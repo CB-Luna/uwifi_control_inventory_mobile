@@ -15,7 +15,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/providers/providers.dart';
-import 'package:taller_alex_app_asesor/screens/emprendedores/emprendedores_screen.dart';
+import 'package:taller_alex_app_asesor/screens/emprendedores/clientes_screen.dart';
 import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/side_menu/custom_menu_item.dart';
 
@@ -213,7 +213,7 @@ class SideMenu extends StatelessWidget {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const EmprendedoresScreen(),
+                              builder: (context) => const ClientesScreen(),
                             ),
                           );
                         }

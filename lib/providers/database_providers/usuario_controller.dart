@@ -334,6 +334,20 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     notifyListeners();
   }
 
+  bool addCliente(int idCliente) {
+    final cliente = dataBase.clienteBox.get(idCliente);
+    if (cliente != null) {
+      usuarioCurrent!.clientes.add(cliente);
+      dataBase.usuariosBox.put(usuarioCurrent!);
+      //print('Emprendimiento modificado exitosamente');
+      notifyListeners();
+      return true;
+    } else {
+      notifyListeners();
+      return false;
+    }
+  }
+
   List<Emprendimientos> getEmprendimientos() {
     final List<Emprendimientos> emprendimientos = [];
     final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? -1);
@@ -343,6 +357,28 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
       }
     }
     return emprendimientos;
+  }
+
+  List<OrdenTrabajo> obtenerOrdenesTrabajo() {
+    final List<OrdenTrabajo> ordenesTrabajo = [];
+    final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? -1);
+    if (usuarioActual != null) {
+        for (var element in usuarioActual.ordenesTrabajo) {
+        ordenesTrabajo.add(element);
+      }
+    }
+    return ordenesTrabajo;
+  }
+
+  List<Cliente> obtenerClientes() {
+    final List<Cliente> clientes = [];
+    final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? -1);
+    if (usuarioActual != null) {
+        for (var element in usuarioActual.clientes) {
+        clientes.add(element);
+      }
+    }
+    return clientes;
   }
 
 }

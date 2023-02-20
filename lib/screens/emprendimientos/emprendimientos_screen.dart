@@ -1,24 +1,16 @@
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/emprendimiento_controller.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/agregar_cliente_screen.dart';
-import 'package:taller_alex_app_asesor/screens/emprendimientos/components/tarjeta_descripcion_widget.dart';
-import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimiento_archivado_screen.dart';
-import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimiento_retomado_screen.dart';
-import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimiento_reactivado_screen.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_archivar_emprendimiento.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/components/tarjeta_orden_trabajo_descripcion.dart';
+import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/agregar_orden_trabajo_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
-import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/util/util.dart';
 
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/screens/emprendimientos/grid_emprendimientos_screen.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_descargar_catalogos.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/side_menu/side_menu.dart';
-import 'package:taller_alex_app_asesor/screens/emprendimientos/agregar_emprendimiento_screen.dart';
 
 class EmprendimientosScreen extends StatefulWidget {
   const EmprendimientosScreen({Key? key}) : super(key: key);
@@ -30,26 +22,15 @@ class EmprendimientosScreen extends StatefulWidget {
 class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  List<String> listAreaCirculo = [];
-  List<Emprendimientos> emprendimientos = [];
-  List<Emprendimientos> emprendimientosPDF = [];
+  List<OrdenTrabajo> ordenesTrabajo = [];
 
   @override
   void initState() {
     super.initState();
     setState(() {
       getInfo();
-      listAreaCirculo = [];
-      emprendimientosPDF = [];
-      emprendimientos = [];
-      dataBase.areaCirculoBox.getAll().forEach((element) {
-        listAreaCirculo.add(element.nombreArea);
-      });
-      listAreaCirculo
-          .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
-      emprendimientosPDF =
-          context.read<UsuarioController>().getEmprendimientos();
-      emprendimientos = context.read<UsuarioController>().getEmprendimientos();
+      ordenesTrabajo = [];
+      ordenesTrabajo = context.read<UsuarioController>().obtenerOrdenesTrabajo();
     });
   }
 
@@ -66,14 +47,14 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
     final emprendimientoProvider =
         Provider.of<EmprendimientoController>(context);
     final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
-    emprendimientos = [];
-    emprendimientos = usuarioProvider.getEmprendimientos();
+    ordenesTrabajo = [];
+    ordenesTrabajo = usuarioProvider.obtenerOrdenesTrabajo();
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
         drawer: const SideMenu(),
-        backgroundColor: Colors.white,
+        backgroundColor: FlutterFlowTheme.of(context).white,
         floatingActionButton: (currentUser.rol.target!.rol == "Asesor")
             ? Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -101,33 +82,40 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                 ),
                 FloatingActionButton(
                   onPressed: () async {
-                    //TODO: Colocar el último catálogo que se descargue
-                    List<ProdProyecto> listProdProyecto =
-                        dataBase.productosProyectoBox.getAll();
-                    if (listProdProyecto.isNotEmpty) {
-                      await Navigator.push(
+                    await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              const AgregarEmprendimientoScreen(),
+                              const AgregarOrdenTrabajoScreen(),
                         ),
                       );
-                    } else {
-                      await showModalBottomSheet(
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        context: context,
-                        builder: (context) {
-                          return Padding(
-                            padding: MediaQuery.of(context).viewInsets,
-                            child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.45,
-                              child: const BottomSheetDescargarCatalogos(),
-                            ),
-                          );
-                        },
-                      );
-                    }
+                    // //TODO: Colocar el último catálogo que se descargue
+                    // List<ProdProyecto> listProdProyecto =
+                    //     dataBase.productosProyectoBox.getAll();
+                    // if (listProdProyecto.isNotEmpty) {
+                    //   await Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) =>
+                    //           const AgregarEmprendimientoScreen(),
+                    //     ),
+                    //   );
+                    // } else {
+                    //   await showModalBottomSheet(
+                    //     isScrollControlled: true,
+                    //     backgroundColor: Colors.transparent,
+                    //     context: context,
+                    //     builder: (context) {
+                    //       return Padding(
+                    //         padding: MediaQuery.of(context).viewInsets,
+                    //         child: SizedBox(
+                    //           height: MediaQuery.of(context).size.height * 0.45,
+                    //           child: const BottomSheetDescargarCatalogos(),
+                    //         ),
+                    //       );
+                    //     },
+                    //   );
+                    // }
                   },
                   backgroundColor: FlutterFlowTheme.of(context).primaryColor,
                   elevation: 8,
@@ -344,15 +332,15 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                GridEmprendimientosScreen(
-                                              emprendimientos: emprendimientos,
-                                            ),
-                                          ),
-                                        );
+                                        // await Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) =>
+                                        //         GridEmprendimientosScreen(
+                                        //       emprendimientos: emprendimientos,
+                                        //     ),
+                                        //   ),
+                                        // );
                                       },
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -377,23 +365,31 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 145, 0, 6),
+                          const EdgeInsetsDirectional.fromSTEB(0, 155, 0, 6),
                       child: Builder(
                         builder: (context) {
                           //Busqueda
                           if (searchController.text != '') {
-                            emprendimientos.removeWhere((element) {
-                              final nombreEmprendimiento =
-                                  removeDiacritics(element.nombre)
+                            ordenesTrabajo.removeWhere((element) {
+                              final nombreCliente =
+                                  removeDiacritics("${element.cliente.target!.nombre} ${element.cliente.target!.apellidoP} ${element.cliente.target?.apellidoM}")
                                       .toLowerCase();
-                              final nombreEmprendedor = removeDiacritics(
-                                      '${element.emprendedor.target?.nombre ?? ''} ${element.emprendedor.target?.apellidos ?? ''}')
+                              final modelo = removeDiacritics(
+                                      element.vehiculo.target!.modelo)
+                                  .toLowerCase();
+                              final marca = removeDiacritics(
+                                      element.vehiculo.target!.marca)
+                                  .toLowerCase();
+                              final descripcion = removeDiacritics(
+                                      element.descripcion)
                                   .toLowerCase();
                               final tempBusqueda =
                                   removeDiacritics(searchController.text)
                                       .toLowerCase();
-                              if (nombreEmprendimiento.contains(tempBusqueda) ||
-                                  nombreEmprendedor.contains(tempBusqueda)) {
+                              if (nombreCliente.contains(tempBusqueda) ||
+                                  modelo.contains(tempBusqueda) ||
+                                  marca.contains(tempBusqueda) ||
+                                  descripcion.contains(tempBusqueda)) {
                                 return false;
                               }
                               return true;
@@ -406,298 +402,13 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               scrollDirection: Axis.vertical,
-                              itemCount: emprendimientos.length,
+                              itemCount: ordenesTrabajo.length,
                               itemBuilder: (context, resultadoIndex) {
-                                final emprendimiento =
-                                    emprendimientos[resultadoIndex];
-                                while (!emprendimiento.archivado) {
-                                  return emprendimiento.faseActual == "Detenido"
-                                      ? Slidable(
-                                          startActionPane: ActionPane(
-                                              motion: const DrawerMotion(),
-                                              children: [
-                                                SlidableAction(
-                                                    label: "Reactivar",
-                                                    icon: Icons
-                                                        .play_circle_outlined,
-                                                    backgroundColor:
-                                                        FlutterFlowTheme.of(context).primaryColor,
-                                                    onPressed: (context) async {
-                                                      if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
-                                                          currentUser
-                                                                  .rol
-                                                                  .target!
-                                                                  .rol ==
-                                                              "Amigo del Cambio" ||
-                                                          currentUser
-                                                                  .rol
-                                                                  .target!
-                                                                  .rol ==
-                                                              "Emprendedor") {
-                                                        snackbarKey.currentState
-                                                            ?.showSnackBar(
-                                                                const SnackBar(
-                                                          content: Text(
-                                                              "Este usuario no tiene permisos para esta acción."),
-                                                        ));
-                                                      } else {
-                                                        emprendimientoProvider
-                                                            .reactivarOdesconsolidarEmprendimiento(
-                                                                emprendimiento
-                                                                    .id);
-                                                        await Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const EmprendimientoReactivadoScreen(),
-                                                          ),
-                                                        );
-                                                      }
-                                                    }),
-                                                SlidableAction(
-                                                    label: "Archivar",
-                                                    icon: Icons
-                                                        .file_download_outlined,
-                                                    backgroundColor:
-                                                        const Color.fromARGB(
-                                                            207, 255, 64, 128),
-                                                    onPressed: (context) async {
-                                                      if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
-                                                          currentUser
-                                                                  .rol
-                                                                  .target!
-                                                                  .rol ==
-                                                              "Amigo del Cambio" ||
-                                                          currentUser
-                                                                  .rol
-                                                                  .target!
-                                                                  .rol ==
-                                                              "Emprendedor") {
-                                                        snackbarKey.currentState
-                                                            ?.showSnackBar(
-                                                                const SnackBar(
-                                                          content: Text(
-                                                              "Este usuario no tiene permisos para esta acción."),
-                                                        ));
-                                                      } else {
-                                                        emprendimientoProvider
-                                                            .archivarEmprendimiento(
-                                                                emprendimiento
-                                                                    .id);
-                                                        await showModalBottomSheet(
-                                                          isScrollControlled:
-                                                              true,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return Padding(
-                                                              padding: MediaQuery
-                                                                      .of(context)
-                                                                  .viewInsets,
-                                                              child: SizedBox(
-                                                                height: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .height *
-                                                                    0.45,
-                                                                child:
-                                                                    const BottomSheetArchivarWidget(
-                                                                  isVisible:
-                                                                      true,
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
-                                                        );
-                                                      }
-                                                    }),
-                                              ]),
-                                          child: Stack(
-                                            children: [
-                                              TargetaDescripcionWidget(
-                                                  emprendimiento:
-                                                      emprendimiento),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                        15, 10, 15, 10),
-                                                child: Container(
-                                                  width: 60,
-                                                  height: 275,
-                                                  decoration: BoxDecoration(
-                                                    gradient:
-                                                        const LinearGradient(
-                                                      colors: [
-                                                        Color.fromARGB(
-                                                            80, 255, 64, 128),
-                                                        Color(0x0014181B),
-                                                      ],
-                                                      stops: [0, 1],
-                                                      begin:
-                                                          Alignment.centerLeft,
-                                                      end:
-                                                          Alignment.centerRight,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.double_arrow_rounded,
-                                                    size: 65,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      : emprendimiento.faseActual ==
-                                              "Consolidado"
-                                          ? Slidable(
-                                              startActionPane: ActionPane(
-                                                  motion: const DrawerMotion(),
-                                                  children: [
-                                                    SlidableAction(
-                                                        label: "Retomar",
-                                                        icon: Icons
-                                                            .thumb_down_outlined,
-                                                        backgroundColor:
-                                                            const Color(
-                                                                0xFF4672FF),
-                                                        onPressed:
-                                                            (context) async {
-                                                          if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
-                                                              currentUser
-                                                                      .rol
-                                                                      .target!
-                                                                      .rol ==
-                                                                  "Amigo del Cambio" ||
-                                                              currentUser
-                                                                      .rol
-                                                                      .target!
-                                                                      .rol ==
-                                                                  "Emprendedor") {
-                                                            snackbarKey
-                                                                .currentState
-                                                                ?.showSnackBar(
-                                                                    const SnackBar(
-                                                              content: Text(
-                                                                  "Este usuario no tiene permisos para esta acción."),
-                                                            ));
-                                                          } else {
-                                                            emprendimientoProvider
-                                                                .reactivarOdesconsolidarEmprendimiento(
-                                                                    emprendimiento
-                                                                        .id);
-                                                            await Navigator
-                                                                .push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const EmprendimientoRetomadoScreen(),
-                                                              ),
-                                                            );
-                                                          }
-                                                        }),
-                                                    SlidableAction(
-                                                        label: "Archivar",
-                                                        icon: Icons
-                                                            .file_download_outlined,
-                                                        backgroundColor:
-                                                            const Color
-                                                                    .fromARGB(
-                                                                207,
-                                                                38,
-                                                                128,
-                                                                55),
-                                                        onPressed:
-                                                            (context) async {
-                                                          if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
-                                                              currentUser
-                                                                      .rol
-                                                                      .target!
-                                                                      .rol ==
-                                                                  "Amigo del Cambio" ||
-                                                              currentUser
-                                                                      .rol
-                                                                      .target!
-                                                                      .rol ==
-                                                                  "Emprendedor") {
-                                                            snackbarKey
-                                                                .currentState
-                                                                ?.showSnackBar(
-                                                                    const SnackBar(
-                                                              content: Text(
-                                                                  "Este usuario no tiene permisos para esta acción."),
-                                                            ));
-                                                          } else {
-                                                            emprendimientoProvider
-                                                                .archivarEmprendimiento(
-                                                                    emprendimiento
-                                                                        .id);
-                                                            await Navigator
-                                                                .push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const EmprendimientoArchivadoScreen(),
-                                                              ),
-                                                            );
-                                                          }
-                                                        }),
-                                                  ]),
-                                              child: Stack(
-                                                children: [
-                                                  TargetaDescripcionWidget(
-                                                      emprendimiento:
-                                                          emprendimiento),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            15, 10, 15, 10),
-                                                    child: Container(
-                                                      width: 60,
-                                                      height: 275,
-                                                      decoration: BoxDecoration(
-                                                        gradient:
-                                                            const LinearGradient(
-                                                          colors: [
-                                                            Color.fromARGB(80,
-                                                                38, 128, 55),
-                                                            Color(0x0014181B),
-                                                          ],
-                                                          stops: [0, 1],
-                                                          begin: Alignment
-                                                              .centerLeft,
-                                                          end: Alignment
-                                                              .centerRight,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      child: const Icon(
-                                                        Icons
-                                                            .double_arrow_rounded,
-                                                        size: 65,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          : TargetaDescripcionWidget(
-                                              emprendimiento: emprendimiento);
-                                }
-                                return const SizedBox();
+                                final ordenTrabajo =
+                                    ordenesTrabajo[resultadoIndex];
+                                  return  TargetaOrdenTrabajoDescripcion(
+                                     ordenTrabajo: ordenTrabajo);
+                                
                               },
                             ),
                           );

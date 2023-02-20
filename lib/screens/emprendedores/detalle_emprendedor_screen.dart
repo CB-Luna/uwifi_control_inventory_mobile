@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/screens/emprendedores/editar_emprendedor.dart';
-import 'package:taller_alex_app_asesor/screens/emprendedores/emprendedores_screen.dart';
+import 'package:taller_alex_app_asesor/screens/emprendedores/clientes_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
@@ -112,7 +112,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const EmprendedoresScreen(),
+                                              const ClientesScreen(),
                                         ),
                                       );
                                     },

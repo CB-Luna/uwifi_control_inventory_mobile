@@ -1,11 +1,23 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_widgets.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/cliente_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/vehiculo_controller.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/agregar_vehiculo_screen.dart';
+import 'package:taller_alex_app_asesor/screens/clientes/cliente_creado_screen.dart';
+import 'package:taller_alex_app_asesor/screens/clientes/cliente_no_creado_screen.dart';
+import 'package:taller_alex_app_asesor/screens/screens.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
 
 import 'package:flutter/material.dart';
@@ -30,6 +42,9 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final vehiculoProvider = Provider.of<VehiculoController>(context);
+    final clienteProvider = Provider.of<ClienteController>(context);
+    final usuarioProvider = Provider.of<UsuarioController>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -60,7 +75,42 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                           ),
                           child: InkWell(
                             onTap: () async {
-                              Navigator.pop(context);
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: const Text(
+                                        '¿Seguro que quieres abandonar esta pantalla?'),
+                                    content: const Text(
+                                        'La información ingresada se perderá.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () async {
+                                          vehiculoProvider.limpiarInformacion();
+                                          clienteProvider.limpiarInformacion();
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EmprendimientosScreen(),
+                                            ),
+                                          );
+                                        },
+                                        child:
+                                            const Text('Abandonar'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child:
+                                            const Text('Cancelar'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              return;
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -157,20 +207,20 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                                     }
 
                                     setState(() {
-                                      // image = pickedFile;
-                                      // File file = File(image!.path);
-                                      // List<int> fileInByte =
-                                      //     file.readAsBytesSync();
-                                      // String base64 =
-                                      //     base64Encode(fileInByte);
-                                      // var newImagenLocal = Imagenes(
-                                      //     imagenes: image!.path,
-                                      //     nombre: image!.name,
-                                      //     path: image!.path,
-                                      //     base64: base64,
-                                      //     idEmprendimiento: 0);
-                                      // emprendedorProvider.imagenLocal =
-                                      //     newImagenLocal;
+                                      image = pickedFile;
+                                      File file = File(image!.path);
+                                      List<int> fileInByte =
+                                          file.readAsBytesSync();
+                                      String base64 =
+                                          base64Encode(fileInByte);
+                                      var newImagenLocal = Imagenes(
+                                          imagenes: image!.path,
+                                          nombre: image!.name,
+                                          path: image!.path,
+                                          base64: base64,
+                                          idEmprendimiento: 0);
+                                      clienteProvider.imagenCliente =
+                                          newImagenLocal;
                                     });
                                   },
                                   child: Container(
@@ -214,7 +264,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
                       onChanged: (value) {
-                        
+                        clienteProvider.nombre = value;
                       },
                       obscureText: false,
                       decoration: InputDecoration(
@@ -286,7 +336,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
                       onChanged: (value) {
-                        
+                        clienteProvider.apellidoP = value;
                       },
                       obscureText: false,
                       decoration: InputDecoration(
@@ -358,6 +408,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
                       onChanged: (value) {
+                        clienteProvider.apellidoM = value;
                       },
                       obscureText: false,
                       decoration: InputDecoration(
@@ -423,6 +474,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
                       onChanged: (value) {
+                        clienteProvider.curp = value;
                       },
                       obscureText: false,
                       decoration: InputDecoration(
@@ -484,11 +536,95 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                     ),
                   ),
                   Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        16, 16, 16, 0),
+                    child: TextFormField(
+                        controller: clienteProvider.nacimientoController,
+                        autovalidateMode:
+                            AutovalidateMode.onUserInteraction,
+                        onTap: () async {
+                          await DatePicker.showDatePicker(
+                            context,
+                            locale: LocaleType.es,
+                            showTitleActions: true,
+                            onConfirm: (date) {
+                              setState(() {
+                                clienteProvider.nacimiento = date;
+                                clienteProvider.nacimientoController = TextEditingController(text: dateTimeFormat('d/MMMM/y', date));
+                              });
+                            },
+                            currentTime: getCurrentTimestamp,
+                            // minTime: getCurrentTimestamp.subtract(const Duration(days: 7)),
+                          );
+                        },
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          labelText: 'Fecha de Nacimiento*',
+                          labelStyle:
+                              FlutterFlowTheme.of(context).title3.override(
+                                    fontFamily: 'Montserrat',
+                                    color: FlutterFlowTheme.of(context)
+                                        .grayDark,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                          hintText: 'Ingresa la Fecha de Nacimiento...',
+                          enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color:
+                                FlutterFlowTheme.of(context).grayDark,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color:
+                                FlutterFlowTheme.of(context).grayDark,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Color(0x00000000),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Color(0x00000000),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        contentPadding:
+                            const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                        suffixIcon: Icon(
+                            Icons.date_range_outlined,
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryText,
+                            size: 24,
+                          ),
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                        textAlign: TextAlign.start,
+                        keyboardType: TextInputType.none,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'La Fecha de Nacimiento requerida.';
+                          }
+                          return null;
+                        }),
+                  ),
+                  Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: TextFormField(
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
                       onChanged: (value) {
+                        clienteProvider.telefono = value;
                       },
                       obscureText: false,
                       decoration: InputDecoration(
@@ -559,10 +695,11 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
                       onChanged: (value) {
+                        clienteProvider.celular = value;
                       },
                       obscureText: false,
                       decoration: InputDecoration(
-                        labelText: 'Celular',
+                        labelText: 'Celular*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
                             .override(
@@ -629,6 +766,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
                       onChanged: (value) {
+                        clienteProvider.correo = value;
                       },
                       obscureText: false,
                       decoration: InputDecoration(
@@ -691,19 +829,33 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const AgregarVehiculoScreen(),
-                        ),
-                      );
+                        if (vehiculoProvider.clienteAsociado) {
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Ya se ha asignado un vehículo, no puedes agregar más."),
+                          ));
+                        } else {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const AgregarVehiculoScreen(),
+                            ),
+                          );
+                        }
                       },
-                      text: 'Asignar Vehículo',
+                      text: vehiculoProvider.clienteAsociado
+                      ? 'Vehículo Asignado'
+                      : 'Asignar Vehículo',
                       options: FFButtonOptions(
                         width: 400,
                         height: 50,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
+                        color: vehiculoProvider.clienteAsociado
+                        ?
+                        FlutterFlowTheme.of(context).grayLight
+                        :
+                        FlutterFlowTheme.of(context).tertiaryColor,
                         textStyle:
                             FlutterFlowTheme.of(context).subtitle1.override(
                                   fontFamily: 'Lexend Deca',
@@ -724,7 +876,57 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        
+                        if (clienteProvider
+                              .validateForm(clienteKey) &&
+                          vehiculoProvider.clienteAsociado) {
+                        //Se crea cliente sin vehiculo
+                        final idCliente = clienteProvider.add();
+                        //Se asigna el cliente al usuario actual
+                        if (usuarioProvider.addCliente(idCliente)) {
+                          //Se agrega vehículo
+                          vehiculoProvider.add(idCliente);
+                          vehiculoProvider
+                              .limpiarInformacion();
+                          clienteProvider
+                              .limpiarInformacion();
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const ClienteCreadoScreen(),
+                            ),
+                          );
+                        } else {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const ClienteNoCreadoScreen(),
+                            ),
+                          );
+                        }
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title:
+                                  const Text('Campos requeridos vacíos.'),
+                              content: const Text(
+                                  'Para continuar, debe llenar todos los campos requeridos y asociar un vehículo.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(
+                                          alertDialogContext),
+                                  child: const Text('Bien'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        return;
+                      }
                       },
                       text: 'Registrar',
                       options: FFButtonOptions(

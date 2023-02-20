@@ -43,7 +43,7 @@ class DropDown extends StatefulWidget {
 class _DropDownState extends State<DropDown> {
   late String? dropDownValue;
   List<String> get effectiveOptions =>
-      widget.options.isEmpty ? ['[Option]'] : widget.options;
+      widget.options.isEmpty ? ['[Vacío]'] : widget.options;
 
   @override
   void initState() {

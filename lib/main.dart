@@ -11,9 +11,11 @@ import 'package:taller_alex_app_asesor/providers/providers.dart';
 import 'package:taller_alex_app_asesor/database/object_box_database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'providers/database_providers/cliente_controller.dart';
 import 'providers/database_providers/consultoria_controller.dart';
 import 'providers/database_providers/emprendedor_controller.dart';
 import 'providers/database_providers/emprendimiento_controller.dart';
+import 'providers/database_providers/orden_trabajo_controller.dart';
 import 'providers/database_providers/producto_venta_controller.dart';
 import 'providers/database_providers/producto_inversion_jornada_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
@@ -34,6 +36,7 @@ import 'package:taller_alex_app_asesor/screens/screens.dart';
 import 'package:taller_alex_app_asesor/services/navigation_service.dart';
 import 'package:taller_alex_app_asesor/internationalization/internationalization.dart';
 
+import 'providers/database_providers/vehiculo_controller.dart';
 import 'providers/database_providers/venta_controller.dart';
 import 'providers/sync_emprendimientos_externos_pocketbase_provider.dart';
 import 'providers/sync_emprendimientos_externos_emi_web_provider.dart';
@@ -70,6 +73,18 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider<ClienteController>(
+          create: (context) => ClienteController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<VehiculoController>(
+          create: (context) => VehiculoController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<OrdenTrabajoController>(
+          create: (context) => OrdenTrabajoController(),
+          lazy: false,
+        ),
         ChangeNotifierProvider<EmprendimientoController>(
           create: (context) => EmprendimientoController(),
           lazy: false,

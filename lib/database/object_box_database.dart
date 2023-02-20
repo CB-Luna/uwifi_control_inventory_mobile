@@ -6,6 +6,10 @@ class ObjectBoxDatabase {
   late final Store store;
 
   late final Box<Usuarios> usuariosBox;
+  late final Box<Cliente> clienteBox;
+  late final Box<Vehiculo> vehiculoBox;
+  late final Box<OrdenTrabajo> ordenTrabajoBox;
+  late final Box<FormaPago> formaPagoBox;
   late final Box<Emprendimientos> emprendimientosBox;
   late final Box<Emprendedores> emprendedoresBox;
   late final Box<Jornadas> jornadasBox;
@@ -45,6 +49,10 @@ class ObjectBoxDatabase {
   ObjectBoxDatabase._create(this.store) {
     // Add any additional setup code, e.g. build queries.
     usuariosBox = Box<Usuarios>(store);
+    clienteBox = Box<Cliente>(store);
+    vehiculoBox = Box<Vehiculo>(store);
+    ordenTrabajoBox = Box<OrdenTrabajo>(store);
+    formaPagoBox = Box<FormaPago>(store);
     emprendimientosBox = Box<Emprendimientos>(store);
     emprendedoresBox = Box<Emprendedores>(store);
     jornadasBox = Box<Jornadas>(store);
