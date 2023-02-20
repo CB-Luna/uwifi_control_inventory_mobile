@@ -4,6 +4,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
+import '../widgets/flutter_flow_widgets.dart';
 import 'flutter_flow_animaciones.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -73,61 +75,6 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).background,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        backgroundColor: FlutterFlowTheme.of(context).customColor1,
-        selectedItemColor: FlutterFlowTheme.of(context).primaryColor,
-        unselectedItemColor: FlutterFlowTheme.of(context).grayLight,
-        showSelectedLabels: true,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.directions_car_outlined,
-              size: 24,
-            ),
-            activeIcon: Icon(
-              Icons.directions_car,
-              size: 24,
-            ),
-            label: '•',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.checklist_rtl_outlined,
-              size: 24,
-            ),
-            activeIcon: Icon(
-              Icons.checklist_rtl_outlined,
-              size: 24,
-            ),
-            label: '•',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.car_repair,
-              size: 24,
-            ),
-            label: '__',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.attach_money_rounded,
-              size: 24,
-            ),
-            activeIcon: Icon(
-              Icons.attach_money_rounded,
-              size: 24,
-            ),
-            label: '•',
-            tooltip: '',
-          )
-        ],
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -145,7 +92,14 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
                       height: 40,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [
+                          BoxShadow(
+                            blurRadius: 4,
+                            color: Color(0x39000000),
+                            offset: Offset(-4, 8),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       child: InkWell(
                         onTap: () async {
@@ -183,6 +137,92 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
                         ),
                       ),
                     ),
+                    SizedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).secondaryColor,
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 4,
+                                  color: Color(0x39000000),
+                                  offset: Offset(-4, 8),
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.build,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  size: 30,
+                                ),
+                                AutoSizeText(
+                                  'Técnico',
+                                  textAlign: TextAlign.center,
+                                  style: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Outfit',
+                                        color:
+                                            FlutterFlowTheme.of(context).alternate,
+                                        fontSize: 15,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 4,
+                                  color: Color(0x39000000),
+                                  offset: Offset(-4, 8),
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.person,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  size: 30,
+                                ),
+                                AutoSizeText(
+                                  'Cliente',
+                                  textAlign: TextAlign.center,
+                                  style: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Outfit',
+                                        color:
+                                            FlutterFlowTheme.of(context).alternate,
+                                        fontSize: 15,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -279,202 +319,384 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
                   ],
                 ),
               ),
-              Container(
+              Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+              child: Container(
                 width: MediaQuery.of(context).size.width * 0.9,
-                height: 70,
-                decoration: BoxDecoration(
-                  color: Color(0x9A090F13),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 4,
-                      color: Color(0x43000000),
-                      offset: Offset(0, 2),
-                    )
-                  ],
-                  borderRadius: BorderRadius.circular(8),
+                decoration: const BoxDecoration(
+                  color: Color(0x004672FF),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(0),
+                    bottomRight: Radius.circular(0),
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  ),
                 ),
-                child: Row(
+                child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                      child: Column(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(10, 12, 5, 12),
+                      child: Row(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            child: Image.asset(
-                              'assets/images/tallerAlexLogo.png',
+                          Text(
+                            'Observaciones',
+                            style: FlutterFlowTheme.of(context).bodyText2.override(
+                              fontFamily: 'Outfit',
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              fontSize: 20,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(12, 0, 16, 0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Dianóstico Inicial Reportado',
-                                  textAlign: TextAlign.start,
-                                  style: GoogleFonts.getFont(
-                                    'Lexend Deca',
-                                    color: Color(0xB3FFFFFF),
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                Text(
-                                  '4:30pm',
-                                  textAlign: TextAlign.end,
-                                  style: GoogleFonts.getFont(
-                                    'Lexend Deca',
-                                    color: Color(0xB3FFFFFF),
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
+                          FFButtonWidget(
+                            onPressed: () async {
+                              // if (widget.emprendimiento.usuario.target!.rol
+                              //             .target!.rol !=
+                              //         "Amigo del Cambio" &&
+                              //     widget.emprendimiento.usuario.target!.rol
+                              //             .target!.rol !=
+                              //         "Emprendedor") {
+                              //   if (widget.inversion.jornada3) {
+                              //     snackbarKey.currentState
+                              //         ?.showSnackBar(const SnackBar(
+                              //       content: Text(
+                              //           "No se puede hacer seguimiento a esta inversión."),
+                              //     ));
+                              //   } else {
+                              //     if (widget.inversion.estadoInversion.target!
+                              //                 .estado ==
+                              //             "Solicitada" &&
+                              //         widget.inversion.idDBR == null) {
+                              //       await Navigator.push(
+                              //         context,
+                              //         MaterialPageRoute(
+                              //           builder: (context) =>
+                              //               AgregarProductoInversionScreen(
+                              //             emprendimiento: widget.emprendimiento,
+                              //             inversion: widget.inversion,
+                              //           ),
+                              //         ),
+                              //       );
+                              //     } else {
+                              //       snackbarKey.currentState
+                              //           ?.showSnackBar(const SnackBar(
+                              //         content: Text(
+                              //             "Ya no puedes agregar más productos."),
+                              //       ));
+                              //     }
+                              //   }
+                              // } else {
+                              //   snackbarKey.currentState
+                              //       ?.showSnackBar(const SnackBar(
+                              //     content: Text(
+                              //         "Este usuario no tiene permisos para esta acción."),
+                              //   ));
+                              // }
+                            },
+                            text: 'Agregar',
+                            icon: const Icon(
+                              Icons.add,
+                              size: 15,
                             ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                    'La batería del vehículo se descarga rápido.',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Outfit',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                        ),
+                            options: FFButtonOptions(
+                              width: 150,
+                              height: 35,
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .subtitle2
+                                  .override(
+                                    fontFamily:
+                                        FlutterFlowTheme.of(context).subtitle2Family,
+                                    color: Colors.white,
+                                    fontSize: 15,
                                   ),
-                                ],
+                              borderSide: const BorderSide(
+                                color: Colors.transparent,
+                                width: 1,
                               ),
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
+                    ),
+                    Builder(
+                      builder: (context) {
+                        return ListView.builder(
+                          controller: ScrollController(),
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: 1,
+                          itemBuilder: (context, index) {
+                            return SizedBox(
+                              height: 110,
+                              child: InkWell(
+                                onTap: () async {
+                                  //print("object");
+                                  // if (widget.emprendimiento.usuario.target!.rol
+                                  //             .target!.rol !=
+                                  //         "Amigo del Cambio" &&
+                                  //     widget.emprendimiento.usuario.target!.rol
+                                  //             .target!.rol !=
+                                  //         "Emprendedor") {
+                                  //   if (widget.inversion.jornada3) {
+                                  //     snackbarKey.currentState
+                                  //         ?.showSnackBar(const SnackBar(
+                                  //       content: Text(
+                                  //           "No se puede hacer seguimiento a esta inversión."),
+                                  //     ));
+                                  //   } else {
+                                  //     await Navigator.push(
+                                  //       context,
+                                  //       MaterialPageRoute(
+                                  //         builder: (context) =>
+                                  //             EditarProductoInversionScreen(
+                                  //           inversion: widget.inversion,
+                                  //           prodSolicitado: productoSolicitado,
+                                  //           idEmprendimiento:
+                                  //               widget.emprendimiento.id,
+                                  //         ),
+                                  //       ),
+                                  //     );
+                                  //   }
+                                  // } else {
+                                  //   snackbarKey.currentState
+                                  //       ?.showSnackBar(const SnackBar(
+                                  //     content: Text(
+                                  //         "Este usuario no tiene permisos para esta acción."),
+                                  //   ));
+                                  // }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 24),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, 8),
+                                        child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width *
+                                                  0.92,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context).grayLighter,
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                blurRadius: 4,
+                                                color: Color(0x43000000),
+                                                offset: Offset(-4, 8),
+                                              )
+                                            ],
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(15, 0, 0, 0),
+                                                child: Container(
+                                                  width: 35,
+                                                  height: 35,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.center,
+                                                    children: [
+                                                      Text(
+                                                        (index + 1).toString(),
+                                                        style:
+                                                            FlutterFlowTheme.of(context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText1Family,
+                                                                  fontSize: 20,
+                                                                ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .all(8),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            maybeHandleOverflow(
+                                                                "Nombre Técnico Atendió",
+                                                                25,
+                                                                "..."),
+                                                            style:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText1
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .bodyText1Family,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryText,
+                                                                    ),
+                                                          ),
+                                                          Text(
+                                                            dateTimeFormat(
+                                                                'd/MMM/y',
+                                                                DateTime.now()),
+                                                            textAlign:
+                                                                TextAlign.end,
+                                                            style: FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText1Family,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  fontSize: 12,
+                                                                ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets
+                                                                .symmetric(
+                                                            vertical: 5),
+                                                        child: Text(
+                                                          maybeHandleOverflow('Resumen de la obervación realizada por el cliente...', 84, "..."),
+                                                          maxLines: 2,
+                                                          style: FlutterFlowTheme.of(
+                                                                  context)
+                                                              .subtitle1
+                                                              .override(
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .subtitle1Family,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    const SizedBox(
+                      height: 40,
                     ),
                   ],
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: 120,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryColor,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 3,
-                            color: Color(0x39000000),
-                            offset: Offset(0, 1),
-                          )
-                        ],
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                            child: Icon(
-                              Icons.build,
-                              color: FlutterFlowTheme.of(context).alternate,
-                              size: 45,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                            child: AutoSizeText(
-                              'Técnico',
-                              textAlign: TextAlign.center,
-                              style: FlutterFlowTheme.of(context)
-                                  .subtitle1
-                                  .override(
-                                    fontFamily: 'Outfit',
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    fontSize: 23
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 120,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 3,
-                            color: Color(0x39000000),
-                            offset: Offset(0, 1),
-                          )
-                        ],
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                            child: Icon(
-                              Icons.person,
-                              color: FlutterFlowTheme.of(context).alternate,
-                              size: 45,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                            child: AutoSizeText(
-                              'Cliente',
-                              textAlign: TextAlign.center,
-                              style: FlutterFlowTheme.of(context)
-                                  .subtitle1
-                                  .override(
-                                    fontFamily: 'Outfit',
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    fontSize: 23
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation']!),
+            ),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        backgroundColor: FlutterFlowTheme.of(context).customColor1,
+        selectedItemColor: FlutterFlowTheme.of(context).primaryColor,
+        unselectedItemColor: FlutterFlowTheme.of(context).grayLight,
+        showSelectedLabels: true,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.directions_car_outlined,
+              size: 24,
+            ),
+            activeIcon: Icon(
+              Icons.directions_car,
+              size: 24,
+            ),
+            label: '•',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.checklist_rtl_outlined,
+              size: 24,
+            ),
+            activeIcon: Icon(
+              Icons.checklist_rtl_outlined,
+              size: 24,
+            ),
+            label: '•',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.car_repair,
+              size: 24,
+            ),
+            label: '__',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.attach_money_rounded,
+              size: 24,
+            ),
+            activeIcon: Icon(
+              Icons.attach_money_rounded,
+              size: 24,
+            ),
+            label: '•',
+            tooltip: '',
+          )
+        ],
       ),
     );
   }
