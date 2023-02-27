@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
-Widget? getImageEmprendimiento(String? image, {double height = 180}) {
+Widget getImageEmprendimiento(String? image, {double height = 180}) {
   if (image == null || image == '') {
     return Image(
       height: height,

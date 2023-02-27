@@ -684,10 +684,11 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
                       onTap: () async {
-                        vehiculoProvider.gasolina = "75";
-                         showDialog(
+                         await showDialog(
+                          barrierDismissible: false,
                           context: context,
                           builder: (BuildContext context) {
+                            final vehiculoProvider = Provider.of<VehiculoController>(context);
                             return AlertDialog(
                               title: const Text("Porcentaje de Gasolina"),
                               content: SizedBox( // Need to use container to add size constraint.
@@ -697,18 +698,19 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                                   child: Column(
                                     children: [
                                       SemicircularIndicator(
+                                        progress: vehiculoProvider.valor * 0.01,
                                         radius: 100,
-                                        color: Colors.orange,
+                                        color: FlutterFlowTheme.of(context).primaryColor,
                                         backgroundColor: FlutterFlowTheme.of(context).grayLighter,
                                         strokeWidth: 13,
                                         bottomPadding: 0,
                                         contain: true,
                                         child: Text(
-                                          '75%',
+                                          "${vehiculoProvider.valor} %",
                                           style: TextStyle(
                                               fontSize: 32,
                                               fontWeight: FontWeight.w600,
-                                              color: Colors.orange),
+                                              color: FlutterFlowTheme.of(context).primaryColor),
                                         ),
                                       ),
                                       SizedBox(
@@ -736,9 +738,12 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                                             min: 0.0,
                                             max: 100.0,
                                             interval: 1.0,
-                                            value: 75.0, 
+                                            value: vehiculoProvider.valor, 
+                                            stepSize: 1.0,
+                                            activeColor: FlutterFlowTheme.of(context).secondaryColor,
+                                            inactiveColor: FlutterFlowTheme.of(context).grayLighter,
                                             onChanged: ((value) {
-                                              
+                                              vehiculoProvider.actualizarValor(value.truncate());
                                             })
                                           ),
                                       ),
@@ -747,7 +752,9 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                                         child: FFButtonWidget(
                                           onPressed: () async {
                                             setState(() {
-                                              vehiculoProvider.gasolinaController = TextEditingController(text: "75");
+                                              vehiculoProvider.gasolinaController = TextEditingController(
+                                                text: vehiculoProvider.valor.toString()
+                                              );
                                             });
                                             Navigator.pop(context);
                                           },

@@ -4,6 +4,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:taller_alex_app_asesor/screens/observaciones/agregar_observacion_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import '../widgets/flutter_flow_widgets.dart';
 import 'flutter_flow_animaciones.dart';
@@ -253,14 +255,33 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
                   ],
                 ),
               ),
-              Image.asset(
-                'assets/images/carHome@3x.png',
-                width: MediaQuery.of(context).size.width,
-                height: 240,
-                fit: BoxFit.cover,
-              ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation']!),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                padding: const EdgeInsets.all(12),
+                child: Container(
+                  height: 240,
+                  decoration: BoxDecoration(
+                    boxShadow: const [
+                      BoxShadow(
+                        blurRadius: 4,
+                        color: Color(0x43000000),
+                        offset: Offset(-4, 8),
+                      )
+                    ],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: getImageEmprendimiento(
+                    widget.ordenTrabajo.vehiculo.target?.imagen.target?.path).
+                      animateOnPageLoad(animationsMap['imageOnPageLoadAnimation']!),
+                ),
+              ),
+              // Image.asset(
+              //   'assets/images/carHome@3x.png',
+              //   width: MediaQuery.of(context).size.width,
+              //   height: 240,
+              //   fit: BoxFit.cover,
+              // ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation']!),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                 child: LinearPercentIndicator(
                   percent: 0.2,
                   width: MediaQuery.of(context).size.width * 0.9,
@@ -352,6 +373,13 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
                           ),
                           FFButtonWidget(
                             onPressed: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      AgregarObservacionScreen(ordenTrabajo: widget.ordenTrabajo,),
+                                ),
+                              );
                               // if (widget.emprendimiento.usuario.target!.rol
                               //             .target!.rol !=
                               //         "Amigo del Cambio" &&
@@ -554,7 +582,7 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
                                                         children: [
                                                           Text(
                                                             maybeHandleOverflow(
-                                                                "Nombre Técnico Atendió",
+                                                                "Nombre Asesor Atendió",
                                                                 25,
                                                                 "..."),
                                                             style:

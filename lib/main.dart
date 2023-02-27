@@ -15,6 +15,7 @@ import 'providers/database_providers/cliente_controller.dart';
 import 'providers/database_providers/consultoria_controller.dart';
 import 'providers/database_providers/emprendedor_controller.dart';
 import 'providers/database_providers/emprendimiento_controller.dart';
+import 'providers/database_providers/observacion_controller.dart';
 import 'providers/database_providers/orden_trabajo_controller.dart';
 import 'providers/database_providers/producto_venta_controller.dart';
 import 'providers/database_providers/producto_inversion_jornada_controller.dart';
@@ -83,6 +84,10 @@ void main() async {
         ),
         ChangeNotifierProvider<OrdenTrabajoController>(
           create: (context) => OrdenTrabajoController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<ObservacionController>(
+          create: (context) => ObservacionController(),
           lazy: false,
         ),
         ChangeNotifierProvider<EmprendimientoController>(

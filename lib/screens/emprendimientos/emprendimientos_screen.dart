@@ -1,5 +1,4 @@
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/emprendimiento_controller.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/agregar_cliente_screen.dart';
 import 'package:taller_alex_app_asesor/screens/emprendimientos/components/tarjeta_orden_trabajo_descripcion.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/agregar_orden_trabajo_screen.dart';
@@ -44,8 +43,6 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    final emprendimientoProvider =
-        Provider.of<EmprendimientoController>(context);
     final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
     ordenesTrabajo = [];
     ordenesTrabajo = usuarioProvider.obtenerOrdenesTrabajo();

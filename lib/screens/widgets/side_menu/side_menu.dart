@@ -87,7 +87,7 @@ class SideMenu extends StatelessWidget {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 5, 0, 0, 0),
                             child: Text(
-                              'Taller Automotriz Alex',
+                              'Taller Mecánico',
                               maxLines: 2,
                               style: FlutterFlowTheme.of(context).bodyText2.override(
                                     fontFamily:

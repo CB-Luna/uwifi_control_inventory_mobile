@@ -15,6 +15,7 @@ class VehiculoController extends ChangeNotifier {
   String marca = "";
   String modelo = "";
   String anio = "";
+  int valor = 0;
   //Se asigna un controller para que se pueda visualizar lo que se selecciona del Widget que abre el campo
   TextEditingController anioController = TextEditingController(); 
   String vin = "";
@@ -32,6 +33,7 @@ class VehiculoController extends ChangeNotifier {
 
   void limpiarInformacion()
   {
+    valor = 0;
     vehiculo = null;
     imagenVehiculo = null;
     marca = "";
@@ -44,6 +46,11 @@ class VehiculoController extends ChangeNotifier {
     gasolina = "";
     clienteAsociado = false;
     gasolinaController.clear();
+    notifyListeners();
+  }
+
+  void actualizarValor(int value) {
+    valor = value;
     notifyListeners();
   }
 

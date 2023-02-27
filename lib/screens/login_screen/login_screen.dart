@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          'Taller Automotriz Alex',
+                          'Taller Mecánico',
                           style: FlutterFlowTheme.of(context).title1.override(
                                 fontFamily: 'Outfit',
                                 color: FlutterFlowTheme.of(context).alternate,
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 24),
                             child: Text(
-                              'El cuidado perfecto para su carro',
+                              'Atendemos su carro como si fuera nuestro',
                               style: FlutterFlowTheme.of(context).title3.override(
                                     fontFamily: 'Outfit',
                                     color: FlutterFlowTheme.of(context).alternate,
