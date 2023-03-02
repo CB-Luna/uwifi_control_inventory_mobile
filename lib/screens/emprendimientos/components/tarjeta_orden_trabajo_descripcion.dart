@@ -107,7 +107,7 @@ class _TargetaOrdenTrabajoDescripcionState extends State<TargetaOrdenTrabajoDesc
               padding: const EdgeInsetsDirectional
                   .fromSTEB(16, 0, 16, 5),
               child: Text(
-                maybeHandleOverflow(widget.ordenTrabajo.descripcion, 180, "..."),
+                maybeHandleOverflow(widget.ordenTrabajo.descripcionFalla, 180, "..."),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: FlutterFlowTheme.of(context)

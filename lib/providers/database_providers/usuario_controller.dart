@@ -381,4 +381,17 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     return clientes;
   }
 
+  List<String> obtenerVehiculos() {
+    final List<String> vehiculos = [];
+    final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? -1);
+    if (usuarioActual != null) {
+        for (var cliente in usuarioActual.clientes) {
+        for (var vehiculo in cliente.vehiculo) {
+          vehiculos.add(vehiculo.vin);
+        }
+      }
+    }
+    return vehiculos;
+  }
+
 }

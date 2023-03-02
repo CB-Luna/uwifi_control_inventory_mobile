@@ -1,5 +1,4 @@
 import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/vehiculo_temporal.dart';
-import 'package:taller_alex_app_asesor/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
@@ -15,15 +14,14 @@ class VehiculoController extends ChangeNotifier {
   String marca = "";
   String modelo = "";
   String anio = "";
-  int valor = 0;
   //Se asigna un controller para que se pueda visualizar lo que se selecciona del Widget que abre el campo
   TextEditingController anioController = TextEditingController(); 
   String vin = "";
   String placas = "";
-  String kilometraje = "";
-  String gasolina = "";
+  String motor = "";
+  String color = "";
   //Se asigna un controller para que se pueda visualizar lo que se selecciona del Widget que abre el campo
-  TextEditingController gasolinaController = TextEditingController();
+  // TextEditingController gasolinaController = TextEditingController();
   bool clienteAsociado =  false;
 
   bool validateForm(GlobalKey<FormState> vehiculoKey) {
@@ -33,7 +31,6 @@ class VehiculoController extends ChangeNotifier {
 
   void limpiarInformacion()
   {
-    valor = 0;
     vehiculo = null;
     imagenVehiculo = null;
     marca = "";
@@ -42,17 +39,13 @@ class VehiculoController extends ChangeNotifier {
     anioController.clear();
     vin = "";
     placas = "";
-    kilometraje = "";
-    gasolina = "";
+    motor = "";
+    color = "";
     clienteAsociado = false;
-    gasolinaController.clear();
+    // gasolinaController.clear();
     notifyListeners();
   }
 
-  void actualizarValor(int value) {
-    valor = value;
-    notifyListeners();
-  }
 
   void addTemporal() {
     vehiculo = VehiculoTemporal(
@@ -61,8 +54,8 @@ class VehiculoController extends ChangeNotifier {
       anio: anio, 
       vin: vin, 
       placas: placas, 
-      kilometraje: kilometraje, 
-      gasolina: gasolina, 
+      motor: motor, 
+      color: color, 
       imagen: imagenVehiculo!,  
     );
     clienteAsociado = true;
@@ -77,8 +70,8 @@ class VehiculoController extends ChangeNotifier {
         anio: vehiculo!.anio, 
         vin: vehiculo!.vin, 
         placas: vehiculo!.placas, 
-        kilometraje: vehiculo!.kilometraje, 
-        gasolina: vehiculo!.gasolina,  
+        motor: vehiculo!.motor, 
+        color: vehiculo!.color,  
       );
       final cliente = dataBase.clienteBox.get(idCliente);
       if (cliente != null) {

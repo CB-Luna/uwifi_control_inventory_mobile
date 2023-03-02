@@ -11,10 +11,8 @@ class ClienteController extends ChangeNotifier {
   String nombre = "";
   String apellidoP = "";
   String apellidoM = "";
-  String curp = "";
-  DateTime? nacimiento; //Es null para inicializar sin valor el campo en el formulario 
-  //Se asigna un controller para que se pueda visualizar lo que se selecciona del Widget que abre el campo
-  TextEditingController nacimientoController = TextEditingController(); 
+  String rfc = "";
+  String domicilio = "";
   String telefono = "";
   String celular = "";
   String correo = ""; 
@@ -30,9 +28,8 @@ class ClienteController extends ChangeNotifier {
     nombre = "";
     apellidoP = "";
     apellidoM = "";
-    curp = "";
-    nacimiento = null;
-    nacimientoController.clear();
+    rfc = "";
+    domicilio = "";
     telefono = "";
     celular = "";
     correo = "";
@@ -45,8 +42,8 @@ class ClienteController extends ChangeNotifier {
       nombre: nombre, 
       apellidoP: apellidoP,
       apellidoM: apellidoM, 
-      curp: curp,
-      fechaNacimiento: nacimiento!,
+      rfc: rfc,
+      domicilio: domicilio,
       telefono: telefono, 
       celular: celular, 
       correo: correo,  
@@ -66,14 +63,13 @@ class ClienteController extends ChangeNotifier {
     return idCliente;
   }
 
-  void update(int id, String newNombre, String newApellidos, String newCurp, 
+  void update(int id, String newNombre, String newApellidos, String newRfc, 
   String newIntegrantesFamilia, String newTelefono, String newComentarios, int idComunidad, int idEmprendimiento) {
     final updateEmprendedor = dataBase.emprendedoresBox.get(id);
     final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
     if (updateEmprendedor != null) {
       updateEmprendedor.nombre = newNombre;
       updateEmprendedor.apellidos = newApellidos;
-      updateEmprendedor.curp = newCurp;
       updateEmprendedor.integrantesFamilia = newIntegrantesFamilia;
       updateEmprendedor.telefono =  newTelefono;
       updateEmprendedor.comentarios =  newComentarios;

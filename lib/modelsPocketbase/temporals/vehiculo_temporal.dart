@@ -7,8 +7,8 @@ class VehiculoTemporal {
     final String anio;
     final String vin;
     final String placas;
-    final String kilometraje;
-    final String gasolina;
+    final String motor;
+    final String color;
     final Imagenes imagen;
 
     VehiculoTemporal({
@@ -17,8 +17,8 @@ class VehiculoTemporal {
       required this.anio,
       required this.vin,
       required this.placas,
-      required this.kilometraje,
-      required this.gasolina,
+      required this.motor,
+      required this.color,
       required this.imagen,
     });
 

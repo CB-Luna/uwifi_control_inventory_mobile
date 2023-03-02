@@ -56,7 +56,9 @@ class Emprendimientos {
 class OrdenTrabajo {
   int id;
   DateTime fechaOrden;
-  String descripcion;
+  String gasolina;
+  String kilometrajeMillaje;
+  String descripcionFalla;
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
@@ -70,7 +72,9 @@ class OrdenTrabajo {
   OrdenTrabajo({
     this.id = 0,
     required this.fechaOrden,
-    required this.descripcion,
+    required this.gasolina,
+    required this.kilometrajeMillaje,
+    required this.descripcionFalla,
     DateTime? fechaRegistro,
     this.idDBR,
   }) : fechaRegistro = fechaRegistro ?? DateTime.now();
@@ -87,10 +91,10 @@ class Cliente {
   String? apellidoM;
   String? telefono;
   String celular;
-  String curp;
+  String rfc;
   String correo;
-  DateTime fechaRegistro;
-  DateTime fechaNacimiento;
+  String domicilio;
+  DateTime fechaRegistro; 
   @Unique()
   String? idDBR;
   @Backlink()
@@ -106,9 +110,9 @@ class Cliente {
     this.apellidoM,
     this.telefono,
     required this.celular,
-    required this.curp,
+    required this.rfc,
     required this.correo,
-    required this.fechaNacimiento,
+    required this.domicilio,
     DateTime? fechaRegistro,
     this.idDBR,
   }) : fechaRegistro = fechaRegistro ?? DateTime.now();
@@ -127,8 +131,8 @@ class Vehiculo {
   String vin;
   @Unique()
   String placas;
-  String kilometraje;
-  String gasolina;
+  String motor;
+  String color;
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
@@ -144,8 +148,8 @@ class Vehiculo {
     required this.anio,
     required this.vin,
     required this.placas,
-    required this.kilometraje,
-    required this.gasolina,
+    required this.motor,
+    required this.color,
     DateTime? fechaRegistro,
     this.idDBR,
   }) : fechaRegistro = fechaRegistro ?? DateTime.now();

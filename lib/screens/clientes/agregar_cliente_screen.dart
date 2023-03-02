@@ -474,11 +474,11 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
                       onChanged: (value) {
-                        clienteProvider.curp = value;
+                        clienteProvider.rfc = value;
                       },
                       obscureText: false,
                       decoration: InputDecoration(
-                        labelText: 'CURP*',
+                        labelText: 'RFC*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
                             .override(
@@ -487,7 +487,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                               fontSize: 15,
                               fontWeight: FontWeight.normal,
                             ),
-                        hintText: 'Ingrese el CURP...',
+                        hintText: 'Ingrese el RFC...',
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
@@ -525,51 +525,41 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       textAlign: TextAlign.start,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'El CURP es requerido.';
+                          return 'El RFC es requerido.';
                         } else {
-                          return curpCharacters
+                          return rfcCharacters
                               .hasMatch(value)
                           ? null
-                          : 'Por favor captura el CURP a 18 posiciones.';
+                          : 'Por favor captura el RFC a 10 posiciones.';
                         }
                       },
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        16, 16, 16, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 0),
                     child: TextFormField(
-                        controller: clienteProvider.nacimientoController,
-                        autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
-                        onTap: () async {
-                          await DatePicker.showDatePicker(
-                            context,
-                            locale: LocaleType.es,
-                            showTitleActions: true,
-                            onConfirm: (date) {
-                              setState(() {
-                                clienteProvider.nacimiento = date;
-                                clienteProvider.nacimientoController = TextEditingController(text: dateTimeFormat('d/MMMM/y', date));
-                              });
-                            },
-                            currentTime: getCurrentTimestamp,
-                            // minTime: getCurrentTimestamp.subtract(const Duration(days: 7)),
-                          );
-                        },
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'Fecha de Nacimiento*',
-                          labelStyle:
-                              FlutterFlowTheme.of(context).title3.override(
-                                    fontFamily: 'Montserrat',
-                                    color: FlutterFlowTheme.of(context)
-                                        .grayDark,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                          hintText: 'Ingresa la Fecha de Nacimiento...',
-                          enabledBorder: OutlineInputBorder(
+                      maxLines: 2,
+                      textCapitalization:
+                          TextCapitalization.words,
+                      autovalidateMode:
+                          AutovalidateMode.onUserInteraction,
+                      onChanged: (value) {
+                        clienteProvider.domicilio = value;
+                      },
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: 'Domicilio*',
+                        labelStyle: FlutterFlowTheme.of(context)
+                            .title3
+                            .override(
+                              fontFamily: 'Montserrat',
+                              color: FlutterFlowTheme.of(context).grayDark,
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal,
+                            ),
+                        hintText: 'Ingrese domicilio...',
+                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
                                 FlutterFlowTheme.of(context).grayDark,
@@ -601,22 +591,19 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         ),
                         contentPadding:
                             const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                        suffixIcon: Icon(
-                            Icons.date_range_outlined,
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryText,
-                            size: 24,
-                          ),
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
-                        textAlign: TextAlign.start,
-                        keyboardType: TextInputType.none,
-                        validator: (value) {
+                      ),
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                      textAlign: TextAlign.start,
+                      validator: FormBuilderValidators.compose([
+                        (value) {
                           if (value == null || value.isEmpty) {
-                            return 'La Fecha de Nacimiento requerida.';
+                            return 'El Domicilio es requerido.';
+                          } else {
+                            return null;
                           }
-                          return null;
-                        }),
+                        }
+                      ]),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),

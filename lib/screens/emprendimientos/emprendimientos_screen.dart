@@ -378,7 +378,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                       element.vehiculo.target!.marca)
                                   .toLowerCase();
                               final descripcion = removeDiacritics(
-                                      element.descripcion)
+                                      element.descripcionFalla)
                                   .toLowerCase();
                               final tempBusqueda =
                                   removeDiacritics(searchController.text)

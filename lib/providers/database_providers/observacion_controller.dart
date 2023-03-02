@@ -47,37 +47,38 @@ class ObservacionController extends ChangeNotifier {
 
 
   bool add(Usuarios usuario) {
-    final nuevaOrdenTrabajo = OrdenTrabajo(
-      fechaOrden: fechaOrden!,
-      descripcion: descripcion,  
-    );
+    return true;
+    // final nuevaOrdenTrabajo = OrdenTrabajo(
+    //   fechaOrden: fechaOrden!,
+    //   descripcion: descripcion,  
+    // );
 
-    final nuevaInstruccion = Bitacora(
-      instruccion: 'syncAgregarOrdenTrabajo',
-      usuario: prefs.getString("userId")!,
-      idEmprendimiento: 0,
-    ); //Se crea la nueva instruccion a realizar en bitacora
+    // final nuevaInstruccion = Bitacora(
+    //   instruccion: 'syncAgregarOrdenTrabajo',
+    //   usuario: prefs.getString("userId")!,
+    //   idEmprendimiento: 0,
+    // ); //Se crea la nueva instruccion a realizar en bitacora
 
-    final cliente = dataBase.clienteBox.get(idCliente);
-    final vehiculo = dataBase.vehiculoBox.get(idVehiculo);
-    // final formaPago = dataBase.formaPagoBox.get(idFormaPago!);
-    if (cliente != null && vehiculo != null) {
-      nuevaOrdenTrabajo.cliente.target = cliente;
-      nuevaOrdenTrabajo.vehiculo.target = vehiculo;
-      // nuevaOrdenTrabajo.formaPago.target = formaPago;
-      nuevaOrdenTrabajo.usuario.target = usuario;
-      nuevaInstruccion.ordenTrabajo.target = nuevaOrdenTrabajo; //Se asigna la orden de trabajo a la nueva instrucción
-      nuevaOrdenTrabajo.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a la orden de trabajo
-      dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
-      dataBase.ordenTrabajoBox.put(nuevaOrdenTrabajo); //Agregamos la orden de trabajo en objectBox
-      usuario.ordenesTrabajo.add(nuevaOrdenTrabajo);
-      dataBase.usuariosBox.put(usuario);
-      notifyListeners();
-      return true;
-    } else {
-      notifyListeners();
-      return false;
-    }
+    // final cliente = dataBase.clienteBox.get(idCliente);
+    // final vehiculo = dataBase.vehiculoBox.get(idVehiculo);
+    // // final formaPago = dataBase.formaPagoBox.get(idFormaPago!);
+    // if (cliente != null && vehiculo != null) {
+    //   nuevaOrdenTrabajo.cliente.target = cliente;
+    //   nuevaOrdenTrabajo.vehiculo.target = vehiculo;
+    //   // nuevaOrdenTrabajo.formaPago.target = formaPago;
+    //   nuevaOrdenTrabajo.usuario.target = usuario;
+    //   nuevaInstruccion.ordenTrabajo.target = nuevaOrdenTrabajo; //Se asigna la orden de trabajo a la nueva instrucción
+    //   nuevaOrdenTrabajo.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a la orden de trabajo
+    //   dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+    //   dataBase.ordenTrabajoBox.put(nuevaOrdenTrabajo); //Agregamos la orden de trabajo en objectBox
+    //   usuario.ordenesTrabajo.add(nuevaOrdenTrabajo);
+    //   dataBase.usuariosBox.put(usuario);
+    //   notifyListeners();
+    //   return true;
+    // } else {
+    //   notifyListeners();
+    //   return false;
+    // }
   }
 
   void update(int id, String newNombre, String newApellidos, String newCurp, 

@@ -77,7 +77,7 @@ final curpCharacters = RegExp(
 final palabras = RegExp(r'^([a-zA-Z\sñÑà-úÀ-Ú])+$');
 final contrasena = RegExp(
     r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.\-_:,;]{6,50}$");
-
+final rfcCharacters = RegExp(r'^([A-Z&Ñ]{3,4})\d{6}([A-Z0-9]{3})$');
 final telefonoCharacters = RegExp(r'^[0-9\-() ]+$');
 final cualquierCharacters = RegExp(r'^.+');
 final capitalizadoCharacters = RegExp(r'^([A-Z]{1}|[ÁÉÍÓÚÑ]{1}).+$');

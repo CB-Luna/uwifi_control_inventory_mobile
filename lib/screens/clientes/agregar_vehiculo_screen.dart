@@ -17,6 +17,7 @@ import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart'
 
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
+import 'package:taller_alex_app_asesor/util/util.dart';
 
 class AgregarVehiculoScreen extends StatefulWidget {
   const AgregarVehiculoScreen({Key? key}) : super(key: key);
@@ -36,6 +37,28 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
   @override
   Widget build(BuildContext context) {
     final vehiculoProvider = Provider.of<VehiculoController>(context);
+    Map<String, dynamic> jsonMap = {
+  "idUsuario": 6,
+  "nombreUsuario": "Álvaro Lozano Platonoff",
+  "nombre": "Kevin",
+  "apellidos": "Cervantes Padilla",
+  "curp": "PARU990118HDFLDZ01",
+  "integrantesFamilia": 4,
+  "comunidad": 2,
+  "estado": 2,
+  "municipio": 2,
+  "emprendimiento": "Las abejas felices",
+  "telefono": 5523216431,
+  "comentarios": "Sin comentarios",
+  "fechaRegistro": (DateFormat("yyyy-MM-ddTHH:mm:ss")
+          .format(DateTime.now()))
+      .toString(),
+  "archivado": false
+};
+
+String jsonString = jsonEncode(jsonMap);
+
+print(jsonString);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -409,6 +432,7 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                                       dateTimeSelected = dateTime.year;
                                       vehiculoProvider.anio = dateTimeSelected.toString();
                                       vehiculoProvider.anioController = TextEditingController(text: dateTimeSelected.toString());
+                                      print(vehiculoProvider.anioController.text);
                                     });
                                     Navigator.pop(context);
                                   },
@@ -473,7 +497,7 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                         textAlign: TextAlign.start,
                         keyboardType: TextInputType.none,
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if (vehiculoProvider.anioController.text == "") {
                             return 'El Año es requerido.';
                           }
                           return null;
@@ -615,14 +639,16 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: TextFormField(
+                      textCapitalization:
+                          TextCapitalization.words,
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
                       onChanged: (value) {
-                        vehiculoProvider.kilometraje = value;
+                        vehiculoProvider.color = value;
                       },
                       obscureText: false,
                       decoration: InputDecoration(
-                        labelText: 'Kilometraje*',
+                        labelText: 'Color*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
                             .override(
@@ -631,7 +657,7 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                               fontSize: 15,
                               fontWeight: FontWeight.normal,
                             ),
-                        hintText: 'Ingrese el kilometraje...',
+                        hintText: 'Ingrese el color...',
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
@@ -664,14 +690,12 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                         ),
                         contentPadding:
                             const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                        suffixText: 'Km',
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
                       textAlign: TextAlign.start,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: false),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                            return 'El Kilometraje es requerido.';
+                            return 'El Color es requerido.';
                           } 
                           return null;
                       },
@@ -680,116 +704,16 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: TextFormField(
-                      controller: vehiculoProvider.gasolinaController,
+                      textCapitalization:
+                          TextCapitalization.characters,
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
-                      onTap: () async {
-                         await showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (BuildContext context) {
-                            final vehiculoProvider = Provider.of<VehiculoController>(context);
-                            return AlertDialog(
-                              title: const Text("Porcentaje de Gasolina"),
-                              content: SizedBox( // Need to use container to add size constraint.
-                                width: 300,
-                                height: 300,
-                                child: Center(
-                                  child: Column(
-                                    children: [
-                                      SemicircularIndicator(
-                                        progress: vehiculoProvider.valor * 0.01,
-                                        radius: 100,
-                                        color: FlutterFlowTheme.of(context).primaryColor,
-                                        backgroundColor: FlutterFlowTheme.of(context).grayLighter,
-                                        strokeWidth: 13,
-                                        bottomPadding: 0,
-                                        contain: true,
-                                        child: Text(
-                                          "${vehiculoProvider.valor} %",
-                                          style: TextStyle(
-                                              fontSize: 32,
-                                              fontWeight: FontWeight.w600,
-                                              color: FlutterFlowTheme.of(context).primaryColor),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 250,
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                          Icon(
-                                            Icons.local_gas_station_outlined,
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            size: 40,
-                                          ),
-                                          Icon(
-                                            Icons.local_gas_station_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            size: 40,
-                                          )
-                                        ],),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: SfSlider(
-                                            min: 0.0,
-                                            max: 100.0,
-                                            interval: 1.0,
-                                            value: vehiculoProvider.valor, 
-                                            stepSize: 1.0,
-                                            activeColor: FlutterFlowTheme.of(context).secondaryColor,
-                                            inactiveColor: FlutterFlowTheme.of(context).grayLighter,
-                                            onChanged: ((value) {
-                                              vehiculoProvider.actualizarValor(value.truncate());
-                                            })
-                                          ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            setState(() {
-                                              vehiculoProvider.gasolinaController = TextEditingController(
-                                                text: vehiculoProvider.valor.toString()
-                                              );
-                                            });
-                                            Navigator.pop(context);
-                                          },
-                                          text: 'Aceptar',
-                                          options: FFButtonOptions(
-                                            width: 200,
-                                            height: 50,
-                                            color: FlutterFlowTheme.of(context).primaryColor,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context).subtitle1.override(
-                                                      fontFamily: 'Lexend Deca',
-                                                      color: Colors.white,
-                                                      fontSize: 18,
-                                                      fontWeight: FontWeight.bold,
-                                                    ),
-                                            elevation: 3,
-                                            borderSide: const BorderSide(
-                                              color: Colors.transparent,
-                                              width: 1,
-                                            ),
-                                            borderRadius: BorderRadius.circular(50),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                        },
+                      onChanged: (value) {
+                        vehiculoProvider.motor = value;
+                      },
                       obscureText: false,
                       decoration: InputDecoration(
-                        labelText: 'Gasolina*',
+                        labelText: 'Motor*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
                             .override(
@@ -798,7 +722,7 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                               fontSize: 15,
                               fontWeight: FontWeight.normal,
                             ),
-                        hintText: 'Ingrese la gasolina...',
+                        hintText: 'Ingrese el motor...',
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
@@ -831,14 +755,12 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                         ),
                         contentPadding:
                             const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                        suffixText: '%',
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
                       textAlign: TextAlign.start,
-                      keyboardType: TextInputType.none,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                            return 'El porcentaje de Gasolina es requerido.';
+                            return 'El Motor es requerido.';
                           } 
                           return null;
                       },

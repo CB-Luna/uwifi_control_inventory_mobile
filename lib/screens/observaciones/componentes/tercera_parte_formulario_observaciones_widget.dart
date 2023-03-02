@@ -455,7 +455,7 @@ class _TerceraParteFormularioObservacionesWidgetState extends State<TerceraParte
                         autovalidateMode:
                             AutovalidateMode.onUserInteraction,
                         onChanged: (value) {
-                          ordenTrabajoProvider.descripcion = value;
+                          ordenTrabajoProvider.descripcionFalla = value;
                         },
                         obscureText: false,
                         decoration: InputDecoration(
@@ -497,8 +497,8 @@ class _TerceraParteFormularioObservacionesWidgetState extends State<TerceraParte
                         textAlign: TextAlign.start,
                         maxLines: 4,
                         validator: (val) {
-                          if (ordenTrabajoProvider.descripcion == "" ||
-                              ordenTrabajoProvider.descripcion.isEmpty) {
+                          if (ordenTrabajoProvider.descripcionFalla == "" ||
+                              ordenTrabajoProvider.descripcionFalla.isEmpty) {
                             return 'La respuesta indicada es requerida.';
                           }
                           return null;

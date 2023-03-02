@@ -268,7 +268,7 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                         autovalidateMode:
                             AutovalidateMode.onUserInteraction,
                         onChanged: (value) {
-                          ordenTrabajoProvider.descripcion = value;
+                          ordenTrabajoProvider.descripcionFalla = value;
                         },
                         obscureText: false,
                         decoration: InputDecoration(
@@ -310,8 +310,8 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                         textAlign: TextAlign.start,
                         maxLines: 4,
                         validator: (val) {
-                          if (ordenTrabajoProvider.descripcion == "" ||
-                              ordenTrabajoProvider.descripcion.isEmpty) {
+                          if (ordenTrabajoProvider.descripcionFalla == "" ||
+                              ordenTrabajoProvider.descripcionFalla.isEmpty) {
                             return 'El tiempo indicado es requerido.';
                           }
                           return null;
