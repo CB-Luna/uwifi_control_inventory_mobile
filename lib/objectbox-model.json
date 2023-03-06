@@ -816,7 +816,7 @@
     },
     {
       "id": "27:1774905738150923512",
-      "lastPropertyId": "22:8492288376663323770",
+      "lastPropertyId": "23:2129861730720673334",
       "name": "Bitacora",
       "properties": [
         {
@@ -903,6 +903,14 @@
           "flags": 520,
           "indexId": "288:199666736918557477",
           "relationTarget": "OrdenTrabajo"
+        },
+        {
+          "id": "23:2129861730720673334",
+          "name": "observacionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "297:8685125260427970668",
+          "relationTarget": "Observaciones"
         }
       ],
       "relations": []
@@ -2963,10 +2971,104 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "68:3713927666656252399",
+      "lastPropertyId": "16:2211411520720391891",
+      "name": "Observaciones",
+      "properties": [
+        {
+          "id": "1:7649954976526474598",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7770854650492431421",
+          "name": "fechaObservacion",
+          "type": 10
+        },
+        {
+          "id": "3:5505397589679894767",
+          "name": "respuestaP1",
+          "type": 9
+        },
+        {
+          "id": "4:699863168351027397",
+          "name": "respuestaP2",
+          "type": 9
+        },
+        {
+          "id": "5:2350854603691429285",
+          "name": "respuestaP3",
+          "type": 9
+        },
+        {
+          "id": "6:7908047968288145105",
+          "name": "respuestaP4",
+          "type": 9
+        },
+        {
+          "id": "7:8352425832288518353",
+          "name": "respuestaP5",
+          "type": 9
+        },
+        {
+          "id": "8:4400134888944794752",
+          "name": "respuestaP6",
+          "type": 9
+        },
+        {
+          "id": "9:6520458733199875118",
+          "name": "respuestaP7",
+          "type": 9
+        },
+        {
+          "id": "10:459494196219413966",
+          "name": "respuestaP8",
+          "type": 9
+        },
+        {
+          "id": "11:2685074739700608388",
+          "name": "respuestaP9",
+          "type": 9
+        },
+        {
+          "id": "12:3813717749858696997",
+          "name": "respuestaP10",
+          "type": 9
+        },
+        {
+          "id": "13:2852379985617170245",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "14:6570187720589570573",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "295:7318119897512116915"
+        },
+        {
+          "id": "15:2526752159936628840",
+          "name": "ordenTrabajoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "296:4588799358054363302",
+          "relationTarget": "OrdenTrabajo"
+        },
+        {
+          "id": "16:2211411520720391891",
+          "name": "nombreAsesor",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "67:5935206935227986130",
-  "lastIndexId": "294:4404778352683764595",
+  "lastEntityId": "68:3713927666656252399",
+  "lastIndexId": "297:8685125260427970668",
   "lastRelationId": "84:5411951088038235824",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

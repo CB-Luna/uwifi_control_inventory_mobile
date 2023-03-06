@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 
 import 'package:taller_alex_app_asesor/util/util.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/emprendedor_controller.dart';
@@ -139,7 +141,7 @@ class _ClientesScreenState extends State<ClientesScreen> {
                                         0.8,
                                     height: 50,
                                     decoration: BoxDecoration(
-                                      color: const Color(0x49FFFFFF),
+                                      color: FlutterFlowTheme.of(context).grayLighter,
                                       boxShadow: const [
                                         BoxShadow(
                                           color: Color(0x39000000),
@@ -380,75 +382,113 @@ class _ClientesScreenState extends State<ClientesScreen> {
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(16, 12, 16, 8),
                                           child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(0, 0, 5, 0),
-                                                child: Text(
-                                                  "${cliente.nombre} ${cliente.apellidoP} ${cliente.apellidoM}",
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: FlutterFlowTheme.of(context)
-                                                      .title3
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        color: FlutterFlowTheme.of(context).primaryColor,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(16, 0, 16, 8),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  cliente.correo,
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: FlutterFlowTheme.of(context)
-                                                      .bodyText2
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        color: Colors.black,
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(16, 0, 16, 5),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Text(
-                                                "No. Celular: ${cliente.celular}",
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: FlutterFlowTheme.of(context)
-                                                    .bodyText2
-                                                    .override(
-                                                      fontFamily: 'Poppins',
-                                                      color: Colors.black,
-                                                      fontSize: 12,
-                                                      fontWeight: FontWeight.normal,
+                                              Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    maybeHandleOverflow("${cliente.nombre} ${
+                                                      cliente.apellidoP} ${
+                                                        cliente.apellidoM}", 30, "..."),
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: FlutterFlowTheme.of(context)
+                                                        .title3
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: FlutterFlowTheme.of(context).primaryColor,
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 5, 0, 0),
+                                                    child: Text(
+                                                      maybeHandleOverflow(cliente.correo, 50, "..."),
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: FlutterFlowTheme.of(context)
+                                                          .bodyText2
+                                                          .override(
+                                                            fontFamily: 'Poppins',
+                                                            color: Colors.black,
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.normal,
+                                                          ),
                                                     ),
+                                                  ),
+                                                  Text(
+                                                    "No. Celular: ${cliente.celular}",
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: FlutterFlowTheme.of(context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: Colors.black,
+                                                          fontSize: 12,
+                                                          fontWeight: FontWeight.normal,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ), 
+                                              Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    "Vehículos",
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: FlutterFlowTheme.of(context)
+                                                        .title3
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: FlutterFlowTheme.of(context).tertiaryColor,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 5, 0, 0),
+                                                    child: ClayContainer(
+                                                      height: 35,
+                                                      width: 35,
+                                                      depth: 40,
+                                                      spread: 2,
+                                                      borderRadius: 25,
+                                                      curveType: CurveType.concave,
+                                                      parentColor: FlutterFlowTheme.of(context).grayLighter,
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(25),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            cliente.vehiculo.toList().length.toString(),
+                                                            style: FlutterFlowTheme.of(context)
+                                                                .title1
+                                                                .override(
+                                                                  fontFamily: 'Outfit',
+                                                                  color: FlutterFlowTheme.of(context).grayDark.withOpacity(0.75),
+                                                                  fontSize: 25,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ]
                                               ),
                                             ],
                                           ),

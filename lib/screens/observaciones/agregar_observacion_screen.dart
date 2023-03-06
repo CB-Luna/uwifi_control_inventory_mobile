@@ -1,14 +1,11 @@
-import 'dart:ui';
 
 import 'package:clay_containers/clay_containers.dart';
 import 'package:diacritic/diacritic.dart';
-import 'package:expandable/expandable.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/orden_trabajo_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/observacion_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/componentes/primera_parte_formulario_observaciones_widget.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/componentes/segunda_parte_formulario_observaciones_widget.dart';
@@ -17,10 +14,6 @@ import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/detalle_orden_tra
 import 'package:flutter_animate/flutter_animate.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/drop_down.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/toggle_icon.dart';
-import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 
 import '../ordenes_trabajo/flutter_flow_animaciones.dart';
 
@@ -93,12 +86,11 @@ class _AgregarObservacionScreenState extends State<AgregarObservacionScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    final ordenTrabajoProvider = Provider.of<OrdenTrabajoController>(context);
-    final usuarioProvider = Provider.of<UsuarioController>(context);
+    final observacionProvider = Provider.of<ObservacionController>(context);
     final tabs = {
-      'primeraParte': PrimeraParteFormularioObservacionesWidget(),
-      'segundaParte': SegundaParteFormularioObservacionesWidget(),
-      'terceraParte': TerceraParteFormularioObservacionesWidget(),
+      'primeraParte': PrimeraParteFormularioObservacionesWidget(ordenTrabajo: widget.ordenTrabajo,),
+      // 'segundaParte': SegundaParteFormularioObservacionesWidget(),
+      // 'terceraParte': TerceraParteFormularioObservacionesWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
     return WillPopScope(
@@ -149,7 +141,7 @@ class _AgregarObservacionScreenState extends State<AgregarObservacionScreen> {
                                       actions: [
                                         TextButton(
                                           onPressed: () async {
-                                            ordenTrabajoProvider.limpiarInformacion();
+                                            observacionProvider.limpiarInformacion();
                                             await Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -227,182 +219,183 @@ class _AgregarObservacionScreenState extends State<AgregarObservacionScreen> {
               ),
               Flexible(
                 child: tabs[_currentPageName]!,
-              ),
+              ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation']!),
             ],
           )
         ),
-        bottomNavigationBar: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.1,
-          child: BottomNavigationBar(
-            selectedFontSize: 0,
-            currentIndex: currentIndex,
-            onTap: (i) => setState(() {
-              _currentPageName = tabs.keys.toList()[i];
-            }),
-            items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: ClayContainer(
-                height: 40,
-                width: 40,
-                depth: 20,
-                borderRadius: 25,
-                curveType: CurveType.concave,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: FlutterFlowTheme.of(context).white.withOpacity(0.2), width: 2),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '1',
-                      style: FlutterFlowTheme.of(context)
-                          .title1
-                          .override(
-                            fontFamily: 'Outfit',
-                            color: FlutterFlowTheme.of(context).grayDark.withOpacity(0.75),
-                            fontSize: 25,
-                          ),
-                    ),
-                  ),
-                ),
-              ),
-              activeIcon: ClayContainer(
-                height: 40,
-                width: 40,
-                depth: 100,
-                borderRadius: 25,
-                curveType: CurveType.concave,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: FlutterFlowTheme.of(context).white.withOpacity(0.2), width: 2),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '1',
-                      style: FlutterFlowTheme.of(context)
-                          .title1
-                          .override(
-                            fontFamily: 'Outfit',
-                            color: FlutterFlowTheme.of(context).grayDark.withOpacity(0.75),
-                            fontSize: 25,
-                          ),
-                    ),
-                  ),
-                ),
-              ),
-              label: "",
-            ),
-            BottomNavigationBarItem(
-              icon: ClayContainer(
-                height: 40,
-                width: 40,
-                depth: 20,
-                borderRadius: 25,
-                curveType: CurveType.concave,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: FlutterFlowTheme.of(context).white.withOpacity(0.2), width: 2),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '2',
-                      style: FlutterFlowTheme.of(context)
-                          .title1
-                          .override(
-                            fontFamily: 'Outfit',
-                            color: FlutterFlowTheme.of(context).grayDark.withOpacity(0.75),
-                            fontSize: 25,
-                          ),
-                    ),
-                  ),
-                ),
-              ),
-              activeIcon: ClayContainer(
-                surfaceColor: FlutterFlowTheme.of(context).white.withOpacity(0.8),
-                height: 40,
-                width: 40,
-                depth: 100,
-                borderRadius: 25,
-                curveType: CurveType.concave,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: FlutterFlowTheme.of(context).white.withOpacity(0.2), width: 2),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '2',
-                      style: FlutterFlowTheme.of(context)
-                          .title1
-                          .override(
-                            fontFamily: 'Outfit',
-                            color: FlutterFlowTheme.of(context).grayDark.withOpacity(0.75),
-                            fontSize: 25,
-                          ),
-                    ),
-                  ),
-                ),
-              ),
-              label: "",
-            ),
-            BottomNavigationBarItem(
-              icon: ClayContainer(
-                height: 40,
-                width: 40,
-                depth: 20,
-                borderRadius: 25,
-                curveType: CurveType.concave,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: FlutterFlowTheme.of(context).white.withOpacity(0.2), width: 2),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '3',
-                      style: FlutterFlowTheme.of(context)
-                          .title1
-                          .override(
-                            fontFamily: 'Outfit',
-                            color: FlutterFlowTheme.of(context).grayDark.withOpacity(0.75),
-                            fontSize: 25,
-                          ),
-                    ),
-                  ),
-                ),
-              ),
-              activeIcon: ClayContainer(
-                surfaceColor: FlutterFlowTheme.of(context).white.withOpacity(0.8),
-                height: 40,
-                width: 40,
-                depth: 100,
-                borderRadius: 25,
-                curveType: CurveType.concave,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: FlutterFlowTheme.of(context).white.withOpacity(0.2), width: 2),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '3',
-                      style: FlutterFlowTheme.of(context)
-                          .title1
-                          .override(
-                            fontFamily: 'Outfit',
-                            color: FlutterFlowTheme.of(context).grayDark.withOpacity(0.75),
-                            fontSize: 25,
-                          ),
-                    ),
-                  ),
-                ),
-              ),
-              label: "",
-            ),
-          ]),
-        ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation']!),
+        // bottomNavigationBar: SizedBox(
+        //   height: MediaQuery.of(context).size.height * 0.1,
+        //   child: BottomNavigationBar(
+        //     selectedFontSize: 0,
+        //     currentIndex: currentIndex,
+        //     onTap: (i) => setState(() {
+        //       print("Valor OP2: ${observacionProvider.valorSeleccionP2}");
+        //       _currentPageName = tabs.keys.toList()[i];
+        //     }),
+        //     items: <BottomNavigationBarItem>[
+        //     BottomNavigationBarItem(
+        //       icon: ClayContainer(
+        //         height: 40,
+        //         width: 40,
+        //         depth: 20,
+        //         borderRadius: 25,
+        //         curveType: CurveType.concave,
+        //         child: Container(
+        //           decoration: BoxDecoration(
+        //             border: Border.all(color: FlutterFlowTheme.of(context).white.withOpacity(0.2), width: 2),
+        //             borderRadius: BorderRadius.circular(25),
+        //           ),
+        //           child: Center(
+        //             child: Text(
+        //               '1',
+        //               style: FlutterFlowTheme.of(context)
+        //                   .title1
+        //                   .override(
+        //                     fontFamily: 'Outfit',
+        //                     color: FlutterFlowTheme.of(context).grayDark.withOpacity(0.75),
+        //                     fontSize: 25,
+        //                   ),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //       activeIcon: ClayContainer(
+        //         height: 40,
+        //         width: 40,
+        //         depth: 100,
+        //         borderRadius: 25,
+        //         curveType: CurveType.concave,
+        //         child: Container(
+        //           decoration: BoxDecoration(
+        //             border: Border.all(color: FlutterFlowTheme.of(context).white.withOpacity(0.2), width: 2),
+        //             borderRadius: BorderRadius.circular(25),
+        //           ),
+        //           child: Center(
+        //             child: Text(
+        //               '1',
+        //               style: FlutterFlowTheme.of(context)
+        //                   .title1
+        //                   .override(
+        //                     fontFamily: 'Outfit',
+        //                     color: FlutterFlowTheme.of(context).grayDark.withOpacity(0.75),
+        //                     fontSize: 25,
+        //                   ),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //       label: "",
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: ClayContainer(
+        //         height: 40,
+        //         width: 40,
+        //         depth: 20,
+        //         borderRadius: 25,
+        //         curveType: CurveType.concave,
+        //         child: Container(
+        //           decoration: BoxDecoration(
+        //             border: Border.all(color: FlutterFlowTheme.of(context).white.withOpacity(0.2), width: 2),
+        //             borderRadius: BorderRadius.circular(25),
+        //           ),
+        //           child: Center(
+        //             child: Text(
+        //               '2',
+        //               style: FlutterFlowTheme.of(context)
+        //                   .title1
+        //                   .override(
+        //                     fontFamily: 'Outfit',
+        //                     color: FlutterFlowTheme.of(context).grayDark.withOpacity(0.75),
+        //                     fontSize: 25,
+        //                   ),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //       activeIcon: ClayContainer(
+        //         surfaceColor: FlutterFlowTheme.of(context).white.withOpacity(0.8),
+        //         height: 40,
+        //         width: 40,
+        //         depth: 100,
+        //         borderRadius: 25,
+        //         curveType: CurveType.concave,
+        //         child: Container(
+        //           decoration: BoxDecoration(
+        //             border: Border.all(color: FlutterFlowTheme.of(context).white.withOpacity(0.2), width: 2),
+        //             borderRadius: BorderRadius.circular(25),
+        //           ),
+        //           child: Center(
+        //             child: Text(
+        //               '2',
+        //               style: FlutterFlowTheme.of(context)
+        //                   .title1
+        //                   .override(
+        //                     fontFamily: 'Outfit',
+        //                     color: FlutterFlowTheme.of(context).grayDark.withOpacity(0.75),
+        //                     fontSize: 25,
+        //                   ),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //       label: "",
+        //     ),
+        //     // BottomNavigationBarItem(
+        //     //   icon: ClayContainer(
+        //     //     height: 40,
+        //     //     width: 40,
+        //     //     depth: 20,
+        //     //     borderRadius: 25,
+        //     //     curveType: CurveType.concave,
+        //     //     child: Container(
+        //     //       decoration: BoxDecoration(
+        //     //         border: Border.all(color: FlutterFlowTheme.of(context).white.withOpacity(0.2), width: 2),
+        //     //         borderRadius: BorderRadius.circular(25),
+        //     //       ),
+        //     //       child: Center(
+        //     //         child: Text(
+        //     //           '3',
+        //     //           style: FlutterFlowTheme.of(context)
+        //     //               .title1
+        //     //               .override(
+        //     //                 fontFamily: 'Outfit',
+        //     //                 color: FlutterFlowTheme.of(context).grayDark.withOpacity(0.75),
+        //     //                 fontSize: 25,
+        //     //               ),
+        //     //         ),
+        //     //       ),
+        //     //     ),
+        //     //   ),
+        //     //   activeIcon: ClayContainer(
+        //     //     surfaceColor: FlutterFlowTheme.of(context).white.withOpacity(0.8),
+        //     //     height: 40,
+        //     //     width: 40,
+        //     //     depth: 100,
+        //     //     borderRadius: 25,
+        //     //     curveType: CurveType.concave,
+        //     //     child: Container(
+        //     //       decoration: BoxDecoration(
+        //     //         border: Border.all(color: FlutterFlowTheme.of(context).white.withOpacity(0.2), width: 2),
+        //     //         borderRadius: BorderRadius.circular(25),
+        //     //       ),
+        //     //       child: Center(
+        //     //         child: Text(
+        //     //           '3',
+        //     //           style: FlutterFlowTheme.of(context)
+        //     //               .title1
+        //     //               .override(
+        //     //                 fontFamily: 'Outfit',
+        //     //                 color: FlutterFlowTheme.of(context).grayDark.withOpacity(0.75),
+        //     //                 fontSize: 25,
+        //     //               ),
+        //     //         ),
+        //     //       ),
+        //     //     ),
+        //     //   ),
+        //     //   label: "",
+        //     // ),
+        //   ]),
+        // ),
       ),
     );
   }

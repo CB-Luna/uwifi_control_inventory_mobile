@@ -801,7 +801,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(27, 1774905738150923512),
       name: 'Bitacora',
-      lastPropertyId: const IdUid(22, 8492288376663323770),
+      lastPropertyId: const IdUid(23, 2129861730720673334),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -884,7 +884,14 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(288, 199666736918557477),
-            relationTarget: 'OrdenTrabajo')
+            relationTarget: 'OrdenTrabajo'),
+        ModelProperty(
+            id: const IdUid(23, 2129861730720673334),
+            name: 'observacionId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(297, 8685125260427970668),
+            relationTarget: 'Observaciones')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -2865,6 +2872,102 @@ final _entities = <ModelEntity>[
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
+        ModelBacklink(
+            name: 'observacion', srcEntity: 'Observaciones', srcField: ''),
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(68, 3713927666656252399),
+      name: 'Observaciones',
+      lastPropertyId: const IdUid(16, 2211411520720391891),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 7649954976526474598),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 7770854650492431421),
+            name: 'fechaObservacion',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 5505397589679894767),
+            name: 'respuestaP1',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 699863168351027397),
+            name: 'respuestaP2',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 2350854603691429285),
+            name: 'respuestaP3',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 7908047968288145105),
+            name: 'respuestaP4',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 8352425832288518353),
+            name: 'respuestaP5',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 4400134888944794752),
+            name: 'respuestaP6',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 6520458733199875118),
+            name: 'respuestaP7',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 459494196219413966),
+            name: 'respuestaP8',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 2685074739700608388),
+            name: 'respuestaP9',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 3813717749858696997),
+            name: 'respuestaP10',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 2852379985617170245),
+            name: 'fechaRegistro',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 6570187720589570573),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(295, 7318119897512116915)),
+        ModelProperty(
+            id: const IdUid(15, 2526752159936628840),
+            name: 'ordenTrabajoId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(296, 4588799358054363302),
+            relationTarget: 'OrdenTrabajo'),
+        ModelProperty(
+            id: const IdUid(16, 2211411520720391891),
+            name: 'nombreAsesor',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
         ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
       ])
 ];
@@ -2889,8 +2992,8 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(67, 5935206935227986130),
-      lastIndexId: const IdUid(294, 4404778352683764595),
+      lastEntityId: const IdUid(68, 3713927666656252399),
+      lastIndexId: const IdUid(297, 8685125260427970668),
       lastRelationId: const IdUid(84, 5411951088038235824),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -4192,8 +4295,12 @@ ModelDefinition getObjectBoxModel() {
         }),
     Bitacora: EntityDefinition<Bitacora>(
         model: _entities[10],
-        toOneRelations: (Bitacora object) =>
-            [object.cliente, object.vehiculo, object.ordenTrabajo],
+        toOneRelations: (Bitacora object) => [
+              object.cliente,
+              object.vehiculo,
+              object.ordenTrabajo,
+              object.observacion
+            ],
         toManyRelations: (Bitacora object) => {
               RelInfo<Emprendedores>.toManyBacklink(9, object.id):
                   object.emprendedores,
@@ -4238,7 +4345,7 @@ ModelDefinition getObjectBoxModel() {
           final emprendimientoOffset = object.emprendimiento == null
               ? null
               : fbb.writeString(object.emprendimiento!);
-          fbb.startTable(23);
+          fbb.startTable(24);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addInt64(3, object.fechaSync?.millisecondsSinceEpoch);
@@ -4254,6 +4361,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(19, object.cliente.targetId);
           fbb.addInt64(20, object.vehiculo.targetId);
           fbb.addInt64(21, object.ordenTrabajo.targetId);
+          fbb.addInt64(22, object.observacion.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4292,6 +4400,9 @@ ModelDefinition getObjectBoxModel() {
           object.ordenTrabajo.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 46, 0);
           object.ordenTrabajo.attach(store);
+          object.observacion.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 48, 0);
+          object.observacion.attach(store);
           InternalToManyAccess.setRelInfo(
               object.emprendedores,
               store,
@@ -6233,6 +6344,9 @@ ModelDefinition getObjectBoxModel() {
         toOneRelations: (OrdenTrabajo object) =>
             [object.usuario, object.cliente, object.vehiculo, object.formaPago],
         toManyRelations: (OrdenTrabajo object) => {
+              RelInfo<Observaciones>.toOneBacklink(15, object.id,
+                      (Observaciones srcObject) => srcObject.ordenTrabajo):
+                  object.observacion,
               RelInfo<Bitacora>.toOneBacklink(22, object.id,
                       (Bitacora srcObject) => srcObject.ordenTrabajo):
                   object.bitacora
@@ -6295,11 +6409,102 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
           object.formaPago.attach(store);
           InternalToManyAccess.setRelInfo(
+              object.observacion,
+              store,
+              RelInfo<Observaciones>.toOneBacklink(15, object.id,
+                  (Observaciones srcObject) => srcObject.ordenTrabajo),
+              store.box<OrdenTrabajo>());
+          InternalToManyAccess.setRelInfo(
               object.bitacora,
               store,
               RelInfo<Bitacora>.toOneBacklink(22, object.id,
                   (Bitacora srcObject) => srcObject.ordenTrabajo),
               store.box<OrdenTrabajo>());
+          return object;
+        }),
+    Observaciones: EntityDefinition<Observaciones>(
+        model: _entities[41],
+        toOneRelations: (Observaciones object) => [object.ordenTrabajo],
+        toManyRelations: (Observaciones object) => {
+              RelInfo<Bitacora>.toOneBacklink(23, object.id,
+                      (Bitacora srcObject) => srcObject.observacion):
+                  object.bitacora
+            },
+        getId: (Observaciones object) => object.id,
+        setId: (Observaciones object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Observaciones object, fb.Builder fbb) {
+          final respuestaP1Offset = fbb.writeString(object.respuestaP1);
+          final respuestaP2Offset = fbb.writeString(object.respuestaP2);
+          final respuestaP3Offset = fbb.writeString(object.respuestaP3);
+          final respuestaP4Offset = fbb.writeString(object.respuestaP4);
+          final respuestaP5Offset = fbb.writeString(object.respuestaP5);
+          final respuestaP6Offset = fbb.writeString(object.respuestaP6);
+          final respuestaP7Offset = fbb.writeString(object.respuestaP7);
+          final respuestaP8Offset = fbb.writeString(object.respuestaP8);
+          final respuestaP9Offset = fbb.writeString(object.respuestaP9);
+          final respuestaP10Offset = fbb.writeString(object.respuestaP10);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          final nombreAsesorOffset = fbb.writeString(object.nombreAsesor);
+          fbb.startTable(17);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.fechaObservacion.millisecondsSinceEpoch);
+          fbb.addOffset(2, respuestaP1Offset);
+          fbb.addOffset(3, respuestaP2Offset);
+          fbb.addOffset(4, respuestaP3Offset);
+          fbb.addOffset(5, respuestaP4Offset);
+          fbb.addOffset(6, respuestaP5Offset);
+          fbb.addOffset(7, respuestaP6Offset);
+          fbb.addOffset(8, respuestaP7Offset);
+          fbb.addOffset(9, respuestaP8Offset);
+          fbb.addOffset(10, respuestaP9Offset);
+          fbb.addOffset(11, respuestaP10Offset);
+          fbb.addInt64(12, object.fechaRegistro.millisecondsSinceEpoch);
+          fbb.addOffset(13, idDBROffset);
+          fbb.addInt64(14, object.ordenTrabajo.targetId);
+          fbb.addOffset(15, nombreAsesorOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Observaciones(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              fechaObservacion: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0)),
+              respuestaP1: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              respuestaP2: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              respuestaP3: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, ''),
+              respuestaP4: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              respuestaP5: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, ''),
+              respuestaP6: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              respuestaP7:
+                  const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
+              respuestaP8: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
+              respuestaP9: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 24, ''),
+              respuestaP10: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, ''),
+              nombreAsesor: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''),
+              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 30));
+          object.ordenTrabajo.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
+          object.ordenTrabajo.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  23, object.id, (Bitacora srcObject) => srcObject.observacion),
+              store.box<Observaciones>());
           return object;
         })
   };
@@ -6883,6 +7088,10 @@ class Bitacora_ {
   /// see [Bitacora.ordenTrabajo]
   static final ordenTrabajo =
       QueryRelationToOne<Bitacora, OrdenTrabajo>(_entities[10].properties[14]);
+
+  /// see [Bitacora.observacion]
+  static final observacion =
+      QueryRelationToOne<Bitacora, Observaciones>(_entities[10].properties[15]);
 }
 
 /// [AmbitoConsultoria] entity fields to define ObjectBox queries.
@@ -8195,4 +8404,71 @@ class OrdenTrabajo_ {
   /// see [OrdenTrabajo.descripcionFalla]
   static final descripcionFalla =
       QueryStringProperty<OrdenTrabajo>(_entities[40].properties[10]);
+}
+
+/// [Observaciones] entity fields to define ObjectBox queries.
+class Observaciones_ {
+  /// see [Observaciones.id]
+  static final id =
+      QueryIntegerProperty<Observaciones>(_entities[41].properties[0]);
+
+  /// see [Observaciones.fechaObservacion]
+  static final fechaObservacion =
+      QueryIntegerProperty<Observaciones>(_entities[41].properties[1]);
+
+  /// see [Observaciones.respuestaP1]
+  static final respuestaP1 =
+      QueryStringProperty<Observaciones>(_entities[41].properties[2]);
+
+  /// see [Observaciones.respuestaP2]
+  static final respuestaP2 =
+      QueryStringProperty<Observaciones>(_entities[41].properties[3]);
+
+  /// see [Observaciones.respuestaP3]
+  static final respuestaP3 =
+      QueryStringProperty<Observaciones>(_entities[41].properties[4]);
+
+  /// see [Observaciones.respuestaP4]
+  static final respuestaP4 =
+      QueryStringProperty<Observaciones>(_entities[41].properties[5]);
+
+  /// see [Observaciones.respuestaP5]
+  static final respuestaP5 =
+      QueryStringProperty<Observaciones>(_entities[41].properties[6]);
+
+  /// see [Observaciones.respuestaP6]
+  static final respuestaP6 =
+      QueryStringProperty<Observaciones>(_entities[41].properties[7]);
+
+  /// see [Observaciones.respuestaP7]
+  static final respuestaP7 =
+      QueryStringProperty<Observaciones>(_entities[41].properties[8]);
+
+  /// see [Observaciones.respuestaP8]
+  static final respuestaP8 =
+      QueryStringProperty<Observaciones>(_entities[41].properties[9]);
+
+  /// see [Observaciones.respuestaP9]
+  static final respuestaP9 =
+      QueryStringProperty<Observaciones>(_entities[41].properties[10]);
+
+  /// see [Observaciones.respuestaP10]
+  static final respuestaP10 =
+      QueryStringProperty<Observaciones>(_entities[41].properties[11]);
+
+  /// see [Observaciones.fechaRegistro]
+  static final fechaRegistro =
+      QueryIntegerProperty<Observaciones>(_entities[41].properties[12]);
+
+  /// see [Observaciones.idDBR]
+  static final idDBR =
+      QueryStringProperty<Observaciones>(_entities[41].properties[13]);
+
+  /// see [Observaciones.ordenTrabajo]
+  static final ordenTrabajo = QueryRelationToOne<Observaciones, OrdenTrabajo>(
+      _entities[41].properties[14]);
+
+  /// see [Observaciones.nombreAsesor]
+  static final nombreAsesor =
+      QueryStringProperty<Observaciones>(_entities[41].properties[15]);
 }

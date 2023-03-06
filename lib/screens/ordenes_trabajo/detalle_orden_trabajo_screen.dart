@@ -380,48 +380,6 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
                                       AgregarObservacionScreen(ordenTrabajo: widget.ordenTrabajo,),
                                 ),
                               );
-                              // if (widget.emprendimiento.usuario.target!.rol
-                              //             .target!.rol !=
-                              //         "Amigo del Cambio" &&
-                              //     widget.emprendimiento.usuario.target!.rol
-                              //             .target!.rol !=
-                              //         "Emprendedor") {
-                              //   if (widget.inversion.jornada3) {
-                              //     snackbarKey.currentState
-                              //         ?.showSnackBar(const SnackBar(
-                              //       content: Text(
-                              //           "No se puede hacer seguimiento a esta inversión."),
-                              //     ));
-                              //   } else {
-                              //     if (widget.inversion.estadoInversion.target!
-                              //                 .estado ==
-                              //             "Solicitada" &&
-                              //         widget.inversion.idDBR == null) {
-                              //       await Navigator.push(
-                              //         context,
-                              //         MaterialPageRoute(
-                              //           builder: (context) =>
-                              //               AgregarProductoInversionScreen(
-                              //             emprendimiento: widget.emprendimiento,
-                              //             inversion: widget.inversion,
-                              //           ),
-                              //         ),
-                              //       );
-                              //     } else {
-                              //       snackbarKey.currentState
-                              //           ?.showSnackBar(const SnackBar(
-                              //         content: Text(
-                              //             "Ya no puedes agregar más productos."),
-                              //       ));
-                              //     }
-                              //   }
-                              // } else {
-                              //   snackbarKey.currentState
-                              //       ?.showSnackBar(const SnackBar(
-                              //     content: Text(
-                              //         "Este usuario no tiene permisos para esta acción."),
-                              //   ));
-                              // }
                             },
                             text: 'Agregar',
                             icon: const Icon(
@@ -457,46 +415,13 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
-                          itemCount: 1,
+                          itemCount: widget.ordenTrabajo.observacion.toList().length,
                           itemBuilder: (context, index) {
+                            final observacion = widget.ordenTrabajo.observacion.toList()[index];
                             return SizedBox(
                               height: 110,
                               child: InkWell(
                                 onTap: () async {
-                                  //print("object");
-                                  // if (widget.emprendimiento.usuario.target!.rol
-                                  //             .target!.rol !=
-                                  //         "Amigo del Cambio" &&
-                                  //     widget.emprendimiento.usuario.target!.rol
-                                  //             .target!.rol !=
-                                  //         "Emprendedor") {
-                                  //   if (widget.inversion.jornada3) {
-                                  //     snackbarKey.currentState
-                                  //         ?.showSnackBar(const SnackBar(
-                                  //       content: Text(
-                                  //           "No se puede hacer seguimiento a esta inversión."),
-                                  //     ));
-                                  //   } else {
-                                  //     await Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //         builder: (context) =>
-                                  //             EditarProductoInversionScreen(
-                                  //           inversion: widget.inversion,
-                                  //           prodSolicitado: productoSolicitado,
-                                  //           idEmprendimiento:
-                                  //               widget.emprendimiento.id,
-                                  //         ),
-                                  //       ),
-                                  //     );
-                                  //   }
-                                  // } else {
-                                  //   snackbarKey.currentState
-                                  //       ?.showSnackBar(const SnackBar(
-                                  //     content: Text(
-                                  //         "Este usuario no tiene permisos para esta acción."),
-                                  //   ));
-                                  // }
                                 },
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
@@ -582,7 +507,7 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
                                                         children: [
                                                           Text(
                                                             maybeHandleOverflow(
-                                                                "Nombre Asesor Atendió",
+                                                                observacion.nombreAsesor,
                                                                 25,
                                                                 "..."),
                                                             style:
@@ -601,7 +526,7 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
                                                           Text(
                                                             dateTimeFormat(
                                                                 'd/MMM/y',
-                                                                DateTime.now()),
+                                                                observacion.fechaObservacion),
                                                             textAlign:
                                                                 TextAlign.end,
                                                             style: FlutterFlowTheme.of(
@@ -624,7 +549,7 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
                                                                 .symmetric(
                                                             vertical: 5),
                                                         child: Text(
-                                                          maybeHandleOverflow('Resumen de la obervación realizada por el cliente...', 84, "..."),
+                                                          maybeHandleOverflow(observacion.respuestaP1, 84, "..."),
                                                           maxLines: 2,
                                                           style: FlutterFlowTheme.of(
                                                                   context)

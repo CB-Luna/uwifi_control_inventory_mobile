@@ -44,7 +44,10 @@ class _CampoSeleccionWidgetState extends State<CampoSeleccionWidget> {
                 padding: const EdgeInsetsDirectional
                     .fromSTEB(0, 0, 16, 0),
                 child: Icon(
-                    Icons.check_box_outline_blank_rounded,
+                    widget.valorSeleccion == "" ? 
+                    Icons.check_box_outline_blank_rounded
+                    :
+                    Icons.check_box_rounded,
                     color: FlutterFlowTheme.of(context).secondaryColor,
                     size: 25,
                   ),
@@ -126,7 +129,7 @@ class _CampoSeleccionWidgetState extends State<CampoSeleccionWidget> {
                         Container(
                           width: MediaQuery.of(context).size.width * 0.7,
                           decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).white,
+                            color: item.seleccion ?  FlutterFlowTheme.of(context).primaryColor : FlutterFlowTheme.of(context).white,
                             boxShadow: const [
                               BoxShadow(
                                 blurRadius: 5,
@@ -165,7 +168,7 @@ class _CampoSeleccionWidgetState extends State<CampoSeleccionWidget> {
                                                 .bodyText1
                                                 .override(
                                                   fontFamily: 'Outfit',
-                                                  color: Colors.black,
+                                                  color: item.seleccion ?  FlutterFlowTheme.of(context).white : FlutterFlowTheme.of(context).tertiaryColor,
                                                   fontSize: 16,
                                                   fontWeight:
                                                       FontWeight.bold,

@@ -67,7 +67,10 @@ class OrdenTrabajo {
   final vehiculo = ToOne<Vehiculo>();
   final formaPago = ToOne<FormaPago>();
   @Backlink()
+  final observacion = ToMany<Observaciones>();
+  @Backlink()
   final bitacora = ToMany<Bitacora>();
+
 
   OrdenTrabajo({
     this.id = 0,
@@ -75,6 +78,50 @@ class OrdenTrabajo {
     required this.gasolina,
     required this.kilometrajeMillaje,
     required this.descripcionFalla,
+    DateTime? fechaRegistro,
+    this.idDBR,
+  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+}
+
+@Entity()
+class Observaciones {
+  int id;
+  DateTime fechaObservacion;
+  String respuestaP1;
+  String respuestaP2;
+  String respuestaP3;
+  String respuestaP4;
+  String respuestaP5;
+  String respuestaP6;
+  String respuestaP7;
+  String respuestaP8;
+  String respuestaP9;
+  String respuestaP10;
+  String nombreAsesor;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final ordenTrabajo = ToOne<OrdenTrabajo>();
+  @Backlink()
+  final bitacora = ToMany<Bitacora>();
+
+  Observaciones({
+    this.id = 0,
+    required this.fechaObservacion,
+    required this.respuestaP1,
+    required this.respuestaP2,
+    required this.respuestaP3,
+    required this.respuestaP4,
+    required this.respuestaP5,
+    required this.respuestaP6,
+    required this.respuestaP7,
+    required this.respuestaP8,
+    required this.respuestaP9,
+    required this.respuestaP10,
+    required this.nombreAsesor,
     DateTime? fechaRegistro,
     this.idDBR,
   }) : fechaRegistro = fechaRegistro ?? DateTime.now();
@@ -351,6 +398,7 @@ class Bitacora {
   final cliente = ToOne<Cliente>();
   final vehiculo = ToOne<Vehiculo>();
   final ordenTrabajo = ToOne<OrdenTrabajo>();
+  final observacion = ToOne<Observaciones>();
   @Backlink()
   final emprendedores = ToMany<Emprendedores>();
   @Backlink()

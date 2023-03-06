@@ -4,7 +4,8 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/orden_trabajo_controller.dart';
+import 'package:taller_alex_app_asesor/modelsFormularios/opciones_observaciones.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/observacion_controller.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/toggle_icon.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 
@@ -19,16 +20,15 @@ class SegundaParteFormularioObservacionesWidget extends StatefulWidget {
 }
 
 class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParteFormularioObservacionesWidget> {
-  final ordenTrabajoFormKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    final ordenTrabajoProvider = Provider.of<OrdenTrabajoController>(context);
+    final observacionProvider = Provider.of<ObservacionController>(context);
     return SingleChildScrollView(
       controller: ScrollController(),
       child: Form(
-        key: ordenTrabajoFormKey,
+        key: observacionProvider.observaciones2FormKey,
         child: Column(
           children: [
             Padding(
@@ -49,7 +49,10 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                         padding: const EdgeInsetsDirectional
                             .fromSTEB(0, 0, 16, 0),
                         child: Icon(
-                            Icons.check_box_outline_blank_rounded,
+                            observacionProvider.valorSeleccionP4 == "" ? 
+                            Icons.check_box_outline_blank_rounded
+                            :
+                            Icons.check_box_rounded,
                             color: FlutterFlowTheme.of(context).secondaryColor,
                             size: 25,
                           ),
@@ -83,8 +86,9 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                             0, 16, 0, 0),
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
-                          itemCount: 2,
+                          itemCount: observacionProvider.opcionesP4.length,
                           itemBuilder: (context, index) {
+                          OpcionesObservaciones item = observacionProvider.opcionesP4[index];
                           return Padding(
                             padding:
                                 const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
@@ -96,31 +100,25 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                                   child: ToggleIcon(
                                     onPressed: () {
                                       setState(() {
-                                        // // emprendimientoTemp.proyecto.selected =
-                                        // //     !emprendimientoTemp.proyecto.selected;
-                                        
-                                        // // Cuando se selecciona por segunda vez el mismo item entonces se mandaria una cadena vacia. EmprendimientoSelected
-                                        // if (emprendimientoTemp.proyecto.selected) {
-                                        //   emprendimientoSelected = "";
-                                        //   // Cambia el estado.
-                                        //   emprendimientoTemp.proyecto.selected =
-                                        //       !emprendimientoTemp.proyecto.selected;
-                                        // } else {
-                                        //   // Cuando se selecciona por primera vez el item
-                                        //   for (var element in widget
-                                        //       .usuarioProyectosTemporal
-                                        //       .emprendimientosTemp) {
-                                        //     element.proyecto.selected = false;
-                                        //   }
-                                        //   emprendimientoSelected = emprendimientoTemp
-                                        //       .proyecto.idProyecto
-                                        //       .toString();
-                                        //   emprendimientoTemp.proyecto.selected =
-                                        //       !emprendimientoTemp.proyecto.selected;
-                                        // }
+                                        // Cuando se selecciona por segunda vez el mismo item entonces se mandaria una cadena vacia.
+                                        if (item.seleccion) {
+                                          observacionProvider.valorSeleccionP4 = "";
+                                          // Cambia el estado.
+                                          item.seleccion =
+                                              !item.seleccion;
+                                        } else {
+                                          // Cuando se selecciona por primera vez el item
+                                          for (var element in 
+                                            observacionProvider.opcionesP4) {
+                                            element.seleccion = false;
+                                          }
+                                          observacionProvider.valorSeleccionP4 = item.opcion;
+                                          item.seleccion =
+                                              !item.seleccion;
+                                        }
                                       });
                                     },
-                                    value: false,
+                                    value: item.seleccion,
                                     onIcon: Icon(
                                       Icons.radio_button_checked_outlined,
                                       color: FlutterFlowTheme.of(context).primaryColor,
@@ -136,13 +134,7 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                                 Container(
                                   width: MediaQuery.of(context).size.width * 0.7,
                                   decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context).white,
-                                    // image: DecorationImage(
-                                    //   fit: BoxFit.cover,
-                                    //   image: Image.asset(
-                                    //     'assets/images/mesgbluegradient.jpeg',
-                                    //   ).image,
-                                    // ),
+                                    color: item.seleccion ?  FlutterFlowTheme.of(context).primaryColor : FlutterFlowTheme.of(context).white,
                                     boxShadow: const [
                                       BoxShadow(
                                         blurRadius: 5,
@@ -174,14 +166,14 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                                                 children: [
                                                   Text(
                                                     maybeHandleOverflow(
-                                                        "Opciones",
+                                                        item.opcion,
                                                         40,
                                                         "..."),
                                                     style: FlutterFlowTheme.of(context)
                                                         .bodyText1
                                                         .override(
                                                           fontFamily: 'Outfit',
-                                                          color: Colors.black,
+                                                          color: item.seleccion ?  FlutterFlowTheme.of(context).white : FlutterFlowTheme.of(context).tertiaryColor,
                                                           fontSize: 16,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -235,7 +227,10 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                         padding: const EdgeInsetsDirectional
                             .fromSTEB(0, 0, 16, 0),
                         child: Icon(
-                            Icons.check_box_outline_blank_rounded,
+                            observacionProvider.respuestaP5 == "" ? 
+                            Icons.check_box_outline_blank_rounded
+                            :
+                            Icons.check_box_rounded,
                             color: FlutterFlowTheme.of(context).secondaryColor,
                             size: 25,
                           ),
@@ -268,7 +263,9 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                         autovalidateMode:
                             AutovalidateMode.onUserInteraction,
                         onChanged: (value) {
-                          ordenTrabajoProvider.descripcionFalla = value;
+                          setState(() {
+                            observacionProvider.respuestaP5 = value;
+                          });
                         },
                         obscureText: false,
                         decoration: InputDecoration(
@@ -310,8 +307,8 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                         textAlign: TextAlign.start,
                         maxLines: 4,
                         validator: (val) {
-                          if (ordenTrabajoProvider.descripcionFalla == "" ||
-                              ordenTrabajoProvider.descripcionFalla.isEmpty) {
+                          if (observacionProvider.respuestaP5 == "" ||
+                              observacionProvider.respuestaP5.isEmpty) {
                             return 'El tiempo indicado es requerido.';
                           }
                           return null;
@@ -350,7 +347,10 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                         padding: const EdgeInsetsDirectional
                             .fromSTEB(0, 0, 16, 0),
                         child: Icon(
-                            Icons.check_box_outline_blank_rounded,
+                            observacionProvider.valorSeleccionP6 == "" ? 
+                            Icons.check_box_outline_blank_rounded
+                            :
+                            Icons.check_box_rounded,
                             color: FlutterFlowTheme.of(context).secondaryColor,
                             size: 25,
                           ),
@@ -384,8 +384,9 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                             0, 16, 0, 0),
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
-                          itemCount: 2,
+                          itemCount: observacionProvider.opcionesP6.length,
                           itemBuilder: (context, index) {
+                          OpcionesObservaciones item = observacionProvider.opcionesP6[index];
                           return Padding(
                             padding:
                                 const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
@@ -397,31 +398,25 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                                   child: ToggleIcon(
                                     onPressed: () {
                                       setState(() {
-                                        // // emprendimientoTemp.proyecto.selected =
-                                        // //     !emprendimientoTemp.proyecto.selected;
-                                        
-                                        // // Cuando se selecciona por segunda vez el mismo item entonces se mandaria una cadena vacia. EmprendimientoSelected
-                                        // if (emprendimientoTemp.proyecto.selected) {
-                                        //   emprendimientoSelected = "";
-                                        //   // Cambia el estado.
-                                        //   emprendimientoTemp.proyecto.selected =
-                                        //       !emprendimientoTemp.proyecto.selected;
-                                        // } else {
-                                        //   // Cuando se selecciona por primera vez el item
-                                        //   for (var element in widget
-                                        //       .usuarioProyectosTemporal
-                                        //       .emprendimientosTemp) {
-                                        //     element.proyecto.selected = false;
-                                        //   }
-                                        //   emprendimientoSelected = emprendimientoTemp
-                                        //       .proyecto.idProyecto
-                                        //       .toString();
-                                        //   emprendimientoTemp.proyecto.selected =
-                                        //       !emprendimientoTemp.proyecto.selected;
-                                        // }
+                                        // Cuando se selecciona por segunda vez el mismo item entonces se mandaria una cadena vacia.
+                                        if (item.seleccion) {
+                                          observacionProvider.valorSeleccionP6 = "";
+                                          // Cambia el estado.
+                                          item.seleccion =
+                                              !item.seleccion;
+                                        } else {
+                                          // Cuando se selecciona por primera vez el item
+                                          for (var element in 
+                                            observacionProvider.opcionesP6) {
+                                            element.seleccion = false;
+                                          }
+                                          observacionProvider.valorSeleccionP6 = item.opcion;
+                                          item.seleccion =
+                                              !item.seleccion;
+                                        }
                                       });
                                     },
-                                    value: false,
+                                    value: item.seleccion,
                                     onIcon: Icon(
                                       Icons.radio_button_checked_outlined,
                                       color: FlutterFlowTheme.of(context).primaryColor,
@@ -437,13 +432,7 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                                 Container(
                                   width: MediaQuery.of(context).size.width * 0.7,
                                   decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context).white,
-                                    // image: DecorationImage(
-                                    //   fit: BoxFit.cover,
-                                    //   image: Image.asset(
-                                    //     'assets/images/mesgbluegradient.jpeg',
-                                    //   ).image,
-                                    // ),
+                                    color: item.seleccion ?  FlutterFlowTheme.of(context).primaryColor : FlutterFlowTheme.of(context).white,
                                     boxShadow: const [
                                       BoxShadow(
                                         blurRadius: 5,
@@ -475,14 +464,14 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                                                 children: [
                                                   Text(
                                                     maybeHandleOverflow(
-                                                        "Opciones",
+                                                        item.opcion,
                                                         40,
                                                         "..."),
                                                     style: FlutterFlowTheme.of(context)
                                                         .bodyText1
                                                         .override(
                                                           fontFamily: 'Outfit',
-                                                          color: Colors.black,
+                                                          color: item.seleccion ?  FlutterFlowTheme.of(context).white : FlutterFlowTheme.of(context).tertiaryColor,
                                                           fontSize: 16,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -536,7 +525,10 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                         padding: const EdgeInsetsDirectional
                             .fromSTEB(0, 0, 16, 0),
                         child: Icon(
-                            Icons.check_box_outline_blank_rounded,
+                            observacionProvider.valorSeleccionP7 == "" ? 
+                            Icons.check_box_outline_blank_rounded
+                            :
+                            Icons.check_box_rounded,
                             color: FlutterFlowTheme.of(context).secondaryColor,
                             size: 25,
                           ),
@@ -570,8 +562,9 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                             0, 16, 0, 0),
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
-                          itemCount: 4,
+                          itemCount: observacionProvider.opcionesP7.length,
                           itemBuilder: (context, index) {
+                          OpcionesObservaciones item = observacionProvider.opcionesP7[index];
                           return Padding(
                             padding:
                                 const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
@@ -583,31 +576,25 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                                   child: ToggleIcon(
                                     onPressed: () {
                                       setState(() {
-                                        // // emprendimientoTemp.proyecto.selected =
-                                        // //     !emprendimientoTemp.proyecto.selected;
-                                        
-                                        // // Cuando se selecciona por segunda vez el mismo item entonces se mandaria una cadena vacia. EmprendimientoSelected
-                                        // if (emprendimientoTemp.proyecto.selected) {
-                                        //   emprendimientoSelected = "";
-                                        //   // Cambia el estado.
-                                        //   emprendimientoTemp.proyecto.selected =
-                                        //       !emprendimientoTemp.proyecto.selected;
-                                        // } else {
-                                        //   // Cuando se selecciona por primera vez el item
-                                        //   for (var element in widget
-                                        //       .usuarioProyectosTemporal
-                                        //       .emprendimientosTemp) {
-                                        //     element.proyecto.selected = false;
-                                        //   }
-                                        //   emprendimientoSelected = emprendimientoTemp
-                                        //       .proyecto.idProyecto
-                                        //       .toString();
-                                        //   emprendimientoTemp.proyecto.selected =
-                                        //       !emprendimientoTemp.proyecto.selected;
-                                        // }
+                                        // Cuando se selecciona por segunda vez el mismo item entonces se mandaria una cadena vacia.
+                                        if (item.seleccion) {
+                                          observacionProvider.valorSeleccionP7 = "";
+                                          // Cambia el estado.
+                                          item.seleccion =
+                                              !item.seleccion;
+                                        } else {
+                                          // Cuando se selecciona por primera vez el item
+                                          for (var element in 
+                                            observacionProvider.opcionesP7) {
+                                            element.seleccion = false;
+                                          }
+                                          observacionProvider.valorSeleccionP7 = item.opcion;
+                                          item.seleccion =
+                                              !item.seleccion;
+                                        }
                                       });
                                     },
-                                    value: false,
+                                    value: item.seleccion,
                                     onIcon: Icon(
                                       Icons.radio_button_checked_outlined,
                                       color: FlutterFlowTheme.of(context).primaryColor,
@@ -623,13 +610,7 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                                 Container(
                                   width: MediaQuery.of(context).size.width * 0.7,
                                   decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context).white,
-                                    // image: DecorationImage(
-                                    //   fit: BoxFit.cover,
-                                    //   image: Image.asset(
-                                    //     'assets/images/mesgbluegradient.jpeg',
-                                    //   ).image,
-                                    // ),
+                                    color: item.seleccion ?  FlutterFlowTheme.of(context).primaryColor : FlutterFlowTheme.of(context).white,
                                     boxShadow: const [
                                       BoxShadow(
                                         blurRadius: 5,
@@ -661,14 +642,14 @@ class _SegundaParteFormularioObservacionesWidgetState extends State<SegundaParte
                                                 children: [
                                                   Text(
                                                     maybeHandleOverflow(
-                                                        "Opciones",
+                                                        item.opcion,
                                                         40,
                                                         "..."),
                                                     style: FlutterFlowTheme.of(context)
                                                         .bodyText1
                                                         .override(
                                                           fontFamily: 'Outfit',
-                                                          color: Colors.black,
+                                                          color: item.seleccion ?  FlutterFlowTheme.of(context).white : FlutterFlowTheme.of(context).tertiaryColor,
                                                           fontSize: 16,
                                                           fontWeight:
                                                               FontWeight.bold,
