@@ -146,7 +146,10 @@ class _AgregarObservacionScreenState extends State<AgregarObservacionScreen> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    DetalleOrdenTrabajoScreen(ordenTrabajo: widget.ordenTrabajo,),
+                                                    DetalleOrdenTrabajoScreen(
+                                                      ordenTrabajo: widget.ordenTrabajo,
+                                                      pantalla: "pantallaRecepcion",
+                                                    ),
                                               ),
                                             );
                                           },

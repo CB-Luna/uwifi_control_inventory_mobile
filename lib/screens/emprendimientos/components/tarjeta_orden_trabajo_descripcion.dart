@@ -51,6 +51,7 @@ class _TargetaOrdenTrabajoDescripcionState extends State<TargetaOrdenTrabajoDesc
                     builder: (context) =>
                         DetalleOrdenTrabajoScreen(
                       ordenTrabajo: widget.ordenTrabajo,
+                      pantalla: "pantallaRecepcion",
                     ),
                   ),
                 );
