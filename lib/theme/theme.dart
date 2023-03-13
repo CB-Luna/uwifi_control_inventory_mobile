@@ -48,7 +48,7 @@ abstract class AppTheme {
 
 class LightModeTheme extends AppTheme {
   @override
-  Color primaryColor = const Color(0xFF4B39EF);
+  Color primaryColor = Colors.black;
   @override
   Color secondaryColor = const Color(0xFF39D2C0);
   @override
@@ -60,9 +60,9 @@ class LightModeTheme extends AppTheme {
   @override
   Color secondaryBackground = const Color(0xFFFFFFFF);
   @override
-  Color primaryText = const Color(0xFF221573);
+  Color primaryText = Colors.black;
   @override
-  Color secondaryText = const Color(0xFF4672FF);
+  Color secondaryText = Colors.black;
 
   @override
   Color primaryBtnText = const Color(0xFFFFFFFF);
@@ -73,7 +73,7 @@ class LightModeTheme extends AppTheme {
   @override
   Color richBlackFOGRA39 = const Color(0xFF070707);
   @override
-  Color blue = const Color(0xFF3A28DE);
+  Color blue = Colors.black;
   @override
   Color turquoise = const Color(0xFF34D1BF);
   @override

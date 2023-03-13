@@ -1,3 +1,4 @@
+import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -6,7 +7,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:taller_alex_app_asesor/providers/providers.dart';
 import 'package:taller_alex_app_asesor/screens/screens.dart';
-import 'package:taller_alex_app_asesor/theme/theme.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({
@@ -64,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       return Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height,
-                        color: Colors.transparent,
+                        color: FlutterFlowTheme.of(context).tertiaryColor,
                         child: Builder(
                           builder: (context) => Image.asset(
                             'assets/images/Final_Comp.gif',
@@ -86,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   width: 50,
                   height: 50,
                   child: SpinKitRipple(
-                    color: AppTheme.of(context).primaryColor,
+                    color: FlutterFlowTheme.of(context).tertiaryColor,
                     size: 50,
                   ),
                 ),

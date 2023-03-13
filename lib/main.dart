@@ -13,12 +13,17 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'providers/database_providers/cliente_controller.dart';
 import 'providers/database_providers/consultoria_controller.dart';
+import 'providers/database_providers/electrico_controller.dart';
 import 'providers/database_providers/emprendedor_controller.dart';
 import 'providers/database_providers/emprendimiento_controller.dart';
+import 'providers/database_providers/fluidos_controller.dart';
+import 'providers/database_providers/frenos_controller.dart';
+import 'providers/database_providers/motor_controller.dart';
 import 'providers/database_providers/observacion_controller.dart';
 import 'providers/database_providers/orden_trabajo_controller.dart';
 import 'providers/database_providers/producto_venta_controller.dart';
 import 'providers/database_providers/producto_inversion_jornada_controller.dart';
+import 'providers/database_providers/suspension_direccion_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'providers/database_providers/jornada_controller.dart';
 import 'package:taller_alex_app_asesor/providers/catalogo_emi_web_provider.dart';
@@ -88,6 +93,26 @@ void main() async {
         ),
         ChangeNotifierProvider<ObservacionController>(
           create: (context) => ObservacionController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<SuspensionDireccionController>(
+          create: (context) => SuspensionDireccionController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<MotorController>(
+          create: (context) => MotorController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<FluidosController>(
+          create: (context) => FluidosController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<FrenosController>(
+          create: (context) => FrenosController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<ElectricoController>(
+          create: (context) => ElectricoController(),
           lazy: false,
         ),
         ChangeNotifierProvider<EmprendimientoController>(

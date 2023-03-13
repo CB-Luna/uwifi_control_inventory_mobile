@@ -137,7 +137,7 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
               Icons.car_repair,
               size: 24,
             ),
-            label: '__',
+            label: '•',
             tooltip: '',
           ),
           BottomNavigationBarItem(
