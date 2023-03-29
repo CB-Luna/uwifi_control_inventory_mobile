@@ -530,7 +530,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                           return rfcCharacters
                               .hasMatch(value)
                           ? null
-                          : 'Por favor captura el RFC a 10 posiciones.';
+                          : 'Por favor captura el RFC a 12 posiciones.';
                         }
                       },
                     ),

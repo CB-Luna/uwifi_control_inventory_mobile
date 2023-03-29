@@ -801,7 +801,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(27, 1774905738150923512),
       name: 'Bitacora',
-      lastPropertyId: const IdUid(23, 2129861730720673334),
+      lastPropertyId: const IdUid(29, 5331836423271060866),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -891,7 +891,49 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(297, 8685125260427970668),
-            relationTarget: 'Observaciones')
+            relationTarget: 'Observaciones'),
+        ModelProperty(
+            id: const IdUid(24, 4982602150232490228),
+            name: 'inspeccionId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(298, 2269028587050617485),
+            relationTarget: 'Inspeccion'),
+        ModelProperty(
+            id: const IdUid(25, 3918405948041939496),
+            name: 'suspensionDireccionId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(299, 3403559951066700930),
+            relationTarget: 'SuspensionDireccion'),
+        ModelProperty(
+            id: const IdUid(26, 1880547944969244836),
+            name: 'motorId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(300, 9038695532186726245),
+            relationTarget: 'Motor'),
+        ModelProperty(
+            id: const IdUid(27, 3365272668340359628),
+            name: 'fluidosId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(301, 2303801916463691192),
+            relationTarget: 'Fluidos'),
+        ModelProperty(
+            id: const IdUid(28, 7287601138491933738),
+            name: 'frenosId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(302, 6692076237910304150),
+            relationTarget: 'Frenos'),
+        ModelProperty(
+            id: const IdUid(29, 5331836423271060866),
+            name: 'electricoId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(303, 4414320023330082672),
+            relationTarget: 'Electrico')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -2802,7 +2844,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(67, 5935206935227986130),
       name: 'OrdenTrabajo',
-      lastPropertyId: const IdUid(13, 9159429507851055399),
+      lastPropertyId: const IdUid(14, 7468202760391464931),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2868,7 +2910,14 @@ final _entities = <ModelEntity>[
             id: const IdUid(13, 9159429507851055399),
             name: 'descripcionFalla',
             type: 9,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 7468202760391464931),
+            name: 'inspeccionId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(319, 8225671083316443571),
+            relationTarget: 'Inspeccion')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -2969,6 +3018,725 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
         ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(69, 194731522577233837),
+      name: 'Electrico',
+      lastPropertyId: const IdUid(15, 8062410051394054856),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 3899599197910438393),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 1582286473411789249),
+            name: 'terminalesDeBaterias',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 7810307374051011471),
+            name: 'terminalesDeBateriasObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 8273892317905702198),
+            name: 'lucesFrenos',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 5829707091731756906),
+            name: 'lucesFrenosObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 8589511875773959310),
+            name: 'lucesDireccionales',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 2037225785371025010),
+            name: 'lucesDireccionalesObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 6695808902686629258),
+            name: 'lucesCuartos',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 2899779761605154913),
+            name: 'lucesCuartosObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 2943495617865334423),
+            name: 'checkEngine',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 2044919953711266738),
+            name: 'checkEngineObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 2687713125527562977),
+            name: 'completado',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 1354923012247420241),
+            name: 'fechaRegistro',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 8098841996086351966),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(304, 7623393226964576846)),
+        ModelProperty(
+            id: const IdUid(15, 8062410051394054856),
+            name: 'inspeccionId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(305, 6682874173406097296),
+            relationTarget: 'Inspeccion')
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(70, 7402766830593382424),
+      name: 'Fluidos',
+      lastPropertyId: const IdUid(15, 8390754601530441060),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 5286832443788918267),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 3232318583791222270),
+            name: 'atf',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 3564655150886546987),
+            name: 'atfObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 1430041349471906575),
+            name: 'power',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 1356915949558732810),
+            name: 'powerObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 8467277798439327185),
+            name: 'frenos',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 8483743287805547205),
+            name: 'frenosObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 3773888057419244273),
+            name: 'anticongelante',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 6803321901637660678),
+            name: 'anticongelanteObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 19444752648793607),
+            name: 'wipers',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 2939295981831265925),
+            name: 'wipersObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 7362246488296728318),
+            name: 'completado',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 4902618966093921228),
+            name: 'fechaRegistro',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 2844263264656519334),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(306, 911150289122399543)),
+        ModelProperty(
+            id: const IdUid(15, 8390754601530441060),
+            name: 'inspeccionId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(307, 2361876396703109126),
+            relationTarget: 'Inspeccion')
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(71, 111540169671743370),
+      name: 'Frenos',
+      lastPropertyId: const IdUid(15, 533305253152089088),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8606077505997039808),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 7612025267406553371),
+            name: 'balatasDelanteras',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 237150343599318434),
+            name: 'balatasDelanterasObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 2249394492417416893),
+            name: 'balatasTraserasDiscoTambor',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 3166664666191090494),
+            name: 'balatasTraserasDiscoTamborObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 406838970515822255),
+            name: 'manguerasLineas',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 1898752098293455102),
+            name: 'manguerasLineasObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 5874668608103936528),
+            name: 'cilindroMaestro',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 6154261140377607033),
+            name: 'cilindroMaestroObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 3104039877479998052),
+            name: 'birlosYTuercas',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 8648978120146378054),
+            name: 'birlosYTuercasObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 3659038920267373606),
+            name: 'completado',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 5692491892694608755),
+            name: 'fechaRegistro',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 4686251601549853557),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(308, 7954708597295856759)),
+        ModelProperty(
+            id: const IdUid(15, 533305253152089088),
+            name: 'inspeccionId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(309, 3340382302793284993),
+            relationTarget: 'Inspeccion')
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(72, 6058346533219474088),
+      name: 'Inspeccion',
+      lastPropertyId: const IdUid(10, 217979591081755395),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 87293066711590796),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 8885131783820316498),
+            name: 'completado',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 3715155887157026250),
+            name: 'fechaRegistro',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 8285343895130438747),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(310, 4573244063569299906)),
+        ModelProperty(
+            id: const IdUid(5, 429722851893671768),
+            name: 'ordenTrabajoId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(311, 1680557825428046778),
+            relationTarget: 'OrdenTrabajo'),
+        ModelProperty(
+            id: const IdUid(6, 4261604311738999975),
+            name: 'suspensionDireccionId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(312, 4644219849127576858),
+            relationTarget: 'SuspensionDireccion'),
+        ModelProperty(
+            id: const IdUid(7, 5026232333015543017),
+            name: 'motorId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(313, 3417602949111726003),
+            relationTarget: 'Motor'),
+        ModelProperty(
+            id: const IdUid(8, 3636328042280877759),
+            name: 'fluidosId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(314, 4032144164510903170),
+            relationTarget: 'Fluidos'),
+        ModelProperty(
+            id: const IdUid(9, 1498174391682013886),
+            name: 'frenosId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(315, 4380495365496347077),
+            relationTarget: 'Frenos'),
+        ModelProperty(
+            id: const IdUid(10, 217979591081755395),
+            name: 'electricoId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(316, 8610428745349104041),
+            relationTarget: 'Electrico')
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(73, 3609614765671064101),
+      name: 'Motor',
+      lastPropertyId: const IdUid(21, 4175555395084776827),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 3378316707571434912),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 392262610981897710),
+            name: 'aceite',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 8385911088565035072),
+            name: 'aceiteObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 6710403503072460685),
+            name: 'filtroDeAceite',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 530608803701318774),
+            name: 'filtroDeAceiteObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 8591389061362627185),
+            name: 'cpoDeAceleracion',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 7148434606585059497),
+            name: 'cpoDeAceleracionObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 6235846545681265367),
+            name: 'bujias',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 7461868005591746992),
+            name: 'bujiasObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 5130616632241858063),
+            name: 'bandaCadenaDeTiempo',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 2028680134501150908),
+            name: 'bandaCadenaDeTiempoObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 438771135047589049),
+            name: 'soportes',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 7523751442063410605),
+            name: 'soportesObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 5048346201712343731),
+            name: 'bandas',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 6163186675891091559),
+            name: 'bandasObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(16, 1153696306003445686),
+            name: 'mangueras',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(17, 2249414385226059275),
+            name: 'manguerasObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(18, 9072881332819282290),
+            name: 'completado',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(19, 639812413296443104),
+            name: 'fechaRegistro',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(20, 6855194185502422996),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(317, 4499173726230872981)),
+        ModelProperty(
+            id: const IdUid(21, 4175555395084776827),
+            name: 'inspeccionId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(318, 7638733067445510244),
+            relationTarget: 'Inspeccion')
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(74, 8182885394159286166),
+      name: 'SuspensionDireccion',
+      lastPropertyId: const IdUid(49, 3325459040369815966),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8816192752205185822),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 5915720470869899953),
+            name: 'rotulaSuperiorIzq',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 7267995918292218964),
+            name: 'rotulaSuperiorIzqObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 9216901714370915133),
+            name: 'rotulaSuperiorDer',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 6174938900235582323),
+            name: 'rotulaSuperiorDerObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 7399528940602323142),
+            name: 'rotulaInferiorIzq',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 8067283106061788084),
+            name: 'rotulaInferiorIzqObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 689901634706923966),
+            name: 'rotulaInferiorDer',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 3403734889957091002),
+            name: 'rotulaInferiorDerObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 3475926414246198157),
+            name: 'bujeHorquillaSuperiorIzq',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 1351704315098087135),
+            name: 'bujeHorquillaSuperiorIzqObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 3409339742082844834),
+            name: 'bujeHorquillaSuperiorDer',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 1714627067698003951),
+            name: 'bujeHorquillaSuperiorDerObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 8882616308481342819),
+            name: 'bujeHorquillaInferiorIzq',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 8981075485654037389),
+            name: 'bujeHorquillaInferiorIzqObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(16, 4122732220353037990),
+            name: 'bujeHorquillaInferiorDer',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(17, 2728811241870841570),
+            name: 'bujeHorquillaInferiorDerObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(18, 7820075417804272261),
+            name: 'amortiguadorDelanteroIzq',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(19, 7970114796588337864),
+            name: 'amortiguadorDelanteroIzqObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(20, 2749306330643444737),
+            name: 'amortiguadorDelanteroDer',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(21, 8607937809412422),
+            name: 'amortiguadorDelanteroDerObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(22, 9042560685937533101),
+            name: 'amortiguadorTraseroIzq',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(23, 143223895900408298),
+            name: 'amortiguadorTraseroIzqObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(24, 5494306436436646227),
+            name: 'amortiguadorTraseroDer',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(25, 4174386317734713449),
+            name: 'amortiguadorTraseroDerObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(26, 7559802069558347998),
+            name: 'bujeBarraEstabilizadoraIzq',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(27, 759441433079310132),
+            name: 'bujeBarraEstabilizadoraIzqObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(28, 6940129557200722607),
+            name: 'bujeBarraEstabilizadoraDer',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(29, 1580832237462881225),
+            name: 'bujeBarraEstabilizadoraDerObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(30, 9121755658058211878),
+            name: 'linkKitDelanteroIzq',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(31, 2084840029599708081),
+            name: 'linkKitDelanteroIzqObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(32, 3282486932384088688),
+            name: 'linkKitDelanteroDer',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(33, 1438633415460386111),
+            name: 'linkKitDelanteroDerObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(34, 6899237661904916822),
+            name: 'linkKitTraseroIzq',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(35, 5727857029759928970),
+            name: 'linkKitTraseroIzqObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(36, 7871509143000216491),
+            name: 'linkKitTraseroDer',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(37, 621968723033748951),
+            name: 'linkKitTraseroDerObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(38, 6241926712891156122),
+            name: 'terminalInteriorIzq',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(39, 7853507940034261267),
+            name: 'terminalInteriorIzqObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(40, 734574511219299792),
+            name: 'terminalInteriorDer',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(41, 443059315001386998),
+            name: 'terminalInteriorDerObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(42, 4137525549701440244),
+            name: 'terminalExteriorIzq',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(43, 8987456970247917143),
+            name: 'terminalExteriorIzqObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(44, 8066717926158358997),
+            name: 'terminalExteriorDer',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(45, 3588603006249227714),
+            name: 'terminalExteriorDerObservaciones',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(46, 5951979229393608679),
+            name: 'completado',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(47, 5423197799235748702),
+            name: 'fechaRegistro',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(48, 539200898874793609),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(320, 8517032296365500676)),
+        ModelProperty(
+            id: const IdUid(49, 3325459040369815966),
+            name: 'inspeccionId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(321, 7330226207696814681),
+            relationTarget: 'Inspeccion')
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
       ])
 ];
 
@@ -2992,8 +3760,8 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(68, 3713927666656252399),
-      lastIndexId: const IdUid(297, 8685125260427970668),
+      lastEntityId: const IdUid(74, 8182885394159286166),
+      lastIndexId: const IdUid(321, 7330226207696814681),
       lastRelationId: const IdUid(84, 5411951088038235824),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -4299,7 +5067,13 @@ ModelDefinition getObjectBoxModel() {
               object.cliente,
               object.vehiculo,
               object.ordenTrabajo,
-              object.observacion
+              object.observacion,
+              object.inspeccion,
+              object.suspensionDireccion,
+              object.motor,
+              object.fluidos,
+              object.frenos,
+              object.electrico
             ],
         toManyRelations: (Bitacora object) => {
               RelInfo<Emprendedores>.toManyBacklink(9, object.id):
@@ -4345,7 +5119,7 @@ ModelDefinition getObjectBoxModel() {
           final emprendimientoOffset = object.emprendimiento == null
               ? null
               : fbb.writeString(object.emprendimiento!);
-          fbb.startTable(24);
+          fbb.startTable(30);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addInt64(3, object.fechaSync?.millisecondsSinceEpoch);
@@ -4362,6 +5136,12 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(20, object.vehiculo.targetId);
           fbb.addInt64(21, object.ordenTrabajo.targetId);
           fbb.addInt64(22, object.observacion.targetId);
+          fbb.addInt64(23, object.inspeccion.targetId);
+          fbb.addInt64(24, object.suspensionDireccion.targetId);
+          fbb.addInt64(25, object.motor.targetId);
+          fbb.addInt64(26, object.fluidos.targetId);
+          fbb.addInt64(27, object.frenos.targetId);
+          fbb.addInt64(28, object.electrico.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4403,6 +5183,24 @@ ModelDefinition getObjectBoxModel() {
           object.observacion.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 48, 0);
           object.observacion.attach(store);
+          object.inspeccion.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0);
+          object.inspeccion.attach(store);
+          object.suspensionDireccion.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 52, 0);
+          object.suspensionDireccion.attach(store);
+          object.motor.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 54, 0);
+          object.motor.attach(store);
+          object.fluidos.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 56, 0);
+          object.fluidos.attach(store);
+          object.frenos.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 58, 0);
+          object.frenos.attach(store);
+          object.electrico.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 60, 0);
+          object.electrico.attach(store);
           InternalToManyAccess.setRelInfo(
               object.emprendedores,
               store,
@@ -6341,8 +7139,13 @@ ModelDefinition getObjectBoxModel() {
         }),
     OrdenTrabajo: EntityDefinition<OrdenTrabajo>(
         model: _entities[40],
-        toOneRelations: (OrdenTrabajo object) =>
-            [object.usuario, object.cliente, object.vehiculo, object.formaPago],
+        toOneRelations: (OrdenTrabajo object) => [
+              object.usuario,
+              object.cliente,
+              object.vehiculo,
+              object.formaPago,
+              object.inspeccion
+            ],
         toManyRelations: (OrdenTrabajo object) => {
               RelInfo<Observaciones>.toOneBacklink(15, object.id,
                       (Observaciones srcObject) => srcObject.ordenTrabajo):
@@ -6363,7 +7166,7 @@ ModelDefinition getObjectBoxModel() {
               fbb.writeString(object.kilometrajeMillaje);
           final descripcionFallaOffset =
               fbb.writeString(object.descripcionFalla);
-          fbb.startTable(14);
+          fbb.startTable(15);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.fechaOrden.millisecondsSinceEpoch);
           fbb.addInt64(3, object.fechaRegistro.millisecondsSinceEpoch);
@@ -6375,6 +7178,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(9, gasolinaOffset);
           fbb.addOffset(11, kilometrajeMillajeOffset);
           fbb.addOffset(12, descripcionFallaOffset);
+          fbb.addInt64(13, object.inspeccion.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -6408,6 +7212,9 @@ ModelDefinition getObjectBoxModel() {
           object.formaPago.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
           object.formaPago.attach(store);
+          object.inspeccion.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
+          object.inspeccion.attach(store);
           InternalToManyAccess.setRelInfo(
               object.observacion,
               store,
@@ -6505,6 +7312,773 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<Bitacora>.toOneBacklink(
                   23, object.id, (Bitacora srcObject) => srcObject.observacion),
               store.box<Observaciones>());
+          return object;
+        }),
+    Electrico: EntityDefinition<Electrico>(
+        model: _entities[42],
+        toOneRelations: (Electrico object) => [object.inspeccion],
+        toManyRelations: (Electrico object) => {
+              RelInfo<Bitacora>.toOneBacklink(29, object.id,
+                  (Bitacora srcObject) => srcObject.electrico): object.bitacora
+            },
+        getId: (Electrico object) => object.id,
+        setId: (Electrico object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Electrico object, fb.Builder fbb) {
+          final terminalesDeBateriasOffset =
+              fbb.writeString(object.terminalesDeBaterias);
+          final terminalesDeBateriasObservacionesOffset =
+              object.terminalesDeBateriasObservaciones == null
+                  ? null
+                  : fbb.writeString(object.terminalesDeBateriasObservaciones!);
+          final lucesFrenosOffset = fbb.writeString(object.lucesFrenos);
+          final lucesFrenosObservacionesOffset =
+              object.lucesFrenosObservaciones == null
+                  ? null
+                  : fbb.writeString(object.lucesFrenosObservaciones!);
+          final lucesDireccionalesOffset =
+              fbb.writeString(object.lucesDireccionales);
+          final lucesDireccionalesObservacionesOffset =
+              object.lucesDireccionalesObservaciones == null
+                  ? null
+                  : fbb.writeString(object.lucesDireccionalesObservaciones!);
+          final lucesCuartosOffset = fbb.writeString(object.lucesCuartos);
+          final lucesCuartosObservacionesOffset =
+              object.lucesCuartosObservaciones == null
+                  ? null
+                  : fbb.writeString(object.lucesCuartosObservaciones!);
+          final checkEngineOffset = fbb.writeString(object.checkEngine);
+          final checkEngineObservacionesOffset =
+              object.checkEngineObservaciones == null
+                  ? null
+                  : fbb.writeString(object.checkEngineObservaciones!);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(16);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, terminalesDeBateriasOffset);
+          fbb.addOffset(2, terminalesDeBateriasObservacionesOffset);
+          fbb.addOffset(3, lucesFrenosOffset);
+          fbb.addOffset(4, lucesFrenosObservacionesOffset);
+          fbb.addOffset(5, lucesDireccionalesOffset);
+          fbb.addOffset(6, lucesDireccionalesObservacionesOffset);
+          fbb.addOffset(7, lucesCuartosOffset);
+          fbb.addOffset(8, lucesCuartosObservacionesOffset);
+          fbb.addOffset(9, checkEngineOffset);
+          fbb.addOffset(10, checkEngineObservacionesOffset);
+          fbb.addBool(11, object.completado);
+          fbb.addInt64(12, object.fechaRegistro.millisecondsSinceEpoch);
+          fbb.addOffset(13, idDBROffset);
+          fbb.addInt64(14, object.inspeccion.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Electrico(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              terminalesDeBaterias: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              terminalesDeBateriasObservaciones:
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGetNullable(buffer, rootOffset, 8),
+              lucesFrenos: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              lucesFrenosObservaciones: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12),
+              lucesDireccionales: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              lucesDireccionalesObservaciones:
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGetNullable(buffer, rootOffset, 16),
+              lucesCuartos: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, ''),
+              lucesCuartosObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20),
+              checkEngine: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
+              checkEngineObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 24),
+              completado: const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false),
+              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 30));
+          object.inspeccion.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
+          object.inspeccion.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  29, object.id, (Bitacora srcObject) => srcObject.electrico),
+              store.box<Electrico>());
+          return object;
+        }),
+    Fluidos: EntityDefinition<Fluidos>(
+        model: _entities[43],
+        toOneRelations: (Fluidos object) => [object.inspeccion],
+        toManyRelations: (Fluidos object) => {
+              RelInfo<Bitacora>.toOneBacklink(
+                      27, object.id, (Bitacora srcObject) => srcObject.fluidos):
+                  object.bitacora
+            },
+        getId: (Fluidos object) => object.id,
+        setId: (Fluidos object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Fluidos object, fb.Builder fbb) {
+          final atfOffset = fbb.writeString(object.atf);
+          final atfObservacionesOffset = object.atfObservaciones == null
+              ? null
+              : fbb.writeString(object.atfObservaciones!);
+          final powerOffset = fbb.writeString(object.power);
+          final powerObservacionesOffset = object.powerObservaciones == null
+              ? null
+              : fbb.writeString(object.powerObservaciones!);
+          final frenosOffset = fbb.writeString(object.frenos);
+          final frenosObservacionesOffset = object.frenosObservaciones == null
+              ? null
+              : fbb.writeString(object.frenosObservaciones!);
+          final anticongelanteOffset = fbb.writeString(object.anticongelante);
+          final anticongelanteObservacionesOffset =
+              object.anticongelanteObservaciones == null
+                  ? null
+                  : fbb.writeString(object.anticongelanteObservaciones!);
+          final wipersOffset = fbb.writeString(object.wipers);
+          final wipersObservacionesOffset = object.wipersObservaciones == null
+              ? null
+              : fbb.writeString(object.wipersObservaciones!);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(16);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, atfOffset);
+          fbb.addOffset(2, atfObservacionesOffset);
+          fbb.addOffset(3, powerOffset);
+          fbb.addOffset(4, powerObservacionesOffset);
+          fbb.addOffset(5, frenosOffset);
+          fbb.addOffset(6, frenosObservacionesOffset);
+          fbb.addOffset(7, anticongelanteOffset);
+          fbb.addOffset(8, anticongelanteObservacionesOffset);
+          fbb.addOffset(9, wipersOffset);
+          fbb.addOffset(10, wipersObservacionesOffset);
+          fbb.addBool(11, object.completado);
+          fbb.addInt64(12, object.fechaRegistro.millisecondsSinceEpoch);
+          fbb.addOffset(13, idDBROffset);
+          fbb.addInt64(14, object.inspeccion.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Fluidos(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              atf: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              atfObservaciones: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 8),
+              power: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              powerObservaciones: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12),
+              frenos: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              frenosObservaciones: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 16),
+              anticongelante: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              anticongelanteObservaciones:
+                  const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20),
+              wipers: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
+              wipersObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 24),
+              completado: const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false),
+              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 30));
+          object.inspeccion.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
+          object.inspeccion.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  27, object.id, (Bitacora srcObject) => srcObject.fluidos),
+              store.box<Fluidos>());
+          return object;
+        }),
+    Frenos: EntityDefinition<Frenos>(
+        model: _entities[44],
+        toOneRelations: (Frenos object) => [object.inspeccion],
+        toManyRelations: (Frenos object) => {
+              RelInfo<Bitacora>.toOneBacklink(
+                      28, object.id, (Bitacora srcObject) => srcObject.frenos):
+                  object.bitacora
+            },
+        getId: (Frenos object) => object.id,
+        setId: (Frenos object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Frenos object, fb.Builder fbb) {
+          final balatasDelanterasOffset =
+              fbb.writeString(object.balatasDelanteras);
+          final balatasDelanterasObservacionesOffset =
+              object.balatasDelanterasObservaciones == null
+                  ? null
+                  : fbb.writeString(object.balatasDelanterasObservaciones!);
+          final balatasTraserasDiscoTamborOffset =
+              fbb.writeString(object.balatasTraserasDiscoTambor);
+          final balatasTraserasDiscoTamborObservacionesOffset =
+              object.balatasTraserasDiscoTamborObservaciones == null
+                  ? null
+                  : fbb.writeString(
+                      object.balatasTraserasDiscoTamborObservaciones!);
+          final manguerasLineasOffset = fbb.writeString(object.manguerasLineas);
+          final manguerasLineasObservacionesOffset =
+              object.manguerasLineasObservaciones == null
+                  ? null
+                  : fbb.writeString(object.manguerasLineasObservaciones!);
+          final cilindroMaestroOffset = fbb.writeString(object.cilindroMaestro);
+          final cilindroMaestroObservacionesOffset =
+              object.cilindroMaestroObservaciones == null
+                  ? null
+                  : fbb.writeString(object.cilindroMaestroObservaciones!);
+          final birlosYTuercasOffset = fbb.writeString(object.birlosYTuercas);
+          final birlosYTuercasObservacionesOffset =
+              object.birlosYTuercasObservaciones == null
+                  ? null
+                  : fbb.writeString(object.birlosYTuercasObservaciones!);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(16);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, balatasDelanterasOffset);
+          fbb.addOffset(2, balatasDelanterasObservacionesOffset);
+          fbb.addOffset(3, balatasTraserasDiscoTamborOffset);
+          fbb.addOffset(4, balatasTraserasDiscoTamborObservacionesOffset);
+          fbb.addOffset(5, manguerasLineasOffset);
+          fbb.addOffset(6, manguerasLineasObservacionesOffset);
+          fbb.addOffset(7, cilindroMaestroOffset);
+          fbb.addOffset(8, cilindroMaestroObservacionesOffset);
+          fbb.addOffset(9, birlosYTuercasOffset);
+          fbb.addOffset(10, birlosYTuercasObservacionesOffset);
+          fbb.addBool(11, object.completado);
+          fbb.addInt64(12, object.fechaRegistro.millisecondsSinceEpoch);
+          fbb.addOffset(13, idDBROffset);
+          fbb.addInt64(14, object.inspeccion.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Frenos(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              balatasDelanteras: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              balatasDelanterasObservaciones:
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGetNullable(buffer, rootOffset, 8),
+              balatasTraserasDiscoTambor: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              balatasTraserasDiscoTamborObservaciones:
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGetNullable(buffer, rootOffset, 12),
+              manguerasLineas: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              manguerasLineasObservaciones: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 16),
+              cilindroMaestro: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, ''),
+              cilindroMaestroObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20),
+              birlosYTuercas: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
+              birlosYTuercasObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 24),
+              completado: const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false),
+              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 30));
+          object.inspeccion.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
+          object.inspeccion.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  28, object.id, (Bitacora srcObject) => srcObject.frenos),
+              store.box<Frenos>());
+          return object;
+        }),
+    Inspeccion: EntityDefinition<Inspeccion>(
+        model: _entities[45],
+        toOneRelations: (Inspeccion object) => [
+              object.ordenTrabajo,
+              object.suspensionDireccion,
+              object.motor,
+              object.fluidos,
+              object.frenos,
+              object.electrico
+            ],
+        toManyRelations: (Inspeccion object) => {
+              RelInfo<Bitacora>.toOneBacklink(24, object.id,
+                  (Bitacora srcObject) => srcObject.inspeccion): object.bitacora
+            },
+        getId: (Inspeccion object) => object.id,
+        setId: (Inspeccion object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Inspeccion object, fb.Builder fbb) {
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(11);
+          fbb.addInt64(0, object.id);
+          fbb.addBool(1, object.completado);
+          fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
+          fbb.addOffset(3, idDBROffset);
+          fbb.addInt64(4, object.ordenTrabajo.targetId);
+          fbb.addInt64(5, object.suspensionDireccion.targetId);
+          fbb.addInt64(6, object.motor.targetId);
+          fbb.addInt64(7, object.fluidos.targetId);
+          fbb.addInt64(8, object.frenos.targetId);
+          fbb.addInt64(9, object.electrico.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Inspeccion(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              completado:
+                  const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false),
+              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 10));
+          object.ordenTrabajo.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          object.ordenTrabajo.attach(store);
+          object.suspensionDireccion.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          object.suspensionDireccion.attach(store);
+          object.motor.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          object.motor.attach(store);
+          object.fluidos.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          object.fluidos.attach(store);
+          object.frenos.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          object.frenos.attach(store);
+          object.electrico.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          object.electrico.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  24, object.id, (Bitacora srcObject) => srcObject.inspeccion),
+              store.box<Inspeccion>());
+          return object;
+        }),
+    Motor: EntityDefinition<Motor>(
+        model: _entities[46],
+        toOneRelations: (Motor object) => [object.inspeccion],
+        toManyRelations: (Motor object) => {
+              RelInfo<Bitacora>.toOneBacklink(
+                      26, object.id, (Bitacora srcObject) => srcObject.motor):
+                  object.bitacora
+            },
+        getId: (Motor object) => object.id,
+        setId: (Motor object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Motor object, fb.Builder fbb) {
+          final aceiteOffset = fbb.writeString(object.aceite);
+          final aceiteObservacionesOffset = object.aceiteObservaciones == null
+              ? null
+              : fbb.writeString(object.aceiteObservaciones!);
+          final filtroDeAceiteOffset = fbb.writeString(object.filtroDeAceite);
+          final filtroDeAceiteObservacionesOffset =
+              object.filtroDeAceiteObservaciones == null
+                  ? null
+                  : fbb.writeString(object.filtroDeAceiteObservaciones!);
+          final cpoDeAceleracionOffset =
+              fbb.writeString(object.cpoDeAceleracion);
+          final cpoDeAceleracionObservacionesOffset =
+              object.cpoDeAceleracionObservaciones == null
+                  ? null
+                  : fbb.writeString(object.cpoDeAceleracionObservaciones!);
+          final bujiasOffset = fbb.writeString(object.bujias);
+          final bujiasObservacionesOffset = object.bujiasObservaciones == null
+              ? null
+              : fbb.writeString(object.bujiasObservaciones!);
+          final bandaCadenaDeTiempoOffset =
+              fbb.writeString(object.bandaCadenaDeTiempo);
+          final bandaCadenaDeTiempoObservacionesOffset =
+              object.bandaCadenaDeTiempoObservaciones == null
+                  ? null
+                  : fbb.writeString(object.bandaCadenaDeTiempoObservaciones!);
+          final soportesOffset = fbb.writeString(object.soportes);
+          final soportesObservacionesOffset =
+              object.soportesObservaciones == null
+                  ? null
+                  : fbb.writeString(object.soportesObservaciones!);
+          final bandasOffset = fbb.writeString(object.bandas);
+          final bandasObservacionesOffset = object.bandasObservaciones == null
+              ? null
+              : fbb.writeString(object.bandasObservaciones!);
+          final manguerasOffset = fbb.writeString(object.mangueras);
+          final manguerasObservacionesOffset =
+              object.manguerasObservaciones == null
+                  ? null
+                  : fbb.writeString(object.manguerasObservaciones!);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(22);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, aceiteOffset);
+          fbb.addOffset(2, aceiteObservacionesOffset);
+          fbb.addOffset(3, filtroDeAceiteOffset);
+          fbb.addOffset(4, filtroDeAceiteObservacionesOffset);
+          fbb.addOffset(5, cpoDeAceleracionOffset);
+          fbb.addOffset(6, cpoDeAceleracionObservacionesOffset);
+          fbb.addOffset(7, bujiasOffset);
+          fbb.addOffset(8, bujiasObservacionesOffset);
+          fbb.addOffset(9, bandaCadenaDeTiempoOffset);
+          fbb.addOffset(10, bandaCadenaDeTiempoObservacionesOffset);
+          fbb.addOffset(11, soportesOffset);
+          fbb.addOffset(12, soportesObservacionesOffset);
+          fbb.addOffset(13, bandasOffset);
+          fbb.addOffset(14, bandasObservacionesOffset);
+          fbb.addOffset(15, manguerasOffset);
+          fbb.addOffset(16, manguerasObservacionesOffset);
+          fbb.addBool(17, object.completado);
+          fbb.addInt64(18, object.fechaRegistro.millisecondsSinceEpoch);
+          fbb.addOffset(19, idDBROffset);
+          fbb.addInt64(20, object.inspeccion.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Motor(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              aceite: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              aceiteObservaciones: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 8),
+              filtroDeAceite: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              filtroDeAceiteObservaciones: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12),
+              cpoDeAceleracion: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              cpoDeAceleracionObservaciones: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 16),
+              bujias: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              bujiasObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20),
+              bandaCadenaDeTiempo: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
+              bandaCadenaDeTiempoObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 24),
+              soportes: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, ''),
+              soportesObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 28),
+              bandas: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 30, ''),
+              bandasObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32),
+              mangueras: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''),
+              manguerasObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 36),
+              completado: const fb.BoolReader().vTableGet(buffer, rootOffset, 38, false),
+              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 42));
+          object.inspeccion.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 44, 0);
+          object.inspeccion.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  26, object.id, (Bitacora srcObject) => srcObject.motor),
+              store.box<Motor>());
+          return object;
+        }),
+    SuspensionDireccion: EntityDefinition<SuspensionDireccion>(
+        model: _entities[47],
+        toOneRelations: (SuspensionDireccion object) => [object.inspeccion],
+        toManyRelations: (SuspensionDireccion object) => {
+              RelInfo<Bitacora>.toOneBacklink(25, object.id,
+                      (Bitacora srcObject) => srcObject.suspensionDireccion):
+                  object.bitacora
+            },
+        getId: (SuspensionDireccion object) => object.id,
+        setId: (SuspensionDireccion object, int id) {
+          object.id = id;
+        },
+        objectToFB: (SuspensionDireccion object, fb.Builder fbb) {
+          final rotulaSuperiorIzqOffset =
+              fbb.writeString(object.rotulaSuperiorIzq);
+          final rotulaSuperiorIzqObservacionesOffset =
+              object.rotulaSuperiorIzqObservaciones == null
+                  ? null
+                  : fbb.writeString(object.rotulaSuperiorIzqObservaciones!);
+          final rotulaSuperiorDerOffset =
+              fbb.writeString(object.rotulaSuperiorDer);
+          final rotulaSuperiorDerObservacionesOffset =
+              object.rotulaSuperiorDerObservaciones == null
+                  ? null
+                  : fbb.writeString(object.rotulaSuperiorDerObservaciones!);
+          final rotulaInferiorIzqOffset =
+              fbb.writeString(object.rotulaInferiorIzq);
+          final rotulaInferiorIzqObservacionesOffset =
+              object.rotulaInferiorIzqObservaciones == null
+                  ? null
+                  : fbb.writeString(object.rotulaInferiorIzqObservaciones!);
+          final rotulaInferiorDerOffset =
+              fbb.writeString(object.rotulaInferiorDer);
+          final rotulaInferiorDerObservacionesOffset =
+              object.rotulaInferiorDerObservaciones == null
+                  ? null
+                  : fbb.writeString(object.rotulaInferiorDerObservaciones!);
+          final bujeHorquillaSuperiorIzqOffset =
+              fbb.writeString(object.bujeHorquillaSuperiorIzq);
+          final bujeHorquillaSuperiorIzqObservacionesOffset = object
+                      .bujeHorquillaSuperiorIzqObservaciones ==
+                  null
+              ? null
+              : fbb.writeString(object.bujeHorquillaSuperiorIzqObservaciones!);
+          final bujeHorquillaSuperiorDerOffset =
+              fbb.writeString(object.bujeHorquillaSuperiorDer);
+          final bujeHorquillaSuperiorDerObservacionesOffset = object
+                      .bujeHorquillaSuperiorDerObservaciones ==
+                  null
+              ? null
+              : fbb.writeString(object.bujeHorquillaSuperiorDerObservaciones!);
+          final bujeHorquillaInferiorIzqOffset =
+              fbb.writeString(object.bujeHorquillaInferiorIzq);
+          final bujeHorquillaInferiorIzqObservacionesOffset = object
+                      .bujeHorquillaInferiorIzqObservaciones ==
+                  null
+              ? null
+              : fbb.writeString(object.bujeHorquillaInferiorIzqObservaciones!);
+          final bujeHorquillaInferiorDerOffset =
+              fbb.writeString(object.bujeHorquillaInferiorDer);
+          final bujeHorquillaInferiorDerObservacionesOffset = object
+                      .bujeHorquillaInferiorDerObservaciones ==
+                  null
+              ? null
+              : fbb.writeString(object.bujeHorquillaInferiorDerObservaciones!);
+          final amortiguadorDelanteroIzqOffset =
+              fbb.writeString(object.amortiguadorDelanteroIzq);
+          final amortiguadorDelanteroIzqObservacionesOffset = object
+                      .amortiguadorDelanteroIzqObservaciones ==
+                  null
+              ? null
+              : fbb.writeString(object.amortiguadorDelanteroIzqObservaciones!);
+          final amortiguadorDelanteroDerOffset =
+              fbb.writeString(object.amortiguadorDelanteroDer);
+          final amortiguadorDelanteroDerObservacionesOffset = object
+                      .amortiguadorDelanteroDerObservaciones ==
+                  null
+              ? null
+              : fbb.writeString(object.amortiguadorDelanteroDerObservaciones!);
+          final amortiguadorTraseroIzqOffset =
+              fbb.writeString(object.amortiguadorTraseroIzq);
+          final amortiguadorTraseroIzqObservacionesOffset =
+              object.amortiguadorTraseroIzqObservaciones == null
+                  ? null
+                  : fbb
+                      .writeString(object.amortiguadorTraseroIzqObservaciones!);
+          final amortiguadorTraseroDerOffset =
+              fbb.writeString(object.amortiguadorTraseroDer);
+          final amortiguadorTraseroDerObservacionesOffset =
+              object.amortiguadorTraseroDerObservaciones == null
+                  ? null
+                  : fbb
+                      .writeString(object.amortiguadorTraseroDerObservaciones!);
+          final bujeBarraEstabilizadoraIzqOffset =
+              fbb.writeString(object.bujeBarraEstabilizadoraIzq);
+          final bujeBarraEstabilizadoraIzqObservacionesOffset =
+              object.bujeBarraEstabilizadoraIzqObservaciones == null
+                  ? null
+                  : fbb.writeString(
+                      object.bujeBarraEstabilizadoraIzqObservaciones!);
+          final bujeBarraEstabilizadoraDerOffset =
+              fbb.writeString(object.bujeBarraEstabilizadoraDer);
+          final bujeBarraEstabilizadoraDerObservacionesOffset =
+              object.bujeBarraEstabilizadoraDerObservaciones == null
+                  ? null
+                  : fbb.writeString(
+                      object.bujeBarraEstabilizadoraDerObservaciones!);
+          final linkKitDelanteroIzqOffset =
+              fbb.writeString(object.linkKitDelanteroIzq);
+          final linkKitDelanteroIzqObservacionesOffset =
+              object.linkKitDelanteroIzqObservaciones == null
+                  ? null
+                  : fbb.writeString(object.linkKitDelanteroIzqObservaciones!);
+          final linkKitDelanteroDerOffset =
+              fbb.writeString(object.linkKitDelanteroDer);
+          final linkKitDelanteroDerObservacionesOffset =
+              object.linkKitDelanteroDerObservaciones == null
+                  ? null
+                  : fbb.writeString(object.linkKitDelanteroDerObservaciones!);
+          final linkKitTraseroIzqOffset =
+              fbb.writeString(object.linkKitTraseroIzq);
+          final linkKitTraseroIzqObservacionesOffset =
+              object.linkKitTraseroIzqObservaciones == null
+                  ? null
+                  : fbb.writeString(object.linkKitTraseroIzqObservaciones!);
+          final linkKitTraseroDerOffset =
+              fbb.writeString(object.linkKitTraseroDer);
+          final linkKitTraseroDerObservacionesOffset =
+              object.linkKitTraseroDerObservaciones == null
+                  ? null
+                  : fbb.writeString(object.linkKitTraseroDerObservaciones!);
+          final terminalInteriorIzqOffset =
+              fbb.writeString(object.terminalInteriorIzq);
+          final terminalInteriorIzqObservacionesOffset =
+              object.terminalInteriorIzqObservaciones == null
+                  ? null
+                  : fbb.writeString(object.terminalInteriorIzqObservaciones!);
+          final terminalInteriorDerOffset =
+              fbb.writeString(object.terminalInteriorDer);
+          final terminalInteriorDerObservacionesOffset =
+              object.terminalInteriorDerObservaciones == null
+                  ? null
+                  : fbb.writeString(object.terminalInteriorDerObservaciones!);
+          final terminalExteriorIzqOffset =
+              fbb.writeString(object.terminalExteriorIzq);
+          final terminalExteriorIzqObservacionesOffset =
+              object.terminalExteriorIzqObservaciones == null
+                  ? null
+                  : fbb.writeString(object.terminalExteriorIzqObservaciones!);
+          final terminalExteriorDerOffset =
+              fbb.writeString(object.terminalExteriorDer);
+          final terminalExteriorDerObservacionesOffset =
+              object.terminalExteriorDerObservaciones == null
+                  ? null
+                  : fbb.writeString(object.terminalExteriorDerObservaciones!);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(50);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, rotulaSuperiorIzqOffset);
+          fbb.addOffset(2, rotulaSuperiorIzqObservacionesOffset);
+          fbb.addOffset(3, rotulaSuperiorDerOffset);
+          fbb.addOffset(4, rotulaSuperiorDerObservacionesOffset);
+          fbb.addOffset(5, rotulaInferiorIzqOffset);
+          fbb.addOffset(6, rotulaInferiorIzqObservacionesOffset);
+          fbb.addOffset(7, rotulaInferiorDerOffset);
+          fbb.addOffset(8, rotulaInferiorDerObservacionesOffset);
+          fbb.addOffset(9, bujeHorquillaSuperiorIzqOffset);
+          fbb.addOffset(10, bujeHorquillaSuperiorIzqObservacionesOffset);
+          fbb.addOffset(11, bujeHorquillaSuperiorDerOffset);
+          fbb.addOffset(12, bujeHorquillaSuperiorDerObservacionesOffset);
+          fbb.addOffset(13, bujeHorquillaInferiorIzqOffset);
+          fbb.addOffset(14, bujeHorquillaInferiorIzqObservacionesOffset);
+          fbb.addOffset(15, bujeHorquillaInferiorDerOffset);
+          fbb.addOffset(16, bujeHorquillaInferiorDerObservacionesOffset);
+          fbb.addOffset(17, amortiguadorDelanteroIzqOffset);
+          fbb.addOffset(18, amortiguadorDelanteroIzqObservacionesOffset);
+          fbb.addOffset(19, amortiguadorDelanteroDerOffset);
+          fbb.addOffset(20, amortiguadorDelanteroDerObservacionesOffset);
+          fbb.addOffset(21, amortiguadorTraseroIzqOffset);
+          fbb.addOffset(22, amortiguadorTraseroIzqObservacionesOffset);
+          fbb.addOffset(23, amortiguadorTraseroDerOffset);
+          fbb.addOffset(24, amortiguadorTraseroDerObservacionesOffset);
+          fbb.addOffset(25, bujeBarraEstabilizadoraIzqOffset);
+          fbb.addOffset(26, bujeBarraEstabilizadoraIzqObservacionesOffset);
+          fbb.addOffset(27, bujeBarraEstabilizadoraDerOffset);
+          fbb.addOffset(28, bujeBarraEstabilizadoraDerObservacionesOffset);
+          fbb.addOffset(29, linkKitDelanteroIzqOffset);
+          fbb.addOffset(30, linkKitDelanteroIzqObservacionesOffset);
+          fbb.addOffset(31, linkKitDelanteroDerOffset);
+          fbb.addOffset(32, linkKitDelanteroDerObservacionesOffset);
+          fbb.addOffset(33, linkKitTraseroIzqOffset);
+          fbb.addOffset(34, linkKitTraseroIzqObservacionesOffset);
+          fbb.addOffset(35, linkKitTraseroDerOffset);
+          fbb.addOffset(36, linkKitTraseroDerObservacionesOffset);
+          fbb.addOffset(37, terminalInteriorIzqOffset);
+          fbb.addOffset(38, terminalInteriorIzqObservacionesOffset);
+          fbb.addOffset(39, terminalInteriorDerOffset);
+          fbb.addOffset(40, terminalInteriorDerObservacionesOffset);
+          fbb.addOffset(41, terminalExteriorIzqOffset);
+          fbb.addOffset(42, terminalExteriorIzqObservacionesOffset);
+          fbb.addOffset(43, terminalExteriorDerOffset);
+          fbb.addOffset(44, terminalExteriorDerObservacionesOffset);
+          fbb.addBool(45, object.completado);
+          fbb.addInt64(46, object.fechaRegistro.millisecondsSinceEpoch);
+          fbb.addOffset(47, idDBROffset);
+          fbb.addInt64(48, object.inspeccion.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = SuspensionDireccion(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              rotulaSuperiorIzq: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              rotulaSuperiorIzqObservaciones: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 8),
+              rotulaSuperiorDer: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              rotulaSuperiorDerObservaciones: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12),
+              rotulaInferiorIzq: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              rotulaInferiorIzqObservaciones: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 16),
+              rotulaInferiorDer: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              rotulaInferiorDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20),
+              bujeHorquillaSuperiorIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
+              bujeHorquillaSuperiorIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 24),
+              bujeHorquillaSuperiorDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, ''),
+              bujeHorquillaSuperiorDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 28),
+              bujeHorquillaInferiorIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 30, ''),
+              bujeHorquillaInferiorIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32),
+              bujeHorquillaInferiorDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''),
+              bujeHorquillaInferiorDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 36),
+              amortiguadorDelanteroIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 38, ''),
+              amortiguadorDelanteroIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 40),
+              amortiguadorDelanteroDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 42, ''),
+              amortiguadorDelanteroDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 44),
+              amortiguadorTraseroIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 46, ''),
+              amortiguadorTraseroIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 48),
+              amortiguadorTraseroDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 50, ''),
+              amortiguadorTraseroDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 52),
+              bujeBarraEstabilizadoraIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 54, ''),
+              bujeBarraEstabilizadoraIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 56),
+              bujeBarraEstabilizadoraDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 58, ''),
+              bujeBarraEstabilizadoraDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 60),
+              linkKitDelanteroIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 62, ''),
+              linkKitDelanteroIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 64),
+              linkKitDelanteroDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 66, ''),
+              linkKitDelanteroDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 68),
+              linkKitTraseroIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 70, ''),
+              linkKitTraseroIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 72),
+              linkKitTraseroDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 74, ''),
+              linkKitTraseroDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 76),
+              terminalInteriorIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 78, ''),
+              terminalInteriorIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 80),
+              terminalInteriorDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 82, ''),
+              terminalInteriorDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 84),
+              terminalExteriorIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 86, ''),
+              terminalExteriorIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 88),
+              terminalExteriorDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 90, ''),
+              terminalExteriorDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 92),
+              completado: const fb.BoolReader().vTableGet(buffer, rootOffset, 94, false),
+              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 96, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 98));
+          object.inspeccion.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 100, 0);
+          object.inspeccion.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(25, object.id,
+                  (Bitacora srcObject) => srcObject.suspensionDireccion),
+              store.box<SuspensionDireccion>());
           return object;
         })
   };
@@ -7092,6 +8666,31 @@ class Bitacora_ {
   /// see [Bitacora.observacion]
   static final observacion =
       QueryRelationToOne<Bitacora, Observaciones>(_entities[10].properties[15]);
+
+  /// see [Bitacora.inspeccion]
+  static final inspeccion =
+      QueryRelationToOne<Bitacora, Inspeccion>(_entities[10].properties[16]);
+
+  /// see [Bitacora.suspensionDireccion]
+  static final suspensionDireccion =
+      QueryRelationToOne<Bitacora, SuspensionDireccion>(
+          _entities[10].properties[17]);
+
+  /// see [Bitacora.motor]
+  static final motor =
+      QueryRelationToOne<Bitacora, Motor>(_entities[10].properties[18]);
+
+  /// see [Bitacora.fluidos]
+  static final fluidos =
+      QueryRelationToOne<Bitacora, Fluidos>(_entities[10].properties[19]);
+
+  /// see [Bitacora.frenos]
+  static final frenos =
+      QueryRelationToOne<Bitacora, Frenos>(_entities[10].properties[20]);
+
+  /// see [Bitacora.electrico]
+  static final electrico =
+      QueryRelationToOne<Bitacora, Electrico>(_entities[10].properties[21]);
 }
 
 /// [AmbitoConsultoria] entity fields to define ObjectBox queries.
@@ -8404,6 +10003,10 @@ class OrdenTrabajo_ {
   /// see [OrdenTrabajo.descripcionFalla]
   static final descripcionFalla =
       QueryStringProperty<OrdenTrabajo>(_entities[40].properties[10]);
+
+  /// see [OrdenTrabajo.inspeccion]
+  static final inspeccion = QueryRelationToOne<OrdenTrabajo, Inspeccion>(
+      _entities[40].properties[11]);
 }
 
 /// [Observaciones] entity fields to define ObjectBox queries.
@@ -8471,4 +10074,516 @@ class Observaciones_ {
   /// see [Observaciones.nombreAsesor]
   static final nombreAsesor =
       QueryStringProperty<Observaciones>(_entities[41].properties[15]);
+}
+
+/// [Electrico] entity fields to define ObjectBox queries.
+class Electrico_ {
+  /// see [Electrico.id]
+  static final id =
+      QueryIntegerProperty<Electrico>(_entities[42].properties[0]);
+
+  /// see [Electrico.terminalesDeBaterias]
+  static final terminalesDeBaterias =
+      QueryStringProperty<Electrico>(_entities[42].properties[1]);
+
+  /// see [Electrico.terminalesDeBateriasObservaciones]
+  static final terminalesDeBateriasObservaciones =
+      QueryStringProperty<Electrico>(_entities[42].properties[2]);
+
+  /// see [Electrico.lucesFrenos]
+  static final lucesFrenos =
+      QueryStringProperty<Electrico>(_entities[42].properties[3]);
+
+  /// see [Electrico.lucesFrenosObservaciones]
+  static final lucesFrenosObservaciones =
+      QueryStringProperty<Electrico>(_entities[42].properties[4]);
+
+  /// see [Electrico.lucesDireccionales]
+  static final lucesDireccionales =
+      QueryStringProperty<Electrico>(_entities[42].properties[5]);
+
+  /// see [Electrico.lucesDireccionalesObservaciones]
+  static final lucesDireccionalesObservaciones =
+      QueryStringProperty<Electrico>(_entities[42].properties[6]);
+
+  /// see [Electrico.lucesCuartos]
+  static final lucesCuartos =
+      QueryStringProperty<Electrico>(_entities[42].properties[7]);
+
+  /// see [Electrico.lucesCuartosObservaciones]
+  static final lucesCuartosObservaciones =
+      QueryStringProperty<Electrico>(_entities[42].properties[8]);
+
+  /// see [Electrico.checkEngine]
+  static final checkEngine =
+      QueryStringProperty<Electrico>(_entities[42].properties[9]);
+
+  /// see [Electrico.checkEngineObservaciones]
+  static final checkEngineObservaciones =
+      QueryStringProperty<Electrico>(_entities[42].properties[10]);
+
+  /// see [Electrico.completado]
+  static final completado =
+      QueryBooleanProperty<Electrico>(_entities[42].properties[11]);
+
+  /// see [Electrico.fechaRegistro]
+  static final fechaRegistro =
+      QueryIntegerProperty<Electrico>(_entities[42].properties[12]);
+
+  /// see [Electrico.idDBR]
+  static final idDBR =
+      QueryStringProperty<Electrico>(_entities[42].properties[13]);
+
+  /// see [Electrico.inspeccion]
+  static final inspeccion =
+      QueryRelationToOne<Electrico, Inspeccion>(_entities[42].properties[14]);
+}
+
+/// [Fluidos] entity fields to define ObjectBox queries.
+class Fluidos_ {
+  /// see [Fluidos.id]
+  static final id = QueryIntegerProperty<Fluidos>(_entities[43].properties[0]);
+
+  /// see [Fluidos.atf]
+  static final atf = QueryStringProperty<Fluidos>(_entities[43].properties[1]);
+
+  /// see [Fluidos.atfObservaciones]
+  static final atfObservaciones =
+      QueryStringProperty<Fluidos>(_entities[43].properties[2]);
+
+  /// see [Fluidos.power]
+  static final power =
+      QueryStringProperty<Fluidos>(_entities[43].properties[3]);
+
+  /// see [Fluidos.powerObservaciones]
+  static final powerObservaciones =
+      QueryStringProperty<Fluidos>(_entities[43].properties[4]);
+
+  /// see [Fluidos.frenos]
+  static final frenos =
+      QueryStringProperty<Fluidos>(_entities[43].properties[5]);
+
+  /// see [Fluidos.frenosObservaciones]
+  static final frenosObservaciones =
+      QueryStringProperty<Fluidos>(_entities[43].properties[6]);
+
+  /// see [Fluidos.anticongelante]
+  static final anticongelante =
+      QueryStringProperty<Fluidos>(_entities[43].properties[7]);
+
+  /// see [Fluidos.anticongelanteObservaciones]
+  static final anticongelanteObservaciones =
+      QueryStringProperty<Fluidos>(_entities[43].properties[8]);
+
+  /// see [Fluidos.wipers]
+  static final wipers =
+      QueryStringProperty<Fluidos>(_entities[43].properties[9]);
+
+  /// see [Fluidos.wipersObservaciones]
+  static final wipersObservaciones =
+      QueryStringProperty<Fluidos>(_entities[43].properties[10]);
+
+  /// see [Fluidos.completado]
+  static final completado =
+      QueryBooleanProperty<Fluidos>(_entities[43].properties[11]);
+
+  /// see [Fluidos.fechaRegistro]
+  static final fechaRegistro =
+      QueryIntegerProperty<Fluidos>(_entities[43].properties[12]);
+
+  /// see [Fluidos.idDBR]
+  static final idDBR =
+      QueryStringProperty<Fluidos>(_entities[43].properties[13]);
+
+  /// see [Fluidos.inspeccion]
+  static final inspeccion =
+      QueryRelationToOne<Fluidos, Inspeccion>(_entities[43].properties[14]);
+}
+
+/// [Frenos] entity fields to define ObjectBox queries.
+class Frenos_ {
+  /// see [Frenos.id]
+  static final id = QueryIntegerProperty<Frenos>(_entities[44].properties[0]);
+
+  /// see [Frenos.balatasDelanteras]
+  static final balatasDelanteras =
+      QueryStringProperty<Frenos>(_entities[44].properties[1]);
+
+  /// see [Frenos.balatasDelanterasObservaciones]
+  static final balatasDelanterasObservaciones =
+      QueryStringProperty<Frenos>(_entities[44].properties[2]);
+
+  /// see [Frenos.balatasTraserasDiscoTambor]
+  static final balatasTraserasDiscoTambor =
+      QueryStringProperty<Frenos>(_entities[44].properties[3]);
+
+  /// see [Frenos.balatasTraserasDiscoTamborObservaciones]
+  static final balatasTraserasDiscoTamborObservaciones =
+      QueryStringProperty<Frenos>(_entities[44].properties[4]);
+
+  /// see [Frenos.manguerasLineas]
+  static final manguerasLineas =
+      QueryStringProperty<Frenos>(_entities[44].properties[5]);
+
+  /// see [Frenos.manguerasLineasObservaciones]
+  static final manguerasLineasObservaciones =
+      QueryStringProperty<Frenos>(_entities[44].properties[6]);
+
+  /// see [Frenos.cilindroMaestro]
+  static final cilindroMaestro =
+      QueryStringProperty<Frenos>(_entities[44].properties[7]);
+
+  /// see [Frenos.cilindroMaestroObservaciones]
+  static final cilindroMaestroObservaciones =
+      QueryStringProperty<Frenos>(_entities[44].properties[8]);
+
+  /// see [Frenos.birlosYTuercas]
+  static final birlosYTuercas =
+      QueryStringProperty<Frenos>(_entities[44].properties[9]);
+
+  /// see [Frenos.birlosYTuercasObservaciones]
+  static final birlosYTuercasObservaciones =
+      QueryStringProperty<Frenos>(_entities[44].properties[10]);
+
+  /// see [Frenos.completado]
+  static final completado =
+      QueryBooleanProperty<Frenos>(_entities[44].properties[11]);
+
+  /// see [Frenos.fechaRegistro]
+  static final fechaRegistro =
+      QueryIntegerProperty<Frenos>(_entities[44].properties[12]);
+
+  /// see [Frenos.idDBR]
+  static final idDBR =
+      QueryStringProperty<Frenos>(_entities[44].properties[13]);
+
+  /// see [Frenos.inspeccion]
+  static final inspeccion =
+      QueryRelationToOne<Frenos, Inspeccion>(_entities[44].properties[14]);
+}
+
+/// [Inspeccion] entity fields to define ObjectBox queries.
+class Inspeccion_ {
+  /// see [Inspeccion.id]
+  static final id =
+      QueryIntegerProperty<Inspeccion>(_entities[45].properties[0]);
+
+  /// see [Inspeccion.completado]
+  static final completado =
+      QueryBooleanProperty<Inspeccion>(_entities[45].properties[1]);
+
+  /// see [Inspeccion.fechaRegistro]
+  static final fechaRegistro =
+      QueryIntegerProperty<Inspeccion>(_entities[45].properties[2]);
+
+  /// see [Inspeccion.idDBR]
+  static final idDBR =
+      QueryStringProperty<Inspeccion>(_entities[45].properties[3]);
+
+  /// see [Inspeccion.ordenTrabajo]
+  static final ordenTrabajo =
+      QueryRelationToOne<Inspeccion, OrdenTrabajo>(_entities[45].properties[4]);
+
+  /// see [Inspeccion.suspensionDireccion]
+  static final suspensionDireccion =
+      QueryRelationToOne<Inspeccion, SuspensionDireccion>(
+          _entities[45].properties[5]);
+
+  /// see [Inspeccion.motor]
+  static final motor =
+      QueryRelationToOne<Inspeccion, Motor>(_entities[45].properties[6]);
+
+  /// see [Inspeccion.fluidos]
+  static final fluidos =
+      QueryRelationToOne<Inspeccion, Fluidos>(_entities[45].properties[7]);
+
+  /// see [Inspeccion.frenos]
+  static final frenos =
+      QueryRelationToOne<Inspeccion, Frenos>(_entities[45].properties[8]);
+
+  /// see [Inspeccion.electrico]
+  static final electrico =
+      QueryRelationToOne<Inspeccion, Electrico>(_entities[45].properties[9]);
+}
+
+/// [Motor] entity fields to define ObjectBox queries.
+class Motor_ {
+  /// see [Motor.id]
+  static final id = QueryIntegerProperty<Motor>(_entities[46].properties[0]);
+
+  /// see [Motor.aceite]
+  static final aceite = QueryStringProperty<Motor>(_entities[46].properties[1]);
+
+  /// see [Motor.aceiteObservaciones]
+  static final aceiteObservaciones =
+      QueryStringProperty<Motor>(_entities[46].properties[2]);
+
+  /// see [Motor.filtroDeAceite]
+  static final filtroDeAceite =
+      QueryStringProperty<Motor>(_entities[46].properties[3]);
+
+  /// see [Motor.filtroDeAceiteObservaciones]
+  static final filtroDeAceiteObservaciones =
+      QueryStringProperty<Motor>(_entities[46].properties[4]);
+
+  /// see [Motor.cpoDeAceleracion]
+  static final cpoDeAceleracion =
+      QueryStringProperty<Motor>(_entities[46].properties[5]);
+
+  /// see [Motor.cpoDeAceleracionObservaciones]
+  static final cpoDeAceleracionObservaciones =
+      QueryStringProperty<Motor>(_entities[46].properties[6]);
+
+  /// see [Motor.bujias]
+  static final bujias = QueryStringProperty<Motor>(_entities[46].properties[7]);
+
+  /// see [Motor.bujiasObservaciones]
+  static final bujiasObservaciones =
+      QueryStringProperty<Motor>(_entities[46].properties[8]);
+
+  /// see [Motor.bandaCadenaDeTiempo]
+  static final bandaCadenaDeTiempo =
+      QueryStringProperty<Motor>(_entities[46].properties[9]);
+
+  /// see [Motor.bandaCadenaDeTiempoObservaciones]
+  static final bandaCadenaDeTiempoObservaciones =
+      QueryStringProperty<Motor>(_entities[46].properties[10]);
+
+  /// see [Motor.soportes]
+  static final soportes =
+      QueryStringProperty<Motor>(_entities[46].properties[11]);
+
+  /// see [Motor.soportesObservaciones]
+  static final soportesObservaciones =
+      QueryStringProperty<Motor>(_entities[46].properties[12]);
+
+  /// see [Motor.bandas]
+  static final bandas =
+      QueryStringProperty<Motor>(_entities[46].properties[13]);
+
+  /// see [Motor.bandasObservaciones]
+  static final bandasObservaciones =
+      QueryStringProperty<Motor>(_entities[46].properties[14]);
+
+  /// see [Motor.mangueras]
+  static final mangueras =
+      QueryStringProperty<Motor>(_entities[46].properties[15]);
+
+  /// see [Motor.manguerasObservaciones]
+  static final manguerasObservaciones =
+      QueryStringProperty<Motor>(_entities[46].properties[16]);
+
+  /// see [Motor.completado]
+  static final completado =
+      QueryBooleanProperty<Motor>(_entities[46].properties[17]);
+
+  /// see [Motor.fechaRegistro]
+  static final fechaRegistro =
+      QueryIntegerProperty<Motor>(_entities[46].properties[18]);
+
+  /// see [Motor.idDBR]
+  static final idDBR = QueryStringProperty<Motor>(_entities[46].properties[19]);
+
+  /// see [Motor.inspeccion]
+  static final inspeccion =
+      QueryRelationToOne<Motor, Inspeccion>(_entities[46].properties[20]);
+}
+
+/// [SuspensionDireccion] entity fields to define ObjectBox queries.
+class SuspensionDireccion_ {
+  /// see [SuspensionDireccion.id]
+  static final id =
+      QueryIntegerProperty<SuspensionDireccion>(_entities[47].properties[0]);
+
+  /// see [SuspensionDireccion.rotulaSuperiorIzq]
+  static final rotulaSuperiorIzq =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[1]);
+
+  /// see [SuspensionDireccion.rotulaSuperiorIzqObservaciones]
+  static final rotulaSuperiorIzqObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[2]);
+
+  /// see [SuspensionDireccion.rotulaSuperiorDer]
+  static final rotulaSuperiorDer =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[3]);
+
+  /// see [SuspensionDireccion.rotulaSuperiorDerObservaciones]
+  static final rotulaSuperiorDerObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[4]);
+
+  /// see [SuspensionDireccion.rotulaInferiorIzq]
+  static final rotulaInferiorIzq =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[5]);
+
+  /// see [SuspensionDireccion.rotulaInferiorIzqObservaciones]
+  static final rotulaInferiorIzqObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[6]);
+
+  /// see [SuspensionDireccion.rotulaInferiorDer]
+  static final rotulaInferiorDer =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[7]);
+
+  /// see [SuspensionDireccion.rotulaInferiorDerObservaciones]
+  static final rotulaInferiorDerObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[8]);
+
+  /// see [SuspensionDireccion.bujeHorquillaSuperiorIzq]
+  static final bujeHorquillaSuperiorIzq =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[9]);
+
+  /// see [SuspensionDireccion.bujeHorquillaSuperiorIzqObservaciones]
+  static final bujeHorquillaSuperiorIzqObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[10]);
+
+  /// see [SuspensionDireccion.bujeHorquillaSuperiorDer]
+  static final bujeHorquillaSuperiorDer =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[11]);
+
+  /// see [SuspensionDireccion.bujeHorquillaSuperiorDerObservaciones]
+  static final bujeHorquillaSuperiorDerObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[12]);
+
+  /// see [SuspensionDireccion.bujeHorquillaInferiorIzq]
+  static final bujeHorquillaInferiorIzq =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[13]);
+
+  /// see [SuspensionDireccion.bujeHorquillaInferiorIzqObservaciones]
+  static final bujeHorquillaInferiorIzqObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[14]);
+
+  /// see [SuspensionDireccion.bujeHorquillaInferiorDer]
+  static final bujeHorquillaInferiorDer =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[15]);
+
+  /// see [SuspensionDireccion.bujeHorquillaInferiorDerObservaciones]
+  static final bujeHorquillaInferiorDerObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[16]);
+
+  /// see [SuspensionDireccion.amortiguadorDelanteroIzq]
+  static final amortiguadorDelanteroIzq =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[17]);
+
+  /// see [SuspensionDireccion.amortiguadorDelanteroIzqObservaciones]
+  static final amortiguadorDelanteroIzqObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[18]);
+
+  /// see [SuspensionDireccion.amortiguadorDelanteroDer]
+  static final amortiguadorDelanteroDer =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[19]);
+
+  /// see [SuspensionDireccion.amortiguadorDelanteroDerObservaciones]
+  static final amortiguadorDelanteroDerObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[20]);
+
+  /// see [SuspensionDireccion.amortiguadorTraseroIzq]
+  static final amortiguadorTraseroIzq =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[21]);
+
+  /// see [SuspensionDireccion.amortiguadorTraseroIzqObservaciones]
+  static final amortiguadorTraseroIzqObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[22]);
+
+  /// see [SuspensionDireccion.amortiguadorTraseroDer]
+  static final amortiguadorTraseroDer =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[23]);
+
+  /// see [SuspensionDireccion.amortiguadorTraseroDerObservaciones]
+  static final amortiguadorTraseroDerObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[24]);
+
+  /// see [SuspensionDireccion.bujeBarraEstabilizadoraIzq]
+  static final bujeBarraEstabilizadoraIzq =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[25]);
+
+  /// see [SuspensionDireccion.bujeBarraEstabilizadoraIzqObservaciones]
+  static final bujeBarraEstabilizadoraIzqObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[26]);
+
+  /// see [SuspensionDireccion.bujeBarraEstabilizadoraDer]
+  static final bujeBarraEstabilizadoraDer =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[27]);
+
+  /// see [SuspensionDireccion.bujeBarraEstabilizadoraDerObservaciones]
+  static final bujeBarraEstabilizadoraDerObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[28]);
+
+  /// see [SuspensionDireccion.linkKitDelanteroIzq]
+  static final linkKitDelanteroIzq =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[29]);
+
+  /// see [SuspensionDireccion.linkKitDelanteroIzqObservaciones]
+  static final linkKitDelanteroIzqObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[30]);
+
+  /// see [SuspensionDireccion.linkKitDelanteroDer]
+  static final linkKitDelanteroDer =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[31]);
+
+  /// see [SuspensionDireccion.linkKitDelanteroDerObservaciones]
+  static final linkKitDelanteroDerObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[32]);
+
+  /// see [SuspensionDireccion.linkKitTraseroIzq]
+  static final linkKitTraseroIzq =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[33]);
+
+  /// see [SuspensionDireccion.linkKitTraseroIzqObservaciones]
+  static final linkKitTraseroIzqObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[34]);
+
+  /// see [SuspensionDireccion.linkKitTraseroDer]
+  static final linkKitTraseroDer =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[35]);
+
+  /// see [SuspensionDireccion.linkKitTraseroDerObservaciones]
+  static final linkKitTraseroDerObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[36]);
+
+  /// see [SuspensionDireccion.terminalInteriorIzq]
+  static final terminalInteriorIzq =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[37]);
+
+  /// see [SuspensionDireccion.terminalInteriorIzqObservaciones]
+  static final terminalInteriorIzqObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[38]);
+
+  /// see [SuspensionDireccion.terminalInteriorDer]
+  static final terminalInteriorDer =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[39]);
+
+  /// see [SuspensionDireccion.terminalInteriorDerObservaciones]
+  static final terminalInteriorDerObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[40]);
+
+  /// see [SuspensionDireccion.terminalExteriorIzq]
+  static final terminalExteriorIzq =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[41]);
+
+  /// see [SuspensionDireccion.terminalExteriorIzqObservaciones]
+  static final terminalExteriorIzqObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[42]);
+
+  /// see [SuspensionDireccion.terminalExteriorDer]
+  static final terminalExteriorDer =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[43]);
+
+  /// see [SuspensionDireccion.terminalExteriorDerObservaciones]
+  static final terminalExteriorDerObservaciones =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[44]);
+
+  /// see [SuspensionDireccion.completado]
+  static final completado =
+      QueryBooleanProperty<SuspensionDireccion>(_entities[47].properties[45]);
+
+  /// see [SuspensionDireccion.fechaRegistro]
+  static final fechaRegistro =
+      QueryIntegerProperty<SuspensionDireccion>(_entities[47].properties[46]);
+
+  /// see [SuspensionDireccion.idDBR]
+  static final idDBR =
+      QueryStringProperty<SuspensionDireccion>(_entities[47].properties[47]);
+
+  /// see [SuspensionDireccion.inspeccion]
+  static final inspeccion = QueryRelationToOne<SuspensionDireccion, Inspeccion>(
+      _entities[47].properties[48]);
 }

@@ -816,7 +816,7 @@
     },
     {
       "id": "27:1774905738150923512",
-      "lastPropertyId": "23:2129861730720673334",
+      "lastPropertyId": "29:5331836423271060866",
       "name": "Bitacora",
       "properties": [
         {
@@ -911,6 +911,54 @@
           "flags": 520,
           "indexId": "297:8685125260427970668",
           "relationTarget": "Observaciones"
+        },
+        {
+          "id": "24:4982602150232490228",
+          "name": "inspeccionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "298:2269028587050617485",
+          "relationTarget": "Inspeccion"
+        },
+        {
+          "id": "25:3918405948041939496",
+          "name": "suspensionDireccionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "299:3403559951066700930",
+          "relationTarget": "SuspensionDireccion"
+        },
+        {
+          "id": "26:1880547944969244836",
+          "name": "motorId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "300:9038695532186726245",
+          "relationTarget": "Motor"
+        },
+        {
+          "id": "27:3365272668340359628",
+          "name": "fluidosId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "301:2303801916463691192",
+          "relationTarget": "Fluidos"
+        },
+        {
+          "id": "28:7287601138491933738",
+          "name": "frenosId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "302:6692076237910304150",
+          "relationTarget": "Frenos"
+        },
+        {
+          "id": "29:5331836423271060866",
+          "name": "electricoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "303:4414320023330082672",
+          "relationTarget": "Electrico"
         }
       ],
       "relations": []
@@ -2896,7 +2944,7 @@
     },
     {
       "id": "67:5935206935227986130",
-      "lastPropertyId": "13:9159429507851055399",
+      "lastPropertyId": "14:7468202760391464931",
       "name": "OrdenTrabajo",
       "properties": [
         {
@@ -2968,6 +3016,14 @@
           "id": "13:9159429507851055399",
           "name": "descripcionFalla",
           "type": 9
+        },
+        {
+          "id": "14:7468202760391464931",
+          "name": "inspeccionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "319:8225671083316443571",
+          "relationTarget": "Inspeccion"
         }
       ],
       "relations": []
@@ -3065,10 +3121,734 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "69:194731522577233837",
+      "lastPropertyId": "15:8062410051394054856",
+      "name": "Electrico",
+      "properties": [
+        {
+          "id": "1:3899599197910438393",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1582286473411789249",
+          "name": "terminalesDeBaterias",
+          "type": 9
+        },
+        {
+          "id": "3:7810307374051011471",
+          "name": "terminalesDeBateriasObservaciones",
+          "type": 9
+        },
+        {
+          "id": "4:8273892317905702198",
+          "name": "lucesFrenos",
+          "type": 9
+        },
+        {
+          "id": "5:5829707091731756906",
+          "name": "lucesFrenosObservaciones",
+          "type": 9
+        },
+        {
+          "id": "6:8589511875773959310",
+          "name": "lucesDireccionales",
+          "type": 9
+        },
+        {
+          "id": "7:2037225785371025010",
+          "name": "lucesDireccionalesObservaciones",
+          "type": 9
+        },
+        {
+          "id": "8:6695808902686629258",
+          "name": "lucesCuartos",
+          "type": 9
+        },
+        {
+          "id": "9:2899779761605154913",
+          "name": "lucesCuartosObservaciones",
+          "type": 9
+        },
+        {
+          "id": "10:2943495617865334423",
+          "name": "checkEngine",
+          "type": 9
+        },
+        {
+          "id": "11:2044919953711266738",
+          "name": "checkEngineObservaciones",
+          "type": 9
+        },
+        {
+          "id": "12:2687713125527562977",
+          "name": "completado",
+          "type": 1
+        },
+        {
+          "id": "13:1354923012247420241",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "14:8098841996086351966",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "304:7623393226964576846"
+        },
+        {
+          "id": "15:8062410051394054856",
+          "name": "inspeccionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "305:6682874173406097296",
+          "relationTarget": "Inspeccion"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "70:7402766830593382424",
+      "lastPropertyId": "15:8390754601530441060",
+      "name": "Fluidos",
+      "properties": [
+        {
+          "id": "1:5286832443788918267",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3232318583791222270",
+          "name": "atf",
+          "type": 9
+        },
+        {
+          "id": "3:3564655150886546987",
+          "name": "atfObservaciones",
+          "type": 9
+        },
+        {
+          "id": "4:1430041349471906575",
+          "name": "power",
+          "type": 9
+        },
+        {
+          "id": "5:1356915949558732810",
+          "name": "powerObservaciones",
+          "type": 9
+        },
+        {
+          "id": "6:8467277798439327185",
+          "name": "frenos",
+          "type": 9
+        },
+        {
+          "id": "7:8483743287805547205",
+          "name": "frenosObservaciones",
+          "type": 9
+        },
+        {
+          "id": "8:3773888057419244273",
+          "name": "anticongelante",
+          "type": 9
+        },
+        {
+          "id": "9:6803321901637660678",
+          "name": "anticongelanteObservaciones",
+          "type": 9
+        },
+        {
+          "id": "10:19444752648793607",
+          "name": "wipers",
+          "type": 9
+        },
+        {
+          "id": "11:2939295981831265925",
+          "name": "wipersObservaciones",
+          "type": 9
+        },
+        {
+          "id": "12:7362246488296728318",
+          "name": "completado",
+          "type": 1
+        },
+        {
+          "id": "13:4902618966093921228",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "14:2844263264656519334",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "306:911150289122399543"
+        },
+        {
+          "id": "15:8390754601530441060",
+          "name": "inspeccionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "307:2361876396703109126",
+          "relationTarget": "Inspeccion"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "71:111540169671743370",
+      "lastPropertyId": "15:533305253152089088",
+      "name": "Frenos",
+      "properties": [
+        {
+          "id": "1:8606077505997039808",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7612025267406553371",
+          "name": "balatasDelanteras",
+          "type": 9
+        },
+        {
+          "id": "3:237150343599318434",
+          "name": "balatasDelanterasObservaciones",
+          "type": 9
+        },
+        {
+          "id": "4:2249394492417416893",
+          "name": "balatasTraserasDiscoTambor",
+          "type": 9
+        },
+        {
+          "id": "5:3166664666191090494",
+          "name": "balatasTraserasDiscoTamborObservaciones",
+          "type": 9
+        },
+        {
+          "id": "6:406838970515822255",
+          "name": "manguerasLineas",
+          "type": 9
+        },
+        {
+          "id": "7:1898752098293455102",
+          "name": "manguerasLineasObservaciones",
+          "type": 9
+        },
+        {
+          "id": "8:5874668608103936528",
+          "name": "cilindroMaestro",
+          "type": 9
+        },
+        {
+          "id": "9:6154261140377607033",
+          "name": "cilindroMaestroObservaciones",
+          "type": 9
+        },
+        {
+          "id": "10:3104039877479998052",
+          "name": "birlosYTuercas",
+          "type": 9
+        },
+        {
+          "id": "11:8648978120146378054",
+          "name": "birlosYTuercasObservaciones",
+          "type": 9
+        },
+        {
+          "id": "12:3659038920267373606",
+          "name": "completado",
+          "type": 1
+        },
+        {
+          "id": "13:5692491892694608755",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "14:4686251601549853557",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "308:7954708597295856759"
+        },
+        {
+          "id": "15:533305253152089088",
+          "name": "inspeccionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "309:3340382302793284993",
+          "relationTarget": "Inspeccion"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "72:6058346533219474088",
+      "lastPropertyId": "10:217979591081755395",
+      "name": "Inspeccion",
+      "properties": [
+        {
+          "id": "1:87293066711590796",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8885131783820316498",
+          "name": "completado",
+          "type": 1
+        },
+        {
+          "id": "3:3715155887157026250",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "4:8285343895130438747",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "310:4573244063569299906"
+        },
+        {
+          "id": "5:429722851893671768",
+          "name": "ordenTrabajoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "311:1680557825428046778",
+          "relationTarget": "OrdenTrabajo"
+        },
+        {
+          "id": "6:4261604311738999975",
+          "name": "suspensionDireccionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "312:4644219849127576858",
+          "relationTarget": "SuspensionDireccion"
+        },
+        {
+          "id": "7:5026232333015543017",
+          "name": "motorId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "313:3417602949111726003",
+          "relationTarget": "Motor"
+        },
+        {
+          "id": "8:3636328042280877759",
+          "name": "fluidosId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "314:4032144164510903170",
+          "relationTarget": "Fluidos"
+        },
+        {
+          "id": "9:1498174391682013886",
+          "name": "frenosId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "315:4380495365496347077",
+          "relationTarget": "Frenos"
+        },
+        {
+          "id": "10:217979591081755395",
+          "name": "electricoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "316:8610428745349104041",
+          "relationTarget": "Electrico"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "73:3609614765671064101",
+      "lastPropertyId": "21:4175555395084776827",
+      "name": "Motor",
+      "properties": [
+        {
+          "id": "1:3378316707571434912",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:392262610981897710",
+          "name": "aceite",
+          "type": 9
+        },
+        {
+          "id": "3:8385911088565035072",
+          "name": "aceiteObservaciones",
+          "type": 9
+        },
+        {
+          "id": "4:6710403503072460685",
+          "name": "filtroDeAceite",
+          "type": 9
+        },
+        {
+          "id": "5:530608803701318774",
+          "name": "filtroDeAceiteObservaciones",
+          "type": 9
+        },
+        {
+          "id": "6:8591389061362627185",
+          "name": "cpoDeAceleracion",
+          "type": 9
+        },
+        {
+          "id": "7:7148434606585059497",
+          "name": "cpoDeAceleracionObservaciones",
+          "type": 9
+        },
+        {
+          "id": "8:6235846545681265367",
+          "name": "bujias",
+          "type": 9
+        },
+        {
+          "id": "9:7461868005591746992",
+          "name": "bujiasObservaciones",
+          "type": 9
+        },
+        {
+          "id": "10:5130616632241858063",
+          "name": "bandaCadenaDeTiempo",
+          "type": 9
+        },
+        {
+          "id": "11:2028680134501150908",
+          "name": "bandaCadenaDeTiempoObservaciones",
+          "type": 9
+        },
+        {
+          "id": "12:438771135047589049",
+          "name": "soportes",
+          "type": 9
+        },
+        {
+          "id": "13:7523751442063410605",
+          "name": "soportesObservaciones",
+          "type": 9
+        },
+        {
+          "id": "14:5048346201712343731",
+          "name": "bandas",
+          "type": 9
+        },
+        {
+          "id": "15:6163186675891091559",
+          "name": "bandasObservaciones",
+          "type": 9
+        },
+        {
+          "id": "16:1153696306003445686",
+          "name": "mangueras",
+          "type": 9
+        },
+        {
+          "id": "17:2249414385226059275",
+          "name": "manguerasObservaciones",
+          "type": 9
+        },
+        {
+          "id": "18:9072881332819282290",
+          "name": "completado",
+          "type": 1
+        },
+        {
+          "id": "19:639812413296443104",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "20:6855194185502422996",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "317:4499173726230872981"
+        },
+        {
+          "id": "21:4175555395084776827",
+          "name": "inspeccionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "318:7638733067445510244",
+          "relationTarget": "Inspeccion"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "74:8182885394159286166",
+      "lastPropertyId": "49:3325459040369815966",
+      "name": "SuspensionDireccion",
+      "properties": [
+        {
+          "id": "1:8816192752205185822",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5915720470869899953",
+          "name": "rotulaSuperiorIzq",
+          "type": 9
+        },
+        {
+          "id": "3:7267995918292218964",
+          "name": "rotulaSuperiorIzqObservaciones",
+          "type": 9
+        },
+        {
+          "id": "4:9216901714370915133",
+          "name": "rotulaSuperiorDer",
+          "type": 9
+        },
+        {
+          "id": "5:6174938900235582323",
+          "name": "rotulaSuperiorDerObservaciones",
+          "type": 9
+        },
+        {
+          "id": "6:7399528940602323142",
+          "name": "rotulaInferiorIzq",
+          "type": 9
+        },
+        {
+          "id": "7:8067283106061788084",
+          "name": "rotulaInferiorIzqObservaciones",
+          "type": 9
+        },
+        {
+          "id": "8:689901634706923966",
+          "name": "rotulaInferiorDer",
+          "type": 9
+        },
+        {
+          "id": "9:3403734889957091002",
+          "name": "rotulaInferiorDerObservaciones",
+          "type": 9
+        },
+        {
+          "id": "10:3475926414246198157",
+          "name": "bujeHorquillaSuperiorIzq",
+          "type": 9
+        },
+        {
+          "id": "11:1351704315098087135",
+          "name": "bujeHorquillaSuperiorIzqObservaciones",
+          "type": 9
+        },
+        {
+          "id": "12:3409339742082844834",
+          "name": "bujeHorquillaSuperiorDer",
+          "type": 9
+        },
+        {
+          "id": "13:1714627067698003951",
+          "name": "bujeHorquillaSuperiorDerObservaciones",
+          "type": 9
+        },
+        {
+          "id": "14:8882616308481342819",
+          "name": "bujeHorquillaInferiorIzq",
+          "type": 9
+        },
+        {
+          "id": "15:8981075485654037389",
+          "name": "bujeHorquillaInferiorIzqObservaciones",
+          "type": 9
+        },
+        {
+          "id": "16:4122732220353037990",
+          "name": "bujeHorquillaInferiorDer",
+          "type": 9
+        },
+        {
+          "id": "17:2728811241870841570",
+          "name": "bujeHorquillaInferiorDerObservaciones",
+          "type": 9
+        },
+        {
+          "id": "18:7820075417804272261",
+          "name": "amortiguadorDelanteroIzq",
+          "type": 9
+        },
+        {
+          "id": "19:7970114796588337864",
+          "name": "amortiguadorDelanteroIzqObservaciones",
+          "type": 9
+        },
+        {
+          "id": "20:2749306330643444737",
+          "name": "amortiguadorDelanteroDer",
+          "type": 9
+        },
+        {
+          "id": "21:8607937809412422",
+          "name": "amortiguadorDelanteroDerObservaciones",
+          "type": 9
+        },
+        {
+          "id": "22:9042560685937533101",
+          "name": "amortiguadorTraseroIzq",
+          "type": 9
+        },
+        {
+          "id": "23:143223895900408298",
+          "name": "amortiguadorTraseroIzqObservaciones",
+          "type": 9
+        },
+        {
+          "id": "24:5494306436436646227",
+          "name": "amortiguadorTraseroDer",
+          "type": 9
+        },
+        {
+          "id": "25:4174386317734713449",
+          "name": "amortiguadorTraseroDerObservaciones",
+          "type": 9
+        },
+        {
+          "id": "26:7559802069558347998",
+          "name": "bujeBarraEstabilizadoraIzq",
+          "type": 9
+        },
+        {
+          "id": "27:759441433079310132",
+          "name": "bujeBarraEstabilizadoraIzqObservaciones",
+          "type": 9
+        },
+        {
+          "id": "28:6940129557200722607",
+          "name": "bujeBarraEstabilizadoraDer",
+          "type": 9
+        },
+        {
+          "id": "29:1580832237462881225",
+          "name": "bujeBarraEstabilizadoraDerObservaciones",
+          "type": 9
+        },
+        {
+          "id": "30:9121755658058211878",
+          "name": "linkKitDelanteroIzq",
+          "type": 9
+        },
+        {
+          "id": "31:2084840029599708081",
+          "name": "linkKitDelanteroIzqObservaciones",
+          "type": 9
+        },
+        {
+          "id": "32:3282486932384088688",
+          "name": "linkKitDelanteroDer",
+          "type": 9
+        },
+        {
+          "id": "33:1438633415460386111",
+          "name": "linkKitDelanteroDerObservaciones",
+          "type": 9
+        },
+        {
+          "id": "34:6899237661904916822",
+          "name": "linkKitTraseroIzq",
+          "type": 9
+        },
+        {
+          "id": "35:5727857029759928970",
+          "name": "linkKitTraseroIzqObservaciones",
+          "type": 9
+        },
+        {
+          "id": "36:7871509143000216491",
+          "name": "linkKitTraseroDer",
+          "type": 9
+        },
+        {
+          "id": "37:621968723033748951",
+          "name": "linkKitTraseroDerObservaciones",
+          "type": 9
+        },
+        {
+          "id": "38:6241926712891156122",
+          "name": "terminalInteriorIzq",
+          "type": 9
+        },
+        {
+          "id": "39:7853507940034261267",
+          "name": "terminalInteriorIzqObservaciones",
+          "type": 9
+        },
+        {
+          "id": "40:734574511219299792",
+          "name": "terminalInteriorDer",
+          "type": 9
+        },
+        {
+          "id": "41:443059315001386998",
+          "name": "terminalInteriorDerObservaciones",
+          "type": 9
+        },
+        {
+          "id": "42:4137525549701440244",
+          "name": "terminalExteriorIzq",
+          "type": 9
+        },
+        {
+          "id": "43:8987456970247917143",
+          "name": "terminalExteriorIzqObservaciones",
+          "type": 9
+        },
+        {
+          "id": "44:8066717926158358997",
+          "name": "terminalExteriorDer",
+          "type": 9
+        },
+        {
+          "id": "45:3588603006249227714",
+          "name": "terminalExteriorDerObservaciones",
+          "type": 9
+        },
+        {
+          "id": "46:5951979229393608679",
+          "name": "completado",
+          "type": 1
+        },
+        {
+          "id": "47:5423197799235748702",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "48:539200898874793609",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "320:8517032296365500676"
+        },
+        {
+          "id": "49:3325459040369815966",
+          "name": "inspeccionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "321:7330226207696814681",
+          "relationTarget": "Inspeccion"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "68:3713927666656252399",
-  "lastIndexId": "297:8685125260427970668",
+  "lastEntityId": "74:8182885394159286166",
+  "lastIndexId": "321:7330226207696814681",
   "lastRelationId": "84:5411951088038235824",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

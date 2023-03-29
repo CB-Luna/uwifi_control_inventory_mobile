@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/electrico/electrico_screen.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/fluidos/fluidos_screen.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/frenos/frenos_screen.dart';
@@ -153,13 +154,21 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                     ),
                     InkWell(
                       onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                SuspensionDireccionScreen(ordenTrabajo: widget.ordenTrabajo,),
-                          ),
-                        );
+                        if (widget.ordenTrabajo.inspeccion.target?.suspensionDireccion == null) {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  SuspensionDireccionScreen(ordenTrabajo: widget.ordenTrabajo,),
+                            ),
+                          );
+                        } else {
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Ya se ha realizado la inspección de la Suspensión / Dirección del vehículo."),
+                          ));
+                        }
                       },
                       child: ClayContainer(
                         height: 35,
@@ -168,22 +177,36 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                         spread: 2,
                         borderRadius: 25,
                         curveType: CurveType.concave,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        surfaceColor: FlutterFlowTheme.of(context).tertiaryColor,
-                        parentColor: FlutterFlowTheme.of(context).grayDark,
+                        color: widget.ordenTrabajo.inspeccion.target?.suspensionDireccion == null ?
+                          FlutterFlowTheme.of(context).tertiaryColor
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
+                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.suspensionDireccion == null ?
+                          FlutterFlowTheme.of(context).tertiaryColor
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
+                        parentColor: widget.ordenTrabajo.inspeccion.target?.suspensionDireccion == null ?
+                          FlutterFlowTheme.of(context).grayDark
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
                           ),
                           child: Center(
                             child: Text(
-                              "Agregar",
+                              widget.ordenTrabajo.inspeccion.target?.suspensionDireccion == null ?
+                              "Revisar"
+                              :
+                              "Revisado",
                               style: FlutterFlowTheme.of(context)
                               .bodyText1
                               .override(
                                 fontFamily: 'Outfit',
-                                color:
-                                    FlutterFlowTheme.of(context).alternate,
+                                color: widget.ordenTrabajo.inspeccion.target?.suspensionDireccion == null ?
+                                    FlutterFlowTheme.of(context).alternate
+                                    :
+                                    FlutterFlowTheme.of(context).white,
                               ),
                             ),
                           ),
@@ -249,7 +272,10 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Sin inspeccionar',
+                                      widget.ordenTrabajo.inspeccion.target?.suspensionDireccion == null ?
+                                      'Sin inspeccionar' 
+                                      :
+                                      'Inspeccionado',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(
@@ -313,13 +339,21 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                     ),
                     InkWell(
                       onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                MotorScreen(ordenTrabajo: widget.ordenTrabajo,),
-                          ),
-                        );
+                        if (widget.ordenTrabajo.inspeccion.target?.motor == null) {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  MotorScreen(ordenTrabajo: widget.ordenTrabajo,),
+                            ),
+                          );
+                        } else {
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Ya se ha realizado la inspección del Motor del vehículo."),
+                          ));
+                        }
                       },
                       child: ClayContainer(
                         height: 35,
@@ -328,22 +362,36 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                         spread: 2,
                         borderRadius: 25,
                         curveType: CurveType.concave,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        surfaceColor: FlutterFlowTheme.of(context).tertiaryColor,
-                        parentColor: FlutterFlowTheme.of(context).grayDark,
+                        color: widget.ordenTrabajo.inspeccion.target?.motor == null ?
+                          FlutterFlowTheme.of(context).tertiaryColor
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
+                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.motor == null ?
+                          FlutterFlowTheme.of(context).tertiaryColor
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
+                        parentColor: widget.ordenTrabajo.inspeccion.target?.motor == null ?
+                          FlutterFlowTheme.of(context).grayDark
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
                           ),
                           child: Center(
                             child: Text(
-                              "Agregar",
+                              widget.ordenTrabajo.inspeccion.target?.motor == null ?
+                              "Revisar"
+                              :
+                              "Revisado",
                               style: FlutterFlowTheme.of(context)
                               .bodyText1
                               .override(
                                 fontFamily: 'Outfit',
-                                color:
-                                    FlutterFlowTheme.of(context).alternate,
+                                color: widget.ordenTrabajo.inspeccion.target?.motor == null ?
+                                    FlutterFlowTheme.of(context).alternate
+                                    :
+                                    FlutterFlowTheme.of(context).white,
                               ),
                             ),
                           ),
@@ -409,7 +457,10 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Sin inspeccionar',
+                                      widget.ordenTrabajo.inspeccion.target?.motor == null ?
+                                      'Sin inspeccionar' 
+                                      :
+                                      'Inspeccionado',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(
@@ -473,13 +524,21 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                     ),
                     InkWell(
                       onTap: () async {
-                         await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                FluidosScreen(ordenTrabajo: widget.ordenTrabajo,),
-                          ),
-                        );
+                         if (widget.ordenTrabajo.inspeccion.target?.fluidos == null) {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  FluidosScreen(ordenTrabajo: widget.ordenTrabajo,),
+                            ),
+                          );
+                        } else {
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Ya se ha realizado la inspección de los Fluidos del vehículo."),
+                          ));
+                        }
                       },
                       child: ClayContainer(
                         height: 35,
@@ -488,22 +547,36 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                         spread: 2,
                         borderRadius: 25,
                         curveType: CurveType.concave,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        surfaceColor: FlutterFlowTheme.of(context).tertiaryColor,
-                        parentColor: FlutterFlowTheme.of(context).grayDark,
+                        color: widget.ordenTrabajo.inspeccion.target?.fluidos == null ?
+                          FlutterFlowTheme.of(context).tertiaryColor
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
+                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.fluidos == null ?
+                          FlutterFlowTheme.of(context).tertiaryColor
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
+                        parentColor: widget.ordenTrabajo.inspeccion.target?.fluidos == null ?
+                          FlutterFlowTheme.of(context).grayDark
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
                           ),
                           child: Center(
                             child: Text(
-                              "Agregar",
+                              widget.ordenTrabajo.inspeccion.target?.fluidos == null ?
+                              "Revisar"
+                              :
+                              "Revisado",
                               style: FlutterFlowTheme.of(context)
                               .bodyText1
                               .override(
                                 fontFamily: 'Outfit',
-                                color:
-                                    FlutterFlowTheme.of(context).alternate,
+                                color: widget.ordenTrabajo.inspeccion.target?.fluidos == null ?
+                                    FlutterFlowTheme.of(context).alternate
+                                    :
+                                    FlutterFlowTheme.of(context).white,
                               ),
                             ),
                           ),
@@ -569,7 +642,10 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Sin inspeccionar',
+                                      widget.ordenTrabajo.inspeccion.target?.fluidos == null ?
+                                      'Sin inspeccionar' 
+                                      :
+                                      'Inspeccionado',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(
@@ -633,13 +709,21 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                     ),
                     InkWell(
                       onTap: () async {
-                         await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                FrenosScreen(ordenTrabajo: widget.ordenTrabajo,),
-                          ),
-                        );
+                        if (widget.ordenTrabajo.inspeccion.target?.frenos == null) {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  FrenosScreen(ordenTrabajo: widget.ordenTrabajo,),
+                            ),
+                          );
+                        } else {
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Ya se ha realizado la inspección de los Frenos del vehículo."),
+                          ));
+                        }
                       },
                       child: ClayContainer(
                         height: 35,
@@ -648,22 +732,36 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                         spread: 2,
                         borderRadius: 25,
                         curveType: CurveType.concave,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        surfaceColor: FlutterFlowTheme.of(context).tertiaryColor,
-                        parentColor: FlutterFlowTheme.of(context).grayDark,
+                        color: widget.ordenTrabajo.inspeccion.target?.frenos == null ?
+                          FlutterFlowTheme.of(context).tertiaryColor
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
+                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.frenos == null ?
+                          FlutterFlowTheme.of(context).tertiaryColor
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
+                        parentColor: widget.ordenTrabajo.inspeccion.target?.frenos == null ?
+                          FlutterFlowTheme.of(context).grayDark
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
                           ),
                           child: Center(
                             child: Text(
-                              "Agregar",
+                              widget.ordenTrabajo.inspeccion.target?.frenos == null ?
+                              "Revisar"
+                              :
+                              "Revisado",
                               style: FlutterFlowTheme.of(context)
                               .bodyText1
                               .override(
                                 fontFamily: 'Outfit',
-                                color:
-                                    FlutterFlowTheme.of(context).alternate,
+                                color: widget.ordenTrabajo.inspeccion.target?.frenos == null ?
+                                    FlutterFlowTheme.of(context).alternate
+                                    :
+                                    FlutterFlowTheme.of(context).white,
                               ),
                             ),
                           ),
@@ -729,7 +827,10 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Sin inspeccionar',
+                                      widget.ordenTrabajo.inspeccion.target?.frenos == null ?
+                                      'Sin inspeccionar' 
+                                      :
+                                      'Inspeccionado',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(
@@ -793,13 +894,21 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                     ),
                     InkWell(
                       onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ElectricoScreen(ordenTrabajo: widget.ordenTrabajo,),
-                          ),
-                        );
+                        if (widget.ordenTrabajo.inspeccion.target?.electrico == null) {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ElectricoScreen(ordenTrabajo: widget.ordenTrabajo,),
+                            ),
+                          );
+                        } else {
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Ya se ha realizado la inspección del Sistema Eléctrico del vehículo."),
+                          ));
+                        }
                       },
                       child: ClayContainer(
                         height: 35,
@@ -808,22 +917,36 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                         spread: 2,
                         borderRadius: 25,
                         curveType: CurveType.concave,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        surfaceColor: FlutterFlowTheme.of(context).tertiaryColor,
-                        parentColor: FlutterFlowTheme.of(context).grayDark,
+                        color: widget.ordenTrabajo.inspeccion.target?.electrico == null ?
+                          FlutterFlowTheme.of(context).tertiaryColor
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
+                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.electrico == null ?
+                          FlutterFlowTheme.of(context).tertiaryColor
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
+                        parentColor: widget.ordenTrabajo.inspeccion.target?.electrico == null ?
+                          FlutterFlowTheme.of(context).grayDark
+                          :
+                          FlutterFlowTheme.of(context).grayLight,
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
                           ),
                           child: Center(
                             child: Text(
-                              "Agregar",
+                              widget.ordenTrabajo.inspeccion.target?.electrico == null ?
+                              "Revisar"
+                              :
+                              "Revisado",
                               style: FlutterFlowTheme.of(context)
                               .bodyText1
                               .override(
                                 fontFamily: 'Outfit',
-                                color:
-                                    FlutterFlowTheme.of(context).alternate,
+                                color: widget.ordenTrabajo.inspeccion.target?.electrico == null ?
+                                    FlutterFlowTheme.of(context).alternate
+                                    :
+                                    FlutterFlowTheme.of(context).white,
                               ),
                             ),
                           ),
@@ -837,12 +960,6 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                 padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                 child: InkWell(
                   onTap: () async {
-                    // await Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => PastPaymentWidget(),
-                    //   ),
-                    // );
                   },
                   child: Container(
                     width: double.infinity,
@@ -898,7 +1015,10 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Sin inspeccionar',
+                                        widget.ordenTrabajo.inspeccion.target?.electrico == null ?
+                                      'Sin inspeccionar' 
+                                      :
+                                      'Inspeccionado',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText2
                                             .override(

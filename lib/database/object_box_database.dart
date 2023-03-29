@@ -11,6 +11,12 @@ class ObjectBoxDatabase {
   late final Box<OrdenTrabajo> ordenTrabajoBox;
   late final Box<FormaPago> formaPagoBox;
   late final Box<Observaciones> observacionesBox;
+  late final Box<Inspeccion> inspeccionBox;
+  late final Box<SuspensionDireccion> suspensionDireccionBox;
+  late final Box<Motor> motorBox;
+  late final Box<Frenos> frenosBox;
+  late final Box<Fluidos> fluidosBox;
+  late final Box<Electrico> electricoBox;
   late final Box<Emprendimientos> emprendimientosBox;
   late final Box<Emprendedores> emprendedoresBox;
   late final Box<Jornadas> jornadasBox;
@@ -55,6 +61,12 @@ class ObjectBoxDatabase {
     ordenTrabajoBox = Box<OrdenTrabajo>(store);
     formaPagoBox = Box<FormaPago>(store);
     observacionesBox = Box<Observaciones>(store);
+    inspeccionBox = Box<Inspeccion>(store);
+    suspensionDireccionBox = Box<SuspensionDireccion>(store);
+    motorBox = Box<Motor>(store);
+    frenosBox = Box<Frenos>(store);
+    fluidosBox = Box<Fluidos>(store);
+    electricoBox = Box<Electrico>(store);
     emprendimientosBox = Box<Emprendimientos>(store);
     emprendedoresBox = Box<Emprendedores>(store);
     jornadasBox = Box<Jornadas>(store);

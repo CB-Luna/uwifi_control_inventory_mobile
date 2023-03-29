@@ -767,40 +767,102 @@ class SuspensionDireccionController extends ChangeNotifier {
     }
   }
   
-    bool add(Usuarios usuario, String medida) {
-    return true;
-    // final nuevaOrdenTrabajo = OrdenTrabajo(
-    //   fechaOrden: fechaOrden!,
-    //   gasolina: gasolina,
-    //   kilometrajeMillaje: "$kilometrajeMillaje $medida",
-    //   descripcionFalla: descripcionFalla,  
-    // );
+  bool agregarSuspensionDireccion(OrdenTrabajo ordenTrabajo) {
+    try {
+      //Se válida que la inspección exista en la orden de trabajo
+      final fechaRegistro =  DateTime.now();
+      final nuevaSuspensionDireccion = SuspensionDireccion(
+          rotulaSuperiorIzq: rotulaSuperiorIzq, 
+          rotulaSuperiorIzqObservaciones: observacionesRotulaSuperiorIzq,
+          rotulaSuperiorDer: rotulaSuperiorDer, 
+          rotulaSuperiorDerObservaciones: observacionesRotulaSuperiorDer,
+          rotulaInferiorIzq: rotulaInferiorIzq, 
+          rotulaInferiorIzqObservaciones: observacionesRotulaInferiorIzq,
+          rotulaInferiorDer: rotulaInferiorDer, 
+          rotulaInferiorDerObservaciones: observacionesRotulaInferiorDer,
+          bujeHorquillaSuperiorIzq: bujeHorquillaSuperiorIzq, 
+          bujeHorquillaSuperiorIzqObservaciones: observacionesBujeHorquillaSuperiorIzq,
+          bujeHorquillaSuperiorDer: bujeHorquillaSuperiorDer, 
+          bujeHorquillaSuperiorDerObservaciones: observacionesBujeHorquillaSuperiorDer,
+          bujeHorquillaInferiorIzq: bujeHorquillaInferiorIzq, 
+          bujeHorquillaInferiorIzqObservaciones: observacionesBujeHorquillaInferiorIzq,
+          bujeHorquillaInferiorDer: bujeHorquillaInferiorDer, 
+          bujeHorquillaInferiorDerObservaciones: observacionesBujeHorquillaInferiorDer,
+          amortiguadorDelanteroIzq: amortiguadorDelanteroIzq, 
+          amortiguadorDelanteroIzqObservaciones: observacionesAmortiguadorDelanteroIzq,
+          amortiguadorDelanteroDer: amortiguadorDelanteroDer, 
+          amortiguadorDelanteroDerObservaciones: observacionesAmortiguadorDelanteroDer,
+          amortiguadorTraseroIzq: amortiguadorTraseroIzq, 
+          amortiguadorTraseroIzqObservaciones: observacionesAmortiguadorTraseroIzq,
+          amortiguadorTraseroDer: amortiguadorTraseroDer, 
+          amortiguadorTraseroDerObservaciones: observacionesAmortiguadorTraseroDer,
+          bujeBarraEstabilizadoraIzq: bujeBarraEstabilizadoraIzq, 
+          bujeBarraEstabilizadoraIzqObservaciones: observacionesBujeBarraEstabilizadoraIzq,
+          bujeBarraEstabilizadoraDer: bujeBarraEstabilizadoraDer, 
+          bujeBarraEstabilizadoraDerObservaciones: observacionesBujeBarraEstabilizadoraDer,
+          linkKitDelanteroIzq: linkKitDelanteroIzq, 
+          linkKitDelanteroIzqObservaciones: observacionesLinkKitDelanteroIzq,
+          linkKitDelanteroDer: linkKitDelanteroDer, 
+          linkKitDelanteroDerObservaciones: observacionesLinkKitDelanteroDer,
+          linkKitTraseroIzq: linkKitTraseroIzq, 
+          linkKitTraseroIzqObservaciones: observacionesLinkKitTraseroIzq,
+          linkKitTraseroDer: linkKitTraseroDer, 
+          linkKitTraseroDerObservaciones: observacionesLinkKitTraseroDer,
+          terminalInteriorIzq: terminalInteriorIzq, 
+          terminalInteriorIzqObservaciones: observacionesTerminalInteriorIzq,
+          terminalInteriorDer: terminalInteriorDer, 
+          terminalInteriorDerObservaciones: observacionesTerminalInteriorDer,
+          terminalExteriorIzq: terminalExteriorIzq, 
+          terminalExteriorIzqObservaciones: observacionesTerminalExteriorIzq,
+          terminalExteriorDer: terminalExteriorDer, 
+          terminalExteriorDerObservaciones: observacionesTerminalExteriorDer,
+          completado: true,
+          fechaRegistro: fechaRegistro,
+        );
+      if (ordenTrabajo.inspeccion.target == null) {
+        final nuevaInspeccion = Inspeccion(
+          completado: false,
+          fechaRegistro: fechaRegistro,
+        );
+        nuevaInspeccion.suspensionDireccion.target = nuevaSuspensionDireccion;
+        nuevaSuspensionDireccion.inspeccion.target = nuevaInspeccion;
+        dataBase.suspensionDireccionBox.put(nuevaSuspensionDireccion);
+        dataBase.inspeccionBox.put(nuevaInspeccion);
+        ordenTrabajo.inspeccion.target = nuevaInspeccion;
+        dataBase.ordenTrabajoBox.put(ordenTrabajo);
+        final nuevaInstruccionInspeccion = Bitacora(
+          instruccion: 'syncAgregarInspeccion',
+          usuario: prefs.getString("userId")!,
+          idEmprendimiento: 0,
+        ); //Se crea la nueva instruccion a realizar en bitacora
+        dataBase.bitacoraBox.put(nuevaInstruccionInspeccion);
+        final nuevaInstruccionSuspensionDireccion = Bitacora(
+          instruccion: 'syncAgregarSuspensionDireccion',
+          usuario: prefs.getString("userId")!,
+          idEmprendimiento: 0,
+        ); //Se crea la nueva instruccion a realizar en bitacora
+        dataBase.bitacoraBox.put(nuevaInstruccionSuspensionDireccion);
+        notifyListeners();
+        return true;
 
-    // final nuevaInstruccion = Bitacora(
-    //   instruccion: 'syncAgregarOrdenTrabajo',
-    //   usuario: prefs.getString("userId")!,
-    //   idEmprendimiento: 0,
-    // ); //Se crea la nueva instruccion a realizar en bitacora
-    
-    // final cliente = vehiculo?.cliente.target;
-    // // final formaPago = dataBase.formaPagoBox.get(idFormaPago!);
-    // if (cliente != null && vehiculo != null) {
-    //   nuevaOrdenTrabajo.cliente.target = cliente;
-    //   nuevaOrdenTrabajo.vehiculo.target = vehiculo;
-    //   // nuevaOrdenTrabajo.formaPago.target = formaPago;
-    //   nuevaOrdenTrabajo.usuario.target = usuario;
-    //   nuevaInstruccion.ordenTrabajo.target = nuevaOrdenTrabajo; //Se asigna la orden de trabajo a la nueva instrucción
-    //   nuevaOrdenTrabajo.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a la orden de trabajo
-    //   dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
-    //   dataBase.ordenTrabajoBox.put(nuevaOrdenTrabajo); //Agregamos la orden de trabajo en objectBox
-    //   usuario.ordenesTrabajo.add(nuevaOrdenTrabajo);
-    //   dataBase.usuariosBox.put(usuario);
-    //   notifyListeners();
-    //   return true;
-    // } else {
-    //   notifyListeners();
-    //   return false;
-    // }
+      } else {
+        nuevaSuspensionDireccion.inspeccion.target = ordenTrabajo.inspeccion.target;
+        ordenTrabajo.inspeccion.target!.suspensionDireccion.target = nuevaSuspensionDireccion;
+        dataBase.suspensionDireccionBox.put(nuevaSuspensionDireccion);
+        dataBase.inspeccionBox.put(ordenTrabajo.inspeccion.target!);
+        dataBase.ordenTrabajoBox.put(ordenTrabajo);
+        final nuevaInstruccionSuspensionDireccion = Bitacora(
+          instruccion: 'syncAgregarSuspensionDireccion',
+          usuario: prefs.getString("userId")!,
+          idEmprendimiento: 0,
+        ); //Se crea la nueva instruccion a realizar en bitacora
+        dataBase.bitacoraBox.put(nuevaInstruccionSuspensionDireccion);
+        notifyListeners();
+        return true;
+      }
+    } catch (e) {
+      return false;
+    }
   }
 
   void update(int id, String newNombre, String newApellidos, String newCurp, 

@@ -66,6 +66,7 @@ class OrdenTrabajo {
   final cliente = ToOne<Cliente>();
   final vehiculo = ToOne<Vehiculo>();
   final formaPago = ToOne<FormaPago>();
+  final inspeccion = ToOne<Inspeccion>();
   @Backlink()
   final observacion = ToMany<Observaciones>();
   @Backlink()
@@ -122,6 +123,323 @@ class Observaciones {
     required this.respuestaP9,
     required this.respuestaP10,
     required this.nombreAsesor,
+    DateTime? fechaRegistro,
+    this.idDBR,
+  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+}
+
+@Entity()
+class Inspeccion {
+  int id;
+  bool completado;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final ordenTrabajo = ToOne<OrdenTrabajo>();
+  final suspensionDireccion = ToOne<SuspensionDireccion>();
+  final motor = ToOne<Motor>();
+  final fluidos = ToOne<Fluidos>();
+  final frenos = ToOne<Frenos>();
+  final electrico = ToOne<Electrico>();
+  @Backlink()
+  final bitacora = ToMany<Bitacora>();
+
+  Inspeccion({
+    this.id = 0,
+    required this.completado,
+    DateTime? fechaRegistro,
+    this.idDBR,
+  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+}
+
+@Entity()
+class SuspensionDireccion {
+  int id;
+  String rotulaSuperiorIzq;
+  String? rotulaSuperiorIzqObservaciones;
+  String rotulaSuperiorDer;
+  String? rotulaSuperiorDerObservaciones;
+  String rotulaInferiorIzq;
+  String? rotulaInferiorIzqObservaciones;
+  String rotulaInferiorDer;
+  String? rotulaInferiorDerObservaciones;
+  String bujeHorquillaSuperiorIzq;
+  String? bujeHorquillaSuperiorIzqObservaciones;
+  String bujeHorquillaSuperiorDer;
+  String? bujeHorquillaSuperiorDerObservaciones;
+  String bujeHorquillaInferiorIzq;
+  String? bujeHorquillaInferiorIzqObservaciones;
+  String bujeHorquillaInferiorDer;
+  String? bujeHorquillaInferiorDerObservaciones;
+  String amortiguadorDelanteroIzq;
+  String? amortiguadorDelanteroIzqObservaciones;
+  String amortiguadorDelanteroDer;
+  String? amortiguadorDelanteroDerObservaciones;
+  String amortiguadorTraseroIzq;
+  String? amortiguadorTraseroIzqObservaciones;
+  String amortiguadorTraseroDer;
+  String? amortiguadorTraseroDerObservaciones;
+  String bujeBarraEstabilizadoraIzq;
+  String? bujeBarraEstabilizadoraIzqObservaciones;
+  String bujeBarraEstabilizadoraDer;
+  String? bujeBarraEstabilizadoraDerObservaciones;
+  String linkKitDelanteroIzq;
+  String? linkKitDelanteroIzqObservaciones;
+  String linkKitDelanteroDer;
+  String? linkKitDelanteroDerObservaciones;
+  String linkKitTraseroIzq;
+  String? linkKitTraseroIzqObservaciones;
+  String linkKitTraseroDer;
+  String? linkKitTraseroDerObservaciones;
+  String terminalInteriorIzq;
+  String? terminalInteriorIzqObservaciones;
+  String terminalInteriorDer;
+  String? terminalInteriorDerObservaciones;
+  String terminalExteriorIzq;
+  String? terminalExteriorIzqObservaciones;
+  String terminalExteriorDer;
+  String? terminalExteriorDerObservaciones;
+  bool completado;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final inspeccion = ToOne<Inspeccion>();
+  @Backlink()
+  final bitacora = ToMany<Bitacora>();
+
+  SuspensionDireccion({
+    this.id = 0,
+    required this.rotulaSuperiorIzq,
+    this.rotulaSuperiorIzqObservaciones,
+    required this.rotulaSuperiorDer,
+    this.rotulaSuperiorDerObservaciones,
+    required this.rotulaInferiorIzq,
+    this.rotulaInferiorIzqObservaciones,
+    required this.rotulaInferiorDer,
+    this.rotulaInferiorDerObservaciones,
+    required this.bujeHorquillaSuperiorIzq,
+    this.bujeHorquillaSuperiorIzqObservaciones,
+    required this.bujeHorquillaSuperiorDer,
+    this.bujeHorquillaSuperiorDerObservaciones,
+    required this.bujeHorquillaInferiorIzq,
+    this.bujeHorquillaInferiorIzqObservaciones,
+    required this.bujeHorquillaInferiorDer,
+    this.bujeHorquillaInferiorDerObservaciones,
+    required this.amortiguadorDelanteroIzq,
+    this.amortiguadorDelanteroIzqObservaciones,
+    required this.amortiguadorDelanteroDer,
+    this.amortiguadorDelanteroDerObservaciones,
+    required this.amortiguadorTraseroIzq,
+    this.amortiguadorTraseroIzqObservaciones,
+    required this.amortiguadorTraseroDer,
+    this.amortiguadorTraseroDerObservaciones,
+    required this.bujeBarraEstabilizadoraIzq,
+    this.bujeBarraEstabilizadoraIzqObservaciones,
+    required this.bujeBarraEstabilizadoraDer,
+    this.bujeBarraEstabilizadoraDerObservaciones,
+    required this.linkKitDelanteroIzq,
+    this.linkKitDelanteroIzqObservaciones,
+    required this.linkKitDelanteroDer,
+    this.linkKitDelanteroDerObservaciones,
+    required this.linkKitTraseroIzq,
+    this.linkKitTraseroIzqObservaciones,
+    required this.linkKitTraseroDer,
+    this.linkKitTraseroDerObservaciones,
+    required this.terminalInteriorIzq,
+    this.terminalInteriorIzqObservaciones,
+    required this.terminalInteriorDer,
+    this.terminalInteriorDerObservaciones,
+    required this.terminalExteriorIzq,
+    this.terminalExteriorIzqObservaciones,
+    required this.terminalExteriorDer,
+    this.terminalExteriorDerObservaciones,
+    required this.completado,
+    DateTime? fechaRegistro,
+    this.idDBR,
+  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+}
+
+@Entity()
+class Motor {
+  int id;
+  String aceite;
+  String? aceiteObservaciones;
+  String filtroDeAceite;
+  String? filtroDeAceiteObservaciones;
+  String cpoDeAceleracion;
+  String? cpoDeAceleracionObservaciones;
+  String bujias;
+  String? bujiasObservaciones;
+  String bandaCadenaDeTiempo;
+  String? bandaCadenaDeTiempoObservaciones;
+  String soportes;
+  String? soportesObservaciones;
+  String bandas;
+  String? bandasObservaciones;
+  String mangueras;
+  String? manguerasObservaciones;
+  bool completado;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final inspeccion = ToOne<Inspeccion>();
+  @Backlink()
+  final bitacora = ToMany<Bitacora>();
+
+  Motor({
+    this.id = 0,
+    required this.aceite,
+    this.aceiteObservaciones,
+    required this.filtroDeAceite,
+    this.filtroDeAceiteObservaciones,
+    required this.cpoDeAceleracion,
+    this.cpoDeAceleracionObservaciones,
+    required this.bujias,
+    this.bujiasObservaciones,
+    required this.bandaCadenaDeTiempo,
+    this.bandaCadenaDeTiempoObservaciones,
+    required this.soportes,
+    this.soportesObservaciones,
+    required this.bandas,
+    this.bandasObservaciones,
+    required this.mangueras,
+    this.manguerasObservaciones,
+    required this.completado,
+    DateTime? fechaRegistro,
+    this.idDBR,
+  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+}
+
+@Entity()
+class Fluidos {
+  int id;
+  String atf;
+  String? atfObservaciones;
+  String power;
+  String? powerObservaciones;
+  String frenos;
+  String? frenosObservaciones;
+  String anticongelante;
+  String? anticongelanteObservaciones;
+  String wipers;
+  String? wipersObservaciones;
+  bool completado;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final inspeccion = ToOne<Inspeccion>();
+  @Backlink()
+  final bitacora = ToMany<Bitacora>();
+
+  Fluidos({
+    this.id = 0,
+    required this.atf,
+    this.atfObservaciones,
+    required this.power,
+    this.powerObservaciones,
+    required this.frenos,
+    this.frenosObservaciones,
+    required this.anticongelante,
+    this.anticongelanteObservaciones,
+    required this.wipers,
+    this.wipersObservaciones,
+    required this.completado,
+    DateTime? fechaRegistro,
+    this.idDBR,
+  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+}
+
+@Entity()
+class Frenos {
+  int id;
+  String balatasDelanteras;
+  String? balatasDelanterasObservaciones;
+  String balatasTraserasDiscoTambor;
+  String? balatasTraserasDiscoTamborObservaciones;
+  String manguerasLineas;
+  String? manguerasLineasObservaciones;
+  String cilindroMaestro;
+  String? cilindroMaestroObservaciones;
+  String birlosYTuercas;
+  String? birlosYTuercasObservaciones;
+  bool completado;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final inspeccion = ToOne<Inspeccion>();
+  @Backlink()
+  final bitacora = ToMany<Bitacora>();
+
+  Frenos({
+    this.id = 0,
+    required this.balatasDelanteras,
+    this.balatasDelanterasObservaciones,
+    required this.balatasTraserasDiscoTambor,
+    this.balatasTraserasDiscoTamborObservaciones,
+    required this.manguerasLineas,
+    this.manguerasLineasObservaciones,
+    required this.cilindroMaestro,
+    this.cilindroMaestroObservaciones,
+    required this.birlosYTuercas,
+    this.birlosYTuercasObservaciones,
+    required this.completado,
+    DateTime? fechaRegistro,
+    this.idDBR,
+  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+}
+
+@Entity()
+class Electrico {
+  int id;
+  String terminalesDeBaterias;
+  String? terminalesDeBateriasObservaciones;
+  String lucesFrenos;
+  String? lucesFrenosObservaciones;
+  String lucesDireccionales;
+  String? lucesDireccionalesObservaciones;
+  String lucesCuartos;
+  String? lucesCuartosObservaciones;
+  String checkEngine;
+  String? checkEngineObservaciones;
+  bool completado;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final inspeccion = ToOne<Inspeccion>();
+  @Backlink()
+  final bitacora = ToMany<Bitacora>();
+
+  Electrico({
+    this.id = 0,
+    required this.terminalesDeBaterias,
+    this.terminalesDeBateriasObservaciones,
+    required this.lucesFrenos,
+    this.lucesFrenosObservaciones,
+    required this.lucesDireccionales,
+    this.lucesDireccionalesObservaciones,
+    required this.lucesCuartos,
+    this.lucesCuartosObservaciones,
+    required this.checkEngine,
+    this.checkEngineObservaciones,
+    required this.completado,
     DateTime? fechaRegistro,
     this.idDBR,
   }) : fechaRegistro = fechaRegistro ?? DateTime.now();
@@ -399,6 +717,12 @@ class Bitacora {
   final vehiculo = ToOne<Vehiculo>();
   final ordenTrabajo = ToOne<OrdenTrabajo>();
   final observacion = ToOne<Observaciones>();
+  final inspeccion = ToOne<Inspeccion>();
+  final suspensionDireccion = ToOne<SuspensionDireccion>();
+  final motor = ToOne<Motor>();
+  final fluidos = ToOne<Fluidos>();
+  final frenos = ToOne<Frenos>();
+  final electrico = ToOne<Electrico>();
   @Backlink()
   final emprendedores = ToMany<Emprendedores>();
   @Backlink()
