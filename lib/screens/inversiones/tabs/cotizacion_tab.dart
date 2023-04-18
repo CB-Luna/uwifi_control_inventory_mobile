@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:taller_alex_app_asesor/providers/sync_provider_emi_web.dart';
 import 'package:taller_alex_app_asesor/screens/inversiones/detalle_cotizacion.dart';
 import 'package:taller_alex_app_asesor/screens/inversiones/editar_producto_inversion.dart';
-import 'package:taller_alex_app_asesor/screens/productos/productos_emprendedor_screen.dart';
 import 'package:taller_alex_app_asesor/screens/screens.dart';
 import 'package:taller_alex_app_asesor/screens/sync/cotizaciones_emi_web_screen.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';

@@ -12,7 +12,6 @@ import 'package:taller_alex_app_asesor/database/object_box_database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'providers/database_providers/cliente_controller.dart';
-import 'providers/database_providers/consultoria_controller.dart';
 import 'providers/database_providers/diagnostico_controller.dart';
 import 'providers/database_providers/electrico_controller.dart';
 import 'providers/database_providers/emprendedor_controller.dart';
@@ -26,7 +25,6 @@ import 'providers/database_providers/producto_venta_controller.dart';
 import 'providers/database_providers/producto_inversion_jornada_controller.dart';
 import 'providers/database_providers/suspension_direccion_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
-import 'providers/database_providers/jornada_controller.dart';
 import 'package:taller_alex_app_asesor/providers/catalogo_emi_web_provider.dart';
 import 'package:taller_alex_app_asesor/providers/sync_provider_emi_web.dart';
 import 'package:taller_alex_app_asesor/providers/catalogo_pocketbase_provider.dart';
@@ -131,14 +129,6 @@ void main() async {
         ),
         ChangeNotifierProvider<EmprendedorController>(
           create: (context) => EmprendedorController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<JornadaController>(
-          create: (context) => JornadaController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<ConsultoriaController>(
-          create: (context) => ConsultoriaController(),
           lazy: false,
         ),
         ChangeNotifierProvider<InversionController>(

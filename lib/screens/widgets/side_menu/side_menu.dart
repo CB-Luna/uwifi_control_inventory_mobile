@@ -8,14 +8,13 @@ import 'package:taller_alex_app_asesor/providers/database_providers/usuario_cont
 import 'package:taller_alex_app_asesor/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_cerrar_sesion.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_recover_catalogos.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_recover_proyectos.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_sincronizar_widget.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/providers/providers.dart';
-import 'package:taller_alex_app_asesor/screens/emprendedores/clientes_screen.dart';
+import 'package:taller_alex_app_asesor/screens/clientes/clientes_screen.dart';
 import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/side_menu/custom_menu_item.dart';
 
@@ -269,49 +268,6 @@ class SideMenu extends StatelessWidget {
                       iconData: Icons.downloading_outlined,
                       lineHeight: 1.2,
                       onTap: () async {
-                        if (currentUser.rol.target!.rol == "Amigo del Cambio" ||
-                            currentUser.rol.target!.rol == "Emprendedor") {
-                          snackbarKey.currentState
-                              ?.showSnackBar(const SnackBar(
-                            content: Text(
-                                "Este usuario no tiene permisos para esta acción."),
-                          ));
-                        } else {
-                          List<ProdProyecto> listProdProyecto =
-                            dataBase.productosProyectoBox.getAll();
-                          if (listProdProyecto.isNotEmpty) {
-                            final connectivityResult =
-                                await (Connectivity().checkConnectivity());
-                            await showModalBottomSheet(
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              context: context,
-                              builder: (context) {
-                                return Padding(
-                                  padding: MediaQuery.of(context).viewInsets,
-                                  child: SizedBox(
-                                    height:
-                                        MediaQuery.of(context).size.height * 0.45,
-                                    child: connectivityResult ==
-                                                ConnectivityResult.none 
-                                        ? const BottomSheetRecoverProyectosWidget(
-                                            isVisible: false,
-                                          )
-                                        : const BottomSheetRecoverProyectosWidget(
-                                            isVisible: true,
-                                          ),
-                                  ),
-                                );
-                              },
-                            );
-                          } else {
-                              snackbarKey.currentState
-                                ?.showSnackBar(const SnackBar(
-                              content: Text(
-                                  "Para esta acción es necesario descargar primero los catálogos."),
-                            ));
-                          }
-                        }
                       },
                     ),
 

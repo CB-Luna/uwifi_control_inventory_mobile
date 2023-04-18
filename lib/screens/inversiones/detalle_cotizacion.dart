@@ -2,11 +2,7 @@ import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/cotizacion_controller.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/producto_emprendedor_controller.dart';
-import 'package:taller_alex_app_asesor/screens/productos/editar_producto_emprendedor.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

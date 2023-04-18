@@ -13,7 +13,6 @@ import 'package:taller_alex_app_asesor/screens/widgets/pdf/api/pdf_api.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/invoice_info.dart';
 import 'package:taller_alex_app_asesor/screens/inversiones/agregar_primer_producto_inversion_screen.dart';
 import 'package:taller_alex_app_asesor/screens/inversiones/main_tab_opciones.dart';
-import 'package:taller_alex_app_asesor/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
@@ -128,16 +127,6 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                DetalleEmprendimientoScreen(
-                                              idEmprendimiento:
-                                                  actualEmprendimiento!.id,
-                                            ),
-                                          ),
-                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
