@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/screens/emprendedores/clientes_screen.dart';
+import 'package:taller_alex_app_asesor/screens/clientes/clientes_screen.dart';
 
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 

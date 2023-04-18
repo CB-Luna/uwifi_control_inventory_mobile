@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/screens/cotizacion/cotizacion_screen.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/inspeccion_screen.dart';
-import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/diagnostico/diagnostico_screen.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/agregar_observacion_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/componentes/widgets/recepcion_screen.dart';

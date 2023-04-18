@@ -7,7 +7,7 @@ import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 import 'package:taller_alex_app_asesor/screens/sync/descarga_catalogos_pocketbase_screen.dart';
-import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
 
 class DescargaCatalogosEmiWebScreen extends StatefulWidget {
   const DescargaCatalogosEmiWebScreen({Key? key}) : super(key: key);
@@ -184,7 +184,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  const EmprendimientosScreen(),
+                                                  const OrdenesTrabajoScreen(),
                                             ),
                                           );
                                         }

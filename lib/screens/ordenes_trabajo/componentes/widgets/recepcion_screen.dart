@@ -7,7 +7,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_widgets.dart';
-import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/agregar_observacion_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
@@ -110,7 +110,7 @@ class _RecepcionScreenState extends State<RecepcionScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              const EmprendimientosScreen(),
+                              const OrdenesTrabajoScreen(),
                         ),
                       );
                     },

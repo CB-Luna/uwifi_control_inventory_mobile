@@ -92,7 +92,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  const EmprendimientosScreen(),
+                                                  const OrdenesTrabajoScreen(),
                                             ),
                                           );
                                         },

@@ -776,7 +776,7 @@ class _CotizacionTabState extends State<CotizacionTab>
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const EmprendimientosScreen(),
+                                                    const OrdenesTrabajoScreen(),
                                               ),
                                             );
 
@@ -876,7 +876,7 @@ class _CotizacionTabState extends State<CotizacionTab>
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const EmprendimientosScreen(),
+                                                    const OrdenesTrabajoScreen(),
                                               ),
                                             );
 
@@ -987,7 +987,7 @@ class _CotizacionTabState extends State<CotizacionTab>
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const EmprendimientosScreen(),
+                                                    const OrdenesTrabajoScreen(),
                                               ),
                                             );
 

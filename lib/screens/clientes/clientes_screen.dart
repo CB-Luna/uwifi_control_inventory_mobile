@@ -9,7 +9,6 @@ import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:taller_alex_app_asesor/util/util.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/emprendedor_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
-import 'package:taller_alex_app_asesor/screens/emprendedores/detalle_emprendedor_screen.dart';
 import 'package:taller_alex_app_asesor/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_button.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';

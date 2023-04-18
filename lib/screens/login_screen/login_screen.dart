@@ -8,7 +8,7 @@ import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/providers.dart';
 import 'package:taller_alex_app_asesor/providers/roles_pocketbase_provider.dart';
-import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/toggle_icon.dart';
 import 'package:taller_alex_app_asesor/services/auth_service.dart';
 
@@ -386,7 +386,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const EmprendimientosScreen(),
+                                          const OrdenesTrabajoScreen(),
                                     ),
                                   );
                                 } else {
@@ -478,7 +478,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const EmprendimientosScreen(),
+                                              const OrdenesTrabajoScreen(),
                                         ),
                                       );
                                     } else {

@@ -6,7 +6,7 @@ import 'package:taller_alex_app_asesor/providers/catalogo_pocketbase_provider.da
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:lottie/lottie.dart';
-import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class DescargaCatalogosPocketbaseScreen extends StatefulWidget {
@@ -162,7 +162,7 @@ class _DescargaCatalogosPocketbaseScreenState extends State<DescargaCatalogosPoc
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const EmprendimientosScreen(),
+                                              const OrdenesTrabajoScreen(),
                                         ),
                                       );
                                     }
@@ -222,7 +222,7 @@ class _DescargaCatalogosPocketbaseScreenState extends State<DescargaCatalogosPoc
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const EmprendimientosScreen(),
+                                                    const OrdenesTrabajoScreen(),
                                               ),
                                             );
                                         }

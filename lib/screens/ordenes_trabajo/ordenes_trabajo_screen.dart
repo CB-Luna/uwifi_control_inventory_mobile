@@ -1,6 +1,5 @@
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/agregar_cliente_screen.dart';
-import 'package:taller_alex_app_asesor/screens/emprendimientos/components/tarjeta_orden_trabajo_descripcion.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/agregar_orden_trabajo_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,14 +10,16 @@ import 'package:taller_alex_app_asesor/providers/database_providers/usuario_cont
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/side_menu/side_menu.dart';
 
-class EmprendimientosScreen extends StatefulWidget {
-  const EmprendimientosScreen({Key? key}) : super(key: key);
+import 'componentes/tarjeta_orden_trabajo_descripcion.dart';
+
+class OrdenesTrabajoScreen extends StatefulWidget {
+  const OrdenesTrabajoScreen({Key? key}) : super(key: key);
 
   @override
-  State<EmprendimientosScreen> createState() => _EmprendimientosScreenState();
+  State<OrdenesTrabajoScreen> createState() => _OrdenesTrabajoScreenState();
 }
 
-class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
+class _OrdenesTrabajoScreenState extends State<OrdenesTrabajoScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   List<OrdenTrabajo> ordenesTrabajo = [];
@@ -333,7 +334,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                         //   context,
                                         //   MaterialPageRoute(
                                         //     builder: (context) =>
-                                        //         GridEmprendimientosScreen(
+                                        //         GridOrdenesTrabajoScreen(
                                         //       emprendimientos: emprendimientos,
                                         //     ),
                                         //   ),

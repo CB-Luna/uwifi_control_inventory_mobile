@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
-import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
 
 class DescargaProyectosExternosEmiWebScreen extends StatefulWidget {
   final Usuarios usuario;
@@ -195,7 +195,7 @@ class _DescargaProyectosExternosEmiWebScreenState extends State<DescargaProyecto
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  const EmprendimientosScreen(),
+                                                  const OrdenesTrabajoScreen(),
                                             ),
                                           );
                                         }

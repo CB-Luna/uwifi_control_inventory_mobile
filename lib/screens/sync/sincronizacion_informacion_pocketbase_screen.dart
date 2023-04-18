@@ -12,7 +12,7 @@ import 'package:taller_alex_app_asesor/theme/theme.dart';
 
 import 'package:taller_alex_app_asesor/providers/sync_provider_pocketbase.dart';
 
-import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class SincronizacionInformacionPocketbaseScreen extends StatefulWidget {
@@ -182,7 +182,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const EmprendimientosScreen(),
+                                              const OrdenesTrabajoScreen(),
                                         ),
                                       );
                                       syncProviderPocketbase.procesoTerminado(false);
@@ -421,7 +421,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  const EmprendimientosScreen(),
+                                                  const OrdenesTrabajoScreen(),
                                             ),
                                           );
                                         },

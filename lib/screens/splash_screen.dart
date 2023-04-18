@@ -76,7 +76,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     if (snapshot.data![0] == '') {
                       return const LoginScreen();
                     } else {
-                      return const EmprendimientosScreen();
+                      return const OrdenesTrabajoScreen();
                     }
                   },
                 );
