@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,9 +6,7 @@ import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 
 import 'package:taller_alex_app_asesor/util/util.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/emprendedor_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
-import 'package:taller_alex_app_asesor/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_button.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/side_menu/side_menu.dart';
@@ -32,24 +29,14 @@ class _ClientesScreenState extends State<ClientesScreen> {
   void initState() {
     super.initState();
     setState(() {
-      getInfo();
       clientes = [];
       clientes = context.read<UsuarioController>().obtenerClientes();
     });
   }
 
-  getInfo() {
-    //print("PREFERS: ${prefs.getString("userId")}");
-    context.read<EmprendedorController>().getEmprendedoresActualUser(
-        context.read<UsuarioController>().getEmprendimientos());
-  }
 
   @override
   Widget build(BuildContext context) {
-    final usuarioProvider = Provider.of<UsuarioController>(context);
-    final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
-    const String currentUserPhoto =
-        'assets/images/default-user-profile-picture.jpg';
     clientes = [];
     clientes = context.read<UsuarioController>().obtenerClientes();
     return WillPopScope(
