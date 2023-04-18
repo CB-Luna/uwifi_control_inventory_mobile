@@ -252,7 +252,7 @@ class _RecepcionScreenState extends State<RecepcionScreen> {
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
             child: LinearPercentIndicator(
-              percent: 0.2,
+              percent: widget.ordenTrabajo.estatus.target!.avance,
               width: MediaQuery.of(context).size.width * 0.9,
               lineHeight: 24,
               animation: true,
@@ -280,7 +280,7 @@ class _RecepcionScreenState extends State<RecepcionScreen> {
                       ),
                     ),
                     Text(
-                      '20%',
+                      '${widget.ordenTrabajo.estatus.target!.avance * 100} %',
                       style: FlutterFlowTheme.of(context).title1.override(
                             fontFamily: 'Outfit',
                             color:
@@ -301,7 +301,7 @@ class _RecepcionScreenState extends State<RecepcionScreen> {
                       ),
                     ),
                     Text(
-                      'Revisión',
+                      '${widget.ordenTrabajo.estatus.target?.estatus}',
                       style: FlutterFlowTheme.of(context).title1,
                     ),
                   ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/modelsLocales/estatus/estatus_data.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
 class OrdenTrabajoController extends ChangeNotifier {
 
@@ -76,6 +77,11 @@ class OrdenTrabajoController extends ChangeNotifier {
     final cliente = vehiculo?.cliente.target;
     // final formaPago = dataBase.formaPagoBox.get(idFormaPago!);
     if (cliente != null && vehiculo != null) {
+      //Inscrito
+      final estatus = listaEstatusData.elementAt(0);
+      dataBase.estatusBox.put(estatus);
+      nuevaOrdenTrabajo.estatus.target = estatus;
+
       nuevaOrdenTrabajo.cliente.target = cliente;
       nuevaOrdenTrabajo.vehiculo.target = vehiculo;
       // nuevaOrdenTrabajo.formaPago.target = formaPago;

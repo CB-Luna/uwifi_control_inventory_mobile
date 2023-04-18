@@ -4,11 +4,11 @@ import 'package:im_stepper/stepper.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/suspension_direccion_controller.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/suspension_direccion/components/seccion_dos_formulario.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/suspension_direccion/components/seccion_tres_formulario.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/suspension_direccion/components/seccion_uno_formulario.dart';
-import 'package:taller_alex_app_asesor/screens/inspeccion/suspension_direccion/components/suspension_direccion_no_agregada_screen.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/suspension_direccion/suspension_direccion_agregada_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/detalle_orden_trabajo_screen.dart';
 
@@ -255,16 +255,9 @@ class _SuspensionDireccionScreen extends State<SuspensionDireccionScreen> {
                                 ),
                               );
                             } else {
-                              suspensionDireccionProvider.limpiarInformacion();
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      SuspensionDireccionNoAgregadaScreen(
-                                        ordenTrabajo: widget.ordenTrabajo,
-                                      ),
-                                ),
-                              );
+                              snackbarKey.currentState?.showSnackBar(const SnackBar(
+                                content: Text("No se pudo agregar información de la suspensión y dirección, intente más tarde."),
+                              ));
                             }
                             } else {
                               await showDialog(

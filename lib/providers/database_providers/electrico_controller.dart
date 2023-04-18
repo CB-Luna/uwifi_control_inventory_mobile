@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/modelsLocales/estatus/estatus_data.dart';
 
 class ElectricoController extends ChangeNotifier {
 
@@ -203,40 +204,76 @@ class ElectricoController extends ChangeNotifier {
   }
 
   
-    bool add(Usuarios usuario, String medida) {
-    return true;
-    // final nuevaOrdenTrabajo = OrdenTrabajo(
-    //   fechaOrden: fechaOrden!,
-    //   gasolina: gasolina,
-    //   kilometrajeMillaje: "$kilometrajeMillaje $medida",
-    //   descripcionFalla: descripcionFalla,  
-    // );
+  bool agregarSistemaElectrico(OrdenTrabajo ordenTrabajo) {
+    try {
+      //Se válida que la inspección exista en la orden de trabajo
+      final fechaRegistro =  DateTime.now();
+      final nuevoElectrico = Electrico(
+          terminalesDeBaterias: terminalesDeBateria,
+          terminalesDeBateriasObservaciones: observacionesTerminalesDeBateria,
+          lucesFrenos: lucesFrenos,
+          lucesFrenosObservaciones: observacionesLucesFrenos,
+          lucesDireccionales: lucesDireccionales,
+          lucesDireccionalesObservaciones: observacionesLucesDireccionales,
+          lucesCuartos: lucesCuartos,
+          lucesCuartosObservaciones: observacionesLucesCuartos,
+          checkEngine: checkEngine,
+          checkEngineObservaciones: observacionesCheckEngine,
+          completado: true,
+          fechaRegistro: fechaRegistro,
+        );
+      //Inspección
+      if (ordenTrabajo.estatus.target!.estatus == "Observación")  {
+        final estatus = listaEstatusData.elementAt(2);
+        dataBase.estatusBox.put(estatus);
+        ordenTrabajo.estatus.target = estatus;
+      } else{
+        // ordenTrabajo.estatus.target!.avance += 0.05; 
+      }
+      if (ordenTrabajo.inspeccion.target == null) {
+        final nuevaInspeccion = Inspeccion(
+          completado: false,
+          fechaRegistro: fechaRegistro,
+        );
+        nuevaInspeccion.electrico.target = nuevoElectrico;
+        nuevoElectrico.inspeccion.target = nuevaInspeccion;
+        dataBase.electricoBox.put(nuevoElectrico);
+        dataBase.inspeccionBox.put(nuevaInspeccion);
+        ordenTrabajo.inspeccion.target = nuevaInspeccion;
+        dataBase.ordenTrabajoBox.put(ordenTrabajo);
+        final nuevaInstruccionInspeccion = Bitacora(
+          instruccion: 'syncAgregarInspeccion',
+          usuario: prefs.getString("userId")!,
+          idEmprendimiento: 0,
+        ); //Se crea la nueva instruccion a realizar en bitacora
+        dataBase.bitacoraBox.put(nuevaInstruccionInspeccion);
+        final nuevaInstruccionElectrico = Bitacora(
+          instruccion: 'syncAgregarElectrico',
+          usuario: prefs.getString("userId")!,
+          idEmprendimiento: 0,
+        ); //Se crea la nueva instruccion a realizar en bitacora
+        dataBase.bitacoraBox.put(nuevaInstruccionElectrico);
+        notifyListeners();
+        return true;
 
-    // final nuevaInstruccion = Bitacora(
-    //   instruccion: 'syncAgregarOrdenTrabajo',
-    //   usuario: prefs.getString("userId")!,
-    //   idEmprendimiento: 0,
-    // ); //Se crea la nueva instruccion a realizar en bitacora
-    
-    // final cliente = vehiculo?.cliente.target;
-    // // final formaPago = dataBase.formaPagoBox.get(idFormaPago!);
-    // if (cliente != null && vehiculo != null) {
-    //   nuevaOrdenTrabajo.cliente.target = cliente;
-    //   nuevaOrdenTrabajo.vehiculo.target = vehiculo;
-    //   // nuevaOrdenTrabajo.formaPago.target = formaPago;
-    //   nuevaOrdenTrabajo.usuario.target = usuario;
-    //   nuevaInstruccion.ordenTrabajo.target = nuevaOrdenTrabajo; //Se asigna la orden de trabajo a la nueva instrucción
-    //   nuevaOrdenTrabajo.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a la orden de trabajo
-    //   dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
-    //   dataBase.ordenTrabajoBox.put(nuevaOrdenTrabajo); //Agregamos la orden de trabajo en objectBox
-    //   usuario.ordenesTrabajo.add(nuevaOrdenTrabajo);
-    //   dataBase.usuariosBox.put(usuario);
-    //   notifyListeners();
-    //   return true;
-    // } else {
-    //   notifyListeners();
-    //   return false;
-    // }
+      } else {
+        nuevoElectrico.inspeccion.target = ordenTrabajo.inspeccion.target;
+        ordenTrabajo.inspeccion.target!.electrico.target = nuevoElectrico;
+        dataBase.electricoBox.put(nuevoElectrico);
+        dataBase.inspeccionBox.put(ordenTrabajo.inspeccion.target!);
+        dataBase.ordenTrabajoBox.put(ordenTrabajo);
+        final nuevaInstruccionElectrico = Bitacora(
+          instruccion: 'syncAgregarElectrico',
+          usuario: prefs.getString("userId")!,
+          idEmprendimiento: 0,
+        ); //Se crea la nueva instruccion a realizar en bitacora
+        dataBase.bitacoraBox.put(nuevaInstruccionElectrico);
+        notifyListeners();
+        return true;
+      }
+    } catch (e) {
+      return false;
+    }
   }
 
   void update(int id, String newNombre, String newApellidos, String newCurp, 

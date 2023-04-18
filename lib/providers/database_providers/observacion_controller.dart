@@ -3,6 +3,7 @@ import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/modelsFormularios/opciones_observaciones.dart';
+import 'package:taller_alex_app_asesor/modelsLocales/estatus/estatus_data.dart';
 import 'package:taller_alex_app_asesor/util/util.dart';
 class ObservacionController extends ChangeNotifier {
   final observaciones1FormKey = GlobalKey<FormState>();
@@ -146,6 +147,12 @@ class ObservacionController extends ChangeNotifier {
       respuestaP10: respuestaP10,
       nombreAsesor: "${usuario.nombre} ${usuario.apellidoP} ${usuario.apellidoM}"
     );
+    //Observación
+    if (ordenTrabajo.estatus.target!.estatus == "Recepción")  {
+      final estatus = listaEstatusData.elementAt(1);
+      dataBase.estatusBox.put(estatus);
+      ordenTrabajo.estatus.target = estatus;
+    }
 
     final nuevaInstruccion = Bitacora(
       instruccion: 'syncAgregarObservacion',

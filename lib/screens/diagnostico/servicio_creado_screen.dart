@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/screens/emprendedores/clientes_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/detalle_orden_trabajo_screen.dart';
 
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-class SuspensionDireccionAgregadaScreen extends StatefulWidget {
+class ServicioCreadoScreen extends StatefulWidget {
   final OrdenTrabajo ordenTrabajo;
-
-  const SuspensionDireccionAgregadaScreen({
+  const ServicioCreadoScreen({
     Key? key, 
     required this.ordenTrabajo
   }) : super(key: key);
 
   @override
-  State<SuspensionDireccionAgregadaScreen> createState() => _SuspensionDireccionAgregadaScreenState();
+  State<ServicioCreadoScreen> createState() => _ServicioCreadoScreenState();
 }
 
-class _SuspensionDireccionAgregadaScreenState extends State<SuspensionDireccionAgregadaScreen> {
+class _ServicioCreadoScreenState extends State<ServicioCreadoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -42,7 +43,7 @@ class _SuspensionDireccionAgregadaScreenState extends State<SuspensionDireccionA
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Información de \nSuspensión/ Dirección\nagregada!',
+                        '¡Servicio\nAsignado!',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -85,9 +86,8 @@ class _SuspensionDireccionAgregadaScreenState extends State<SuspensionDireccionA
                             MaterialPageRoute(
                               builder: (context) =>
                                   DetalleOrdenTrabajoScreen(
-                                    ordenTrabajo: widget.ordenTrabajo, 
-                                    pantalla: "pantallaInspeccion",
-                                  ),
+                                    ordenTrabajo: widget.ordenTrabajo,
+                                    pantalla: "pantallaRecepcion",),
                             ),
                           );
                         },

@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as libraryBage;
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
@@ -1112,13 +1112,13 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
                                             5, 0, 5, 10),
-                                    child: Badge(
+                                    child: libraryBage.Badge(
                                       badgeContent: Text(totalProductos,
                                           style: const TextStyle(
                                               color: Colors.white)),
                                       showBadge: true,
                                       badgeColor: const Color(0xFFD20030),
-                                      position: BadgePosition.topEnd(),
+                                      position: libraryBage.BadgePosition.topEnd(),
                                       elevation: 4,
                                       child: FFButtonWidget(
                                         onPressed: () async {

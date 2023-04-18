@@ -13,6 +13,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'providers/database_providers/cliente_controller.dart';
 import 'providers/database_providers/consultoria_controller.dart';
+import 'providers/database_providers/diagnostico_controller.dart';
 import 'providers/database_providers/electrico_controller.dart';
 import 'providers/database_providers/emprendedor_controller.dart';
 import 'providers/database_providers/emprendimiento_controller.dart';
@@ -113,6 +114,10 @@ void main() async {
         ),
         ChangeNotifierProvider<ElectricoController>(
           create: (context) => ElectricoController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<DiagnosticoController>(
+          create: (context) => DiagnosticoController(),
           lazy: false,
         ),
         ChangeNotifierProvider<EmprendimientoController>(

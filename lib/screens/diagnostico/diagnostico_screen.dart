@@ -1,6 +1,10 @@
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/screens/diagnostico/create_appointment_widget.dart';
+import 'package:taller_alex_app_asesor/screens/diagnostico/agregar_diagnostico_screen.dart';
+import 'package:taller_alex_app_asesor/screens/diagnostico/servicio_creado_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +14,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 class DiagnosticoScreen extends StatefulWidget {
-  const DiagnosticoScreen({Key? key}) : super(key: key);
+  final OrdenTrabajo ordenTrabajo;
+  const DiagnosticoScreen({
+    Key? key, 
+    required this.ordenTrabajo
+    }) : super(key: key);
 
   @override
   _DiagnosticoScreenState createState() => _DiagnosticoScreenState();
@@ -152,7 +160,10 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
               type: PageTransitionType.bottomToTop,
               duration: Duration(milliseconds: 240),
               reverseDuration: Duration(milliseconds: 240),
-              child: CreateAppointmentWidget(),
+              child: AgregarDiagnosticoScreen(
+                vehiculo: widget.ordenTrabajo.vehiculo.target!,
+                ordenTrabajo: widget.ordenTrabajo
+                ,),
             ),
           );
         },
@@ -169,9 +180,16 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
         automaticallyImplyLeading: false,
         title: Text(
           'Diagnóstico',
-          style: FlutterFlowTheme.of(context).title2,
+          textAlign: TextAlign.center,
+          style:
+              FlutterFlowTheme.of(context).bodyText1.override(
+                    fontFamily: FlutterFlowTheme.of(context)
+                        .bodyText1Family,
+                    color: FlutterFlowTheme.of(context).tertiaryColor,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
         ),
-        actions: [],
         centerTitle: false,
         elevation: 0,
       ),
@@ -186,8 +204,16 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                   child: Text(
-                    'In Progress',
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    'Solicitadas',
+                    textAlign: TextAlign.center,
+                    style:
+                        FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: FlutterFlowTheme.of(context)
+                                  .bodyText1Family,
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
                   ).animateOnPageLoad(
                       animationsMap['textOnPageLoadAnimation1']!),
                 ),
@@ -231,157 +257,191 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                   ],
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          8, 0, 0, 0),
-                                      child: Builder(
-                                        builder: (context) {
-                                          return Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Expanded(
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(8, 4, 0, 4),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "hola",
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Outfit',
-                                                                  fontSize: 12,
-                                                                ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0, 4, 0, 0),
-                                                        child: Text(
-                                                          "listViewCarAppointmentsRecord",
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .subtitle1,
+                                child: Slidable(
+                                  startActionPane: ActionPane(
+                                motion: const DrawerMotion(),
+                                children: [
+                                  SlidableAction(
+                                      label: "Aceptar",
+                                      icon: Icons
+                                          .check_circle_outline,
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context).primaryColor,
+                                      onPressed: (context) async {
+                                      }),
+                                  SlidableAction(
+                                      label: "Rechazar",
+                                      icon: Icons
+                                          .cancel_outlined,
+                                      backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
+                                      onPressed: (context) async {
+                                      }),
+                                ]),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            8, 0, 0, 0),
+                                        child: Builder(
+                                          builder: (context) {
+                                            return Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding: EdgeInsetsDirectional
+                                                        .fromSTEB(8, 4, 0, 4),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          "Nombre Del Técnico Encargado",
+                                                          style:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyText2
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Outfit',
+                                                                    fontSize: 12,
+                                                                  ),
                                                         ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0, 4, 0, 0),
-                                                        child: Text(
-                                                          formatNumber(
-                                                            54456,
-                                                            formatType:
-                                                                FormatType
-                                                                    .decimal,
-                                                            decimalType:
-                                                                DecimalType
-                                                                    .automatic,
-                                                            currency: '#',
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0, 4, 0, 0),
+                                                          child: Text(
+                                                            "Calibración de Llantas",
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .subtitle1,
                                                           ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText2,
                                                         ),
-                                                      ),
-                                                    ],
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0, 4, 0, 0),
+                                                          child: Text(
+                                                            "${formatNumber(
+                                                              119.99,
+                                                              formatType:
+                                                                  FormatType
+                                                                      .decimal,
+                                                              decimalType:
+                                                                  DecimalType
+                                                                      .automatic,
+                                                              currency: '\$',
+                                                            )} (Costo Servicio)",
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText2,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              ClipRRect(
-                                                borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(0),
-                                                  bottomRight:
-                                                      Radius.circular(12),
-                                                  topLeft: Radius.circular(0),
-                                                  topRight: Radius.circular(12),
+                                                ClipRRect(
+                                                  borderRadius: BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(0),
+                                                    bottomRight:
+                                                        Radius.circular(12),
+                                                    topLeft: Radius.circular(0),
+                                                    topRight: Radius.circular(12),
+                                                  ),
+                                                  child: Image(
+                                                    height: 100,
+                                                    width: 160,
+                                                    image: const AssetImage('assets/images/calibracionLlantas.jpeg'),
+                                                    fit: BoxFit.cover,
+                                                  ),
                                                 ),
-                                                child: Image.asset(
-                                                  "assets/images/carHome@3x.png",
-                                                  width: 160,
-                                                  height: 100,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        },
+                                              ],
+                                            );
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 16, 8),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Card(
-                                            clipBehavior:
-                                                Clip.antiAliasWithSaveLayer,
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(40),
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8, 8, 8, 8),
-                                              child: Icon(
-                                                Icons.access_time_rounded,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                size: 20,
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            12, 0, 16, 8),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Card(
+                                              clipBehavior:
+                                                  Clip.antiAliasWithSaveLayer,
+                                              color: FlutterFlowTheme.of(context)
+                                                  .tertiaryColor,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(40),
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(8, 8, 8, 8),
+                                                child: Icon(
+                                                  Icons.access_time_rounded,
+                                                  color:
+                                                      FlutterFlowTheme.of(context)
+                                                          .white,
+                                                  size: 20,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(12, 0, 0, 0),
+                                            Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(12, 0, 0, 0),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "Fecha de Entrega",
+                                                      style:
+                                                          FlutterFlowTheme.of(context)
+                                                              .bodyText2,
+                                                    ),
+                                                    Text(
+                                                      dateTimeFormat(
+                                                        'yMMMEd',
+                                                        DateTime.now().add(const Duration(days:2))),
+                                                      style:
+                                                          FlutterFlowTheme.of(context)
+                                                              .bodyText1,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                      12, 0, 0, 0),
                                               child: Text(
-                                                "fdd",
+                                                dateTimeFormat(
+                                                    'yMMMEd',
+                                                    DateTime.now()),
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyText2,
                                               ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
-                                            child: Text(
-                                              dateTimeFormat(
-                                                  'relative',
-                                                  DateTime.now()),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1,
-                                            ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ).animateOnPageLoad(animationsMap[
@@ -395,8 +455,16 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 8),
                   child: Text(
-                    'Completed Tickets',
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    'Autorizadas',
+                    textAlign: TextAlign.center,
+                    style:
+                        FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: FlutterFlowTheme.of(context)
+                                  .bodyText1Family,
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
                   ).animateOnPageLoad(
                       animationsMap['textOnPageLoadAnimation2']!),
                 ),
@@ -410,8 +478,9 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                         primary: false,
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
-                        itemCount: 1,
+                        itemCount: widget.ordenTrabajo.diagnostico.target?.servicios.toList().length ?? 0,
                         itemBuilder: (context, listViewIndex) {
+                          final servicio = widget.ordenTrabajo.diagnostico.target?.servicios.toList()[listViewIndex];
                           return Padding(
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
@@ -485,7 +554,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        "hola",
+                                                        "Nombre Del Técnico Encargado",
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -502,7 +571,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                                                 .fromSTEB(
                                                                     0, 4, 0, 0),
                                                         child: Text(
-                                                          "hols",
+                                                          "${servicio?.servicio}",
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .subtitle1,
@@ -514,16 +583,16 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                                                 .fromSTEB(
                                                                     0, 4, 0, 0),
                                                         child: Text(
-                                                          formatNumber(
-                                                            4334434,
+                                                          "${formatNumber(
+                                                            servicio?.costoServicio ?? 0,
                                                             formatType:
                                                                 FormatType
                                                                     .decimal,
                                                             decimalType:
                                                                 DecimalType
                                                                     .automatic,
-                                                            currency: '#',
-                                                          ),
+                                                            currency: '\$',
+                                                          )} (Costo Servicio)",
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyText2,
@@ -542,12 +611,11 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                                   topLeft: Radius.circular(0),
                                                   topRight: Radius.circular(12),
                                                 ),
-                                                child: Image.asset(
-                                                  "assets/images/carHome@3x.png",
-                                                  width: 160,
-                                                  height: 100,
-                                                  fit: BoxFit.cover,
-                                                ),
+                                                child: getAssetImage(
+                                                      servicio?.imagen ?? "assets/images/default_image_placeholder.jpeg",
+                                                      height: 100,
+                                                      width: 160
+                                                    ),
                                               ),
                                             ],
                                           );
@@ -564,7 +632,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                             clipBehavior:
                                                 Clip.antiAliasWithSaveLayer,
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryText,
+                                                .primaryColor,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(40),
@@ -585,11 +653,24 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(12, 0, 0, 0),
-                                              child: Text(
-                                                'Completed On',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "Fecha de Entrega",
+                                                    style:
+                                                        FlutterFlowTheme.of(context)
+                                                            .bodyText2,
+                                                  ),
+                                                  Text(
+                                                    dateTimeFormat(
+                                                      'yMMMEd',
+                                                      servicio?.fechaEntrega ?? DateTime.now()),
+                                                    style:
+                                                        FlutterFlowTheme.of(context)
+                                                            .bodyText1,
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ),
@@ -599,11 +680,11 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                                     12, 0, 0, 0),
                                             child: Text(
                                               dateTimeFormat(
-                                                  'MMMEd',
-                                                  DateTime.now()),
+                                                  'yMMMEd',
+                                                  servicio?.fechaRegistro ?? DateTime.now()),
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1,
+                                                      .bodyText2,
                                             ),
                                           ),
                                         ],

@@ -154,7 +154,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                     ),
                     InkWell(
                       onTap: () async {
-                        if (widget.ordenTrabajo.inspeccion.target?.suspensionDireccion == null) {
+                        if (widget.ordenTrabajo.inspeccion.target?.suspensionDireccion.target == null) {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -177,15 +177,15 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                         spread: 2,
                         borderRadius: 25,
                         curveType: CurveType.concave,
-                        color: widget.ordenTrabajo.inspeccion.target?.suspensionDireccion == null ?
+                        color: widget.ordenTrabajo.inspeccion.target?.suspensionDireccion.target == null ?
                           FlutterFlowTheme.of(context).tertiaryColor
                           :
                           FlutterFlowTheme.of(context).grayLight,
-                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.suspensionDireccion == null ?
+                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.suspensionDireccion.target == null ?
                           FlutterFlowTheme.of(context).tertiaryColor
                           :
                           FlutterFlowTheme.of(context).grayLight,
-                        parentColor: widget.ordenTrabajo.inspeccion.target?.suspensionDireccion == null ?
+                        parentColor: widget.ordenTrabajo.inspeccion.target?.suspensionDireccion.target == null ?
                           FlutterFlowTheme.of(context).grayDark
                           :
                           FlutterFlowTheme.of(context).grayLight,
@@ -195,7 +195,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                           ),
                           child: Center(
                             child: Text(
-                              widget.ordenTrabajo.inspeccion.target?.suspensionDireccion == null ?
+                              widget.ordenTrabajo.inspeccion.target?.suspensionDireccion.target == null ?
                               "Revisar"
                               :
                               "Revisado",
@@ -203,7 +203,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                               .bodyText1
                               .override(
                                 fontFamily: 'Outfit',
-                                color: widget.ordenTrabajo.inspeccion.target?.suspensionDireccion == null ?
+                                color: widget.ordenTrabajo.inspeccion.target?.suspensionDireccion.target == null ?
                                     FlutterFlowTheme.of(context).alternate
                                     :
                                     FlutterFlowTheme.of(context).white,
@@ -272,7 +272,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      widget.ordenTrabajo.inspeccion.target?.suspensionDireccion == null ?
+                                      widget.ordenTrabajo.inspeccion.target?.suspensionDireccion.target == null ?
                                       'Sin inspeccionar' 
                                       :
                                       'Inspeccionado',
@@ -339,7 +339,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                     ),
                     InkWell(
                       onTap: () async {
-                        if (widget.ordenTrabajo.inspeccion.target?.motor == null) {
+                        if (widget.ordenTrabajo.inspeccion.target?.motor.target == null) {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -348,6 +348,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                             ),
                           );
                         } else {
+                          print("object");
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
                             content: Text(
@@ -362,15 +363,15 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                         spread: 2,
                         borderRadius: 25,
                         curveType: CurveType.concave,
-                        color: widget.ordenTrabajo.inspeccion.target?.motor == null ?
+                        color: widget.ordenTrabajo.inspeccion.target?.motor.target == null ?
                           FlutterFlowTheme.of(context).tertiaryColor
                           :
                           FlutterFlowTheme.of(context).grayLight,
-                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.motor == null ?
+                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.motor.target == null ?
                           FlutterFlowTheme.of(context).tertiaryColor
                           :
                           FlutterFlowTheme.of(context).grayLight,
-                        parentColor: widget.ordenTrabajo.inspeccion.target?.motor == null ?
+                        parentColor: widget.ordenTrabajo.inspeccion.target?.motor.target == null ?
                           FlutterFlowTheme.of(context).grayDark
                           :
                           FlutterFlowTheme.of(context).grayLight,
@@ -380,7 +381,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                           ),
                           child: Center(
                             child: Text(
-                              widget.ordenTrabajo.inspeccion.target?.motor == null ?
+                              widget.ordenTrabajo.inspeccion.target?.motor.target == null ?
                               "Revisar"
                               :
                               "Revisado",
@@ -388,7 +389,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                               .bodyText1
                               .override(
                                 fontFamily: 'Outfit',
-                                color: widget.ordenTrabajo.inspeccion.target?.motor == null ?
+                                color: widget.ordenTrabajo.inspeccion.target?.motor.target == null ?
                                     FlutterFlowTheme.of(context).alternate
                                     :
                                     FlutterFlowTheme.of(context).white,
@@ -457,7 +458,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      widget.ordenTrabajo.inspeccion.target?.motor == null ?
+                                      widget.ordenTrabajo.inspeccion.target?.motor.target == null ?
                                       'Sin inspeccionar' 
                                       :
                                       'Inspeccionado',
@@ -524,7 +525,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                     ),
                     InkWell(
                       onTap: () async {
-                         if (widget.ordenTrabajo.inspeccion.target?.fluidos == null) {
+                         if (widget.ordenTrabajo.inspeccion.target?.fluidos.target == null) {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -547,15 +548,15 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                         spread: 2,
                         borderRadius: 25,
                         curveType: CurveType.concave,
-                        color: widget.ordenTrabajo.inspeccion.target?.fluidos == null ?
+                        color: widget.ordenTrabajo.inspeccion.target?.fluidos.target == null ?
                           FlutterFlowTheme.of(context).tertiaryColor
                           :
                           FlutterFlowTheme.of(context).grayLight,
-                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.fluidos == null ?
+                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.fluidos.target == null ?
                           FlutterFlowTheme.of(context).tertiaryColor
                           :
                           FlutterFlowTheme.of(context).grayLight,
-                        parentColor: widget.ordenTrabajo.inspeccion.target?.fluidos == null ?
+                        parentColor: widget.ordenTrabajo.inspeccion.target?.fluidos.target == null ?
                           FlutterFlowTheme.of(context).grayDark
                           :
                           FlutterFlowTheme.of(context).grayLight,
@@ -565,7 +566,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                           ),
                           child: Center(
                             child: Text(
-                              widget.ordenTrabajo.inspeccion.target?.fluidos == null ?
+                              widget.ordenTrabajo.inspeccion.target?.fluidos.target == null ?
                               "Revisar"
                               :
                               "Revisado",
@@ -573,7 +574,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                               .bodyText1
                               .override(
                                 fontFamily: 'Outfit',
-                                color: widget.ordenTrabajo.inspeccion.target?.fluidos == null ?
+                                color: widget.ordenTrabajo.inspeccion.target?.fluidos.target == null ?
                                     FlutterFlowTheme.of(context).alternate
                                     :
                                     FlutterFlowTheme.of(context).white,
@@ -642,7 +643,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      widget.ordenTrabajo.inspeccion.target?.fluidos == null ?
+                                      widget.ordenTrabajo.inspeccion.target?.fluidos.target == null ?
                                       'Sin inspeccionar' 
                                       :
                                       'Inspeccionado',
@@ -709,7 +710,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                     ),
                     InkWell(
                       onTap: () async {
-                        if (widget.ordenTrabajo.inspeccion.target?.frenos == null) {
+                        if (widget.ordenTrabajo.inspeccion.target?.frenos.target == null) {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -732,15 +733,15 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                         spread: 2,
                         borderRadius: 25,
                         curveType: CurveType.concave,
-                        color: widget.ordenTrabajo.inspeccion.target?.frenos == null ?
+                        color: widget.ordenTrabajo.inspeccion.target?.frenos.target == null ?
                           FlutterFlowTheme.of(context).tertiaryColor
                           :
                           FlutterFlowTheme.of(context).grayLight,
-                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.frenos == null ?
+                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.frenos.target == null ?
                           FlutterFlowTheme.of(context).tertiaryColor
                           :
                           FlutterFlowTheme.of(context).grayLight,
-                        parentColor: widget.ordenTrabajo.inspeccion.target?.frenos == null ?
+                        parentColor: widget.ordenTrabajo.inspeccion.target?.frenos.target == null ?
                           FlutterFlowTheme.of(context).grayDark
                           :
                           FlutterFlowTheme.of(context).grayLight,
@@ -750,7 +751,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                           ),
                           child: Center(
                             child: Text(
-                              widget.ordenTrabajo.inspeccion.target?.frenos == null ?
+                              widget.ordenTrabajo.inspeccion.target?.frenos.target == null ?
                               "Revisar"
                               :
                               "Revisado",
@@ -758,7 +759,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                               .bodyText1
                               .override(
                                 fontFamily: 'Outfit',
-                                color: widget.ordenTrabajo.inspeccion.target?.frenos == null ?
+                                color: widget.ordenTrabajo.inspeccion.target?.frenos.target == null ?
                                     FlutterFlowTheme.of(context).alternate
                                     :
                                     FlutterFlowTheme.of(context).white,
@@ -827,7 +828,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      widget.ordenTrabajo.inspeccion.target?.frenos == null ?
+                                      widget.ordenTrabajo.inspeccion.target?.frenos.target == null ?
                                       'Sin inspeccionar' 
                                       :
                                       'Inspeccionado',
@@ -894,7 +895,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                     ),
                     InkWell(
                       onTap: () async {
-                        if (widget.ordenTrabajo.inspeccion.target?.electrico == null) {
+                        if (widget.ordenTrabajo.inspeccion.target?.electrico.target == null) {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -917,15 +918,15 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                         spread: 2,
                         borderRadius: 25,
                         curveType: CurveType.concave,
-                        color: widget.ordenTrabajo.inspeccion.target?.electrico == null ?
+                        color: widget.ordenTrabajo.inspeccion.target?.electrico.target == null ?
                           FlutterFlowTheme.of(context).tertiaryColor
                           :
                           FlutterFlowTheme.of(context).grayLight,
-                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.electrico == null ?
+                        surfaceColor: widget.ordenTrabajo.inspeccion.target?.electrico.target == null ?
                           FlutterFlowTheme.of(context).tertiaryColor
                           :
                           FlutterFlowTheme.of(context).grayLight,
-                        parentColor: widget.ordenTrabajo.inspeccion.target?.electrico == null ?
+                        parentColor: widget.ordenTrabajo.inspeccion.target?.electrico.target == null ?
                           FlutterFlowTheme.of(context).grayDark
                           :
                           FlutterFlowTheme.of(context).grayLight,
@@ -935,7 +936,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                           ),
                           child: Center(
                             child: Text(
-                              widget.ordenTrabajo.inspeccion.target?.electrico == null ?
+                              widget.ordenTrabajo.inspeccion.target?.electrico.target == null ?
                               "Revisar"
                               :
                               "Revisado",
@@ -943,7 +944,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                               .bodyText1
                               .override(
                                 fontFamily: 'Outfit',
-                                color: widget.ordenTrabajo.inspeccion.target?.electrico == null ?
+                                color: widget.ordenTrabajo.inspeccion.target?.electrico.target == null ?
                                     FlutterFlowTheme.of(context).alternate
                                     :
                                     FlutterFlowTheme.of(context).white,
@@ -1015,7 +1016,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        widget.ordenTrabajo.inspeccion.target?.electrico == null ?
+                                        widget.ordenTrabajo.inspeccion.target?.electrico.target == null ?
                                       'Sin inspeccionar' 
                                       :
                                       'Inspeccionado',

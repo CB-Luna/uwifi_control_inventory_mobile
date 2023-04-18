@@ -4,6 +4,7 @@ import 'package:im_stepper/stepper.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/frenos_controller.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/frenos/components/seccion_dos_formularios.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/frenos/components/seccion_uno_formulario.dart';
@@ -210,16 +211,22 @@ class _FrenosScreen extends State<FrenosScreen> {
                           break;
                         case 1:
                           if (frenosProvider.validarSeccionDosFormulario()) {
-                            frenosProvider.limpiarInformacion();
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      FrenosAgregadoScreen(
-                                        ordenTrabajo: widget.ordenTrabajo,
-                                      ),
-                                ),
-                              );
+                            if (frenosProvider.agregarFrenos(widget.ordenTrabajo)) {
+                                frenosProvider.limpiarInformacion();
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        FrenosAgregadoScreen(
+                                          ordenTrabajo: widget.ordenTrabajo,
+                                        ),
+                                  ),
+                                );
+                              } else {
+                                snackbarKey.currentState?.showSnackBar(const SnackBar(
+                                  content: Text("No se pudo agregar información de los frenos, intente más tarde."),
+                                ));
+                              }
                             } else {
                               await showDialog(
                                 context: context,

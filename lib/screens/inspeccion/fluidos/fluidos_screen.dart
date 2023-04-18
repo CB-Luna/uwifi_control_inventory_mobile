@@ -4,6 +4,7 @@ import 'package:im_stepper/stepper.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/fluidos_controller.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/fluidos/components/seccion_dos_formulario.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/fluidos/components/seccion_uno_formulario.dart';
@@ -210,16 +211,22 @@ class _FluidosScreen extends State<FluidosScreen> {
                           break;
                         case 1:
                           if (fluidosProvider.validarSeccionDosFormulario()) {
-                            fluidosProvider.limpiarInformacion();
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      FluidosAgregadoScreen(
-                                        ordenTrabajo: widget.ordenTrabajo,
-                                      ),
-                                ),
-                              );
+                            if (fluidosProvider.agregarFluidos(widget.ordenTrabajo)) {
+                                fluidosProvider.limpiarInformacion();
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        FluidosAgregadoScreen(
+                                          ordenTrabajo: widget.ordenTrabajo,
+                                        ),
+                                  ),
+                                );
+                              } else {
+                                snackbarKey.currentState?.showSnackBar(const SnackBar(
+                                  content: Text("No se pudo agregar información de los fluidos, intente más tarde."),
+                                ));
+                              }
                             } else {
                               await showDialog(
                                 context: context,

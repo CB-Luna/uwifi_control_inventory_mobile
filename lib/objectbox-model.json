@@ -816,7 +816,7 @@
     },
     {
       "id": "27:1774905738150923512",
-      "lastPropertyId": "29:5331836423271060866",
+      "lastPropertyId": "33:4535282600813447593",
       "name": "Bitacora",
       "properties": [
         {
@@ -959,6 +959,38 @@
           "flags": 520,
           "indexId": "303:4414320023330082672",
           "relationTarget": "Electrico"
+        },
+        {
+          "id": "30:7654551223914586010",
+          "name": "servicioId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "330:5249064443956429852",
+          "relationTarget": "Servicio"
+        },
+        {
+          "id": "31:6988111336556761",
+          "name": "productoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "331:3361789893351489509",
+          "relationTarget": "Producto"
+        },
+        {
+          "id": "32:8791841775805765497",
+          "name": "diagnosticoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "332:2381769723952164502",
+          "relationTarget": "Diagnostico"
+        },
+        {
+          "id": "33:4535282600813447593",
+          "name": "estatusId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "334:504837245352985312",
+          "relationTarget": "Estatus"
         }
       ],
       "relations": []
@@ -2944,7 +2976,7 @@
     },
     {
       "id": "67:5935206935227986130",
-      "lastPropertyId": "14:7468202760391464931",
+      "lastPropertyId": "16:7527339157164656864",
       "name": "OrdenTrabajo",
       "properties": [
         {
@@ -3024,6 +3056,22 @@
           "flags": 520,
           "indexId": "319:8225671083316443571",
           "relationTarget": "Inspeccion"
+        },
+        {
+          "id": "15:3821015968441469978",
+          "name": "diagnosticoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "333:7302368435975826295",
+          "relationTarget": "Diagnostico"
+        },
+        {
+          "id": "16:7527339157164656864",
+          "name": "estatusId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "336:2885127048885014010",
+          "relationTarget": "Estatus"
         }
       ],
       "relations": []
@@ -3470,7 +3518,7 @@
     },
     {
       "id": "73:3609614765671064101",
-      "lastPropertyId": "21:4175555395084776827",
+      "lastPropertyId": "23:2016822154535446518",
       "name": "Motor",
       "properties": [
         {
@@ -3487,16 +3535,6 @@
         {
           "id": "3:8385911088565035072",
           "name": "aceiteObservaciones",
-          "type": 9
-        },
-        {
-          "id": "4:6710403503072460685",
-          "name": "filtroDeAceite",
-          "type": 9
-        },
-        {
-          "id": "5:530608803701318774",
-          "name": "filtroDeAceiteObservaciones",
           "type": 9
         },
         {
@@ -3583,6 +3621,16 @@
           "flags": 520,
           "indexId": "318:7638733067445510244",
           "relationTarget": "Inspeccion"
+        },
+        {
+          "id": "22:6477881401001478570",
+          "name": "filtroDeAire",
+          "type": 9
+        },
+        {
+          "id": "23:2016822154535446518",
+          "name": "filtroDeAireObservaciones",
+          "type": 9
         }
       ],
       "relations": []
@@ -3845,10 +3893,275 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "75:5100626670541562876",
+      "lastPropertyId": "6:3148729869057314786",
+      "name": "Diagnostico",
+      "properties": [
+        {
+          "id": "1:5162288244745793053",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1314237784956713205",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "3:7041119885018323941",
+          "name": "fechaEntrega",
+          "type": 10
+        },
+        {
+          "id": "4:5431856584957283846",
+          "name": "costoTotal",
+          "type": 8
+        },
+        {
+          "id": "5:8889823374666441278",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "322:6697864656768367856"
+        },
+        {
+          "id": "6:3148729869057314786",
+          "name": "ordenTrabajoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "323:2227046152398392533",
+          "relationTarget": "OrdenTrabajo"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "76:7992280240775612538",
+      "lastPropertyId": "7:6051791476480567790",
+      "name": "Producto",
+      "properties": [
+        {
+          "id": "1:633205492787897739",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8392913615014330985",
+          "name": "producto",
+          "type": 9
+        },
+        {
+          "id": "3:4499334555563066290",
+          "name": "cantidad",
+          "type": 6
+        },
+        {
+          "id": "4:473540877700771468",
+          "name": "costo",
+          "type": 8
+        },
+        {
+          "id": "5:5285214767097775784",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "6:164142765578155626",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "324:2276371521522702829"
+        },
+        {
+          "id": "7:6051791476480567790",
+          "name": "servicioId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "325:3823128915946583116",
+          "relationTarget": "Servicio"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "77:2743501254910091798",
+      "lastPropertyId": "10:2016605017757956177",
+      "name": "Servicio",
+      "properties": [
+        {
+          "id": "1:2259646061796668055",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2325151380291453067",
+          "name": "servicio",
+          "type": 9
+        },
+        {
+          "id": "3:3746890772857768643",
+          "name": "costoServicio",
+          "type": 8
+        },
+        {
+          "id": "5:2822199496222054622",
+          "name": "autorizado",
+          "type": 1
+        },
+        {
+          "id": "6:7318790662708284409",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "7:2099027275996410089",
+          "name": "fechaEntrega",
+          "type": 10
+        },
+        {
+          "id": "8:3508794536146117736",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "326:5777926947307451852"
+        },
+        {
+          "id": "9:5222079827570678012",
+          "name": "diagnosticoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "327:2002401092371240826",
+          "relationTarget": "Diagnostico"
+        },
+        {
+          "id": "10:2016605017757956177",
+          "name": "imagen",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "78:7969214193083467450",
+      "lastPropertyId": "5:9090682104077850223",
+      "name": "TipoProducto",
+      "properties": [
+        {
+          "id": "1:3435239766130670289",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6101338124253117635",
+          "name": "tipoProducto",
+          "type": 9
+        },
+        {
+          "id": "3:5161982749825288098",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "4:4362560124698977937",
+          "name": "costo",
+          "type": 8
+        },
+        {
+          "id": "5:9090682104077850223",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "328:801619231935516592"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "79:8431482435154692484",
+      "lastPropertyId": "6:8755928181593528194",
+      "name": "TipoServicio",
+      "properties": [
+        {
+          "id": "1:1372329611842198773",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6639052366466886907",
+          "name": "tipoServicio",
+          "type": 9
+        },
+        {
+          "id": "3:1753824477111234699",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "4:5952273703979672651",
+          "name": "costo",
+          "type": 8
+        },
+        {
+          "id": "5:6671325618153653554",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "329:7387390563203056319"
+        },
+        {
+          "id": "6:8755928181593528194",
+          "name": "imagen",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "80:8177890023282011956",
+      "lastPropertyId": "7:2953742968786170798",
+      "name": "Estatus",
+      "properties": [
+        {
+          "id": "1:8414589768240169581",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "4:8885416856685155434",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "5:8036328873746816342",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "335:7247475376651258602"
+        },
+        {
+          "id": "6:8176290949278981940",
+          "name": "avance",
+          "type": 8
+        },
+        {
+          "id": "7:2953742968786170798",
+          "name": "estatus",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "74:8182885394159286166",
-  "lastIndexId": "321:7330226207696814681",
+  "lastEntityId": "80:8177890023282011956",
+  "lastIndexId": "336:2885127048885014010",
   "lastRelationId": "84:5411951088038235824",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
@@ -4338,7 +4651,12 @@
     6297297404552520338,
     1043127547320240698,
     4514912785627669612,
-    8577618512929462620
+    8577618512929462620,
+    388728847284978909,
+    3965200016558188555,
+    8614986762524892139,
+    6710403503072460685,
+    530608803701318774
   ],
   "retiredRelationUids": [
     1226469011453769556,

@@ -17,6 +17,12 @@ class ObjectBoxDatabase {
   late final Box<Frenos> frenosBox;
   late final Box<Fluidos> fluidosBox;
   late final Box<Electrico> electricoBox;
+  late final Box<Servicio> servicioBox;
+  late final Box<TipoServicio> tipoServicioBox;
+  late final Box<Producto> productoBox;
+  late final Box<TipoProducto> tipoProductoBox;
+  late final Box<Diagnostico> diagnosticoBox;
+  late final Box<Estatus> estatusBox;
   late final Box<Emprendimientos> emprendimientosBox;
   late final Box<Emprendedores> emprendedoresBox;
   late final Box<Jornadas> jornadasBox;
@@ -67,6 +73,12 @@ class ObjectBoxDatabase {
     frenosBox = Box<Frenos>(store);
     fluidosBox = Box<Fluidos>(store);
     electricoBox = Box<Electrico>(store);
+    servicioBox = Box<Servicio>(store);
+    tipoServicioBox = Box<TipoServicio>(store);
+    productoBox = Box<Producto>(store);
+    tipoProductoBox = Box<TipoProducto>(store);
+    diagnosticoBox = Box<Diagnostico>(store);
+    estatusBox = Box<Estatus>(store);
     emprendimientosBox = Box<Emprendimientos>(store);
     emprendedoresBox = Box<Emprendedores>(store);
     jornadasBox = Box<Jornadas>(store);

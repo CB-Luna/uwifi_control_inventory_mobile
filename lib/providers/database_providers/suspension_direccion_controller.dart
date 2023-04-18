@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/modelsLocales/estatus/estatus_data.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
 class SuspensionDireccionController extends ChangeNotifier {
 
@@ -819,6 +820,14 @@ class SuspensionDireccionController extends ChangeNotifier {
           completado: true,
           fechaRegistro: fechaRegistro,
         );
+      //Inspección
+      if (ordenTrabajo.estatus.target!.estatus == "Observación")  {
+        final estatus = listaEstatusData.elementAt(2);
+        dataBase.estatusBox.put(estatus);
+        ordenTrabajo.estatus.target = estatus;
+      } else{
+        // ordenTrabajo.estatus.target!.avance += 0.05; 
+      }
       if (ordenTrabajo.inspeccion.target == null) {
         final nuevaInspeccion = Inspeccion(
           completado: false,

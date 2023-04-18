@@ -3,6 +3,8 @@ import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/screens/cotizacion/cotizacion_screen.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/inspeccion_screen.dart';
 import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:taller_alex_app_asesor/screens/diagnostico/diagnostico_screen.dart';
@@ -86,7 +88,8 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
     final tabs = {
       'pantallaRecepcion': RecepcionScreen(ordenTrabajo: widget.ordenTrabajo,),
       'pantallaInspeccion': InspeccionScreen(ordenTrabajo: widget.ordenTrabajo,),
-      'pantallaDiagnostico': DiagnosticoScreen(),
+      'pantallaDiagnostico': DiagnosticoScreen(ordenTrabajo: widget.ordenTrabajo,),
+      'pantallaCotizacion': CotizacionScreen(ordenTrabajo: widget.ordenTrabajo,),
       // 'terceraParte': TerceraParteFormularioObservacionesWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
@@ -99,7 +102,47 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (i) => setState(() {
-          _currentPageName = tabs.keys.toList()[i];
+          switch (i) {
+            case 0:
+              _currentPageName = tabs.keys.toList()[i];
+              break;
+            case 1:
+              if(widget.ordenTrabajo.estatus.target!.avance == 0.15){
+                snackbarKey.currentState?.showSnackBar(const SnackBar(
+                  content: Text("Se requiere registrar alguna observación para continuar con la Insepcción."),
+                ));
+                break;
+              } else{
+                _currentPageName = tabs.keys.toList()[i];
+                break;
+              }
+            case 2:
+              if(widget.ordenTrabajo.inspeccion.target?.suspensionDireccion.target == null 
+                  || widget.ordenTrabajo.inspeccion.target?.frenos.target == null
+                  || widget.ordenTrabajo.inspeccion.target?.fluidos.target == null
+                  || widget.ordenTrabajo.inspeccion.target?.electrico.target == null
+                  || widget.ordenTrabajo.inspeccion.target?.motor.target == null) {
+                snackbarKey.currentState?.showSnackBar(const SnackBar(
+                  content: Text("Se requiere terminar la Insepcción de todas las áreas para continuar con el Diagnóstico."),
+                ));
+                break;
+              } else{
+                _currentPageName = tabs.keys.toList()[i];
+                break;
+              }
+            case 3:
+              if(widget.ordenTrabajo.estatus.target!.avance < 0.65){
+                snackbarKey.currentState?.showSnackBar(const SnackBar(
+                  content: Text("Se requiere agregar al menos un Servicio en el Diagnóstico para continuar con la Cotización."),
+                ));
+                break;
+              } else{
+                _currentPageName = tabs.keys.toList()[i];
+                break;
+              }
+            default:
+              break;
+          }
         }),
         backgroundColor: FlutterFlowTheme.of(context).customColor1,
         selectedItemColor: FlutterFlowTheme.of(context).primaryColor,

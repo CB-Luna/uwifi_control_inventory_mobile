@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/screens/emprendedores/clientes_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/detalle_orden_trabajo_screen.dart';
 
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-class SuspensionDireccionAgregadaScreen extends StatefulWidget {
+class ServicioNoCreadoScreen extends StatefulWidget {
   final OrdenTrabajo ordenTrabajo;
-
-  const SuspensionDireccionAgregadaScreen({
+  const ServicioNoCreadoScreen({
     Key? key, 
-    required this.ordenTrabajo
-  }) : super(key: key);
+    required this.ordenTrabajo}) : super(key: key);
 
   @override
-  State<SuspensionDireccionAgregadaScreen> createState() => _SuspensionDireccionAgregadaScreenState();
+  State<ServicioNoCreadoScreen> createState() => _ServicioNoCreadoScreenState();
 }
 
-class _SuspensionDireccionAgregadaScreenState extends State<SuspensionDireccionAgregadaScreen> {
+class _ServicioNoCreadoScreenState extends State<ServicioNoCreadoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -42,7 +41,7 @@ class _SuspensionDireccionAgregadaScreenState extends State<SuspensionDireccionA
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Información de \nSuspensión/ Dirección\nagregada!',
+                        '¡Falló en la\ncreación del Servicio!',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -55,7 +54,7 @@ class _SuspensionDireccionAgregadaScreenState extends State<SuspensionDireccionA
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(                                
-                        'El registro se ha guadado con éxito.',
+                        'El registro no se ejecutó con éxito.',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -69,8 +68,8 @@ class _SuspensionDireccionAgregadaScreenState extends State<SuspensionDireccionA
                           const EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
                       child: SizedBox(
                         child: Icon(
-                          Icons.check_circle_outline,
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          Icons.cancel_outlined,
+                          color: FlutterFlowTheme.of(context).tertiaryColor,
                           size: 250,
                           )
                       ),
@@ -80,14 +79,13 @@ class _SuspensionDireccionAgregadaScreenState extends State<SuspensionDireccionA
                           const EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          await Navigator.push(
+                           await Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
                                   DetalleOrdenTrabajoScreen(
-                                    ordenTrabajo: widget.ordenTrabajo, 
-                                    pantalla: "pantallaInspeccion",
-                                  ),
+                                    ordenTrabajo: widget.ordenTrabajo,
+                                    pantalla: "pantallaRecepcion",),
                             ),
                           );
                         },

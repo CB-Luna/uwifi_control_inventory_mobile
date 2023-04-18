@@ -9,7 +9,7 @@ import 'package:taller_alex_app_asesor/theme/theme.dart';
 
 import 'package:taller_alex_app_asesor/providers/database_providers/venta_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/producto_venta_controller.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as libraryBage;
 import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/productos_vendidos_temporal.dart';
 import 'package:taller_alex_app_asesor/screens/ventas/venta_creada.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
@@ -442,13 +442,13 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Badge(
+                                    libraryBage.Badge(
                                       badgeContent: Text(totalProductos,
                                           style: const TextStyle(
                                               color: Colors.white)),
                                       showBadge: true,
                                       badgeColor: const Color(0xFFD20030),
-                                      position: BadgePosition.topEnd(),
+                                      position: libraryBage.BadgePosition.topEnd(),
                                       elevation: 4,
                                       child: FFButtonWidget(
                                         onPressed: () async {
