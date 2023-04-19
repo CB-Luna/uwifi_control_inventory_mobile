@@ -1,18 +1,8 @@
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
-import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/screens/diagnostico/agregar_diagnostico_screen.dart';
-import 'package:taller_alex_app_asesor/screens/diagnostico/servicio_creado_screen.dart';
+import 'package:taller_alex_app_asesor/screens/cotizacion/main_tab_opciones.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
-import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 class CotizacionScreen extends StatefulWidget {
   final OrdenTrabajo ordenTrabajo;
   const CotizacionScreen({
@@ -149,36 +139,8 @@ class _CotizacionScreenState extends State<CotizacionScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Cotización',
-          textAlign: TextAlign.center,
-          style:
-              FlutterFlowTheme.of(context).bodyText1.override(
-                    fontFamily: FlutterFlowTheme.of(context)
-                        .bodyText1Family,
-                    color: FlutterFlowTheme.of(context).tertiaryColor,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                  ),
-        ),
-        centerTitle: false,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: SingleChildScrollView(
-            child: Column(
-            ),
-          ),
-        ),
-      ),
-    );
+    return MainTabOpcionesScreen(
+      ordenTrabajo: 
+      widget.ordenTrabajo);
   }
 }

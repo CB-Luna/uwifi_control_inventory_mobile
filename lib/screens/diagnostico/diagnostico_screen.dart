@@ -2,17 +2,11 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/screens/diagnostico/agregar_diagnostico_screen.dart';
-import 'package:taller_alex_app_asesor/screens/diagnostico/servicio_creado_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 class DiagnosticoScreen extends StatefulWidget {
   final OrdenTrabajo ordenTrabajo;
   const DiagnosticoScreen({
@@ -45,8 +39,8 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0, 50),
-          end: Offset(0, 0),
+          begin: const Offset(0, 50),
+          end: const Offset(0, 0),
         ),
       ],
     ),
@@ -64,8 +58,8 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0, 70),
-          end: Offset(0, 0),
+          begin: const Offset(0, 70),
+          end: const Offset(0, 0),
         ),
       ],
     ),
@@ -83,8 +77,8 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0, 80),
-          end: Offset(0, 0),
+          begin: const Offset(0, 80),
+          end: const Offset(0, 0),
         ),
       ],
     ),
@@ -102,8 +96,8 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0, 90),
-          end: Offset(0, 0),
+          begin: const Offset(0, 90),
+          end: const Offset(0, 0),
         ),
       ],
     ),
@@ -121,8 +115,8 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0, 90),
-          end: Offset(0, 0),
+          begin: const Offset(0, 90),
+          end: const Offset(0, 0),
         ),
       ],
     ),
@@ -158,8 +152,8 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
             context,
             PageTransition(
               type: PageTransitionType.bottomToTop,
-              duration: Duration(milliseconds: 240),
-              reverseDuration: Duration(milliseconds: 240),
+              duration: const Duration(milliseconds: 240),
+              reverseDuration: const Duration(milliseconds: 240),
               child: AgregarDiagnosticoScreen(
                 vehiculo: widget.ordenTrabajo.vehiculo.target!,
                 ordenTrabajo: widget.ordenTrabajo
@@ -202,7 +196,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                   child: Text(
                     'Solicitadas',
                     textAlign: TextAlign.center,
@@ -218,7 +212,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                       animationsMap['textOnPageLoadAnimation1']!),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                   child: Builder(
                     builder: (context) {
                       return ListView(
@@ -229,7 +223,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                         children: [
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
+                                const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
                             child: InkWell(
                               onTap: () async {
                                 // await Navigator.push(
@@ -248,7 +242,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       blurRadius: 4,
                                       color: Color(0x2B202529),
@@ -258,7 +252,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Slidable(
-                                  startActionPane: ActionPane(
+                                startActionPane: ActionPane(
                                 motion: const DrawerMotion(),
                                 children: [
                                   SlidableAction(
@@ -281,7 +275,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             8, 0, 0, 0),
                                         child: Builder(
                                           builder: (context) {
@@ -290,7 +284,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                               children: [
                                                 Expanded(
                                                   child: Padding(
-                                                    padding: EdgeInsetsDirectional
+                                                    padding: const EdgeInsetsDirectional
                                                         .fromSTEB(8, 4, 0, 4),
                                                     child: Column(
                                                       mainAxisSize:
@@ -316,7 +310,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
+                                                              const EdgeInsetsDirectional
                                                                   .fromSTEB(
                                                                       0, 4, 0, 0),
                                                           child: Text(
@@ -328,7 +322,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
+                                                              const EdgeInsetsDirectional
                                                                   .fromSTEB(
                                                                       0, 4, 0, 0),
                                                           child: Text(
@@ -351,7 +345,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                                     ),
                                                   ),
                                                 ),
-                                                ClipRRect(
+                                                const ClipRRect(
                                                   borderRadius: BorderRadius.only(
                                                     bottomLeft:
                                                         Radius.circular(0),
@@ -363,7 +357,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                                   child: Image(
                                                     height: 100,
                                                     width: 160,
-                                                    image: const AssetImage('assets/images/calibracionLlantas.jpeg'),
+                                                    image: AssetImage('assets/images/calibracionLlantas.jpeg'),
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
@@ -373,7 +367,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             12, 0, 16, 8),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
@@ -388,7 +382,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                                     BorderRadius.circular(40),
                                               ),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
+                                                padding: const EdgeInsetsDirectional
                                                     .fromSTEB(8, 8, 8, 8),
                                                 child: Icon(
                                                   Icons.access_time_rounded,
@@ -401,7 +395,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                             ),
                                             Expanded(
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
+                                                padding: const EdgeInsetsDirectional
                                                     .fromSTEB(12, 0, 0, 0),
                                                 child: Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -426,7 +420,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                             ),
                                             Padding(
                                               padding:
-                                                  EdgeInsetsDirectional.fromSTEB(
+                                                  const EdgeInsetsDirectional.fromSTEB(
                                                       12, 0, 0, 0),
                                               child: Text(
                                                 dateTimeFormat(
@@ -453,7 +447,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 8),
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 0, 8),
                   child: Text(
                     'Autorizadas',
                     textAlign: TextAlign.center,
@@ -469,7 +463,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                       animationsMap['textOnPageLoadAnimation2']!),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 16),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 16),
                   child: Builder(
                     builder: (context) {
                       // Customize what your widget looks like when it's loading.
@@ -483,7 +477,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                           final servicio = widget.ordenTrabajo.diagnostico.target?.servicios.toList()[listViewIndex];
                           return Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
+                                const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
                             child: InkWell(
                               onTap: () async {
                                 // await Navigator.push(
@@ -502,7 +496,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       blurRadius: 4,
                                       color: Color(0x2B202529),
@@ -511,186 +505,203 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                   ],
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
+                                child: Slidable(
+                                  startActionPane: ActionPane(
+                                  motion: const DrawerMotion(),
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          8, 0, 0, 0),
-                                      child: Builder(
-                                        builder: (context) {
-                                          // Customize what your widget looks like when it's loading.
-                                          // if (!snapshot.hasData) {
-                                          //   return Center(
-                                          //     child: SizedBox(
-                                          //       width: 50,
-                                          //       height: 50,
-                                          //       child: SpinKitCubeGrid(
-                                          //         color: FlutterFlowTheme.of(
-                                          //                 context)
-                                          //             .primaryColor,
-                                          //         size: 50,
-                                          //       ),
-                                          //     ),
-                                          //   );
-                                          // }
-                                          // final rowProductNameRecord =
-                                          //     snapshot.data!;
-                                          return Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Expanded(
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(8, 4, 0, 4),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "Nombre Del Técnico Encargado",
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Outfit',
-                                                                  fontSize: 12,
-                                                                ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0, 4, 0, 0),
-                                                        child: Text(
-                                                          "${servicio?.servicio}",
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .subtitle1,
+                                    SlidableAction(
+                                        label: "Eliminar",
+                                        icon: Icons
+                                            .check_circle_outline,
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context).primaryColor,
+                                        onPressed: (context) async {
+                                        }),
+                                  ]),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            8, 0, 0, 0),
+                                        child: Builder(
+                                          builder: (context) {
+                                            // Customize what your widget looks like when it's loading.
+                                            // if (!snapshot.hasData) {
+                                            //   return Center(
+                                            //     child: SizedBox(
+                                            //       width: 50,
+                                            //       height: 50,
+                                            //       child: SpinKitCubeGrid(
+                                            //         color: FlutterFlowTheme.of(
+                                            //                 context)
+                                            //             .primaryColor,
+                                            //         size: 50,
+                                            //       ),
+                                            //     ),
+                                            //   );
+                                            // }
+                                            // final rowProductNameRecord =
+                                            //     snapshot.data!;
+                                            return Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding: const EdgeInsetsDirectional
+                                                        .fromSTEB(8, 4, 0, 4),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          "Nombre Del Técnico Encargado",
+                                                          style:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyText2
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Outfit',
+                                                                    fontSize: 12,
+                                                                  ),
                                                         ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0, 4, 0, 0),
-                                                        child: Text(
-                                                          "${formatNumber(
-                                                            servicio?.costoServicio ?? 0,
-                                                            formatType:
-                                                                FormatType
-                                                                    .decimal,
-                                                            decimalType:
-                                                                DecimalType
-                                                                    .automatic,
-                                                            currency: '\$',
-                                                          )} (Costo Servicio)",
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText2,
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0, 4, 0, 0),
+                                                          child: Text(
+                                                            "${servicio?.servicio}",
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .subtitle1,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              ClipRRect(
-                                                borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(0),
-                                                  bottomRight:
-                                                      Radius.circular(12),
-                                                  topLeft: Radius.circular(0),
-                                                  topRight: Radius.circular(12),
-                                                ),
-                                                child: getAssetImage(
-                                                      servicio?.imagen ?? "assets/images/default_image_placeholder.jpeg",
-                                                      height: 100,
-                                                      width: 160
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0, 4, 0, 0),
+                                                          child: Text(
+                                                            "${formatNumber(
+                                                              servicio?.costoServicio ?? 0,
+                                                              formatType:
+                                                                  FormatType
+                                                                      .decimal,
+                                                              decimalType:
+                                                                  DecimalType
+                                                                      .automatic,
+                                                              currency: '\$',
+                                                            )} (Costo Servicio)",
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText2,
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                              ),
-                                            ],
-                                          );
-                                        },
+                                                  ),
+                                                ),
+                                                ClipRRect(
+                                                  borderRadius: const BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(0),
+                                                    bottomRight:
+                                                        Radius.circular(12),
+                                                    topLeft: Radius.circular(0),
+                                                    topRight: Radius.circular(12),
+                                                  ),
+                                                  child: getAssetImage(
+                                                        servicio?.imagen ?? "assets/images/default_image_placeholder.jpeg",
+                                                        height: 100,
+                                                        width: 160
+                                                      ),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 16, 8),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Card(
-                                            clipBehavior:
-                                                Clip.antiAliasWithSaveLayer,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(40),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            12, 0, 16, 8),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Card(
+                                              clipBehavior:
+                                                  Clip.antiAliasWithSaveLayer,
+                                              color: FlutterFlowTheme.of(context)
+                                                  .primaryColor,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(40),
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(8, 8, 8, 8),
+                                                child: Icon(
+                                                  Icons.access_time_rounded,
+                                                  color:
+                                                      FlutterFlowTheme.of(context)
+                                                          .secondaryBackground,
+                                                  size: 24,
+                                                ),
+                                              ),
                                             ),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8, 8, 8, 8),
-                                              child: Icon(
-                                                Icons.access_time_rounded,
-                                                color:
+                                            Expanded(
+                                              child: Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(12, 0, 0, 0),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "Fecha de Entrega",
+                                                      style:
+                                                          FlutterFlowTheme.of(context)
+                                                              .bodyText2,
+                                                    ),
+                                                    Text(
+                                                      dateTimeFormat(
+                                                        'yMMMEd',
+                                                        servicio?.fechaEntrega ?? DateTime.now()),
+                                                      style:
+                                                          FlutterFlowTheme.of(context)
+                                                              .bodyText1,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                      12, 0, 0, 0),
+                                              child: Text(
+                                                "Registrado",
+                                                style:
                                                     FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                size: 24,
+                                                        .bodyText2.override(
+                                                          fontFamily:
+                                                              'Outfit',
+                                                          fontSize: 18,
+                                                          fontWeight: FontWeight.bold
+                                                        ),
                                               ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(12, 0, 0, 0),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "Fecha de Entrega",
-                                                    style:
-                                                        FlutterFlowTheme.of(context)
-                                                            .bodyText2,
-                                                  ),
-                                                  Text(
-                                                    dateTimeFormat(
-                                                      'yMMMEd',
-                                                      servicio?.fechaEntrega ?? DateTime.now()),
-                                                    style:
-                                                        FlutterFlowTheme.of(context)
-                                                            .bodyText1,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
-                                            child: Text(
-                                              dateTimeFormat(
-                                                  'yMMMEd',
-                                                  servicio?.fechaRegistro ?? DateTime.now()),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText2,
-                                            ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ).animateOnPageLoad(animationsMap[

@@ -14,15 +14,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'providers/database_providers/cliente_controller.dart';
 import 'providers/database_providers/diagnostico_controller.dart';
 import 'providers/database_providers/electrico_controller.dart';
-import 'providers/database_providers/emprendedor_controller.dart';
-import 'providers/database_providers/emprendimiento_controller.dart';
 import 'providers/database_providers/fluidos_controller.dart';
 import 'providers/database_providers/frenos_controller.dart';
 import 'providers/database_providers/motor_controller.dart';
 import 'providers/database_providers/observacion_controller.dart';
 import 'providers/database_providers/orden_trabajo_controller.dart';
-import 'providers/database_providers/producto_venta_controller.dart';
-import 'providers/database_providers/producto_inversion_jornada_controller.dart';
 import 'providers/database_providers/suspension_direccion_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/catalogo_emi_web_provider.dart';
@@ -32,8 +28,6 @@ import 'package:taller_alex_app_asesor/providers/roles_emi_web_provider.dart';
 import 'package:taller_alex_app_asesor/providers/roles_pocketbase_provider.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/cotizacion_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/inversion_controller.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/inversion_jornada_controller.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/producto_emprendedor_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/recepcion_y_entrega_inversion_controller.dart';
 import 'package:taller_alex_app_asesor/providers/sync_provider_pocketbase.dart';
 
@@ -42,7 +36,6 @@ import 'package:taller_alex_app_asesor/services/navigation_service.dart';
 import 'package:taller_alex_app_asesor/internationalization/internationalization.dart';
 
 import 'providers/database_providers/vehiculo_controller.dart';
-import 'providers/database_providers/venta_controller.dart';
 import 'providers/sync_emprendimientos_externos_pocketbase_provider.dart';
 import 'providers/sync_emprendimientos_externos_emi_web_provider.dart';
 
@@ -118,41 +111,13 @@ void main() async {
           create: (context) => DiagnosticoController(),
           lazy: false,
         ),
-        ChangeNotifierProvider<EmprendimientoController>(
-          create: (context) => EmprendimientoController(),
-          lazy: false,
-        ),
         ChangeNotifierProvider<UsuarioController>(
           create: (context) =>
               UsuarioController(email: prefs.getString("userId")),
           lazy: false,
         ),
-        ChangeNotifierProvider<EmprendedorController>(
-          create: (context) => EmprendedorController(),
-          lazy: false,
-        ),
         ChangeNotifierProvider<InversionController>(
           create: (context) => InversionController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<InversionJornadaController>(
-          create: (context) => InversionJornadaController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<ProductoInversionJornadaController>(
-          create: (context) => ProductoInversionJornadaController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<ProductoEmprendedorController>(
-          create: (context) => ProductoEmprendedorController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<ProductoVentaController>(
-          create: (context) => ProductoVentaController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<VentaController>(
-          create: (context) => VentaController(),
           lazy: false,
         ),
         ChangeNotifierProvider<CotizacionController>(

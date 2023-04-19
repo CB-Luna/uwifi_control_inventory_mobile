@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/screens/cotizacion/cotizacion_screen.dart';
+import 'package:taller_alex_app_asesor/screens/cotizacion/main_tab_opciones.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/inspeccion_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/diagnostico/diagnostico_screen.dart';
@@ -89,7 +90,7 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
       'pantallaRecepcion': RecepcionScreen(ordenTrabajo: widget.ordenTrabajo,),
       'pantallaInspeccion': InspeccionScreen(ordenTrabajo: widget.ordenTrabajo,),
       'pantallaDiagnostico': DiagnosticoScreen(ordenTrabajo: widget.ordenTrabajo,),
-      'pantallaCotizacion': CotizacionScreen(ordenTrabajo: widget.ordenTrabajo,),
+      'pantallaCotizacion': MainTabOpcionesScreen(ordenTrabajo: widget.ordenTrabajo,),
       // 'terceraParte': TerceraParteFormularioObservacionesWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
