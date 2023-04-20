@@ -2,16 +2,16 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/modelsPocketbase/get_imagen_usuario.dart';
-import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/save_imagenes_local.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/main.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 
 class UsuarioController extends ChangeNotifier {
   List<Usuarios> usuarios = [];
+  var uuid = Uuid();
 
   Usuarios? usuarioCurrent;
   //Usuario
@@ -56,16 +56,15 @@ class UsuarioController extends ChangeNotifier {
       String? apellidoM,
       String? telefono,
       String celular,
-      String curp,
+      String rfc,
+      String? domicilio,
       String correo,
       String password,
-      GetImagenUsuario? imagen,
+      String? imagenBase64,
       List<String> rolesIdDBR,
       String idDBR,
-      String idEmiWeb,
-      DateTime fechaNacimiento,
       ) async {
-    late Imagenes nuevaImagenUsuario;
+    String? path;
     final nuevoUsuario = Usuarios(
         nombre: nombre,
         apellidoP: apellidoP,
@@ -75,32 +74,17 @@ class UsuarioController extends ChangeNotifier {
         correo: correo,
         password: password,
         idDBR: idDBR, 
-        idEmiWeb: idEmiWeb, 
-        fechaNacimiento: fechaNacimiento, 
-        curp: curp,
+        rfc: rfc,
+        domicilio: domicilio,
+        imagen: imagenBase64,
         );
-    if (imagen != null) {
-      final uInt8ListImagen = base64Decode(imagen.base64);
+    if (imagenBase64 != null) {
+      final uInt8ListImagen = base64Decode(imagenBase64);
       final tempDir = await getTemporaryDirectory();
-      File file = await File('${tempDir.path}/${imagen.nombre}').create();
+      File file = await File('${tempDir.path}/${uuid.v1()}').create();
       file.writeAsBytesSync(uInt8ListImagen);
-      nuevaImagenUsuario = Imagenes(
-      imagenes: file.path,
-      nombre: imagen.nombre,
-      path: file.path,
-      base64: imagen.base64,
-      idEmiWeb: imagen.idEmiWeb,
-      idDBR: imagen.id,
-      idEmprendimiento: 0,
-      );   
-      //print("Se guarda exitosamente la imagen de perfil");
-    } else{
-      //print("No hay imagen de perfil");
-      nuevaImagenUsuario = Imagenes(
-      imagenes: "",
-      idEmprendimiento: 0,
-      );
-    }
+      path = file.path;
+    } 
     //Se crea el objeto imagenes para el Usuario
     //Se agregan los roles
     for (var i = 0; i < rolesIdDBR.length; i++) {
@@ -113,8 +97,7 @@ class UsuarioController extends ChangeNotifier {
     final rolActual = dataBase.rolesBox.query(Roles_.idDBR.equals(rolesIdDBR[0])).build().findUnique(); //Se recupera el rol actual del Usuario
     if (rolActual != null) {
       nuevoUsuario.rol.target = rolActual;
-      nuevoUsuario.imagen.target = nuevaImagenUsuario;
-      nuevaImagenUsuario.usuario.target = nuevoUsuario;
+      nuevoUsuario.path = path;
       dataBase.usuariosBox.put(nuevoUsuario);
       usuarios.add(nuevoUsuario);
       //print('Usuario agregado exitosamente');
@@ -129,18 +112,24 @@ class UsuarioController extends ChangeNotifier {
       String? newApellidoM,
       String? newTelefono,
       String newCelular,
+      String newRFC,
+      String? newDomicilio,
       String newPassword,
-      GetImagenUsuario? newImagen,
+      String? newImagenBase64,
       List<String> newRolesIdDBR,
       ) async {
+    String? path;
     // Se recupera el usuario por id
     final updateUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(correo)).build().findUnique();
     if (updateUsuario != null) {
       updateUsuario.nombre = newNombre;
       updateUsuario.apellidoP = newApellidoP;
       updateUsuario.apellidoM = newApellidoM;
+      updateUsuario.nombre = newNombre;
       updateUsuario.telefono = newTelefono;
       updateUsuario.celular = newCelular;
+      updateUsuario.rfc = newRFC;
+      updateUsuario.domicilio = newDomicilio;
       updateUsuario.password = newPassword;
       //Se agregan los roles actualizados
       updateUsuario.roles.clear();
@@ -155,50 +144,21 @@ class UsuarioController extends ChangeNotifier {
       if (rolActual != null) {
         updateUsuario.rol.target = rolActual;
       }
-      if (newImagen != null) {
-        if (updateUsuario.imagen.target!.idDBR == null) {
-          // Se agrega nueva imagen
-          final uInt8ListImagen = base64Decode(newImagen.base64);
-          final tempDir = await getTemporaryDirectory();
-          File file = await File('${tempDir.path}/${newImagen.nombre}').create();
-          file.writeAsBytesSync(uInt8ListImagen);
-          final nuevaImagenUsuario = Imagenes(
-            imagenes: file.path,
-            nombre: newImagen.nombre,
-            path: file.path,
-            base64: newImagen.base64,
-            idEmiWeb: newImagen.idEmiWeb,
-            idDBR: newImagen.id,
-            idEmprendimiento: 0,
-          ); 
-          nuevaImagenUsuario.usuario.target = updateUsuario;
-          dataBase.imagenesBox.put(nuevaImagenUsuario);
-          updateUsuario.imagen.target = nuevaImagenUsuario;
-        } else {
+      if (newImagenBase64 != null) {
           //print("Se actualiza imagen USUARIO");
           // Se actualiza imagen
           //print("ID IMAGEN: ${newImagen.idEmiWeb}");
-          final uInt8ListImagen = base64Decode(newImagen.base64);
+          final uInt8ListImagen = base64Decode(newImagenBase64);
           final tempDir = await getTemporaryDirectory();
-          File file = await File('${tempDir.path}/${newImagen.nombre}').create();
+          File file = await File('${tempDir.path}/${uuid.v1()}').create();
           file.writeAsBytesSync(uInt8ListImagen);
-          updateUsuario.imagen.target!.imagenes = file.path;
-          updateUsuario.imagen.target!.nombre = newImagen.nombre;
-          updateUsuario.imagen.target!.path = file.path;
-          updateUsuario.imagen.target!.base64 = newImagen.base64;
-          dataBase.imagenesBox.put(updateUsuario.imagen.target!);
-        }
+          updateUsuario.imagen = newImagenBase64;
+          updateUsuario.path = path;
       } else {
-        if (updateUsuario.imagen.target!.idDBR != null) {
+        if (updateUsuario.imagen != null) {
           // Se eliminan los datos de la imagen actual del usuario
-          updateUsuario.imagen.target!.imagenes = "";
-          updateUsuario.imagen.target!.nombre = null;
-          updateUsuario.imagen.target!.path = null;
-          updateUsuario.imagen.target!.base64 = null;
-          updateUsuario.imagen.target!.idDBR = null;
-          updateUsuario.imagen.target!.idEmiWeb = null;
-          updateUsuario.imagen.target!.fechaRegistro = DateTime.now();
-          dataBase.imagenesBox.put(updateUsuario.imagen.target!);
+          updateUsuario.imagen = null;
+          updateUsuario.path = null;
         }
       }
       // Se actualiza el usuario con éxito

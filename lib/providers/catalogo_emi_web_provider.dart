@@ -2455,7 +2455,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               }
               //Se recupera al usuario
               final updateUsuario = dataBase.usuariosBox
-                  .query(Usuarios_.idEmiWeb.equals(
+                  .query(Usuarios_.idDBR.equals(
                       responseGetUsuarioDataBasicoParse.payload!.idUsuario
                           .toString()))
                   .build()
@@ -2466,7 +2466,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                     0) {
                   //print("No hay imagen asociada");
                   //No hay imagen nueva asociada al usuario
-                  if (updateUsuario.imagen.target!.idDBR == null) {
+                  if (updateUsuario == null) {
                     //print("No había imagen previa");
                     //Se actualiza Usuario emi_users nuevo en colección de pocketbase
                     final updateRecordEmiUser = await client.records.update(
@@ -2535,8 +2535,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                     if (updateRecordEmiUser.id.isNotEmpty) {
                       // Usuario actualizado éxitosamente en Pocketbase
                       //Se elimina la imagen de Pocketbase anterior
-                      await client.records.delete(
-                          'imagenes', '${updateUsuario.imagen.target!.idDBR}');
+                      // await client.records.delete(
+                      //     'imagenes', '${updateUsuario.imagen.target!.idDBR}');
                       return true;
                     } else {
                       // Usuario Emi Web no actualizado éxitosamente en Pocketbase
@@ -2562,7 +2562,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                       final responseImagenUsuarioEmiWeb =
                           getImagenUsuarioEmiWebFromMap(const Utf8Decoder()
                               .convert(responseImagenUsuario.bodyBytes));
-                      if (updateUsuario.imagen.target!.idDBR == null) {
+                      if (updateUsuario == null) {
                         // Se crea la imagen
                         //print("Se crea imagen");
                         // Decodificar imagen base 64
@@ -2635,7 +2635,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                         final List<int> imageBytes = encodeJpg(imageResized, quality: 30);
                         final updateRecordImagenUsuario = await client.records
                             .update('imagenes',
-                                updateUsuario.imagen.target!.idDBR.toString(),
+                                "",
                                 body: {
                               "nombre": responseImagenUsuarioEmiWeb
                                   .payload!.nombreArchivo,

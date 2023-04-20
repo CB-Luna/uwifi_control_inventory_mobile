@@ -55,8 +55,8 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
     for (var element in widget.usuario.roles) {
       listRoles.add(element.rol);
     }
-    newImagen = widget.usuario.imagen.target;
-    imagenTemp = widget.usuario.imagen.target?.path;
+    newImagen = Imagenes(imagenes: "imagenes", idEmprendimiento: 2);
+    imagenTemp = widget.usuario.path;
     nombreController = TextEditingController(text: widget.usuario.nombre);
     apellidoPController = TextEditingController(text: widget.usuario.apellidoP);
     apellidoMController = TextEditingController(text: widget.usuario.apellidoM);
@@ -365,7 +365,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                     child: CustomButton(
                                       onPressed: () async {
                                         //print("ID IMAGEN: ${widget.usuario.imagen.target?.idEmiWeb}");
-                                        if (imagenTemp != widget.usuario.imagen.target?.path) {
+                                        if (imagenTemp != widget.usuario.path) {
                                           //print("Sí");
                                           if (nombreController.text !=
                                                 widget.usuario.nombre ||
@@ -391,10 +391,10 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                                 );
                                               }
                                             }
-                                            if (widget.usuario.imagen.target?.path != null) {
+                                            if (widget.usuario.path != null) {
                                                 //print("Se va a actualizar la imagen del Usuario");
                                                 usuarioProvider.updateImagenUsuario(
-                                                  widget.usuario.imagen.target!.id,
+                                                  1,
                                                   newImagen!.nombre!,
                                                   newImagen!.path!,
                                                   newImagen!.base64!,
@@ -402,7 +402,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                               } else {
                                                 //print("Se va a agregar la imagen del Usuario");
                                                 usuarioProvider.addImagenUsuario(
-                                                  widget.usuario.imagen.target!.id,
+                                                  1,
                                                   newImagen!.nombre!,
                                                   newImagen!.path!,
                                                   newImagen!.base64!,
@@ -459,11 +459,11 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                               );
                                             }
                                           }
-                                          if (imagenTemp != widget.usuario.imagen.target?.path) {
-                                            if (widget.usuario.imagen.target?.path != null) {
+                                          if (imagenTemp != widget.usuario.path) {
+                                            if (widget.usuario.path != null) {
                                               //print("Se va a actualizar la imagen del Usuario");
                                               usuarioProvider.updateImagenUsuario(
-                                                widget.usuario.imagen.target!.id,
+                                                1,
                                                 newImagen!.nombre!,
                                                 newImagen!.path!,
                                                 newImagen!.base64!,
@@ -471,7 +471,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                             } else {
                                               //print("Se va a agregar la imagen del Usuario");
                                               usuarioProvider.addImagenUsuario(
-                                                widget.usuario.imagen.target!.id,
+                                                1,
                                                 newImagen!.nombre!,
                                                 newImagen!.path!,
                                                 newImagen!.base64!,

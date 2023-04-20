@@ -986,11 +986,9 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
         final responsePutUsuario = await put(actualizarUsuarioUri,
             headers: headers,
             body: jsonEncode({
-              "idUsuarioRegistra": usuario.idEmiWeb,
               "usuarioRegistra":
                   "${usuario.nombre} ${usuario.apellidoP} ${usuario.apellidoM}",
               "switchMovil": 1,
-              "idPromotor": usuario.idEmiWeb,
             }));
         switch (responsePutUsuario.statusCode) {
           case 200:

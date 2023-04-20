@@ -115,7 +115,7 @@ class SideMenu extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            currentUser.imagen.target?.imagenes == ""
+                            currentUser.imagen == null
                                 ? Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -160,7 +160,7 @@ class SideMenu extends StatelessWidget {
                                         image: DecorationImage(
                                             fit: BoxFit.cover,
                                             image: FileImage(File(currentUser
-                                                .imagen.target!.imagenes))),
+                                                .path!))),
                                         shape: BoxShape.circle,
                                       ),
                                     ),

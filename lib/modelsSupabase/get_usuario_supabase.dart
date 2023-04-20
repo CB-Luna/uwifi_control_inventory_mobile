@@ -1,34 +1,36 @@
 import 'dart:convert';
-
-GetUsuarioSupabase getUsuarioSupabaseFromMap(String str) => GetUsuarioSupabase.fromMap(json.decode(str));
-
-String getUsuarioSupabaseToMap(GetUsuarioSupabase usuarioCollection) => json.encode(usuarioCollection.toMap());
-
 class GetUsuarioSupabase {
     GetUsuarioSupabase({
-        required this.usuarioCollection,
+        required this.perfilUsuarioCollection,
     });
 
-    final UsuarioCollection usuarioCollection;
+    final PerfilUsuarioCollection perfilUsuarioCollection;
+
+    factory GetUsuarioSupabase.fromJson(String str) => GetUsuarioSupabase.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
 
     factory GetUsuarioSupabase.fromMap(Map<String, dynamic> json) => GetUsuarioSupabase(
-        usuarioCollection: UsuarioCollection.fromMap(json["usuarioCollection"]),
+        perfilUsuarioCollection: PerfilUsuarioCollection.fromMap(json["perfil_usuarioCollection"]),
     );
 
     Map<String, dynamic> toMap() => {
-        "usuarioCollection": usuarioCollection.toMap(),
+        "perfil_usuarioCollection": perfilUsuarioCollection.toMap(),
     };
 }
 
-
-class UsuarioCollection {
-    UsuarioCollection({
+class PerfilUsuarioCollection {
+    PerfilUsuarioCollection({
         required this.edges,
     });
 
     final List<Edge> edges;
 
-    factory UsuarioCollection.fromMap(Map<String, dynamic> json) => UsuarioCollection(
+    factory PerfilUsuarioCollection.fromJson(String str) => PerfilUsuarioCollection.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory PerfilUsuarioCollection.fromMap(Map<String, dynamic> json) => PerfilUsuarioCollection(
         edges: List<Edge>.from(json["edges"].map((x) => Edge.fromMap(x))),
     );
 
@@ -44,6 +46,10 @@ class Edge {
 
     final Node node;
 
+    factory Edge.fromJson(String str) => Edge.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
     factory Edge.fromMap(Map<String, dynamic> json) => Edge(
         node: Node.fromMap(json["node"]),
     );
@@ -56,59 +62,83 @@ class Edge {
 class Node {
     Node({
         required this.id,
-        required this.curp,
-        required this.correo,
+        required this.createdAt,
+        required this.rfc,
+        required this.roles,
+        this.imagen,
         required this.nombre,
         required this.celular,
         this.telefono,
-        required this.idRolFk,
-        this.apellidoM,
+        this.domicilio,
+        required this.apellidoM,
         required this.apellidoP,
-        required this.createdAt,
-        this.idImagenFk,
-        required this.fechaNacimiento,
     });
 
     final String id;
-    final String curp;
-    final String correo;
+    final DateTime createdAt;
+    final String rfc;
+    final Roles roles;
+    final String? imagen;
     final String nombre;
     final String celular;
     final String? telefono;
-    final String idRolFk;
-    final String? apellidoM;
+    final String? domicilio;
+    final String apellidoM;
     final String apellidoP;
-    final DateTime createdAt;
-    final String? idImagenFk;
-    final DateTime fechaNacimiento;
+
+    factory Node.fromJson(String str) => Node.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
 
     factory Node.fromMap(Map<String, dynamic> json) => Node(
-        id: json["id"],
-        curp: json["curp"],
-        correo: json["correo"],
+        id: json["perfil_usuario_id"],
+        createdAt: DateTime.parse(json["created_at"]),
+        rfc: json["rfc"],
+        roles: Roles.fromMap(json["roles"]),
+        imagen: json["imagen"],
         nombre: json["nombre"],
         celular: json["celular"],
         telefono: json["telefono"],
-        idRolFk: json["id_rol_fk"],
+        domicilio: json["domicilio"],
         apellidoM: json["apellido_m"],
         apellidoP: json["apellido_p"],
-        createdAt: DateTime.parse(json["created_at"]),
-        idImagenFk: json["id_imagen_fk"],
-        fechaNacimiento: DateTime.parse(json["fecha_nacimiento"]),
+    );
+
+    Map<String, dynamic> toMap() => {
+        "perfil_usuario_id": id,
+        "created_at": createdAt.toIso8601String(),
+        "rfc": rfc,
+        "roles": roles.toMap(),
+        "imagen": imagen,
+        "nombre": nombre,
+        "celular": celular,
+        "telefono": telefono,
+        "domicilio": domicilio,
+        "apellido_m": apellidoM,
+        "apellido_p": apellidoP,
+    };
+}
+
+class Roles {
+    Roles({
+        required this.id,
+        required this.rol,
+    });
+
+    final String id;
+    final String rol;
+
+    factory Roles.fromJson(String str) => Roles.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory Roles.fromMap(Map<String, dynamic> json) => Roles(
+        id: json["id"],
+        rol: json["rol"],
     );
 
     Map<String, dynamic> toMap() => {
         "id": id,
-        "curp": curp,
-        "correo": correo,
-        "nombre": nombre,
-        "celular": celular,
-        "telefono": telefono,
-        "id_rol_fk": idRolFk,
-        "apellido_m": apellidoM,
-        "apellido_p": apellidoP,
-        "created_at": createdAt.toIso8601String(),
-        "id_imagen_fk": idImagenFk,
-        "fecha_nacimiento": fechaNacimiento.toIso8601String(),
+        "rol": rol,
     };
 }

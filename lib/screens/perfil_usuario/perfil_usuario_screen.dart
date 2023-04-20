@@ -207,7 +207,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                       ),
                     ),
                   ),
-                  currentUser.imagen.target?.imagenes == ""
+                  currentUser.path == null
                       ? Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
@@ -247,7 +247,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                   type: PageTransitionType.fade,
                                   child: FlutterFlowExpandedImageView(
                                     image: Image.file(
-                                      File(currentUser.imagen.target!.imagenes),
+                                      File(currentUser.path!),
                                       fit: BoxFit.contain,
                                     ),
                                     allowRotation: false,
@@ -269,7 +269,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                 ),
                                 child: //TODO: manejar imagen de red
                                     Image.file(
-                                  File(currentUser.imagen.target!.imagenes),
+                                  File(currentUser.path!),
                                   fit: BoxFit.cover,
                                 ),
                               ),

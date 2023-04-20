@@ -78,9 +78,7 @@ class CotizacionController extends ChangeNotifier {
                 final responseProyecto = getValidateUsuarioEstatusEmiWebFromMap(
                     const Utf8Decoder()
                         .convert(responseGetUsuarioEstatusProyecto.bodyBytes));
-                if (responseProyecto.payload.idPromotor.toString() ==
-                        usuarioActual.idEmiWeb &&
-                    responseProyecto.payload.switchMovil == true) {
+                if (responseProyecto.payload.switchMovil == true) {
                   return 1;
                 } else {
                   //El estatus o el Usuario del Proyecto cambiaron, así que se tienen que eliminar de este dispositivo
@@ -148,8 +146,6 @@ class CotizacionController extends ChangeNotifier {
                   await put(actualizarEstadoInversionUri,
                       headers: headers,
                       body: jsonEncode({
-                        "idUsuarioRegistra": inversion
-                            .emprendimiento.target!.usuario.target!.idEmiWeb,
                         "usuarioRegistra":
                             "${inversion.emprendimiento.target!.usuario.target!.nombre} ${inversion.emprendimiento.target!.usuario.target!.apellidoP} ${inversion.emprendimiento.target!.usuario.target!.apellidoM}",
                         "idInversiones": inversion.idEmiWeb,
@@ -225,8 +221,6 @@ class CotizacionController extends ChangeNotifier {
                 await put(actualizarEstadoInversionUri,
                     headers: headers,
                     body: jsonEncode({
-                      "idUsuarioRegistra": inversion
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
                       "usuarioRegistra":
                           "${inversion.emprendimiento.target!.usuario.target!.nombre} ${inversion.emprendimiento.target!.usuario.target!.apellidoP} ${inversion.emprendimiento.target!.usuario.target!.apellidoM}",
                       "idInversiones": inversion.idEmiWeb,
@@ -306,8 +300,6 @@ class CotizacionController extends ChangeNotifier {
                 await put(actualizarEstadoInversionUri,
                     headers: headers,
                     body: jsonEncode({
-                      "idUsuarioRegistra": inversion
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
                       "usuarioRegistra":
                           "${inversion.emprendimiento.target!.usuario.target!.nombre} ${inversion.emprendimiento.target!.usuario.target!.apellidoP} ${inversion.emprendimiento.target!.usuario.target!.apellidoM}",
                       "idInversiones": inversion.idEmiWeb,

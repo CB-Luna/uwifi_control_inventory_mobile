@@ -79,7 +79,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             final responseTokenEmiWeb = getTokenEmiWebFromMap(response.body);
             tokenGlobal = responseTokenEmiWeb.accessToken;
             var urlgetRolesUsuario = Uri.parse(
-                "$baseUrlEmiWebServices/usuarios/${updateUsuario.idEmiWeb}/roles");
+                "$baseUrlEmiWebServices/usuarios/${updateUsuario.idDBR}/roles");
             final headers = ({
               "Content-Type": "application/json",
               'Authorization': 'Bearer $tokenGlobal',
@@ -384,7 +384,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   final idEmprendimientoMensaje =
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddJornada1 = await syncAddJornada1(jornadaToSync,
-                      instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                      instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncAddJornada1) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -438,7 +438,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   final idEmprendimientoMensaje =
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddJornada2 = await syncAddJornada2(jornadaToSync,
-                      instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                      instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncAddJornada2) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -494,7 +494,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   var caseSyncAddImagenJornada2 = await syncAddImagenJornada2(
                       imagenToSync,
                       instruccionesBitacora[i],
-                      usuarioActual.idEmiWeb);
+                      usuarioActual.idDBR);
                   switch (caseSyncAddImagenJornada2) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -548,7 +548,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   final idEmprendimientoMensaje =
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddJornada3 = await syncAddJornada3(jornadaToSync,
-                      instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                      instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncAddJornada3) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -604,7 +604,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   var caseSyncAddImagenJornada3 = await syncAddImagenJornada3(
                       imagenToSync,
                       instruccionesBitacora[i],
-                      usuarioActual.idEmiWeb);
+                      usuarioActual.idDBR);
                   switch (caseSyncAddImagenJornada3) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -660,7 +660,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddProductoInversionJ3 =
                       await syncAddProductoInversionJ3(prodSolicitadoToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncAddProductoInversionJ3) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -718,7 +718,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateProductoInversionJ3 =
                       await syncUpdateProductoInversionJ3(prodSolicitadoToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncUpdateProductoInversionJ3) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -773,7 +773,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   final idEmprendimientoMensaje =
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddJornada4 = await syncAddJornada4(jornadaToSync,
-                      instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                      instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncAddJornada4) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -829,7 +829,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   var caseSyncAddImagenJornada4 = await syncAddImagenJornada4(
                       imagenToSync,
                       instruccionesBitacora[i],
-                      usuarioActual.idEmiWeb);
+                      usuarioActual.idDBR);
                   switch (caseSyncAddImagenJornada4) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -886,7 +886,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   var caseSyncAddConsultoria = await syncAddConsultoria(
                       consultoriaToSync,
                       instruccionesBitacora[i],
-                      usuarioActual.idEmiWeb);
+                      usuarioActual.idDBR);
                   switch (caseSyncAddConsultoria) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -943,7 +943,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   var caseSyncAddProductoEmp = await syncAddProductoEmprendedor(
                       productoEmpToSync,
                       instruccionesBitacora[i],
-                      usuarioActual.idEmiWeb);
+                      usuarioActual.idDBR);
                   switch (caseSyncAddProductoEmp) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -999,7 +999,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddImagenProdEmprendedor =
                       await syncAddImagenProductoEmprendedor(imagenToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncAddImagenProdEmprendedor) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1054,7 +1054,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   final idEmprendimientoMensaje =
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddVenta = await syncAddVenta(ventaToSync,
-                      instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                      instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncAddVenta) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1110,7 +1110,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   var caseSyncAddProductoVendido = await syncAddProductoVendido(
                       prodVendidoToSync,
                       instruccionesBitacora[i],
-                      usuarioActual.idEmiWeb);
+                      usuarioActual.idDBR);
                   switch (caseSyncAddProductoVendido) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1165,7 +1165,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddSingleProductoVendido =
                       await syncAddSingleProductoVendido(prodVendidoToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncAddSingleProductoVendido) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1223,7 +1223,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   var caseSyncAddInversion = await syncAddInversion(
                       inversionToSync,
                       instruccionesBitacora[i],
-                      usuarioActual.idEmiWeb);
+                      usuarioActual.idDBR);
                   switch (caseSyncAddInversion) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1344,7 +1344,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateFaseEmprendimiento =
                       await syncUpdateFaseEmprendimiento(emprendimientoToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncUpdateFaseEmprendimiento) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1402,7 +1402,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   var caseSyncUpdateEmprendedor = await syncUpdateEmprendedor(
                       emprendedorToSync,
                       instruccionesBitacora[i],
-                      usuarioActual.idEmiWeb);
+                      usuarioActual.idDBR);
                   switch (caseSyncUpdateEmprendedor) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1457,7 +1457,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateEmprendimiento =
                       await syncUpdateEmprendimiento(emprendimientoToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncUpdateEmprendimiento) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1514,7 +1514,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   var caseSyncUpdateJornada1 = await syncUpdateJornada1(
                       jornadaToSync,
                       instruccionesBitacora[i],
-                      usuarioActual.idEmiWeb);
+                      usuarioActual.idDBR);
                   switch (caseSyncUpdateJornada1) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1570,7 +1570,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   var caseSyncUpdateJornada2 = await syncUpdateJornada2(
                       jornadaToSync,
                       instruccionesBitacora[i],
-                      usuarioActual.idEmiWeb);
+                      usuarioActual.idDBR);
                   switch (caseSyncUpdateJornada2) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1625,7 +1625,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateImagenJornada2 =
                       await syncUpdateImagenJornada2(imagenToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncUpdateImagenJornada2) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1682,7 +1682,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   var caseSyncUpdateJornada3 = await syncUpdateJornada3(
                       jornadaToSync,
                       instruccionesBitacora[i],
-                      usuarioActual.idEmiWeb);
+                      usuarioActual.idDBR);
                   switch (caseSyncUpdateJornada3) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1737,7 +1737,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateImagenJornada3 =
                       await syncUpdateImagenJornada3(imagenToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncUpdateImagenJornada3) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1794,7 +1794,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   var caseSyncUpdateJornada4 = await syncUpdateJornada4(
                       jornadaToSync,
                       instruccionesBitacora[i],
-                      usuarioActual.idEmiWeb);
+                      usuarioActual.idDBR);
                   switch (caseSyncUpdateJornada4) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1849,7 +1849,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateImagenJornada4 =
                       await syncUpdateImagenJornada4(imagenToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncUpdateImagenJornada4) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1906,7 +1906,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateEstadoInversion =
                       await syncUpdateEstadoInversion(inversionToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncUpdateEstadoInversion) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -1962,7 +1962,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateTareaConsultoria =
                       await syncUpdateTareaConsultoria(tareaToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncUpdateTareaConsultoria) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -2021,7 +2021,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       await syncUpdateProductoEmprendedor(
                           productoEmprendedorToSync,
                           instruccionesBitacora[i],
-                          usuarioActual.idEmiWeb);
+                          usuarioActual.idDBR);
                   switch (caseSyncUpdateProductoEmprendedor) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -2077,7 +2077,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateImagenProdEmprendedor =
                       await syncUpdateImagenProductoEmprendedor(imagenToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncUpdateImagenProdEmprendedor) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -2132,7 +2132,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   final idEmprendimientoMensaje =
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseUpdateVenta = await syncUpdateVenta(ventaToSync,
-                      instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                      instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseUpdateVenta) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -2187,7 +2187,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateProductoVendido =
                       await syncUpdateProductoVendido(prodVendidoToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncUpdateProductoVendido) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -2243,7 +2243,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateProductosVendidosVenta =
                       await syncUpdateProductosVendidosVenta(ventaToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncUpdateProductosVendidosVenta) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -2294,7 +2294,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 final idEmprendimientoMensaje =
                     instruccionesBitacora[i].idEmprendimiento;
                 var caseSyncDeleteImagenJornada = await syncDeleteImagenJornada(
-                    instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                    instruccionesBitacora[i], usuarioActual.idDBR);
                 switch (caseSyncDeleteImagenJornada) {
                   case 0:
                     banderasExistoSync.add(false);
@@ -2335,7 +2335,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     instruccionesBitacora[i].idEmprendimiento;
                 var caseSyncDeleteProductoInversionJ3 =
                     await syncDeleteProductoInversionJ3(
-                        instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                        instruccionesBitacora[i], usuarioActual.idDBR);
                 switch (caseSyncDeleteProductoInversionJ3) {
                   case 0:
                     banderasExistoSync.add(false);
@@ -2376,7 +2376,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     instruccionesBitacora[i].idEmprendimiento;
                 var caseSyncDeleteProductoVendido =
                     await syncDeleteProductoVendido(
-                        instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                        instruccionesBitacora[i], usuarioActual.idDBR);
                 switch (caseSyncDeleteProductoVendido) {
                   case 0:
                     banderasExistoSync.add(false);
@@ -2420,7 +2420,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncArchivarEmprendimiento =
                       await syncArchivarEmprendimiento(emprendimientoToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncArchivarEmprendimiento) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -2475,7 +2475,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncDesarchivarEmprendimiento =
                       await syncDesarchivarEmprendimiento(emprendimientoToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncDesarchivarEmprendimiento) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -2531,7 +2531,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncArchivarConsultoria =
                       await syncArchivarConsultoria(consultoriaToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncArchivarConsultoria) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -2587,7 +2587,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncDesarchivarConsultoria =
                       await syncDesarchivarConsultoria(consultoriaToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncDesarchivarConsultoria) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -2646,7 +2646,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       await syncAcceptInversionesXProductosCotizados(
                           inversionXproductoCotizadoToSync,
                           instruccionesBitacora[i],
-                          usuarioActual.idEmiWeb);
+                          usuarioActual.idDBR);
                   switch (caseSyncAcceptInversionXProductoCotizado) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -2706,7 +2706,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       await syncUpdateInversionesXProductosCotizados(
                           inversionXproductoCotizadoToSync,
                           instruccionesBitacora[i],
-                          usuarioActual.idEmiWeb);
+                          usuarioActual.idDBR);
                   switch (caseSyncAcceptInversionXProductoCotizado) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -2769,7 +2769,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAcceptProductoCotizado =
                       await syncAcceptProdCotizado(productoCotizadoToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncAcceptProductoCotizado) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -2825,7 +2825,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddImagenesEntregaInversion =
                       await syncAddImagenesEntregaInversion(inversionToSync,
-                          instruccionesBitacora[i], usuarioActual.idEmiWeb);
+                          instruccionesBitacora[i], usuarioActual.idDBR);
                   switch (caseSyncAddImagenesEntregaInversion) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -2882,7 +2882,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   var caseSyncAddPagoInversion = await syncAddPagoInversion(
                       pagoToSync,
                       instruccionesBitacora[i],
-                      usuarioActual.idEmiWeb);
+                      usuarioActual.idDBR);
                   switch (caseSyncAddPagoInversion) {
                     case 0:
                       banderasExistoSync.add(false);
@@ -3193,9 +3193,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Emprendedores emprendedor, Bitacora bitacora) async {
     //print("Estoy en El syncAddEmprendedor de Emi Web");
     try {
-      if (emprendedor.emprendimiento.target!.idEmiWeb == null) {
+      if (emprendedor.emprendimiento.target!.idDBR == null) {
         //Verificamos que no se haya posteado anteriormente el emprendedor y emprendimiento
-        if (emprendedor.idEmiWeb == null) {
+        if (emprendedor.idDBR == null) {
           // Primero creamos el emprendedor asociado al emprendimiento
           final crearEmprendedorUri =
               Uri.parse('$baseUrlEmiWebServices/emprendedores/registro/crear');
@@ -3207,18 +3207,18 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               headers: headers,
               body: jsonEncode({
                 "idUsuario":
-                    emprendedor.emprendimiento.target!.usuario.target!.idEmiWeb,
+                    emprendedor.emprendimiento.target!.usuario.target!.idDBR,
                 "nombreUsuario":
                     "${emprendedor.emprendimiento.target!.usuario.target!.nombre} ${emprendedor.emprendimiento.target!.usuario.target!.apellidoP} ${emprendedor.emprendimiento.target!.usuario.target!.apellidoM}",
                 "nombre": emprendedor.nombre,
                 "apellidos": emprendedor.apellidos,
                 "curp": emprendedor.curp,
                 "integrantesFamilia": emprendedor.integrantesFamilia,
-                "comunidad": emprendedor.comunidad.target!.idEmiWeb,
+                "comunidad": emprendedor.comunidad.target!.idDBR,
                 "estado": emprendedor.comunidad.target!.municipios.target!
-                    .estados.target!.idEmiWeb,
+                    .estados.target!.idDBR,
                 "municipio":
-                    emprendedor.comunidad.target!.municipios.target!.idEmiWeb,
+                    emprendedor.comunidad.target!.municipios.target!.idDBR,
                 "emprendimiento": emprendedor.emprendimiento.target!.nombre,
                 "telefono": emprendedor.telefono?.replaceAll("-", ""),
                 "comentarios": emprendedor.comentarios,
@@ -3236,13 +3236,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               final responsePostEmprendedorParse =
                   postRegistroExitosoEmiWebFromMap(const Utf8Decoder()
                       .convert(responsePostEmprendedor.bodyBytes));
-              emprendedor.idEmiWeb =
+              emprendedor.idDBR =
                   responsePostEmprendedorParse.payload!.id.toString();
               dataBase.emprendedoresBox.put(emprendedor);
               //Segundo creamos el emprendimiento
               // Recuperamos el id asociado al emprendimiento
               final obtenerEmprendimientoUri = Uri.parse(
-                  '$baseUrlEmiWebServices/proyectos/${emprendedor.idEmiWeb}');
+                  '$baseUrlEmiWebServices/proyectos/${emprendedor.idDBR}');
               final headers = ({
                 "Content-Type": "application/json",
                 'Authorization': 'Bearer $tokenGlobal',
@@ -3270,16 +3270,16 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       headers: headers,
                       body: jsonEncode({
                         "idUsuarioRegistra": emprendedor
-                            .emprendimiento.target!.usuario.target!.idEmiWeb,
+                            .emprendimiento.target!.usuario.target!.idDBR,
                         "usuarioRegistra":
                             "${emprendedor.emprendimiento.target!.usuario.target!.nombre} ${emprendedor.emprendimiento.target!.usuario.target!.apellidoP} ${emprendedor.emprendimiento.target!.usuario.target!.apellidoM}",
                         "switchMovil": 1,
                         "idPromotor": emprendedor
-                            .emprendimiento.target!.usuario.target!.idEmiWeb,
+                            .emprendimiento.target!.usuario.target!.idDBR,
                       }));
                   switch (responsePutUsuario.statusCode) {
                     case 200:
-                      emprendedor.emprendimiento.target!.idEmiWeb =
+                      emprendedor.emprendimiento.target!.idDBR =
                           responseGetEmprendimientoParse.payload!.id.toString();
                       dataBase.emprendimientosBox
                           .put(emprendedor.emprendimiento.target!);
@@ -3303,7 +3303,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         } else {
           // Recuperamos el id asociado al emprendimiento
           final obtenerEmprendimientoUri = Uri.parse(
-              '$baseUrlEmiWebServices/proyectos/${emprendedor.idEmiWeb}');
+              '$baseUrlEmiWebServices/proyectos/${emprendedor.idDBR}');
           final headers = ({
             "Content-Type": "application/json",
             'Authorization': 'Bearer $tokenGlobal',
@@ -3331,16 +3331,16 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   headers: headers,
                   body: jsonEncode({
                     "idUsuarioRegistra": emprendedor
-                        .emprendimiento.target!.usuario.target!.idEmiWeb,
+                        .emprendimiento.target!.usuario.target!.idDBR,
                     "usuarioRegistra":
                         "${emprendedor.emprendimiento.target!.usuario.target!.nombre} ${emprendedor.emprendimiento.target!.usuario.target!.apellidoP} ${emprendedor.emprendimiento.target!.usuario.target!.apellidoM}",
                     "switchMovil": 1,
                     "idPromotor": emprendedor
-                        .emprendimiento.target!.usuario.target!.idEmiWeb,
+                        .emprendimiento.target!.usuario.target!.idDBR,
                   }));
               switch (responsePutUsuario.statusCode) {
                 case 200:
-                  emprendedor.emprendimiento.target!.idEmiWeb =
+                  emprendedor.emprendimiento.target!.idDBR =
                       responseGetEmprendimientoParse.payload!.id.toString();
                   dataBase.emprendimientosBox
                       .put(emprendedor.emprendimiento.target!);
@@ -3387,7 +3387,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     //print("Estoy en El syncAddJornada1 de Emi Web");
     // Validamos que se pueda ejecutar la instrucción
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -3409,7 +3409,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 dataBase.tareasBox.get(jornada.tarea.target!.id);
             if (tareaToSync != null) {
               //Verificamos que no se haya posteado anteriormente la jornada y tarea
-              if (jornada.idEmiWeb == null) {
+              if (jornada.idDBR == null) {
                 // Primero creamos la jornada asociada a la tarea
                 final crearJornadaUri = Uri.parse(
                     '$baseUrlEmiWebServices/jornadas?jornada=${jornada.numJornada}');
@@ -3421,7 +3421,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuario": jornada
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "nombreUsuario":
                           "${jornada.emprendimiento.target!.usuario.target!.nombre} ${jornada.emprendimiento.target!.usuario.target!.apellidoP} ${jornada.emprendimiento.target!.usuario.target!.apellidoM}",
                       "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -3433,7 +3433,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "tareaCompletada":
                           false, //Es falso por que apenas la estamos dando de alta
                       "descripcion": jornada.tarea.target!.descripcion,
-                      "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
+                      "idProyecto": jornada.emprendimiento.target!.idDBR,
                       "nombreEmprendimiento":
                           jornada.emprendimiento.target!.nombre,
                     }));
@@ -3450,13 +3450,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     //Se concatena el id recuperado con uuid para que los ids no se repitan
                     final idEmiWebUUid =
                         "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
-                    jornada.idEmiWeb = idEmiWebUUid;
+                    jornada.idDBR = idEmiWebUUid;
                     //print("Se recupera el idEmiWeb");
                     dataBase.jornadasBox.put(jornada);
                     //print("Se hace put a la jornada");
                     //Segundo creamos la Tarea
                     //Se recupera el id Emi Web de la Tarea
-                    tareaToSync.idEmiWeb = idEmiWebUUid;
+                    tareaToSync.idDBR = idEmiWebUUid;
                     dataBase.tareasBox.put(tareaToSync);
                     //Se marca como realizada en EmiWeb la instrucción en Bitacora
                     bitacora.executeEmiWeb = true;
@@ -3467,12 +3467,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     return 0;
                 }
               } else {
-                if (tareaToSync.idEmiWeb == null) {
+                if (tareaToSync.idDBR == null) {
                   //Se concatena el id recuperado con uuid para que los ids no se repitan
                   //print("Se hace put a la jornada");
                   //Segundo creamos la Tarea
                   //Se recupera el id Emi Web de la Tarea
-                  tareaToSync.idEmiWeb = jornada.idEmiWeb;
+                  tareaToSync.idDBR = jornada.idDBR;
                   dataBase.tareasBox.put(tareaToSync);
                   //Se marca como realizada en EmiWeb la instrucción en Bitacora
                   bitacora.executeEmiWeb = true;
@@ -3514,7 +3514,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddJornada2 de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -3536,7 +3536,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 dataBase.tareasBox.get(jornada.tarea.target!.id);
             if (tareaToSync != null) {
               //Verificamos que no se haya posteado anteriormente la jornada y tarea
-              if (jornada.idEmiWeb == null) {
+              if (jornada.idDBR == null) {
                 // Primero creamos la jornada asociada a la tarea
                 final crearJornadaUri = Uri.parse(
                     '$baseUrlEmiWebServices/jornadas?jornada=${jornada.numJornada}');
@@ -3548,7 +3548,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuario": jornada
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "nombreUsuario":
                           "${jornada.emprendimiento.target!.usuario.target!.nombre} ${jornada.emprendimiento.target!.usuario.target!.apellidoP} ${jornada.emprendimiento.target!.usuario.target!.apellidoM}",
                       "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -3560,7 +3560,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "tareaCompletada":
                           false, //Es falso por que apenas la estamos dando de alta
                       "descripcion": jornada.tarea.target!.descripcion,
-                      "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
+                      "idProyecto": jornada.emprendimiento.target!.idDBR,
                       "nombreEmprendimiento":
                           jornada.emprendimiento.target!.nombre,
                     }));
@@ -3576,7 +3576,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     //Se concatena el id recuperado con uuid para que los ids no se repitan
                     final idEmiWebUuid =
                         "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
-                    jornada.idEmiWeb = idEmiWebUuid;
+                    jornada.idDBR = idEmiWebUuid;
                     dataBase.jornadasBox.put(jornada);
                     //print("Se hace put a la jornada");
                     // Segundo creamos y enviamos las imágenes de la jornada
@@ -3601,14 +3601,14 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                     .toList()[i]
                                     .base64,
                                 "idUsuario": jornada.emprendimiento.target!
-                                    .usuario.target!.idEmiWeb,
-                                "idJornada2": jornada.idEmiWeb!.split("?")[0],
+                                    .usuario.target!.idDBR,
+                                "idJornada2": jornada.idDBR!.split("?")[0],
                               }));
                       final responsePostImagenJornadaParse =
                           postRegistroImagenExitosoEmiWebFromMap(
                               const Utf8Decoder().convert(
                                   responsePostImagenJornada.bodyBytes));
-                      jornada.tarea.target!.imagenes.toList()[i].idEmiWeb =
+                      jornada.tarea.target!.imagenes.toList()[i].idDBR =
                           responsePostImagenJornadaParse.payload.idDocumento
                               .toString();
                       dataBase.imagenesBox
@@ -3616,7 +3616,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     }
                     // Tercero creamos la Tarea
                     // Se recupera el id Emi Web de la Tarea
-                    tareaToSync.idEmiWeb = idEmiWebUuid;
+                    tareaToSync.idDBR = idEmiWebUuid;
                     dataBase.tareasBox.put(tareaToSync);
                     //print("Se hace put a la tarea");
                     //Se marca como realizada en EmiWeb la instrucción en Bitacora
@@ -3628,12 +3628,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     return 0;
                 }
               } else {
-                if (tareaToSync.idEmiWeb == null) {
+                if (tareaToSync.idDBR == null) {
                   // Segundo creamos y enviamos las imágenes de la jornada
                   for (var i = 0;
                       i < jornada.tarea.target!.imagenes.toList().length;
                       i++) {
-                    if (jornada.tarea.target!.imagenes.toList()[i].idEmiWeb ==
+                    if (jornada.tarea.target!.imagenes.toList()[i].idDBR ==
                         null) {
                       final crearImagenJornadaUri =
                           Uri.parse('$baseUrlEmiWebServices/documentos/crear');
@@ -3653,14 +3653,14 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                     .toList()[i]
                                     .base64,
                                 "idUsuario": jornada.emprendimiento.target!
-                                    .usuario.target!.idEmiWeb,
-                                "idJornada2": jornada.idEmiWeb!.split("?")[0],
+                                    .usuario.target!.idDBR,
+                                "idJornada2": jornada.idDBR!.split("?")[0],
                               }));
                       final responsePostImagenJornadaParse =
                           postRegistroImagenExitosoEmiWebFromMap(
                               const Utf8Decoder().convert(
                                   responsePostImagenJornada.bodyBytes));
-                      jornada.tarea.target!.imagenes.toList()[i].idEmiWeb =
+                      jornada.tarea.target!.imagenes.toList()[i].idDBR =
                           responsePostImagenJornadaParse.payload.idDocumento
                               .toString();
                       dataBase.imagenesBox
@@ -3669,7 +3669,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   }
                   // Tercero creamos la Tarea
                   // Se recupera el id Emi Web de la Tarea
-                  tareaToSync.idEmiWeb = jornada.idEmiWeb;
+                  tareaToSync.idDBR = jornada.idDBR;
                   dataBase.tareasBox.put(tareaToSync);
                   //print("Se hace put a la tarea");
                   //Se marca como realizada en EmiWeb la instrucción en Bitacora
@@ -3712,7 +3712,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddImagenJornada2() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -3745,9 +3745,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "nombreArchivo": imagen.nombre,
                       "archivo": imagen.base64,
                       "idUsuario": imagen.tarea.target!.jornada.target!
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "idJornada2": imagen
-                          .tarea.target!.jornada.target!.idEmiWeb!
+                          .tarea.target!.jornada.target!.idDBR!
                           .split("?")[0],
                     }));
             switch (responsePostAddImagenJornada2.statusCode) {
@@ -3757,7 +3757,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 final responsePostImagenUsuarioParse =
                     postRegistroImagenExitosoEmiWebFromMap(const Utf8Decoder()
                         .convert(responsePostAddImagenJornada2.bodyBytes));
-                imagen.idEmiWeb = responsePostImagenUsuarioParse
+                imagen.idDBR = responsePostImagenUsuarioParse
                     .payload.idDocumento
                     .toString();
                 dataBase.imagenesBox.put(imagen);
@@ -3791,7 +3791,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddJornada3 de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -3813,7 +3813,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 dataBase.tareasBox.get(jornada.tarea.target!.id);
             if (tareaToSync != null) {
               //Verificamos que no se haya posteado anteriormente la jornada y tarea
-              if (jornada.idEmiWeb == null) {
+              if (jornada.idDBR == null) {
                 // Primero creamos la jornada asociada a la tarea
                 final crearJornadaUri = Uri.parse(
                     '$baseUrlEmiWebServices/jornadas?jornada=${jornada.numJornada}');
@@ -3825,7 +3825,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuario": jornada
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "nombreUsuario":
                           "${jornada.emprendimiento.target!.usuario.target!.nombre} ${jornada.emprendimiento.target!.usuario.target!.apellidoP} ${jornada.emprendimiento.target!.usuario.target!.apellidoM}",
                       "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -3837,7 +3837,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "tareaCompletada":
                           false, //Es falso por que apenas la estamos dando de alta
                       "descripcion": jornada.tarea.target!.descripcion,
-                      "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
+                      "idProyecto": jornada.emprendimiento.target!.idDBR,
                       "nombreEmprendimiento":
                           jornada.emprendimiento.target!.nombre,
                     }));
@@ -3851,7 +3851,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     //Se concatena el id recuperado con uuid para que los ids no se repitan
                     final idEmiWebUUid =
                         "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
-                    jornada.idEmiWeb = idEmiWebUUid;
+                    jornada.idDBR = idEmiWebUUid;
                     dataBase.jornadasBox.put(jornada);
                     //Segundo actualizamos el tipo de proyecto del emprendimiento
                     final updateTipoProyectoEmprendimientoUri = Uri.parse(
@@ -3865,12 +3865,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                             headers: headers,
                             body: jsonEncode({
                               "idUsuarioRegistra": jornada.emprendimiento
-                                  .target!.usuario.target!.idEmiWeb,
+                                  .target!.usuario.target!.idDBR,
                               "usuarioRegistra":
                                   "${jornada.emprendimiento.target!.usuario.target!.nombre} ${jornada.emprendimiento.target!.usuario.target!.apellidoP} ${jornada.emprendimiento.target!.usuario.target!.apellidoM}",
-                              "id": jornada.emprendimiento.target!.idEmiWeb,
+                              "id": jornada.emprendimiento.target!.idDBR,
                               "idCatProyecto": jornada.emprendimiento.target!
-                                  .catalogoProyecto.target!.idEmiWeb,
+                                  .catalogoProyecto.target!.idDBR,
                               "idCatTipoProyecto": jornada
                                   .emprendimiento
                                   .target!
@@ -3878,7 +3878,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                   .target!
                                   .tipoProyecto
                                   .target!
-                                  .idEmiWeb,
+                                  .idDBR,
                             }));
                     switch (
                         responseUpdateTipoProyectoEmprendimiento.statusCode) {
@@ -3906,14 +3906,14 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                     .toList()[i]
                                     .base64,
                                 "idUsuario": jornada.emprendimiento.target!
-                                    .usuario.target!.idEmiWeb,
-                                "idJornada3": jornada.idEmiWeb!.split("?")[0],
+                                    .usuario.target!.idDBR,
+                                "idJornada3": jornada.idDBR!.split("?")[0],
                               }));
                           final responsePostImagenJornadaParse =
                               postRegistroImagenExitosoEmiWebFromMap(
                                   const Utf8Decoder().convert(
                                       responsePostImagenJornada.bodyBytes));
-                          jornada.tarea.target!.imagenes.toList()[i].idEmiWeb =
+                          jornada.tarea.target!.imagenes.toList()[i].idDBR =
                               responsePostImagenJornadaParse.payload.idDocumento
                                   .toString();
                           dataBase.imagenesBox
@@ -3932,7 +3932,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                               i++) {
                             if (inversionJornada3.prodSolicitados
                                     .toList()[i]
-                                    .idEmiWeb ==
+                                    .idDBR ==
                                 null) {
                               if (inversionJornada3.prodSolicitados
                                       .toList()[i]
@@ -3951,7 +3951,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                         headers: headers,
                                         body: jsonEncode({
                                           "idUsuario": jornada.emprendimiento
-                                              .target!.usuario.target!.idEmiWeb,
+                                              .target!.usuario.target!.idDBR,
                                           "nombreUsuario":
                                               "${jornada.emprendimiento.target!.usuario.target!.nombre} ${jornada.emprendimiento.target!.usuario.target!.apellidoP} ${jornada.emprendimiento.target!.usuario.target!.apellidoM}",
                                           "producto": inversionJornada3
@@ -3979,19 +3979,19 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                               .toList()[i]
                                               .proveedorSugerido,
                                           "idProyecto": jornada
-                                              .emprendimiento.target!.idEmiWeb,
+                                              .emprendimiento.target!.idDBR,
                                           "idFamilia": inversionJornada3
                                               .prodSolicitados
                                               .toList()[i]
                                               .familiaInversion
                                               .target!
-                                              .idEmiWeb,
+                                              .idDBR,
                                           "unidadMedida": inversionJornada3
                                               .prodSolicitados
                                               .toList()[i]
                                               .tipoEmpaques
                                               .target!
-                                              .idEmiWeb, //TODO: Posible falla en sincronización, Unidad medida-Tipo empaque
+                                              .idDBR, //TODO: Posible falla en sincronización, Unidad medida-Tipo empaque
                                         }));
                                 final responsePostProductoProyectoParse =
                                     postRegistroExitosoEmiWebFromMap(
@@ -4000,7 +4000,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                                 .bodyBytes));
                                 inversionJornada3.prodSolicitados
                                         .toList()[i]
-                                        .idEmiWeb =
+                                        .idDBR =
                                     responsePostProductoProyectoParse
                                         .payload!.id
                                         .toString();
@@ -4020,7 +4020,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                         headers: headers,
                                         body: jsonEncode({
                                           "idUsuario": jornada.emprendimiento
-                                              .target!.usuario.target!.idEmiWeb,
+                                              .target!.usuario.target!.idDBR,
                                           "nombreUsuario":
                                               "${jornada.emprendimiento.target!.usuario.target!.nombre} ${jornada.emprendimiento.target!.usuario.target!.apellidoP} ${jornada.emprendimiento.target!.usuario.target!.apellidoM}",
                                           "producto": inversionJornada3
@@ -4048,19 +4048,19 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                               .toList()[i]
                                               .proveedorSugerido,
                                           "idProyecto": jornada
-                                              .emprendimiento.target!.idEmiWeb,
+                                              .emprendimiento.target!.idDBR,
                                           "idFamilia": inversionJornada3
                                               .prodSolicitados
                                               .toList()[i]
                                               .familiaInversion
                                               .target!
-                                              .idEmiWeb,
+                                              .idDBR,
                                           "unidadMedida": inversionJornada3
                                               .prodSolicitados
                                               .toList()[i]
                                               .tipoEmpaques
                                               .target!
-                                              .idEmiWeb,
+                                              .idDBR,
                                         }));
                                 final responsePostProductoProyectoParse =
                                     postRegistroExitosoEmiWebFromMap(
@@ -4069,7 +4069,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                                 .bodyBytes));
                                 inversionJornada3.prodSolicitados
                                         .toList()[i]
-                                        .idEmiWeb =
+                                        .idDBR =
                                     responsePostProductoProyectoParse
                                         .payload!.id
                                         .toString();
@@ -4080,7 +4080,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                             }
                           }
                           //Se recupera el id Emi Web de la Tarea
-                          tareaToSync.idEmiWeb = idEmiWebUUid;
+                          tareaToSync.idDBR = idEmiWebUUid;
                           dataBase.tareasBox.put(tareaToSync);
                           //Se marca como realizada en EmiWeb la instrucción en Bitacora
                           bitacora.executeEmiWeb = true;
@@ -4099,7 +4099,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     return 0;
                 }
               } else {
-                if (tareaToSync.idEmiWeb == null) {
+                if (tareaToSync.idDBR == null) {
                   //Segundo actualizamos el tipo de proyecto del emprendimiento
                   final updateTipoProyectoEmprendimientoUri = Uri.parse(
                       '$baseUrlEmiWebServices/proyectos/catProyectos/');
@@ -4112,12 +4112,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           headers: headers,
                           body: jsonEncode({
                             "idUsuarioRegistra": jornada.emprendimiento.target!
-                                .usuario.target!.idEmiWeb,
+                                .usuario.target!.idDBR,
                             "usuarioRegistra":
                                 "${jornada.emprendimiento.target!.usuario.target!.nombre} ${jornada.emprendimiento.target!.usuario.target!.apellidoP} ${jornada.emprendimiento.target!.usuario.target!.apellidoM}",
-                            "id": jornada.emprendimiento.target!.idEmiWeb,
+                            "id": jornada.emprendimiento.target!.idDBR,
                             "idCatProyecto": jornada.emprendimiento.target!
-                                .catalogoProyecto.target!.idEmiWeb,
+                                .catalogoProyecto.target!.idDBR,
                             "idCatTipoProyecto": jornada
                                 .emprendimiento
                                 .target!
@@ -4125,7 +4125,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                 .target!
                                 .tipoProyecto
                                 .target!
-                                .idEmiWeb,
+                                .idDBR,
                           }));
                   switch (responseUpdateTipoProyectoEmprendimiento.statusCode) {
                     case 200:
@@ -4136,7 +4136,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           i++) {
                         if (jornada.tarea.target!.imagenes
                                 .toList()[i]
-                                .idEmiWeb ==
+                                .idDBR ==
                             null) {
                           final crearImagenJornadaUri = Uri.parse(
                               '$baseUrlEmiWebServices/documentos/crear');
@@ -4156,14 +4156,14 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                     .toList()[i]
                                     .base64,
                                 "idUsuario": jornada.emprendimiento.target!
-                                    .usuario.target!.idEmiWeb,
-                                "idJornada3": jornada.idEmiWeb!.split("?")[0],
+                                    .usuario.target!.idDBR,
+                                "idJornada3": jornada.idDBR!.split("?")[0],
                               }));
                           final responsePostImagenJornadaParse =
                               postRegistroImagenExitosoEmiWebFromMap(
                                   const Utf8Decoder().convert(
                                       responsePostImagenJornada.bodyBytes));
-                          jornada.tarea.target!.imagenes.toList()[i].idEmiWeb =
+                          jornada.tarea.target!.imagenes.toList()[i].idDBR =
                               responsePostImagenJornadaParse.payload.idDocumento
                                   .toString();
                           dataBase.imagenesBox
@@ -4184,7 +4184,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                             i++) {
                           if (inversionJornada3.prodSolicitados
                                   .toList()[i]
-                                  .idEmiWeb ==
+                                  .idDBR ==
                               null) {
                             if (inversionJornada3.prodSolicitados
                                     .toList()[i]
@@ -4203,7 +4203,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                       headers: headers,
                                       body: jsonEncode({
                                         "idUsuario": jornada.emprendimiento
-                                            .target!.usuario.target!.idEmiWeb,
+                                            .target!.usuario.target!.idDBR,
                                         "nombreUsuario":
                                             "${jornada.emprendimiento.target!.usuario.target!.nombre} ${jornada.emprendimiento.target!.usuario.target!.apellidoP} ${jornada.emprendimiento.target!.usuario.target!.apellidoM}",
                                         "producto": inversionJornada3
@@ -4231,19 +4231,19 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                             .toList()[i]
                                             .proveedorSugerido,
                                         "idProyecto": jornada
-                                            .emprendimiento.target!.idEmiWeb,
+                                            .emprendimiento.target!.idDBR,
                                         "idFamilia": inversionJornada3
                                             .prodSolicitados
                                             .toList()[i]
                                             .familiaInversion
                                             .target!
-                                            .idEmiWeb,
+                                            .idDBR,
                                         "unidadMedida": inversionJornada3
                                             .prodSolicitados
                                             .toList()[i]
                                             .tipoEmpaques
                                             .target!
-                                            .idEmiWeb,
+                                            .idDBR,
                                       }));
                               final responsePostProductoProyectoParse =
                                   postRegistroExitosoEmiWebFromMap(
@@ -4252,7 +4252,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                               .bodyBytes));
                               inversionJornada3.prodSolicitados
                                       .toList()[i]
-                                      .idEmiWeb =
+                                      .idDBR =
                                   responsePostProductoProyectoParse.payload!.id
                                       .toString();
                               dataBase.productosSolicitadosBox.put(
@@ -4271,7 +4271,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                       headers: headers,
                                       body: jsonEncode({
                                         "idUsuario": jornada.emprendimiento
-                                            .target!.usuario.target!.idEmiWeb,
+                                            .target!.usuario.target!.idDBR,
                                         "nombreUsuario":
                                             "${jornada.emprendimiento.target!.usuario.target!.nombre} ${jornada.emprendimiento.target!.usuario.target!.apellidoP} ${jornada.emprendimiento.target!.usuario.target!.apellidoM}",
                                         "producto": inversionJornada3
@@ -4299,19 +4299,19 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                             .toList()[i]
                                             .proveedorSugerido,
                                         "idProyecto": jornada
-                                            .emprendimiento.target!.idEmiWeb,
+                                            .emprendimiento.target!.idDBR,
                                         "idFamilia": inversionJornada3
                                             .prodSolicitados
                                             .toList()[i]
                                             .familiaInversion
                                             .target!
-                                            .idEmiWeb,
+                                            .idDBR,
                                         "unidadMedida": inversionJornada3
                                             .prodSolicitados
                                             .toList()[i]
                                             .tipoEmpaques
                                             .target!
-                                            .idEmiWeb,
+                                            .idDBR,
                                       }));
                               //print(responsePostProductoProyecto.body);
                               final responsePostProductoProyectoParse =
@@ -4321,7 +4321,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                               .bodyBytes));
                               inversionJornada3.prodSolicitados
                                       .toList()[i]
-                                      .idEmiWeb =
+                                      .idDBR =
                                   responsePostProductoProyectoParse.payload!.id
                                       .toString();
                               dataBase.productosSolicitadosBox.put(
@@ -4331,7 +4331,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           }
                         }
                         //Se recupera el id Emi Web de la Tarea
-                        tareaToSync.idEmiWeb = jornada.idEmiWeb;
+                        tareaToSync.idDBR = jornada.idDBR;
                         dataBase.tareasBox.put(tareaToSync);
                         //Se marca como realizada en EmiWeb la instrucción en Bitacora
                         bitacora.executeEmiWeb = true;
@@ -4381,7 +4381,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddImagenJornada3() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -4414,9 +4414,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "nombreArchivo": imagen.nombre,
                       "archivo": imagen.base64,
                       "idUsuario": imagen.tarea.target!.jornada.target!
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "idJornada2": imagen
-                          .tarea.target!.jornada.target!.idEmiWeb!
+                          .tarea.target!.jornada.target!.idDBR!
                           .split("?")[0],
                     }));
             switch (responsePostAddImagenJornada3.statusCode) {
@@ -4426,7 +4426,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 final responsePostImagenUsuarioParse =
                     postRegistroImagenExitosoEmiWebFromMap(const Utf8Decoder()
                         .convert(responsePostAddImagenJornada3.bodyBytes));
-                imagen.idEmiWeb = responsePostImagenUsuarioParse
+                imagen.idDBR = responsePostImagenUsuarioParse
                     .payload.idDocumento
                     .toString();
                 dataBase.imagenesBox.put(imagen);
@@ -4460,7 +4460,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddJornada4 de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -4483,12 +4483,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 dataBase.tareasBox.get(jornada.tarea.target!.id);
             if (tareaToSync != null) {
               //Verificamos que no se haya posteado anteriormente la jornada y tarea
-              if (jornada.idEmiWeb == null) {
+              if (jornada.idDBR == null) {
                 //Antes finalizamos las jornadas previas
                 for (var i = 0; i < listJornadas.length; i++) {
                   if (listJornadas[i].numJornada != "4") {
                     final actualizarJornada1Uri = Uri.parse(
-                        '$baseUrlEmiWebServices/jornadas?id=${listJornadas[i].idEmiWeb!.split("?")[0]}&jornada=${listJornadas[i].numJornada}');
+                        '$baseUrlEmiWebServices/jornadas?id=${listJornadas[i].idDBR!.split("?")[0]}&jornada=${listJornadas[i].numJornada}');
                     final headers = ({
                       "Content-Type": "application/json",
                       'Authorization': 'Bearer $tokenGlobal',
@@ -4502,7 +4502,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                   .target!
                                   .usuario
                                   .target!
-                                  .idEmiWeb,
+                                  .idDBR,
                               "nombreUsuario":
                                   "${listJornadas[i].emprendimiento.target!.usuario.target!.nombre} ${listJornadas[i].emprendimiento.target!.usuario.target!.apellidoP} ${listJornadas[i].emprendimiento.target!.usuario.target!.apellidoM}",
                               "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -4519,7 +4519,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                               "idProyecto": listJornadas[i]
                                   .emprendimiento
                                   .target!
-                                  .idEmiWeb,
+                                  .idDBR,
                               "nombreEmprendimiento":
                                   listJornadas[i].emprendimiento.target!.nombre,
                             }));
@@ -4545,7 +4545,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuario": jornada
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "nombreUsuario":
                           "${jornada.emprendimiento.target!.usuario.target!.nombre} ${jornada.emprendimiento.target!.usuario.target!.apellidoP} ${jornada.emprendimiento.target!.usuario.target!.apellidoM}",
                       "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -4557,7 +4557,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "tareaCompletada":
                           false, //Es falso por que apenas la estamos dando de alta
                       "descripcion": jornada.tarea.target!.descripcion,
-                      "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
+                      "idProyecto": jornada.emprendimiento.target!.idDBR,
                       "nombreEmprendimiento":
                           jornada.emprendimiento.target!.nombre,
                     }));
@@ -4573,7 +4573,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     //Se concatena el id recuperado con uuid para que los ids no se repitan
                     final idEmiWebUuid =
                         "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
-                    jornada.idEmiWeb = idEmiWebUuid;
+                    jornada.idDBR = idEmiWebUuid;
                     dataBase.jornadasBox.put(jornada);
                     //print("Se hace put a la jornada");
                     // Segundo creamos y enviamos las imágenes de la jornada
@@ -4598,14 +4598,14 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                     .toList()[i]
                                     .base64,
                                 "idUsuario": jornada.emprendimiento.target!
-                                    .usuario.target!.idEmiWeb,
-                                "idJornada4": jornada.idEmiWeb!.split("?")[0],
+                                    .usuario.target!.idDBR,
+                                "idJornada4": jornada.idDBR!.split("?")[0],
                               }));
                       final responsePostImagenJornadaParse =
                           postRegistroImagenExitosoEmiWebFromMap(
                               const Utf8Decoder().convert(
                                   responsePostImagenJornada.bodyBytes));
-                      jornada.tarea.target!.imagenes.toList()[i].idEmiWeb =
+                      jornada.tarea.target!.imagenes.toList()[i].idDBR =
                           responsePostImagenJornadaParse.payload.idDocumento
                               .toString();
                       dataBase.imagenesBox
@@ -4613,7 +4613,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     }
                     // Tercero creamos la Tarea
                     // Se recupera el id Emi Web de la Tarea
-                    tareaToSync.idEmiWeb = idEmiWebUuid;
+                    tareaToSync.idDBR = idEmiWebUuid;
                     dataBase.tareasBox.put(tareaToSync);
                     //print("Se hace put a la tarea");
                     //Se marca como realizada en EmiWeb la instrucción en Bitacora
@@ -4625,12 +4625,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     return 0;
                 }
               } else {
-                if (tareaToSync.idEmiWeb == null) {
+                if (tareaToSync.idDBR == null) {
                   // Segundo creamos y enviamos las imágenes de la jornada
                   for (var i = 0;
                       i < jornada.tarea.target!.imagenes.toList().length;
                       i++) {
-                    if (jornada.tarea.target!.imagenes.toList()[i].idEmiWeb ==
+                    if (jornada.tarea.target!.imagenes.toList()[i].idDBR ==
                         null) {
                       final crearImagenJornadaUri =
                           Uri.parse('$baseUrlEmiWebServices/documentos/crear');
@@ -4650,14 +4650,14 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                     .toList()[i]
                                     .base64,
                                 "idUsuario": jornada.emprendimiento.target!
-                                    .usuario.target!.idEmiWeb,
-                                "idJornada4": jornada.idEmiWeb!.split("?")[0],
+                                    .usuario.target!.idDBR,
+                                "idJornada4": jornada.idDBR!.split("?")[0],
                               }));
                       final responsePostImagenJornadaParse =
                           postRegistroImagenExitosoEmiWebFromMap(
                               const Utf8Decoder().convert(
                                   responsePostImagenJornada.bodyBytes));
-                      jornada.tarea.target!.imagenes.toList()[i].idEmiWeb =
+                      jornada.tarea.target!.imagenes.toList()[i].idDBR =
                           responsePostImagenJornadaParse.payload.idDocumento
                               .toString();
                       dataBase.imagenesBox
@@ -4666,7 +4666,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   }
                   // Tercero creamos la Tarea
                   // Se recupera el id Emi Web de la Tarea
-                  tareaToSync.idEmiWeb = jornada.idEmiWeb;
+                  tareaToSync.idDBR = jornada.idDBR;
                   dataBase.tareasBox.put(tareaToSync);
                   //print("Se hace put a la tarea");
                   //Se marca como realizada en EmiWeb la instrucción en Bitacora
@@ -4709,7 +4709,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddProductoInversionJ3() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -4739,7 +4739,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuario": prodSolicitado.inversion.target!
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "nombreUsuario":
                           "${prodSolicitado.inversion.target!.emprendimiento.target!.usuario.target!.nombre} ${prodSolicitado.inversion.target!.emprendimiento.target!.usuario.target!.apellidoP} ${prodSolicitado.inversion.target!.emprendimiento.target!.usuario.target!.apellidoM}",
                       "producto": prodSolicitado.producto,
@@ -4749,10 +4749,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "costoEstimado": prodSolicitado.costoEstimado,
                       "proveedorSugerido": prodSolicitado.proveedorSugerido,
                       "idProyecto": prodSolicitado
-                          .inversion.target!.emprendimiento.target!.idEmiWeb,
-                      "idFamilia": prodSolicitado.familiaInversion.target!.idEmiWeb,
+                          .inversion.target!.emprendimiento.target!.idDBR,
+                      "idFamilia": prodSolicitado.familiaInversion.target!.idDBR,
                       "unidadMedida":
-                          prodSolicitado.tipoEmpaques.target!.idEmiWeb,
+                          prodSolicitado.tipoEmpaques.target!.idDBR,
                     }));
             switch (responsePostProductoProyecto.statusCode) {
               case 200:
@@ -4761,7 +4761,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 final responsePostProductoProyectoParse =
                     postRegistroExitosoEmiWebFromMap(const Utf8Decoder()
                         .convert(responsePostProductoProyecto.bodyBytes));
-                prodSolicitado.idEmiWeb =
+                prodSolicitado.idDBR =
                     responsePostProductoProyectoParse.payload!.id.toString();
                 dataBase.productosSolicitadosBox.put(prodSolicitado);
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
@@ -4794,7 +4794,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddImagenJornada4() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -4827,9 +4827,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "nombreArchivo": imagen.nombre,
                       "archivo": imagen.base64,
                       "idUsuario": imagen.tarea.target!.jornada.target!
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "idJornada2": imagen
-                          .tarea.target!.jornada.target!.idEmiWeb!
+                          .tarea.target!.jornada.target!.idDBR!
                           .split("?")[0],
                     }));
             switch (responsePostAddImagenJornada4.statusCode) {
@@ -4839,7 +4839,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 final responsePostImagenUsuarioParse =
                     postRegistroImagenExitosoEmiWebFromMap(const Utf8Decoder()
                         .convert(responsePostAddImagenJornada4.bodyBytes));
-                imagen.idEmiWeb = responsePostImagenUsuarioParse
+                imagen.idDBR = responsePostImagenUsuarioParse
                     .payload.idDocumento
                     .toString();
                 dataBase.imagenesBox.put(imagen);
@@ -4873,7 +4873,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Consultorias consultoria, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddConsultoria de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -4895,7 +4895,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 dataBase.tareasBox.get(consultoria.tareas.first.id);
             if (tareaToSync != null) {
               //Verificamos que no se haya posteado anteriormente la consultoria y tarea
-              if (consultoria.idEmiWeb == null) {
+              if (consultoria.idDBR == null) {
                 //Creamos la consultoria asociada a la primera tarea creada
                 final crearConsultoriaUri =
                     Uri.parse('$baseUrlEmiWebServices/consultorias');
@@ -4907,17 +4907,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuario": consultoria
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "nombreUsuario":
                           "${consultoria.emprendimiento.target!.usuario.target!.nombre} ${consultoria.emprendimiento.target!.usuario.target!.apellidoP} ${consultoria.emprendimiento.target!.usuario.target!.apellidoM}",
                       "idCatAmbito":
-                          consultoria.ambitoConsultoria.target!.idEmiWeb,
+                          consultoria.ambitoConsultoria.target!.idDBR,
                       "idCatAreaCirculo":
-                          consultoria.areaCirculo.target!.idEmiWeb,
+                          consultoria.areaCirculo.target!.idDBR,
                       "asignarTarea": consultoria.tareas.first.tarea,
                       "proximaVisita": DateFormat("yyyy-MM-dd")
                           .format(consultoria.tareas.first.fechaRevision),
-                      "idProyecto": consultoria.emprendimiento.target!.idEmiWeb,
+                      "idProyecto": consultoria.emprendimiento.target!.idDBR,
                       "archivado":
                           false, //Es falso por que apenas la estamos dando de alta
                       "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -4933,12 +4933,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     final responsePostConsultoriaParse =
                         postRegistroExitosoEmiWebFromMap(const Utf8Decoder()
                             .convert(responsePostConsultoria.bodyBytes));
-                    consultoria.idEmiWeb =
+                    consultoria.idDBR =
                         responsePostConsultoriaParse.payload!.id.toString();
                     dataBase.consultoriasBox.put(consultoria);
                     // Segundo creamos la Tarea
                     // Se recupera el id Emi Web de la Tarea
-                    tareaToSync.idEmiWeb = consultoria.idEmiWeb;
+                    tareaToSync.idDBR = consultoria.idDBR;
                     dataBase.tareasBox.put(tareaToSync);
                     //Se marca como realizada en EmiWeb la instrucción en Bitacora
                     bitacora.executeEmiWeb = true;
@@ -4949,10 +4949,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     return 0;
                 }
               } else {
-                if (tareaToSync.idEmiWeb == null) {
+                if (tareaToSync.idDBR == null) {
                   // Segundo creamos la Tarea
                   // Se recupera el id Emi Web de la Tarea
-                  tareaToSync.idEmiWeb = consultoria.idEmiWeb;
+                  tareaToSync.idDBR = consultoria.idDBR;
                   dataBase.tareasBox.put(tareaToSync);
                   //Se marca como realizada en EmiWeb la instrucción en Bitacora
                   bitacora.executeEmiWeb = true;
@@ -4994,7 +4994,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       ProductosEmp productoEmp, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddProductoEmprendedor de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -5019,7 +5019,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             if (imagenToSync != null) {
               //print("SÍ HAY IMAGEN ASOCIADA EN EMI WEB");
               //Verificamos que no se haya posteado anteriormente la imagen
-              if (imagenToSync.idEmiWeb == null) {
+              if (imagenToSync.idDBR == null) {
                 //print("Primer if");
                 //Aún no se ha posteado la imagen
                 //Primero se postea la imagen
@@ -5037,7 +5037,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           "nombreArchivo": imagenToSync.nombre,
                           "archivo": imagenToSync.base64,
                           "idUsuario": productoEmp
-                              .emprendimientos.target!.usuario.target!.idEmiWeb,
+                              .emprendimientos.target!.usuario.target!.idDBR,
                         }));
                 switch (responsePostImagenProductoEmp.statusCode) {
                   case 200:
@@ -5046,7 +5046,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         postRegistroImagenExitosoEmiWebFromMap(
                             const Utf8Decoder().convert(
                                 responsePostImagenProductoEmp.bodyBytes));
-                    imagenToSync.idEmiWeb = responsePostImagenProductoEmpParse
+                    imagenToSync.idDBR = responsePostImagenProductoEmpParse
                         .payload.idDocumento
                         .toString();
                     dataBase.imagenesBox.put(imagenToSync);
@@ -5063,16 +5063,16 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                             headers: headers,
                             body: jsonEncode({
                               "idUsuario": productoEmp.emprendimientos.target!
-                                  .usuario.target!.idEmiWeb,
+                                  .usuario.target!.idDBR,
                               "nombreUsuario":
                                   "${productoEmp.emprendimientos.target!.usuario.target!.nombre} ${productoEmp.emprendimientos.target!.usuario.target!.apellidoP} ${productoEmp.emprendimientos.target!.usuario.target!.apellidoM}",
                               "idEmprendedor": productoEmp.emprendimientos
-                                  .target!.emprendedor.target!.idEmiWeb,
+                                  .target!.emprendedor.target!.idDBR,
                               "producto": productoEmp.nombre,
                               "idEmprendimiento":
-                                  productoEmp.emprendimientos.target!.idEmiWeb,
+                                  productoEmp.emprendimientos.target!.idDBR,
                               "idUnidadMedida":
-                                  productoEmp.unidadMedida.target!.idEmiWeb,
+                                  productoEmp.unidadMedida.target!.idDBR,
                               "idDocumento": responsePostImagenProductoEmpParse
                                   .payload.idDocumento
                                   .toString(),
@@ -5088,7 +5088,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                 const Utf8Decoder().convert(
                                     responsePostProductoEmprendedor.bodyBytes));
                         //Se necesita hacer este paso para actualizar la información
-                        productoEmp.idEmiWeb =
+                        productoEmp.idDBR =
                             responsePostProductoEmprendedorParse.payload
                                 .toString();
                         dataBase.productosEmpBox.put(productoEmp);
@@ -5108,7 +5108,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 }
               } else {
                 //print("Primer else");
-                if (productoEmp.idEmiWeb == null) {
+                if (productoEmp.idDBR == null) {
                   // Segundo creamos el producto Emprendedor
                   final crearProductoEmprendedorUri = Uri.parse(
                       '$baseUrlEmiWebServices/productos/emprendedores/registro/crear');
@@ -5121,17 +5121,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           headers: headers,
                           body: jsonEncode({
                             "idUsuario": productoEmp.emprendimientos.target!
-                                .usuario.target!.idEmiWeb,
+                                .usuario.target!.idDBR,
                             "nombreUsuario":
                                 "${productoEmp.emprendimientos.target!.usuario.target!.nombre} ${productoEmp.emprendimientos.target!.usuario.target!.apellidoP} ${productoEmp.emprendimientos.target!.usuario.target!.apellidoM}",
                             "idEmprendedor": productoEmp.emprendimientos.target!
-                                .emprendedor.target!.idEmiWeb,
+                                .emprendedor.target!.idDBR,
                             "producto": productoEmp.nombre,
                             "idEmprendimiento":
-                                productoEmp.emprendimientos.target!.idEmiWeb,
+                                productoEmp.emprendimientos.target!.idDBR,
                             "idUnidadMedida":
-                                productoEmp.unidadMedida.target!.idEmiWeb,
-                            "idDocumento": productoEmp.imagen.target!.idEmiWeb,
+                                productoEmp.unidadMedida.target!.idDBR,
+                            "idDocumento": productoEmp.imagen.target!.idDBR,
                             "descripcion": productoEmp.descripcion,
                             "costoUnidadMedida": productoEmp.costo,
                           }));
@@ -5146,7 +5146,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                               const Utf8Decoder().convert(
                                   responsePostProductoEmprendedor.bodyBytes));
                       //Se necesita hacer este paso para actualizar la información
-                      productoEmp.idEmiWeb =
+                      productoEmp.idDBR =
                           responsePostProductoEmprendedorParse.payload
                               .toString();
                       dataBase.productosEmpBox.put(productoEmp);
@@ -5169,7 +5169,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               }
             } else {
               //print("NO HAY IMAGEN ASOCIADA EN EMI WEB");
-              if (productoEmp.idEmiWeb == null) {
+              if (productoEmp.idDBR == null) {
                 //No existe una imagen asociada al producto Emp
                 // Primero creamos el producto Emprendedor
                 final crearProductoEmprendedorUri = Uri.parse(
@@ -5183,16 +5183,16 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         headers: headers,
                         body: jsonEncode({
                           "idUsuario": productoEmp
-                              .emprendimientos.target!.usuario.target!.idEmiWeb,
+                              .emprendimientos.target!.usuario.target!.idDBR,
                           "nombreUsuario":
                               "${productoEmp.emprendimientos.target!.usuario.target!.nombre} ${productoEmp.emprendimientos.target!.usuario.target!.apellidoP} ${productoEmp.emprendimientos.target!.usuario.target!.apellidoM}",
                           "idEmprendedor": productoEmp.emprendimientos.target!
-                              .emprendedor.target!.idEmiWeb,
+                              .emprendedor.target!.idDBR,
                           "producto": productoEmp.nombre,
                           "idEmprendimiento":
-                              productoEmp.emprendimientos.target!.idEmiWeb,
+                              productoEmp.emprendimientos.target!.idDBR,
                           "idUnidadMedida":
-                              productoEmp.unidadMedida.target!.idEmiWeb,
+                              productoEmp.unidadMedida.target!.idDBR,
                           "descripcion": productoEmp.descripcion,
                           "costoUnidadMedida": productoEmp.costo,
                         }));
@@ -5205,7 +5205,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                             const Utf8Decoder().convert(
                                 responsePostProductoEmprendedor.bodyBytes));
                     //Se necesita hacer este paso para actualizar la información
-                    productoEmp.idEmiWeb =
+                    productoEmp.idDBR =
                         responsePostProductoEmprendedorParse.payload.toString();
                     dataBase.productosEmpBox.put(productoEmp);
                     //print("Se hace put al producto emprendedor 3");
@@ -5248,7 +5248,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddImagenProductoEmprendedor() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -5276,7 +5276,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             //print("DATOS DE LA IMAGEN DEL PROD EMPRENDEDOR");
             //print(imagen.nombre);
             //print(imagen.base64);
-            //print(imagen.productosEmp.target!.emprendimientos.target!.usuario.target!.idEmiWeb);
+            //print(imagen.productosEmp.target!.emprendimientos.target!.usuario.target!.idDBR);
             final responsePostAddImagenProductoEmprendedor =
                 await post(crearImagenProductoEmprendedorUri,
                     headers: headers,
@@ -5285,7 +5285,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "nombreArchivo": imagen.nombre,
                       "archivo": imagen.base64,
                       "idUsuario": imagen.productosEmp.target!.emprendimientos
-                          .target!.usuario.target!.idEmiWeb,
+                          .target!.usuario.target!.idDBR,
                     }));
 
             switch (responsePostAddImagenProductoEmprendedor.statusCode) {
@@ -5296,7 +5296,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     postRegistroImagenExitosoEmiWebFromMap(const Utf8Decoder()
                         .convert(responsePostAddImagenProductoEmprendedor
                             .bodyBytes));
-                imagen.idEmiWeb = responsePostImagenProductoEmprendedorParse
+                imagen.idDBR = responsePostImagenProductoEmprendedorParse
                     .payload.idDocumento
                     .toString();
                 dataBase.imagenesBox.put(imagen);
@@ -5330,7 +5330,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Ventas venta, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddVenta de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -5350,7 +5350,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           try {
             List<dynamic> ventaCrearRequestList = [];
             //Verificamos que no se haya posteado anteriormente la venta
-            if (venta.idEmiWeb == null) {
+            if (venta.idDBR == null) {
               //Creamos la venta asociada a los productos vendidos
               final crearVentaUri = Uri.parse('$baseUrlEmiWebServices/ventas');
               final headers = ({
@@ -5360,7 +5360,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               for (var i = 0; i < venta.prodVendidos.length; i++) {
                 var newVentaCreada = VentaCrearRequestListEmiWeb(
                     idProductoEmprendedor: int.parse(
-                        venta.prodVendidos[i].productoEmp.target!.idEmiWeb!),
+                        venta.prodVendidos[i].productoEmp.target!.idDBR!),
                     cantidadVendida: venta.prodVendidos[i].cantVendida,
                     precioVenta: venta.prodVendidos[i].precioVenta);
                 ventaCrearRequestList.add(newVentaCreada.toMap());
@@ -5370,10 +5370,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   headers: headers,
                   body: jsonEncode({
                     "idUsuarioRegistra":
-                        venta.emprendimiento.target!.usuario.target!.idEmiWeb,
+                        venta.emprendimiento.target!.usuario.target!.idDBR,
                     "usuarioRegistra":
                         "${venta.emprendimiento.target!.usuario.target!.nombre} ${venta.emprendimiento.target!.usuario.target!.apellidoP} ${venta.emprendimiento.target!.usuario.target!.apellidoM}",
-                    "idProyecto": venta.emprendimiento.target!.idEmiWeb,
+                    "idProyecto": venta.emprendimiento.target!.idDBR,
                     "fechaInicio": DateFormat("yyyy-MM-ddTHH:mm:ss")
                         .format(venta.fechaInicio),
                     "fechaTermino": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -5390,7 +5390,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   final responsePostVentaParse =
                       postRegistroExitosoEmiWebSingleFromMap(const Utf8Decoder()
                           .convert(responsePostVenta.bodyBytes));
-                  venta.idEmiWeb = responsePostVentaParse.payload.toString();
+                  venta.idDBR = responsePostVentaParse.payload.toString();
                   dataBase.ventasBox.put(venta);
                   // Se recuperan los ids de los productos vendidos
                   final obtenerProductosVendidosUri = Uri.parse(
@@ -5447,10 +5447,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                       .ventasXProductoEmprenedorList![i]
                                       .productoEmprendedorDto!
                                       .unidadMedida) {
-                            if (venta.prodVendidos.toList()[i].idEmiWeb ==
+                            if (venta.prodVendidos.toList()[i].idDBR ==
                                 null) {
                               //Se asigna el id Emi Web al prod Vendido
-                              venta.prodVendidos.toList()[i].idEmiWeb =
+                              venta.prodVendidos.toList()[i].idDBR =
                                   responseGetProductosVendidosParse.payload!
                                       .ventasXProductoEmprenedorList![i].id
                                       .toString();
@@ -5475,7 +5475,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             } else {
               // Se recuperan los ids de los productos vendidos
               final obtenerProductosVendidosUri =
-                  Uri.parse('$baseUrlEmiWebServices/ventas/${venta.idEmiWeb}');
+                  Uri.parse('$baseUrlEmiWebServices/ventas/${venta.idDBR}');
               final headers = ({
                 "Content-Type": "application/json",
                 'Authorization': 'Bearer $tokenGlobal',
@@ -5528,9 +5528,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                   .ventasXProductoEmprenedorList![i]
                                   .productoEmprendedorDto!
                                   .unidadMedida) {
-                        if (venta.prodVendidos.toList()[i].idEmiWeb == null) {
+                        if (venta.prodVendidos.toList()[i].idDBR == null) {
                           //Se asigna el id Emi Web al prod Vendido
-                          venta.prodVendidos.toList()[i].idEmiWeb =
+                          venta.prodVendidos.toList()[i].idDBR =
                               responseGetProductosVendidosParse
                                   .payload!.ventasXProductoEmprenedorList![i].id
                                   .toString();
@@ -5572,7 +5572,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       ProdVendidos prodVendido, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddProductoVendido de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -5617,7 +5617,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       ProdVendidos prodVendido, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddSingleProductoVendido de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -5647,24 +5647,24 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               var newProdVendido = VentaActualizarRequestList(
                 id: 0,
                 idProductoEmprendedor:
-                    prodVendido.productoEmp.target!.idEmiWeb!,
+                    prodVendido.productoEmp.target!.idDBR!,
                 cantidadVendida: prodVendido.cantVendida,
                 precioVenta: prodVendido.precioVenta,
                 nombreProducto: prodVendido.nombreProd,
                 costoUnitario: prodVendido.costo,
-                unidadMedida: prodVendido.unidadMedida.target!.idEmiWeb,
+                unidadMedida: "",
               );
               ventaActualizarRequestList.add(newProdVendido.toMap());
               final responseAddProdVendido = await put(actualizarProdVendidoUri,
                   headers: headers,
                   body: jsonEncode({
                     "idUsuarioRegistra": prodVendido.venta.target!
-                        .emprendimiento.target!.usuario.target!.idEmiWeb,
+                        .emprendimiento.target!.usuario.target!.idDBR,
                     "usuarioRegistra":
                         "${prodVendido.venta.target!.emprendimiento.target!.usuario.target!.nombre} ${prodVendido.venta.target!.emprendimiento.target!.usuario.target!.apellidoP} ${prodVendido.venta.target!.emprendimiento.target!.usuario.target!.apellidoM}",
-                    "idVentas": prodVendido.venta.target!.idEmiWeb,
+                    "idVentas": prodVendido.venta.target!.idDBR,
                     "idProyecto": prodVendido
-                        .venta.target!.emprendimiento.target!.idEmiWeb,
+                        .venta.target!.emprendimiento.target!.idDBR,
                     "fechaInicio": DateFormat("yyyy-MM-ddTHH:mm:ss")
                         .format(prodVendido.venta.target!.fechaInicio),
                     "fechaTermino": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -5681,7 +5681,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   dataBase.productosVendidosBox.put(prodVendido);
                   // Se recuperan el id del producto vendido
                   final obtenerProductosVendidosUri = Uri.parse(
-                      '$baseUrlEmiWebServices/ventas/${prodVendido.venta.target!.idEmiWeb}');
+                      '$baseUrlEmiWebServices/ventas/${prodVendido.venta.target!.idDBR}');
                   final headers = ({
                     "Content-Type": "application/json",
                     'Authorization': 'Bearer $tokenGlobal',
@@ -5733,9 +5733,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                     .ventasXProductoEmprenedorList![i]
                                     .productoEmprendedorDto!
                                     .unidadMedida) {
-                          if (prodVendido.idEmiWeb == null) {
+                          if (prodVendido.idDBR == null) {
                             //Se asigna el id Emi Web al prod Vendido
-                            prodVendido.idEmiWeb =
+                            prodVendido.idDBR =
                                 responseGetProductosVendidosParse.payload!
                                     .ventasXProductoEmprenedorList![i].id
                                     .toString();
@@ -5759,7 +5759,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             } else {
               // Se recuperan el id del producto vendido
               final obtenerProductosVendidosUri = Uri.parse(
-                  '$baseUrlEmiWebServices/ventas/${prodVendido.venta.target!.idEmiWeb}');
+                  '$baseUrlEmiWebServices/ventas/${prodVendido.venta.target!.idDBR}');
               final headers = ({
                 "Content-Type": "application/json",
                 'Authorization': 'Bearer $tokenGlobal',
@@ -5811,9 +5811,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                 .ventasXProductoEmprenedorList![i]
                                 .productoEmprendedorDto!
                                 .unidadMedida) {
-                      if (prodVendido.idEmiWeb == null) {
+                      if (prodVendido.idDBR == null) {
                         //Se asigna el id Emi Web al prod Vendido
-                        prodVendido.idEmiWeb = responseGetProductosVendidosParse
+                        prodVendido.idDBR = responseGetProductosVendidosParse
                             .payload!.ventasXProductoEmprenedorList![i].id
                             .toString();
                         dataBase.productosVendidosBox.put(prodVendido);
@@ -5853,7 +5853,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       ProdVendidos prodVendido, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateProductoVendido de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -5880,13 +5880,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               'Authorization': 'Bearer $tokenGlobal',
             });
             var updateProdVenido = VentaActualizarRequestList(
-              id: int.parse(prodVendido.idEmiWeb!),
-              idProductoEmprendedor: prodVendido.productoEmp.target!.idEmiWeb!,
+              id: int.parse(prodVendido.idDBR!),
+              idProductoEmprendedor: prodVendido.productoEmp.target!.idDBR!,
               cantidadVendida: prodVendido.cantVendida,
               precioVenta: prodVendido.precioVenta,
               nombreProducto: prodVendido.nombreProd,
               costoUnitario: prodVendido.costo,
-              unidadMedida: prodVendido.unidadMedida.target!.idEmiWeb,
+              unidadMedida: "",
             );
             ventaActualizarRequestList.add(updateProdVenido.toMap());
             //print(jsonEncode(ventaActualizarRequestList));
@@ -5895,12 +5895,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 headers: headers,
                 body: jsonEncode({
                   "idUsuarioRegistra": prodVendido.venta.target!.emprendimiento
-                      .target!.usuario.target!.idEmiWeb,
+                      .target!.usuario.target!.idDBR,
                   "usuarioRegistra":
                       "${prodVendido.venta.target!.emprendimiento.target!.usuario.target!.nombre} ${prodVendido.venta.target!.emprendimiento.target!.usuario.target!.apellidoP} ${prodVendido.venta.target!.emprendimiento.target!.usuario.target!.apellidoM}",
-                  "idVentas": prodVendido.venta.target!.idEmiWeb,
+                  "idVentas": prodVendido.venta.target!.idDBR,
                   "idProyecto":
-                      prodVendido.venta.target!.emprendimiento.target!.idEmiWeb,
+                      prodVendido.venta.target!.emprendimiento.target!.idDBR,
                   "fechaInicio": DateFormat("yyyy-MM-ddTHH:mm:ss")
                       .format(prodVendido.venta.target!.fechaInicio),
                   "fechaTermino": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -5944,7 +5944,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncDeleteProductoVendido de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -5973,7 +5973,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 headers: headers,
                 body: jsonEncode({
                   "ventasXProductoDeleteRequests": [
-                    {"id": "${bitacora.idEmiWeb}"}
+                    {"id": "${bitacora.idDBR}"}
                   ]
                 }));
             switch (responseDeleteProdVendido.statusCode) {
@@ -6009,7 +6009,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Inversiones inversion, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddInversion de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -6028,7 +6028,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             responseProyecto.payload.switchMovil == true) {
           try {
             //Verificamos que no se haya posteado anteriormente la inversión
-            if (inversion.idEmiWeb == null) {
+            if (inversion.idDBR == null) {
               //Creamos la inversión asociada a los prod solicitados
               final crearInversionUri =
                   Uri.parse('$baseUrlEmiWebServices/inversiones');
@@ -6040,12 +6040,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   headers: headers,
                   body: jsonEncode({
                     "idUsuarioRegistra": inversion
-                        .emprendimiento.target!.usuario.target!.idEmiWeb,
+                        .emprendimiento.target!.usuario.target!.idDBR,
                     "usuarioRegistra":
                         "${inversion.emprendimiento.target!.usuario.target!.nombre} ${inversion.emprendimiento.target!.usuario.target!.apellidoP} ${inversion.emprendimiento.target!.usuario.target!.apellidoM}",
-                    "idProyecto": inversion.emprendimiento.target!.idEmiWeb,
+                    "idProyecto": inversion.emprendimiento.target!.idDBR,
                     "idCatEstadoInversion":
-                        inversion.estadoInversion.target!.idEmiWeb,
+                        inversion.estadoInversion.target!.idDBR,
                     "porcentajePago": inversion.porcentajePago,
                     "archivadoPromotor": false,
                     "archivadoStaff": false,
@@ -6092,7 +6092,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                     .target!
                                     .base64,
                                 "idUsuario": inversion.emprendimiento.target!
-                                    .usuario.target!.idEmiWeb,
+                                    .usuario.target!.idDBR,
                               }));
                       switch (responsePostImagenProdSolicitado.statusCode) {
                         case 200:
@@ -6107,7 +6107,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                   .toList()[i]
                                   .imagen
                                   .target!
-                                  .idEmiWeb =
+                                  .idDBR =
                               responsePostImagenProdSolicitadoParse
                                   .payload.idDocumento
                                   .toString();
@@ -6135,12 +6135,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                         .toList()[i]
                                         .tipoEmpaques
                                         .target!
-                                        .idEmiWeb,
+                                        .idDBR,
                                     "cantidad": inversion.prodSolicitados
                                         .toList()[i]
                                         .cantidad,
                                     "idUsuario": inversion.emprendimiento
-                                        .target!.usuario.target!.idEmiWeb,
+                                        .target!.usuario.target!.idDBR,
                                     "nombreUsuario":
                                         "${inversion.emprendimiento.target!.usuario.target!.nombre} ${inversion.emprendimiento.target!.usuario.target!.apellidoP} ${inversion.emprendimiento.target!.usuario.target!.apellidoM}",
                                     "marcaSugerida": inversion.prodSolicitados
@@ -6169,7 +6169,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                       const Utf8Decoder().convert(
                                           responsePostProdSolicitado
                                               .bodyBytes));
-                              inversion.prodSolicitados.toList()[i].idEmiWeb =
+                              inversion.prodSolicitados.toList()[i].idDBR =
                                   responsePostProdSolicitadoParse.payload!.id
                                       .toString();
                               dataBase.productosSolicitadosBox
@@ -6203,11 +6203,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                 .toList()[i]
                                 .tipoEmpaques
                                 .target!
-                                .idEmiWeb,
+                                .idDBR,
                             "cantidad":
                                 inversion.prodSolicitados.toList()[i].cantidad,
                             "idUsuario": inversion.emprendimiento.target!
-                                .usuario.target!.idEmiWeb,
+                                .usuario.target!.idDBR,
                             "nombreUsuario":
                                 "${inversion.emprendimiento.target!.usuario.target!.nombre} ${inversion.emprendimiento.target!.usuario.target!.apellidoP} ${inversion.emprendimiento.target!.usuario.target!.apellidoM}",
                             "marcaSugerida": inversion.prodSolicitados
@@ -6231,7 +6231,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                               postRegistroExitosoEmiWebFromMap(
                                   const Utf8Decoder().convert(
                                       responsePostProdSolicitado.bodyBytes));
-                          inversion.prodSolicitados.toList()[i].idEmiWeb =
+                          inversion.prodSolicitados.toList()[i].idDBR =
                               responsePostProdSolicitadoParse.payload!.id
                                   .toString();
                           dataBase.productosSolicitadosBox
@@ -6245,7 +6245,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     }
                   }
                   //Se recupera el id Emi Web de la Inversión
-                  inversion.idEmiWeb =
+                  inversion.idDBR =
                       responsePostInversionParse.payload.toString();
                   dataBase.inversionesBox.put(inversion);
                   //print("Se recupera el idEmiWeb de la inversión");
@@ -6286,7 +6286,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Pagos pago, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddPagoInversion de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -6305,7 +6305,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             responseProyecto.payload.switchMovil == true) {
           try {
             //Verificamos que no se haya posteado anteriormente el pago
-            if (pago.idEmiWeb == null) {
+            if (pago.idDBR == null) {
               final crearPagoUri =
                   Uri.parse('$baseUrlEmiWebServices/inversiones/pago');
               final headers = ({
@@ -6315,10 +6315,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               final responsePostPago = await post(crearPagoUri,
                   headers: headers,
                   body: jsonEncode({
-                    "idInversion": pago.inversion.target!.idEmiWeb,
+                    "idInversion": pago.inversion.target!.idDBR,
                     "montoAbonado": pago.montoAbonado,
                     "idUsuario": pago.inversion.target!.emprendimiento.target!
-                        .usuario.target!.idEmiWeb,
+                        .usuario.target!.idDBR,
                     "nombreUsuario":
                         "${pago.inversion.target!.emprendimiento.target!.usuario.target!.nombre} ${pago.inversion.target!.emprendimiento.target!.usuario.target!.apellidoP} ${pago.inversion.target!.emprendimiento.target!.usuario.target!.apellidoM}",
                   }));
@@ -6331,7 +6331,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   final responsePostPagoParse =
                       postRegistroExitosoEmiWebFromMap(const Utf8Decoder()
                           .convert(responsePostPago.bodyBytes));
-                  pago.idEmiWeb = responsePostPagoParse.payload!.id.toString();
+                  pago.idDBR = responsePostPagoParse.payload!.id.toString();
                   dataBase.pagosBox.put(pago);
                   //Se marca como realizada en EmiWeb la instrucción en Bitacora
                   bitacora.executeEmiWeb = true;
@@ -6370,7 +6370,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Emprendedores emprendedor, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateEmprendedor Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -6400,21 +6400,21 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuario": emprendedor
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "nombreUsuario":
                           "${emprendedor.emprendimiento.target!.usuario.target!.nombre} ${emprendedor.emprendimiento.target!.usuario.target!.apellidoP} ${emprendedor.emprendimiento.target!.usuario.target!.apellidoM}",
                       "emprendimiento":
                           emprendedor.emprendimiento.target!.nombre,
-                      "idEmprendedor": emprendedor.idEmiWeb,
+                      "idEmprendedor": emprendedor.idDBR,
                       "nombre": emprendedor.nombre,
                       "apellidos": emprendedor.apellidos,
                       "curp": emprendedor.curp,
                       "integrantesFamilia": emprendedor.integrantesFamilia,
-                      "comunidad": emprendedor.comunidad.target!.idEmiWeb,
+                      "comunidad": emprendedor.comunidad.target!.idDBR,
                       "estado": emprendedor.comunidad.target!.municipios.target!
-                          .estados.target!.idEmiWeb,
+                          .estados.target!.idDBR,
                       "municipio": emprendedor
-                          .comunidad.target!.municipios.target!.idEmiWeb,
+                          .comunidad.target!.municipios.target!.idDBR,
                       "telefono": emprendedor.telefono?.replaceAll("-", ""),
                       "comentarios": emprendedor.comentarios,
                       "fechaRegistro": (DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -6457,7 +6457,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateEmprendimiento Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -6487,11 +6487,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuarioRegistra":
-                          emprendimiento.usuario.target!.idEmiWeb,
+                          emprendimiento.usuario.target!.idDBR,
                       "usuarioRegistra":
                           "${emprendimiento.usuario.target!.nombre} ${emprendimiento.usuario.target!.apellidoP} ${emprendimiento.usuario.target!.apellidoM}",
                       "emprendimiento": emprendimiento.nombre,
-                      "id": emprendimiento.idEmiWeb,
+                      "id": emprendimiento.idDBR,
                     }));
             //print(responseUpdateEmprendimiento.statusCode);
             //print(responseUpdateEmprendimiento.body);
@@ -6528,7 +6528,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateFaseEmprendimiento en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -6559,17 +6559,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 'Authorization': 'Bearer $tokenGlobal',
               });
               //print("Fase Actual: ${faseActual.fase}");
-              //print("Id Emprendimiento: ${emprendimiento.idEmiWeb}");
+              //print("Id Emprendimiento: ${emprendimiento.idDBR}");
               final responseUpdateFaseEmprendimiento =
                   await put(actualizarFaseEmprendimientoUri,
                       headers: headers,
                       body: jsonEncode({
                         "idUsuarioRegistra":
-                            emprendimiento.usuario.target!.idEmiWeb,
+                            emprendimiento.usuario.target!.idDBR,
                         "usuarioRegistra":
                             "${emprendimiento.usuario.target!.nombre} ${emprendimiento.usuario.target!.apellidoP} ${emprendimiento.usuario.target!.apellidoM}",
-                        "id": emprendimiento.idEmiWeb,
-                        "idCatFase": faseActual.idEmiWeb,
+                        "id": emprendimiento.idDBR,
+                        "idCatFase": faseActual.idDBR,
                       }));
 
               switch (responseUpdateFaseEmprendimiento.statusCode) {
@@ -6608,7 +6608,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Inversiones inversion, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateEstadoInversion en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -6645,11 +6645,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       headers: headers,
                       body: jsonEncode({
                         "idUsuarioRegistra": inversion
-                            .emprendimiento.target!.usuario.target!.idEmiWeb,
+                            .emprendimiento.target!.usuario.target!.idDBR,
                         "usuarioRegistra":
                             "${inversion.emprendimiento.target!.usuario.target!.nombre} ${inversion.emprendimiento.target!.usuario.target!.apellidoP} ${inversion.emprendimiento.target!.usuario.target!.apellidoM}",
-                        "idInversiones": inversion.idEmiWeb,
-                        "idCatEstadoInversion": estadoActual.idEmiWeb,
+                        "idInversiones": inversion.idDBR,
+                        "idCatEstadoInversion": estadoActual.idDBR,
                       }));
 
               switch (responseUpdateEstasyncUpdateEstadoInversion.statusCode) {
@@ -6689,7 +6689,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateJornada1() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -6709,7 +6709,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           try {
             // Primero creamos el API para realizar la actualización
             final actualizarJornada1Uri = Uri.parse(
-                '$baseUrlEmiWebServices/jornadas?id=${jornada.idEmiWeb!.split("?")[0]}&jornada=${jornada.numJornada}');
+                '$baseUrlEmiWebServices/jornadas?id=${jornada.idDBR!.split("?")[0]}&jornada=${jornada.numJornada}');
             final headers = ({
               "Content-Type": "application/json",
               'Authorization': 'Bearer $tokenGlobal',
@@ -6718,7 +6718,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 headers: headers,
                 body: jsonEncode({
                   "idUsuario":
-                      jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
+                      jornada.emprendimiento.target!.usuario.target!.idDBR,
                   "nombreUsuario":
                       "${jornada.emprendimiento.target!.usuario.target!.nombre} ${jornada.emprendimiento.target!.usuario.target!.apellidoP} ${jornada.emprendimiento.target!.usuario.target!.apellidoM}",
                   "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -6729,7 +6729,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   "comentarios": jornada.tarea.target!.comentarios,
                   "tareaCompletada": jornada.completada,
                   "descripcion": jornada.tarea.target!.descripcion,
-                  "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
+                  "idProyecto": jornada.emprendimiento.target!.idDBR,
                   "nombreEmprendimiento": jornada.emprendimiento.target!.nombre,
                 }));
 
@@ -6766,7 +6766,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateJornada2() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -6786,7 +6786,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           try {
             // Primero creamos el API para realizar la actualización
             final actualizarJornada2Uri = Uri.parse(
-                '$baseUrlEmiWebServices/jornadas?id=${jornada.idEmiWeb!.split("?")[0]}&jornada=${jornada.numJornada}');
+                '$baseUrlEmiWebServices/jornadas?id=${jornada.idDBR!.split("?")[0]}&jornada=${jornada.numJornada}');
             final headers = ({
               "Content-Type": "application/json",
               'Authorization': 'Bearer $tokenGlobal',
@@ -6795,7 +6795,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 headers: headers,
                 body: jsonEncode({
                   "idUsuario":
-                      jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
+                      jornada.emprendimiento.target!.usuario.target!.idDBR,
                   "nombreUsuario":
                       "${jornada.emprendimiento.target!.usuario.target!.nombre} ${jornada.emprendimiento.target!.usuario.target!.apellidoP} ${jornada.emprendimiento.target!.usuario.target!.apellidoM}",
                   "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -6806,7 +6806,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   "comentarios": jornada.tarea.target!.comentarios,
                   "tareaCompletada": jornada.completada,
                   "descripcion": jornada.tarea.target!.descripcion,
-                  "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
+                  "idProyecto": jornada.emprendimiento.target!.idDBR,
                   "nombreEmprendimiento": jornada.emprendimiento.target!.nombre,
                 }));
 
@@ -6843,7 +6843,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateImagenJornada2() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -6862,9 +6862,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             responseProyecto.payload.switchMovil == true) {
           try {
             // Primero creamos el API para realizar la actualización
-            //print("${imagen.idEmiWeb}");
+            //print("${imagen.idDBR}");
             final actualizarImagenJornada2Uri = Uri.parse(
-                '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idEmiWeb}');
+                '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idDBR}');
             final headers = ({
               "Content-Type": "application/json",
               'Authorization': 'Bearer $tokenGlobal',
@@ -6874,12 +6874,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuario": imagen.tarea.target!.jornada.target!
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "idCatTipoDocumento": "4", //Círculo Empresa
                       "nombreArchivo": imagen.nombre,
                       "archivo": imagen.base64,
                       "idJornada2": imagen
-                          .tarea.target!.jornada.target!.idEmiWeb!
+                          .tarea.target!.jornada.target!.idDBR!
                           .split("?")[0],
                     }));
             switch (responseUpdateImagenJornada2.statusCode) {
@@ -6915,7 +6915,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateJornada3() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -6935,7 +6935,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           try {
             // Primero creamos el API para realizar la actualización
             final actualizarJornada3Uri = Uri.parse(
-                '$baseUrlEmiWebServices/jornadas?id=${jornada.idEmiWeb!.split("?")[0]}&jornada=${jornada.numJornada}');
+                '$baseUrlEmiWebServices/jornadas?id=${jornada.idDBR!.split("?")[0]}&jornada=${jornada.numJornada}');
             final headers = ({
               "Content-Type": "application/json",
               'Authorization': 'Bearer $tokenGlobal',
@@ -6944,7 +6944,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 headers: headers,
                 body: jsonEncode({
                   "idUsuario":
-                      jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
+                      jornada.emprendimiento.target!.usuario.target!.idDBR,
                   "nombreUsuario":
                       "${jornada.emprendimiento.target!.usuario.target!.nombre} ${jornada.emprendimiento.target!.usuario.target!.apellidoP} ${jornada.emprendimiento.target!.usuario.target!.apellidoM}",
                   "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -6955,7 +6955,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   "comentarios": jornada.tarea.target!.comentarios,
                   "tareaCompletada": jornada.completada,
                   "descripcion": jornada.tarea.target!.descripcion,
-                  "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
+                  "idProyecto": jornada.emprendimiento.target!.idDBR,
                   "nombreEmprendimiento": jornada.emprendimiento.target!.nombre,
                 }));
 
@@ -6992,7 +6992,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateImagenJornada3() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -7011,9 +7011,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             responseProyecto.payload.switchMovil == true) {
           try {
             // Primero creamos el API para realizar la actualización
-            //print("${imagen.idEmiWeb}");
+            //print("${imagen.idDBR}");
             final actualizarImagenJornada3Uri = Uri.parse(
-                '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idEmiWeb}');
+                '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idDBR}');
             final headers = ({
               "Content-Type": "application/json",
               'Authorization': 'Bearer $tokenGlobal',
@@ -7023,12 +7023,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuario": imagen.tarea.target!.jornada.target!
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "idCatTipoDocumento": "5", //Análisis Financiero
                       "nombreArchivo": imagen.nombre,
                       "archivo": imagen.base64,
                       "idJornada4": imagen
-                          .tarea.target!.jornada.target!.idEmiWeb!
+                          .tarea.target!.jornada.target!.idDBR!
                           .split("?")[0],
                     }));
             switch (responseUpdateImagenJornada3.statusCode) {
@@ -7064,7 +7064,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateProductoInversionJ3() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -7093,9 +7093,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 await put(actualizarProductoProyectoUri,
                     headers: headers,
                     body: jsonEncode({
-                      "idProductoDeProyecto": prodSolicitado.idEmiWeb,
+                      "idProductoDeProyecto": prodSolicitado.idDBR,
                       "idUsuario": prodSolicitado.inversion.target!
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "nombreUsuario":
                           "${prodSolicitado.inversion.target!.emprendimiento.target!.usuario.target!.nombre} ${prodSolicitado.inversion.target!.emprendimiento.target!.usuario.target!.apellidoP} ${prodSolicitado.inversion.target!.emprendimiento.target!.usuario.target!.apellidoM}",
                       "producto": prodSolicitado.producto,
@@ -7105,10 +7105,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "costoEstimado": prodSolicitado.costoEstimado,
                       "proveedorSugerido": prodSolicitado.proveedorSugerido,
                       "idProyecto": prodSolicitado
-                          .inversion.target!.emprendimiento.target!.idEmiWeb,
-                      "idFamilia": prodSolicitado.familiaInversion.target!.idEmiWeb,
+                          .inversion.target!.emprendimiento.target!.idDBR,
+                      "idFamilia": prodSolicitado.familiaInversion.target!.idDBR,
                       "unidadMedida":
-                          prodSolicitado.tipoEmpaques.target!.idEmiWeb,
+                          prodSolicitado.tipoEmpaques.target!.idDBR,
                     }));
             switch (responseUpdateProductoProyecto.statusCode) {
               case 200:
@@ -7143,7 +7143,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateJornada4() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -7163,7 +7163,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           try {
             // Primero creamos el API para realizar la actualización
             final actualizarJornada4Uri = Uri.parse(
-                '$baseUrlEmiWebServices/jornadas?id=${jornada.idEmiWeb!.split("?")[0]}&jornada=${jornada.numJornada}');
+                '$baseUrlEmiWebServices/jornadas?id=${jornada.idDBR!.split("?")[0]}&jornada=${jornada.numJornada}');
             final headers = ({
               "Content-Type": "application/json",
               'Authorization': 'Bearer $tokenGlobal',
@@ -7172,7 +7172,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 headers: headers,
                 body: jsonEncode({
                   "idUsuario":
-                      jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
+                      jornada.emprendimiento.target!.usuario.target!.idDBR,
                   "nombreUsuario":
                       "${jornada.emprendimiento.target!.usuario.target!.nombre} ${jornada.emprendimiento.target!.usuario.target!.apellidoP} ${jornada.emprendimiento.target!.usuario.target!.apellidoM}",
                   "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -7183,7 +7183,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   "comentarios": jornada.tarea.target!.comentarios,
                   "tareaCompletada": jornada.completada,
                   "descripcion": jornada.tarea.target!.descripcion,
-                  "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
+                  "idProyecto": jornada.emprendimiento.target!.idDBR,
                   "nombreEmprendimiento": jornada.emprendimiento.target!.nombre,
                 }));
 
@@ -7220,7 +7220,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateImagenJornada4() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -7239,9 +7239,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             responseProyecto.payload.switchMovil == true) {
           try {
             // Primero creamos el API para realizar la actualización
-            //print("${imagen.idEmiWeb}");
+            //print("${imagen.idDBR}");
             final actualizarImagenJornada4Uri = Uri.parse(
-                '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idEmiWeb}');
+                '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idDBR}');
             final headers = ({
               "Content-Type": "application/json",
               'Authorization': 'Bearer $tokenGlobal',
@@ -7251,12 +7251,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuario": imagen.tarea.target!.jornada.target!
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "idCatTipoDocumento": "6", //Convenio
                       "nombreArchivo": imagen.nombre,
                       "archivo": imagen.base64,
                       "idJornada4": imagen
-                          .tarea.target!.jornada.target!.idEmiWeb!
+                          .tarea.target!.jornada.target!.idDBR!
                           .split("?")[0],
                     }));
             switch (responseUpdateImagenJornada4.statusCode) {
@@ -7292,7 +7292,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncDeleteImagenJornada() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -7312,7 +7312,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           try {
             // Primero creamos el API para realizar la eliminación
             final eliminarImagenJornada = Uri.parse(
-                '$baseUrlEmiWebServices/documentos/eliminar?id=${bitacora.idEmiWeb}');
+                '$baseUrlEmiWebServices/documentos/eliminar?id=${bitacora.idDBR}');
             final headers = ({
               "Content-Type": "application/json",
               'Authorization': 'Bearer $tokenGlobal',
@@ -7354,7 +7354,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncDeleteProductoInversionJ3() en Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -7385,7 +7385,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     body: jsonEncode({
                       {
                         "productosProyectoDeleteRequests": [
-                          {"idProductoDeProyecto": bitacora.idEmiWeb}
+                          {"idProductoDeProyecto": bitacora.idDBR}
                         ]
                       }
                     }));
@@ -7422,7 +7422,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Tareas tarea, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateTareaConsultoria de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -7442,7 +7442,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           try {
             if (tarea.imagenes.isNotEmpty) {
               //Verificamos que no se haya posteado anteriormente la imagen
-              if (tarea.imagenes.first.idEmiWeb == null) {
+              if (tarea.imagenes.first.idDBR == null) {
                 //Aún no se ha posteado la imagen
                 //Primero se postea la imagen
                 final crearImagenProductoEmpUri =
@@ -7459,7 +7459,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           "nombreArchivo": tarea.imagenes.first.nombre,
                           "archivo": tarea.imagenes.first.base64,
                           "idUsuario": tarea.consultoria.target!.emprendimiento
-                              .target!.usuario.target!.idEmiWeb,
+                              .target!.usuario.target!.idDBR,
                         }));
                 switch (responsePostImagenProductoEmp.statusCode) {
                   case 200:
@@ -7468,7 +7468,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         postRegistroImagenExitosoEmiWebFromMap(
                             const Utf8Decoder().convert(
                                 responsePostImagenProductoEmp.bodyBytes));
-                    tarea.imagenes.first.idEmiWeb =
+                    tarea.imagenes.first.idDBR =
                         responsePostImagenProductoEmpParse.payload.idDocumento
                             .toString();
                     dataBase.imagenesBox.put(tarea.imagenes.first);
@@ -7491,15 +7491,15 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                   .target!
                                   .usuario
                                   .target!
-                                  .idEmiWeb,
+                                  .idDBR,
                               "usuarioRegistra":
                                   "${tarea.consultoria.target!.emprendimiento.target!.usuario.target!.nombre} ${tarea.consultoria.target!.emprendimiento.target!.usuario.target!.apellidoP} ${tarea.consultoria.target!.emprendimiento.target!.usuario.target!.apellidoM}",
                               "avanceObservado": tarea.descripcion,
                               "idCatPorcentajeAvance":
-                                  tarea.porcentaje.target!.idEmiWeb,
+                                  tarea.porcentaje.target!.idDBR,
                               "siguientesPasos": tarea.tarea,
                               "idConsultoria":
-                                  tarea.consultoria.target!.idEmiWeb,
+                                  tarea.consultoria.target!.idDBR,
                               "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
                                   .format(tarea.fechaRegistro),
                               "idDocumento": responsePostImagenProductoEmpParse
@@ -7512,7 +7512,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       case 200:
                         //print("Caso 200 en Emi Web Tarea Consultoría");
                         //Se recupera el id Emi Web de la Consultoría que será el mismo id para la nueva Tarea
-                        tarea.idEmiWeb = tarea.consultoria.target!.idEmiWeb;
+                        tarea.idDBR = tarea.consultoria.target!.idDBR;
                         dataBase.tareasBox.put(tarea);
                         //Se marca como realizada en EmiWeb la instrucción en Bitacora
                         bitacora.executeEmiWeb = true;
@@ -7528,7 +7528,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     return 0;
                 }
               } else {
-                if (tarea.idEmiWeb == null) {
+                if (tarea.idDBR == null) {
                   // Segundo creamos la nueva tarea asociada a la consultoría
                   final actualizarTareaConsultoriaUri =
                       Uri.parse('$baseUrlEmiWebServices/tareas');
@@ -7547,17 +7547,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                 .target!
                                 .usuario
                                 .target!
-                                .idEmiWeb,
+                                .idDBR,
                             "usuarioRegistra":
                                 "${tarea.consultoria.target!.emprendimiento.target!.usuario.target!.nombre} ${tarea.consultoria.target!.emprendimiento.target!.usuario.target!.apellidoP} ${tarea.consultoria.target!.emprendimiento.target!.usuario.target!.apellidoM}",
                             "avanceObservado": tarea.descripcion,
                             "idCatPorcentajeAvance":
-                                tarea.porcentaje.target!.idEmiWeb,
+                                tarea.porcentaje.target!.idDBR,
                             "siguientesPasos": tarea.tarea,
-                            "idConsultoria": tarea.consultoria.target!.idEmiWeb,
+                            "idConsultoria": tarea.consultoria.target!.idDBR,
                             "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
                                 .format(tarea.fechaRegistro),
-                            "idDocumento": tarea.imagenes.first.idEmiWeb,
+                            "idDocumento": tarea.imagenes.first.idDBR,
                           }));
                   //print(responsePostConsultoria.statusCode);
                   //print(responsePostConsultoria.body);
@@ -7566,7 +7566,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     case 200:
                       //print("Caso 200 en Emi Web Tarea Consultoría");
                       //Se recupera el id Emi Web de la Consultoría que será el mismo id para la nueva Tarea
-                      tarea.idEmiWeb = tarea.consultoria.target!.idEmiWeb;
+                      tarea.idDBR = tarea.consultoria.target!.idDBR;
                       dataBase.tareasBox.put(tarea);
                       //Se marca como realizada en EmiWeb la instrucción en Bitacora
                       bitacora.executeEmiWeb = true;
@@ -7585,7 +7585,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 }
               }
             } else {
-              if (tarea.idEmiWeb == null) {
+              if (tarea.idDBR == null) {
                 // Segundo creamos la nueva tarea asociada a la consultoría
                 final actualizarTareaConsultoriaUri =
                     Uri.parse('$baseUrlEmiWebServices/tareas');
@@ -7598,14 +7598,14 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         headers: headers,
                         body: jsonEncode({
                           "idUsuarioRegistra": tarea.consultoria.target!
-                              .emprendimiento.target!.usuario.target!.idEmiWeb,
+                              .emprendimiento.target!.usuario.target!.idDBR,
                           "usuarioRegistra":
                               "${tarea.consultoria.target!.emprendimiento.target!.usuario.target!.nombre} ${tarea.consultoria.target!.emprendimiento.target!.usuario.target!.apellidoP} ${tarea.consultoria.target!.emprendimiento.target!.usuario.target!.apellidoM}",
                           "avanceObservado": tarea.descripcion,
                           "idCatPorcentajeAvance":
-                              tarea.porcentaje.target!.idEmiWeb,
+                              tarea.porcentaje.target!.idDBR,
                           "siguientesPasos": tarea.tarea,
-                          "idConsultoria": tarea.consultoria.target!.idEmiWeb,
+                          "idConsultoria": tarea.consultoria.target!.idDBR,
                           "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
                               .format(tarea.fechaRegistro),
                         }));
@@ -7616,7 +7616,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   case 200:
                     //print("Caso 200 en Emi Web Tarea Consultoría");
                     //Se recupera el id Emi Web de la Consultoría que será el mismo id para la nueva Tarea
-                    tarea.idEmiWeb = tarea.consultoria.target!.idEmiWeb;
+                    tarea.idDBR = tarea.consultoria.target!.idDBR;
                     dataBase.tareasBox.put(tarea);
                     //Se marca como realizada en EmiWeb la instrucción en Bitacora
                     bitacora.executeEmiWeb = true;
@@ -7657,7 +7657,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateProductoEmprendedor Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -7687,23 +7687,23 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuario": productoEmprendedor
-                          .emprendimientos.target!.usuario.target!.idEmiWeb,
+                          .emprendimientos.target!.usuario.target!.idDBR,
                       "nombreUsuario":
                           "${productoEmprendedor.emprendimientos.target!.usuario.target!.nombre} ${productoEmprendedor.emprendimientos.target!.usuario.target!.apellidoP} ${productoEmprendedor.emprendimientos.target!.usuario.target!.apellidoM}",
                       "emprendimiento":
                           productoEmprendedor.emprendimientos.target!.nombre,
-                      "idProductoEmprendedor": productoEmprendedor.idEmiWeb,
+                      "idProductoEmprendedor": productoEmprendedor.idDBR,
                       "idEmprendedor":
-                          productoEmprendedor.emprendimientos.target!.idEmiWeb,
+                          productoEmprendedor.emprendimientos.target!.idDBR,
                       "producto": productoEmprendedor.nombre,
                       "idEmprendimiento":
-                          productoEmprendedor.emprendimientos.target!.idEmiWeb,
+                          productoEmprendedor.emprendimientos.target!.idDBR,
                       "idUnidadMedida":
-                          productoEmprendedor.unidadMedida.target!.idEmiWeb,
+                          productoEmprendedor.unidadMedida.target!.idDBR,
                       "descripcion": productoEmprendedor.descripcion,
                       "costoUnidadMedida": productoEmprendedor.costo,
                       "idDocumento":
-                          productoEmprendedor.imagen.target?.idEmiWeb ?? "",
+                          productoEmprendedor.imagen.target?.idDBR ?? "",
                     }));
             //print(responseUpdateEmprendedor.statusCode);
             //print(responseUpdateEmprendedor.body);
@@ -7740,7 +7740,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateImagenProductoEmprendedor Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -7759,9 +7759,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             responseProyecto.payload.switchMovil == true) {
           try {
             // Primero creamos el API para realizar la actualización
-            //print("${imagen.idEmiWeb}");
+            //print("${imagen.idDBR}");
             final actualizarImagenProdEmprendedorUri = Uri.parse(
-                '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idEmiWeb}');
+                '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idDBR}');
             final headers = ({
               "Content-Type": "application/json",
               'Authorization': 'Bearer $tokenGlobal',
@@ -7771,7 +7771,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuario": imagen.productosEmp.target!.emprendimientos
-                          .target!.usuario.target!.idEmiWeb,
+                          .target!.usuario.target!.idDBR,
                       "idCatTipoDocumento": "3", //Producto emprendedor
                       "nombreArchivo": imagen.nombre,
                       "archivo": imagen.base64,
@@ -7809,7 +7809,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Ventas venta, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateVenta de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -7836,17 +7836,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               'Authorization': 'Bearer $tokenGlobal',
             });
             for (var i = 0; i < venta.prodVendidos.length; i++) {
-              if (venta.prodVendidos.toList()[i].idEmiWeb != null) {
+              if (venta.prodVendidos.toList()[i].idDBR != null) {
                 var newVentaCreada = VentaActualizarRequestList(
-                  id: int.parse(venta.prodVendidos.toList()[i].idEmiWeb!),
+                  id: int.parse(venta.prodVendidos.toList()[i].idDBR!),
                   idProductoEmprendedor:
-                      venta.prodVendidos[i].productoEmp.target!.idEmiWeb!,
+                      venta.prodVendidos[i].productoEmp.target!.idDBR!,
                   cantidadVendida: venta.prodVendidos[i].cantVendida,
                   precioVenta: venta.prodVendidos[i].precioVenta,
                   nombreProducto: venta.prodVendidos[i].nombreProd,
                   costoUnitario: venta.prodVendidos[i].costo,
                   unidadMedida:
-                      venta.prodVendidos[i].unidadMedida.target!.idEmiWeb,
+                      "",
                 );
                 ventaActualizarRequestList.add(newVentaCreada.toMap());
               }
@@ -7856,11 +7856,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 headers: headers,
                 body: jsonEncode({
                   "idUsuarioRegistra":
-                      venta.emprendimiento.target!.usuario.target!.idEmiWeb,
+                      venta.emprendimiento.target!.usuario.target!.idDBR,
                   "usuarioRegistra":
                       "${venta.emprendimiento.target!.usuario.target!.nombre} ${venta.emprendimiento.target!.usuario.target!.apellidoP} ${venta.emprendimiento.target!.usuario.target!.apellidoM}",
-                  "idVentas": venta.idEmiWeb,
-                  "idProyecto": venta.emprendimiento.target!.idEmiWeb,
+                  "idVentas": venta.idDBR,
+                  "idProyecto": venta.emprendimiento.target!.idDBR,
                   "fechaInicio": DateFormat("yyyy-MM-ddTHH:mm:ss")
                       .format(venta.fechaInicio),
                   "fechaTermino": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -7913,10 +7913,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       final responsePutUpdateUsuario = await put(actualizarUsuarioUri,
           headers: headers,
           body: jsonEncode({
-            "idUsuarioRegistra": usuario.idEmiWeb,
+            "idUsuarioRegistra": usuario.idDBR,
             "usuarioRegistra":
                 "${usuario.nombre} ${usuario.apellidoP} ${usuario.apellidoM}",
-            "idUsuario": usuario.idEmiWeb,
+            "idUsuario": usuario.idDBR,
             "nombre": usuario.nombre,
             "apellidoPaterno": usuario.apellidoP,
             "apellidoMaterno": usuario.apellidoM,
@@ -7944,7 +7944,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Ventas venta, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncUpdateProductosVendidosVenta de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -7971,17 +7971,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               'Authorization': 'Bearer $tokenGlobal',
             });
             for (var i = 0; i < venta.prodVendidos.length; i++) {
-              if (venta.prodVendidos.toList()[i].idEmiWeb != null) {
+              if (venta.prodVendidos.toList()[i].idDBR != null) {
                 var newVentaCreada = VentaActualizarRequestList(
-                  id: int.parse(venta.prodVendidos.toList()[i].idEmiWeb!),
+                  id: int.parse(venta.prodVendidos.toList()[i].idDBR!),
                   idProductoEmprendedor:
-                      venta.prodVendidos[i].productoEmp.target!.idEmiWeb!,
+                      venta.prodVendidos[i].productoEmp.target!.idDBR!,
                   cantidadVendida: venta.prodVendidos[i].cantVendida,
                   precioVenta: venta.prodVendidos[i].precioVenta,
                   nombreProducto: venta.prodVendidos[i].nombreProd,
                   costoUnitario: venta.prodVendidos[i].costo,
                   unidadMedida:
-                      venta.prodVendidos[i].unidadMedida.target!.idEmiWeb,
+                      "",
                 );
                 ventaActualizarRequestList.add(newVentaCreada.toMap());
               }
@@ -7991,11 +7991,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 headers: headers,
                 body: jsonEncode({
                   "idUsuarioRegistra":
-                      venta.emprendimiento.target!.usuario.target!.idEmiWeb,
+                      venta.emprendimiento.target!.usuario.target!.idDBR,
                   "usuarioRegistra":
                       "${venta.emprendimiento.target!.usuario.target!.nombre} ${venta.emprendimiento.target!.usuario.target!.apellidoP} ${venta.emprendimiento.target!.usuario.target!.apellidoM}",
-                  "idVentas": venta.idEmiWeb,
-                  "idProyecto": venta.emprendimiento.target!.idEmiWeb,
+                  "idVentas": venta.idDBR,
+                  "idProyecto": venta.emprendimiento.target!.idDBR,
                   "fechaInicio": DateFormat("yyyy-MM-ddTHH:mm:ss")
                       .format(venta.fechaInicio),
                   "fechaTermino": DateFormat("yyyy-MM-ddTHH:mm:ss")
@@ -8039,7 +8039,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       ProdCotizados prodCotizado, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAcceptProdCotizado Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -8059,7 +8059,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           try {
             // Primero creamos el API para realizar la actualización
             final aceptarProdCotizadoUri = Uri.parse(
-                '$baseUrlEmiWebServices/inversiones/productos/cotizados/aprobados?id=${prodCotizado.inversionXprodCotizados.target!.inversion.target!.idEmiWeb!}');
+                '$baseUrlEmiWebServices/inversiones/productos/cotizados/aprobados?id=${prodCotizado.inversionXprodCotizados.target!.inversion.target!.idDBR!}');
             final headers = ({
               "Content-Type": "application/json",
               'Authorization': 'Bearer $tokenGlobal',
@@ -8070,7 +8070,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     body: jsonEncode({
                       "productos": [
                         {
-                          "idProducto": prodCotizado.idEmiWeb,
+                          "idProducto": prodCotizado.idDBR,
                           "cantidad": prodCotizado.cantidad,
                           "aceptado": true,
                           "costoTotal": prodCotizado.costoTotal
@@ -8085,7 +8085,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           .target!
                           .usuario
                           .target!
-                          .idEmiWeb,
+                          .idDBR,
                       "nombreUsuario":
                           "${prodCotizado.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.usuario.target!.nombre} ${prodCotizado.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.usuario.target!.apellidoP} ${prodCotizado.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.usuario.target!.apellidoM}",
                     }));
@@ -8126,7 +8126,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       String idUsuario) async {
     //print("Estoy en El syncAcceptInversionesXProductosCotizados Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -8162,13 +8162,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           .target!
                           .usuario
                           .target!
-                          .idEmiWeb,
+                          .idDBR,
                       "usuarioRegistra":
                           "${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.nombre} ${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.apellidoP} ${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.apellidoM}",
                       "aceptado": inversionXprodCotizados.aceptado,
-                      "idListaCotizacion": inversionXprodCotizados.idEmiWeb,
+                      "idListaCotizacion": inversionXprodCotizados.idDBR,
                       "idInversion":
-                          inversionXprodCotizados.inversion.target!.idEmiWeb,
+                          inversionXprodCotizados.inversion.target!.idDBR,
                     }));
             //print(responseAceptarInversionXProdCotizados.statusCode);
             //print(responseAceptarInversionXProdCotizados.body);
@@ -8178,7 +8178,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 // Segundo creamos el API para realizar la actualización de prod Cotizados
                 for (var productoCotizado in inversionXprodCotizados.prodCotizados.toList()) {
                   final agregarProdCotizadoUri = Uri.parse(
-                    '$baseUrlEmiWebServices/inversiones/productos/cotizados/aprobados?id=${inversionXprodCotizados.inversion.target!.idEmiWeb!}');
+                    '$baseUrlEmiWebServices/inversiones/productos/cotizados/aprobados?id=${inversionXprodCotizados.inversion.target!.idDBR!}');
                   final headers = ({
                     "Content-Type": "application/json",
                     'Authorization': 'Bearer $tokenGlobal',
@@ -8189,7 +8189,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           body: jsonEncode({
                             "productos": [
                               {
-                                "idProducto": productoCotizado.idEmiWeb,
+                                "idProducto": productoCotizado.idDBR,
                                 "cantidad": productoCotizado.cantidad,
                                 "aceptado": false,
                                 "costoTotal": productoCotizado.costoTotal
@@ -8204,7 +8204,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                 .target!
                                 .usuario
                                 .target!
-                                .idEmiWeb,
+                                .idDBR,
                             "nombreUsuario":
                                 "${productoCotizado.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.usuario.target!.nombre} ${productoCotizado.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.usuario.target!.apellidoP} ${productoCotizado.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.usuario.target!.apellidoM}",
                           }));
@@ -8249,7 +8249,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       String idUsuario) async {
     //print("Estoy en El syncUpdateInversionesXProductosCotizados Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -8290,13 +8290,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                             .target!
                             .usuario
                             .target!
-                            .idEmiWeb,
+                            .idDBR,
                         "usuarioRegistra":
                             "${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.nombre} ${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.apellidoP} ${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.apellidoM}",
                         "aceptado": inversionXprodCotizados.aceptado,
-                        "idListaCotizacion": inversionXprodCotizados.idEmiWeb,
+                        "idListaCotizacion": inversionXprodCotizados.idDBR,
                         "idInversion":
-                            inversionXprodCotizados.inversion.target!.idEmiWeb,
+                            inversionXprodCotizados.inversion.target!.idDBR,
                       }));
               //print(responseAceptarInversionXProdCotizados.statusCode);
               //print(responseAceptarInversionXProdCotizados.body);
@@ -8321,13 +8321,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                 .target!
                                 .usuario
                                 .target!
-                                .idEmiWeb,
+                                .idDBR,
                             "usuarioRegistra":
                                 "${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.nombre} ${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.apellidoP} ${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.apellidoM}",
                             "idInversiones": inversionXprodCotizados
-                                .inversion.target!.idEmiWeb,
+                                .inversion.target!.idDBR,
                             "idCatEstadoInversion":
-                                actualEstadoInversion.idEmiWeb,
+                                actualEstadoInversion.idDBR,
                           }));
                   //print(responsePutEstadoInversion.statusCode);
                   //print(responsePutEstadoInversion.body);
@@ -8353,11 +8353,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                     .target!
                                     .usuario
                                     .target!
-                                    .idEmiWeb,
+                                    .idDBR,
                                 "nombreUsuario":
                                     "${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.nombre} ${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.apellidoP} ${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.apellidoM}",
                                 "idInversiones": inversionXprodCotizados
-                                    .inversion.target!.idEmiWeb,
+                                    .inversion.target!.idDBR,
                                 "inversionRecibida": true,
                               }));
                       //print(responsePutMontoSaldoTotalInversion.statusCode);
@@ -8408,11 +8408,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Imagenes imagen, Bitacora bitacora) async {
     //print("Estoy en El syncUpdateImagenUsuario() en Emi Web");
     try {
-      //print("ID IMAGEN: ${imagen.idEmiWeb}");
+      //print("ID IMAGEN: ${imagen.idDBR}");
       //print("NOMBRE IMAGEN: ${imagen.nombre}");
       // Primero creamos el API para realizar la actualización
       final actualizarImagenUsuarioUri = Uri.parse(
-          '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idEmiWeb}');
+          '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idDBR}');
       final headers = ({
         "Content-Type": "application/json",
         'Authorization': 'Bearer $tokenGlobal',
@@ -8421,7 +8421,6 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           await put(actualizarImagenUsuarioUri,
               headers: headers,
               body: jsonEncode({
-                "idUsuario": imagen.usuario.target!.idEmiWeb,
                 "idCatTipoDocumento": "1", //Foto perfil Usuario
                 "nombreArchivo": imagen.nombre,
                 "archivo": imagen.base64,
@@ -8459,7 +8458,6 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             "idCatTipoDocumento": "1", //Foto perfil Usuario
             "nombreArchivo": imagen.nombre,
             "archivo": imagen.base64,
-            "idUsuario": imagen.usuario.target!.idEmiWeb,
           }));
 
       switch (responsePostAddImagenUsuario.statusCode) {
@@ -8469,7 +8467,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           final responsePostImagenUsuarioParse =
               postRegistroImagenExitosoEmiWebFromMap(const Utf8Decoder()
                   .convert(responsePostAddImagenUsuario.bodyBytes));
-          imagen.idEmiWeb =
+          imagen.idDBR =
               responsePostImagenUsuarioParse.payload.idDocumento.toString();
           dataBase.imagenesBox.put(imagen);
           //print("ID DE IMAGEN NUEVO: ${responsePostImagenUsuarioParse.payload.idDocumento.toString()}");
@@ -8491,7 +8489,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncArchivarEmprendimiento Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -8521,10 +8519,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuarioRegistra":
-                          emprendimiento.usuario.target!.idEmiWeb,
+                          emprendimiento.usuario.target!.idDBR,
                       "usuarioRegistra":
                           "${emprendimiento.usuario.target!.nombre} ${emprendimiento.usuario.target!.apellidoP} ${emprendimiento.usuario.target!.apellidoM}",
-                      "id": emprendimiento.idEmiWeb,
+                      "id": emprendimiento.idDBR,
                       "archivado": true,
                     }));
             //print(responseArchivarEmprendimiento.statusCode);
@@ -8562,7 +8560,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncDesarchivarEmprendimiento Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -8592,10 +8590,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuarioRegistra":
-                          emprendimiento.usuario.target!.idEmiWeb,
+                          emprendimiento.usuario.target!.idDBR,
                       "usuarioRegistra":
                           "${emprendimiento.usuario.target!.nombre} ${emprendimiento.usuario.target!.apellidoP} ${emprendimiento.usuario.target!.apellidoM}",
-                      "id": emprendimiento.idEmiWeb,
+                      "id": emprendimiento.idDBR,
                       "archivado": false,
                     }));
             //print(responseDesarchivarEmprendimiento.statusCode);
@@ -8633,7 +8631,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Consultorias consultoria, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncArchivarConsultoria Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -8663,10 +8661,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuario": consultoria
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "nombreUsuario":
                           "${consultoria.emprendimiento.target!.usuario.target!.nombre} ${consultoria.emprendimiento.target!.usuario.target!.apellidoP} ${consultoria.emprendimiento.target!.usuario.target!.apellidoM}",
-                      "idConsultoria": consultoria.idEmiWeb,
+                      "idConsultoria": consultoria.idDBR,
                       "archivado": true,
                     }));
             //print(responseArchivarConsultoria.statusCode);
@@ -8704,7 +8702,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Consultorias consultoria, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncDesarchivarConsultoria Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -8734,10 +8732,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     headers: headers,
                     body: jsonEncode({
                       "idUsuario": consultoria
-                          .emprendimiento.target!.usuario.target!.idEmiWeb,
+                          .emprendimiento.target!.usuario.target!.idDBR,
                       "nombreUsuario":
                           "${consultoria.emprendimiento.target!.usuario.target!.nombre} ${consultoria.emprendimiento.target!.usuario.target!.apellidoP} ${consultoria.emprendimiento.target!.usuario.target!.apellidoM}",
-                      "idConsultoria": consultoria.idEmiWeb,
+                      "idConsultoria": consultoria.idDBR,
                       "archivado": false,
                     }));
             //print(responseDesarchivarConsultoria.statusCode);
@@ -8775,7 +8773,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       Inversiones inversion, Bitacora bitacora, String idUsuario) async {
     //print("Estoy en El syncAddImagenesEntregaInversion de Emi Web");
     String? idProyectoEmiWeb =
-        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idDBR;
     if (idProyectoEmiWeb != null) {
       final getUsuarioEstatusUri = Uri.parse(
           '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
@@ -8793,7 +8791,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         if (responseProyecto.payload.idPromotor.toString() == idUsuario &&
             responseProyecto.payload.switchMovil == true) {
           try {
-            if (inversion.imagenFirmaRecibido.target!.idEmiWeb == null) {
+            if (inversion.imagenFirmaRecibido.target!.idDBR == null) {
               //Primero se postea la imagen de firma de recibo
               final crearImagenFirmaRecibidoUri =
                   Uri.parse('$baseUrlEmiWebServices/documentos/crear');
@@ -8810,7 +8808,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                             inversion.imagenFirmaRecibido.target!.nombre,
                         "archivo": inversion.imagenFirmaRecibido.target!.base64,
                         "idUsuario": inversion
-                            .emprendimiento.target!.usuario.target!.idEmiWeb,
+                            .emprendimiento.target!.usuario.target!.idDBR,
                       }));
               switch (responsePostImagenFirmaRecibido.statusCode) {
                 case 200:
@@ -8818,7 +8816,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   final responsePostImagenFirmaRecibidoParse =
                       postRegistroImagenExitosoEmiWebFromMap(const Utf8Decoder()
                           .convert(responsePostImagenFirmaRecibido.bodyBytes));
-                  inversion.imagenFirmaRecibido.target!.idEmiWeb =
+                  inversion.imagenFirmaRecibido.target!.idDBR =
                       responsePostImagenFirmaRecibidoParse.payload.idDocumento
                           .toString();
                   dataBase.imagenesBox
@@ -8840,7 +8838,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                             "archivo": inversion
                                 .imagenProductoEntregado.target!.base64,
                             "idUsuario": inversion.emprendimiento.target!
-                                .usuario.target!.idEmiWeb,
+                                .usuario.target!.idDBR,
                           }));
                   //print(responsePostImagenProductoEntregado.statusCode);
                   //print(responsePostImagenProductoEntregado.body);
@@ -8852,7 +8850,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                               const Utf8Decoder().convert(
                                   responsePostImagenProductoEntregado
                                       .bodyBytes));
-                      inversion.imagenProductoEntregado.target!.idEmiWeb =
+                      inversion.imagenProductoEntregado.target!.idDBR =
                           responsePostImagenProductoEntregadoParse
                               .payload.idDocumento
                               .toString();
@@ -8869,7 +8867,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           await put(actualizarImagenFirmaRecibidoUri,
                               headers: headers,
                               body: jsonEncode({
-                                "idInversion": inversion.idEmiWeb,
+                                "idInversion": inversion.idDBR,
                                 "pagoRecibido":
                                     responsePostImagenFirmaRecibidoParse
                                         .payload.idDocumento
@@ -8903,7 +8901,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   return 0;
               }
             } else {
-              if (inversion.imagenProductoEntregado.target!.idEmiWeb == null) {
+              if (inversion.imagenProductoEntregado.target!.idDBR == null) {
                 // Segundo creamos la nueva imagen de producto entregado
                 final crearImagenProductoEntregadoUri =
                     Uri.parse('$baseUrlEmiWebServices/documentos/crear');
@@ -8921,7 +8919,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           "archivo":
                               inversion.imagenProductoEntregado.target!.base64,
                           "idUsuario": inversion
-                              .emprendimiento.target!.usuario.target!.idEmiWeb,
+                              .emprendimiento.target!.usuario.target!.idDBR,
                         }));
                 //print(responsePostImagenProductoEntregado.statusCode);
                 //print(responsePostImagenProductoEntregado.body);
@@ -8932,7 +8930,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         postRegistroImagenExitosoEmiWebFromMap(
                             const Utf8Decoder().convert(
                                 responsePostImagenProductoEntregado.bodyBytes));
-                    inversion.imagenProductoEntregado.target!.idEmiWeb =
+                    inversion.imagenProductoEntregado.target!.idDBR =
                         responsePostImagenProductoEntregadoParse
                             .payload.idDocumento
                             .toString();
@@ -8949,9 +8947,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         await put(actualizarImagenFirmaRecibidoUri,
                             headers: headers,
                             body: jsonEncode({
-                              "idInversion": inversion.idEmiWeb,
+                              "idInversion": inversion.idDBR,
                               "pagoRecibido": inversion
-                                  .imagenFirmaRecibido.target!.idEmiWeb,
+                                  .imagenFirmaRecibido.target!.idDBR,
                               "productoEntregado":
                                   responsePostImagenProductoEntregadoParse
                                       .payload.idDocumento
@@ -8987,11 +8985,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     await put(actualizarImagenFirmaRecibidoUri,
                         headers: headers,
                         body: jsonEncode({
-                          "idInversion": inversion.idEmiWeb,
+                          "idInversion": inversion.idDBR,
                           "pagoRecibido":
-                              inversion.imagenFirmaRecibido.target!.idEmiWeb,
+                              inversion.imagenFirmaRecibido.target!.idDBR,
                           "productoEntregado": inversion
-                              .imagenProductoEntregado.target!.idEmiWeb,
+                              .imagenProductoEntregado.target!.idDBR,
                         }));
                 switch (responseActualizarImagenesFirmaRecibidoProductoEntregado
                     .statusCode) {
@@ -9061,9 +9059,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
   Future<bool> validateCotizacionFirstTimeEmiWeb(Inversiones inversion) async {
     try {
       if (await getTokenOAuth()) {
-        //print("idInversion Emi Web: ${inversion.idEmiWeb}");
+        //print("idInversion Emi Web: ${inversion.idDBR}");
         var url = Uri.parse(
-            "$baseUrlEmiWebServices/productosCotizados?idInversion=${inversion.idEmiWeb}");
+            "$baseUrlEmiWebServices/productosCotizados?idInversion=${inversion.idDBR}");
         final headers = ({
           "Content-Type": "application/json",
           'Authorization': 'Bearer $tokenGlobal',
@@ -9094,7 +9092,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     try {
       if (await getTokenOAuth()) {
         var url = Uri.parse(
-            "$baseUrlEmiWebServices/productosCotizados?idInversion=${inversion.idEmiWeb}");
+            "$baseUrlEmiWebServices/productosCotizados?idInversion=${inversion.idDBR}");
         final headers = ({
           "Content-Type": "application/json",
           'Authorization': 'Bearer $tokenGlobal',
@@ -9103,17 +9101,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         switch (response.statusCode) {
           case 200: //Caso éxitoso
             //print("Caso exitoso");
-            //print("${inversion.idEmiWeb}");
+            //print("${inversion.idDBR}");
             //print("Tamaño: ${inversion.inversionXprodCotizados.toList().length}");
             final responseListProdCotizados = getProdCotizadosEmiWebFromMap(
                 const Utf8Decoder().convert(response.bodyBytes));
-            //print("Indice a buscar: ${int.parse(inversion.inversionXprodCotizados.toList()[inversion.inversionXprodCotizados.toList().length - 2].idEmiWeb!)}");
-            //print("${responseListProdCotizados.payload![int.parse(inversion.inversionXprodCotizados.toList()[inversion.inversionXprodCotizados.toList().length - 2].idEmiWeb!)] != []}");
+            //print("Indice a buscar: ${int.parse(inversion.inversionXprodCotizados.toList()[inversion.inversionXprodCotizados.toList().length - 2].idDBR!)}");
+            //print("${responseListProdCotizados.payload![int.parse(inversion.inversionXprodCotizados.toList()[inversion.inversionXprodCotizados.toList().length - 2].idDBR!)] != []}");
             if (responseListProdCotizados.payload![int.parse(inversion
                     .inversionXprodCotizados
                     .toList()[
                         inversion.inversionXprodCotizados.toList().length - 2]
-                    .idEmiWeb!)] !=
+                    .idDBR!)] !=
                 []) {
               //print("es true");
               return true;
@@ -9158,7 +9156,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             //print("No se ha realizado la cotización");
             if (await getTokenOAuth()) {
               var url = Uri.parse(
-                  "$baseUrlEmiWebServices/productosCotizados?idInversion=${inversion.idEmiWeb}");
+                  "$baseUrlEmiWebServices/productosCotizados?idInversion=${inversion.idDBR}");
               final headers = ({
                 "Content-Type": "application/json",
                 'Authorization': 'Bearer $tokenGlobal',
@@ -9317,9 +9315,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
   Future<bool> validateInversionComprada(Inversiones inversion) async {
     try {
       if (await getTokenOAuth()) {
-        //print("Id inversion Emi Web: ${inversion.idEmiWeb}");
+        //print("Id inversion Emi Web: ${inversion.idDBR}");
         var url = Uri.parse(
-            "$baseUrlEmiWebServices/inversiones/${inversion.idEmiWeb}");
+            "$baseUrlEmiWebServices/inversiones/${inversion.idDBR}");
         final headers = ({
           "Content-Type": "application/json",
           'Authorization': 'Bearer $tokenGlobal',
@@ -9332,7 +9330,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             final responseGetInversionParse = getInversionEmiWebFromMap(
                 const Utf8Decoder().convert(response.bodyBytes));
             final estadoInversion = dataBase.estadoInversionBox
-                .query(EstadoInversion_.idEmiWeb.equals(
+                .query(EstadoInversion_.idDBR.equals(
                     responseGetInversionParse.payload!.idCatEstadoInversion
                         .toString()))
                 .build()

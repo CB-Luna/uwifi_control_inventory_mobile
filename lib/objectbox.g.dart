@@ -148,7 +148,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(10, 252808688812742776),
       name: 'Usuarios',
-      lastPropertyId: const IdUid(28, 9106146166091297461),
+      lastPropertyId: const IdUid(33, 720007507906714044),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -210,27 +210,24 @@ final _entities = <ModelEntity>[
             indexId: const IdUid(210, 5673280590788867277),
             relationTarget: 'Roles'),
         ModelProperty(
-            id: const IdUid(25, 8319252168650042041),
-            name: 'idEmiWeb',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(237, 5916027695817265200)),
-        ModelProperty(
-            id: const IdUid(26, 6277362090783645144),
-            name: 'imagenId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(250, 4481819197045105238),
-            relationTarget: 'Imagenes'),
-        ModelProperty(
-            id: const IdUid(27, 3443423026800618837),
-            name: 'curp',
+            id: const IdUid(29, 2352000377987118230),
+            name: 'rfc',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(28, 9106146166091297461),
-            name: 'fechaNacimiento',
-            type: 10,
+            id: const IdUid(30, 8932174031785446642),
+            name: 'imagen',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(31, 9122619162300007543),
+            name: 'path',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(33, 720007507906714044),
+            name: 'domicilio',
+            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[
@@ -1699,13 +1696,6 @@ final _entities = <ModelEntity>[
             type: 9,
             flags: 2080,
             indexId: const IdUid(251, 1378116722324924789)),
-        ModelProperty(
-            id: const IdUid(11, 7411525460197573173),
-            name: 'usuarioId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(253, 2893911726871456069),
-            relationTarget: 'Usuarios'),
         ModelProperty(
             id: const IdUid(12, 5630061134539575344),
             name: 'emprendedorId',
@@ -4215,7 +4205,10 @@ ModelDefinition getObjectBoxModel() {
         3029635981322260859,
         530782811209096402,
         5375138088732281764,
-        2457468952970496864
+        2457468952970496864,
+        2893911726871456069,
+        5916027695817265200,
+        4481819197045105238
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -4564,7 +4557,13 @@ ModelDefinition getObjectBoxModel() {
         3965200016558188555,
         8614986762524892139,
         6710403503072460685,
-        530608803701318774
+        530608803701318774,
+        7411525460197573173,
+        8319252168650042041,
+        6277362090783645144,
+        3443423026800618837,
+        9106146166091297461,
+        5040892531881832164
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -4748,7 +4747,7 @@ ModelDefinition getObjectBoxModel() {
         }),
     Usuarios: EntityDefinition<Usuarios>(
         model: _entities[1],
-        toOneRelations: (Usuarios object) => [object.rol, object.imagen],
+        toOneRelations: (Usuarios object) => [object.rol],
         toManyRelations: (Usuarios object) => {
               RelInfo<Usuarios>.toMany(30, object.id): object.bitacora,
               RelInfo<Usuarios>.toMany(62, object.id): object.pagos,
@@ -4778,9 +4777,15 @@ ModelDefinition getObjectBoxModel() {
           final correoOffset = fbb.writeString(object.correo);
           final passwordOffset = fbb.writeString(object.password);
           final idDBROffset = fbb.writeString(object.idDBR);
-          final idEmiWebOffset = fbb.writeString(object.idEmiWeb);
-          final curpOffset = fbb.writeString(object.curp);
-          fbb.startTable(29);
+          final rfcOffset = fbb.writeString(object.rfc);
+          final imagenOffset =
+              object.imagen == null ? null : fbb.writeString(object.imagen!);
+          final pathOffset =
+              object.path == null ? null : fbb.writeString(object.path!);
+          final domicilioOffset = object.domicilio == null
+              ? null
+              : fbb.writeString(object.domicilio!);
+          fbb.startTable(34);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
           fbb.addOffset(2, apellidoPOffset);
@@ -4792,10 +4797,10 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(11, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(15, idDBROffset);
           fbb.addInt64(23, object.rol.targetId);
-          fbb.addOffset(24, idEmiWebOffset);
-          fbb.addInt64(25, object.imagen.targetId);
-          fbb.addOffset(26, curpOffset);
-          fbb.addInt64(27, object.fechaNacimiento.millisecondsSinceEpoch);
+          fbb.addOffset(28, rfcOffset);
+          fbb.addOffset(29, imagenOffset);
+          fbb.addOffset(30, pathOffset);
+          fbb.addOffset(32, domicilioOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4815,22 +4820,20 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGetNullable(buffer, rootOffset, 14),
               celular: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 16, ''),
-              curp: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 56, ''),
-              correo: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 18, ''),
-              password:
-                  const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
-              fechaNacimiento: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 58, 0)),
+              rfc: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 60, ''),
+              domicilio: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 68),
+              correo:
+                  const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, ''),
+              password: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
+              imagen: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 62),
+              path: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 64),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''),
-              idEmiWeb: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 52, ''));
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''));
           object.rol.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0);
           object.rol.attach(store);
-          object.imagen.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 54, 0);
-          object.imagen.attach(store);
           InternalToManyAccess.setRelInfo(object.bitacora, store,
               RelInfo<Usuarios>.toMany(30, object.id), store.box<Usuarios>());
           InternalToManyAccess.setRelInfo(object.pagos, store,
@@ -6287,7 +6290,6 @@ ModelDefinition getObjectBoxModel() {
     Imagenes: EntityDefinition<Imagenes>(
         model: _entities[23],
         toOneRelations: (Imagenes object) => [
-              object.usuario,
               object.emprendedor,
               object.emprendimiento,
               object.tarea,
@@ -6326,7 +6328,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(6, pathOffset);
           fbb.addOffset(7, base64Offset);
           fbb.addOffset(8, idDBROffset);
-          fbb.addInt64(10, object.usuario.targetId);
           fbb.addInt64(11, object.emprendedor.targetId);
           fbb.addInt64(12, object.emprendimiento.targetId);
           fbb.addInt64(13, object.tarea.targetId);
@@ -6358,9 +6359,6 @@ ModelDefinition getObjectBoxModel() {
               idEmiWeb: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 12),
               idEmprendimiento: const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0));
-          object.usuario.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
-          object.usuario.attach(store);
           object.emprendedor.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
           object.emprendedor.attach(store);
@@ -8878,21 +8876,20 @@ class Usuarios_ {
   static final rol =
       QueryRelationToOne<Usuarios, Roles>(_entities[1].properties[10]);
 
-  /// see [Usuarios.idEmiWeb]
-  static final idEmiWeb =
-      QueryStringProperty<Usuarios>(_entities[1].properties[11]);
+  /// see [Usuarios.rfc]
+  static final rfc = QueryStringProperty<Usuarios>(_entities[1].properties[11]);
 
   /// see [Usuarios.imagen]
   static final imagen =
-      QueryRelationToOne<Usuarios, Imagenes>(_entities[1].properties[12]);
+      QueryStringProperty<Usuarios>(_entities[1].properties[12]);
 
-  /// see [Usuarios.curp]
-  static final curp =
+  /// see [Usuarios.path]
+  static final path =
       QueryStringProperty<Usuarios>(_entities[1].properties[13]);
 
-  /// see [Usuarios.fechaNacimiento]
-  static final fechaNacimiento =
-      QueryIntegerProperty<Usuarios>(_entities[1].properties[14]);
+  /// see [Usuarios.domicilio]
+  static final domicilio =
+      QueryStringProperty<Usuarios>(_entities[1].properties[14]);
 
   /// see [Usuarios.bitacora]
   static final bitacora =
@@ -9841,37 +9838,33 @@ class Imagenes_ {
   static final idDBR =
       QueryStringProperty<Imagenes>(_entities[23].properties[7]);
 
-  /// see [Imagenes.usuario]
-  static final usuario =
-      QueryRelationToOne<Imagenes, Usuarios>(_entities[23].properties[8]);
-
   /// see [Imagenes.emprendedor]
   static final emprendedor =
-      QueryRelationToOne<Imagenes, Emprendedores>(_entities[23].properties[9]);
+      QueryRelationToOne<Imagenes, Emprendedores>(_entities[23].properties[8]);
 
   /// see [Imagenes.emprendimiento]
   static final emprendimiento = QueryRelationToOne<Imagenes, Emprendimientos>(
-      _entities[23].properties[10]);
+      _entities[23].properties[9]);
 
   /// see [Imagenes.tarea]
   static final tarea =
-      QueryRelationToOne<Imagenes, Tareas>(_entities[23].properties[11]);
+      QueryRelationToOne<Imagenes, Tareas>(_entities[23].properties[10]);
 
   /// see [Imagenes.productosEmp]
   static final productosEmp =
-      QueryRelationToOne<Imagenes, ProductosEmp>(_entities[23].properties[12]);
+      QueryRelationToOne<Imagenes, ProductosEmp>(_entities[23].properties[11]);
 
   /// see [Imagenes.inversion]
   static final inversion =
-      QueryRelationToOne<Imagenes, Inversiones>(_entities[23].properties[13]);
+      QueryRelationToOne<Imagenes, Inversiones>(_entities[23].properties[12]);
 
   /// see [Imagenes.productosProv]
   static final productosProv =
-      QueryRelationToOne<Imagenes, ProductosProv>(_entities[23].properties[14]);
+      QueryRelationToOne<Imagenes, ProductosProv>(_entities[23].properties[13]);
 
   /// see [Imagenes.idEmprendimiento]
   static final idEmprendimiento =
-      QueryIntegerProperty<Imagenes>(_entities[23].properties[15]);
+      QueryIntegerProperty<Imagenes>(_entities[23].properties[14]);
 
   /// see [Imagenes.prodSolicitados]
   static final prodSolicitados =

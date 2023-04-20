@@ -1161,19 +1161,18 @@ class Usuarios {
   String? apellidoM;
   String? telefono;
   String celular;
-  String curp;
+  String rfc;
+  String? domicilio;
   String correo;
   String password;
+  String? imagen;
+  String? path;
   DateTime fechaRegistro;
-  DateTime fechaNacimiento;
   @Unique()
   String idDBR;
-  @Unique()
-  String idEmiWeb;
   final bitacora = ToMany<Bitacora>();
   final rol = ToOne<Roles>();
   final roles = ToMany<Roles>();
-  final imagen = ToOne<Imagenes>();
   final pagos = ToMany<Pagos>();
   @Backlink()
   final emprendimientos = ToMany<Emprendimientos>();
@@ -1187,13 +1186,14 @@ class Usuarios {
     this.apellidoM,
     this.telefono,
     required this.celular,
-    required this.curp,
+    required this.rfc,
+    this.domicilio,
     required this.correo,
     required this.password,
-    required this.fechaNacimiento,
+    this.imagen,
+    this.path,
     DateTime? fechaRegistro,
     required this.idDBR,
-    required this.idEmiWeb,
   }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat =>
@@ -1800,7 +1800,6 @@ class Imagenes {
   final bitacora = ToMany<Bitacora>();
   final emprendedor = ToOne<Emprendedores>();
   final emprendimiento = ToOne<Emprendimientos>();
-  final usuario = ToOne<Usuarios>();
   Imagenes({
     this.id = 0,
     required this.imagenes,

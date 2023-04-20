@@ -434,31 +434,32 @@ class _LoginScreenState extends State<LoginScreen> {
                                         //print('Usuario ya existente');
                                         usuarioProvider.getUser(userId);
                                         usuarioProvider.update(
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.correo,
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.nombre,
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.apellidoP,
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.apellidoM,
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.telefono,
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.celular,
+                                          userState.emailController.text,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.nombre,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.apellidoP,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.apellidoM,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.telefono,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.celular,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.rfc,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.domicilio,
                                           userState.passwordController.text,
-                                          null,
-                                          [getUsuarioSupabase.usuarioCollection.edges.first.node.idRolFk],
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.imagen,
+                                          [getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.roles.id],
                                         );
                                       } else {
                                         usuarioProvider.add(
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.nombre,
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.apellidoP,
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.apellidoM,
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.telefono,
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.celular,
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.curp,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.nombre,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.apellidoP,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.apellidoM,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.telefono,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.celular,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.rfc,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.domicilio,
                                           loginResponseSupabase.user.email,
                                           userState.passwordController.text,
-                                          null,
-                                          [getUsuarioSupabase.usuarioCollection.edges.first.node.idRolFk],
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.id,
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.id,
-                                          getUsuarioSupabase.usuarioCollection.edges.first.node.fechaNacimiento,
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.imagen,
+                                          [getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.roles.id],
+                                          getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.id,
                                         );
                                         usuarioProvider.getUser(loginResponseSupabase.user.email);
                                       }
