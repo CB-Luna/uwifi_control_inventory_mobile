@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
-import 'package:taller_alex_app_asesor/screens/sync/descarga_catalogos_emi_web_screen.dart';
+import 'package:taller_alex_app_asesor/screens/sync/descarga_catalogos_supabase_screen.dart';
 
 class BottomSheetRecoverCatalogosWidget extends StatefulWidget {
   final bool isVisible;
@@ -148,7 +148,7 @@ class _BottomSheetRecoverCatalogosWidgetState
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const DescargaCatalogosEmiWebScreen(),
+                                          const DescargaCatalogosSupabaseScreen(),
                                     ),
                                   );
                                 },

@@ -64,7 +64,7 @@ class _TargetaOrdenTrabajoDescripcionState extends State<TargetaOrdenTrabajoDesc
                   topRight: Radius.circular(8),
                 ),
                 child:
-                    getImageEmprendimiento(widget.ordenTrabajo.vehiculo.target?.imagen.target?.path),
+                    getImageEmprendimiento(widget.ordenTrabajo.vehiculo.target?.path),
               ),
             ),
             Padding(
@@ -108,8 +108,25 @@ class _TargetaOrdenTrabajoDescripcionState extends State<TargetaOrdenTrabajoDesc
               padding: const EdgeInsetsDirectional
                   .fromSTEB(16, 0, 16, 5),
               child: Text(
-                maybeHandleOverflow(widget.ordenTrabajo.descripcionFalla, 180, "..."),
-                maxLines: 2,
+                maybeHandleOverflow(widget.ordenTrabajo.descripcionFalla, 40, "..."),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: FlutterFlowTheme.of(context)
+                    .bodyText2
+                    .override(
+                      fontFamily: 'Poppins',
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                    ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional
+                  .fromSTEB(16, 0, 16, 5),
+              child: Text(
+                "Id Local: ${widget.ordenTrabajo.id}",
+                maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: FlutterFlowTheme.of(context)
                     .bodyText2

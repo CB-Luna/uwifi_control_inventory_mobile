@@ -1,5 +1,5 @@
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/screens/sync/descarga_catalogos_emi_web_screen.dart';
+import 'package:taller_alex_app_asesor/screens/sync/descarga_catalogos_supabase_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
@@ -147,8 +147,7 @@ class _BottomSheetDescargarCatalogosState
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        // const DescargaCatalogosPocketbaseScreen(),
-                                        const DescargaCatalogosEmiWebScreen(),
+                                        const DescargaCatalogosSupabaseScreen(),
                                   ),
                                 );
                               },

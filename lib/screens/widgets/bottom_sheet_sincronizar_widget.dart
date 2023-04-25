@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:taller_alex_app_asesor/screens/sync/sincronizacion_informacion_pocketbase_screen.dart';
 
 import 'package:taller_alex_app_asesor/theme/theme.dart';
-import 'package:taller_alex_app_asesor/screens/sync/sincronizacion_informacion_emi_web_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class BottomSheetSincronizarWidget extends StatefulWidget {
@@ -149,7 +149,7 @@ class _BottomSheetSincronizarWidgetState
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const SincronizacionInformacionEmiWebScreen(),
+                                          const SincronizacionInformacionSupabaseScreen(),
                                     ),
                                   );
                                 },

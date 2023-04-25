@@ -6,8 +6,7 @@ import 'package:stepper_counter_swipe/stepper_counter_swipe.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/modelsLocales/productos/productos_data.dart';
-import 'package:taller_alex_app_asesor/modelsLocales/servicios/servicios_data.dart';
+import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/diagnostico_controller.dart';
 import 'package:taller_alex_app_asesor/screens/diagnostico/servicio_creado_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
@@ -44,12 +43,12 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
   void initState() {
     super.initState();
     listaServicios = [];
-    for (var element in listaServiciosData) {
+    for (var element in dataBase.tipoServicioBox.getAll().toList()) {
       listaServicios.add(element.tipoServicio);
     }
     listaServicios.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     listaProductos = [];
-    for (var element in listaProductosData) {
+    for (var element in dataBase.tipoProductoBox.getAll().toList()) {
       listaProductos.add(element.tipoProducto);
     }
     listaProductos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
@@ -66,11 +65,11 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
     final diagnosticoProvider = Provider.of<DiagnosticoController>(context);
     listaServicios.clear();
     listaProductos.clear();
-    for (var element in listaServiciosData) {
+    for (var element in dataBase.tipoServicioBox.getAll().toList()) {
       listaServicios.add(element.tipoServicio);
     }
     listaServicios.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
-    for (var element in listaProductosData) {
+    for (var element in dataBase.tipoProductoBox.getAll().toList()) {
       listaProductos.add(element.tipoProducto);
     }
     listaProductos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
@@ -467,8 +466,8 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                   topRight: Radius.circular(8),
                                 ),
                                 child:
-                                    getAssetImage(
-                                      diagnosticoProvider.tipoServicio?.imagen,
+                                    getImageContainer(
+                                      diagnosticoProvider.tipoServicio?.path,
                                       height: 200
                                     ),
                               ),

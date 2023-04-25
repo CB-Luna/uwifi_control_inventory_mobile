@@ -213,14 +213,10 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                                           file.readAsBytesSync();
                                       String base64 =
                                           base64Encode(fileInByte);
-                                      var newImagenLocal = Imagenes(
-                                          imagenes: image!.path,
-                                          nombre: image!.name,
-                                          path: image!.path,
-                                          base64: base64,
-                                          idEmprendimiento: 0);
                                       clienteProvider.imagenCliente =
-                                          newImagenLocal;
+                                          base64;
+                                      clienteProvider.path = 
+                                        file.path;
                                     });
                                   },
                                   child: Container(
@@ -867,7 +863,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                               .validateForm(clienteKey) &&
                           vehiculoProvider.clienteAsociado) {
                         //Se crea cliente sin vehiculo
-                        final idCliente = clienteProvider.add();
+                        final idCliente = clienteProvider.add(usuarioProvider.usuarioCurrent);
                         //Se asigna el cliente al usuario actual
                         if (usuarioProvider.addCliente(idCliente)) {
                           //Se agrega vehículo

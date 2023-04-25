@@ -1,21 +1,12 @@
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/screens/cotizacion/cotizacion_screen.dart';
 import 'package:taller_alex_app_asesor/screens/cotizacion/main_tab_opciones.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/inspeccion_screen.dart';
-import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/diagnostico/diagnostico_screen.dart';
-import 'package:taller_alex_app_asesor/screens/observaciones/agregar_observacion_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/componentes/widgets/recepcion_screen.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
-import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
-import '../widgets/flutter_flow_widgets.dart';
 import 'flutter_flow_animaciones.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class DetalleOrdenTrabajoScreen extends StatefulWidget {
@@ -118,11 +109,8 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
                 break;
               }
             case 2:
-              if(widget.ordenTrabajo.inspeccion.target?.suspensionDireccion.target == null 
-                  || widget.ordenTrabajo.inspeccion.target?.frenos.target == null
-                  || widget.ordenTrabajo.inspeccion.target?.fluidos.target == null
-                  || widget.ordenTrabajo.inspeccion.target?.electrico.target == null
-                  || widget.ordenTrabajo.inspeccion.target?.motor.target == null) {
+
+              if(widget.ordenTrabajo.inspeccion.target?.completado == false) {
                 snackbarKey.currentState?.showSnackBar(const SnackBar(
                   content: Text("Se requiere terminar la Insepcción de todas las áreas para continuar con el Diagnóstico."),
                 ));
@@ -132,7 +120,7 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
                 break;
               }
             case 3:
-              if(widget.ordenTrabajo.estatus.target!.avance < 0.65){
+              if(widget.ordenTrabajo.estatus.target!.avance < 0.4){
                 snackbarKey.currentState?.showSnackBar(const SnackBar(
                   content: Text("Se requiere agregar al menos un Servicio en el Diagnóstico para continuar con la Cotización."),
                 ));

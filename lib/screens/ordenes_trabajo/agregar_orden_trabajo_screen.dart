@@ -444,7 +444,7 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                               ),
                               child:
                                   getImageEmprendimiento(
-                                    ordenTrabajoProvider.vehiculo?.imagen.target?.path,
+                                    ordenTrabajoProvider.vehiculo?.path,
                                     height: 200
                                   ),
                             ),
@@ -960,6 +960,8 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                             style: FlutterFlowTheme.of(context).bodyText1,
                             textAlign: TextAlign.start,
                             maxLines: 4,
+                            textCapitalization:
+                                TextCapitalization.sentences,
                           ),
                         ),
                         Padding(

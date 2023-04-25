@@ -9,7 +9,8 @@ class VehiculoTemporal {
     final String placas;
     final String motor;
     final String color;
-    final Imagenes imagen;
+    final String imagen;
+    final String path;
 
     VehiculoTemporal({
       required this.marca,
@@ -20,6 +21,7 @@ class VehiculoTemporal {
       required this.motor,
       required this.color,
       required this.imagen,
+      required this.path,
     });
 
 }

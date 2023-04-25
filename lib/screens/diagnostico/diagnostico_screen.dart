@@ -618,8 +618,8 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                                                     topLeft: Radius.circular(0),
                                                     topRight: Radius.circular(12),
                                                   ),
-                                                  child: getAssetImage(
-                                                        servicio?.imagen ?? "assets/images/default_image_placeholder.jpeg",
+                                                  child: getImageContainer(
+                                                        servicio?.path ?? "assets/images/default_image_placeholder.jpeg",
                                                         height: 100,
                                                         width: 160
                                                       ),

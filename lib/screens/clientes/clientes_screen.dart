@@ -23,7 +23,7 @@ class ClientesScreen extends StatefulWidget {
 class _ClientesScreenState extends State<ClientesScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  List<Cliente> clientes = [];
+  List<Usuarios> clientes = [];
 
   @override
   void initState() {
@@ -362,7 +362,7 @@ class _ClientesScreenState extends State<ClientesScreen> {
                                                 topRight: Radius.circular(8),
                                               ),
                                               child: getWidgetImageEmprendedor(
-                                                  cliente.imagen.target?.path, 180, double.infinity)),
+                                                  cliente.path, 180, double.infinity)),
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
@@ -461,7 +461,7 @@ class _ClientesScreenState extends State<ClientesScreen> {
                                                         ),
                                                         child: Center(
                                                           child: Text(
-                                                            cliente.vehiculo.toList().length.toString(),
+                                                            cliente.vehiculos.toList().length.toString(),
                                                             style: FlutterFlowTheme.of(context)
                                                                 .title1
                                                                 .override(

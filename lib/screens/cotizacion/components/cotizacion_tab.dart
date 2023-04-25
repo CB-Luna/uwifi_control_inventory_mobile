@@ -1,15 +1,12 @@
 import 'dart:io';
 
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/providers/sync_provider_emi_web.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/cotizacion_controller.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_animations.dart';
 
 class CotizacionTab extends StatefulWidget {
@@ -43,8 +40,6 @@ class _CotizacionTabState extends State<CotizacionTab>
 
   @override
   Widget build(BuildContext context) {
-    final syncProviderEmiWeb = Provider.of<SyncProviderEmiWeb>(context);
-    final cotizacionProvider = Provider.of<CotizacionController>(context);
     totalProyecto = widget.ordenTrabajo.diagnostico.target?.costoTotal ?? 0.00;
     servicios.clear();
     widget.ordenTrabajo.diagnostico.target?.servicios.toList().forEach((element) {
@@ -102,13 +97,13 @@ class _CotizacionTabState extends State<CotizacionTab>
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: widget.ordenTrabajo.vehiculo.target?.imagen.target == null ?
+                                image: widget.ordenTrabajo.vehiculo.target?.path == null ?
                                 Image.asset(
                                         "assets/images/default_image_placeholder.jpeg",
                                       ).image
                                 :
                                 Image.file(
-                                      File(widget.ordenTrabajo.vehiculo.target!.imagen.target!.imagenes),
+                                      File(widget.ordenTrabajo.vehiculo.target!.path),
                                       fit: BoxFit.contain,
                                     ).image,
                               ),
@@ -596,77 +591,80 @@ class _CotizacionTabState extends State<CotizacionTab>
                               );
                             },
                           ),
-                          Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 10, 0, 10),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    FFButtonWidget(
-                                      onPressed: () async {
-                                      },
-                                      text: 'Aceptar',
-                                      icon: const Icon(
-                                        Icons.check_circle_outlined,
-                                        size: 15,
-                                      ),
-                                      options: FFButtonOptions(
-                                        width: 150,
-                                        height: 50,
-                                        color: FlutterFlowTheme.of(context).primaryColor,
-                                        textStyle:
-                                            FlutterFlowTheme.of(context).title3.override(
-                                                  fontFamily: 'Poppins',
-                                                  color: FlutterFlowTheme.of(context).white,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                        elevation: 3,
-                                        borderSide: const BorderSide(
-                                          color: Color(0x002CC3F4),
-                                          width: 0,
+                          Visibility(
+                            visible: servicios.isEmpty ? false : true ,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 10, 0, 10),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      FFButtonWidget(
+                                        onPressed: () async {
+                                        },
+                                        text: 'Aceptar',
+                                        icon: const Icon(
+                                          Icons.check_circle_outlined,
+                                          size: 15,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                    FFButtonWidget(
-                                      onPressed: () async {
-                                      },
-                                      text: 'Cancelar Cotización',
-                                      icon: const Icon(
-                                        Icons.cancel_outlined,
-                                        size: 15,
-                                      ),
-                                      options: FFButtonOptions(
-                                        width: 170,
-                                        height: 50,
-                                        color:
-                                            FlutterFlowTheme.of(context).primaryText,
-                                        textStyle:
-                                            FlutterFlowTheme.of(context).title3.override(
-                                                  fontFamily: 'Poppins',
-                                                  color: FlutterFlowTheme.of(context).white,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                        elevation: 3,
-                                        borderSide: const BorderSide(
-                                          color: Color(0x002CC3F4),
-                                          width: 0,
+                                        options: FFButtonOptions(
+                                          width: 150,
+                                          height: 50,
+                                          color: FlutterFlowTheme.of(context).primaryColor,
+                                          textStyle:
+                                              FlutterFlowTheme.of(context).title3.override(
+                                                    fontFamily: 'Poppins',
+                                                    color: FlutterFlowTheme.of(context).white,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                          elevation: 3,
+                                          borderSide: const BorderSide(
+                                            color: Color(0x002CC3F4),
+                                            width: 0,
+                                          ),
+                                          borderRadius: BorderRadius.circular(8),
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
                                       ),
-                                    ),
-                                  ],
+                                      FFButtonWidget(
+                                        onPressed: () async {
+                                        },
+                                        text: 'Cancelar Cotización',
+                                        icon: const Icon(
+                                          Icons.cancel_outlined,
+                                          size: 15,
+                                        ),
+                                        options: FFButtonOptions(
+                                          width: 170,
+                                          height: 50,
+                                          color:
+                                              FlutterFlowTheme.of(context).primaryText,
+                                          textStyle:
+                                              FlutterFlowTheme.of(context).title3.override(
+                                                    fontFamily: 'Poppins',
+                                                    color: FlutterFlowTheme.of(context).white,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                          elevation: 3,
+                                          borderSide: const BorderSide(
+                                            color: Color(0x002CC3F4),
+                                            width: 0,
+                                          ),
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 40,
-                              ),
-                            ],
+                                const SizedBox(
+                                  height: 40,
+                                ),
+                              ],
+                            ),
                           )
                         ],
                       ),

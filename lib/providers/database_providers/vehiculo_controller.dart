@@ -10,7 +10,8 @@ class VehiculoController extends ChangeNotifier {
 
   //Vehículo
   // TextEditingController integrantesFamilia = TextEditingController();
-  Imagenes? imagenVehiculo;
+  String imagenVehiculo = "";
+  String? path;
   String marca = "";
   String modelo = "";
   String anio = "";
@@ -32,7 +33,8 @@ class VehiculoController extends ChangeNotifier {
   void limpiarInformacion()
   {
     vehiculo = null;
-    imagenVehiculo = null;
+    imagenVehiculo = "";
+    path = null; 
     marca = "";
     modelo = "";
     anio = "";
@@ -56,7 +58,8 @@ class VehiculoController extends ChangeNotifier {
       placas: placas, 
       motor: motor, 
       color: color, 
-      imagen: imagenVehiculo!,  
+      imagen: imagenVehiculo, 
+      path: path!, 
     );
     clienteAsociado = true;
     notifyListeners();
@@ -72,16 +75,16 @@ class VehiculoController extends ChangeNotifier {
         placas: vehiculo!.placas, 
         motor: vehiculo!.motor, 
         color: vehiculo!.color,  
+        imagen: vehiculo!.imagen,
+        path: vehiculo!.path,
       );
-      final cliente = dataBase.clienteBox.get(idCliente);
+      final cliente = dataBase.usuariosBox.get(idCliente);
       if (cliente != null) {
-        final nuevaInstruccion = Bitacora(instruccion: 'syncAgregarVehiculo', usuario: prefs.getString("userId")!, idEmprendimiento: 0); //Se crea la nueva instrucción a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instruccion: 'syncAgregarVehiculo', usuarioPropietario: prefs.getString("userId")!, idOrdenTrabajo: 0); //Se crea la nueva instrucción a realizar en bitacora
         nuevoVehiculo.bitacora.add(nuevaInstruccion);
         nuevoVehiculo.cliente.target = cliente;
-        cliente.vehiculo.add(nuevoVehiculo);
-        dataBase.imagenesBox.put(imagenVehiculo!);
-        nuevoVehiculo.imagen.target = imagenVehiculo!;
-        dataBase.clienteBox.put(cliente);
+        cliente.vehiculos.add(nuevoVehiculo);
+        dataBase.usuariosBox.put(cliente);
         dataBase.vehiculoBox.put(nuevoVehiculo);
         notifyListeners();
       }
@@ -91,47 +94,19 @@ class VehiculoController extends ChangeNotifier {
   void update(int id, String newNombre, String newApellidos, String newCurp, 
   String newIntegrantesFamilia, String newTelefono, String newComentarios, int idComunidad, int idEmprendimiento) {
     final updateEmprendedor = dataBase.emprendedoresBox.get(id);
-    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
-    if (updateEmprendedor != null) {
-      updateEmprendedor.nombre = newNombre;
-      updateEmprendedor.apellidos = newApellidos;
-      updateEmprendedor.curp = newCurp;
-      updateEmprendedor.integrantesFamilia = newIntegrantesFamilia;
-      updateEmprendedor.telefono =  newTelefono;
-      updateEmprendedor.comentarios =  newComentarios;
-      updateEmprendedor.comunidad.target = dataBase.comunidadesBox.get(idComunidad);
-      updateEmprendedor.bitacora.add(nuevaInstruccion);
-      dataBase.emprendedoresBox.put(updateEmprendedor);
-      //print('Emprendedor actualizado exitosamente');
 
-    }
     notifyListeners();
   }
 
   void addImagen(int idEmprendimiento) {
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     if (emprendimiento != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
-      imagenVehiculo!.bitacora.add(nuevaInstruccion);
-      emprendimiento.emprendedor.target!.imagen.target = imagenVehiculo;
-      dataBase.imagenesBox.put(imagenVehiculo!);
-      dataBase.emprendedoresBox.put(emprendimiento.emprendedor.target!);
-      //print('Imagen Emprendedor agregada exitosamente');
       notifyListeners();
     } 
   }
 
   void updateImagen(int id, Imagenes newImagen, int idEmprendimiento) {
     final updateImagen = dataBase.imagenesBox.get(id);
-    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
-    if (updateImagen != null) {
-      updateImagen.nombre = newImagen.nombre;
-      updateImagen.path = newImagen.path;
-      updateImagen.base64 = newImagen.base64;
-      updateImagen.bitacora.add(nuevaInstruccion);
-      dataBase.imagenesBox.put(updateImagen);
-      //print('Imagen de Emprendedor actualizada exitosamente');
-    }
     notifyListeners();
   }
 

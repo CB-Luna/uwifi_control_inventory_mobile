@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/providers/sync_provider_pocketbase.dart';
+import 'package:taller_alex_app_asesor/providers/sync_provider_supabase.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_expanded_image_view.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
@@ -40,7 +40,7 @@ class _PagosTabState extends State<PagosTab>
 
   @override
   Widget build(BuildContext context) {
-    final syncProviderPocketbase = Provider.of<SyncProviderPocketbase>(context);
+    final syncProviderSupabase = Provider.of<SyncProviderSupabase>(context);
     final List<ProdSolicitado> prodSolicitado = [];
     double totalProyecto = 3555;
     return Scaffold(

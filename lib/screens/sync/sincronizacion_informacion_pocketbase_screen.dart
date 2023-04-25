@@ -1,8 +1,6 @@
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
-import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/instruccion_no_sincronizada.dart';
-import 'package:taller_alex_app_asesor/providers/sync_provider_emi_web.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -10,40 +8,35 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/theme/theme.dart';
 
-import 'package:taller_alex_app_asesor/providers/sync_provider_pocketbase.dart';
+import 'package:taller_alex_app_asesor/providers/sync_provider_supabase.dart';
 
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-class SincronizacionInformacionPocketbaseScreen extends StatefulWidget {
-  final List<InstruccionNoSincronizada> instruccionesFallidasEmiWeb;
-  final bool exitosoEmiWeb;
+class SincronizacionInformacionSupabaseScreen extends StatefulWidget {
 
-  const SincronizacionInformacionPocketbaseScreen({
+  const SincronizacionInformacionSupabaseScreen({
     Key? key, 
-    required this.instruccionesFallidasEmiWeb, 
-    required this.exitosoEmiWeb
     }) : super(key: key);
 
   @override
-  State<SincronizacionInformacionPocketbaseScreen> createState() => _SincronizacionInformacionPocketbaseScreenState();
+  State<SincronizacionInformacionSupabaseScreen> createState() => _SincronizacionInformacionSupabaseScreenState();
 }
 
-class _SincronizacionInformacionPocketbaseScreenState extends State<SincronizacionInformacionPocketbaseScreen> {
+class _SincronizacionInformacionSupabaseScreenState extends State<SincronizacionInformacionSupabaseScreen> {
   @override
   void initState() {
     super.initState();
       setState(() {
-        context.read<SyncProviderPocketbase>().exitoso = widget.exitosoEmiWeb;
-        context.read<SyncProviderPocketbase>().procesoCargando(true);
-        context.read<SyncProviderPocketbase>().procesoTerminado(false);
-        context.read<SyncProviderPocketbase>().procesoExitoso(false);
-        Future<bool> booleano = context.read<SyncProviderPocketbase>().executeInstrucciones(dataBase.bitacoraBox
+        context.read<SyncProviderSupabase>().exitoso = true;
+        context.read<SyncProviderSupabase>().procesoCargando(true);
+        context.read<SyncProviderSupabase>().procesoTerminado(false);
+        context.read<SyncProviderSupabase>().procesoExitoso(false);
+        Future<bool> booleano = context.read<SyncProviderSupabase>().executeInstrucciones(dataBase.bitacoraBox
             .getAll()
             .toList()
-            .where((element) => element.usuario == prefs.getString("userId")!)
-            .toList(), 
-            widget.instruccionesFallidasEmiWeb
+            .where((element) => element.usuarioPropietario == prefs.getString("userId")!)
+            .toList()
             );
         Future(() async {
           if (await booleano) {
@@ -55,8 +48,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
 
   @override
   Widget build(BuildContext context) {
-    final syncProviderPocketbase = Provider.of<SyncProviderPocketbase>(context);
-    final syncProviderEmiWeb = Provider.of<SyncProviderEmiWeb>(context);
+    final syncProviderSupabase = Provider.of<SyncProviderSupabase>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -93,7 +85,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Visibility(
-                                visible: syncProviderPocketbase.procesocargando || syncProviderPocketbase.procesoexitoso,
+                                visible: syncProviderSupabase.procesocargando || syncProviderSupabase.procesoexitoso,
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 40, 0, 0),
@@ -110,7 +102,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                 ),
                               ),
                               Visibility(
-                                visible: syncProviderPocketbase.procesocargando || syncProviderPocketbase.procesoexitoso,
+                                visible: syncProviderSupabase.procesocargando || syncProviderSupabase.procesoexitoso,
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 10, 0, 0),
@@ -128,9 +120,9 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                   ),
                                 ),
                               ),
-                              syncProviderPocketbase.procesocargando
+                              syncProviderSupabase.procesocargando
                                   ? Visibility(
-                                    visible: syncProviderPocketbase.procesocargando,
+                                    visible: syncProviderSupabase.procesocargando,
                                     child: Padding(
                                         padding:
                                             const EdgeInsetsDirectional.fromSTEB(
@@ -140,9 +132,9 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                       ),
                                   )
                                   : 
-                                  syncProviderPocketbase.procesoexitoso
+                                  syncProviderSupabase.procesoexitoso
                                   ? Visibility(
-                                      visible: !syncProviderPocketbase.procesocargando,
+                                      visible: !syncProviderSupabase.procesocargando,
                                       child: Padding(
                                           padding:
                                               const EdgeInsetsDirectional.fromSTEB(
@@ -159,7 +151,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                     )
                                     :
                                     Visibility(
-                                      visible: !syncProviderPocketbase.procesocargando,
+                                      visible: !syncProviderSupabase.procesocargando,
                                       child: const Padding(
                                         padding:
                                             EdgeInsetsDirectional.fromSTEB(
@@ -172,7 +164,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                       ),
                                     ),
                               Visibility(
-                                visible: syncProviderPocketbase.procesoterminado && syncProviderPocketbase.procesoexitoso,
+                                visible: syncProviderSupabase.procesoterminado && syncProviderSupabase.procesoexitoso,
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 100, 0, 0),
@@ -185,7 +177,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                               const OrdenesTrabajoScreen(),
                                         ),
                                       );
-                                      syncProviderPocketbase.procesoTerminado(false);
+                                      syncProviderSupabase.procesoTerminado(false);
                                     },
                                     text: 'Listo',
                                     options: FFButtonOptions(
@@ -208,7 +200,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                 ),
                               ),
                               Visibility(
-                                visible: syncProviderPocketbase.procesoterminado && (syncProviderPocketbase.procesoexitoso == false),
+                                visible: syncProviderSupabase.procesoterminado && (syncProviderSupabase.procesoexitoso == false),
                                 child: Column(
                                   children: [
                                     Padding(
@@ -279,9 +271,9 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                                     padding: EdgeInsets.zero,
                                                     shrinkWrap: true,
                                                     scrollDirection: Axis.vertical,
-                                                    itemCount: syncProviderPocketbase.instruccionesFallidas.length,
+                                                    itemCount: syncProviderSupabase.instruccionesFallidas.length,
                                                     itemBuilder: (context, index) {
-                                                      final error = syncProviderPocketbase.instruccionesFallidas[index];
+                                                      final error = syncProviderSupabase.instruccionesFallidas[index];
                                                       return Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
@@ -308,38 +300,6 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                                             mainAxisSize:
                                                                 MainAxisSize.max,
                                                             children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                        16, 5, 16, 5),
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                          0, 5, 0, 0),
-                                                                  child: Text(
-                                                                    maybeHandleOverflow(
-                                                                      'Emprendimiento: ${error.emprendimiento ?? "No aplica"}', 
-                                                                      60, 
-                                                                      "..."),
-                                                                    maxLines: 1,
-                                                                    style: AppTheme.of(
-                                                                            context)
-                                                                        .title3
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Poppins',
-                                                                          color: Colors
-                                                                              .white,
-                                                                          fontSize: 13,
-                                                                          fontWeight:
-                                                                              FontWeight
-                                                                                  .w500,
-                                                                        ),
-                                                                  ),
-                                                                ),
-                                                              ),
                                                               Padding(
                                                                 padding:
                                                                     const EdgeInsetsDirectional
@@ -415,8 +375,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                           0, 30, 0, 30),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          syncProviderEmiWeb.instruccionesFallidas.clear();
-                                          syncProviderPocketbase.instruccionesFallidas.clear();
+                                          syncProviderSupabase.instruccionesFallidas.clear();
                                           await Navigator.push(
                                             context,
                                             MaterialPageRoute(

@@ -1,4 +1,3 @@
-import 'package:taller_alex_app_asesor/providers/sync_provider_emi_web.dart';
 import 'package:taller_alex_app_asesor/screens/cotizacion/components/cotizacion_tab.dart';
 import 'package:taller_alex_app_asesor/screens/cotizacion/components/pagos_tab.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +34,6 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
 
   @override
   Widget build(BuildContext context) {
-    final syncProviderEmiWeb =
-        Provider.of<SyncProviderEmiWeb>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

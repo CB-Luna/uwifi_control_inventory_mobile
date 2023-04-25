@@ -64,7 +64,6 @@ class UsuarioController extends ChangeNotifier {
       List<String> rolesIdDBR,
       String idDBR,
       ) async {
-    String? path;
     final nuevoUsuario = Usuarios(
         nombre: nombre,
         apellidoP: apellidoP,
@@ -81,9 +80,9 @@ class UsuarioController extends ChangeNotifier {
     if (imagenBase64 != null) {
       final uInt8ListImagen = base64Decode(imagenBase64);
       final tempDir = await getTemporaryDirectory();
-      File file = await File('${tempDir.path}/${uuid.v1()}').create();
+      File file = await File('${tempDir.path}/${uuid.v1()}.jpg').create();
       file.writeAsBytesSync(uInt8ListImagen);
-      path = file.path;
+      nuevoUsuario.path = file.path;
     } 
     //Se crea el objeto imagenes para el Usuario
     //Se agregan los roles
@@ -97,7 +96,6 @@ class UsuarioController extends ChangeNotifier {
     final rolActual = dataBase.rolesBox.query(Roles_.idDBR.equals(rolesIdDBR[0])).build().findUnique(); //Se recupera el rol actual del Usuario
     if (rolActual != null) {
       nuevoUsuario.rol.target = rolActual;
-      nuevoUsuario.path = path;
       dataBase.usuariosBox.put(nuevoUsuario);
       usuarios.add(nuevoUsuario);
       //print('Usuario agregado exitosamente');
@@ -150,7 +148,7 @@ class UsuarioController extends ChangeNotifier {
           //print("ID IMAGEN: ${newImagen.idEmiWeb}");
           final uInt8ListImagen = base64Decode(newImagenBase64);
           final tempDir = await getTemporaryDirectory();
-          File file = await File('${tempDir.path}/${uuid.v1()}').create();
+          File file = await File('${tempDir.path}/${uuid.v1()}.jpg').create();
           file.writeAsBytesSync(uInt8ListImagen);
           updateUsuario.imagen = newImagenBase64;
           updateUsuario.path = path;
@@ -185,51 +183,17 @@ void updateRol(int id, int newIdRol) {
   }
 
 void updateDatos(int id, String newNombre, String newApellidoP, String newApellidoM, String newTelefono) {
-    var updateUsuario = dataBase.usuariosBox.get(id);
-    if (updateUsuario != null) {
-      //El id Emprendimiento es 0 porque la instrucción no se relaciona con ningún emprendimiento
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateUsuario', usuario: prefs.getString("userId")!, idEmprendimiento: 0); //Se crea la nueva instruccion a realizar en bitacora
-      updateUsuario.nombre = newNombre;
-      updateUsuario.apellidoP = newApellidoP;
-      updateUsuario.apellidoM = newApellidoM;
-      updateUsuario.telefono = newTelefono;
-      updateUsuario.bitacora.add(nuevaInstruccion);
-      dataBase.usuariosBox.put(updateUsuario);
-      //print('Usuario actualizado exitosamente');
-    }
+
     notifyListeners();
   }
 
 void updateImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPath, String newBase64) {
-    var updateImagenUsuario = dataBase.imagenesBox.get(idImagenUsuario);
-    //El id Emprendimiento es 0 porque la instrucción no se relaciona con ningún emprendimiento
-    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenUsuario', usuario: prefs.getString("userId")!, idEmprendimiento: 0); //Se crea la nueva instruccion a realizar en bitacora
-    if (updateImagenUsuario != null) {
-      updateImagenUsuario.imagenes = newPath; //Se actualiza la imagen del usuario
-      updateImagenUsuario.nombre = newNombreImagen;
-      updateImagenUsuario.base64 = newBase64;
-      updateImagenUsuario.path = newPath;
-      updateImagenUsuario.bitacora.add(nuevaInstruccion);
-      dataBase.imagenesBox.put(updateImagenUsuario);
-      //print("ID IMAGEN CONFIRMAR: ${updateImagenUsuario.idEmiWeb}");
-      //print('Imagen Usuario actualizado exitosamente');
-    }
+
     notifyListeners();
   }
 
 void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPath, String newBase64) {
-    var newImagenUsuario = dataBase.imagenesBox.get(idImagenUsuario);
-    //El id Emprendimiento es 0 porque la instrucción no se relaciona con ningún emprendimiento
-    final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenUsuario', usuario: prefs.getString("userId")!, idEmprendimiento: 0); //Se crea la nueva instruccion a realizar en bitacora
-    if (newImagenUsuario != null) {
-      newImagenUsuario.imagenes = newPath; //Se actualiza la imagen del usuario
-      newImagenUsuario.nombre = newNombreImagen;
-      newImagenUsuario.base64 = newBase64;
-      newImagenUsuario.path = newPath;
-      newImagenUsuario.bitacora.add(nuevaInstruccion);
-      dataBase.imagenesBox.put(newImagenUsuario);
-      //print('Imagen Usuario agregada exitosamente');
-    }
+
     notifyListeners();
   }
   getAll() {
@@ -295,7 +259,7 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
   }
 
   bool addCliente(int idCliente) {
-    final cliente = dataBase.clienteBox.get(idCliente);
+    final cliente = dataBase.usuariosBox.get(idCliente);
     if (cliente != null) {
       usuarioCurrent!.clientes.add(cliente);
       dataBase.usuariosBox.put(usuarioCurrent!);
@@ -330,8 +294,8 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     return ordenesTrabajo;
   }
 
-  List<Cliente> obtenerClientes() {
-    final List<Cliente> clientes = [];
+  List<Usuarios> obtenerClientes() {
+    final List<Usuarios> clientes = [];
     final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual != null) {
         for (var element in usuarioActual.clientes) {
@@ -346,7 +310,7 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual != null) {
         for (var cliente in usuarioActual.clientes) {
-        for (var vehiculo in cliente.vehiculo) {
+        for (var vehiculo in cliente.vehiculos) {
           vehiculos.add(vehiculo.vin);
         }
       }

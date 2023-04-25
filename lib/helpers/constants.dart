@@ -102,7 +102,7 @@ Column getProgressIndicatorAnimated(String message) {
       SpinKitCircle(
         size: 200,
         itemBuilder: (context, index) {
-          final colors = [const Color(0xFF221573), const Color(0xffB6D9F9)];
+          final colors = [const Color(0xFFDE2979), const Color(0xFFDBE2E7)];
           final color = colors[index % colors.length];
           return DecoratedBox(
             decoration: BoxDecoration(color: color, shape: BoxShape.rectangle),
@@ -135,7 +135,7 @@ Column getDownloadIndicatorAnimated(String message) {
       SpinKitThreeInOut(
         size: 120,
         itemBuilder: (context, index) {
-          final colors = [const Color(0xFF221573), const Color(0xffB6D9F9)];
+          final colors = [const Color(0xFFDE2979), const Color(0xFFDBE2E7)];
           final color = colors[index % colors.length];
           return DecoratedBox(
             decoration: BoxDecoration(color: color, shape: BoxShape.rectangle),
@@ -168,7 +168,7 @@ Column getSyncIndicatorAnimated(String message) {
       SpinKitWave(
         size: 100,
         itemBuilder: (context, index) {
-          final colors = [const Color(0xFF221573), const Color(0xffB6D9F9)];
+          final colors = [const Color(0xFFDE2979), const Color(0xFFDBE2E7)];
           final color = colors[index % colors.length];
           return DecoratedBox(
             decoration: BoxDecoration(color: color, shape: BoxShape.rectangle),

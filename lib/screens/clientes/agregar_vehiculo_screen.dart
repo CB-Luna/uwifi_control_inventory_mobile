@@ -222,14 +222,10 @@ print(jsonString);
                                           file.readAsBytesSync();
                                       String base64 =
                                           base64Encode(fileInByte);
-                                      var newImagenLocal = Imagenes(
-                                          imagenes: image!.path,
-                                          nombre: image!.name,
-                                          path: image!.path,
-                                          base64: base64,
-                                          idEmprendimiento: 0);
                                       vehiculoProvider.imagenVehiculo =
-                                          newImagenLocal;
+                                          base64;
+                                      vehiculoProvider.path =
+                                          file.path;
                                     });
                                   },
                                   child: Container(
@@ -254,7 +250,7 @@ print(jsonString);
                                         width: 1.5,
                                       ),
                                     ),
-                                    child: getImage(vehiculoProvider.imagenVehiculo?.path),
+                                    child: getImage(vehiculoProvider.path),
                                   ),
                                 ),
                               ),
@@ -262,7 +258,7 @@ print(jsonString);
                           );
                         },
                         validator: (val) {
-                          if (vehiculoProvider.imagenVehiculo?.path == null || vehiculoProvider.imagenVehiculo?.path == "") {
+                          if (vehiculoProvider.path == "" || vehiculoProvider.path == null) {
                             return 'Para continuar, cargue la imagen del vehículo.';
                           }
                           return null;

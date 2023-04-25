@@ -131,7 +131,7 @@ class _InspeccionScreenState extends State<InspeccionScreen> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(25),
                     child: getImageEmprendimiento(
-                        widget.ordenTrabajo.vehiculo.target?.imagen.target?.path),
+                        widget.ordenTrabajo.vehiculo.target?.path),
                   ),
                 ),
               ).animateOnPageLoad(animationsMap['moveLoadAnimationLR']!),

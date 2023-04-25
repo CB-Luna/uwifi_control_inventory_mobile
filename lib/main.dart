@@ -22,14 +22,10 @@ import 'providers/database_providers/orden_trabajo_controller.dart';
 import 'providers/database_providers/suspension_direccion_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/catalogo_emi_web_provider.dart';
-import 'package:taller_alex_app_asesor/providers/sync_provider_emi_web.dart';
-import 'package:taller_alex_app_asesor/providers/catalogo_pocketbase_provider.dart';
+import 'package:taller_alex_app_asesor/providers/catalogo_supabase_provider.dart';
 import 'package:taller_alex_app_asesor/providers/roles_emi_web_provider.dart';
-import 'package:taller_alex_app_asesor/providers/roles_pocketbase_provider.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/cotizacion_controller.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/inversion_controller.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/recepcion_y_entrega_inversion_controller.dart';
-import 'package:taller_alex_app_asesor/providers/sync_provider_pocketbase.dart';
+import 'package:taller_alex_app_asesor/providers/roles_supabase_provider.dart';
+import 'package:taller_alex_app_asesor/providers/sync_provider_supabase.dart';
 
 import 'package:taller_alex_app_asesor/screens/screens.dart';
 import 'package:taller_alex_app_asesor/services/navigation_service.dart';
@@ -116,18 +112,6 @@ void main() async {
               UsuarioController(email: prefs.getString("userId")),
           lazy: false,
         ),
-        ChangeNotifierProvider<InversionController>(
-          create: (context) => InversionController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<CotizacionController>(
-          create: (context) => CotizacionController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<RecepcionYEntregaController>(
-          create: (context) => RecepcionYEntregaController(),
-          lazy: false,
-        ),
         ChangeNotifierProvider<SyncEmpExternosEmiWebProvider>(
           create: (context) => SyncEmpExternosEmiWebProvider(),
           lazy: false,
@@ -136,24 +120,20 @@ void main() async {
           create: (context) => SyncEmpExternosPocketbaseProvider(),
           lazy: false,
         ),
-        ChangeNotifierProvider<SyncProviderPocketbase>(
-          create: (context) => SyncProviderPocketbase(),
+        ChangeNotifierProvider<SyncProviderSupabase>(
+          create: (context) => SyncProviderSupabase(),
           lazy: false,
         ),
-        ChangeNotifierProvider<SyncProviderEmiWeb>(
-          create: (context) => SyncProviderEmiWeb(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<CatalogoPocketbaseProvider>(
-          create: (context) => CatalogoPocketbaseProvider(),
+        ChangeNotifierProvider<CatalogoSupabaseProvider>(
+          create: (context) => CatalogoSupabaseProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<CatalogoEmiWebProvider>(
           create: (context) => CatalogoEmiWebProvider(),
           lazy: false,
         ),
-        ChangeNotifierProvider<RolesPocketbaseProvider>(
-          create: (context) => RolesPocketbaseProvider(),
+        ChangeNotifierProvider<RolesSupabaseProvider>(
+          create: (context) => RolesSupabaseProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<RolesEmiWebProvider>(

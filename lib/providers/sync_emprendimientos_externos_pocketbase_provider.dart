@@ -1034,7 +1034,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
 Future<void> deleteEmprendimientoLocal(int idEmprendimiento) async {
   final listIntruccionesEmp = dataBase.bitacoraBox.getAll().toList();
   for (var element in listIntruccionesEmp) {
-    if (element.idEmprendimiento == idEmprendimiento) {
+    if (element.idOrdenTrabajo == idEmprendimiento) {
       dataBase.bitacoraBox.remove(element.id);
     }
   }

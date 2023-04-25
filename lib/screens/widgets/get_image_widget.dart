@@ -26,7 +26,7 @@ Widget getImageEmprendimiento(String? image, {double height = 180}) {
   );
 }
 
-Widget getAssetImage(String? image, {double height = 180, double width = double.infinity}) {
+Widget getImageContainer(String? image, {double height = 180, double width = double.infinity}) {
   if (image == null || image == '') {
     return Image(
       height: height,
@@ -38,7 +38,7 @@ Widget getAssetImage(String? image, {double height = 180, double width = double.
     return FadeInImage(
       height: 180,
       width: width,
-      placeholder: const AssetImage('assets/images/animation_500_l3ur8tqa.gif'),
+      placeholder: const AssetImage('assets/images/default_image_placeholder.jpeg'),
       image: NetworkImage(image),
       fit: BoxFit.cover,
     );
@@ -51,18 +51,18 @@ Widget getAssetImage(String? image, {double height = 180, double width = double.
   );
 }
 
-Widget? getImage(String? image, {double height = 180}) {
+Widget? getImage(String? image, {double height = 180, double width = double.infinity}) {
   if (image == null || image == '') {
     return Image(
       height: height,
-      width: double.infinity,
+      width: width,
       image: const AssetImage("assets/images/animation_500_l3ur8tqa.gif"),
       fit: BoxFit.cover,
     );
   } else if (image.startsWith('http') || image.startsWith('https')) {
     return FadeInImage(
       height: 180,
-      width: double.infinity,
+      width: width,
       placeholder: const AssetImage('assets/images/animation_500_l3ur8tqa.gif'),
       image: NetworkImage(image),
       fit: BoxFit.cover,
@@ -71,10 +71,12 @@ Widget? getImage(String? image, {double height = 180}) {
   return Image.file(
     File(image),
     height: height,
-    width: double.infinity,
+    width: width,
     fit: BoxFit.cover,
   );
 }
+
+
 
 Widget? getImageTareaConsultoria(String? image,
     {double height = 180, double width = 180}) {

@@ -3,7 +3,7 @@ import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/modelsFormularios/opciones_observaciones.dart';
-import 'package:taller_alex_app_asesor/modelsLocales/estatus/estatus_data.dart';
+import 'package:taller_alex_app_asesor/objectbox.g.dart';
 import 'package:taller_alex_app_asesor/util/util.dart';
 class ObservacionController extends ChangeNotifier {
   final observaciones1FormKey = GlobalKey<FormState>();
@@ -149,19 +149,31 @@ class ObservacionController extends ChangeNotifier {
     );
     //Observación
     if (ordenTrabajo.estatus.target!.estatus == "Recepción")  {
-      final estatus = listaEstatusData.elementAt(1);
-      dataBase.estatusBox.put(estatus);
+      final estatus = dataBase.estatusBox
+          .query(Estatus_.estatus.equals("Observación"))
+          .build()
+          .findFirst();
       ordenTrabajo.estatus.target = estatus;
+
+      final nuevaInstruccionEstatusOrdenTrabajo = Bitacora(
+        instruccion: 'syncActualizarEstatusOrdenTrabajo',
+        usuarioPropietario: prefs.getString("userId")!,
+        idOrdenTrabajo: ordenTrabajo.id,
+        instruccionAdicional: estatus?.estatus,
+      ); //Se crea la nueva instruccion a realizar en bitacora
+      nuevaInstruccionEstatusOrdenTrabajo.ordenTrabajo.target = ordenTrabajo;
+      dataBase.bitacoraBox.put(nuevaInstruccionEstatusOrdenTrabajo);
+
     }
 
-    final nuevaInstruccion = Bitacora(
+    final nuevaInstruccionAgregarObservacion = Bitacora(
       instruccion: 'syncAgregarObservacion',
-      usuario: prefs.getString("userId")!,
-      idEmprendimiento: 0,
+      usuarioPropietario: prefs.getString("userId")!,
+      idOrdenTrabajo: ordenTrabajo.id,
     ); //Se crea la nueva instruccion a realizar en bitacora
 
-    nuevaInstruccion.observacion.target = nuevaObservacion;
-    dataBase.bitacoraBox.put(nuevaInstruccion);
+    nuevaInstruccionAgregarObservacion.observacion.target = nuevaObservacion;
+    dataBase.bitacoraBox.put(nuevaInstruccionAgregarObservacion);
     nuevaObservacion.ordenTrabajo.target = ordenTrabajo;
     ordenTrabajo.observacion.add(nuevaObservacion);
     dataBase.observacionesBox.put(nuevaObservacion); //Agregamos la observacion en objectBox
@@ -172,20 +184,7 @@ class ObservacionController extends ChangeNotifier {
 
   void update(int id, String newNombre, String newApellidos, String newCurp, 
   String newIntegrantesFamilia, String newTelefono, String newComentarios, int idComunidad, int idEmprendimiento) {
-    final updateEmprendedor = dataBase.emprendedoresBox.get(id);
-    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
-    if (updateEmprendedor != null) {
-      updateEmprendedor.nombre = newNombre;
-      updateEmprendedor.apellidos = newApellidos;
-      updateEmprendedor.curp = newCurp;
-      updateEmprendedor.integrantesFamilia = newIntegrantesFamilia;
-      updateEmprendedor.telefono =  newTelefono;
-      updateEmprendedor.comentarios =  newComentarios;
-      updateEmprendedor.comunidad.target = dataBase.comunidadesBox.get(idComunidad);
-      updateEmprendedor.bitacora.add(nuevaInstruccion);
-      dataBase.emprendedoresBox.put(updateEmprendedor);
 
-    }
     notifyListeners();
   }
 
@@ -204,15 +203,7 @@ class ObservacionController extends ChangeNotifier {
 
   void updateImagen(int id, Imagenes newImagen, int idEmprendimiento) {
     final updateImagen = dataBase.imagenesBox.get(id);
-    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
-    if (updateImagen != null) {
-      updateImagen.nombre = newImagen.nombre;
-      updateImagen.path = newImagen.path;
-      updateImagen.base64 = newImagen.base64;
-      updateImagen.bitacora.add(nuevaInstruccion);
-      dataBase.imagenesBox.put(updateImagen);
-      //print('Imagen de Emprendedor actualizada exitosamente');
-    }
+
     notifyListeners();
   }
 

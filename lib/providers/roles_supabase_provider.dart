@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
-import 'package:taller_alex_app_asesor/helpers/constants.dart';
-import 'package:taller_alex_app_asesor/modelsPocketbase/get_roles.dart';
 import 'package:taller_alex_app_asesor/modelsSupabase/get_roles_supabase.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import '../objectbox.g.dart';
 
-class RolesPocketbaseProvider extends ChangeNotifier {
+class RolesSupabaseProvider extends ChangeNotifier {
 
   bool procesocargando = false;
   bool procesoterminado = false;

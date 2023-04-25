@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
-import 'package:taller_alex_app_asesor/modelsLocales/estatus/estatus_data.dart';
+import 'package:taller_alex_app_asesor/objectbox.g.dart';
 
 class FrenosController extends ChangeNotifier {
 
@@ -224,11 +224,19 @@ class FrenosController extends ChangeNotifier {
         );
       //Inspección
       if (ordenTrabajo.estatus.target!.estatus == "Observación")  {
-        final estatus = listaEstatusData.elementAt(2);
-        dataBase.estatusBox.put(estatus);
+        final estatus = dataBase.estatusBox
+          .query(Estatus_.estatus.equals("Inspección"))
+          .build()
+          .findFirst();
         ordenTrabajo.estatus.target = estatus;
-      } else{
-        // ordenTrabajo.estatus.target!.avance = 0.05; 
+        final nuevaInstruccionEstatusOrdenTrabajo = Bitacora(
+          instruccion: 'syncActualizarEstatusOrdenTrabajo',
+          usuarioPropietario: prefs.getString("userId")!,
+          idOrdenTrabajo: ordenTrabajo.id,
+          instruccionAdicional: estatus?.estatus,
+        ); //Se crea la nueva instruccion a realizar en bitacora
+        nuevaInstruccionEstatusOrdenTrabajo.ordenTrabajo.target = ordenTrabajo;
+        dataBase.bitacoraBox.put(nuevaInstruccionEstatusOrdenTrabajo);
       }
       if (ordenTrabajo.inspeccion.target == null) {
         final nuevaInspeccion = Inspeccion(
@@ -237,37 +245,53 @@ class FrenosController extends ChangeNotifier {
         );
         nuevaInspeccion.frenos.target = nuevoFrenos;
         nuevoFrenos.inspeccion.target = nuevaInspeccion;
-        dataBase.frenosBox.put(nuevoFrenos);
-        dataBase.inspeccionBox.put(nuevaInspeccion);
         ordenTrabajo.inspeccion.target = nuevaInspeccion;
         dataBase.ordenTrabajoBox.put(ordenTrabajo);
         final nuevaInstruccionInspeccion = Bitacora(
           instruccion: 'syncAgregarInspeccion',
-          usuario: prefs.getString("userId")!,
-          idEmprendimiento: 0,
+          usuarioPropietario: prefs.getString("userId")!,
+          idOrdenTrabajo: ordenTrabajo.id,
         ); //Se crea la nueva instruccion a realizar en bitacora
+        nuevaInstruccionInspeccion.inspeccion.target = nuevaInspeccion;
         dataBase.bitacoraBox.put(nuevaInstruccionInspeccion);
+        dataBase.inspeccionBox.put(nuevaInspeccion);
         final nuevaInstruccionFrenos = Bitacora(
           instruccion: 'syncAgregarFrenos',
-          usuario: prefs.getString("userId")!,
-          idEmprendimiento: 0,
+          usuarioPropietario: prefs.getString("userId")!,
+          idOrdenTrabajo: ordenTrabajo.id,
         ); //Se crea la nueva instruccion a realizar en bitacora
+        nuevaInstruccionFrenos.frenos.target = nuevoFrenos;
         dataBase.bitacoraBox.put(nuevaInstruccionFrenos);
+        dataBase.frenosBox.put(nuevoFrenos);
         notifyListeners();
         return true;
-
       } else {
         nuevoFrenos.inspeccion.target = ordenTrabajo.inspeccion.target;
         ordenTrabajo.inspeccion.target!.frenos.target = nuevoFrenos;
-        dataBase.frenosBox.put(nuevoFrenos);
+        if (ordenTrabajo.inspeccion.target?.suspensionDireccion.target != null 
+          && ordenTrabajo.inspeccion.target?.frenos.target != null
+          && ordenTrabajo.inspeccion.target?.fluidos.target != null
+          && ordenTrabajo.inspeccion.target?.electrico.target != null
+          && ordenTrabajo.inspeccion.target?.motor.target != null) {      
+          ordenTrabajo.inspeccion.target!.completado = true;
+          final nuevaInstruccionInspeccion = Bitacora(
+            instruccion: 'syncActualizarInspeccion',
+            usuarioPropietario: prefs.getString("userId")!,
+            idOrdenTrabajo: ordenTrabajo.id,
+          ); //Se crea la nueva instruccion a realizar en bitacora
+          nuevaInstruccionInspeccion.inspeccion.target = ordenTrabajo.inspeccion.target;
+          dataBase.bitacoraBox.put(nuevaInstruccionInspeccion);
+        }
         dataBase.inspeccionBox.put(ordenTrabajo.inspeccion.target!);
         dataBase.ordenTrabajoBox.put(ordenTrabajo);
         final nuevaInstruccionFrenos = Bitacora(
           instruccion: 'syncAgregarFrenos',
-          usuario: prefs.getString("userId")!,
-          idEmprendimiento: 0,
+          usuarioPropietario: prefs.getString("userId")!,
+          idOrdenTrabajo: ordenTrabajo.id,
         ); //Se crea la nueva instruccion a realizar en bitacora
+        nuevaInstruccionFrenos.frenos.target = nuevoFrenos;
         dataBase.bitacoraBox.put(nuevaInstruccionFrenos);
+        dataBase.frenosBox.put(nuevoFrenos);
         notifyListeners();
         return true;
       }
@@ -279,19 +303,6 @@ class FrenosController extends ChangeNotifier {
   void update(int id, String newNombre, String newApellidos, String newCurp, 
   String newIntegrantesFamilia, String newTelefono, String newComentarios, int idComunidad, int idEmprendimiento) {
     final updateEmprendedor = dataBase.emprendedoresBox.get(id);
-    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
-    if (updateEmprendedor != null) {
-      updateEmprendedor.nombre = newNombre;
-      updateEmprendedor.apellidos = newApellidos;
-      updateEmprendedor.curp = newCurp;
-      updateEmprendedor.integrantesFamilia = newIntegrantesFamilia;
-      updateEmprendedor.telefono =  newTelefono;
-      updateEmprendedor.comentarios =  newComentarios;
-      updateEmprendedor.comunidad.target = dataBase.comunidadesBox.get(idComunidad);
-      updateEmprendedor.bitacora.add(nuevaInstruccion);
-      dataBase.emprendedoresBox.put(updateEmprendedor);
-
-    }
     notifyListeners();
   }
 }

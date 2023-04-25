@@ -62,8 +62,8 @@ class OrdenTrabajo {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  final usuario = ToOne<Usuarios>();
-  final cliente = ToOne<Cliente>();
+  final asesor = ToOne<Usuarios>();
+  final cliente = ToOne<Usuarios>();
   final vehiculo = ToOne<Vehiculo>();
   final formaPago = ToOne<FormaPago>();
   final inspeccion = ToOne<Inspeccion>();
@@ -217,7 +217,8 @@ class Servicio {
   int id;
   String servicio;
   double costoServicio;
-  String? imagen;
+  String imagen;
+  String path;
   bool autorizado;
   DateTime fechaRegistro;
   DateTime fechaEntrega;
@@ -233,7 +234,8 @@ class Servicio {
     this.id = 0,
     required this.servicio,
     required this.costoServicio,
-    this.imagen,
+    required this.imagen,
+    required this.path,
     required this.autorizado,
     required this.fechaEntrega,
     DateTime? fechaRegistro,
@@ -250,6 +252,7 @@ class TipoServicio {
   String tipoServicio;
   DateTime fechaRegistro;
   String imagen;
+  String path;
   double costo;
   @Unique()
   String? idDBR;
@@ -258,6 +261,7 @@ class TipoServicio {
     this.id = 0,
     required this.tipoServicio,
     required this.imagen,
+    required this.path,
     required this.costo,
     DateTime? fechaRegistro,
     this.idDBR,
@@ -620,8 +624,6 @@ class Cliente {
   String? idDBR;
   @Backlink()
   final bitacora = ToMany<Bitacora>();
-  @Backlink()
-  final vehiculo = ToMany<Vehiculo>(); 
   final imagen = ToOne<Imagenes>();
 
   Cliente({
@@ -648,6 +650,8 @@ class Vehiculo {
   String marca;
   String modelo;
   String anio;
+  String imagen;
+  String path;
   @Unique()
   String vin;
   @Unique()
@@ -659,14 +663,15 @@ class Vehiculo {
   String? idDBR;
   @Backlink()
   final bitacora = ToMany<Bitacora>();
-  final cliente = ToOne<Cliente>();
-  final imagen = ToOne<Imagenes>();
+  final cliente = ToOne<Usuarios>();
 
   Vehiculo({
     this.id = 0,
     required this.marca,
     required this.modelo,
     required this.anio,
+    required this.imagen,
+    required this.path,
     required this.vin,
     required this.placas,
     required this.motor,
@@ -858,17 +863,12 @@ class InversionesXProdCotizados {
 @Entity()
 class Bitacora {
   int id;
-  String usuario;
+  String usuarioPropietario;
   String instruccion;
   String? instruccionAdicional;
-  bool executeEmiWeb;
-  bool executePocketbase;
-  String? idDBR;
-  String? idEmiWeb;
-  String? emprendimiento;
-  int idEmprendimiento;
+  int idOrdenTrabajo;
   DateTime fechaRegistro;
-  DateTime? fechaSync;
+  bool executeSupabase;
   final cliente = ToOne<Cliente>();
   final vehiculo = ToOne<Vehiculo>();
   final ordenTrabajo = ToOne<OrdenTrabajo>();
@@ -883,6 +883,7 @@ class Bitacora {
   final servicio = ToOne<Servicio>();
   final producto = ToOne<Producto>();
   final estatus = ToOne<Estatus>();
+  final usuario = ToOne<Usuarios>();
   @Backlink()
   final emprendedores = ToMany<Emprendedores>();
   @Backlink()
@@ -916,23 +917,16 @@ class Bitacora {
 
   Bitacora({
     this.id = 0,
-    required this.usuario,
+    required this.usuarioPropietario,
     required this.instruccion,
     this.instruccionAdicional,
-    this.executeEmiWeb = false,
-    this.executePocketbase = false,
-    this.idDBR,
-    this.idEmiWeb,
-    this.emprendimiento,
-    required this.idEmprendimiento,
+    required this.idOrdenTrabajo,
     DateTime? fechaRegistro,
-    this.fechaSync,
+    this.executeSupabase = false,
   }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat =>
       DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync!);
 }
 
 @Entity()
@@ -1176,9 +1170,12 @@ class Usuarios {
   final pagos = ToMany<Pagos>();
   @Backlink()
   final emprendimientos = ToMany<Emprendimientos>();
-  final clientes = ToMany<Cliente>();
-  @Backlink() 
+  final asesor = ToOne<Usuarios>();
+  final clientes = ToMany<Usuarios>();
+  final tecnicosMecanicos = ToMany<Usuarios>();
   final ordenesTrabajo = ToMany<OrdenTrabajo>();
+  final ordenTrabajo = ToOne<OrdenTrabajo>();
+  final vehiculos = ToMany<Vehiculo>();
   Usuarios({
     this.id = 0,
     required this.nombre,

@@ -1,7 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
@@ -38,8 +36,8 @@ final animationsMap = {
           curve: Curves.easeOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(-79, 0),
-          end: Offset(0, 0),
+          begin: const Offset(-79, 0),
+          end: const Offset(0, 0),
         ),
         ScaleEffect(
           curve: Curves.easeOut,
@@ -64,8 +62,8 @@ final animationsMap = {
           curve: Curves.easeOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(79, 0),
-          end: Offset(0, 0),
+          begin: const Offset(79, 0),
+          end: const Offset(0, 0),
         ),
         ScaleEffect(
           curve: Curves.easeOut,
@@ -204,7 +202,7 @@ class _RecepcionScreenState extends State<RecepcionScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(24, 16, 24, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(24, 16, 24, 0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -216,7 +214,7 @@ class _RecepcionScreenState extends State<RecepcionScreen> {
             ),
           ).animateOnPageLoad(animationsMap['moveLoadAnimationLR']!),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(24, 4, 24, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(24, 4, 24, 0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -245,12 +243,12 @@ class _RecepcionScreenState extends State<RecepcionScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: getImageEmprendimiento(
-                widget.ordenTrabajo.vehiculo.target?.imagen.target?.path).
+                widget.ordenTrabajo.vehiculo.target?.path).
                   animateOnPageLoad(animationsMap['moveLoadAnimationRL']!),
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
             child: LinearPercentIndicator(
               percent: widget.ordenTrabajo.estatus.target!.avance,
               width: MediaQuery.of(context).size.width * 0.9,
@@ -258,12 +256,12 @@ class _RecepcionScreenState extends State<RecepcionScreen> {
               animation: true,
               progressColor: FlutterFlowTheme.of(context).primaryColor,
               backgroundColor: FlutterFlowTheme.of(context).grayLighter,
-              barRadius: Radius.circular(40),
+              barRadius: const Radius.circular(40),
               padding: EdgeInsets.zero,
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 12),
+            padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 12),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -273,7 +271,7 @@ class _RecepcionScreenState extends State<RecepcionScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                       child: Text(
                         'Avance',
                         style: FlutterFlowTheme.of(context).bodyText2,
@@ -294,7 +292,7 @@ class _RecepcionScreenState extends State<RecepcionScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                       child: Text(
                         'Estatus',
                         style: FlutterFlowTheme.of(context).bodyText2,

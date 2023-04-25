@@ -238,6 +238,7 @@ class _PrimeraParteFormularioObservacionesWidgetState extends State<PrimeraParte
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                       child: TextFormField(
+                        textCapitalization: TextCapitalization.sentences,
                         autovalidateMode:
                             AutovalidateMode.onUserInteraction,
                         onChanged: (value) {
@@ -895,6 +896,7 @@ class _PrimeraParteFormularioObservacionesWidgetState extends State<PrimeraParte
                       child: TextFormField(
                         autovalidateMode:
                             AutovalidateMode.onUserInteraction,
+                        textCapitalization: TextCapitalization.sentences,
                         onChanged: (value) {
                           setState(() {
                             observacionProvider.respuestaP5 = value;
@@ -1729,6 +1731,7 @@ class _PrimeraParteFormularioObservacionesWidgetState extends State<PrimeraParte
                       child: TextFormField(
                         autovalidateMode:
                             AutovalidateMode.onUserInteraction,
+                        textCapitalization: TextCapitalization.sentences,
                         onChanged: (value) {
                           setState(() {
                             observacionProvider.respuestaP10 = value;
