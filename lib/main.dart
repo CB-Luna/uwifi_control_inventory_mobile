@@ -12,7 +12,7 @@ import 'package:taller_alex_app_asesor/database/object_box_database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'providers/database_providers/cliente_controller.dart';
-import 'providers/database_providers/diagnostico_controller.dart';
+import 'providers/database_providers/orden_servicio_controller.dart';
 import 'providers/database_providers/electrico_controller.dart';
 import 'providers/database_providers/fluidos_controller.dart';
 import 'providers/database_providers/frenos_controller.dart';
@@ -32,7 +32,7 @@ import 'package:taller_alex_app_asesor/services/navigation_service.dart';
 import 'package:taller_alex_app_asesor/internationalization/internationalization.dart';
 
 import 'providers/database_providers/vehiculo_controller.dart';
-import 'providers/sync_emprendimientos_externos_pocketbase_provider.dart';
+import 'providers/sync_ordenes_trabajo_externas_supabase_provider.dart';
 import 'providers/sync_emprendimientos_externos_emi_web_provider.dart';
 
 late ObjectBoxDatabase dataBase;
@@ -103,8 +103,8 @@ void main() async {
           create: (context) => ElectricoController(),
           lazy: false,
         ),
-        ChangeNotifierProvider<DiagnosticoController>(
-          create: (context) => DiagnosticoController(),
+        ChangeNotifierProvider<OrdenServicioController>(
+          create: (context) => OrdenServicioController(),
           lazy: false,
         ),
         ChangeNotifierProvider<UsuarioController>(
@@ -116,8 +116,8 @@ void main() async {
           create: (context) => SyncEmpExternosEmiWebProvider(),
           lazy: false,
         ),
-        ChangeNotifierProvider<SyncEmpExternosPocketbaseProvider>(
-          create: (context) => SyncEmpExternosPocketbaseProvider(),
+        ChangeNotifierProvider<SyncOrdenesTrabajoExternasSupabaseProvider>(
+          create: (context) => SyncOrdenesTrabajoExternasSupabaseProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<SyncProviderSupabase>(

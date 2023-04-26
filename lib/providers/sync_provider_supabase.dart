@@ -569,7 +569,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       Usuarios usuario, Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
-        if (usuario.idDBR == "sinIdDBR") {
+        if (usuario.idDBR.contains("sinIdDBR")) {
           //Registrar al usuario con una contraseña temporal
           final response = await post(
             Uri.parse('$supabaseURL/auth/v1/signup'),
@@ -602,7 +602,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                     'celular': usuario.celular,
                     'domicilio': usuario.domicilio,
                   },
-                ).select<PostgrestList>('id');
+                ).select<PostgrestList>('perfil_usuario_id');
                 if (recordCliente.isNotEmpty) {
                   //Se recupera el idDBR de Supabase del Usuario
                   usuario.idDBR = recordCliente.first['perfil_usuario_id'].toString();
@@ -759,6 +759,8 @@ class SyncProviderSupabase extends ChangeNotifier {
               'id_vehiculo_fk': ordenTrabajo.vehiculo.target!.idDBR,
               'fecha_orden': ordenTrabajo.fechaOrden.toIso8601String(),
               'descripcion_falla': ordenTrabajo.descripcionFalla,
+              'id_cliente_fk': ordenTrabajo.cliente.target!.idDBR,
+              'completado': ordenTrabajo.completado,
             },
           ).select<PostgrestList>('id');
           if (recordOrdenTrabajo.isNotEmpty) {
@@ -816,6 +818,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               'p8_observacion': observacion.respuestaP8,
               'p9_observacion': observacion.respuestaP9,
               'p10_observacion': observacion.respuestaP10,
+              'id_orden_trabajo_fk': observacion.ordenTrabajo.target!.idDBR,
             },
           ).select<PostgrestList>('id');
           if (recordObservacion.isNotEmpty) {
@@ -1189,6 +1192,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               'soportes_o': motor.soportesObservaciones,
               'bandas_o': motor.bandasObservaciones,
               'mangueras_o': motor.manguerasObservaciones,
+              'id_inspeccion_fk': motor.inspeccion.target!.idDBR,
             },
           ).select<PostgrestList>('id');
           if (recordInspeccion.isNotEmpty) {

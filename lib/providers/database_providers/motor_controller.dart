@@ -350,6 +350,7 @@ class MotorController extends ChangeNotifier {
         );
         nuevaInspeccion.motor.target = nuevoMotor;
         nuevoMotor.inspeccion.target = nuevaInspeccion;
+        nuevaInspeccion.ordenTrabajo.target = ordenTrabajo;
         ordenTrabajo.inspeccion.target = nuevaInspeccion;
         dataBase.ordenTrabajoBox.put(ordenTrabajo);
         final nuevaInstruccionInspeccion = Bitacora(

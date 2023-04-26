@@ -245,6 +245,7 @@ class ElectricoController extends ChangeNotifier {
         );
         nuevaInspeccion.electrico.target = nuevoElectrico;
         nuevoElectrico.inspeccion.target = nuevaInspeccion;
+        nuevaInspeccion.ordenTrabajo.target = ordenTrabajo;
         ordenTrabajo.inspeccion.target = nuevaInspeccion;
         dataBase.ordenTrabajoBox.put(ordenTrabajo);
         final nuevaInstruccionInspeccion = Bitacora(

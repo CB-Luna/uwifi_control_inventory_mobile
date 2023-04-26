@@ -1,24 +1,24 @@
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/screens/diagnostico/agregar_diagnostico_screen.dart';
+import 'package:taller_alex_app_asesor/screens/orden_servicio/agregar_orden_servicio_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-class DiagnosticoScreen extends StatefulWidget {
+class OrdenServicioScreen extends StatefulWidget {
   final OrdenTrabajo ordenTrabajo;
-  const DiagnosticoScreen({
+  const OrdenServicioScreen({
     Key? key, 
     required this.ordenTrabajo
     }) : super(key: key);
 
   @override
-  _DiagnosticoScreenState createState() => _DiagnosticoScreenState();
+  _OrdenServicioScreenState createState() => _OrdenServicioScreenState();
 }
 
-class _DiagnosticoScreenState extends State<DiagnosticoScreen>
+class _OrdenServicioScreenState extends State<OrdenServicioScreen>
     with TickerProviderStateMixin {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -154,7 +154,7 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
               type: PageTransitionType.bottomToTop,
               duration: const Duration(milliseconds: 240),
               reverseDuration: const Duration(milliseconds: 240),
-              child: AgregarDiagnosticoScreen(
+              child: AgregarOrdenServicioScreen(
                 vehiculo: widget.ordenTrabajo.vehiculo.target!,
                 ordenTrabajo: widget.ordenTrabajo
                 ,),
@@ -472,9 +472,9 @@ class _DiagnosticoScreenState extends State<DiagnosticoScreen>
                         primary: false,
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
-                        itemCount: widget.ordenTrabajo.diagnostico.target?.servicios.toList().length ?? 0,
+                        itemCount: widget.ordenTrabajo.ordenServicio.target?.servicios.toList().length ?? 0,
                         itemBuilder: (context, listViewIndex) {
-                          final servicio = widget.ordenTrabajo.diagnostico.target?.servicios.toList()[listViewIndex];
+                          final servicio = widget.ordenTrabajo.ordenServicio.target?.servicios.toList()[listViewIndex];
                           return Padding(
                             padding:
                                 const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),

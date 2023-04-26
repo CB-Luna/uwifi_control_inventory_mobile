@@ -842,6 +842,7 @@ class SuspensionDireccionController extends ChangeNotifier {
         );
         nuevaInspeccion.suspensionDireccion.target = nuevaSuspensionDireccion;
         nuevaSuspensionDireccion.inspeccion.target = nuevaInspeccion;
+        nuevaInspeccion.ordenTrabajo.target = ordenTrabajo;
         ordenTrabajo.inspeccion.target = nuevaInspeccion;
         dataBase.ordenTrabajoBox.put(ordenTrabajo);
         final nuevaInstruccionInspeccion = Bitacora(

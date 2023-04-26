@@ -20,7 +20,7 @@ import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:taller_alex_app_asesor/util/util.dart';
 
 class AgregarVehiculoScreen extends StatefulWidget {
-  const AgregarVehiculoScreen({Key? key}) : super(key: key);
+  AgregarVehiculoScreen({Key? key}) : super(key: key);
 
   @override
   _AgregarVehiculoScreenState createState() =>
@@ -300,21 +300,21 @@ print(jsonString);
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -368,21 +368,21 @@ print(jsonString);
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -461,21 +461,21 @@ print(jsonString);
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -533,21 +533,21 @@ print(jsonString);
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -600,21 +600,21 @@ print(jsonString);
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -665,21 +665,21 @@ print(jsonString);
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -730,21 +730,21 @@ print(jsonString);
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),

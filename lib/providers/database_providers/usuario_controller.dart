@@ -116,7 +116,6 @@ class UsuarioController extends ChangeNotifier {
       String? newImagenBase64,
       List<String> newRolesIdDBR,
       ) async {
-    String? path;
     // Se recupera el usuario por id
     final updateUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(correo)).build().findUnique();
     if (updateUsuario != null) {
@@ -151,7 +150,7 @@ class UsuarioController extends ChangeNotifier {
           File file = await File('${tempDir.path}/${uuid.v1()}.jpg').create();
           file.writeAsBytesSync(uInt8ListImagen);
           updateUsuario.imagen = newImagenBase64;
-          updateUsuario.path = path;
+          updateUsuario.path = file.path;
       } else {
         if (updateUsuario.imagen != null) {
           // Se eliminan los datos de la imagen actual del usuario

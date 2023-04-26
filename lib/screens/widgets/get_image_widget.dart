@@ -43,10 +43,10 @@ Widget getImageContainer(String? image, {double height = 180, double width = dou
       fit: BoxFit.cover,
     );
   }
-  return Image(
+  return Image.file(
+    File(image),
     height: height,
     width: width,
-    image: AssetImage(image),
     fit: BoxFit.cover,
   );
 }

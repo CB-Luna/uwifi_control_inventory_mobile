@@ -5,8 +5,8 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/screens/observaciones/observacion_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
-import 'package:taller_alex_app_asesor/screens/observaciones/agregar_observacion_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
@@ -278,7 +278,7 @@ class _RecepcionScreenState extends State<RecepcionScreen> {
                       ),
                     ),
                     Text(
-                      '${widget.ordenTrabajo.estatus.target!.avance * 100} %',
+                      '${(widget.ordenTrabajo.estatus.target!.avance * 100).toStringAsFixed(0)} %',
                       style: FlutterFlowTheme.of(context).title1.override(
                             fontFamily: 'Outfit',
                             color:
@@ -344,7 +344,7 @@ class _RecepcionScreenState extends State<RecepcionScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  AgregarObservacionScreen(ordenTrabajo: widget.ordenTrabajo,),
+                                  ObservacionScreen(ordenTrabajo: widget.ordenTrabajo,),
                             ),
                           );
                         },

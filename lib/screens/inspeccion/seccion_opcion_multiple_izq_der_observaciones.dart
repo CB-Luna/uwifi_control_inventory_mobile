@@ -178,6 +178,7 @@ class SeccionOpcionMultipleIzqDerObservaciones extends StatelessWidget {
             padding:
                 const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
             child: TextFormField(
+              textCapitalization: TextCapitalization.sentences,
               autovalidateMode:
                   AutovalidateMode.onUserInteraction,
               onChanged: (value) {
@@ -197,21 +198,21 @@ class SeccionOpcionMultipleIzqDerObservaciones extends StatelessWidget {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color:
-                        FlutterFlowTheme.of(context).grayDark,
+                        FlutterFlowTheme.of(context).primaryColor,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: FlutterFlowTheme.of(context).secondaryColor,
+                    color: FlutterFlowTheme.of(context).primaryColor,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: FlutterFlowTheme.of(context).secondaryColor,
+                    color: FlutterFlowTheme.of(context).primaryColor,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(8),
@@ -350,6 +351,7 @@ class SeccionOpcionMultipleIzqDerObservaciones extends StatelessWidget {
             padding:
                 const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
             child: TextFormField(
+              textCapitalization: TextCapitalization.sentences,
               autovalidateMode:
                   AutovalidateMode.onUserInteraction,
               onChanged: (value) {
@@ -369,21 +371,21 @@ class SeccionOpcionMultipleIzqDerObservaciones extends StatelessWidget {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color:
-                        FlutterFlowTheme.of(context).grayDark,
+                        FlutterFlowTheme.of(context).primaryColor,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: FlutterFlowTheme.of(context).secondaryColor,
+                    color: FlutterFlowTheme.of(context).primaryColor,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: FlutterFlowTheme.of(context).secondaryColor,
+                    color: FlutterFlowTheme.of(context).primaryColor,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(8),

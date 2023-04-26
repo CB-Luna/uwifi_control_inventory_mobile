@@ -842,7 +842,7 @@
     },
     {
       "id": "27:1774905738150923512",
-      "lastPropertyId": "38:6977709619624885474",
+      "lastPropertyId": "39:2108000366401092803",
       "name": "Bitacora",
       "properties": [
         {
@@ -963,14 +963,6 @@
           "relationTarget": "Producto"
         },
         {
-          "id": "32:8791841775805765497",
-          "name": "diagnosticoId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "332:2381769723952164502",
-          "relationTarget": "Diagnostico"
-        },
-        {
           "id": "33:4535282600813447593",
           "name": "estatusId",
           "type": 11,
@@ -1000,6 +992,14 @@
           "id": "38:6977709619624885474",
           "name": "executeSupabase",
           "type": 1
+        },
+        {
+          "id": "39:2108000366401092803",
+          "name": "ordenServicioId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "345:2071126468008917387",
+          "relationTarget": "OrdenServicio"
         }
       ],
       "relations": []
@@ -2979,7 +2979,7 @@
     },
     {
       "id": "67:5935206935227986130",
-      "lastPropertyId": "17:605237792120356083",
+      "lastPropertyId": "19:5050726085676383011",
       "name": "OrdenTrabajo",
       "properties": [
         {
@@ -3053,14 +3053,6 @@
           "relationTarget": "Inspeccion"
         },
         {
-          "id": "15:3821015968441469978",
-          "name": "diagnosticoId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "333:7302368435975826295",
-          "relationTarget": "Diagnostico"
-        },
-        {
           "id": "16:7527339157164656864",
           "name": "estatusId",
           "type": 11,
@@ -3075,6 +3067,19 @@
           "flags": 520,
           "indexId": "342:7775925577122272699",
           "relationTarget": "Usuarios"
+        },
+        {
+          "id": "18:2971104627899873739",
+          "name": "completado",
+          "type": 1
+        },
+        {
+          "id": "19:5050726085676383011",
+          "name": "ordenServicioId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "346:5102240519216394134",
+          "relationTarget": "OrdenServicio"
         }
       ],
       "relations": []
@@ -3898,50 +3903,6 @@
       "relations": []
     },
     {
-      "id": "75:5100626670541562876",
-      "lastPropertyId": "6:3148729869057314786",
-      "name": "Diagnostico",
-      "properties": [
-        {
-          "id": "1:5162288244745793053",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:1314237784956713205",
-          "name": "fechaRegistro",
-          "type": 10
-        },
-        {
-          "id": "3:7041119885018323941",
-          "name": "fechaEntrega",
-          "type": 10
-        },
-        {
-          "id": "4:5431856584957283846",
-          "name": "costoTotal",
-          "type": 8
-        },
-        {
-          "id": "5:8889823374666441278",
-          "name": "idDBR",
-          "type": 9,
-          "flags": 2080,
-          "indexId": "322:6697864656768367856"
-        },
-        {
-          "id": "6:3148729869057314786",
-          "name": "ordenTrabajoId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "323:2227046152398392533",
-          "relationTarget": "OrdenTrabajo"
-        }
-      ],
-      "relations": []
-    },
-    {
       "id": "76:7992280240775612538",
       "lastPropertyId": "7:6051791476480567790",
       "name": "Producto",
@@ -3992,7 +3953,7 @@
     },
     {
       "id": "77:2743501254910091798",
-      "lastPropertyId": "11:5828188708304762308",
+      "lastPropertyId": "12:8325763251011132126",
       "name": "Servicio",
       "properties": [
         {
@@ -4034,14 +3995,6 @@
           "indexId": "326:5777926947307451852"
         },
         {
-          "id": "9:5222079827570678012",
-          "name": "diagnosticoId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "327:2002401092371240826",
-          "relationTarget": "Diagnostico"
-        },
-        {
           "id": "10:2016605017757956177",
           "name": "imagen",
           "type": 9
@@ -4050,6 +4003,14 @@
           "id": "11:5828188708304762308",
           "name": "path",
           "type": 9
+        },
+        {
+          "id": "12:8325763251011132126",
+          "name": "ordenServicioId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "347:7705174580670337953",
+          "relationTarget": "OrdenServicio"
         }
       ],
       "relations": []
@@ -4171,10 +4132,54 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "81:2641322679545348634",
+      "lastPropertyId": "6:5844943379902337314",
+      "name": "OrdenServicio",
+      "properties": [
+        {
+          "id": "1:2656486150849867410",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7944503815991233540",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "3:6524024833306945642",
+          "name": "fechaEntrega",
+          "type": 10
+        },
+        {
+          "id": "4:9183866744924227174",
+          "name": "costoTotal",
+          "type": 8
+        },
+        {
+          "id": "5:130372104415231116",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "343:4196360993135839853"
+        },
+        {
+          "id": "6:5844943379902337314",
+          "name": "ordenTrabajoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "344:1815195187478967690",
+          "relationTarget": "OrdenTrabajo"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "80:8177890023282011956",
-  "lastIndexId": "342:7775925577122272699",
+  "lastEntityId": "81:2641322679545348634",
+  "lastIndexId": "347:7705174580670337953",
   "lastRelationId": "87:1176537328766838454",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
@@ -4205,7 +4210,8 @@
     7989753976020672504,
     7625539946193612618,
     6276906075580230896,
-    6250629756136671550
+    6250629756136671550,
+    5100626670541562876
   ],
   "retiredIndexUids": [
     8990521503430950587,
@@ -4327,7 +4333,10 @@
     485661063447907108,
     8708498230408183714,
     3992374126221858894,
-    1775900829394429954
+    1775900829394429954,
+    2381769723952164502,
+    7302368435975826295,
+    2002401092371240826
   ],
   "retiredPropertyUids": [
     7079790605743243388,
@@ -4695,7 +4704,16 @@
     2331261162579149674,
     1532225114633300870,
     8729884026583326624,
-    5951979229393608679
+    5951979229393608679,
+    5162288244745793053,
+    1314237784956713205,
+    7041119885018323941,
+    5431856584957283846,
+    8889823374666441278,
+    3148729869057314786,
+    8791841775805765497,
+    3821015968441469978,
+    5222079827570678012
   ],
   "retiredRelationUids": [
     1226469011453769556,

@@ -1,19 +1,19 @@
 import 'package:taller_alex_app_asesor/database/entitys.dart';
-import 'package:taller_alex_app_asesor/providers/sync_emprendimientos_externos_pocketbase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/providers/sync_ordenes_trabajo_externas_supabase_provider.dart';
 import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:lottie/lottie.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-class DescargaProyectosExternosPocketbaseScreen extends StatefulWidget {
+class DescargaOrdenesTrabajoExternasSupabaseScreen extends StatefulWidget {
   final Usuarios usuario;
   final String idEmprendimiento;
   final String tokenGlobal;
   final String idEmprendimientoEmiWeb;
-  const DescargaProyectosExternosPocketbaseScreen({
+  const DescargaOrdenesTrabajoExternasSupabaseScreen({
     Key? key, 
     required this.idEmprendimiento, 
     required this.usuario, 
@@ -22,26 +22,26 @@ class DescargaProyectosExternosPocketbaseScreen extends StatefulWidget {
     }) : super(key: key);
 
   @override
-  State<DescargaProyectosExternosPocketbaseScreen> createState() => _DescargaProyectosExternosPocketbaseScreenState();
+  State<DescargaOrdenesTrabajoExternasSupabaseScreen> createState() => _DescargaOrdenesTrabajoExternasSupabaseScreenState();
 }
 
-class _DescargaProyectosExternosPocketbaseScreenState extends State<DescargaProyectosExternosPocketbaseScreen> {
+class _DescargaOrdenesTrabajoExternasSupabaseScreenState extends State<DescargaOrdenesTrabajoExternasSupabaseScreen> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
       setState(() {
-        context.read<SyncEmpExternosPocketbaseProvider>().exitoso = true;
-        context.read<SyncEmpExternosPocketbaseProvider>().procesoCargando(true);
-        context.read<SyncEmpExternosPocketbaseProvider>().procesoTerminado(false);
-        context.read<SyncEmpExternosPocketbaseProvider>().procesoExitoso(false);
-        context.read<SyncEmpExternosPocketbaseProvider>().getProyectosExternosPocketbase(widget.idEmprendimiento, widget.usuario, widget.tokenGlobal, widget.idEmprendimientoEmiWeb);
+        context.read<SyncOrdenesTrabajoExternasSupabaseProvider>().exitoso = true;
+        context.read<SyncOrdenesTrabajoExternasSupabaseProvider>().procesoCargando(true);
+        context.read<SyncOrdenesTrabajoExternasSupabaseProvider>().procesoTerminado(false);
+        context.read<SyncOrdenesTrabajoExternasSupabaseProvider>().procesoExitoso(false);
+        context.read<SyncOrdenesTrabajoExternasSupabaseProvider>().getOrdenesTrabajoExternasSupabase(widget.idEmprendimiento, widget.usuario, widget.tokenGlobal, widget.idEmprendimientoEmiWeb);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final empExternosPocketbaseProvider = Provider.of<SyncEmpExternosPocketbaseProvider>(context);
+    final empExternosPocketbaseProvider = Provider.of<SyncOrdenesTrabajoExternasSupabaseProvider>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

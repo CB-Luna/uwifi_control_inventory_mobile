@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/screens/cotizacion/main_tab_opciones.dart';
 import 'package:taller_alex_app_asesor/screens/inspeccion/inspeccion_screen.dart';
-import 'package:taller_alex_app_asesor/screens/diagnostico/diagnostico_screen.dart';
+import 'package:taller_alex_app_asesor/screens/orden_servicio/orden_servicio_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/componentes/widgets/recepcion_screen.dart';
 import 'flutter_flow_animaciones.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -80,7 +80,7 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
     final tabs = {
       'pantallaRecepcion': RecepcionScreen(ordenTrabajo: widget.ordenTrabajo,),
       'pantallaInspeccion': InspeccionScreen(ordenTrabajo: widget.ordenTrabajo,),
-      'pantallaDiagnostico': DiagnosticoScreen(ordenTrabajo: widget.ordenTrabajo,),
+      'pantallaOrdenServicio': OrdenServicioScreen(ordenTrabajo: widget.ordenTrabajo,),
       'pantallaCotizacion': MainTabOpcionesScreen(ordenTrabajo: widget.ordenTrabajo,),
       // 'terceraParte': TerceraParteFormularioObservacionesWidget(),
     };
@@ -109,18 +109,17 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
                 break;
               }
             case 2:
-
-              if(widget.ordenTrabajo.inspeccion.target?.completado == false) {
+              if(widget.ordenTrabajo.inspeccion.target?.completado == true) {
+                _currentPageName = tabs.keys.toList()[i];
+                break;
+              } else{
                 snackbarKey.currentState?.showSnackBar(const SnackBar(
                   content: Text("Se requiere terminar la Insepcción de todas las áreas para continuar con el Diagnóstico."),
                 ));
                 break;
-              } else{
-                _currentPageName = tabs.keys.toList()[i];
-                break;
               }
             case 3:
-              if(widget.ordenTrabajo.estatus.target!.avance < 0.4){
+              if(widget.ordenTrabajo.estatus.target!.avance <= 0.4){
                 snackbarKey.currentState?.showSnackBar(const SnackBar(
                   content: Text("Se requiere agregar al menos un Servicio en el Diagnóstico para continuar con la Cotización."),
                 ));

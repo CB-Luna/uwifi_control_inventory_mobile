@@ -22,7 +22,7 @@ import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
 
-class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
+class SyncOrdenesTrabajoExternasSupabaseProvider extends ChangeNotifier {
   bool procesocargando = false;
   bool procesoterminado = false;
   bool procesoexitoso = false;
@@ -46,7 +46,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
     // notifyListeners();
   }
 
-  Future<bool> getProyectosExternosPocketbase(
+  Future<bool> getOrdenesTrabajoExternasSupabase(
       String idEmprendimiento,
       Usuarios usuario,
       String tokenGlobal,

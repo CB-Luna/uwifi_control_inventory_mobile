@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/screens/clientes/clientes_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/detalle_orden_trabajo_screen.dart';
 
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
@@ -85,7 +84,7 @@ class _ServicioNoCreadoScreenState extends State<ServicioNoCreadoScreen> {
                               builder: (context) =>
                                   DetalleOrdenTrabajoScreen(
                                     ordenTrabajo: widget.ordenTrabajo,
-                                    pantalla: "pantallaRecepcion",),
+                                    pantalla: "pantallaOrdenServicio",),
                             ),
                           );
                         },

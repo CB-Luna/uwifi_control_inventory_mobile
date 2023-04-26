@@ -60,6 +60,7 @@ class OrdenTrabajo {
   String kilometrajeMillaje;
   String descripcionFalla;
   DateTime fechaRegistro;
+  bool completado;
   @Unique()
   String? idDBR;
   final asesor = ToOne<Usuarios>();
@@ -67,7 +68,7 @@ class OrdenTrabajo {
   final vehiculo = ToOne<Vehiculo>();
   final formaPago = ToOne<FormaPago>();
   final inspeccion = ToOne<Inspeccion>();
-  final diagnostico = ToOne<Diagnostico>();
+  final ordenServicio = ToOne<OrdenServicio>();
   final estatus = ToOne<Estatus>();
   @Backlink()
   final observacion = ToMany<Observaciones>();
@@ -81,6 +82,7 @@ class OrdenTrabajo {
     required this.gasolina,
     required this.kilometrajeMillaje,
     required this.descripcionFalla,
+    required this.completado,
     DateTime? fechaRegistro,
     this.idDBR,
   }) : fechaRegistro = fechaRegistro ?? DateTime.now();
@@ -187,7 +189,7 @@ class Inspeccion {
 }
 
 @Entity()
-class Diagnostico {
+class OrdenServicio {
   int id;
   DateTime fechaRegistro;
   DateTime fechaEntrega;
@@ -200,7 +202,7 @@ class Diagnostico {
   @Backlink()
   final bitacora = ToMany<Bitacora>();
 
-  Diagnostico({
+  OrdenServicio({
     this.id = 0,
     required this.costoTotal,
     required this.fechaEntrega,
@@ -224,7 +226,7 @@ class Servicio {
   DateTime fechaEntrega;
   @Unique()
   String? idDBR;
-  final diagnostico = ToOne<Diagnostico>();
+  final ordenServicio = ToOne<OrdenServicio>();
   @Backlink()
   final productos = ToMany<Producto>();
   @Backlink()
@@ -879,7 +881,7 @@ class Bitacora {
   final fluidos = ToOne<Fluidos>();
   final frenos = ToOne<Frenos>();
   final electrico = ToOne<Electrico>();
-  final diagnostico = ToOne<Diagnostico>();
+  final ordenServicio  = ToOne<OrdenServicio>();
   final servicio = ToOne<Servicio>();
   final producto = ToOne<Producto>();
   final estatus = ToOne<Estatus>();
@@ -1170,11 +1172,11 @@ class Usuarios {
   final pagos = ToMany<Pagos>();
   @Backlink()
   final emprendimientos = ToMany<Emprendimientos>();
-  final asesor = ToOne<Usuarios>();
-  final clientes = ToMany<Usuarios>();
-  final tecnicosMecanicos = ToMany<Usuarios>();
-  final ordenesTrabajo = ToMany<OrdenTrabajo>();
-  final ordenTrabajo = ToOne<OrdenTrabajo>();
+  final asesor = ToOne<Usuarios>(); //Para Rol de C Y M
+  final clientes = ToMany<Usuarios>(); //Para Rol de A
+  final tecnicosMecanicos = ToMany<Usuarios>(); //Para Rol de A
+  final ordenesTrabajo = ToMany<OrdenTrabajo>(); //Para Rol de A, C Y M
+  final ordenTrabajo = ToOne<OrdenTrabajo>(); //Para Rol de C Y M
   final vehiculos = ToMany<Vehiculo>();
   Usuarios({
     this.id = 0,

@@ -7,8 +7,8 @@ import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/diagnostico_controller.dart';
-import 'package:taller_alex_app_asesor/screens/diagnostico/servicio_creado_screen.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/orden_servicio_controller.dart';
+import 'package:taller_alex_app_asesor/screens/orden_servicio/servicio_creado_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
@@ -17,24 +17,24 @@ import 'package:provider/provider.dart';
 import 'servicio_no_creado_screen.dart';
 export 'servicio_no_creado_screen.dart';
 
-class AgregarDiagnosticoScreen extends StatefulWidget {
+class AgregarOrdenServicioScreen extends StatefulWidget {
   final Vehiculo vehiculo;
   final OrdenTrabajo ordenTrabajo;
-  const AgregarDiagnosticoScreen({
+  const AgregarOrdenServicioScreen({
       Key? key, 
       required this.vehiculo, 
       required this.ordenTrabajo,
     }) : super(key: key);
 
   @override
-  _AgregarDiagnosticoScreenState createState() =>
-      _AgregarDiagnosticoScreenState();
+  _AgregarOrdenServicioScreenState createState() =>
+      _AgregarOrdenServicioScreenState();
 }
 
-class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
+class _AgregarOrdenServicioScreenState extends State<AgregarOrdenServicioScreen> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final diagnosticoFormKey = GlobalKey<FormState>();
+  final ordenServicioFormKey = GlobalKey<FormState>();
   final _unfocusNode = FocusNode();
   List<String> listaServicios = [];
   List<String> listaProductos = [];
@@ -62,7 +62,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final diagnosticoProvider = Provider.of<DiagnosticoController>(context);
+    final ordenServicioProvider = Provider.of<OrdenServicioController>(context);
     listaServicios.clear();
     listaProductos.clear();
     for (var element in dataBase.tipoServicioBox.getAll().toList()) {
@@ -99,7 +99,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                       actions: [
                         TextButton(
                           onPressed: () {
-                            diagnosticoProvider.limpiarInformacion();
+                            ordenServicioProvider.limpiarInformacion();
                             Navigator.pop(context);
                             Navigator.pop(context);
                           },
@@ -137,7 +137,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
         child: SingleChildScrollView(
           controller: ScrollController(),
           child: Form(
-            key: diagnosticoFormKey,
+            key: ordenServicioFormKey,
             autovalidateMode: AutovalidateMode.disabled,
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -345,14 +345,14 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 16),
                       child: TextFormField(
-                        controller: diagnosticoProvider.servicioController,
+                        controller: ordenServicioProvider.servicioController,
                         autovalidateMode:
                             AutovalidateMode.onUserInteraction,
                         textCapitalization:
                             TextCapitalization.words,
                         onChanged: (value) {
                             print("Lista de servicios antes de enviar: $listaServicios");
-                            diagnosticoProvider.enCambioServicio(value, listaServicios);
+                            ordenServicioProvider.enCambioServicio(value, listaServicios);
                         },
                         obscureText: false,
                         decoration: InputDecoration(
@@ -377,7 +377,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color:
-                                  FlutterFlowTheme.of(context).grayDark,
+                                  FlutterFlowTheme.of(context).primaryColor,
                               width: 2,
                             ),
                             borderRadius: BorderRadius.circular(8),
@@ -412,15 +412,15 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                       ),
                     ),
                     Visibility(
-                      visible: (diagnosticoProvider.servicioController.text.length >= 3 && diagnosticoProvider.opcionesServicios.isNotEmpty && diagnosticoProvider.servicioSeleccionado == "") ? true : false,
+                      visible: (ordenServicioProvider.servicioController.text.length >= 3 && ordenServicioProvider.opcionesServicios.isNotEmpty && ordenServicioProvider.servicioSeleccionado == "") ? true : false,
                       child: SizedBox(
                         height: 100,
                         child: Material(
                           child: ListView.builder(
                             controller: ScrollController(),
-                            itemCount: diagnosticoProvider.opcionesServicios.length,
+                            itemCount: ordenServicioProvider.opcionesServicios.length,
                             itemBuilder: (_, index) {
-                              final servicio = diagnosticoProvider.opcionesServicios[index];
+                              final servicio = ordenServicioProvider.opcionesServicios[index];
                               return ListTile(
                                 leading: Icon(
                                   Icons.car_rental,
@@ -428,7 +428,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                 ),
                                 title: Text(servicio),
                                 onTap: () {
-                                  diagnosticoProvider.seleccionarServicio(servicio);
+                                  ordenServicioProvider.seleccionarServicio(servicio);
                                   
                                 },
                                 hoverColor: Colors.grey[200],
@@ -439,7 +439,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                       ),
                     ),
                     Visibility(
-                      visible: (diagnosticoProvider.servicioSeleccionado == diagnosticoProvider.servicioController.text && diagnosticoProvider.servicioSeleccionado != ""),
+                      visible: (ordenServicioProvider.servicioSeleccionado == ordenServicioProvider.servicioController.text && ordenServicioProvider.servicioSeleccionado != ""),
                       child: Column(
                         children: [
                           Padding(
@@ -467,7 +467,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                 ),
                                 child:
                                     getImageContainer(
-                                      diagnosticoProvider.tipoServicio?.path,
+                                      ordenServicioProvider.tipoServicio?.path,
                                       height: 200
                                     ),
                               ),
@@ -508,7 +508,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                                 vertical: 5),
                                             child: Text(
                                               maybeHandleOverflow(
-                                                  "${diagnosticoProvider
+                                                  "${ordenServicioProvider
                                                     .tipoServicio?.tipoServicio}",
                                                   40,
                                                   "..."),
@@ -535,7 +535,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                                     .symmetric(
                                                 vertical: 5),
                                             child: Text(
-                                              "Costo del Servicio: \$${diagnosticoProvider
+                                              "Costo del Servicio: \$${ordenServicioProvider
                                               .tipoServicio?.costo.toString()}",
                                               style: FlutterFlowTheme.of(
                                                       context)
@@ -586,7 +586,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                           barrierDismissible: false,
                                           context: context,
                                           builder: (BuildContext context) {
-                                            final diagnosticoProvider = Provider.of<DiagnosticoController>(context);
+                                            final ordenServicioProvider = Provider.of<OrdenServicioController>(context);
                                             return AlertDialog(
                                               backgroundColor: FlutterFlowTheme.of(context).grayLighter,
                                               title: const Text("Agregar Producto"),
@@ -600,13 +600,13 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                                       Padding(
                                                         padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 16),
                                                         child: TextFormField(
-                                                          controller: diagnosticoProvider.productoController,
+                                                          controller: ordenServicioProvider.productoController,
                                                           autovalidateMode:
                                                               AutovalidateMode.onUserInteraction,
                                                           textCapitalization:
                                                               TextCapitalization.words,
                                                           onChanged: (value) {
-                                                              diagnosticoProvider.enCambioProducto(value, listaProductos);
+                                                              ordenServicioProvider.enCambioProducto(value, listaProductos);
                                                           },
                                                           obscureText: false,
                                                           decoration: InputDecoration(
@@ -630,7 +630,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                                             focusedBorder: OutlineInputBorder(
                                                               borderSide: BorderSide(
                                                                 color:
-                                                                    FlutterFlowTheme.of(context).grayDark,
+                                                                    FlutterFlowTheme.of(context).primaryColor,
                                                                 width: 2,
                                                               ),
                                                               borderRadius: BorderRadius.circular(8),
@@ -658,15 +658,15 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                                         ),
                                                       ),
                                                       Visibility(
-                                                        visible: (diagnosticoProvider.productoController.text.length >= 3 && diagnosticoProvider.opcionesProductos.isNotEmpty && diagnosticoProvider.productoSeleccionado == "") ? true : false,
+                                                        visible: (ordenServicioProvider.productoController.text.length >= 3 && ordenServicioProvider.opcionesProductos.isNotEmpty && ordenServicioProvider.productoSeleccionado == "") ? true : false,
                                                         child: SizedBox(
                                                           height: 100,
                                                           child: Material(
                                                             child: ListView.builder(
                                                               controller: ScrollController(),
-                                                              itemCount: diagnosticoProvider.opcionesProductos.length,
+                                                              itemCount: ordenServicioProvider.opcionesProductos.length,
                                                               itemBuilder: (_, index) {
-                                                                final producto = diagnosticoProvider.opcionesProductos[index];
+                                                                final producto = ordenServicioProvider.opcionesProductos[index];
                                                                 return ListTile(
                                                                   leading: Icon(
                                                                     Icons.car_rental,
@@ -674,7 +674,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                                                   ),
                                                                   title: Text(producto),
                                                                   onTap: () {
-                                                                    diagnosticoProvider.seleccionarProducto(producto);
+                                                                    ordenServicioProvider.seleccionarProducto(producto);
                                                                   },
                                                                   hoverColor: Colors.grey[200],
                                                                 );
@@ -696,10 +696,10 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                                         child: StepperSwipe(
                                                           withPlusMinus: true,
                                                           iconsColor: FlutterFlowTheme.of(context).primaryColor,
-                                                          initialValue: diagnosticoProvider.cantidad,
+                                                          initialValue: ordenServicioProvider.cantidad,
                                                           speedTransitionLimitCount: 3, //Trigger count for fast counting
                                                           onChanged: (int value) {
-                                                            diagnosticoProvider.enCambioCantidadProducto(value);
+                                                            ordenServicioProvider.enCambioCantidadProducto(value);
                                                           },
                                                           firstIncrementDuration: const Duration(milliseconds: 250), //Unit time before fast counting
                                                           secondIncrementDuration: const Duration(milliseconds: 100), //Unit time during fast counting
@@ -707,17 +707,17 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                                           dragButtonColor: FlutterFlowTheme.of(context).primaryColor,
                                                         maxValue: 100,
                                                         minValue: 1, 
-                                                        stepperValue: diagnosticoProvider.cantidad,
+                                                        stepperValue: ordenServicioProvider.cantidad,
                                                         ),
                                                       ),
                                                       Padding(
                                                         padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                                                         child: FFButtonWidget(
                                                           onPressed: () async {
-                                                            if (diagnosticoProvider.productoSeleccionado != "") {
-                                                              // diagnosticoProvider.productosTemp.add(prod)
-                                                              diagnosticoProvider.agregarProductoTemporal();    
-                                                              diagnosticoProvider.limpiarInformacionProductos();
+                                                            if (ordenServicioProvider.productoSeleccionado != "") {
+                                                              // ordenServicioProvider.productosTemp.add(prod)
+                                                              ordenServicioProvider.agregarProductoTemporal();    
+                                                              ordenServicioProvider.limpiarInformacionProductos();
                                                               Navigator.pop(context);
                                                             } else {
                                                               snackbarKey.currentState?.showSnackBar(const SnackBar(
@@ -729,7 +729,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                                           options: FFButtonOptions(
                                                             width: 200,
                                                             height: 50,
-                                                            color: diagnosticoProvider.productoSeleccionado != "" ?
+                                                            color: ordenServicioProvider.productoSeleccionado != "" ?
                                                               FlutterFlowTheme.of(context).primaryColor
                                                               :
                                                               FlutterFlowTheme.of(context).primaryColor.withOpacity(0.1)
@@ -754,7 +754,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                                         padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                                                         child: FFButtonWidget(
                                                           onPressed: () async {   
-                                                            diagnosticoProvider.limpiarInformacionProductos();
+                                                            ordenServicioProvider.limpiarInformacionProductos();
                                                             Navigator.pop(context);
                                                           },
                                                           text: 'Cancelar',
@@ -821,9 +821,9 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                     padding: EdgeInsets.zero,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
-                                    itemCount: diagnosticoProvider.productosTemp.length,
+                                    itemCount: ordenServicioProvider.productosTemp.length,
                                     itemBuilder: (context, index) {
-                                      final productoTemp = diagnosticoProvider.productosTemp[index];
+                                      final productoTemp = ordenServicioProvider.productosTemp[index];
                                       return InkWell(
                                         onTap: () async {
                                         },
@@ -984,7 +984,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               onChanged: (value) {
-                                diagnosticoProvider.comentarios = value;
+                                ordenServicioProvider.comentarios = value;
                               },
                               obscureText: false,
                               decoration: InputDecoration(
@@ -1009,7 +1009,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color:
-                                        FlutterFlowTheme.of(context).grayDark,
+                                        FlutterFlowTheme.of(context).primaryColor,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
@@ -1039,7 +1039,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                             child: TextFormField(
-                              controller: diagnosticoProvider.fechaEntregaController,
+                              controller: ordenServicioProvider.fechaEntregaController,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               onTap: () async {
@@ -1049,8 +1049,8 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                                   showTitleActions: true,
                                   onConfirm: (date) {
                                     setState(() {
-                                      diagnosticoProvider.fechaEntrega = date;
-                                      diagnosticoProvider.fechaEntregaController = TextEditingController(text: dateTimeFormat('d/MMMM/y', date));
+                                      ordenServicioProvider.fechaEntrega = date;
+                                      ordenServicioProvider.fechaEntregaController = TextEditingController(text: dateTimeFormat('d/MMMM/y', date));
                                     });
                                   },
                                   currentTime: getCurrentTimestamp,
@@ -1070,21 +1070,21 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).grayDark,
+                                      FlutterFlowTheme.of(context).primaryColor,
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).secondaryColor,
+                                  color: FlutterFlowTheme.of(context).primaryColor,
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).secondaryColor,
+                                  color: FlutterFlowTheme.of(context).primaryColor,
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
@@ -1117,11 +1117,11 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                   padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      if (diagnosticoProvider
-                              .validateForm(diagnosticoFormKey)) {
-                        if (widget.ordenTrabajo.diagnostico.target == null) {
-                          if (diagnosticoProvider.addDiagnostico(widget.ordenTrabajo)) {
-                            diagnosticoProvider.limpiarInformacion();
+                      if (ordenServicioProvider
+                              .validateForm(ordenServicioFormKey)) {
+                        if (widget.ordenTrabajo.ordenServicio.target == null) {
+                          if (ordenServicioProvider.addOrdenServicio(widget.ordenTrabajo)) {
+                            ordenServicioProvider.limpiarInformacion();
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -1130,7 +1130,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                               ),
                             );
                           } else {
-                            diagnosticoProvider.limpiarInformacion();
+                            ordenServicioProvider.limpiarInformacion();
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -1140,8 +1140,8 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                             );
                           }
                         } else {
-                          if (diagnosticoProvider.addServicio(widget.ordenTrabajo.diagnostico.target!)) {
-                            diagnosticoProvider.limpiarInformacion();
+                          if (ordenServicioProvider.addServicio(widget.ordenTrabajo.ordenServicio.target!)) {
+                            ordenServicioProvider.limpiarInformacion();
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -1150,7 +1150,7 @@ class _AgregarDiagnosticoScreenState extends State<AgregarDiagnosticoScreen> {
                               ),
                             );
                           } else {
-                            diagnosticoProvider.limpiarInformacion();
+                            ordenServicioProvider.limpiarInformacion();
                             await Navigator.push(
                               context,
                               MaterialPageRoute(

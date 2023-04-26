@@ -30,19 +30,19 @@ class _CotizacionTabState extends State<CotizacionTab>
   @override
   void initState() {
     super.initState();
-    widget.ordenTrabajo.diagnostico.target?.servicios.toList().forEach((element) {
+    widget.ordenTrabajo.ordenServicio.target?.servicios.toList().forEach((element) {
       if (element.autorizado) {
         servicios.add(element);
       }
     });
-    totalProyecto = widget.ordenTrabajo.diagnostico.target?.costoTotal ?? 0.00;
+    totalProyecto = widget.ordenTrabajo.ordenServicio.target?.costoTotal ?? 0.00;
   }
 
   @override
   Widget build(BuildContext context) {
-    totalProyecto = widget.ordenTrabajo.diagnostico.target?.costoTotal ?? 0.00;
+    totalProyecto = widget.ordenTrabajo.ordenServicio.target?.costoTotal ?? 0.00;
     servicios.clear();
-    widget.ordenTrabajo.diagnostico.target?.servicios.toList().forEach((element) {
+    widget.ordenTrabajo.ordenServicio.target?.servicios.toList().forEach((element) {
       if (element.autorizado) {
         servicios.add(element);
       }
@@ -69,7 +69,7 @@ class _CotizacionTabState extends State<CotizacionTab>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Cotización de la Orden de Trabajo',
+                          'Cotización de la Orden de Servicio',
                           style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: FlutterFlowTheme.of(context).title1Family,
                                 fontSize: 22,
@@ -271,7 +271,7 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                   Text(
                                                     "${widget
                                                       .ordenTrabajo
-                                                      .diagnostico
+                                                      .ordenServicio
                                                       .target?.
                                                       servicios
                                                       .toList()

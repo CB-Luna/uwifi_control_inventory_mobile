@@ -65,6 +65,7 @@ class OrdenTrabajoController extends ChangeNotifier {
       gasolina: "$porcentajeGasolina %",
       kilometrajeMillaje: "$kilometrajeMillaje $medida",
       descripcionFalla: descripcionFalla,  
+      completado: false,
     );
     
     final cliente = vehiculo?.cliente.target;

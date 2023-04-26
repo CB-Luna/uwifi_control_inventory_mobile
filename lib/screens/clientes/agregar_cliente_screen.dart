@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_widgets.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
@@ -21,9 +20,7 @@ import 'package:taller_alex_app_asesor/screens/screens.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
-import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 
 class AgregarClienteScreen extends StatefulWidget {
   const AgregarClienteScreen({Key? key}) : super(key: key);
@@ -286,21 +283,21 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -358,21 +355,21 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -429,21 +426,21 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -495,21 +492,21 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -566,21 +563,21 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -632,21 +629,21 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -703,21 +700,21 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -774,21 +771,21 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -823,7 +820,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const AgregarVehiculoScreen(),
+                                   AgregarVehiculoScreen(),
                             ),
                           );
                         }

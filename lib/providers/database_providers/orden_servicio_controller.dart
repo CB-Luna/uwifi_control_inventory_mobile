@@ -3,9 +3,9 @@ import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
-class DiagnosticoController extends ChangeNotifier {
+class OrdenServicioController extends ChangeNotifier {
 
-  GlobalKey<FormState> diagnosticoFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> ordenServicioFormKey = GlobalKey<FormState>();
 
   //Diagnóstico
   String productoSeleccionado = "";
@@ -27,8 +27,8 @@ class DiagnosticoController extends ChangeNotifier {
   List<String> opcionesProductos = [];
   List<Producto> productosTemp = [];
 
-  bool validateForm(GlobalKey<FormState> diagnosticoKey) {
-    return diagnosticoKey.currentState!.validate() ? true : false;
+  bool validateForm(GlobalKey<FormState> ordenServicioKey) {
+    return ordenServicioKey.currentState!.validate() ? true : false;
   }
 
   void limpiarInformacion()
@@ -64,9 +64,9 @@ class DiagnosticoController extends ChangeNotifier {
   }
 
 
-  bool addDiagnostico(OrdenTrabajo ordenTrabajo) {
+  bool addOrdenServicio(OrdenTrabajo ordenTrabajo) {
     try {
-      double costoTotalDiagnostico = tipoServicio!.costo;
+      double costoTotalOrdenServicio = tipoServicio!.costo;
       final nuevoServicio = Servicio(
           servicio: tipoServicio!.tipoServicio, 
           costoServicio: tipoServicio!.costo, 
@@ -80,12 +80,12 @@ class DiagnosticoController extends ChangeNotifier {
         nuevoServicio.productos.add(element);
         element.servicio.target = nuevoServicio;
         dataBase.productoBox.put(element);
-        costoTotalDiagnostico += element.costo;
+        costoTotalOrdenServicio += element.costo;
       }
 
-      final nuevoDiagnostico = Diagnostico(
+      final nuevoOrdenServicio = OrdenServicio(
         fechaEntrega: fechaEntrega!,
-        costoTotal: costoTotalDiagnostico,
+        costoTotal: costoTotalOrdenServicio,
       );
       //Diagnóstico
       final estatus = dataBase.estatusBox
@@ -102,18 +102,18 @@ class DiagnosticoController extends ChangeNotifier {
       nuevaInstruccionEstatusOrdenTrabajo.ordenTrabajo.target = ordenTrabajo;
       dataBase.bitacoraBox.put(nuevaInstruccionEstatusOrdenTrabajo);
 
-      nuevoServicio.diagnostico.target = nuevoDiagnostico;
-      nuevoDiagnostico.servicios.add(nuevoServicio);
-      ordenTrabajo.diagnostico.target = nuevoDiagnostico;
+      nuevoServicio.ordenServicio.target = nuevoOrdenServicio;
+      nuevoOrdenServicio.servicios.add(nuevoServicio);
+      ordenTrabajo.ordenServicio.target = nuevoOrdenServicio;
       dataBase.servicioBox.put(nuevoServicio);
-      dataBase.diagnosticoBox.put(nuevoDiagnostico);
+      dataBase.ordenServicioBox.put(nuevoOrdenServicio);
       dataBase.ordenTrabajoBox.put(ordenTrabajo);
       final nuevaInstruccionServicio = Bitacora(instruccion: 'syncAgregarServicio', usuarioPropietario: prefs.getString("userId")!, idOrdenTrabajo: ordenTrabajo.id); //Se crea la nueva instrucción a realizar en bitacora
       nuevaInstruccionServicio.servicio.target = nuevoServicio;
       dataBase.bitacoraBox.put(nuevaInstruccionServicio);
-      final nuevaInstruccionDiagnostico = Bitacora(instruccion: 'syncAgregarDiagnostico', usuarioPropietario: prefs.getString("userId")!, idOrdenTrabajo: ordenTrabajo.id); //Se crea la nueva instrucción a realizar en bitacora
-      nuevaInstruccionDiagnostico.diagnostico.target = nuevoDiagnostico;
-      dataBase.bitacoraBox.put(nuevaInstruccionDiagnostico);
+      final nuevaInstruccionOrdenServicio = Bitacora(instruccion: 'syncAgregarOrdenServicio', usuarioPropietario: prefs.getString("userId")!, idOrdenTrabajo: ordenTrabajo.id); //Se crea la nueva instrucción a realizar en bitacora
+      nuevaInstruccionOrdenServicio.ordenServicio.target = nuevoOrdenServicio;
+      dataBase.bitacoraBox.put(nuevaInstruccionOrdenServicio);
       notifyListeners();
       return true;
     } catch (e) {
@@ -121,9 +121,9 @@ class DiagnosticoController extends ChangeNotifier {
     }
   }
 
-  bool addServicio(Diagnostico diagnostico) {
+  bool addServicio(OrdenServicio ordenServicio) {
     try {
-      double costoTotalDiagnostico = tipoServicio!.costo;
+      double costoTotalOrdenServicio = tipoServicio!.costo;
       final nuevoServicio = Servicio(
           servicio: tipoServicio!.tipoServicio, 
           costoServicio: tipoServicio!.costo, 
@@ -137,14 +137,14 @@ class DiagnosticoController extends ChangeNotifier {
         nuevoServicio.productos.add(element);
         element.servicio.target = nuevoServicio;
         dataBase.productoBox.put(element);
-        costoTotalDiagnostico += element.costo;
+        costoTotalOrdenServicio += element.costo;
       }
 
-      diagnostico.costoTotal = diagnostico.costoTotal + costoTotalDiagnostico;
-      diagnostico.servicios.add(nuevoServicio);
+      ordenServicio.costoTotal = ordenServicio.costoTotal + costoTotalOrdenServicio;
+      ordenServicio.servicios.add(nuevoServicio);
       dataBase.servicioBox.put(nuevoServicio);
-      dataBase.diagnosticoBox.put(diagnostico);
-      final nuevaInstruccionServicio = Bitacora(instruccion: 'syncAgregarServicio', usuarioPropietario: prefs.getString("userId")!, idOrdenTrabajo: diagnostico.ordenTrabajo.target!.id); //Se crea la nueva instrucción a realizar en bitacora
+      dataBase.ordenServicioBox.put(ordenServicio);
+      final nuevaInstruccionServicio = Bitacora(instruccion: 'syncAgregarServicio', usuarioPropietario: prefs.getString("userId")!, idOrdenTrabajo: ordenServicio.ordenTrabajo.target!.id); //Se crea la nueva instrucción a realizar en bitacora
       nuevaInstruccionServicio.servicio.target = nuevoServicio;
       dataBase.bitacoraBox.put(nuevaInstruccionServicio);
       notifyListeners();

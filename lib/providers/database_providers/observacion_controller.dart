@@ -132,7 +132,42 @@ class ObservacionController extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool add(OrdenTrabajo ordenTrabajo, Usuarios usuario) {
+  bool validarSeccionUnoFormulario ()
+  {
+    if (fechaObservacion != null 
+    && respuestaP1 != ""
+    && valorSeleccionP2 != "") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool validarSeccionDosFormulario ()
+  {
+    if (valorSeleccionP3 != "" 
+    && valorSeleccionP4 != ""
+    && respuestaP5 != ""
+    && valorSeleccionP6 != "") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool validarSeccionTresFormulario ()
+  {
+    if (valorSeleccionP7 != "" 
+    && valorSeleccionP8 != ""
+    && valorSeleccionP9 != ""
+    && respuestaP10 != "") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool agregarObservacion(OrdenTrabajo ordenTrabajo, Usuarios usuario) {
     final nuevaObservacion = Observaciones(
       fechaObservacion: fechaObservacion!,
       respuestaP1: respuestaP1,

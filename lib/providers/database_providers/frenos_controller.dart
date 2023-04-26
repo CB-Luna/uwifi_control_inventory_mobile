@@ -245,6 +245,7 @@ class FrenosController extends ChangeNotifier {
         );
         nuevaInspeccion.frenos.target = nuevoFrenos;
         nuevoFrenos.inspeccion.target = nuevaInspeccion;
+        nuevaInspeccion.ordenTrabajo.target = ordenTrabajo;
         ordenTrabajo.inspeccion.target = nuevaInspeccion;
         dataBase.ordenTrabajoBox.put(ordenTrabajo);
         final nuevaInstruccionInspeccion = Bitacora(

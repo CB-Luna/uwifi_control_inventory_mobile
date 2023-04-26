@@ -87,7 +87,7 @@ class _ServicioCreadoScreenState extends State<ServicioCreadoScreen> {
                               builder: (context) =>
                                   DetalleOrdenTrabajoScreen(
                                     ordenTrabajo: widget.ordenTrabajo,
-                                    pantalla: "pantallaRecepcion",),
+                                    pantalla: "pantallaOrdenServicio",),
                             ),
                           );
                         },

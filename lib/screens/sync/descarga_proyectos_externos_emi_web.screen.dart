@@ -2,7 +2,7 @@ import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/providers.dart';
 import 'package:taller_alex_app_asesor/providers/sync_emprendimientos_externos_emi_web_provider.dart';
-import 'package:taller_alex_app_asesor/screens/sync/descarga_proyectos_externos_pocketbase_screen.dart';
+import 'package:taller_alex_app_asesor/screens/sync/descarga_ordenes_trabajo_externas_supabase_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/theme/theme.dart';
@@ -43,7 +43,7 @@ class _DescargaProyectosExternosEmiWebScreenState extends State<DescargaProyecto
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    DescargaProyectosExternosPocketbaseScreen(
+                    DescargaOrdenesTrabajoExternasSupabaseScreen(
                       idEmprendimiento: context.read<SyncEmpExternosEmiWebProvider>().idEmprendimientoPocketbase,
                       usuario: widget.usuario,
                       tokenGlobal: context.read<SyncEmpExternosEmiWebProvider>().tokenGlobal,

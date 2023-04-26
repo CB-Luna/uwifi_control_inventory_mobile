@@ -197,7 +197,7 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-                    // if (userState.rol == Rol.administrador)
+                    if (currentUser.rol.target!.rol == "Asesor")
                     CustomMenuItem(
                       label: 'Clientes',
                       iconData: Icons.groups,

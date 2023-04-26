@@ -3,6 +3,7 @@ import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
+import 'package:uuid/uuid.dart';
 class ClienteController extends ChangeNotifier {
 
   GlobalKey<FormState> clienteFormKey = GlobalKey<FormState>();
@@ -18,6 +19,7 @@ class ClienteController extends ChangeNotifier {
   String telefono = "";
   String celular = "";
   String correo = ""; 
+  var uuid = Uuid();
 
   bool validateForm(GlobalKey<FormState> clienteKey) {
     return clienteKey.currentState!.validate() ? true : false;
@@ -52,7 +54,7 @@ class ClienteController extends ChangeNotifier {
       celular: celular, 
       correo: correo,
       password: "default",
-      idDBR: "sinIdDBR",
+      idDBR: "sinIdDBR-${uuid.v1()}",
       imagen: imagenCliente,
       path: path,
     );

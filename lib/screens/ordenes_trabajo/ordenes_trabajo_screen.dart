@@ -432,7 +432,7 @@ class _OrdenesTrabajoScreenState extends State<OrdenesTrabajoScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const AgregarOrdenTrabajoScreen(),
+                                         AgregarOrdenTrabajoScreen(),
                                     ),
                                   );
                                 } else {

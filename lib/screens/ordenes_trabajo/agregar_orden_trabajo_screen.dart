@@ -17,7 +17,7 @@ import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 
 class AgregarOrdenTrabajoScreen extends StatefulWidget {
-  const AgregarOrdenTrabajoScreen({Key? key}) : super(key: key);
+  AgregarOrdenTrabajoScreen({Key? key}) : super(key: key);
 
   @override
   _AgregarOrdenTrabajoScreenState createState() =>
@@ -211,21 +211,21 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -256,7 +256,7 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                               });
                             },
                             currentTime: getCurrentTimestamp,
-                            // minTime: getCurrentTimestamp.subtract(const Duration(days: 7)),
+                            // minTime: getCurrentTimestamp.subtract(Duration(days: 7)),
                           );
                         },
                         obscureText: false,
@@ -282,21 +282,21 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -355,21 +355,21 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -697,21 +697,21 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                                           focusedBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                               color:
-                                                  FlutterFlowTheme.of(context).grayDark,
+                                                  FlutterFlowTheme.of(context).primaryColor,
                                               width: 2,
                                             ),
                                             borderRadius: BorderRadius.circular(8),
                                           ),
                                           errorBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                              color: Color(0x00000000),
+                                            borderSide: BorderSide(
+                                              color: FlutterFlowTheme.of(context).primaryColor,
                                               width: 2,
                                             ),
                                             borderRadius: BorderRadius.circular(8),
                                           ),
                                           focusedErrorBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                              color: Color(0x00000000),
+                                            borderSide: BorderSide(
+                                              color: FlutterFlowTheme.of(context).primaryColor,
                                               width: 2,
                                             ),
                                             borderRadius: BorderRadius.circular(8),
@@ -870,21 +870,21 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).grayDark,
+                                      FlutterFlowTheme.of(context).primaryColor,
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).primaryColor,
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).primaryColor,
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
@@ -935,21 +935,21 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).grayDark,
+                                      FlutterFlowTheme.of(context).primaryColor,
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).primaryColor,
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).primaryColor,
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
