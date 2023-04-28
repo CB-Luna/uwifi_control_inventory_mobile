@@ -234,7 +234,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                                       borderRadius:
                                           BorderRadius.circular(8),
                                       border: Border.all(
-                                        color: FlutterFlowTheme.of(context).tertiaryColor,
+                                        color: FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                                         width: 1.5,
                                       ),
                                     ),
@@ -261,6 +261,10 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.person_outline,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                         labelText: 'Nombre(s)*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -275,7 +279,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -333,6 +337,10 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.person_4_outlined,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                         labelText: 'Apellido Paterno*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -347,7 +355,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -405,6 +413,10 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.person_3_outlined,
+                          color: FlutterFlowTheme.of(context).dark400,
+                        ),
                         labelText: 'Apellido Materno',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -426,21 +438,21 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).primaryColor,
+                                FlutterFlowTheme.of(context).dark400,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                            color: FlutterFlowTheme.of(context).dark400,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                            color: FlutterFlowTheme.of(context).dark400,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -471,6 +483,10 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.key_outlined,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                         labelText: 'RFC*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -484,7 +500,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -541,6 +557,10 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.home_outlined,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                         labelText: 'Domicilio*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -555,7 +575,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -608,6 +628,10 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.phone_outlined,
+                          color: FlutterFlowTheme.of(context).dark400,
+                        ),
                         labelText: 'Teléfono',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -629,21 +653,21 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).primaryColor,
+                                FlutterFlowTheme.of(context).dark400,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                            color: FlutterFlowTheme.of(context).dark400,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                            color: FlutterFlowTheme.of(context).dark400,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -679,6 +703,10 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.phone_android_outlined,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                         labelText: 'Celular*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -692,7 +720,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -750,6 +778,10 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.email_outlined,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                         labelText: 'Correo electrónico*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -763,7 +795,7 @@ class _AgregarClienteScreenState extends State<AgregarClienteScreen> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),

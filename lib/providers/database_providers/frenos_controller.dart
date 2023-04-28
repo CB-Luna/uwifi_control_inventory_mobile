@@ -206,7 +206,7 @@ class FrenosController extends ChangeNotifier {
   
   bool agregarFrenos(OrdenTrabajo ordenTrabajo) {
     try {
-      //Se válida que la inspección exista en la orden de trabajo
+      //Se válida que la revisión exista en la orden de trabajo
       final fechaRegistro =  DateTime.now();
       final nuevoFrenos = Frenos(
           balatasDelanteras: balatasDelanteras,
@@ -222,10 +222,10 @@ class FrenosController extends ChangeNotifier {
           completado: true,
           fechaRegistro: fechaRegistro,
         );
-      //Inspección
+      //Revisión
       if (ordenTrabajo.estatus.target!.estatus == "Observación")  {
         final estatus = dataBase.estatusBox
-          .query(Estatus_.estatus.equals("Inspección"))
+          .query(Estatus_.estatus.equals("Revisión"))
           .build()
           .findFirst();
         ordenTrabajo.estatus.target = estatus;
@@ -238,24 +238,24 @@ class FrenosController extends ChangeNotifier {
         nuevaInstruccionEstatusOrdenTrabajo.ordenTrabajo.target = ordenTrabajo;
         dataBase.bitacoraBox.put(nuevaInstruccionEstatusOrdenTrabajo);
       }
-      if (ordenTrabajo.inspeccion.target == null) {
-        final nuevaInspeccion = Inspeccion(
+      if (ordenTrabajo.revision.target == null) {
+        final nuevaRevision = Revision(
           completado: false,
           fechaRegistro: fechaRegistro,
         );
-        nuevaInspeccion.frenos.target = nuevoFrenos;
-        nuevoFrenos.inspeccion.target = nuevaInspeccion;
-        nuevaInspeccion.ordenTrabajo.target = ordenTrabajo;
-        ordenTrabajo.inspeccion.target = nuevaInspeccion;
+        nuevaRevision.frenos.target = nuevoFrenos;
+        nuevoFrenos.revision.target = nuevaRevision;
+        nuevaRevision.ordenTrabajo.target = ordenTrabajo;
+        ordenTrabajo.revision.target = nuevaRevision;
         dataBase.ordenTrabajoBox.put(ordenTrabajo);
-        final nuevaInstruccionInspeccion = Bitacora(
-          instruccion: 'syncAgregarInspeccion',
+        final nuevaInstruccionRevision = Bitacora(
+          instruccion: 'syncAgregarRevision',
           usuarioPropietario: prefs.getString("userId")!,
           idOrdenTrabajo: ordenTrabajo.id,
         ); //Se crea la nueva instruccion a realizar en bitacora
-        nuevaInstruccionInspeccion.inspeccion.target = nuevaInspeccion;
-        dataBase.bitacoraBox.put(nuevaInstruccionInspeccion);
-        dataBase.inspeccionBox.put(nuevaInspeccion);
+        nuevaInstruccionRevision.revision.target = nuevaRevision;
+        dataBase.bitacoraBox.put(nuevaInstruccionRevision);
+        dataBase.revisionBox.put(nuevaRevision);
         final nuevaInstruccionFrenos = Bitacora(
           instruccion: 'syncAgregarFrenos',
           usuarioPropietario: prefs.getString("userId")!,
@@ -267,23 +267,23 @@ class FrenosController extends ChangeNotifier {
         notifyListeners();
         return true;
       } else {
-        nuevoFrenos.inspeccion.target = ordenTrabajo.inspeccion.target;
-        ordenTrabajo.inspeccion.target!.frenos.target = nuevoFrenos;
-        if (ordenTrabajo.inspeccion.target?.suspensionDireccion.target != null 
-          && ordenTrabajo.inspeccion.target?.frenos.target != null
-          && ordenTrabajo.inspeccion.target?.fluidos.target != null
-          && ordenTrabajo.inspeccion.target?.electrico.target != null
-          && ordenTrabajo.inspeccion.target?.motor.target != null) {      
-          ordenTrabajo.inspeccion.target!.completado = true;
-          final nuevaInstruccionInspeccion = Bitacora(
-            instruccion: 'syncActualizarInspeccion',
+        nuevoFrenos.revision.target = ordenTrabajo.revision.target;
+        ordenTrabajo.revision.target!.frenos.target = nuevoFrenos;
+        if (ordenTrabajo.revision.target?.suspensionDireccion.target != null 
+          && ordenTrabajo.revision.target?.frenos.target != null
+          && ordenTrabajo.revision.target?.fluidos.target != null
+          && ordenTrabajo.revision.target?.electrico.target != null
+          && ordenTrabajo.revision.target?.motor.target != null) {      
+          ordenTrabajo.revision.target!.completado = true;
+          final nuevaInstruccionRevision = Bitacora(
+            instruccion: 'syncActualizarRevision',
             usuarioPropietario: prefs.getString("userId")!,
             idOrdenTrabajo: ordenTrabajo.id,
           ); //Se crea la nueva instruccion a realizar en bitacora
-          nuevaInstruccionInspeccion.inspeccion.target = ordenTrabajo.inspeccion.target;
-          dataBase.bitacoraBox.put(nuevaInstruccionInspeccion);
+          nuevaInstruccionRevision.revision.target = ordenTrabajo.revision.target;
+          dataBase.bitacoraBox.put(nuevaInstruccionRevision);
         }
-        dataBase.inspeccionBox.put(ordenTrabajo.inspeccion.target!);
+        dataBase.revisionBox.put(ordenTrabajo.revision.target!);
         dataBase.ordenTrabajoBox.put(ordenTrabajo);
         final nuevaInstruccionFrenos = Bitacora(
           instruccion: 'syncAgregarFrenos',

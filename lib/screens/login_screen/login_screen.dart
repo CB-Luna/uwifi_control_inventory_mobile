@@ -8,6 +8,7 @@ import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/providers.dart';
 import 'package:taller_alex_app_asesor/providers/roles_supabase_provider.dart';
+import 'package:taller_alex_app_asesor/providers/sync_ordenes_trabajo_externas_supabase_provider.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/toggle_icon.dart';
 import 'package:taller_alex_app_asesor/services/auth_service.dart';
@@ -28,8 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    final rolesSupabaseProvider =
-        Provider.of<RolesSupabaseProvider>(context);
+    final rolesSupabaseProvider = Provider.of<RolesSupabaseProvider>(context);
+    final syncOrdenesTrabajoExternaSupabase = Provider.of<SyncOrdenesTrabajoExternasSupabaseProvider>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -380,7 +381,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     await prefs.remove('email');
                                     await prefs.remove('password');
                                   }
-              
+
                                   if (!mounted) return;
                                   await Navigator.push(
                                     context,
@@ -473,7 +474,27 @@ class _LoginScreenState extends State<LoginScreen> {
                                         await prefs.remove('email');
                                         await prefs.remove('password');
                                       }
-              
+                                      //Se descargan los proyectos por cada tipo de Usuario
+                                      bool procesoExistoso = false;
+                                      switch (usuarioProvider.usuarioCurrent!.rol.target!.rol) {
+                                        case "Asesor":
+                                          break;
+                                        case "Técnico-Mecánico":
+                                          break;
+                                        case "Cliente":
+                                          procesoExistoso = await syncOrdenesTrabajoExternaSupabase.getOrdenesTrabajoExternasSupabaseCliente(usuarioProvider.usuarioCurrent!);
+                                          break;
+                                        default:
+                                          break;
+                                      }
+
+                                      if (!procesoExistoso) {
+                                          snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Falló al descargar Órdenes de Trabajo del Servidor para el Usuario Actual."),
+                                        ));
+                                      }
                                       if (!mounted) return;
                                       await Navigator.push(
                                         context,

@@ -197,6 +197,15 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
+                    if (currentUser.rol.target!.rol == "Cliente")
+                    CustomMenuItem(
+                      label: 'Vehículos',
+                      iconData: Icons.directions_car,
+                      onTap: () async {
+                     
+                      },
+                    ),
+
                     if (currentUser.rol.target!.rol == "Asesor")
                     CustomMenuItem(
                       label: 'Clientes',
@@ -236,6 +245,7 @@ class SideMenu extends StatelessWidget {
                               await (Connectivity().checkConnectivity());
                           final bitacora = dataBase.bitacoraBox.getAll().toList();
                           //print("Tamaño bitacora: ${bitacora.length}");
+                          // ignore: use_build_context_synchronously
                           await showModalBottomSheet(
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,
@@ -263,6 +273,7 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
+                    if (currentUser.rol.target!.rol == "Asesor")
                     CustomMenuItem(
                       label: 'Sinc. Órdenes',
                       iconData: Icons.downloading_outlined,
@@ -271,6 +282,7 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
+                    if (currentUser.rol.target!.rol == "Asesor")
                     CustomMenuItem(
                       label: 'Sinc. Catálogos',
                       iconData: Icons.fact_check_outlined,
@@ -286,6 +298,7 @@ class SideMenu extends StatelessWidget {
                         } else {
                           final connectivityResult =
                               await (Connectivity().checkConnectivity());
+                          // ignore: use_build_context_synchronously
                           await showModalBottomSheet(
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,

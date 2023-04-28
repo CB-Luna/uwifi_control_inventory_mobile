@@ -150,20 +150,20 @@ class SyncProviderSupabase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
-        case "syncAgregarInspeccion":
-          final inspeccionToSync = getFirstInspeccion(
-              dataBase.inspeccionBox.getAll(), instruccionesBitacora[i].id);
-          if (inspeccionToSync != null) {
-            final responseSyncAddInspeccion = await syncAddInspeccion(
-                inspeccionToSync, instruccionesBitacora[i]);
-            if (responseSyncAddInspeccion.exitoso) {
-              banderasExistoSync.add(responseSyncAddInspeccion.exitoso);
+        case "syncAgregarRevision":
+          final revisionToSync = getFirstRevision(
+              dataBase.revisionBox.getAll(), instruccionesBitacora[i].id);
+          if (revisionToSync != null) {
+            final responseSyncAddRevision = await syncAddRevision(
+                revisionToSync, instruccionesBitacora[i]);
+            if (responseSyncAddRevision.exitoso) {
+              banderasExistoSync.add(responseSyncAddRevision.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(responseSyncAddInspeccion.exitoso);
+              banderasExistoSync.add(responseSyncAddRevision.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
-                  instruccion: responseSyncAddInspeccion.descripcion,
+                  instruccion: responseSyncAddRevision.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               instruccionesFallidas.add(instruccionNoSincronizada);
               continue;
@@ -201,7 +201,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
                 instruccion:
-                    "Problemas en sincronizar al Servidor Local una inspección de la suspensión y dirección no recuperada.",
+                    "Problemas en sincronizar al Servidor Local una Revisión de la suspensión y dirección no recuperada.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
@@ -229,7 +229,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
                 instruccion:
-                    "Problemas en sincronizar al Servidor Local una inspección del sistema eléctrico no recuperada.",
+                    "Problemas en sincronizar al Servidor Local una Revisión del sistema eléctrico no recuperada.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
@@ -257,7 +257,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
                 instruccion:
-                    "Problemas en sincronizar al Servidor Local una inspección de los fluidos no recuperada.",
+                    "Problemas en sincronizar al Servidor Local una Revisión de los fluidos no recuperada.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
@@ -285,7 +285,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
                 instruccion:
-                    "Problemas en sincronizar al Servidor Local una inspección de los frenos no recuperada.",
+                    "Problemas en sincronizar al Servidor Local una Revisión de los frenos no recuperada.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
@@ -313,7 +313,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
                 instruccion:
-                    "Problemas en sincronizar al Servidor Local una inspección del motor no recuperada.",
+                    "Problemas en sincronizar al Servidor Local una Revisión del motor no recuperada.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
@@ -346,20 +346,20 @@ class SyncProviderSupabase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
-        case "syncActualizarInspeccion":
-          final inspeccionToSync = getFirstInspeccion(
-              dataBase.inspeccionBox.getAll(), instruccionesBitacora[i].id);
-          if (inspeccionToSync != null) {
-            final responseSyncUpdateInspeccion = await syncUpdateInspeccion(
-                inspeccionToSync, instruccionesBitacora[i]);
-            if (responseSyncUpdateInspeccion.exitoso) {
-              banderasExistoSync.add(responseSyncUpdateInspeccion.exitoso);
+        case "syncActualizarRevision":
+          final revisionToSync = getFirstRevision(
+              dataBase.revisionBox.getAll(), instruccionesBitacora[i].id);
+          if (revisionToSync != null) {
+            final responseSyncUpdateRevision = await syncUpdateRevision(
+                revisionToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateRevision.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateRevision.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(responseSyncUpdateInspeccion.exitoso);
+              banderasExistoSync.add(responseSyncUpdateRevision.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
-                  instruccion: responseSyncUpdateInspeccion.descripcion,
+                  instruccion: responseSyncUpdateRevision.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               instruccionesFallidas.add(instruccionNoSincronizada);
               continue;
@@ -369,7 +369,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
                 instruccion:
-                    "Problemas en sincronizar al Servidor Local la actualización de la inspección no recuperada.",
+                    "Problemas en sincronizar al Servidor Local la actualización de la Revisión no recuperada.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
@@ -475,14 +475,14 @@ class SyncProviderSupabase extends ChangeNotifier {
     return null;
   }
 
-  Inspeccion? getFirstInspeccion(
-      List<Inspeccion> inspeccion, int idInstruccionesBitacora) {
-    for (var i = 0; i < inspeccion.length; i++) {
-      if (inspeccion[i].bitacora.isEmpty) {
+  Revision? getFirstRevision(
+      List<Revision> revision, int idInstruccionesBitacora) {
+    for (var i = 0; i < revision.length; i++) {
+      if (revision[i].bitacora.isEmpty) {
       } else {
-        for (var j = 0; j < inspeccion[i].bitacora.length; j++) {
-          if (inspeccion[i].bitacora[j].id == idInstruccionesBitacora) {
-            return inspeccion[i];
+        for (var j = 0; j < revision[i].bitacora.length; j++) {
+          if (revision[i].bitacora[j].id == idInstruccionesBitacora) {
+            return revision[i];
           }
         }
       }
@@ -856,23 +856,23 @@ class SyncProviderSupabase extends ChangeNotifier {
     }
   }
 
-  Future<SyncInstruction> syncAddInspeccion(
-      Inspeccion inspeccion, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddRevision(
+      Revision revision, Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
-        if (inspeccion.idDBR == null) {
+        if (revision.idDBR == null) {
           //Registrar el orden Trabajo
-          final recordInspeccion = await supabaseClient.from('inspeccion').insert(
+          final recordRevision = await supabaseClient.from('revision').insert(
             {
-              'created_at': inspeccion.fechaRegistro.toIso8601String(),
+              'created_at': revision.fechaRegistro.toIso8601String(),
               'completado': false,
-              'id_orden_trabajo_fk': inspeccion.ordenTrabajo.target!.idDBR,
+              'id_orden_trabajo_fk': revision.ordenTrabajo.target!.idDBR,
             },
           ).select<PostgrestList>('id');
-          if (recordInspeccion.isNotEmpty) {
+          if (recordRevision.isNotEmpty) {
             //Se recupera el idDBR de Supabase de la Observación
-            inspeccion.idDBR = recordInspeccion.first['id'].toString();
-            dataBase.inspeccionBox.put(inspeccion);
+            revision.idDBR = recordRevision.first['id'].toString();
+            dataBase.revisionBox.put(revision);
             //Se marca como ejecutada la instrucción en Bitacora
             bitacora.executeSupabase = true;
             dataBase.bitacoraBox.put(bitacora);
@@ -882,7 +882,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             return SyncInstruction(
             exitoso: false,
             descripcion:
-                "Falló en proceso de sincronizar alta de Inspección en el Servidor Local: Problema al postear los datos de la inspección de la Orden de Trabajo con id Local '${inspeccion.ordenTrabajo.target!.id}'.");
+                "Falló en proceso de sincronizar alta de Revisión en el Servidor Local: Problema al postear los datos de la Revisión de la Orden de Trabajo con id Local '${revision.ordenTrabajo.target!.id}'.");
           }
         } else {
           //Se marca como ejecutada la instrucción en Bitacora
@@ -900,7 +900,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Falló en proceso de sincronizar alta de de Inspección de la orden de trabajo con id Local '${inspeccion.ordenTrabajo.target!.id}' en el Servidor Local, detalles: '$e'");
+              "Falló en proceso de sincronizar alta de de Revisión de la orden de trabajo con id Local '${revision.ordenTrabajo.target!.id}' en el Servidor Local, detalles: '$e'");
     }
   }
 
@@ -910,7 +910,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       if (bitacora.executeSupabase == false) {
         if (suspensionDireccion.idDBR == null) {
           //Registrar el orden Trabajo
-          final recordInspeccion = await supabaseClient.from('suspension_direccion').insert(
+          final recordRevision = await supabaseClient.from('suspension_direccion').insert(
             {
               'created_at': suspensionDireccion.fechaRegistro.toIso8601String(),
               'amortiguador_trasero_der': suspensionDireccion.amortiguadorTraseroDer,
@@ -957,12 +957,12 @@ class SyncProviderSupabase extends ChangeNotifier {
               'terminal_exterior_izq_o': suspensionDireccion.terminalExteriorIzqObservaciones,
               'amortiguador_delantero_der_o': suspensionDireccion.amortiguadorDelanteroDerObservaciones,
               'terminal_exterior_der_o': suspensionDireccion.terminalExteriorDerObservaciones,
-              'id_inspeccion_fk': suspensionDireccion.inspeccion.target!.idDBR,
+              'id_revision_fk': suspensionDireccion.revision.target!.idDBR,
             },
           ).select<PostgrestList>('id');
-          if (recordInspeccion.isNotEmpty) {
+          if (recordRevision.isNotEmpty) {
             //Se recupera el idDBR de Supabase de la Suspensión Dirección
-            suspensionDireccion.idDBR = recordInspeccion.first['id'].toString();
+            suspensionDireccion.idDBR = recordRevision.first['id'].toString();
             dataBase.suspensionDireccionBox.put(suspensionDireccion);
             //Se marca como ejecutada la instrucción en Bitacora
             bitacora.executeSupabase = true;
@@ -973,7 +973,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             return SyncInstruction(
             exitoso: false,
             descripcion:
-                "Falló en proceso de sincronizar alta de Inspección de la Suspensión y Dirección del vehiculo en el Servidor Local: Problema al postear los datos de la inspección de la suspensión y dirección de la Orden de Trabajo con id Local '${suspensionDireccion.inspeccion.target!.ordenTrabajo.target!.id}'.");
+                "Falló en proceso de sincronizar alta de Revisión de la Suspensión y Dirección del vehiculo en el Servidor Local: Problema al postear los datos de la Revisión de la suspensión y dirección de la Orden de Trabajo con id Local '${suspensionDireccion.revision.target!.ordenTrabajo.target!.id}'.");
           }
         } else {
           //Se marca como ejecutada la instrucción en Bitacora
@@ -991,7 +991,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Falló en proceso de sincronizar alta de de Inspección de la Suspensión y Dirección del vehiculo de la orden de trabajo con id Local '${suspensionDireccion.inspeccion.target!.ordenTrabajo.target!.id}' en el Servidor Local, detalles: '$e'");
+              "Falló en proceso de sincronizar alta de de Revisión de la Suspensión y Dirección del vehiculo de la orden de trabajo con id Local '${suspensionDireccion.revision.target!.ordenTrabajo.target!.id}' en el Servidor Local, detalles: '$e'");
     }
   }
 
@@ -1002,7 +1002,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       if (bitacora.executeSupabase == false) {
         if (electrico.idDBR == null) {
           //Registrar el orden Trabajo
-          final recordInspeccion = await supabaseClient.from('electrico').insert(
+          final recordRevision = await supabaseClient.from('electrico').insert(
             {
               'created_at': electrico.fechaRegistro.toIso8601String(),
               'luces_direccionales': electrico.lucesDireccionales,
@@ -1015,12 +1015,12 @@ class SyncProviderSupabase extends ChangeNotifier {
               'luces_cuartos_o': electrico.lucesCuartosObservaciones,
               'luces_frenos_o': electrico.lucesFrenosObservaciones,
               'check_engine_o': electrico.checkEngineObservaciones,
-              'id_inspeccion_fk': electrico.inspeccion.target!.idDBR,
+              'id_revision_fk': electrico.revision.target!.idDBR,
             },
           ).select<PostgrestList>('id');
-          if (recordInspeccion.isNotEmpty) {
+          if (recordRevision.isNotEmpty) {
             //Se recupera el idDBR de Supabase del Eléctrico
-            electrico.idDBR = recordInspeccion.first['id'].toString();
+            electrico.idDBR = recordRevision.first['id'].toString();
             dataBase.electricoBox.put(electrico);
             //Se marca como ejecutada la instrucción en Bitacora
             bitacora.executeSupabase = true;
@@ -1031,7 +1031,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             return SyncInstruction(
             exitoso: false,
             descripcion:
-                "Falló en proceso de sincronizar alta de Inspección de la Sistema Eléctrico del vehiculo en el Servidor Local: Problema al postear los datos de la inspección del sistema eléctrico de la Orden de Trabajo con id Local '${electrico.inspeccion.target!.ordenTrabajo.target!.id}'.");
+                "Falló en proceso de sincronizar alta de Revisión de la Sistema Eléctrico del vehiculo en el Servidor Local: Problema al postear los datos de la Revisión del sistema eléctrico de la Orden de Trabajo con id Local '${electrico.revision.target!.ordenTrabajo.target!.id}'.");
           }
         } else {
           //Se marca como ejecutada la instrucción en Bitacora
@@ -1049,7 +1049,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Falló en proceso de sincronizar alta de de Inspección de la Sistema Eléctrico del vehiculo de la orden de trabajo con id Local '${electrico.inspeccion.target!.ordenTrabajo.target!.id}' en el Servidor Local, detalles: '$e'");
+              "Falló en proceso de sincronizar alta de de Revisión de la Sistema Eléctrico del vehiculo de la orden de trabajo con id Local '${electrico.revision.target!.ordenTrabajo.target!.id}' en el Servidor Local, detalles: '$e'");
     }
   }
 
@@ -1059,7 +1059,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       if (bitacora.executeSupabase == false) {
         if (fluido.idDBR == null) {
           //Registrar el orden Trabajo
-          final recordInspeccion = await supabaseClient.from('fluidos').insert(
+          final recordRevision = await supabaseClient.from('fluidos').insert(
             {
               'created_at': fluido.fechaRegistro.toIso8601String(),
               'atf': fluido.atf,
@@ -1072,12 +1072,12 @@ class SyncProviderSupabase extends ChangeNotifier {
               'frenos_o': fluido.frenosObservaciones,
               'anticongelante_o': fluido.anticongelanteObservaciones,
               'wipers_o': fluido.wipersObservaciones,
-              'id_inspeccion_fk': fluido.inspeccion.target!.idDBR,
+              'id_revision_fk': fluido.revision.target!.idDBR,
             },
           ).select<PostgrestList>('id');
-          if (recordInspeccion.isNotEmpty) {
+          if (recordRevision.isNotEmpty) {
             //Se recupera el idDBR de Supabase de Fluidos
-            fluido.idDBR = recordInspeccion.first['id'].toString();
+            fluido.idDBR = recordRevision.first['id'].toString();
             dataBase.fluidosBox.put(fluido);
             //Se marca como ejecutada la instrucción en Bitacora
             bitacora.executeSupabase = true;
@@ -1088,7 +1088,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             return SyncInstruction(
             exitoso: false,
             descripcion:
-                "Falló en proceso de sincronizar alta de Inspección de Fluidos del vehiculo en el Servidor Local: Problema al postear los datos de la inspección de los fluidos de la Orden de Trabajo con id Local '${fluido.inspeccion.target!.ordenTrabajo.target!.id}'.");
+                "Falló en proceso de sincronizar alta de Revisión de Fluidos del vehiculo en el Servidor Local: Problema al postear los datos de la Revisión de los fluidos de la Orden de Trabajo con id Local '${fluido.revision.target!.ordenTrabajo.target!.id}'.");
           }
         } else {
           //Se marca como ejecutada la instrucción en Bitacora
@@ -1106,7 +1106,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Falló en proceso de sincronizar alta de de Inspección de Fluidos del vehiculo de la orden de trabajo con id Local '${fluido.inspeccion.target!.ordenTrabajo.target!.id}' en el Servidor Local, detalles: '$e'");
+              "Falló en proceso de sincronizar alta de de Revisión de Fluidos del vehiculo de la orden de trabajo con id Local '${fluido.revision.target!.ordenTrabajo.target!.id}' en el Servidor Local, detalles: '$e'");
     }
   }
 
@@ -1116,7 +1116,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       if (bitacora.executeSupabase == false) {
         if (frenos.idDBR == null) {
           //Registrar el orden Trabajo
-          final recordInspeccion = await supabaseClient.from('frenos').insert(
+          final recordRevision = await supabaseClient.from('frenos').insert(
             {
               'created_at': frenos.fechaRegistro.toIso8601String(),
               'balatas_delanteras': frenos.balatasDelanteras,
@@ -1129,12 +1129,12 @@ class SyncProviderSupabase extends ChangeNotifier {
               'mangueras_lineas_o': frenos.manguerasLineasObservaciones,
               'cilindro_maestro_o': frenos.cilindroMaestroObservaciones,
               'birlos_tuercas_o': frenos.birlosYTuercasObservaciones,
-              'id_inspeccion_fk': frenos.inspeccion.target!.idDBR,
+              'id_revision_fk': frenos.revision.target!.idDBR,
             },
           ).select<PostgrestList>('id');
-          if (recordInspeccion.isNotEmpty) {
+          if (recordRevision.isNotEmpty) {
             //Se recupera el idDBR de Supabase de Frenos
-            frenos.idDBR = recordInspeccion.first['id'].toString();
+            frenos.idDBR = recordRevision.first['id'].toString();
             dataBase.frenosBox.put(frenos);
             //Se marca como ejecutada la instrucción en Bitacora
             bitacora.executeSupabase = true;
@@ -1145,7 +1145,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             return SyncInstruction(
             exitoso: false,
             descripcion:
-                "Falló en proceso de sincronizar alta de Inspección de Frenos del vehiculo en el Servidor Local: Problema al postear los datos de la inspección de los frenos de la Orden de Trabajo con id Local '${frenos.inspeccion.target!.ordenTrabajo.target!.id}'.");
+                "Falló en proceso de sincronizar alta de Revisión de Frenos del vehiculo en el Servidor Local: Problema al postear los datos de la Revisión de los frenos de la Orden de Trabajo con id Local '${frenos.revision.target!.ordenTrabajo.target!.id}'.");
           }
         } else {
           //Se marca como ejecutada la instrucción en Bitacora
@@ -1163,7 +1163,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Falló en proceso de sincronizar alta de de Inspección de Frenos del vehiculo de la orden de trabajo con id Local '${frenos.inspeccion.target!.ordenTrabajo.target!.id}' en el Servidor Local, detalles: '$e'");
+              "Falló en proceso de sincronizar alta de de Revisión de Frenos del vehiculo de la orden de trabajo con id Local '${frenos.revision.target!.ordenTrabajo.target!.id}' en el Servidor Local, detalles: '$e'");
     }
   }
 
@@ -1173,7 +1173,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       if (bitacora.executeSupabase == false) {
         if (motor.idDBR == null) {
           //Registrar el orden Trabajo
-          final recordInspeccion = await supabaseClient.from('motor').insert(
+          final recordRevision = await supabaseClient.from('motor').insert(
             {
               'created_at': motor.fechaRegistro.toIso8601String(),
               'aceite': motor.aceite,
@@ -1192,12 +1192,12 @@ class SyncProviderSupabase extends ChangeNotifier {
               'soportes_o': motor.soportesObservaciones,
               'bandas_o': motor.bandasObservaciones,
               'mangueras_o': motor.manguerasObservaciones,
-              'id_inspeccion_fk': motor.inspeccion.target!.idDBR,
+              'id_revision_fk': motor.revision.target!.idDBR,
             },
           ).select<PostgrestList>('id');
-          if (recordInspeccion.isNotEmpty) {
+          if (recordRevision.isNotEmpty) {
             //Se recupera el idDBR de Supabase de Frenos
-            motor.idDBR = recordInspeccion.first['id'].toString();
+            motor.idDBR = recordRevision.first['id'].toString();
             dataBase.motorBox.put(motor);
             //Se marca como ejecutada la instrucción en Bitacora
             bitacora.executeSupabase = true;
@@ -1208,7 +1208,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             return SyncInstruction(
             exitoso: false,
             descripcion:
-                "Falló en proceso de sincronizar alta de Inspección de Motor del vehiculo en el Servidor Local: Problema al postear los datos de la inspección del motor de la Orden de Trabajo con id Local '${motor.inspeccion.target!.ordenTrabajo.target!.id}'.");
+                "Falló en proceso de sincronizar alta de Revisión de Motor del vehiculo en el Servidor Local: Problema al postear los datos de la Revisión del motor de la Orden de Trabajo con id Local '${motor.revision.target!.ordenTrabajo.target!.id}'.");
           }
         } else {
           //Se marca como ejecutada la instrucción en Bitacora
@@ -1226,7 +1226,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Falló en proceso de sincronizar alta de de Inspección del Motor del vehiculo de la orden de trabajo con id Local '${motor.inspeccion.target!.ordenTrabajo.target!.id}' en el Servidor Local, detalles: '$e'");
+              "Falló en proceso de sincronizar alta de de Revisión del Motor del vehiculo de la orden de trabajo con id Local '${motor.revision.target!.ordenTrabajo.target!.id}' en el Servidor Local, detalles: '$e'");
     }
   }
 
@@ -1278,19 +1278,19 @@ class SyncProviderSupabase extends ChangeNotifier {
     }
   }
 
-    Future<SyncInstruction> syncUpdateInspeccion(
-      Inspeccion inspeccion, Bitacora bitacora) async {
+    Future<SyncInstruction> syncUpdateRevision(
+      Revision revision, Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
         //Registrar el orden Trabajo
-        final recordInspeccion = await supabaseClient.from('inspeccion').update(
+        final recordRevision = await supabaseClient.from('revision').update(
           {
-            'completado': inspeccion.completado,
+            'completado': revision.completado,
           },
         )
-        .eq('id', inspeccion.idDBR)
+        .eq('id', revision.idDBR)
         .select();
-        if (recordInspeccion.isNotEmpty) {
+        if (recordRevision.isNotEmpty) {
           //Se marca como ejecutada la instrucción en Bitacora
           bitacora.executeSupabase = true;
           dataBase.bitacoraBox.put(bitacora);
@@ -1300,7 +1300,7 @@ class SyncProviderSupabase extends ChangeNotifier {
           return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Falló en proceso de sincronizar actualización de Inspección en el Servidor Local: Problema al actualizar los datos de la inspección de la Orden de Trabajo con id Local '${inspeccion.ordenTrabajo.target!.id}'.");
+              "Falló en proceso de sincronizar actualización de Revisión en el Servidor Local: Problema al actualizar los datos de la Revisión de la Orden de Trabajo con id Local '${revision.ordenTrabajo.target!.id}'.");
         }
       } else {
         dataBase.bitacoraBox.remove(bitacora.id);
@@ -1311,7 +1311,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Falló en proceso de sincronizar actualización de de Inspección de la orden de trabajo con id Local '${inspeccion.ordenTrabajo.target!.id}' en el Servidor Local, detalles: '$e'");
+              "Falló en proceso de sincronizar actualización de de Revisión de la orden de trabajo con id Local '${revision.ordenTrabajo.target!.id}' en el Servidor Local, detalles: '$e'");
     }
   }
 

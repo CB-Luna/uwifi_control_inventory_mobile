@@ -189,6 +189,10 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                           AutovalidateMode.onUserInteraction,
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.person_outline,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                         labelText: 'Asesor*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -203,7 +207,7 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -274,7 +278,7 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                           enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -306,7 +310,7 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                         suffixIcon: Icon(
                             Icons.date_range_outlined,
                             color: FlutterFlowTheme.of(context)
-                                .secondaryText,
+                                .primaryColor,
                             size: 24,
                           ),
                         ),
@@ -334,6 +338,10 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.car_rental_outlined,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                         labelText: 'VIN*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -347,7 +355,7 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -676,6 +684,10 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
+                                          prefixIcon: Icon(
+                                            Icons.speed_outlined,
+                                            color: FlutterFlowTheme.of(context).primaryColor,
+                                          ),
                                           labelText: medida == "Millas" ? 'Millaje*' : 'Kilometraje*',
                                           labelStyle: FlutterFlowTheme.of(context)
                                               .title3
@@ -689,7 +701,7 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                               color:
-                                                  FlutterFlowTheme.of(context).grayDark,
+                                                  FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                                               width: 2,
                                             ),
                                             borderRadius: BorderRadius.circular(8),
@@ -849,6 +861,10 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                               },
                             obscureText: false,
                             decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.local_gas_station_outlined,
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                              ),
                               labelText: 'Gasolina*',
                               labelStyle: FlutterFlowTheme.of(context)
                                   .title3
@@ -862,7 +878,7 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).grayDark,
+                                      FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
@@ -914,6 +930,10 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                             },
                             obscureText: false,
                             decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.info_outlined,
+                                color: FlutterFlowTheme.of(context).dark400,
+                              ),
                               labelText: 'Descripción de la Falla',
                               labelStyle: FlutterFlowTheme.of(context)
                                   .title3
@@ -935,21 +955,21 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                      FlutterFlowTheme.of(context).dark400,
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).dark400,
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).dark400,
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(8),

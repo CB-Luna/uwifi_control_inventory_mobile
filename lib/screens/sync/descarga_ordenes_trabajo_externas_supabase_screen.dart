@@ -35,7 +35,7 @@ class _DescargaOrdenesTrabajoExternasSupabaseScreenState extends State<DescargaO
         context.read<SyncOrdenesTrabajoExternasSupabaseProvider>().procesoCargando(true);
         context.read<SyncOrdenesTrabajoExternasSupabaseProvider>().procesoTerminado(false);
         context.read<SyncOrdenesTrabajoExternasSupabaseProvider>().procesoExitoso(false);
-        context.read<SyncOrdenesTrabajoExternasSupabaseProvider>().getOrdenesTrabajoExternasSupabase(widget.idEmprendimiento, widget.usuario, widget.tokenGlobal, widget.idEmprendimientoEmiWeb);
+        context.read<SyncOrdenesTrabajoExternasSupabaseProvider>().getOrdenesTrabajoExternasSupabaseCliente(widget.usuario);
     });
   }
 

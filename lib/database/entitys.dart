@@ -67,7 +67,7 @@ class OrdenTrabajo {
   final cliente = ToOne<Usuarios>();
   final vehiculo = ToOne<Vehiculo>();
   final formaPago = ToOne<FormaPago>();
-  final inspeccion = ToOne<Inspeccion>();
+  final revision = ToOne<Revision>();
   final ordenServicio = ToOne<OrdenServicio>();
   final estatus = ToOne<Estatus>();
   @Backlink()
@@ -162,7 +162,7 @@ class Observaciones {
 }
 
 @Entity()
-class Inspeccion {
+class Revision {
   int id;
   bool completado;
   DateTime fechaRegistro;
@@ -177,7 +177,7 @@ class Inspeccion {
   @Backlink()
   final bitacora = ToMany<Bitacora>();
 
-  Inspeccion({
+  Revision({
     this.id = 0,
     required this.completado,
     DateTime? fechaRegistro,
@@ -371,7 +371,7 @@ class SuspensionDireccion {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  final inspeccion = ToOne<Inspeccion>();
+  final revision = ToOne<Revision>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
 
@@ -453,7 +453,7 @@ class Motor {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  final inspeccion = ToOne<Inspeccion>();
+  final revision = ToOne<Revision>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
 
@@ -501,7 +501,7 @@ class Fluidos {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  final inspeccion = ToOne<Inspeccion>();
+  final revision = ToOne<Revision>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
 
@@ -543,7 +543,7 @@ class Frenos {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  final inspeccion = ToOne<Inspeccion>();
+  final revision = ToOne<Revision>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
 
@@ -585,7 +585,7 @@ class Electrico {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  final inspeccion = ToOne<Inspeccion>();
+  final revision = ToOne<Revision>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
 
@@ -875,7 +875,7 @@ class Bitacora {
   final vehiculo = ToOne<Vehiculo>();
   final ordenTrabajo = ToOne<OrdenTrabajo>();
   final observacion = ToOne<Observaciones>();
-  final inspeccion = ToOne<Inspeccion>();
+  final revision = ToOne<Revision>();
   final suspensionDireccion = ToOne<SuspensionDireccion>();
   final motor = ToOne<Motor>();
   final fluidos = ToOne<Fluidos>();

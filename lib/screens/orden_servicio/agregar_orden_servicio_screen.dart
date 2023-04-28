@@ -356,6 +356,10 @@ class _AgregarOrdenServicioScreenState extends State<AgregarOrdenServicioScreen>
                         },
                         obscureText: false,
                         decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.build_outlined,
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                          ),
                           labelText: 'Servicio*',
                           labelStyle: FlutterFlowTheme.of(context)
                               .title3
@@ -369,7 +373,7 @@ class _AgregarOrdenServicioScreenState extends State<AgregarOrdenServicioScreen>
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color:
-                                  FlutterFlowTheme.of(context).grayDark,
+                                  FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                               width: 2,
                             ),
                             borderRadius: BorderRadius.circular(8),
@@ -383,15 +387,15 @@ class _AgregarOrdenServicioScreenState extends State<AgregarOrdenServicioScreen>
                             borderRadius: BorderRadius.circular(8),
                           ),
                           errorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0x00000000),
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).primaryColor,
                               width: 2,
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0x00000000),
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).primaryColor,
                               width: 2,
                             ),
                             borderRadius: BorderRadius.circular(8),
@@ -423,7 +427,7 @@ class _AgregarOrdenServicioScreenState extends State<AgregarOrdenServicioScreen>
                               final servicio = ordenServicioProvider.opcionesServicios[index];
                               return ListTile(
                                 leading: Icon(
-                                  Icons.car_rental,
+                                  Icons.build_outlined,
                                   color: FlutterFlowTheme.of(context).primaryColor,
                                 ),
                                 title: Text(servicio),
@@ -610,6 +614,10 @@ class _AgregarOrdenServicioScreenState extends State<AgregarOrdenServicioScreen>
                                                           },
                                                           obscureText: false,
                                                           decoration: InputDecoration(
+                                                            prefixIcon: Icon(
+                                                              Icons.settings_outlined,
+                                                              color: FlutterFlowTheme.of(context).primaryColor,
+                                                            ),
                                                             labelText: 'Producto*',
                                                             labelStyle: FlutterFlowTheme.of(context)
                                                                 .title3
@@ -622,7 +630,7 @@ class _AgregarOrdenServicioScreenState extends State<AgregarOrdenServicioScreen>
                                                             enabledBorder: OutlineInputBorder(
                                                               borderSide: BorderSide(
                                                                 color:
-                                                                    FlutterFlowTheme.of(context).grayDark,
+                                                                    FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                                                                 width: 2,
                                                               ),
                                                               borderRadius: BorderRadius.circular(8),
@@ -988,6 +996,10 @@ class _AgregarOrdenServicioScreenState extends State<AgregarOrdenServicioScreen>
                               },
                               obscureText: false,
                               decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                Icons.comment_outlined,
+                                color: FlutterFlowTheme.of(context).dark400,
+                              ),
                                 labelText: 'Comentarios',
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .title3
@@ -1009,7 +1021,7 @@ class _AgregarOrdenServicioScreenState extends State<AgregarOrdenServicioScreen>
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color:
-                                        FlutterFlowTheme.of(context).primaryColor,
+                                        FlutterFlowTheme.of(context).dark400,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
@@ -1058,11 +1070,20 @@ class _AgregarOrdenServicioScreenState extends State<AgregarOrdenServicioScreen>
                               },
                               obscureText: false,
                               decoration: InputDecoration(
+                                labelText: 'Fecha de Entrega*',
+                                labelStyle: FlutterFlowTheme.of(context)
+                                .title3
+                                .override(
+                                  fontFamily: 'Montserrat',
+                                  color: FlutterFlowTheme.of(context).grayDark,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                ),
                                 hintText: 'Ingrese la Fecha de Entrega...',
                                 enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).lineColor,
+                                      FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
@@ -1094,7 +1115,7 @@ class _AgregarOrdenServicioScreenState extends State<AgregarOrdenServicioScreen>
                               suffixIcon: Icon(
                                   Icons.date_range_outlined,
                                   color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
+                                      .primaryColor,
                                   size: 24,
                                 ),
                               ),

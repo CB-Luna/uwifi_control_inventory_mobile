@@ -842,7 +842,7 @@
     },
     {
       "id": "27:1774905738150923512",
-      "lastPropertyId": "39:2108000366401092803",
+      "lastPropertyId": "40:7122234269288979042",
       "name": "Bitacora",
       "properties": [
         {
@@ -897,14 +897,6 @@
           "flags": 520,
           "indexId": "297:8685125260427970668",
           "relationTarget": "Observaciones"
-        },
-        {
-          "id": "24:4982602150232490228",
-          "name": "inspeccionId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "298:2269028587050617485",
-          "relationTarget": "Inspeccion"
         },
         {
           "id": "25:3918405948041939496",
@@ -1000,6 +992,14 @@
           "flags": 520,
           "indexId": "345:2071126468008917387",
           "relationTarget": "OrdenServicio"
+        },
+        {
+          "id": "40:7122234269288979042",
+          "name": "revisionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "355:8629614743217635052",
+          "relationTarget": "Revision"
         }
       ],
       "relations": []
@@ -2979,7 +2979,7 @@
     },
     {
       "id": "67:5935206935227986130",
-      "lastPropertyId": "19:5050726085676383011",
+      "lastPropertyId": "20:7723558054890044016",
       "name": "OrdenTrabajo",
       "properties": [
         {
@@ -3045,14 +3045,6 @@
           "type": 9
         },
         {
-          "id": "14:7468202760391464931",
-          "name": "inspeccionId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "319:8225671083316443571",
-          "relationTarget": "Inspeccion"
-        },
-        {
           "id": "16:7527339157164656864",
           "name": "estatusId",
           "type": 11,
@@ -3080,6 +3072,14 @@
           "flags": 520,
           "indexId": "346:5102240519216394134",
           "relationTarget": "OrdenServicio"
+        },
+        {
+          "id": "20:7723558054890044016",
+          "name": "revisionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "360:3439419524514485769",
+          "relationTarget": "Revision"
         }
       ],
       "relations": []
@@ -3180,7 +3180,7 @@
     },
     {
       "id": "69:194731522577233837",
-      "lastPropertyId": "15:8062410051394054856",
+      "lastPropertyId": "16:3688190060364945344",
       "name": "Electrico",
       "properties": [
         {
@@ -3257,19 +3257,19 @@
           "indexId": "304:7623393226964576846"
         },
         {
-          "id": "15:8062410051394054856",
-          "name": "inspeccionId",
+          "id": "16:3688190060364945344",
+          "name": "revisionId",
           "type": 11,
           "flags": 520,
-          "indexId": "305:6682874173406097296",
-          "relationTarget": "Inspeccion"
+          "indexId": "356:8944888087688617558",
+          "relationTarget": "Revision"
         }
       ],
       "relations": []
     },
     {
       "id": "70:7402766830593382424",
-      "lastPropertyId": "15:8390754601530441060",
+      "lastPropertyId": "16:3572954889694640449",
       "name": "Fluidos",
       "properties": [
         {
@@ -3346,19 +3346,19 @@
           "indexId": "306:911150289122399543"
         },
         {
-          "id": "15:8390754601530441060",
-          "name": "inspeccionId",
+          "id": "16:3572954889694640449",
+          "name": "revisionId",
           "type": 11,
           "flags": 520,
-          "indexId": "307:2361876396703109126",
-          "relationTarget": "Inspeccion"
+          "indexId": "357:1770250886993691909",
+          "relationTarget": "Revision"
         }
       ],
       "relations": []
     },
     {
       "id": "71:111540169671743370",
-      "lastPropertyId": "15:533305253152089088",
+      "lastPropertyId": "16:2179343323560761209",
       "name": "Frenos",
       "properties": [
         {
@@ -3435,98 +3435,19 @@
           "indexId": "308:7954708597295856759"
         },
         {
-          "id": "15:533305253152089088",
-          "name": "inspeccionId",
+          "id": "16:2179343323560761209",
+          "name": "revisionId",
           "type": 11,
           "flags": 520,
-          "indexId": "309:3340382302793284993",
-          "relationTarget": "Inspeccion"
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "72:6058346533219474088",
-      "lastPropertyId": "10:217979591081755395",
-      "name": "Inspeccion",
-      "properties": [
-        {
-          "id": "1:87293066711590796",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:8885131783820316498",
-          "name": "completado",
-          "type": 1
-        },
-        {
-          "id": "3:3715155887157026250",
-          "name": "fechaRegistro",
-          "type": 10
-        },
-        {
-          "id": "4:8285343895130438747",
-          "name": "idDBR",
-          "type": 9,
-          "flags": 2080,
-          "indexId": "310:4573244063569299906"
-        },
-        {
-          "id": "5:429722851893671768",
-          "name": "ordenTrabajoId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "311:1680557825428046778",
-          "relationTarget": "OrdenTrabajo"
-        },
-        {
-          "id": "6:4261604311738999975",
-          "name": "suspensionDireccionId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "312:4644219849127576858",
-          "relationTarget": "SuspensionDireccion"
-        },
-        {
-          "id": "7:5026232333015543017",
-          "name": "motorId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "313:3417602949111726003",
-          "relationTarget": "Motor"
-        },
-        {
-          "id": "8:3636328042280877759",
-          "name": "fluidosId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "314:4032144164510903170",
-          "relationTarget": "Fluidos"
-        },
-        {
-          "id": "9:1498174391682013886",
-          "name": "frenosId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "315:4380495365496347077",
-          "relationTarget": "Frenos"
-        },
-        {
-          "id": "10:217979591081755395",
-          "name": "electricoId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "316:8610428745349104041",
-          "relationTarget": "Electrico"
+          "indexId": "358:3605606892129463176",
+          "relationTarget": "Revision"
         }
       ],
       "relations": []
     },
     {
       "id": "73:3609614765671064101",
-      "lastPropertyId": "23:2016822154535446518",
+      "lastPropertyId": "24:6228579808324990306",
       "name": "Motor",
       "properties": [
         {
@@ -3623,14 +3544,6 @@
           "indexId": "317:4499173726230872981"
         },
         {
-          "id": "21:4175555395084776827",
-          "name": "inspeccionId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "318:7638733067445510244",
-          "relationTarget": "Inspeccion"
-        },
-        {
           "id": "22:6477881401001478570",
           "name": "filtroDeAire",
           "type": 9
@@ -3639,13 +3552,21 @@
           "id": "23:2016822154535446518",
           "name": "filtroDeAireObservaciones",
           "type": 9
+        },
+        {
+          "id": "24:6228579808324990306",
+          "name": "revisionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "359:3823747044694402973",
+          "relationTarget": "Revision"
         }
       ],
       "relations": []
     },
     {
       "id": "74:8182885394159286166",
-      "lastPropertyId": "50:2512232729201797121",
+      "lastPropertyId": "51:6922946760873952614",
       "name": "SuspensionDireccion",
       "properties": [
         {
@@ -3887,17 +3808,17 @@
           "indexId": "320:8517032296365500676"
         },
         {
-          "id": "49:3325459040369815966",
-          "name": "inspeccionId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "321:7330226207696814681",
-          "relationTarget": "Inspeccion"
-        },
-        {
           "id": "50:2512232729201797121",
           "name": "completado",
           "type": 1
+        },
+        {
+          "id": "51:6922946760873952614",
+          "name": "revisionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "361:4921891675391413447",
+          "relationTarget": "Revision"
         }
       ],
       "relations": []
@@ -4176,10 +4097,89 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "82:7390367631800539092",
+      "lastPropertyId": "10:1999877334393239664",
+      "name": "Revision",
+      "properties": [
+        {
+          "id": "1:7177154962008707056",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3456054432801704327",
+          "name": "completado",
+          "type": 1
+        },
+        {
+          "id": "3:5630590910122487290",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "4:2743153165281518501",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "348:6919265969950515024"
+        },
+        {
+          "id": "5:3094640215326290163",
+          "name": "ordenTrabajoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "349:7553900630667516810",
+          "relationTarget": "OrdenTrabajo"
+        },
+        {
+          "id": "6:5979108585375922629",
+          "name": "suspensionDireccionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "350:3433005883221835885",
+          "relationTarget": "SuspensionDireccion"
+        },
+        {
+          "id": "7:4405027249150098759",
+          "name": "motorId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "351:6490798697442199075",
+          "relationTarget": "Motor"
+        },
+        {
+          "id": "8:7938494145439495975",
+          "name": "fluidosId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "352:5170564838381844129",
+          "relationTarget": "Fluidos"
+        },
+        {
+          "id": "9:3618585044190150185",
+          "name": "frenosId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "353:2221883928487093256",
+          "relationTarget": "Frenos"
+        },
+        {
+          "id": "10:1999877334393239664",
+          "name": "electricoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "354:7877422317358216693",
+          "relationTarget": "Electrico"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "81:2641322679545348634",
-  "lastIndexId": "347:7705174580670337953",
+  "lastEntityId": "82:7390367631800539092",
+  "lastIndexId": "361:4921891675391413447",
   "lastRelationId": "87:1176537328766838454",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
@@ -4211,7 +4211,8 @@
     7625539946193612618,
     6276906075580230896,
     6250629756136671550,
-    5100626670541562876
+    5100626670541562876,
+    6058346533219474088
   ],
   "retiredIndexUids": [
     8990521503430950587,
@@ -4336,7 +4337,14 @@
     1775900829394429954,
     2381769723952164502,
     7302368435975826295,
-    2002401092371240826
+    2002401092371240826,
+    2269028587050617485,
+    6682874173406097296,
+    2361876396703109126,
+    3340382302793284993,
+    7638733067445510244,
+    8225671083316443571,
+    7330226207696814681
   ],
   "retiredPropertyUids": [
     7079790605743243388,
@@ -4713,7 +4721,24 @@
     3148729869057314786,
     8791841775805765497,
     3821015968441469978,
-    5222079827570678012
+    5222079827570678012,
+    87293066711590796,
+    8885131783820316498,
+    3715155887157026250,
+    8285343895130438747,
+    429722851893671768,
+    4261604311738999975,
+    5026232333015543017,
+    3636328042280877759,
+    1498174391682013886,
+    217979591081755395,
+    4982602150232490228,
+    8062410051394054856,
+    8390754601530441060,
+    533305253152089088,
+    4175555395084776827,
+    7468202760391464931,
+    3325459040369815966
   ],
   "retiredRelationUids": [
     1226469011453769556,

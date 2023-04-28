@@ -4,9 +4,6 @@ import 'dart:io';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:semicircle_indicator/semicircle_indicator.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
-import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_widgets.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
@@ -246,7 +243,7 @@ print(jsonString);
                                       borderRadius:
                                           BorderRadius.circular(8),
                                       border: Border.all(
-                                        color: FlutterFlowTheme.of(context).tertiaryColor,
+                                        color: FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                                         width: 1.5,
                                       ),
                                     ),
@@ -278,6 +275,10 @@ print(jsonString);
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.label_outline,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                         labelText: 'Marca*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -292,7 +293,7 @@ print(jsonString);
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -346,6 +347,10 @@ print(jsonString);
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.directions_car_outlined,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                         labelText: 'Modelo*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -360,7 +365,7 @@ print(jsonString);
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -453,7 +458,7 @@ print(jsonString);
                           enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -485,7 +490,7 @@ print(jsonString);
                         suffixIcon: Icon(
                             Icons.date_range_outlined,
                             color: FlutterFlowTheme.of(context)
-                                .secondaryText,
+                                .primaryColor,
                             size: 24,
                           ),
                         ),
@@ -512,6 +517,10 @@ print(jsonString);
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.car_rental_outlined,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                         labelText: 'VIN*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -525,7 +534,7 @@ print(jsonString);
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -579,6 +588,10 @@ print(jsonString);
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.pin_outlined,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                         labelText: 'Placas*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -592,7 +605,7 @@ print(jsonString);
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -644,6 +657,10 @@ print(jsonString);
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.color_lens_outlined,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                         labelText: 'Color*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -657,7 +674,7 @@ print(jsonString);
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -709,6 +726,10 @@ print(jsonString);
                       },
                       obscureText: false,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.bolt_outlined,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                         labelText: 'Motor*',
                         labelStyle: FlutterFlowTheme.of(context)
                             .title3
@@ -722,7 +743,7 @@ print(jsonString);
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:
-                                FlutterFlowTheme.of(context).grayDark,
+                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8),
