@@ -40,9 +40,6 @@ class _PagosTabState extends State<PagosTab>
 
   @override
   Widget build(BuildContext context) {
-    final syncProviderSupabase = Provider.of<SyncProviderSupabase>(context);
-    final List<ProdSolicitado> prodSolicitado = [];
-    double totalProyecto = 3555;
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,

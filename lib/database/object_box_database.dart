@@ -26,21 +26,8 @@ class ObjectBoxDatabase {
   late final Box<Marca> marcaBox;
   late final Box<Modelo> modeloBox;
   late final Box<Anio> anioBox;
-  late final Box<TipoProyecto> tipoProyectoBox;
-  late final Box<CatalogoProyecto> catalogoProyectoBox;
   late final Box<Roles> rolesBox;
-  late final Box<Inversiones> inversionesBox;
-  late final Box<ProdSolicitado> productosSolicitadosBox;
-  late final Box<ProdProyecto> productosProyectoBox;
-  late final Box<EstadoInversion> estadoInversionBox;
   late final Box<Pagos> pagosBox;
-  late final Box<TipoProveedor> tipoProveedorBox;
-  late final Box<CondicionesPago> condicionesPagoBox;
-  late final Box<Bancos> bancosBox;
-  late final Box<Proveedores> proveedoresBox;
-  late final Box<FamiliaInversion> familiaInversionBox;
-  late final Box<ProductosProv> productosProvBox;
-  late final Box<InversionesXProdCotizados> inversionesXprodCotizadosBox;
 
   ObjectBoxDatabase._create(this.store) {
     // Add any additional setup code, e.g. build queries.
@@ -65,21 +52,8 @@ class ObjectBoxDatabase {
     marcaBox = Box<Marca>(store);
     modeloBox = Box<Modelo>(store);
     anioBox = Box<Anio>(store);
-    tipoProyectoBox = Box<TipoProyecto>(store);
-    catalogoProyectoBox = Box<CatalogoProyecto>(store);
     rolesBox = Box<Roles>(store);
-    inversionesBox = Box<Inversiones>(store);
-    productosSolicitadosBox = Box<ProdSolicitado>(store);
-    productosProyectoBox = Box<ProdProyecto>(store);
-    estadoInversionBox = Box<EstadoInversion>(store);
     pagosBox = Box<Pagos>(store);
-    tipoProveedorBox = Box<TipoProveedor>(store);
-    condicionesPagoBox = Box<CondicionesPago>(store);
-    bancosBox = Box<Bancos>(store);
-    proveedoresBox = Box<Proveedores>(store);
-    familiaInversionBox = Box<FamiliaInversion>(store);
-    productosProvBox = Box<ProductosProv>(store);
-    inversionesXprodCotizadosBox = Box<InversionesXProdCotizados>(store);
   }
 
   /// Create an instance of ObjectBox to use throughout the app.

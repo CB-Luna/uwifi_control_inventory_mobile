@@ -17,12 +17,7 @@ class Emprendimientos {
   @Unique()
   String? idEmiWeb;
   final usuario = ToOne<Usuarios>(); //Promotor en Diagrama E-R
-  final prioridadEmp = ToOne<PrioridadEmp>();
-  final catalogoProyecto = ToOne<CatalogoProyecto>();
-  final proveedores = ToMany<Proveedores>();
   final bitacora = ToMany<Bitacora>();
-  @Backlink()
-  final inversiones = ToMany<Inversiones>();
 
   Emprendimientos({
     this.id = 0,
@@ -645,120 +640,6 @@ class Vehiculo {
       DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
 }
 
-
-@Entity()
-class ProdSolicitado {
-  int id;
-  int idInversion;
-  String producto;
-  String? marcaSugerida;
-  String descripcion;
-  String? proveedorSugerido;
-  int cantidad;
-  double? costoEstimado;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  String? idEmiWeb;
-  int idEmprendimiento;
-  final inversion = ToOne<Inversiones>();
-  final bitacora = ToMany<Bitacora>();
-  final familiaInversion = ToOne<FamiliaInversion>();
-
-  ProdSolicitado({
-    this.id = 0,
-    required this.idInversion,
-    required this.producto,
-    this.marcaSugerida,
-    required this.descripcion,
-    this.proveedorSugerido,
-    required this.cantidad,
-    this.costoEstimado,
-    DateTime? fechaRegistro,
-    this.idDBR,
-    this.idEmiWeb,
-    required this.idEmprendimiento,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class ProdProyecto {
-  int id;
-  String producto;
-  String? marcaSugerida;
-  String descripcion;
-  String? proveedorSugerido;
-  int cantidad;
-  double? costoEstimado;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  @Unique()
-  String idEmiWeb;
-  final catalogoProyecto = ToOne<CatalogoProyecto>();
-  final familiaInversion = ToOne<FamiliaInversion>();
-
-  ProdProyecto({
-    this.id = 0,
-    required this.producto,
-    this.marcaSugerida,
-    required this.descripcion,
-    this.proveedorSugerido,
-    required this.cantidad,
-    this.costoEstimado,
-    DateTime? fechaRegistro,
-    this.idDBR,
-    required this.idEmiWeb,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class Inversiones {
-  int id;
-  DateTime? fechaCompra;
-  int porcentajePago;
-  double montoPagar;
-  double saldo;
-  double totalInversion;
-  bool inversionRecibida;
-  DateTime fechaRegistro;
-  bool jornada3;
-  @Unique()
-  String? idDBR;
-  String? idEmiWeb;
-  int idEmprendimiento;
-  final bitacora = ToMany<Bitacora>();
-  final emprendimiento = ToOne<Emprendimientos>();
-  final prodSolicitados = ToMany<ProdSolicitado>();
-  final inversionXprodCotizados = ToMany<InversionesXProdCotizados>();
-  final estadoInversion = ToOne<EstadoInversion>();
-  final pagos = ToMany<Pagos>();
-
-  Inversiones({
-    this.id = 0,
-    this.fechaCompra,
-    this.porcentajePago = 0,
-    this.montoPagar = 0.0,
-    this.saldo = 0.0,
-    this.totalInversion = 0.0,
-    this.inversionRecibida = false,
-    DateTime? fechaRegistro,
-    this.jornada3 = false,
-    this.idDBR,
-    this.idEmiWeb,
-    required this.idEmprendimiento,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
 @Entity()
 class Pagos {
   int id;
@@ -770,7 +651,6 @@ class Pagos {
   @Unique()
   String? idEmiWeb;
   int idEmprendimiento;
-  final inversion = ToOne<Inversiones>();
   final usuario = ToOne<Usuarios>();
   final bitacora = ToMany<Bitacora>();
 
@@ -778,31 +658,6 @@ class Pagos {
     this.id = 0,
     this.montoAbonado = 0.0,
     required this.fechaMovimiento,
-    DateTime? fechaRegistro,
-    this.idDBR,
-    this.idEmiWeb,
-    required this.idEmprendimiento,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class InversionesXProdCotizados {
-  int id;
-  DateTime fechaRegistro;
-  bool aceptado;
-  @Unique()
-  String? idDBR;
-  String? idEmiWeb;
-  int idEmprendimiento;
-  final inversion = ToOne<Inversiones>();
-  final bitacora = ToMany<Bitacora>();
-
-  InversionesXProdCotizados({
-    this.id = 0,
-    this.aceptado = false,
     DateTime? fechaRegistro,
     this.idDBR,
     this.idEmiWeb,
@@ -841,12 +696,6 @@ class Bitacora {
   @Backlink()
   final usuarios = ToMany<Usuarios>();
   @Backlink()
-  final inversiones = ToMany<Inversiones>();
-  @Backlink()
-  final prodSolicitados = ToMany<ProdSolicitado>();
-  @Backlink()
-  final inversionXprodCotizados = ToMany<InversionesXProdCotizados>();
-  @Backlink()
   final pagos = ToMany<Pagos>();
 
   Bitacora({
@@ -863,101 +712,6 @@ class Bitacora {
       DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
 }
 
-
-@Entity()
-class TipoProyecto {
-  int id;
-  String tipoProyecto;
-  DateTime fechaRegistro;
-  bool activo;
-  @Unique()
-  String? idDBR;
-  @Unique()
-  String idEmiWeb;
-  final categoriasProyecto = ToMany<CatalogoProyecto>();
-
-  TipoProyecto({
-    this.id = 0,
-    required this.tipoProyecto,
-    DateTime? fechaRegistro,
-    this.activo = true,
-    this.idDBR,
-    required this.idEmiWeb,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class CatalogoProyecto {
-  int id;
-  String nombre;
-  DateTime fechaRegistro;
-  bool activo;
-  @Unique()
-  String? idDBR;
-  @Unique()
-  String idEmiWeb;
-  final emprendimientos = ToMany<Emprendimientos>();
-  final tipoProyecto = ToOne<TipoProyecto>();
-  final prodProyecto = ToMany<ProdProyecto>();
-
-  CatalogoProyecto({
-    this.id = 0,
-    required this.nombre,
-    DateTime? fechaRegistro,
-    this.activo = true,
-    this.idDBR,
-    required this.idEmiWeb,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class PrioridadEmp {
-  int id;
-  String prioridad;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  final emprendimientos = ToMany<Emprendimientos>();
-
-  PrioridadEmp({
-    this.id = 0,
-    required this.prioridad,
-    DateTime? fechaRegistro,
-    this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class EstadoInversion {
-  int id;
-  String estado;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  @Unique()
-  String idEmiWeb;
-  final emprendimientos = ToMany<Inversiones>();
-
-  EstadoInversion({
-    this.id = 0,
-    required this.estado,
-    DateTime? fechaRegistro,
-    this.idDBR,
-    required this.idEmiWeb,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
 
 @Entity()
 class Usuarios {
@@ -1103,131 +857,6 @@ class Marca {
       DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
 }
 
-@Entity()
-class Proveedores {
-  int id;
-  String nombreFiscal;
-  String rfc;
-  String direccion;
-  String? nombreEncargado;
-  String clabe;
-  String telefono;
-  DateTime fechaRegistro;
-  bool archivado;
-  @Unique()
-  String idEmiWeb;
-  @Unique()
-  String? idDBR;
-  final tipoProveedor = ToOne<TipoProveedor>();
-  final condicionPago = ToOne<CondicionesPago>();
-  final banco = ToOne<Bancos>();
-  final productosProv = ToMany<ProductosProv>();
-
-  Proveedores({
-    this.id = 0,
-    required this.nombreFiscal,
-    required this.rfc,
-    required this.direccion,
-    this.nombreEncargado,
-    required this.clabe,
-    required this.telefono,
-    DateTime? fechaRegistro,
-    required this.archivado,
-    required this.idEmiWeb,
-    this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class FamiliaInversion {
-  int id;
-  String familiaInversion;
-  DateTime fechaRegistro;
-  bool activo;
-  @Unique()
-  String? idDBR;
-  @Unique()
-  String idEmiWeb;
-  @Backlink()
-  final prodSolicitados = ToMany<ProdSolicitado>();
-  @Backlink()
-  final prodProyecto = ToMany<ProdProyecto>();
-  
-  FamiliaInversion({
-    this.id = 0,
-    required this.familiaInversion,
-    DateTime? fechaRegistro,
-    required this.activo,
-    this.idDBR,
-    required this.idEmiWeb,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class ProductosProv {
-  int id;
-  String nombre;
-  String descripcion;
-  String marca;
-  double costo;
-  int tiempoEntrega;
-  DateTime fechaRegistro;
-  bool archivado;
-  @Unique()
-  String? idDBR;
-  @Unique()
-  String idEmiWeb;
-  final proveedor = ToOne<Proveedores>();
-
-  ProductosProv({
-    this.id = 0,
-    required this.nombre,
-    required this.descripcion,
-    required this.marca,
-    required this.costo,
-    required this.tiempoEntrega,
-    DateTime? fechaRegistro,
-    required this.archivado,
-    this.idDBR,
-    required this.idEmiWeb,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class Bancos {
-  int id;
-  String banco;
-  bool activo;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  @Unique()
-  String idEmiWeb;
-  @Backlink()
-  final proveedores = ToMany<Proveedores>();
-
-  Bancos({
-    this.id = 0,
-    required this.banco,
-    this.activo = true,
-    DateTime? fechaRegistro,
-    this.idDBR,
-    required this.idEmiWeb,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
 
 @Entity()
 class FormaPago {
@@ -1250,54 +879,5 @@ class FormaPago {
       DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
 }
 
-@Entity()
-class CondicionesPago {
-  int id;
-  String condicion;
-  bool activo;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  @Unique()
-  String idEmiWeb;
-  @Backlink()
-  final proveedores = ToMany<Proveedores>();
 
-  CondicionesPago({
-    this.id = 0,
-    required this.condicion,
-    this.activo = true,
-    DateTime? fechaRegistro,
-    this.idDBR,
-    required this.idEmiWeb,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class TipoProveedor {
-  int id;
-  String tipo;
-  bool activo;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  @Unique()
-  String idEmiWeb;
-  final proveedores = ToMany<Proveedores>();
-
-  TipoProveedor({
-    this.id = 0,
-    required this.tipo,
-    this.activo = true,
-    DateTime? fechaRegistro,
-    this.idDBR,
-    required this.idEmiWeb,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
 
