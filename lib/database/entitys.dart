@@ -2,42 +2,6 @@ import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class Emprendimientos {
-  int id;
-  String faseActual;
-  String faseAnterior;
-  int? idInversionJornada;
-  String nombre;
-  String descripcion;
-  bool activo;
-  DateTime fechaRegistro;
-  bool archivado;
-  @Unique()
-  String? idDBR;
-  @Unique()
-  String? idEmiWeb;
-  final usuario = ToOne<Usuarios>(); //Promotor en Diagrama E-R
-  final bitacora = ToMany<Bitacora>();
-
-  Emprendimientos({
-    this.id = 0,
-    required this.faseActual,
-    required this.faseAnterior,
-    this.idInversionJornada,
-    required this.nombre,
-    required this.descripcion,
-    this.activo = true,
-    DateTime? fechaRegistro,
-    this.archivado = false,
-    this.idDBR,
-    this.idEmiWeb,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
 class OrdenTrabajo {
   int id;
   DateTime fechaOrden;
@@ -692,8 +656,6 @@ class Bitacora {
   final estatus = ToOne<Estatus>();
   final usuario = ToOne<Usuarios>();
   @Backlink()
-  final emprendimientos = ToMany<Emprendimientos>();
-  @Backlink()
   final usuarios = ToMany<Usuarios>();
   @Backlink()
   final pagos = ToMany<Pagos>();
@@ -735,8 +697,6 @@ class Usuarios {
   final rol = ToOne<Roles>();
   final roles = ToMany<Roles>();
   final pagos = ToMany<Pagos>();
-  @Backlink()
-  final emprendimientos = ToMany<Emprendimientos>();
   final asesor = ToOne<Usuarios>(); //Para Rol de C Y M
   final clientes = ToMany<Usuarios>(); //Para Rol de A
   final tecnicosMecanicos = ToMany<Usuarios>(); //Para Rol de A

@@ -20,84 +20,6 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(8, 804684152773215409),
-      name: 'Emprendimientos',
-      lastPropertyId: const IdUid(33, 4714516556889829554),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 4677830973327539513),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(3, 3655261249465798823),
-            name: 'nombre',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 807468286336679069),
-            name: 'descripcion',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 4225051604479617429),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(16, 5126173959103968444),
-            name: 'activo',
-            type: 1,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(17, 2815575313211393813),
-            name: 'archivado',
-            type: 1,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(19, 400732199218356134),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(62, 2735008652274095664)),
-        ModelProperty(
-            id: const IdUid(24, 9067992503886811416),
-            name: 'usuarioId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(109, 2158114976016630089),
-            relationTarget: 'Usuarios'),
-        ModelProperty(
-            id: const IdUid(28, 8555609759623119270),
-            name: 'idInversionJornada',
-            type: 6,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(30, 6903190290684851827),
-            name: 'faseActual',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(31, 6585524487399118671),
-            name: 'faseAnterior',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(32, 7788765518671870184),
-            name: 'idEmiWeb',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(233, 1803242766406010981))
-      ],
-      relations: <ModelRelation>[
-        ModelRelation(
-            id: const IdUid(8, 9183356578860779220),
-            name: 'bitacora',
-            targetId: const IdUid(27, 1774905738150923512))
-      ],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
       id: const IdUid(10, 252808688812742776),
       name: 'Usuarios',
       lastPropertyId: const IdUid(37, 7115806576092254573),
@@ -251,10 +173,7 @@ final _entities = <ModelEntity>[
             name: 'electricos',
             targetId: const IdUid(69, 194731522577233837))
       ],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(
-            name: 'emprendimientos', srcEntity: 'Emprendimientos', srcField: '')
-      ]),
+      backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(27, 1774905738150923512),
       name: 'Bitacora',
@@ -397,10 +316,6 @@ final _entities = <ModelEntity>[
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
-        ModelBacklink(
-            name: 'emprendimientos',
-            srcEntity: 'Emprendimientos',
-            srcField: ''),
         ModelBacklink(name: 'usuarios', srcEntity: 'Usuarios', srcField: ''),
         ModelBacklink(name: 'pagos', srcEntity: 'Pagos', srcField: '')
       ]),
@@ -2042,7 +1957,8 @@ ModelDefinition getObjectBoxModel() {
         2397636268740769237,
         794331956868775333,
         5967866020755512418,
-        3167743746507035878
+        3167743746507035878,
+        804684152773215409
       ],
       retiredIndexUids: const [
         8990521503430950587,
@@ -2897,7 +2813,19 @@ ModelDefinition getObjectBoxModel() {
         8645563325765495312,
         8793093698124241452,
         7056448703456479325,
-        8224899873614020012
+        8224899873614020012,
+        4677830973327539513,
+        3655261249465798823,
+        807468286336679069,
+        4225051604479617429,
+        5126173959103968444,
+        2815575313211393813,
+        400732199218356134,
+        9067992503886811416,
+        8555609759623119270,
+        6903190290684851827,
+        6585524487399118671,
+        7788765518671870184
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -2938,76 +2866,8 @@ ModelDefinition getObjectBoxModel() {
       version: 1);
 
   final bindings = <Type, EntityDefinition>{
-    Emprendimientos: EntityDefinition<Emprendimientos>(
-        model: _entities[0],
-        toOneRelations: (Emprendimientos object) => [object.usuario],
-        toManyRelations: (Emprendimientos object) =>
-            {RelInfo<Emprendimientos>.toMany(8, object.id): object.bitacora},
-        getId: (Emprendimientos object) => object.id,
-        setId: (Emprendimientos object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Emprendimientos object, fb.Builder fbb) {
-          final nombreOffset = fbb.writeString(object.nombre);
-          final descripcionOffset = fbb.writeString(object.descripcion);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          final faseActualOffset = fbb.writeString(object.faseActual);
-          final faseAnteriorOffset = fbb.writeString(object.faseAnterior);
-          final idEmiWebOffset = object.idEmiWeb == null
-              ? null
-              : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(34);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(2, nombreOffset);
-          fbb.addOffset(3, descripcionOffset);
-          fbb.addInt64(4, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addBool(15, object.activo);
-          fbb.addBool(16, object.archivado);
-          fbb.addOffset(18, idDBROffset);
-          fbb.addInt64(23, object.usuario.targetId);
-          fbb.addInt64(27, object.idInversionJornada);
-          fbb.addOffset(29, faseActualOffset);
-          fbb.addOffset(30, faseAnteriorOffset);
-          fbb.addOffset(31, idEmiWebOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Emprendimientos(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              faseActual: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 62, ''),
-              faseAnterior: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 64, ''),
-              idInversionJornada: const fb.Int64Reader()
-                  .vTableGetNullable(buffer, rootOffset, 58),
-              nombre: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''),
-              descripcion: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
-              activo: const fb.BoolReader()
-                  .vTableGet(buffer, rootOffset, 34, false),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0)),
-              archivado: const fb.BoolReader().vTableGet(buffer, rootOffset, 36, false),
-              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 40),
-              idEmiWeb: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 66));
-          object.usuario.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0);
-          object.usuario.attach(store);
-          InternalToManyAccess.setRelInfo(
-              object.bitacora,
-              store,
-              RelInfo<Emprendimientos>.toMany(8, object.id),
-              store.box<Emprendimientos>());
-          return object;
-        }),
     Usuarios: EntityDefinition<Usuarios>(
-        model: _entities[1],
+        model: _entities[0],
         toOneRelations: (Usuarios object) =>
             [object.rol, object.ordenTrabajo, object.asesor],
         toManyRelations: (Usuarios object) => {
@@ -3023,10 +2883,7 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<Usuarios>.toMany(89, object.id): object.motores,
               RelInfo<Usuarios>.toMany(90, object.id): object.fluidos,
               RelInfo<Usuarios>.toMany(91, object.id): object.frenos,
-              RelInfo<Usuarios>.toMany(92, object.id): object.electricos,
-              RelInfo<Emprendimientos>.toOneBacklink(24, object.id,
-                      (Emprendimientos srcObject) => srcObject.usuario):
-                  object.emprendimientos
+              RelInfo<Usuarios>.toMany(92, object.id): object.electricos
             },
         getId: (Usuarios object) => object.id,
         setId: (Usuarios object, int id) {
@@ -3136,16 +2993,10 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<Usuarios>.toMany(91, object.id), store.box<Usuarios>());
           InternalToManyAccess.setRelInfo(object.electricos, store,
               RelInfo<Usuarios>.toMany(92, object.id), store.box<Usuarios>());
-          InternalToManyAccess.setRelInfo(
-              object.emprendimientos,
-              store,
-              RelInfo<Emprendimientos>.toOneBacklink(24, object.id,
-                  (Emprendimientos srcObject) => srcObject.usuario),
-              store.box<Usuarios>());
           return object;
         }),
     Bitacora: EntityDefinition<Bitacora>(
-        model: _entities[2],
+        model: _entities[1],
         toOneRelations: (Bitacora object) => [
               object.vehiculo,
               object.ordenTrabajo,
@@ -3163,8 +3014,6 @@ ModelDefinition getObjectBoxModel() {
               object.revision
             ],
         toManyRelations: (Bitacora object) => {
-              RelInfo<Emprendimientos>.toManyBacklink(8, object.id):
-                  object.emprendimientos,
               RelInfo<Usuarios>.toManyBacklink(30, object.id): object.usuarios,
               RelInfo<Pagos>.toManyBacklink(61, object.id): object.pagos
             },
@@ -3266,11 +3115,6 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 82, 0);
           object.revision.attach(store);
           InternalToManyAccess.setRelInfo(
-              object.emprendimientos,
-              store,
-              RelInfo<Emprendimientos>.toManyBacklink(8, object.id),
-              store.box<Bitacora>());
-          InternalToManyAccess.setRelInfo(
               object.usuarios,
               store,
               RelInfo<Usuarios>.toManyBacklink(30, object.id),
@@ -3283,7 +3127,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Roles: EntityDefinition<Roles>(
-        model: _entities[3],
+        model: _entities[2],
         toOneRelations: (Roles object) => [object.bitacora],
         toManyRelations: (Roles object) =>
             {RelInfo<Roles>.toMany(17, object.id): object.usuarios},
@@ -3323,7 +3167,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Pagos: EntityDefinition<Pagos>(
-        model: _entities[4],
+        model: _entities[3],
         toOneRelations: (Pagos object) => [object.usuario],
         toManyRelations: (Pagos object) =>
             {RelInfo<Pagos>.toMany(61, object.id): object.bitacora},
@@ -3375,7 +3219,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Vehiculo: EntityDefinition<Vehiculo>(
-        model: _entities[5],
+        model: _entities[4],
         toOneRelations: (Vehiculo object) => [object.cliente],
         toManyRelations: (Vehiculo object) => {
               RelInfo<Bitacora>.toOneBacklink(21, object.id,
@@ -3451,7 +3295,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     FormaPago: EntityDefinition<FormaPago>(
-        model: _entities[6],
+        model: _entities[5],
         toOneRelations: (FormaPago object) => [],
         toManyRelations: (FormaPago object) => {
               RelInfo<OrdenTrabajo>.toOneBacklink(9, object.id,
@@ -3494,7 +3338,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     OrdenTrabajo: EntityDefinition<OrdenTrabajo>(
-        model: _entities[7],
+        model: _entities[6],
         toOneRelations: (OrdenTrabajo object) => [
               object.cliente,
               object.vehiculo,
@@ -3599,7 +3443,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Observaciones: EntityDefinition<Observaciones>(
-        model: _entities[8],
+        model: _entities[7],
         toOneRelations: (Observaciones object) => [object.ordenTrabajo],
         toManyRelations: (Observaciones object) => {
               RelInfo<Bitacora>.toOneBacklink(23, object.id,
@@ -3684,7 +3528,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Electrico: EntityDefinition<Electrico>(
-        model: _entities[9],
+        model: _entities[8],
         toOneRelations: (Electrico object) =>
             [object.revision, object.tecnicoMecanico],
         toManyRelations: (Electrico object) => {
@@ -3787,7 +3631,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Fluidos: EntityDefinition<Fluidos>(
-        model: _entities[10],
+        model: _entities[9],
         toOneRelations: (Fluidos object) =>
             [object.revision, object.tecnicoMecanico],
         toManyRelations: (Fluidos object) => {
@@ -3885,7 +3729,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Frenos: EntityDefinition<Frenos>(
-        model: _entities[11],
+        model: _entities[10],
         toOneRelations: (Frenos object) =>
             [object.revision, object.tecnicoMecanico],
         toManyRelations: (Frenos object) => {
@@ -3990,7 +3834,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Motor: EntityDefinition<Motor>(
-        model: _entities[12],
+        model: _entities[11],
         toOneRelations: (Motor object) =>
             [object.revision, object.tecnicoMecanico],
         toManyRelations: (Motor object) => {
@@ -4117,7 +3961,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     SuspensionDireccion: EntityDefinition<SuspensionDireccion>(
-        model: _entities[13],
+        model: _entities[12],
         toOneRelations: (SuspensionDireccion object) =>
             [object.revision, object.tecnicoMecanico],
         toManyRelations: (SuspensionDireccion object) => {
@@ -4403,7 +4247,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Producto: EntityDefinition<Producto>(
-        model: _entities[14],
+        model: _entities[13],
         toOneRelations: (Producto object) => [object.servicio],
         toManyRelations: (Producto object) => {
               RelInfo<Bitacora>.toOneBacklink(31, object.id,
@@ -4456,7 +4300,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Servicio: EntityDefinition<Servicio>(
-        model: _entities[15],
+        model: _entities[14],
         toOneRelations: (Servicio object) => [object.ordenServicio],
         toManyRelations: (Servicio object) => {
               RelInfo<Producto>.toOneBacklink(
@@ -4528,7 +4372,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     TipoProducto: EntityDefinition<TipoProducto>(
-        model: _entities[16],
+        model: _entities[15],
         toOneRelations: (TipoProducto object) => [],
         toManyRelations: (TipoProducto object) => {},
         getId: (TipoProducto object) => object.id,
@@ -4566,7 +4410,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     TipoServicio: EntityDefinition<TipoServicio>(
-        model: _entities[17],
+        model: _entities[16],
         toOneRelations: (TipoServicio object) => [],
         toManyRelations: (TipoServicio object) => {},
         getId: (TipoServicio object) => object.id,
@@ -4612,7 +4456,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Estatus: EntityDefinition<Estatus>(
-        model: _entities[18],
+        model: _entities[17],
         toOneRelations: (Estatus object) => [],
         toManyRelations: (Estatus object) => {
               RelInfo<OrdenTrabajo>.toOneBacklink(16, object.id,
@@ -4668,7 +4512,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     OrdenServicio: EntityDefinition<OrdenServicio>(
-        model: _entities[19],
+        model: _entities[18],
         toOneRelations: (OrdenServicio object) => [object.ordenTrabajo],
         toManyRelations: (OrdenServicio object) => {
               RelInfo<Servicio>.toOneBacklink(12, object.id,
@@ -4727,7 +4571,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Revision: EntityDefinition<Revision>(
-        model: _entities[20],
+        model: _entities[19],
         toOneRelations: (Revision object) => [
               object.ordenTrabajo,
               object.suspensionDireccion,
@@ -4800,7 +4644,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Anio: EntityDefinition<Anio>(
-        model: _entities[21],
+        model: _entities[20],
         toOneRelations: (Anio object) => [object.modelo],
         toManyRelations: (Anio object) => {},
         getId: (Anio object) => object.id,
@@ -4838,7 +4682,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Marca: EntityDefinition<Marca>(
-        model: _entities[22],
+        model: _entities[21],
         toOneRelations: (Marca object) => [],
         toManyRelations: (Marca object) => {
               RelInfo<Modelo>.toOneBacklink(
@@ -4882,7 +4726,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Modelo: EntityDefinition<Modelo>(
-        model: _entities[23],
+        model: _entities[22],
         toOneRelations: (Modelo object) => [object.marca],
         toManyRelations: (Modelo object) => {
               RelInfo<Anio>.toOneBacklink(
@@ -4934,1290 +4778,1234 @@ ModelDefinition getObjectBoxModel() {
   return ModelDefinition(model, bindings);
 }
 
-/// [Emprendimientos] entity fields to define ObjectBox queries.
-class Emprendimientos_ {
-  /// see [Emprendimientos.id]
-  static final id =
-      QueryIntegerProperty<Emprendimientos>(_entities[0].properties[0]);
-
-  /// see [Emprendimientos.nombre]
-  static final nombre =
-      QueryStringProperty<Emprendimientos>(_entities[0].properties[1]);
-
-  /// see [Emprendimientos.descripcion]
-  static final descripcion =
-      QueryStringProperty<Emprendimientos>(_entities[0].properties[2]);
-
-  /// see [Emprendimientos.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Emprendimientos>(_entities[0].properties[3]);
-
-  /// see [Emprendimientos.activo]
-  static final activo =
-      QueryBooleanProperty<Emprendimientos>(_entities[0].properties[4]);
-
-  /// see [Emprendimientos.archivado]
-  static final archivado =
-      QueryBooleanProperty<Emprendimientos>(_entities[0].properties[5]);
-
-  /// see [Emprendimientos.idDBR]
-  static final idDBR =
-      QueryStringProperty<Emprendimientos>(_entities[0].properties[6]);
-
-  /// see [Emprendimientos.usuario]
-  static final usuario =
-      QueryRelationToOne<Emprendimientos, Usuarios>(_entities[0].properties[7]);
-
-  /// see [Emprendimientos.idInversionJornada]
-  static final idInversionJornada =
-      QueryIntegerProperty<Emprendimientos>(_entities[0].properties[8]);
-
-  /// see [Emprendimientos.faseActual]
-  static final faseActual =
-      QueryStringProperty<Emprendimientos>(_entities[0].properties[9]);
-
-  /// see [Emprendimientos.faseAnterior]
-  static final faseAnterior =
-      QueryStringProperty<Emprendimientos>(_entities[0].properties[10]);
-
-  /// see [Emprendimientos.idEmiWeb]
-  static final idEmiWeb =
-      QueryStringProperty<Emprendimientos>(_entities[0].properties[11]);
-
-  /// see [Emprendimientos.bitacora]
-  static final bitacora =
-      QueryRelationToMany<Emprendimientos, Bitacora>(_entities[0].relations[0]);
-}
-
 /// [Usuarios] entity fields to define ObjectBox queries.
 class Usuarios_ {
   /// see [Usuarios.id]
-  static final id = QueryIntegerProperty<Usuarios>(_entities[1].properties[0]);
+  static final id = QueryIntegerProperty<Usuarios>(_entities[0].properties[0]);
 
   /// see [Usuarios.nombre]
   static final nombre =
-      QueryStringProperty<Usuarios>(_entities[1].properties[1]);
+      QueryStringProperty<Usuarios>(_entities[0].properties[1]);
 
   /// see [Usuarios.apellidoP]
   static final apellidoP =
-      QueryStringProperty<Usuarios>(_entities[1].properties[2]);
+      QueryStringProperty<Usuarios>(_entities[0].properties[2]);
 
   /// see [Usuarios.apellidoM]
   static final apellidoM =
-      QueryStringProperty<Usuarios>(_entities[1].properties[3]);
+      QueryStringProperty<Usuarios>(_entities[0].properties[3]);
 
   /// see [Usuarios.telefono]
   static final telefono =
-      QueryStringProperty<Usuarios>(_entities[1].properties[4]);
+      QueryStringProperty<Usuarios>(_entities[0].properties[4]);
 
   /// see [Usuarios.celular]
   static final celular =
-      QueryStringProperty<Usuarios>(_entities[1].properties[5]);
+      QueryStringProperty<Usuarios>(_entities[0].properties[5]);
 
   /// see [Usuarios.correo]
   static final correo =
-      QueryStringProperty<Usuarios>(_entities[1].properties[6]);
+      QueryStringProperty<Usuarios>(_entities[0].properties[6]);
 
   /// see [Usuarios.password]
   static final password =
-      QueryStringProperty<Usuarios>(_entities[1].properties[7]);
+      QueryStringProperty<Usuarios>(_entities[0].properties[7]);
 
   /// see [Usuarios.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Usuarios>(_entities[1].properties[8]);
+      QueryIntegerProperty<Usuarios>(_entities[0].properties[8]);
 
   /// see [Usuarios.idDBR]
   static final idDBR =
-      QueryStringProperty<Usuarios>(_entities[1].properties[9]);
+      QueryStringProperty<Usuarios>(_entities[0].properties[9]);
 
   /// see [Usuarios.rol]
   static final rol =
-      QueryRelationToOne<Usuarios, Roles>(_entities[1].properties[10]);
+      QueryRelationToOne<Usuarios, Roles>(_entities[0].properties[10]);
 
   /// see [Usuarios.rfc]
-  static final rfc = QueryStringProperty<Usuarios>(_entities[1].properties[11]);
+  static final rfc = QueryStringProperty<Usuarios>(_entities[0].properties[11]);
 
   /// see [Usuarios.imagen]
   static final imagen =
-      QueryStringProperty<Usuarios>(_entities[1].properties[12]);
+      QueryStringProperty<Usuarios>(_entities[0].properties[12]);
 
   /// see [Usuarios.path]
   static final path =
-      QueryStringProperty<Usuarios>(_entities[1].properties[13]);
+      QueryStringProperty<Usuarios>(_entities[0].properties[13]);
 
   /// see [Usuarios.domicilio]
   static final domicilio =
-      QueryStringProperty<Usuarios>(_entities[1].properties[14]);
+      QueryStringProperty<Usuarios>(_entities[0].properties[14]);
 
   /// see [Usuarios.ordenTrabajo]
   static final ordenTrabajo =
-      QueryRelationToOne<Usuarios, OrdenTrabajo>(_entities[1].properties[15]);
+      QueryRelationToOne<Usuarios, OrdenTrabajo>(_entities[0].properties[15]);
 
   /// see [Usuarios.asesor]
   static final asesor =
-      QueryRelationToOne<Usuarios, Usuarios>(_entities[1].properties[16]);
+      QueryRelationToOne<Usuarios, Usuarios>(_entities[0].properties[16]);
 
   /// see [Usuarios.interno]
   static final interno =
-      QueryBooleanProperty<Usuarios>(_entities[1].properties[17]);
+      QueryBooleanProperty<Usuarios>(_entities[0].properties[17]);
 
   /// see [Usuarios.bitacora]
   static final bitacora =
-      QueryRelationToMany<Usuarios, Bitacora>(_entities[1].relations[0]);
+      QueryRelationToMany<Usuarios, Bitacora>(_entities[0].relations[0]);
 
   /// see [Usuarios.pagos]
   static final pagos =
-      QueryRelationToMany<Usuarios, Pagos>(_entities[1].relations[1]);
+      QueryRelationToMany<Usuarios, Pagos>(_entities[0].relations[1]);
 
   /// see [Usuarios.roles]
   static final roles =
-      QueryRelationToMany<Usuarios, Roles>(_entities[1].relations[2]);
+      QueryRelationToMany<Usuarios, Roles>(_entities[0].relations[2]);
 
   /// see [Usuarios.clientes]
   static final clientes =
-      QueryRelationToMany<Usuarios, Usuarios>(_entities[1].relations[3]);
+      QueryRelationToMany<Usuarios, Usuarios>(_entities[0].relations[3]);
 
   /// see [Usuarios.tecnicosMecanicos]
   static final tecnicosMecanicos =
-      QueryRelationToMany<Usuarios, Usuarios>(_entities[1].relations[4]);
+      QueryRelationToMany<Usuarios, Usuarios>(_entities[0].relations[4]);
 
   /// see [Usuarios.ordenesTrabajo]
   static final ordenesTrabajo =
-      QueryRelationToMany<Usuarios, OrdenTrabajo>(_entities[1].relations[5]);
+      QueryRelationToMany<Usuarios, OrdenTrabajo>(_entities[0].relations[5]);
 
   /// see [Usuarios.vehiculos]
   static final vehiculos =
-      QueryRelationToMany<Usuarios, Vehiculo>(_entities[1].relations[6]);
+      QueryRelationToMany<Usuarios, Vehiculo>(_entities[0].relations[6]);
 
   /// see [Usuarios.suspesionesDirecciones]
   static final suspesionesDirecciones =
       QueryRelationToMany<Usuarios, SuspensionDireccion>(
-          _entities[1].relations[7]);
+          _entities[0].relations[7]);
 
   /// see [Usuarios.motores]
   static final motores =
-      QueryRelationToMany<Usuarios, Motor>(_entities[1].relations[8]);
+      QueryRelationToMany<Usuarios, Motor>(_entities[0].relations[8]);
 
   /// see [Usuarios.fluidos]
   static final fluidos =
-      QueryRelationToMany<Usuarios, Fluidos>(_entities[1].relations[9]);
+      QueryRelationToMany<Usuarios, Fluidos>(_entities[0].relations[9]);
 
   /// see [Usuarios.frenos]
   static final frenos =
-      QueryRelationToMany<Usuarios, Frenos>(_entities[1].relations[10]);
+      QueryRelationToMany<Usuarios, Frenos>(_entities[0].relations[10]);
 
   /// see [Usuarios.electricos]
   static final electricos =
-      QueryRelationToMany<Usuarios, Electrico>(_entities[1].relations[11]);
+      QueryRelationToMany<Usuarios, Electrico>(_entities[0].relations[11]);
 }
 
 /// [Bitacora] entity fields to define ObjectBox queries.
 class Bitacora_ {
   /// see [Bitacora.id]
-  static final id = QueryIntegerProperty<Bitacora>(_entities[2].properties[0]);
+  static final id = QueryIntegerProperty<Bitacora>(_entities[1].properties[0]);
 
   /// see [Bitacora.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Bitacora>(_entities[2].properties[1]);
+      QueryIntegerProperty<Bitacora>(_entities[1].properties[1]);
 
   /// see [Bitacora.instruccionAdicional]
   static final instruccionAdicional =
-      QueryStringProperty<Bitacora>(_entities[2].properties[2]);
+      QueryStringProperty<Bitacora>(_entities[1].properties[2]);
 
   /// see [Bitacora.instruccion]
   static final instruccion =
-      QueryStringProperty<Bitacora>(_entities[2].properties[3]);
+      QueryStringProperty<Bitacora>(_entities[1].properties[3]);
 
   /// see [Bitacora.vehiculo]
   static final vehiculo =
-      QueryRelationToOne<Bitacora, Vehiculo>(_entities[2].properties[4]);
+      QueryRelationToOne<Bitacora, Vehiculo>(_entities[1].properties[4]);
 
   /// see [Bitacora.ordenTrabajo]
   static final ordenTrabajo =
-      QueryRelationToOne<Bitacora, OrdenTrabajo>(_entities[2].properties[5]);
+      QueryRelationToOne<Bitacora, OrdenTrabajo>(_entities[1].properties[5]);
 
   /// see [Bitacora.observacion]
   static final observacion =
-      QueryRelationToOne<Bitacora, Observaciones>(_entities[2].properties[6]);
+      QueryRelationToOne<Bitacora, Observaciones>(_entities[1].properties[6]);
 
   /// see [Bitacora.suspensionDireccion]
   static final suspensionDireccion =
       QueryRelationToOne<Bitacora, SuspensionDireccion>(
-          _entities[2].properties[7]);
+          _entities[1].properties[7]);
 
   /// see [Bitacora.motor]
   static final motor =
-      QueryRelationToOne<Bitacora, Motor>(_entities[2].properties[8]);
+      QueryRelationToOne<Bitacora, Motor>(_entities[1].properties[8]);
 
   /// see [Bitacora.fluidos]
   static final fluidos =
-      QueryRelationToOne<Bitacora, Fluidos>(_entities[2].properties[9]);
+      QueryRelationToOne<Bitacora, Fluidos>(_entities[1].properties[9]);
 
   /// see [Bitacora.frenos]
   static final frenos =
-      QueryRelationToOne<Bitacora, Frenos>(_entities[2].properties[10]);
+      QueryRelationToOne<Bitacora, Frenos>(_entities[1].properties[10]);
 
   /// see [Bitacora.electrico]
   static final electrico =
-      QueryRelationToOne<Bitacora, Electrico>(_entities[2].properties[11]);
+      QueryRelationToOne<Bitacora, Electrico>(_entities[1].properties[11]);
 
   /// see [Bitacora.servicio]
   static final servicio =
-      QueryRelationToOne<Bitacora, Servicio>(_entities[2].properties[12]);
+      QueryRelationToOne<Bitacora, Servicio>(_entities[1].properties[12]);
 
   /// see [Bitacora.producto]
   static final producto =
-      QueryRelationToOne<Bitacora, Producto>(_entities[2].properties[13]);
+      QueryRelationToOne<Bitacora, Producto>(_entities[1].properties[13]);
 
   /// see [Bitacora.estatus]
   static final estatus =
-      QueryRelationToOne<Bitacora, Estatus>(_entities[2].properties[14]);
+      QueryRelationToOne<Bitacora, Estatus>(_entities[1].properties[14]);
 
   /// see [Bitacora.usuarioPropietario]
   static final usuarioPropietario =
-      QueryStringProperty<Bitacora>(_entities[2].properties[15]);
+      QueryStringProperty<Bitacora>(_entities[1].properties[15]);
 
   /// see [Bitacora.idOrdenTrabajo]
   static final idOrdenTrabajo =
-      QueryIntegerProperty<Bitacora>(_entities[2].properties[16]);
+      QueryIntegerProperty<Bitacora>(_entities[1].properties[16]);
 
   /// see [Bitacora.usuario]
   static final usuario =
-      QueryRelationToOne<Bitacora, Usuarios>(_entities[2].properties[17]);
+      QueryRelationToOne<Bitacora, Usuarios>(_entities[1].properties[17]);
 
   /// see [Bitacora.executeSupabase]
   static final executeSupabase =
-      QueryBooleanProperty<Bitacora>(_entities[2].properties[18]);
+      QueryBooleanProperty<Bitacora>(_entities[1].properties[18]);
 
   /// see [Bitacora.ordenServicio]
   static final ordenServicio =
-      QueryRelationToOne<Bitacora, OrdenServicio>(_entities[2].properties[19]);
+      QueryRelationToOne<Bitacora, OrdenServicio>(_entities[1].properties[19]);
 
   /// see [Bitacora.revision]
   static final revision =
-      QueryRelationToOne<Bitacora, Revision>(_entities[2].properties[20]);
+      QueryRelationToOne<Bitacora, Revision>(_entities[1].properties[20]);
 }
 
 /// [Roles] entity fields to define ObjectBox queries.
 class Roles_ {
   /// see [Roles.id]
-  static final id = QueryIntegerProperty<Roles>(_entities[3].properties[0]);
+  static final id = QueryIntegerProperty<Roles>(_entities[2].properties[0]);
 
   /// see [Roles.rol]
-  static final rol = QueryStringProperty<Roles>(_entities[3].properties[1]);
+  static final rol = QueryStringProperty<Roles>(_entities[2].properties[1]);
 
   /// see [Roles.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Roles>(_entities[3].properties[2]);
+      QueryIntegerProperty<Roles>(_entities[2].properties[2]);
 
   /// see [Roles.idDBR]
-  static final idDBR = QueryStringProperty<Roles>(_entities[3].properties[3]);
+  static final idDBR = QueryStringProperty<Roles>(_entities[2].properties[3]);
 
   /// see [Roles.bitacora]
   static final bitacora =
-      QueryRelationToOne<Roles, Bitacora>(_entities[3].properties[4]);
+      QueryRelationToOne<Roles, Bitacora>(_entities[2].properties[4]);
 
   /// see [Roles.usuarios]
   static final usuarios =
-      QueryRelationToMany<Roles, Usuarios>(_entities[3].relations[0]);
+      QueryRelationToMany<Roles, Usuarios>(_entities[2].relations[0]);
 }
 
 /// [Pagos] entity fields to define ObjectBox queries.
 class Pagos_ {
   /// see [Pagos.id]
-  static final id = QueryIntegerProperty<Pagos>(_entities[4].properties[0]);
+  static final id = QueryIntegerProperty<Pagos>(_entities[3].properties[0]);
 
   /// see [Pagos.montoAbonado]
   static final montoAbonado =
-      QueryDoubleProperty<Pagos>(_entities[4].properties[1]);
+      QueryDoubleProperty<Pagos>(_entities[3].properties[1]);
 
   /// see [Pagos.fechaMovimiento]
   static final fechaMovimiento =
-      QueryIntegerProperty<Pagos>(_entities[4].properties[2]);
+      QueryIntegerProperty<Pagos>(_entities[3].properties[2]);
 
   /// see [Pagos.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Pagos>(_entities[4].properties[3]);
+      QueryIntegerProperty<Pagos>(_entities[3].properties[3]);
 
   /// see [Pagos.idDBR]
-  static final idDBR = QueryStringProperty<Pagos>(_entities[4].properties[4]);
+  static final idDBR = QueryStringProperty<Pagos>(_entities[3].properties[4]);
 
   /// see [Pagos.usuario]
   static final usuario =
-      QueryRelationToOne<Pagos, Usuarios>(_entities[4].properties[5]);
+      QueryRelationToOne<Pagos, Usuarios>(_entities[3].properties[5]);
 
   /// see [Pagos.idEmiWeb]
   static final idEmiWeb =
-      QueryStringProperty<Pagos>(_entities[4].properties[6]);
+      QueryStringProperty<Pagos>(_entities[3].properties[6]);
 
   /// see [Pagos.idEmprendimiento]
   static final idEmprendimiento =
-      QueryIntegerProperty<Pagos>(_entities[4].properties[7]);
+      QueryIntegerProperty<Pagos>(_entities[3].properties[7]);
 
   /// see [Pagos.bitacora]
   static final bitacora =
-      QueryRelationToMany<Pagos, Bitacora>(_entities[4].relations[0]);
+      QueryRelationToMany<Pagos, Bitacora>(_entities[3].relations[0]);
 }
 
 /// [Vehiculo] entity fields to define ObjectBox queries.
 class Vehiculo_ {
   /// see [Vehiculo.id]
-  static final id = QueryIntegerProperty<Vehiculo>(_entities[5].properties[0]);
+  static final id = QueryIntegerProperty<Vehiculo>(_entities[4].properties[0]);
 
   /// see [Vehiculo.marca]
   static final marca =
-      QueryStringProperty<Vehiculo>(_entities[5].properties[1]);
+      QueryStringProperty<Vehiculo>(_entities[4].properties[1]);
 
   /// see [Vehiculo.modelo]
   static final modelo =
-      QueryStringProperty<Vehiculo>(_entities[5].properties[2]);
+      QueryStringProperty<Vehiculo>(_entities[4].properties[2]);
 
   /// see [Vehiculo.anio]
-  static final anio = QueryStringProperty<Vehiculo>(_entities[5].properties[3]);
+  static final anio = QueryStringProperty<Vehiculo>(_entities[4].properties[3]);
 
   /// see [Vehiculo.vin]
-  static final vin = QueryStringProperty<Vehiculo>(_entities[5].properties[4]);
+  static final vin = QueryStringProperty<Vehiculo>(_entities[4].properties[4]);
 
   /// see [Vehiculo.placas]
   static final placas =
-      QueryStringProperty<Vehiculo>(_entities[5].properties[5]);
+      QueryStringProperty<Vehiculo>(_entities[4].properties[5]);
 
   /// see [Vehiculo.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Vehiculo>(_entities[5].properties[6]);
+      QueryIntegerProperty<Vehiculo>(_entities[4].properties[6]);
 
   /// see [Vehiculo.idDBR]
   static final idDBR =
-      QueryStringProperty<Vehiculo>(_entities[5].properties[7]);
+      QueryStringProperty<Vehiculo>(_entities[4].properties[7]);
 
   /// see [Vehiculo.cliente]
   static final cliente =
-      QueryRelationToOne<Vehiculo, Usuarios>(_entities[5].properties[8]);
+      QueryRelationToOne<Vehiculo, Usuarios>(_entities[4].properties[8]);
 
   /// see [Vehiculo.motor]
   static final motor =
-      QueryStringProperty<Vehiculo>(_entities[5].properties[9]);
+      QueryStringProperty<Vehiculo>(_entities[4].properties[9]);
 
   /// see [Vehiculo.color]
   static final color =
-      QueryStringProperty<Vehiculo>(_entities[5].properties[10]);
+      QueryStringProperty<Vehiculo>(_entities[4].properties[10]);
 
   /// see [Vehiculo.imagen]
   static final imagen =
-      QueryStringProperty<Vehiculo>(_entities[5].properties[11]);
+      QueryStringProperty<Vehiculo>(_entities[4].properties[11]);
 
   /// see [Vehiculo.path]
   static final path =
-      QueryStringProperty<Vehiculo>(_entities[5].properties[12]);
+      QueryStringProperty<Vehiculo>(_entities[4].properties[12]);
 }
 
 /// [FormaPago] entity fields to define ObjectBox queries.
 class FormaPago_ {
   /// see [FormaPago.id]
-  static final id = QueryIntegerProperty<FormaPago>(_entities[6].properties[0]);
+  static final id = QueryIntegerProperty<FormaPago>(_entities[5].properties[0]);
 
   /// see [FormaPago.formaPago]
   static final formaPago =
-      QueryStringProperty<FormaPago>(_entities[6].properties[1]);
+      QueryStringProperty<FormaPago>(_entities[5].properties[1]);
 
   /// see [FormaPago.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<FormaPago>(_entities[6].properties[2]);
+      QueryIntegerProperty<FormaPago>(_entities[5].properties[2]);
 
   /// see [FormaPago.idDBR]
   static final idDBR =
-      QueryStringProperty<FormaPago>(_entities[6].properties[3]);
+      QueryStringProperty<FormaPago>(_entities[5].properties[3]);
 }
 
 /// [OrdenTrabajo] entity fields to define ObjectBox queries.
 class OrdenTrabajo_ {
   /// see [OrdenTrabajo.id]
   static final id =
-      QueryIntegerProperty<OrdenTrabajo>(_entities[7].properties[0]);
+      QueryIntegerProperty<OrdenTrabajo>(_entities[6].properties[0]);
 
   /// see [OrdenTrabajo.fechaOrden]
   static final fechaOrden =
-      QueryIntegerProperty<OrdenTrabajo>(_entities[7].properties[1]);
+      QueryIntegerProperty<OrdenTrabajo>(_entities[6].properties[1]);
 
   /// see [OrdenTrabajo.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<OrdenTrabajo>(_entities[7].properties[2]);
+      QueryIntegerProperty<OrdenTrabajo>(_entities[6].properties[2]);
 
   /// see [OrdenTrabajo.idDBR]
   static final idDBR =
-      QueryStringProperty<OrdenTrabajo>(_entities[7].properties[3]);
+      QueryStringProperty<OrdenTrabajo>(_entities[6].properties[3]);
 
   /// see [OrdenTrabajo.cliente]
   static final cliente =
-      QueryRelationToOne<OrdenTrabajo, Usuarios>(_entities[7].properties[4]);
+      QueryRelationToOne<OrdenTrabajo, Usuarios>(_entities[6].properties[4]);
 
   /// see [OrdenTrabajo.vehiculo]
   static final vehiculo =
-      QueryRelationToOne<OrdenTrabajo, Vehiculo>(_entities[7].properties[5]);
+      QueryRelationToOne<OrdenTrabajo, Vehiculo>(_entities[6].properties[5]);
 
   /// see [OrdenTrabajo.formaPago]
   static final formaPago =
-      QueryRelationToOne<OrdenTrabajo, FormaPago>(_entities[7].properties[6]);
+      QueryRelationToOne<OrdenTrabajo, FormaPago>(_entities[6].properties[6]);
 
   /// see [OrdenTrabajo.gasolina]
   static final gasolina =
-      QueryStringProperty<OrdenTrabajo>(_entities[7].properties[7]);
+      QueryStringProperty<OrdenTrabajo>(_entities[6].properties[7]);
 
   /// see [OrdenTrabajo.kilometrajeMillaje]
   static final kilometrajeMillaje =
-      QueryStringProperty<OrdenTrabajo>(_entities[7].properties[8]);
+      QueryStringProperty<OrdenTrabajo>(_entities[6].properties[8]);
 
   /// see [OrdenTrabajo.descripcionFalla]
   static final descripcionFalla =
-      QueryStringProperty<OrdenTrabajo>(_entities[7].properties[9]);
+      QueryStringProperty<OrdenTrabajo>(_entities[6].properties[9]);
 
   /// see [OrdenTrabajo.estatus]
   static final estatus =
-      QueryRelationToOne<OrdenTrabajo, Estatus>(_entities[7].properties[10]);
+      QueryRelationToOne<OrdenTrabajo, Estatus>(_entities[6].properties[10]);
 
   /// see [OrdenTrabajo.asesor]
   static final asesor =
-      QueryRelationToOne<OrdenTrabajo, Usuarios>(_entities[7].properties[11]);
+      QueryRelationToOne<OrdenTrabajo, Usuarios>(_entities[6].properties[11]);
 
   /// see [OrdenTrabajo.completado]
   static final completado =
-      QueryBooleanProperty<OrdenTrabajo>(_entities[7].properties[12]);
+      QueryBooleanProperty<OrdenTrabajo>(_entities[6].properties[12]);
 
   /// see [OrdenTrabajo.ordenServicio]
   static final ordenServicio = QueryRelationToOne<OrdenTrabajo, OrdenServicio>(
-      _entities[7].properties[13]);
+      _entities[6].properties[13]);
 
   /// see [OrdenTrabajo.revision]
   static final revision =
-      QueryRelationToOne<OrdenTrabajo, Revision>(_entities[7].properties[14]);
+      QueryRelationToOne<OrdenTrabajo, Revision>(_entities[6].properties[14]);
 }
 
 /// [Observaciones] entity fields to define ObjectBox queries.
 class Observaciones_ {
   /// see [Observaciones.id]
   static final id =
-      QueryIntegerProperty<Observaciones>(_entities[8].properties[0]);
+      QueryIntegerProperty<Observaciones>(_entities[7].properties[0]);
 
   /// see [Observaciones.fechaObservacion]
   static final fechaObservacion =
-      QueryIntegerProperty<Observaciones>(_entities[8].properties[1]);
+      QueryIntegerProperty<Observaciones>(_entities[7].properties[1]);
 
   /// see [Observaciones.respuestaP1]
   static final respuestaP1 =
-      QueryStringProperty<Observaciones>(_entities[8].properties[2]);
+      QueryStringProperty<Observaciones>(_entities[7].properties[2]);
 
   /// see [Observaciones.respuestaP2]
   static final respuestaP2 =
-      QueryStringProperty<Observaciones>(_entities[8].properties[3]);
+      QueryStringProperty<Observaciones>(_entities[7].properties[3]);
 
   /// see [Observaciones.respuestaP3]
   static final respuestaP3 =
-      QueryStringProperty<Observaciones>(_entities[8].properties[4]);
+      QueryStringProperty<Observaciones>(_entities[7].properties[4]);
 
   /// see [Observaciones.respuestaP4]
   static final respuestaP4 =
-      QueryStringProperty<Observaciones>(_entities[8].properties[5]);
+      QueryStringProperty<Observaciones>(_entities[7].properties[5]);
 
   /// see [Observaciones.respuestaP5]
   static final respuestaP5 =
-      QueryStringProperty<Observaciones>(_entities[8].properties[6]);
+      QueryStringProperty<Observaciones>(_entities[7].properties[6]);
 
   /// see [Observaciones.respuestaP6]
   static final respuestaP6 =
-      QueryStringProperty<Observaciones>(_entities[8].properties[7]);
+      QueryStringProperty<Observaciones>(_entities[7].properties[7]);
 
   /// see [Observaciones.respuestaP7]
   static final respuestaP7 =
-      QueryStringProperty<Observaciones>(_entities[8].properties[8]);
+      QueryStringProperty<Observaciones>(_entities[7].properties[8]);
 
   /// see [Observaciones.respuestaP8]
   static final respuestaP8 =
-      QueryStringProperty<Observaciones>(_entities[8].properties[9]);
+      QueryStringProperty<Observaciones>(_entities[7].properties[9]);
 
   /// see [Observaciones.respuestaP9]
   static final respuestaP9 =
-      QueryStringProperty<Observaciones>(_entities[8].properties[10]);
+      QueryStringProperty<Observaciones>(_entities[7].properties[10]);
 
   /// see [Observaciones.respuestaP10]
   static final respuestaP10 =
-      QueryStringProperty<Observaciones>(_entities[8].properties[11]);
+      QueryStringProperty<Observaciones>(_entities[7].properties[11]);
 
   /// see [Observaciones.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Observaciones>(_entities[8].properties[12]);
+      QueryIntegerProperty<Observaciones>(_entities[7].properties[12]);
 
   /// see [Observaciones.idDBR]
   static final idDBR =
-      QueryStringProperty<Observaciones>(_entities[8].properties[13]);
+      QueryStringProperty<Observaciones>(_entities[7].properties[13]);
 
   /// see [Observaciones.ordenTrabajo]
   static final ordenTrabajo = QueryRelationToOne<Observaciones, OrdenTrabajo>(
-      _entities[8].properties[14]);
+      _entities[7].properties[14]);
 
   /// see [Observaciones.nombreAsesor]
   static final nombreAsesor =
-      QueryStringProperty<Observaciones>(_entities[8].properties[15]);
+      QueryStringProperty<Observaciones>(_entities[7].properties[15]);
 }
 
 /// [Electrico] entity fields to define ObjectBox queries.
 class Electrico_ {
   /// see [Electrico.id]
-  static final id = QueryIntegerProperty<Electrico>(_entities[9].properties[0]);
+  static final id = QueryIntegerProperty<Electrico>(_entities[8].properties[0]);
 
   /// see [Electrico.terminalesDeBaterias]
   static final terminalesDeBaterias =
-      QueryStringProperty<Electrico>(_entities[9].properties[1]);
+      QueryStringProperty<Electrico>(_entities[8].properties[1]);
 
   /// see [Electrico.terminalesDeBateriasObservaciones]
   static final terminalesDeBateriasObservaciones =
-      QueryStringProperty<Electrico>(_entities[9].properties[2]);
+      QueryStringProperty<Electrico>(_entities[8].properties[2]);
 
   /// see [Electrico.lucesFrenos]
   static final lucesFrenos =
-      QueryStringProperty<Electrico>(_entities[9].properties[3]);
+      QueryStringProperty<Electrico>(_entities[8].properties[3]);
 
   /// see [Electrico.lucesFrenosObservaciones]
   static final lucesFrenosObservaciones =
-      QueryStringProperty<Electrico>(_entities[9].properties[4]);
+      QueryStringProperty<Electrico>(_entities[8].properties[4]);
 
   /// see [Electrico.lucesDireccionales]
   static final lucesDireccionales =
-      QueryStringProperty<Electrico>(_entities[9].properties[5]);
+      QueryStringProperty<Electrico>(_entities[8].properties[5]);
 
   /// see [Electrico.lucesDireccionalesObservaciones]
   static final lucesDireccionalesObservaciones =
-      QueryStringProperty<Electrico>(_entities[9].properties[6]);
+      QueryStringProperty<Electrico>(_entities[8].properties[6]);
 
   /// see [Electrico.lucesCuartos]
   static final lucesCuartos =
-      QueryStringProperty<Electrico>(_entities[9].properties[7]);
+      QueryStringProperty<Electrico>(_entities[8].properties[7]);
 
   /// see [Electrico.lucesCuartosObservaciones]
   static final lucesCuartosObservaciones =
-      QueryStringProperty<Electrico>(_entities[9].properties[8]);
+      QueryStringProperty<Electrico>(_entities[8].properties[8]);
 
   /// see [Electrico.checkEngine]
   static final checkEngine =
-      QueryStringProperty<Electrico>(_entities[9].properties[9]);
+      QueryStringProperty<Electrico>(_entities[8].properties[9]);
 
   /// see [Electrico.checkEngineObservaciones]
   static final checkEngineObservaciones =
-      QueryStringProperty<Electrico>(_entities[9].properties[10]);
+      QueryStringProperty<Electrico>(_entities[8].properties[10]);
 
   /// see [Electrico.completado]
   static final completado =
-      QueryBooleanProperty<Electrico>(_entities[9].properties[11]);
+      QueryBooleanProperty<Electrico>(_entities[8].properties[11]);
 
   /// see [Electrico.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Electrico>(_entities[9].properties[12]);
+      QueryIntegerProperty<Electrico>(_entities[8].properties[12]);
 
   /// see [Electrico.idDBR]
   static final idDBR =
-      QueryStringProperty<Electrico>(_entities[9].properties[13]);
+      QueryStringProperty<Electrico>(_entities[8].properties[13]);
 
   /// see [Electrico.revision]
   static final revision =
-      QueryRelationToOne<Electrico, Revision>(_entities[9].properties[14]);
+      QueryRelationToOne<Electrico, Revision>(_entities[8].properties[14]);
 
   /// see [Electrico.tecnicoMecanico]
   static final tecnicoMecanico =
-      QueryRelationToOne<Electrico, Usuarios>(_entities[9].properties[15]);
+      QueryRelationToOne<Electrico, Usuarios>(_entities[8].properties[15]);
 }
 
 /// [Fluidos] entity fields to define ObjectBox queries.
 class Fluidos_ {
   /// see [Fluidos.id]
-  static final id = QueryIntegerProperty<Fluidos>(_entities[10].properties[0]);
+  static final id = QueryIntegerProperty<Fluidos>(_entities[9].properties[0]);
 
   /// see [Fluidos.atf]
-  static final atf = QueryStringProperty<Fluidos>(_entities[10].properties[1]);
+  static final atf = QueryStringProperty<Fluidos>(_entities[9].properties[1]);
 
   /// see [Fluidos.atfObservaciones]
   static final atfObservaciones =
-      QueryStringProperty<Fluidos>(_entities[10].properties[2]);
+      QueryStringProperty<Fluidos>(_entities[9].properties[2]);
 
   /// see [Fluidos.power]
-  static final power =
-      QueryStringProperty<Fluidos>(_entities[10].properties[3]);
+  static final power = QueryStringProperty<Fluidos>(_entities[9].properties[3]);
 
   /// see [Fluidos.powerObservaciones]
   static final powerObservaciones =
-      QueryStringProperty<Fluidos>(_entities[10].properties[4]);
+      QueryStringProperty<Fluidos>(_entities[9].properties[4]);
 
   /// see [Fluidos.frenos]
   static final frenos =
-      QueryStringProperty<Fluidos>(_entities[10].properties[5]);
+      QueryStringProperty<Fluidos>(_entities[9].properties[5]);
 
   /// see [Fluidos.frenosObservaciones]
   static final frenosObservaciones =
-      QueryStringProperty<Fluidos>(_entities[10].properties[6]);
+      QueryStringProperty<Fluidos>(_entities[9].properties[6]);
 
   /// see [Fluidos.anticongelante]
   static final anticongelante =
-      QueryStringProperty<Fluidos>(_entities[10].properties[7]);
+      QueryStringProperty<Fluidos>(_entities[9].properties[7]);
 
   /// see [Fluidos.anticongelanteObservaciones]
   static final anticongelanteObservaciones =
-      QueryStringProperty<Fluidos>(_entities[10].properties[8]);
+      QueryStringProperty<Fluidos>(_entities[9].properties[8]);
 
   /// see [Fluidos.wipers]
   static final wipers =
-      QueryStringProperty<Fluidos>(_entities[10].properties[9]);
+      QueryStringProperty<Fluidos>(_entities[9].properties[9]);
 
   /// see [Fluidos.wipersObservaciones]
   static final wipersObservaciones =
-      QueryStringProperty<Fluidos>(_entities[10].properties[10]);
+      QueryStringProperty<Fluidos>(_entities[9].properties[10]);
 
   /// see [Fluidos.completado]
   static final completado =
-      QueryBooleanProperty<Fluidos>(_entities[10].properties[11]);
+      QueryBooleanProperty<Fluidos>(_entities[9].properties[11]);
 
   /// see [Fluidos.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Fluidos>(_entities[10].properties[12]);
+      QueryIntegerProperty<Fluidos>(_entities[9].properties[12]);
 
   /// see [Fluidos.idDBR]
   static final idDBR =
-      QueryStringProperty<Fluidos>(_entities[10].properties[13]);
+      QueryStringProperty<Fluidos>(_entities[9].properties[13]);
 
   /// see [Fluidos.revision]
   static final revision =
-      QueryRelationToOne<Fluidos, Revision>(_entities[10].properties[14]);
+      QueryRelationToOne<Fluidos, Revision>(_entities[9].properties[14]);
 
   /// see [Fluidos.tecnicoMecanico]
   static final tecnicoMecanico =
-      QueryRelationToOne<Fluidos, Usuarios>(_entities[10].properties[15]);
+      QueryRelationToOne<Fluidos, Usuarios>(_entities[9].properties[15]);
 }
 
 /// [Frenos] entity fields to define ObjectBox queries.
 class Frenos_ {
   /// see [Frenos.id]
-  static final id = QueryIntegerProperty<Frenos>(_entities[11].properties[0]);
+  static final id = QueryIntegerProperty<Frenos>(_entities[10].properties[0]);
 
   /// see [Frenos.balatasDelanteras]
   static final balatasDelanteras =
-      QueryStringProperty<Frenos>(_entities[11].properties[1]);
+      QueryStringProperty<Frenos>(_entities[10].properties[1]);
 
   /// see [Frenos.balatasDelanterasObservaciones]
   static final balatasDelanterasObservaciones =
-      QueryStringProperty<Frenos>(_entities[11].properties[2]);
+      QueryStringProperty<Frenos>(_entities[10].properties[2]);
 
   /// see [Frenos.balatasTraserasDiscoTambor]
   static final balatasTraserasDiscoTambor =
-      QueryStringProperty<Frenos>(_entities[11].properties[3]);
+      QueryStringProperty<Frenos>(_entities[10].properties[3]);
 
   /// see [Frenos.balatasTraserasDiscoTamborObservaciones]
   static final balatasTraserasDiscoTamborObservaciones =
-      QueryStringProperty<Frenos>(_entities[11].properties[4]);
+      QueryStringProperty<Frenos>(_entities[10].properties[4]);
 
   /// see [Frenos.manguerasLineas]
   static final manguerasLineas =
-      QueryStringProperty<Frenos>(_entities[11].properties[5]);
+      QueryStringProperty<Frenos>(_entities[10].properties[5]);
 
   /// see [Frenos.manguerasLineasObservaciones]
   static final manguerasLineasObservaciones =
-      QueryStringProperty<Frenos>(_entities[11].properties[6]);
+      QueryStringProperty<Frenos>(_entities[10].properties[6]);
 
   /// see [Frenos.cilindroMaestro]
   static final cilindroMaestro =
-      QueryStringProperty<Frenos>(_entities[11].properties[7]);
+      QueryStringProperty<Frenos>(_entities[10].properties[7]);
 
   /// see [Frenos.cilindroMaestroObservaciones]
   static final cilindroMaestroObservaciones =
-      QueryStringProperty<Frenos>(_entities[11].properties[8]);
+      QueryStringProperty<Frenos>(_entities[10].properties[8]);
 
   /// see [Frenos.birlosYTuercas]
   static final birlosYTuercas =
-      QueryStringProperty<Frenos>(_entities[11].properties[9]);
+      QueryStringProperty<Frenos>(_entities[10].properties[9]);
 
   /// see [Frenos.birlosYTuercasObservaciones]
   static final birlosYTuercasObservaciones =
-      QueryStringProperty<Frenos>(_entities[11].properties[10]);
+      QueryStringProperty<Frenos>(_entities[10].properties[10]);
 
   /// see [Frenos.completado]
   static final completado =
-      QueryBooleanProperty<Frenos>(_entities[11].properties[11]);
+      QueryBooleanProperty<Frenos>(_entities[10].properties[11]);
 
   /// see [Frenos.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Frenos>(_entities[11].properties[12]);
+      QueryIntegerProperty<Frenos>(_entities[10].properties[12]);
 
   /// see [Frenos.idDBR]
   static final idDBR =
-      QueryStringProperty<Frenos>(_entities[11].properties[13]);
+      QueryStringProperty<Frenos>(_entities[10].properties[13]);
 
   /// see [Frenos.revision]
   static final revision =
-      QueryRelationToOne<Frenos, Revision>(_entities[11].properties[14]);
+      QueryRelationToOne<Frenos, Revision>(_entities[10].properties[14]);
 
   /// see [Frenos.tecnicoMecanico]
   static final tecnicoMecanico =
-      QueryRelationToOne<Frenos, Usuarios>(_entities[11].properties[15]);
+      QueryRelationToOne<Frenos, Usuarios>(_entities[10].properties[15]);
 }
 
 /// [Motor] entity fields to define ObjectBox queries.
 class Motor_ {
   /// see [Motor.id]
-  static final id = QueryIntegerProperty<Motor>(_entities[12].properties[0]);
+  static final id = QueryIntegerProperty<Motor>(_entities[11].properties[0]);
 
   /// see [Motor.aceite]
-  static final aceite = QueryStringProperty<Motor>(_entities[12].properties[1]);
+  static final aceite = QueryStringProperty<Motor>(_entities[11].properties[1]);
 
   /// see [Motor.aceiteObservaciones]
   static final aceiteObservaciones =
-      QueryStringProperty<Motor>(_entities[12].properties[2]);
+      QueryStringProperty<Motor>(_entities[11].properties[2]);
 
   /// see [Motor.cpoDeAceleracion]
   static final cpoDeAceleracion =
-      QueryStringProperty<Motor>(_entities[12].properties[3]);
+      QueryStringProperty<Motor>(_entities[11].properties[3]);
 
   /// see [Motor.cpoDeAceleracionObservaciones]
   static final cpoDeAceleracionObservaciones =
-      QueryStringProperty<Motor>(_entities[12].properties[4]);
+      QueryStringProperty<Motor>(_entities[11].properties[4]);
 
   /// see [Motor.bujias]
-  static final bujias = QueryStringProperty<Motor>(_entities[12].properties[5]);
+  static final bujias = QueryStringProperty<Motor>(_entities[11].properties[5]);
 
   /// see [Motor.bujiasObservaciones]
   static final bujiasObservaciones =
-      QueryStringProperty<Motor>(_entities[12].properties[6]);
+      QueryStringProperty<Motor>(_entities[11].properties[6]);
 
   /// see [Motor.bandaCadenaDeTiempo]
   static final bandaCadenaDeTiempo =
-      QueryStringProperty<Motor>(_entities[12].properties[7]);
+      QueryStringProperty<Motor>(_entities[11].properties[7]);
 
   /// see [Motor.bandaCadenaDeTiempoObservaciones]
   static final bandaCadenaDeTiempoObservaciones =
-      QueryStringProperty<Motor>(_entities[12].properties[8]);
+      QueryStringProperty<Motor>(_entities[11].properties[8]);
 
   /// see [Motor.soportes]
   static final soportes =
-      QueryStringProperty<Motor>(_entities[12].properties[9]);
+      QueryStringProperty<Motor>(_entities[11].properties[9]);
 
   /// see [Motor.soportesObservaciones]
   static final soportesObservaciones =
-      QueryStringProperty<Motor>(_entities[12].properties[10]);
+      QueryStringProperty<Motor>(_entities[11].properties[10]);
 
   /// see [Motor.bandas]
   static final bandas =
-      QueryStringProperty<Motor>(_entities[12].properties[11]);
+      QueryStringProperty<Motor>(_entities[11].properties[11]);
 
   /// see [Motor.bandasObservaciones]
   static final bandasObservaciones =
-      QueryStringProperty<Motor>(_entities[12].properties[12]);
+      QueryStringProperty<Motor>(_entities[11].properties[12]);
 
   /// see [Motor.mangueras]
   static final mangueras =
-      QueryStringProperty<Motor>(_entities[12].properties[13]);
+      QueryStringProperty<Motor>(_entities[11].properties[13]);
 
   /// see [Motor.manguerasObservaciones]
   static final manguerasObservaciones =
-      QueryStringProperty<Motor>(_entities[12].properties[14]);
+      QueryStringProperty<Motor>(_entities[11].properties[14]);
 
   /// see [Motor.completado]
   static final completado =
-      QueryBooleanProperty<Motor>(_entities[12].properties[15]);
+      QueryBooleanProperty<Motor>(_entities[11].properties[15]);
 
   /// see [Motor.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Motor>(_entities[12].properties[16]);
+      QueryIntegerProperty<Motor>(_entities[11].properties[16]);
 
   /// see [Motor.idDBR]
-  static final idDBR = QueryStringProperty<Motor>(_entities[12].properties[17]);
+  static final idDBR = QueryStringProperty<Motor>(_entities[11].properties[17]);
 
   /// see [Motor.filtroDeAire]
   static final filtroDeAire =
-      QueryStringProperty<Motor>(_entities[12].properties[18]);
+      QueryStringProperty<Motor>(_entities[11].properties[18]);
 
   /// see [Motor.filtroDeAireObservaciones]
   static final filtroDeAireObservaciones =
-      QueryStringProperty<Motor>(_entities[12].properties[19]);
+      QueryStringProperty<Motor>(_entities[11].properties[19]);
 
   /// see [Motor.revision]
   static final revision =
-      QueryRelationToOne<Motor, Revision>(_entities[12].properties[20]);
+      QueryRelationToOne<Motor, Revision>(_entities[11].properties[20]);
 
   /// see [Motor.tecnicoMecanico]
   static final tecnicoMecanico =
-      QueryRelationToOne<Motor, Usuarios>(_entities[12].properties[21]);
+      QueryRelationToOne<Motor, Usuarios>(_entities[11].properties[21]);
 }
 
 /// [SuspensionDireccion] entity fields to define ObjectBox queries.
 class SuspensionDireccion_ {
   /// see [SuspensionDireccion.id]
   static final id =
-      QueryIntegerProperty<SuspensionDireccion>(_entities[13].properties[0]);
+      QueryIntegerProperty<SuspensionDireccion>(_entities[12].properties[0]);
 
   /// see [SuspensionDireccion.rotulaSuperiorIzq]
   static final rotulaSuperiorIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[1]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[1]);
 
   /// see [SuspensionDireccion.rotulaSuperiorIzqObservaciones]
   static final rotulaSuperiorIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[2]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[2]);
 
   /// see [SuspensionDireccion.rotulaSuperiorDer]
   static final rotulaSuperiorDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[3]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[3]);
 
   /// see [SuspensionDireccion.rotulaSuperiorDerObservaciones]
   static final rotulaSuperiorDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[4]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[4]);
 
   /// see [SuspensionDireccion.rotulaInferiorIzq]
   static final rotulaInferiorIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[5]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[5]);
 
   /// see [SuspensionDireccion.rotulaInferiorIzqObservaciones]
   static final rotulaInferiorIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[6]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[6]);
 
   /// see [SuspensionDireccion.rotulaInferiorDer]
   static final rotulaInferiorDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[7]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[7]);
 
   /// see [SuspensionDireccion.rotulaInferiorDerObservaciones]
   static final rotulaInferiorDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[8]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[8]);
 
   /// see [SuspensionDireccion.bujeHorquillaSuperiorIzq]
   static final bujeHorquillaSuperiorIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[9]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[9]);
 
   /// see [SuspensionDireccion.bujeHorquillaSuperiorIzqObservaciones]
   static final bujeHorquillaSuperiorIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[10]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[10]);
 
   /// see [SuspensionDireccion.bujeHorquillaSuperiorDer]
   static final bujeHorquillaSuperiorDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[11]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[11]);
 
   /// see [SuspensionDireccion.bujeHorquillaSuperiorDerObservaciones]
   static final bujeHorquillaSuperiorDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[12]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[12]);
 
   /// see [SuspensionDireccion.bujeHorquillaInferiorIzq]
   static final bujeHorquillaInferiorIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[13]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[13]);
 
   /// see [SuspensionDireccion.bujeHorquillaInferiorIzqObservaciones]
   static final bujeHorquillaInferiorIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[14]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[14]);
 
   /// see [SuspensionDireccion.bujeHorquillaInferiorDer]
   static final bujeHorquillaInferiorDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[15]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[15]);
 
   /// see [SuspensionDireccion.bujeHorquillaInferiorDerObservaciones]
   static final bujeHorquillaInferiorDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[16]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[16]);
 
   /// see [SuspensionDireccion.amortiguadorDelanteroIzq]
   static final amortiguadorDelanteroIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[17]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[17]);
 
   /// see [SuspensionDireccion.amortiguadorDelanteroIzqObservaciones]
   static final amortiguadorDelanteroIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[18]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[18]);
 
   /// see [SuspensionDireccion.amortiguadorDelanteroDer]
   static final amortiguadorDelanteroDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[19]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[19]);
 
   /// see [SuspensionDireccion.amortiguadorDelanteroDerObservaciones]
   static final amortiguadorDelanteroDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[20]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[20]);
 
   /// see [SuspensionDireccion.amortiguadorTraseroIzq]
   static final amortiguadorTraseroIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[21]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[21]);
 
   /// see [SuspensionDireccion.amortiguadorTraseroIzqObservaciones]
   static final amortiguadorTraseroIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[22]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[22]);
 
   /// see [SuspensionDireccion.amortiguadorTraseroDer]
   static final amortiguadorTraseroDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[23]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[23]);
 
   /// see [SuspensionDireccion.amortiguadorTraseroDerObservaciones]
   static final amortiguadorTraseroDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[24]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[24]);
 
   /// see [SuspensionDireccion.bujeBarraEstabilizadoraIzq]
   static final bujeBarraEstabilizadoraIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[25]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[25]);
 
   /// see [SuspensionDireccion.bujeBarraEstabilizadoraIzqObservaciones]
   static final bujeBarraEstabilizadoraIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[26]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[26]);
 
   /// see [SuspensionDireccion.bujeBarraEstabilizadoraDer]
   static final bujeBarraEstabilizadoraDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[27]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[27]);
 
   /// see [SuspensionDireccion.bujeBarraEstabilizadoraDerObservaciones]
   static final bujeBarraEstabilizadoraDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[28]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[28]);
 
   /// see [SuspensionDireccion.linkKitDelanteroIzq]
   static final linkKitDelanteroIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[29]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[29]);
 
   /// see [SuspensionDireccion.linkKitDelanteroIzqObservaciones]
   static final linkKitDelanteroIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[30]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[30]);
 
   /// see [SuspensionDireccion.linkKitDelanteroDer]
   static final linkKitDelanteroDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[31]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[31]);
 
   /// see [SuspensionDireccion.linkKitDelanteroDerObservaciones]
   static final linkKitDelanteroDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[32]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[32]);
 
   /// see [SuspensionDireccion.linkKitTraseroIzq]
   static final linkKitTraseroIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[33]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[33]);
 
   /// see [SuspensionDireccion.linkKitTraseroIzqObservaciones]
   static final linkKitTraseroIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[34]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[34]);
 
   /// see [SuspensionDireccion.linkKitTraseroDer]
   static final linkKitTraseroDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[35]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[35]);
 
   /// see [SuspensionDireccion.linkKitTraseroDerObservaciones]
   static final linkKitTraseroDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[36]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[36]);
 
   /// see [SuspensionDireccion.terminalInteriorIzq]
   static final terminalInteriorIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[37]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[37]);
 
   /// see [SuspensionDireccion.terminalInteriorIzqObservaciones]
   static final terminalInteriorIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[38]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[38]);
 
   /// see [SuspensionDireccion.terminalInteriorDer]
   static final terminalInteriorDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[39]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[39]);
 
   /// see [SuspensionDireccion.terminalInteriorDerObservaciones]
   static final terminalInteriorDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[40]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[40]);
 
   /// see [SuspensionDireccion.terminalExteriorIzq]
   static final terminalExteriorIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[41]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[41]);
 
   /// see [SuspensionDireccion.terminalExteriorIzqObservaciones]
   static final terminalExteriorIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[42]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[42]);
 
   /// see [SuspensionDireccion.terminalExteriorDer]
   static final terminalExteriorDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[43]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[43]);
 
   /// see [SuspensionDireccion.terminalExteriorDerObservaciones]
   static final terminalExteriorDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[44]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[44]);
 
   /// see [SuspensionDireccion.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<SuspensionDireccion>(_entities[13].properties[45]);
+      QueryIntegerProperty<SuspensionDireccion>(_entities[12].properties[45]);
 
   /// see [SuspensionDireccion.idDBR]
   static final idDBR =
-      QueryStringProperty<SuspensionDireccion>(_entities[13].properties[46]);
+      QueryStringProperty<SuspensionDireccion>(_entities[12].properties[46]);
 
   /// see [SuspensionDireccion.completado]
   static final completado =
-      QueryBooleanProperty<SuspensionDireccion>(_entities[13].properties[47]);
+      QueryBooleanProperty<SuspensionDireccion>(_entities[12].properties[47]);
 
   /// see [SuspensionDireccion.revision]
   static final revision = QueryRelationToOne<SuspensionDireccion, Revision>(
-      _entities[13].properties[48]);
+      _entities[12].properties[48]);
 
   /// see [SuspensionDireccion.tecnicoMecanico]
   static final tecnicoMecanico =
       QueryRelationToOne<SuspensionDireccion, Usuarios>(
-          _entities[13].properties[49]);
+          _entities[12].properties[49]);
 }
 
 /// [Producto] entity fields to define ObjectBox queries.
 class Producto_ {
   /// see [Producto.id]
-  static final id = QueryIntegerProperty<Producto>(_entities[14].properties[0]);
+  static final id = QueryIntegerProperty<Producto>(_entities[13].properties[0]);
 
   /// see [Producto.producto]
   static final producto =
-      QueryStringProperty<Producto>(_entities[14].properties[1]);
+      QueryStringProperty<Producto>(_entities[13].properties[1]);
 
   /// see [Producto.cantidad]
   static final cantidad =
-      QueryIntegerProperty<Producto>(_entities[14].properties[2]);
+      QueryIntegerProperty<Producto>(_entities[13].properties[2]);
 
   /// see [Producto.costo]
   static final costo =
-      QueryDoubleProperty<Producto>(_entities[14].properties[3]);
+      QueryDoubleProperty<Producto>(_entities[13].properties[3]);
 
   /// see [Producto.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Producto>(_entities[14].properties[4]);
+      QueryIntegerProperty<Producto>(_entities[13].properties[4]);
 
   /// see [Producto.idDBR]
   static final idDBR =
-      QueryStringProperty<Producto>(_entities[14].properties[5]);
+      QueryStringProperty<Producto>(_entities[13].properties[5]);
 
   /// see [Producto.servicio]
   static final servicio =
-      QueryRelationToOne<Producto, Servicio>(_entities[14].properties[6]);
+      QueryRelationToOne<Producto, Servicio>(_entities[13].properties[6]);
 }
 
 /// [Servicio] entity fields to define ObjectBox queries.
 class Servicio_ {
   /// see [Servicio.id]
-  static final id = QueryIntegerProperty<Servicio>(_entities[15].properties[0]);
+  static final id = QueryIntegerProperty<Servicio>(_entities[14].properties[0]);
 
   /// see [Servicio.servicio]
   static final servicio =
-      QueryStringProperty<Servicio>(_entities[15].properties[1]);
+      QueryStringProperty<Servicio>(_entities[14].properties[1]);
 
   /// see [Servicio.costoServicio]
   static final costoServicio =
-      QueryDoubleProperty<Servicio>(_entities[15].properties[2]);
+      QueryDoubleProperty<Servicio>(_entities[14].properties[2]);
 
   /// see [Servicio.autorizado]
   static final autorizado =
-      QueryBooleanProperty<Servicio>(_entities[15].properties[3]);
+      QueryBooleanProperty<Servicio>(_entities[14].properties[3]);
 
   /// see [Servicio.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Servicio>(_entities[15].properties[4]);
+      QueryIntegerProperty<Servicio>(_entities[14].properties[4]);
 
   /// see [Servicio.fechaEntrega]
   static final fechaEntrega =
-      QueryIntegerProperty<Servicio>(_entities[15].properties[5]);
+      QueryIntegerProperty<Servicio>(_entities[14].properties[5]);
 
   /// see [Servicio.idDBR]
   static final idDBR =
-      QueryStringProperty<Servicio>(_entities[15].properties[6]);
+      QueryStringProperty<Servicio>(_entities[14].properties[6]);
 
   /// see [Servicio.imagen]
   static final imagen =
-      QueryStringProperty<Servicio>(_entities[15].properties[7]);
+      QueryStringProperty<Servicio>(_entities[14].properties[7]);
 
   /// see [Servicio.path]
   static final path =
-      QueryStringProperty<Servicio>(_entities[15].properties[8]);
+      QueryStringProperty<Servicio>(_entities[14].properties[8]);
 
   /// see [Servicio.ordenServicio]
   static final ordenServicio =
-      QueryRelationToOne<Servicio, OrdenServicio>(_entities[15].properties[9]);
+      QueryRelationToOne<Servicio, OrdenServicio>(_entities[14].properties[9]);
 }
 
 /// [TipoProducto] entity fields to define ObjectBox queries.
 class TipoProducto_ {
   /// see [TipoProducto.id]
   static final id =
-      QueryIntegerProperty<TipoProducto>(_entities[16].properties[0]);
+      QueryIntegerProperty<TipoProducto>(_entities[15].properties[0]);
 
   /// see [TipoProducto.tipoProducto]
   static final tipoProducto =
-      QueryStringProperty<TipoProducto>(_entities[16].properties[1]);
+      QueryStringProperty<TipoProducto>(_entities[15].properties[1]);
 
   /// see [TipoProducto.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<TipoProducto>(_entities[16].properties[2]);
+      QueryIntegerProperty<TipoProducto>(_entities[15].properties[2]);
 
   /// see [TipoProducto.costo]
   static final costo =
-      QueryDoubleProperty<TipoProducto>(_entities[16].properties[3]);
+      QueryDoubleProperty<TipoProducto>(_entities[15].properties[3]);
 
   /// see [TipoProducto.idDBR]
   static final idDBR =
-      QueryStringProperty<TipoProducto>(_entities[16].properties[4]);
+      QueryStringProperty<TipoProducto>(_entities[15].properties[4]);
 }
 
 /// [TipoServicio] entity fields to define ObjectBox queries.
 class TipoServicio_ {
   /// see [TipoServicio.id]
   static final id =
-      QueryIntegerProperty<TipoServicio>(_entities[17].properties[0]);
+      QueryIntegerProperty<TipoServicio>(_entities[16].properties[0]);
 
   /// see [TipoServicio.tipoServicio]
   static final tipoServicio =
-      QueryStringProperty<TipoServicio>(_entities[17].properties[1]);
+      QueryStringProperty<TipoServicio>(_entities[16].properties[1]);
 
   /// see [TipoServicio.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<TipoServicio>(_entities[17].properties[2]);
+      QueryIntegerProperty<TipoServicio>(_entities[16].properties[2]);
 
   /// see [TipoServicio.costo]
   static final costo =
-      QueryDoubleProperty<TipoServicio>(_entities[17].properties[3]);
+      QueryDoubleProperty<TipoServicio>(_entities[16].properties[3]);
 
   /// see [TipoServicio.idDBR]
   static final idDBR =
-      QueryStringProperty<TipoServicio>(_entities[17].properties[4]);
+      QueryStringProperty<TipoServicio>(_entities[16].properties[4]);
 
   /// see [TipoServicio.imagen]
   static final imagen =
-      QueryStringProperty<TipoServicio>(_entities[17].properties[5]);
+      QueryStringProperty<TipoServicio>(_entities[16].properties[5]);
 
   /// see [TipoServicio.path]
   static final path =
-      QueryStringProperty<TipoServicio>(_entities[17].properties[6]);
+      QueryStringProperty<TipoServicio>(_entities[16].properties[6]);
 }
 
 /// [Estatus] entity fields to define ObjectBox queries.
 class Estatus_ {
   /// see [Estatus.id]
-  static final id = QueryIntegerProperty<Estatus>(_entities[18].properties[0]);
+  static final id = QueryIntegerProperty<Estatus>(_entities[17].properties[0]);
 
   /// see [Estatus.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Estatus>(_entities[18].properties[1]);
+      QueryIntegerProperty<Estatus>(_entities[17].properties[1]);
 
   /// see [Estatus.idDBR]
   static final idDBR =
-      QueryStringProperty<Estatus>(_entities[18].properties[2]);
+      QueryStringProperty<Estatus>(_entities[17].properties[2]);
 
   /// see [Estatus.avance]
   static final avance =
-      QueryDoubleProperty<Estatus>(_entities[18].properties[3]);
+      QueryDoubleProperty<Estatus>(_entities[17].properties[3]);
 
   /// see [Estatus.estatus]
   static final estatus =
-      QueryStringProperty<Estatus>(_entities[18].properties[4]);
+      QueryStringProperty<Estatus>(_entities[17].properties[4]);
 }
 
 /// [OrdenServicio] entity fields to define ObjectBox queries.
 class OrdenServicio_ {
   /// see [OrdenServicio.id]
   static final id =
-      QueryIntegerProperty<OrdenServicio>(_entities[19].properties[0]);
+      QueryIntegerProperty<OrdenServicio>(_entities[18].properties[0]);
 
   /// see [OrdenServicio.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<OrdenServicio>(_entities[19].properties[1]);
+      QueryIntegerProperty<OrdenServicio>(_entities[18].properties[1]);
 
   /// see [OrdenServicio.fechaEntrega]
   static final fechaEntrega =
-      QueryIntegerProperty<OrdenServicio>(_entities[19].properties[2]);
+      QueryIntegerProperty<OrdenServicio>(_entities[18].properties[2]);
 
   /// see [OrdenServicio.costoTotal]
   static final costoTotal =
-      QueryDoubleProperty<OrdenServicio>(_entities[19].properties[3]);
+      QueryDoubleProperty<OrdenServicio>(_entities[18].properties[3]);
 
   /// see [OrdenServicio.idDBR]
   static final idDBR =
-      QueryStringProperty<OrdenServicio>(_entities[19].properties[4]);
+      QueryStringProperty<OrdenServicio>(_entities[18].properties[4]);
 
   /// see [OrdenServicio.ordenTrabajo]
   static final ordenTrabajo = QueryRelationToOne<OrdenServicio, OrdenTrabajo>(
-      _entities[19].properties[5]);
+      _entities[18].properties[5]);
 }
 
 /// [Revision] entity fields to define ObjectBox queries.
 class Revision_ {
   /// see [Revision.id]
-  static final id = QueryIntegerProperty<Revision>(_entities[20].properties[0]);
+  static final id = QueryIntegerProperty<Revision>(_entities[19].properties[0]);
 
   /// see [Revision.completado]
   static final completado =
-      QueryBooleanProperty<Revision>(_entities[20].properties[1]);
+      QueryBooleanProperty<Revision>(_entities[19].properties[1]);
 
   /// see [Revision.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Revision>(_entities[20].properties[2]);
+      QueryIntegerProperty<Revision>(_entities[19].properties[2]);
 
   /// see [Revision.idDBR]
   static final idDBR =
-      QueryStringProperty<Revision>(_entities[20].properties[3]);
+      QueryStringProperty<Revision>(_entities[19].properties[3]);
 
   /// see [Revision.ordenTrabajo]
   static final ordenTrabajo =
-      QueryRelationToOne<Revision, OrdenTrabajo>(_entities[20].properties[4]);
+      QueryRelationToOne<Revision, OrdenTrabajo>(_entities[19].properties[4]);
 
   /// see [Revision.suspensionDireccion]
   static final suspensionDireccion =
       QueryRelationToOne<Revision, SuspensionDireccion>(
-          _entities[20].properties[5]);
+          _entities[19].properties[5]);
 
   /// see [Revision.motor]
   static final motor =
-      QueryRelationToOne<Revision, Motor>(_entities[20].properties[6]);
+      QueryRelationToOne<Revision, Motor>(_entities[19].properties[6]);
 
   /// see [Revision.fluidos]
   static final fluidos =
-      QueryRelationToOne<Revision, Fluidos>(_entities[20].properties[7]);
+      QueryRelationToOne<Revision, Fluidos>(_entities[19].properties[7]);
 
   /// see [Revision.frenos]
   static final frenos =
-      QueryRelationToOne<Revision, Frenos>(_entities[20].properties[8]);
+      QueryRelationToOne<Revision, Frenos>(_entities[19].properties[8]);
 
   /// see [Revision.electrico]
   static final electrico =
-      QueryRelationToOne<Revision, Electrico>(_entities[20].properties[9]);
+      QueryRelationToOne<Revision, Electrico>(_entities[19].properties[9]);
 }
 
 /// [Anio] entity fields to define ObjectBox queries.
 class Anio_ {
   /// see [Anio.id]
-  static final id = QueryIntegerProperty<Anio>(_entities[21].properties[0]);
+  static final id = QueryIntegerProperty<Anio>(_entities[20].properties[0]);
 
   /// see [Anio.anio]
-  static final anio = QueryStringProperty<Anio>(_entities[21].properties[1]);
+  static final anio = QueryStringProperty<Anio>(_entities[20].properties[1]);
 
   /// see [Anio.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Anio>(_entities[21].properties[2]);
+      QueryIntegerProperty<Anio>(_entities[20].properties[2]);
 
   /// see [Anio.idDBR]
-  static final idDBR = QueryStringProperty<Anio>(_entities[21].properties[3]);
+  static final idDBR = QueryStringProperty<Anio>(_entities[20].properties[3]);
 
   /// see [Anio.modelo]
   static final modelo =
-      QueryRelationToOne<Anio, Modelo>(_entities[21].properties[4]);
+      QueryRelationToOne<Anio, Modelo>(_entities[20].properties[4]);
 }
 
 /// [Marca] entity fields to define ObjectBox queries.
 class Marca_ {
   /// see [Marca.id]
-  static final id = QueryIntegerProperty<Marca>(_entities[22].properties[0]);
+  static final id = QueryIntegerProperty<Marca>(_entities[21].properties[0]);
 
   /// see [Marca.marca]
-  static final marca = QueryStringProperty<Marca>(_entities[22].properties[1]);
+  static final marca = QueryStringProperty<Marca>(_entities[21].properties[1]);
 
   /// see [Marca.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Marca>(_entities[22].properties[2]);
+      QueryIntegerProperty<Marca>(_entities[21].properties[2]);
 
   /// see [Marca.idDBR]
-  static final idDBR = QueryStringProperty<Marca>(_entities[22].properties[3]);
+  static final idDBR = QueryStringProperty<Marca>(_entities[21].properties[3]);
 }
 
 /// [Modelo] entity fields to define ObjectBox queries.
 class Modelo_ {
   /// see [Modelo.id]
-  static final id = QueryIntegerProperty<Modelo>(_entities[23].properties[0]);
+  static final id = QueryIntegerProperty<Modelo>(_entities[22].properties[0]);
 
   /// see [Modelo.modelo]
   static final modelo =
-      QueryStringProperty<Modelo>(_entities[23].properties[1]);
+      QueryStringProperty<Modelo>(_entities[22].properties[1]);
 
   /// see [Modelo.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Modelo>(_entities[23].properties[2]);
+      QueryIntegerProperty<Modelo>(_entities[22].properties[2]);
 
   /// see [Modelo.idDBR]
-  static final idDBR = QueryStringProperty<Modelo>(_entities[23].properties[3]);
+  static final idDBR = QueryStringProperty<Modelo>(_entities[22].properties[3]);
 
   /// see [Modelo.marca]
   static final marca =
-      QueryRelationToOne<Modelo, Marca>(_entities[23].properties[4]);
+      QueryRelationToOne<Modelo, Marca>(_entities[22].properties[4]);
 }
