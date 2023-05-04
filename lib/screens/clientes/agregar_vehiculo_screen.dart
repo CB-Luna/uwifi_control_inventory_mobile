@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:substring_highlight/substring_highlight.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_widgets.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
@@ -29,33 +30,22 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final vehiculoKey = GlobalKey<FormState>();
   final _unfocusNode = FocusNode();
-  var dateTimeSelected = DateTime.now().year;
+
+    @override
+  void initState() {
+    super.initState();
+    setState(() {
+      dataBase.marcaBox.getAll().forEach((element) {
+        context.read<VehiculoController>().listaMarcas.add(element.marca);
+      });
+      context.read<VehiculoController>().listaMarcas
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final vehiculoProvider = Provider.of<VehiculoController>(context);
-    Map<String, dynamic> jsonMap = {
-  "idUsuario": 6,
-  "nombreUsuario": "Álvaro Lozano Platonoff",
-  "nombre": "Kevin",
-  "apellidos": "Cervantes Padilla",
-  "curp": "PARU990118HDFLDZ01",
-  "integrantesFamilia": 4,
-  "comunidad": 2,
-  "estado": 2,
-  "municipio": 2,
-  "emprendimiento": "Las abejas felices",
-  "telefono": 5523216431,
-  "comentarios": "Sin comentarios",
-  "fechaRegistro": (DateFormat("yyyy-MM-ddTHH:mm:ss")
-          .format(DateTime.now()))
-      .toString(),
-  "archivado": false
-};
-
-String jsonString = jsonEncode(jsonMap);
-
-print(jsonString);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -264,245 +254,373 @@ print(jsonString);
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 0),
-                    child: TextFormField(
-                      textCapitalization:
-                          TextCapitalization.words,
-                      autovalidateMode:
-                          AutovalidateMode.onUserInteraction,
-                      onChanged: (value) {
-                        vehiculoProvider.marca = value;
-                      },
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.label_outline,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                        ),
-                        labelText: 'Marca*',
-                        labelStyle: FlutterFlowTheme.of(context)
-                            .title3
-                            .override(
-                              fontFamily: 'Montserrat',
-                              color: FlutterFlowTheme.of(context).grayDark,
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal,
-                            ),
-                        hintText: 'Ingrese marca...',
-                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding:
-                            const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                      textAlign: TextAlign.start,
-                      validator: FormBuilderValidators.compose([
-                        (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'La Marca es requerida.';
-                          } 
-                          return null;
+                    padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 16),
+                    child: Autocomplete(
+                      optionsBuilder: (TextEditingValue textEditingValue) {
+                        if (textEditingValue.text == '') {
+                          return const Iterable<String>.empty();
                         }
-                      ]),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                    child: TextFormField(
-                      textCapitalization:
-                          TextCapitalization.words,
-                      autovalidateMode:
-                          AutovalidateMode.onUserInteraction,
-                      onChanged: (value) {
-                        vehiculoProvider.modelo = value;
+                        return vehiculoProvider.listaMarcas.where((String option) {
+                          return option
+                              .toLowerCase()
+                              .contains(textEditingValue.text.toLowerCase());
+                        });
                       },
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.directions_car_outlined,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                        ),
-                        labelText: 'Modelo*',
-                        labelStyle: FlutterFlowTheme.of(context)
-                            .title3
-                            .override(
-                              fontFamily: 'Montserrat',
-                              color: FlutterFlowTheme.of(context).grayDark,
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal,
-                            ),
-                        hintText: 'Ingrese modelo...',
-                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding:
-                            const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                      textAlign: TextAlign.start,
-                      validator: FormBuilderValidators.compose([
-                        (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'El Modelo es requerido.';
-                          } 
-                          return null;
-                        }
-                      ]),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        16, 16, 16, 0),
-                    child: TextFormField(
-                        controller: vehiculoProvider.anioController,
-                        autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
-                        onTap: () async {
-                         showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text("Selecciona el Año"),
-                              content: SizedBox( // Need to use container to add size constraint.
-                                width: 300,
-                                height: 300,
-                                child: YearPicker(
-                                  currentDate: DateTime(DateTime.now().year + 1, 1),
-                                  firstDate: DateTime(DateTime.now().year - 44, 1),
-                                  lastDate: DateTime(DateTime.now().year, 1),
-                                  selectedDate: DateTime(dateTimeSelected, 1),
-                                  onChanged: (DateTime dateTime) {
-                                    setState(() {
-                                      dateTimeSelected = dateTime.year;
-                                      vehiculoProvider.anio = dateTimeSelected.toString();
-                                      vehiculoProvider.anioController = TextEditingController(text: dateTimeSelected.toString());
-                                      print(vehiculoProvider.anioController.text);
-                                    });
-                                    Navigator.pop(context);
-                                  },
+                      optionsViewBuilder: (context, Function(String) onSelected, options) {
+                        return Material(
+                          elevation: 4,
+                          child: ListView.separated(
+                            padding: EdgeInsets.zero,
+                            itemCount: options.length,
+                            separatorBuilder:(context, index) => const Divider(),
+                            itemBuilder: (context, index) {
+                              final option = options.elementAt(index);
+                              final title = option.toString();
+                              return ListTile(
+                                leading: Icon(
+                                  Icons.label_outline,
+                                  color: FlutterFlowTheme.of(context).primaryColor,
                                 ),
+                                onTap: () {
+                                  onSelected(option.toString());
+                                },
+                                title: SubstringHighlight(
+                                  text: title,
+                                  term: vehiculoProvider.marcaController.text,
+                                  textStyleHighlight: const TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                hoverColor: Colors.grey[200],
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      onSelected: (String selection) {
+                        vehiculoProvider.seleccionarMarca(selection);
+                      },
+                      fieldViewBuilder: (context, controller, focusNode, onEditingComplete) {
+                        vehiculoProvider.marcaController = controller;
+                        return TextFormField(
+                          controller: controller,
+                          focusNode: focusNode,
+                          autovalidateMode:
+                              AutovalidateMode.onUserInteraction,
+                          textCapitalization:
+                              TextCapitalization.characters,
+                          onChanged: (value) {
+                              vehiculoProvider.enCambioMarca(value);
+                          },
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.label_outlined,
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
+                            labelText: 'Marca*',
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .title3
+                                .override(
+                                  fontFamily: 'Montserrat',
+                                  color: FlutterFlowTheme.of(context).grayDark,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                            hintText: 'Ingrese la marca del vehículo...',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
+                                width: 2,
                               ),
-                            );
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            contentPadding:
+                                const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                          ),
+                          style: FlutterFlowTheme.of(context).bodyText1,
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          validator: (val) {
+                            if (val == "" ||
+                                val == null) {
+                              return 'La Marca del vehículo es requerida.';
+                            }
+                            if (val != vehiculoProvider.marcaSeleccionada) {
+                              return 'Seleccione una opción de marca válida.';
+                            }
+                            return null;
                           },
                         );
-                        },
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'Año*',
-                          labelStyle:
-                              FlutterFlowTheme.of(context).title3.override(
-                                    fontFamily: 'Montserrat',
-                                    color: FlutterFlowTheme.of(context)
-                                        .grayDark,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                          hintText: 'Ingresa el Año del vehículo...',
-                          enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
-                            width: 2,
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 16),
+                    child: Autocomplete(
+                      optionsBuilder: (TextEditingValue textEditingValue) {
+                        if (textEditingValue.text == '') {
+                          return const Iterable<String>.empty();
+                        }
+                        return vehiculoProvider.listaModelos.where((String option) {
+                          return option
+                              .toLowerCase()
+                              .contains(textEditingValue.text.toLowerCase());
+                        });
+                      },
+                      optionsViewBuilder: (context, Function(String) onSelected, options) {
+                        return Material(
+                          elevation: 4,
+                          child: ListView.separated(
+                            padding: EdgeInsets.zero,
+                            itemCount: options.length,
+                            separatorBuilder:(context, index) => const Divider(),
+                            itemBuilder: (context, index) {
+                              final option = options.elementAt(index);
+                              final title = option.toString();
+                              return ListTile(
+                                leading: Icon(
+                                  Icons.label_outline,
+                                  color: FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                                onTap: () {
+                                  onSelected(option.toString());
+                                },
+                                title: SubstringHighlight(
+                                  text: title,
+                                  term: vehiculoProvider.modeloController.text,
+                                  textStyleHighlight: const TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                hoverColor: Colors.grey[200],
+                              );
+                            },
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
+                        );
+                      },
+                      onSelected: (String selection) {
+                        vehiculoProvider.seleccionarModelo(selection);
+                      },
+                      fieldViewBuilder: (context, controller, focusNode, onEditingComplete) {
+                        vehiculoProvider.modeloController = controller;
+                        return TextFormField(
+                          controller: controller,
+                          focusNode: focusNode,
+                          autovalidateMode:
+                              AutovalidateMode.onUserInteraction,
+                          textCapitalization:
+                              TextCapitalization.characters,
+                          onChanged: (value) {
+                              vehiculoProvider.enCambioModelo(value);
+                          },
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.directions_car_outlined,
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
+                            labelText: 'Modelo*',
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .title3
+                                .override(
+                                  fontFamily: 'Montserrat',
+                                  color: FlutterFlowTheme.of(context).grayDark,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                            hintText: 'Ingrese el modelo del vehículo...',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            contentPadding:
+                                const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
+                          style: FlutterFlowTheme.of(context).bodyText1,
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          validator: (val) {
+                            if (val == "" ||
+                                val == null) {
+                              return 'El Modelo del vehículo es requerido.';
+                            }
+                            if (val != vehiculoProvider.modeloSeleccionado) {
+                              return 'Seleccione una opción de modelo válida.';
+                            }
+                            return null;
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 16),
+                    child: Autocomplete(
+                      optionsBuilder: (TextEditingValue textEditingValue) {
+                        if (textEditingValue.text == '') {
+                          return const Iterable<String>.empty();
+                        }
+                        return vehiculoProvider.listaAnios.where((String option) {
+                          return option
+                              .toLowerCase()
+                              .contains(textEditingValue.text.toLowerCase());
+                        });
+                      },
+                      optionsViewBuilder: (context, Function(String) onSelected, options) {
+                        return Material(
+                          elevation: 4,
+                          child: ListView.separated(
+                            padding: EdgeInsets.zero,
+                            itemCount: options.length,
+                            separatorBuilder:(context, index) => const Divider(),
+                            itemBuilder: (context, index) {
+                              final option = options.elementAt(index);
+                              final title = option.toString();
+                              return ListTile(
+                                leading: Icon(
+                                  Icons.date_range_outlined,
+                                  color: FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                                onTap: () {
+                                  onSelected(option.toString());
+                                },
+                                title: SubstringHighlight(
+                                  text: title,
+                                  term: vehiculoProvider.anioController.text,
+                                  textStyleHighlight: const TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                hoverColor: Colors.grey[200],
+                              );
+                            },
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
+                        );
+                      },
+                      onSelected: (String selection) {
+                        vehiculoProvider.seleccionarAnio(selection);
+                      },
+                      fieldViewBuilder: (context, controller, focusNode, onEditingComplete) {
+                        vehiculoProvider.anioController = controller;
+                        return TextFormField(
+                          controller: controller,
+                          focusNode: focusNode,
+                          autovalidateMode:
+                              AutovalidateMode.onUserInteraction,
+                          textCapitalization:
+                              TextCapitalization.characters,
+                          onChanged: (value) {
+                              vehiculoProvider.enCambioAnio(value);
+                          },
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.date_range_outlined,
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
+                            labelText: 'Año*',
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .title3
+                                .override(
+                                  fontFamily: 'Montserrat',
+                                  color: FlutterFlowTheme.of(context).grayDark,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                            hintText: 'Ingrese el año del vehículo...',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            contentPadding:
+                                const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding:
-                            const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                        suffixIcon: Icon(
-                            Icons.date_range_outlined,
-                            color: FlutterFlowTheme.of(context)
-                                .primaryColor,
-                            size: 24,
-                          ),
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
-                        textAlign: TextAlign.start,
-                        keyboardType: TextInputType.none,
-                        validator: (value) {
-                          if (vehiculoProvider.anioController.text == "") {
-                            return 'El Año es requerido.';
-                          }
-                          return null;
-                        }),
+                          style: FlutterFlowTheme.of(context).bodyText1,
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          validator: (val) {
+                            if (val == "" ||
+                                val == null) {
+                              return 'El Año del vehículo es requerido.';
+                            }
+                            if (val != vehiculoProvider.anioSeleccionado) {
+                              return 'Seleccione una opción de año válida.';
+                            }
+                            return null;
+                          },
+                        );
+                      },
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),

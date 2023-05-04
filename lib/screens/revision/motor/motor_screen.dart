@@ -211,7 +211,7 @@ class _MotorScreen extends State<MotorScreen> {
                           break;
                         case 1:
                           if (motorProvider.validarSeccionDosFormulario()) {
-                              if (motorProvider.agregarMotor(widget.ordenTrabajo)) {
+                              if (motorProvider.agregarMotor(widget.ordenTrabajo, widget.ordenTrabajo.revision.target!.motor.target!)) {
                                 motorProvider.limpiarInformacion();
                                 await Navigator.push(
                                   context,

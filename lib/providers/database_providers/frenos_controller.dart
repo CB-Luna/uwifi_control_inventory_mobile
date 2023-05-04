@@ -20,6 +20,12 @@ class FrenosController extends ChangeNotifier {
   String birlosYTuercas = "";
   String observacionesBirlosYTuercas = "";
 
+  String tecnicoMecanicoCelularCorreoSeleccionado = "No seleccionado";
+  Usuarios? tecnicoMecanicoInterno;
+  //Se asigna un controller para que se pueda visualizar lo que se selecciona del Widget que abre el campo
+  TextEditingController tecnicoMecanicoCelularCorreoController = TextEditingController(); 
+  String tecnicoMecanicoCelularCorreoIngresado = "";
+
 
   bool validateForm(GlobalKey<FormState> frenosFormKey) {
     return frenosFormKey.currentState!.validate() ? true : false;
@@ -37,6 +43,11 @@ class FrenosController extends ChangeNotifier {
     cilindroMaestro = "";
     observacionesCilindroMaestro = "";
     birlosYTuercas = "";
+    
+    tecnicoMecanicoCelularCorreoSeleccionado = "No seleccionado";
+    tecnicoMecanicoInterno = null;
+    tecnicoMecanicoCelularCorreoController.clear();
+    tecnicoMecanicoCelularCorreoIngresado = "";
     notifyListeners();
   }
 
@@ -203,26 +214,71 @@ class FrenosController extends ChangeNotifier {
     }
   }
 
-  
-  bool agregarFrenos(OrdenTrabajo ordenTrabajo) {
+
+  bool agregarFrenos(OrdenTrabajo ordenTrabajo, Frenos frenos) {
     try {
-      //Se válida que la revisión exista en la orden de trabajo
+      //Se actualiza la información de los frenos
+      frenos.balatasDelanteras = balatasDelanteras;
+      frenos.balatasDelanterasObservaciones = observacionesBalatasDelanteras;
+      frenos.balatasTraserasDiscoTambor = balatasTraserasDiscoTambor;
+      frenos.balatasTraserasDiscoTamborObservaciones = observacionesBalatasTraserasDiscoTambor;
+      frenos.manguerasLineas = manguerasLineas;
+      frenos.manguerasLineasObservaciones = observacionesManguerasLineas;
+      frenos.cilindroMaestro = cilindroMaestro;
+      frenos.cilindroMaestroObservaciones = observacionesCilindroMaestro;
+      frenos.birlosYTuercas = birlosYTuercas;
+      frenos.birlosYTuercasObservaciones = observacionesBirlosYTuercas;
+      frenos.completado = true;
+      if (ordenTrabajo.revision.target?.suspensionDireccion.target?.completado == true 
+        && ordenTrabajo.revision.target?.frenos.target?.completado == true
+        && ordenTrabajo.revision.target?.fluidos.target?.completado == true
+        && ordenTrabajo.revision.target?.electrico.target?.completado == true
+        && ordenTrabajo.revision.target?.motor.target?.completado == true) {      
+        ordenTrabajo.revision.target!.completado = true;
+        final nuevaInstruccionRevision = Bitacora(
+          instruccion: 'syncActualizarRevision',
+          usuarioPropietario: prefs.getString("userId")!,
+          idOrdenTrabajo: ordenTrabajo.id,
+        ); //Se crea la nueva instruccion a realizar en bitacora
+        dataBase.revisionBox.put(ordenTrabajo.revision.target!);
+        nuevaInstruccionRevision.revision.target = ordenTrabajo.revision.target;
+        dataBase.bitacoraBox.put(nuevaInstruccionRevision);
+      }
+      
+      final nuevaInstruccionFrenos = Bitacora(
+        instruccion: 'syncAgregarFrenos',
+        usuarioPropietario: prefs.getString("userId")!,
+        idOrdenTrabajo: ordenTrabajo.id,
+      ); //Se crea la nueva instruccion a realizar en bitacora
+      nuevaInstruccionFrenos.frenos.target = frenos;
+      dataBase.frenosBox.put(frenos);
+      dataBase.bitacoraBox.put(nuevaInstruccionFrenos);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  bool asignarTecnicoMecanicoInterno(OrdenTrabajo ordenTrabajo) {
+  
+    if (tecnicoMecanicoInterno != null) {
       final fechaRegistro =  DateTime.now();
       final nuevoFrenos = Frenos(
-          balatasDelanteras: balatasDelanteras,
-          balatasDelanterasObservaciones: observacionesBalatasDelanteras,
-          balatasTraserasDiscoTambor: balatasTraserasDiscoTambor,
-          balatasTraserasDiscoTamborObservaciones: observacionesBalatasTraserasDiscoTambor,
-          manguerasLineas: manguerasLineas,
-          manguerasLineasObservaciones: observacionesManguerasLineas,
-          cilindroMaestro: cilindroMaestro,
-          cilindroMaestroObservaciones: observacionesCilindroMaestro,
-          birlosYTuercas: birlosYTuercas,
-          birlosYTuercasObservaciones: observacionesBirlosYTuercas,
-          completado: true,
-          fechaRegistro: fechaRegistro,
-        );
-      //Revisión
+        balatasDelanteras: "",
+        balatasDelanterasObservaciones: "",
+        balatasTraserasDiscoTambor: "",
+        balatasTraserasDiscoTamborObservaciones: "",
+        manguerasLineas: "",
+        manguerasLineasObservaciones: "",
+        cilindroMaestro: "",
+        cilindroMaestroObservaciones: "",
+        birlosYTuercas: "",
+        birlosYTuercasObservaciones: "",
+        completado: false,
+        fechaRegistro: fechaRegistro,
+      );
+       //Revisión
       if (ordenTrabajo.estatus.target!.estatus == "Observación")  {
         final estatus = dataBase.estatusBox
           .query(Estatus_.estatus.equals("Revisión"))
@@ -243,6 +299,10 @@ class FrenosController extends ChangeNotifier {
           completado: false,
           fechaRegistro: fechaRegistro,
         );
+        nuevoFrenos.tecnicoMecanico.target = tecnicoMecanicoInterno;
+        tecnicoMecanicoInterno!.frenos.add(nuevoFrenos);
+        dataBase.usuariosBox.put(tecnicoMecanicoInterno!);
+
         nuevaRevision.frenos.target = nuevoFrenos;
         nuevoFrenos.revision.target = nuevaRevision;
         nuevaRevision.ordenTrabajo.target = ordenTrabajo;
@@ -254,56 +314,58 @@ class FrenosController extends ChangeNotifier {
           idOrdenTrabajo: ordenTrabajo.id,
         ); //Se crea la nueva instruccion a realizar en bitacora
         nuevaInstruccionRevision.revision.target = nuevaRevision;
-        dataBase.bitacoraBox.put(nuevaInstruccionRevision);
         dataBase.revisionBox.put(nuevaRevision);
+        dataBase.bitacoraBox.put(nuevaInstruccionRevision);
         final nuevaInstruccionFrenos = Bitacora(
-          instruccion: 'syncAgregarFrenos',
+          instruccion: 'syncAsignarFrenos',
           usuarioPropietario: prefs.getString("userId")!,
           idOrdenTrabajo: ordenTrabajo.id,
         ); //Se crea la nueva instruccion a realizar en bitacora
         nuevaInstruccionFrenos.frenos.target = nuevoFrenos;
-        dataBase.bitacoraBox.put(nuevaInstruccionFrenos);
         dataBase.frenosBox.put(nuevoFrenos);
+        dataBase.bitacoraBox.put(nuevaInstruccionFrenos);
         notifyListeners();
         return true;
       } else {
+        nuevoFrenos.tecnicoMecanico.target = tecnicoMecanicoInterno;
+        tecnicoMecanicoInterno!.frenos.add(nuevoFrenos);
+        dataBase.usuariosBox.put(tecnicoMecanicoInterno!);
+
         nuevoFrenos.revision.target = ordenTrabajo.revision.target;
         ordenTrabajo.revision.target!.frenos.target = nuevoFrenos;
-        if (ordenTrabajo.revision.target?.suspensionDireccion.target != null 
-          && ordenTrabajo.revision.target?.frenos.target != null
-          && ordenTrabajo.revision.target?.fluidos.target != null
-          && ordenTrabajo.revision.target?.electrico.target != null
-          && ordenTrabajo.revision.target?.motor.target != null) {      
-          ordenTrabajo.revision.target!.completado = true;
-          final nuevaInstruccionRevision = Bitacora(
-            instruccion: 'syncActualizarRevision',
-            usuarioPropietario: prefs.getString("userId")!,
-            idOrdenTrabajo: ordenTrabajo.id,
-          ); //Se crea la nueva instruccion a realizar en bitacora
-          nuevaInstruccionRevision.revision.target = ordenTrabajo.revision.target;
-          dataBase.bitacoraBox.put(nuevaInstruccionRevision);
-        }
+
         dataBase.revisionBox.put(ordenTrabajo.revision.target!);
         dataBase.ordenTrabajoBox.put(ordenTrabajo);
         final nuevaInstruccionFrenos = Bitacora(
-          instruccion: 'syncAgregarFrenos',
+          instruccion: 'syncAsignarFrenos',
           usuarioPropietario: prefs.getString("userId")!,
           idOrdenTrabajo: ordenTrabajo.id,
         ); //Se crea la nueva instruccion a realizar en bitacora
         nuevaInstruccionFrenos.frenos.target = nuevoFrenos;
-        dataBase.bitacoraBox.put(nuevaInstruccionFrenos);
         dataBase.frenosBox.put(nuevoFrenos);
+        dataBase.bitacoraBox.put(nuevaInstruccionFrenos);
         notifyListeners();
         return true;
       }
-    } catch (e) {
+    } else {
+      notifyListeners();
       return false;
     }
   }
 
-  void update(int id, String newNombre, String newApellidos, String newCurp, 
-  String newIntegrantesFamilia, String newTelefono, String newComentarios, int idComunidad, int idEmprendimiento) {
-    final updateEmprendedor = dataBase.emprendedoresBox.get(id);
+  void enCambioTecnicoMecanicoCelularCorreo(String tecnicoMecanicoCelularCorreo) {
+    tecnicoMecanicoCelularCorreoIngresado = tecnicoMecanicoCelularCorreo;
     notifyListeners();
   }
+
+
+  void seleccionarTecnicoMecanicoCelularCorreo(String tecnicoMecanicoCelularCorreo) {
+    String correo = tecnicoMecanicoCelularCorreo.split(" ").last; //Se recupera el VIN del Vehiculo
+    tecnicoMecanicoCelularCorreoSeleccionado = tecnicoMecanicoCelularCorreo; 
+    tecnicoMecanicoCelularCorreoIngresado = tecnicoMecanicoCelularCorreo;
+    tecnicoMecanicoCelularCorreoController.text = tecnicoMecanicoCelularCorreo;
+    tecnicoMecanicoInterno = dataBase.usuariosBox.query(Usuarios_.correo.equals(correo)).build().findUnique();
+    notifyListeners();
+  }
+
 }

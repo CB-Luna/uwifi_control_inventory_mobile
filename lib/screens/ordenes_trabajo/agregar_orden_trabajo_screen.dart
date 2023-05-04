@@ -2,6 +2,7 @@ import 'package:diacritic/diacritic.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:semicircle_indicator/semicircle_indicator.dart';
+import 'package:substring_highlight/substring_highlight.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_widgets.dart';
@@ -29,31 +30,19 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final ordenTrabajoFormKey = GlobalKey<FormState>();
   final _unfocusNode = FocusNode();
-  List<String> listaClientes = [];
-  String cliente = "";
-  String correo = "";
-  String formaPago = "";
-  List<String> listaVehiculos = [];
+  List<String> listaOpcionesVehiculos = [];
   List<String> listaMedidas = ["Km", "Millas"];
   String medida = "Km";
-  String vehiculo = "";
-  String vin = "";
   
 
   @override
   void initState() {
     super.initState();
-    listaClientes = [];
-    listaVehiculos = [];
-    cliente = "";
-    correo = "";
-    vehiculo = "";
-    vin = "";
-    formaPago = "";
+    listaOpcionesVehiculos = [];
     if (context.read<UsuarioController>().usuarioCurrent != null) {
-    listaVehiculos = context.read<UsuarioController>().obtenerVehiculos();
-    listaVehiculos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
-    print(listaVehiculos);
+    listaOpcionesVehiculos = context.read<UsuarioController>().obtenerOpcionesVehiculos();
+    listaOpcionesVehiculos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    print(listaOpcionesVehiculos);
     }
   }
   @override
@@ -61,8 +50,8 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
     final ordenTrabajoProvider = Provider.of<OrdenTrabajoController>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     if (usuarioProvider.usuarioCurrent != null) {
-      listaVehiculos = usuarioProvider.obtenerVehiculos();
-      listaVehiculos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+      listaOpcionesVehiculos = usuarioProvider.obtenerOpcionesVehiculos();
+      listaOpcionesVehiculos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     }
     return WillPopScope(
       onWillPop: () async => false,
@@ -307,7 +296,7 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                         ),
                         contentPadding:
                             const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                        suffixIcon: Icon(
+                        prefixIcon: Icon(
                             Icons.date_range_outlined,
                             color: FlutterFlowTheme.of(context)
                                 .primaryColor,
@@ -326,105 +315,134 @@ class _AgregarOrdenTrabajoScreenState extends State<AgregarOrdenTrabajoScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 16),
-                    child: TextFormField(
-                      controller: ordenTrabajoProvider.vinController,
-                      autovalidateMode:
-                          AutovalidateMode.onUserInteraction,
-                      textCapitalization:
-                          TextCapitalization.characters,
-                      onChanged: (value) {
-                          print("Lista de vehiculos antes de enviar: $listaVehiculos");
-                          ordenTrabajoProvider.enCambioVIN(value, listaVehiculos);
-                      },
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.car_rental_outlined,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                        ),
-                        labelText: 'VIN*',
-                        labelStyle: FlutterFlowTheme.of(context)
-                            .title3
-                            .override(
-                              fontFamily: 'Montserrat',
-                              color: FlutterFlowTheme.of(context).grayDark,
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal,
-                            ),
-                        hintText: 'Ingrese el VIN del vehículo...',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding:
-                            const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                      textAlign: TextAlign.start,
-                      maxLines: 1,
-                       validator: (val) {
-                        if (val == "" ||
-                            val == null) {
-                          return 'El VIN del vehículo es requerido.';
+                    child: Autocomplete(
+                      optionsBuilder: (TextEditingValue textEditingValue) {
+                        if (textEditingValue.text == '') {
+                          return const Iterable<String>.empty();
                         }
-                        return null;
+                        return listaOpcionesVehiculos.where((String option) {
+                          return option
+                              .toLowerCase()
+                              .contains(textEditingValue.text.toLowerCase());
+                        });
+                      },
+                      optionsViewBuilder: (context, Function(String) onSelected, options) {
+                        return Material(
+                          elevation: 4,
+                          child: ListView.separated(
+                            padding: EdgeInsets.zero,
+                            itemCount: options.length,
+                            separatorBuilder:(context, index) => const Divider(),
+                            itemBuilder: (context, index) {
+                              final option = options.elementAt(index);
+                              final title = option.toString().split(" ").last;
+                              List<String> listSubtitle = option.toString().split(" ");
+                              listSubtitle.removeLast();
+                              final subtitle = listSubtitle.join(" ");
+                              return ListTile(
+                                leading: Icon(
+                                  Icons.car_rental,
+                                  color: FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                                onTap: () {
+                                  onSelected(option.toString());
+                                },
+                                title: SubstringHighlight(
+                                  text: title,
+                                  term: ordenTrabajoProvider.clienteVINPlacasController.text,
+                                  textStyleHighlight: const TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: SubstringHighlight(
+                                  text: subtitle,
+                                  term: ordenTrabajoProvider.clienteVINPlacasController.text,
+                                  textStyleHighlight: const TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                hoverColor: Colors.grey[200],
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      onSelected: (String selection) {
+                        ordenTrabajoProvider.seleccionarClienteVINPlacas(selection);
+                      },
+                      fieldViewBuilder: (context, controller, focusNode, onEditingComplete) {
+                        ordenTrabajoProvider.clienteVINPlacasController = controller;
+                        return TextFormField(
+                          controller: controller,
+                          focusNode: focusNode,
+                          autovalidateMode:
+                              AutovalidateMode.onUserInteraction,
+                          textCapitalization:
+                              TextCapitalization.characters,
+                          onChanged: (value) {
+                              ordenTrabajoProvider.enCambioClienteVINPlacas(value);
+                          },
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.car_rental_outlined,
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
+                            labelText: 'Cliente, VIN, Placas*',
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .title3
+                                .override(
+                                  fontFamily: 'Montserrat',
+                                  color: FlutterFlowTheme.of(context).grayDark,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                            hintText: 'Ingrese el Nombre del cliente, VIN o placas del vehículo...',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            contentPadding:
+                                const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                          ),
+                          style: FlutterFlowTheme.of(context).bodyText1,
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          validator: (val) {
+                            if (val == "" ||
+                                val == null) {
+                              return 'El Nombre del cliente, VIN o placas del vehículo son requeridas.';
+                            }
+                            return null;
+                          },
+                        );
                       },
                     ),
                   ),
                   Visibility(
-                    visible: ordenTrabajoProvider.vinController.text.length >= 3 && ordenTrabajoProvider.opcionesVehiculos.isNotEmpty ? true : false,
-                    child: SizedBox(
-                      height: 100,
-                      child: Material(
-                        child: ListView.builder(
-                          controller: ScrollController(),
-                          itemCount: ordenTrabajoProvider.opcionesVehiculos.length,
-                          itemBuilder: (_, index) {
-                            final vin = ordenTrabajoProvider.opcionesVehiculos[index];
-                            return ListTile(
-                              leading: Icon(
-                                Icons.car_rental,
-                                color: FlutterFlowTheme.of(context).primaryColor,
-                              ),
-                              title: Text(vin),
-                              onTap: () {
-                                  ordenTrabajoProvider.seleccionarVIN(vin);
-                              },
-                              hoverColor: Colors.grey[200],
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  Visibility(
-                    visible: ordenTrabajoProvider.vinSeleccionado == ordenTrabajoProvider.vinController.text,
+                    visible: ordenTrabajoProvider.clienteVINPlacasSeleccionado == ordenTrabajoProvider.clienteVINPlacasIngresado,
                     child: Column(
                       children: [
                         Padding(

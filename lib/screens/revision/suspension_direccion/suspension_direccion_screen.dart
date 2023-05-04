@@ -243,7 +243,7 @@ class _SuspensionDireccionScreen extends State<SuspensionDireccionScreen> {
                           break;
                         case 2:
                           if (suspensionDireccionProvider.validarSeccionTresFormulario()) {
-                            if (suspensionDireccionProvider.agregarSuspensionDireccion(widget.ordenTrabajo)) {
+                            if (suspensionDireccionProvider.agregarSuspensionDireccion(widget.ordenTrabajo, widget.ordenTrabajo.revision.target!.suspensionDireccion.target!)) {
                               suspensionDireccionProvider.limpiarInformacion();
                               await Navigator.push(
                                 context,

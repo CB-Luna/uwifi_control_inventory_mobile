@@ -361,7 +361,7 @@ class _ClientesScreenState extends State<ClientesScreen> {
                                                 topLeft: Radius.circular(8),
                                                 topRight: Radius.circular(8),
                                               ),
-                                              child: getWidgetImageEmprendedor(
+                                              child: getWidgetImageCliente(
                                                   cliente.path, 180, double.infinity)),
                                         ),
                                         Padding(

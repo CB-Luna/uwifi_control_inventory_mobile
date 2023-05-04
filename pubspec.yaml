@@ -87,6 +87,7 @@ dependencies:
   semicircle_indicator: ^1.1.1
   shared_preferences: ^2.0.15
   stepper_counter_swipe: ^1.0.2
+  substring_highlight: ^1.0.33
   supabase_flutter: ^1.4.0
   syncfusion_flutter_datepicker: ^20.2.40
   syncfusion_flutter_sliders: ^20.4.50

@@ -250,12 +250,6 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     }
   }
 
-  void addEmprendimiento(Emprendimientos emprendimiento) {
-    usuarioCurrent!.emprendimientos.add(emprendimiento);
-    dataBase.usuariosBox.put(usuarioCurrent!);
-    //print('Emprendimiento modificado exitosamente');
-    notifyListeners();
-  }
 
   bool addCliente(int idCliente) {
     final cliente = dataBase.usuariosBox.get(idCliente);
@@ -271,16 +265,6 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     }
   }
 
-  List<Emprendimientos> getEmprendimientos() {
-    final List<Emprendimientos> emprendimientos = [];
-    final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? -1);
-    if (usuarioActual != null) {
-        for (var element in usuarioActual.emprendimientos) {
-        emprendimientos.add(element);
-      }
-    }
-    return emprendimientos;
-  }
 
   List<OrdenTrabajo> obtenerOrdenesTrabajo() {
     final List<OrdenTrabajo> ordenesTrabajo = [];
@@ -304,17 +288,30 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     return clientes;
   }
 
-  List<String> obtenerVehiculos() {
-    final List<String> vehiculos = [];
+  List<String> obtenerOpcionesVehiculos() {
+    final List<String> opcionesVehiculos = [];
     final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual != null) {
         for (var cliente in usuarioActual.clientes) {
         for (var vehiculo in cliente.vehiculos) {
-          vehiculos.add(vehiculo.vin);
+          opcionesVehiculos.add("${cliente.nombre} ${cliente.apellidoP} ${cliente.apellidoM} ${vehiculo.placas} ${vehiculo.vin}");
         }
       }
     }
-    return vehiculos;
+    return opcionesVehiculos;
+  }
+
+  List<String> obtenerTecnicosMecanicosInternos() {
+    List<Usuarios> tecnicosMecanicosInternos = [];
+    List<String> opcionesTecnicosMecanicos = [];
+    tecnicosMecanicosInternos = dataBase.usuariosBox.query(
+            Usuarios_.rol.equals(dataBase.rolesBox.query(
+                Roles_.rol.equals("Técnico-Mecánico"))
+                .build().findFirst()?.id ?? 0).and(Usuarios_.interno.equals(true))).build().find();
+    for (var tecnicoMecanico in tecnicosMecanicosInternos) {
+      opcionesTecnicosMecanicos.add("${tecnicoMecanico.nombre} ${tecnicoMecanico.apellidoP} ${tecnicoMecanico.apellidoM} ${tecnicoMecanico.celular} ${tecnicoMecanico.correo}");
+    }
+    return opcionesTecnicosMecanicos;
   }
 
 }

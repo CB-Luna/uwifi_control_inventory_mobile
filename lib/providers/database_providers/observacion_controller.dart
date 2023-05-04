@@ -236,16 +236,6 @@ class ObservacionController extends ChangeNotifier {
   //   } 
   // }
 
-  void updateImagen(int id, Imagenes newImagen, int idEmprendimiento) {
-    final updateImagen = dataBase.imagenesBox.get(id);
 
-    notifyListeners();
-  }
-
-  void remove(Emprendedores emprendedor) {
-    dataBase.emprendedoresBox.remove(emprendedor.id);  //Se elimina de bitacora la instruccion creada anteriormente
-    // emprendedores.remove(emprendedor);
-    notifyListeners(); 
-  }
   
 }

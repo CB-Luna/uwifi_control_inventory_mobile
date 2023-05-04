@@ -211,7 +211,7 @@ class _FluidosScreen extends State<FluidosScreen> {
                           break;
                         case 1:
                           if (fluidosProvider.validarSeccionDosFormulario()) {
-                            if (fluidosProvider.agregarFluidos(widget.ordenTrabajo)) {
+                            if (fluidosProvider.agregarFluidos(widget.ordenTrabajo, widget.ordenTrabajo.revision.target!.fluidos.target!)) {
                                 fluidosProvider.limpiarInformacion();
                                 await Navigator.push(
                                   context,

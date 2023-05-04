@@ -44,7 +44,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   XFile? image;
   String rolUsuario = "";
   List<String> listRoles = [];
-  Imagenes? newImagen;
+  String? newImagen;
   String? imagenTemp;
 
   @override
@@ -55,7 +55,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
     for (var element in widget.usuario.roles) {
       listRoles.add(element.rol);
     }
-    newImagen = Imagenes(imagenes: "imagenes", idEmprendimiento: 2);
+    newImagen = "";
     imagenTemp = widget.usuario.path;
     nombreController = TextEditingController(text: widget.usuario.nombre);
     apellidoPController = TextEditingController(text: widget.usuario.apellidoP);
@@ -299,13 +299,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                           File file = File(image!.path);
                                           List<int> fileInByte = file.readAsBytesSync();
                                           String base64 = base64Encode(fileInByte);
-                                          newImagen = Imagenes(
-                                            imagenes: image!.path,
-                                            nombre: image!.name, 
-                                            path: image!.path, 
-                                            base64: base64,
-                                            idEmprendimiento: 0,
-                                            );
+                                          newImagen = base64.toString();
                                         });
                                       },
                                       text: 'Cambiar Foto',
@@ -393,20 +387,20 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                             }
                                             if (widget.usuario.path != null) {
                                                 //print("Se va a actualizar la imagen del Usuario");
-                                                usuarioProvider.updateImagenUsuario(
-                                                  1,
-                                                  newImagen!.nombre!,
-                                                  newImagen!.path!,
-                                                  newImagen!.base64!,
-                                                );
+                                                // usuarioProvider.updateImagenUsuario(
+                                                //   1,
+                                                //   newImagen!.nombre!,
+                                                //   newImagen!.path!,
+                                                //   newImagen!.base64!,
+                                                // );
                                               } else {
                                                 //print("Se va a agregar la imagen del Usuario");
-                                                usuarioProvider.addImagenUsuario(
-                                                  1,
-                                                  newImagen!.nombre!,
-                                                  newImagen!.path!,
-                                                  newImagen!.base64!,
-                                                );
+                                                // usuarioProvider.addImagenUsuario(
+                                                //   1,
+                                                //   newImagen!.nombre!,
+                                                //   newImagen!.path!,
+                                                //   newImagen!.base64!,
+                                                // );
                                               }
                                               //print("Sí se actualizan los datos del Usuario");
                                               usuarioProvider.updateDatos(
@@ -462,20 +456,20 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                           if (imagenTemp != widget.usuario.path) {
                                             if (widget.usuario.path != null) {
                                               //print("Se va a actualizar la imagen del Usuario");
-                                              usuarioProvider.updateImagenUsuario(
-                                                1,
-                                                newImagen!.nombre!,
-                                                newImagen!.path!,
-                                                newImagen!.base64!,
-                                              );
+                                              // usuarioProvider.updateImagenUsuario(
+                                              //   1,
+                                              //   newImagen!.nombre!,
+                                              //   newImagen!.path!,
+                                              //   newImagen!.base64!,
+                                              // );
                                             } else {
                                               //print("Se va a agregar la imagen del Usuario");
-                                              usuarioProvider.addImagenUsuario(
-                                                1,
-                                                newImagen!.nombre!,
-                                                newImagen!.path!,
-                                                newImagen!.base64!,
-                                              );
+                                              // usuarioProvider.addImagenUsuario(
+                                              //   1,
+                                              //   newImagen!.nombre!,
+                                              //   newImagen!.path!,
+                                              //   newImagen!.base64!,
+                                              // );
                                             }
                                           }
                                           await Navigator.push(

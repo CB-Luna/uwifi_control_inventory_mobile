@@ -1,8 +1,10 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/vehiculo_temporal.dart';
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/objectbox.g.dart';
 class VehiculoController extends ChangeNotifier {
   VehiculoTemporal? vehiculo; 
 
@@ -10,11 +12,19 @@ class VehiculoController extends ChangeNotifier {
 
   //Vehículo
   // TextEditingController integrantesFamilia = TextEditingController();
+  List<String> listaMarcas = [];
+  List<String> listaModelos = [];
+  List<String> listaAnios = [];
+
   String imagenVehiculo = "";
   String? path;
-  String marca = "";
-  String modelo = "";
-  String anio = "";
+  String marcaSeleccionada = "";
+  //Se asigna un controller para que se pueda visualizar lo que se selecciona del Widget que abre el campo
+  TextEditingController marcaController = TextEditingController(); 
+  String modeloSeleccionado = "";
+  //Se asigna un controller para que se pueda visualizar lo que se selecciona del Widget que abre el campo
+  TextEditingController modeloController = TextEditingController(); 
+  String anioSeleccionado = "";
   //Se asigna un controller para que se pueda visualizar lo que se selecciona del Widget que abre el campo
   TextEditingController anioController = TextEditingController(); 
   String vin = "";
@@ -32,12 +42,18 @@ class VehiculoController extends ChangeNotifier {
 
   void limpiarInformacion()
   {
+    listaMarcas.clear();
+    listaModelos.clear();
+    listaAnios.clear();
+
     vehiculo = null;
     imagenVehiculo = "";
     path = null; 
-    marca = "";
-    modelo = "";
-    anio = "";
+    marcaSeleccionada = "";
+    marcaController.clear();
+    modeloSeleccionado = "";
+    modeloController.clear();
+    anioSeleccionado = "";
     anioController.clear();
     vin = "";
     placas = "";
@@ -51,9 +67,9 @@ class VehiculoController extends ChangeNotifier {
 
   void addTemporal() {
     vehiculo = VehiculoTemporal(
-      marca: marca, 
-      modelo: modelo,
-      anio: anio, 
+      marca: marcaSeleccionada, 
+      modelo: modeloSeleccionado,
+      anio: anioSeleccionado, 
       vin: vin, 
       placas: placas, 
       motor: motor, 
@@ -91,40 +107,105 @@ class VehiculoController extends ChangeNotifier {
     } 
   }
 
-  void update(int id, String newNombre, String newApellidos, String newCurp, 
-  String newIntegrantesFamilia, String newTelefono, String newComentarios, int idComunidad, int idEmprendimiento) {
-    final updateEmprendedor = dataBase.emprendedoresBox.get(id);
-
-    notifyListeners();
-  }
-
-  void addImagen(int idEmprendimiento) {
-    final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
-    if (emprendimiento != null) {
-      notifyListeners();
-    } 
-  }
-
-  void updateImagen(int id, Imagenes newImagen, int idEmprendimiento) {
-    final updateImagen = dataBase.imagenesBox.get(id);
-    notifyListeners();
-  }
-
-  void remove(Emprendedores emprendedor) {
-    dataBase.emprendedoresBox.remove(emprendedor.id);  //Se elimina de bitacora la instruccion creada anteriormente
-    // emprendedores.remove(emprendedor);
-    notifyListeners(); 
-  }
-
-
-  List<Emprendedores> getEmprendedoresActualUser(List<Emprendimientos> emprendimientos) {
-    List<Emprendedores> emprendedoresActualUser = [];
-    for (var element in emprendimientos) {
-      if (element.emprendedor.target != null) {
-        emprendedoresActualUser.add(element.emprendedor.target!);
+  void enCambioMarca(String marca) {
+    if (marcaController.text == marcaSeleccionada) {
+      Marca? objetoMarca = dataBase.marcaBox.query(Marca_.marca.equals(marca)).build().findFirst();
+      if (objetoMarca != null) {
+        listaModelos.clear();
+        listaAnios.clear();
+        for (var element in objetoMarca.modelos) {
+          listaModelos.add(element.modelo);
+        }
+        listaModelos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+      } else{
+        listaModelos.clear();
+        listaAnios.clear();
+        modeloController.text = "";
+        anioController.text = "";
+        modeloSeleccionado = "";
+        anioSeleccionado = "";
       }
+    } else {
+      listaModelos.clear();
+      listaAnios.clear();
+      modeloController.text = "";
+      anioController.text = "";
+      modeloSeleccionado = "";
+      anioSeleccionado = "";
     }
-    return emprendedoresActualUser;
+    notifyListeners();
   }
-  
+
+  void seleccionarMarca(String marca) {
+    marcaSeleccionada = marca; 
+    marcaController.text = marca;
+    Marca? objetoMarca = dataBase.marcaBox.query(Marca_.marca.equals(marca)).build().findFirst();
+      if (objetoMarca != null) {
+        listaModelos.clear();
+        for (var element in objetoMarca.modelos) {
+          listaModelos.add(element.modelo);
+        }
+        listaModelos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+      } else{
+        listaModelos.clear();
+        modeloController.text = "";
+        anioController.text = "";
+        modeloSeleccionado = "";
+        anioSeleccionado = "";
+      }
+    notifyListeners();
+  }
+
+  void enCambioModelo(String modelo) {
+    if (modeloController.text == modeloSeleccionado) {
+      Modelo? objetoModelo = dataBase.modeloBox.query(Modelo_.modelo.equals(modelo)).build().findFirst();
+      listaAnios.clear();
+      if (objetoModelo != null) {
+        for (var element in objetoModelo.anios) {
+          listaAnios.add(element.anio);
+        }
+        listaAnios.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+      } else{
+        listaAnios.clear();
+        anioController.text = "";
+        anioSeleccionado = "";
+      }
+    } else {
+      listaAnios.clear();
+      anioController.text = "";
+      anioSeleccionado = "";
+    }
+    notifyListeners();
+  }
+
+  void seleccionarModelo(String modelo) {
+    modeloSeleccionado = modelo; 
+    modeloController.text = modelo;
+    Modelo? objetoModelo = dataBase.modeloBox.query(Modelo_.modelo.equals(modelo)).build().findFirst();
+      if (objetoModelo != null) {
+        listaAnios.clear();
+        for (var element in objetoModelo.anios) {
+          listaAnios.add(element.anio);
+        }
+        listaAnios.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+      } else{
+        listaAnios.clear();
+        anioController.text = "";
+        anioSeleccionado = "";
+      }
+    notifyListeners();
+  }
+
+  void enCambioAnio(String anio) {
+    if (anioController.text == anioSeleccionado) {
+      notifyListeners();
+    }
+  }
+
+  void seleccionarAnio(String anio) {
+    anioSeleccionado = anio; 
+    anioController.text = anio;
+    notifyListeners();
+  }
+
 }

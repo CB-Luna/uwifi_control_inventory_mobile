@@ -211,7 +211,7 @@ class _ElectricoScreen extends State<ElectricoScreen> {
                           break;
                         case 1:
                           if (electricoProvider.validarSeccionDosFormulario()) {
-                            if (electricoProvider.agregarSistemaElectrico(widget.ordenTrabajo)) {
+                            if (electricoProvider.agregarSistemaElectrico(widget.ordenTrabajo, widget.ordenTrabajo.revision.target!.electrico.target!)) {
                                 electricoProvider.limpiarInformacion();
                                 await Navigator.push(
                                   context,

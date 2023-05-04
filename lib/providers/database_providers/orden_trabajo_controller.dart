@@ -15,10 +15,10 @@ class OrdenTrabajoController extends ChangeNotifier {
   // int idFormaPago = -1;
   String gasolina = "";
   String kilometrajeMillaje = "";
-  String vinSeleccionado = "No seleccionado";
+  String clienteVINPlacasSeleccionado = "No seleccionado";
   Vehiculo? vehiculo;
   //Se asigna un controller para que se pueda visualizar lo que se selecciona del Widget que abre el campo
-  TextEditingController vinController = TextEditingController(); 
+  TextEditingController clienteVINPlacasController = TextEditingController(); 
   //Se asigna un controller para que se pueda visualizar lo que se selecciona del Widget que abre el campo
   TextEditingController gasolinaController = TextEditingController(); 
   DateTime? fechaOrden; //Es null para inicializar sin porcentajeGasolina el campo en el formulario 
@@ -26,8 +26,7 @@ class OrdenTrabajoController extends ChangeNotifier {
   TextEditingController fechaOrdenController = TextEditingController(); 
   
   String descripcionFalla = "";
-  String vinIngresado = "";
-  List<String> opcionesVehiculos = [];
+  String clienteVINPlacasIngresado = "";
 
   bool validateForm(GlobalKey<FormState> ordenTrabajoKey) {
     return ordenTrabajoKey.currentState!.validate() ? true : false;
@@ -42,15 +41,14 @@ class OrdenTrabajoController extends ChangeNotifier {
     // idFormaPago = -1;
     gasolina = "";
     kilometrajeMillaje = "";
-    vinSeleccionado = "No seleccionado";
+    clienteVINPlacasSeleccionado = "No seleccionado";
     vehiculo = null;
-    vinController.clear();
+    clienteVINPlacasController.clear();
     gasolinaController.clear();
     fechaOrden =  null;
     fechaOrdenController.clear();
     descripcionFalla = "";
-    vinIngresado = "";
-    opcionesVehiculos.clear();
+    clienteVINPlacasIngresado = "";
     notifyListeners();
   }
 
@@ -104,12 +102,6 @@ class OrdenTrabajoController extends ChangeNotifier {
     }
   }
 
-  void update(int id, String newNombre, String newApellidos, String newCurp, 
-  String newIntegrantesFamilia, String newTelefono, String newComentarios, int idComunidad, int idEmprendimiento) {
-    final updateEmprendedor = dataBase.emprendedoresBox.get(id);
-    notifyListeners();
-  }
-
   // void addImagen(int idEmprendimiento) {
   //   final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
   //   if (emprendimiento != null) {
@@ -123,49 +115,21 @@ class OrdenTrabajoController extends ChangeNotifier {
   //   } 
   // }
 
-  void enCambioVIN(String vin, List<String> opcionesVehiculosActual) {
-    vinIngresado = vin;
-    print("Tamaño: ${opcionesVehiculosActual.length}");
-    print("VIN ingresado: $vinIngresado");
-    if (vinIngresado.length >= 3) {
-      opcionesVehiculos.removeWhere((element) {
-        final vinUpperCase = element.toUpperCase();
-        final tempBusqueda = vinController.text.toUpperCase();
-        if (vinUpperCase.contains(tempBusqueda)) {
-          return false;
-        } else{
-          return true;
-        }
-      });
-    } else {
-      //Se recuperan los vehiculos
-      rellenarOpcionesVehiculos(opcionesVehiculosActual);
-    }
+  void enCambioClienteVINPlacas(String clienteVINPlacas) {
+    clienteVINPlacasIngresado = clienteVINPlacas;
     notifyListeners();
   }
 
-  void rellenarOpcionesVehiculos(List<String> opcionesVehiculosActual) {
-    opcionesVehiculos = opcionesVehiculosActual;
-    notifyListeners();
-  }
 
-  void seleccionarVIN(String vin) {
-    vinSeleccionado = vin;
-    vinController.text = vin;
+  void seleccionarClienteVINPlacas(String clienteVINPlacas) {
+    String vin = clienteVINPlacas.split(" ").last; //Se recupera el VIN del Vehiculo
+    clienteVINPlacasSeleccionado = clienteVINPlacas; 
+    clienteVINPlacasIngresado = clienteVINPlacas;
+    clienteVINPlacasController.text = clienteVINPlacas;
     vehiculo = dataBase.vehiculoBox.query(Vehiculo_.vin.equals(vin)).build().findUnique();
-    opcionesVehiculos.clear();
     notifyListeners();
   }
 
-  void updateImagen(int id, Imagenes newImagen, int idEmprendimiento) {
-    final updateImagen = dataBase.imagenesBox.get(id);
-    notifyListeners();
-  }
 
-  void remove(Emprendedores emprendedor) {
-    dataBase.emprendedoresBox.remove(emprendedor.id);  //Se elimina de bitacora la instruccion creada anteriormente
-    // emprendedores.remove(emprendedor);
-    notifyListeners(); 
-  }
   
 }

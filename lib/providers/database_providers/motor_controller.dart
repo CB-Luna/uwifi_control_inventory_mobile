@@ -28,6 +28,11 @@ class MotorController extends ChangeNotifier {
   String mangueras = "";
   String observacionesMangueras = "";
 
+  String tecnicoMecanicoCelularCorreoSeleccionado = "No seleccionado";
+  Usuarios? tecnicoMecanicoInterno;
+  //Se asigna un controller para que se pueda visualizar lo que se selecciona del Widget que abre el campo
+  TextEditingController tecnicoMecanicoCelularCorreoController = TextEditingController(); 
+  String tecnicoMecanicoCelularCorreoIngresado = "";
 
   bool validateForm(GlobalKey<FormState> motorFormKey) {
     return motorFormKey.currentState!.validate() ? true : false;
@@ -52,6 +57,11 @@ class MotorController extends ChangeNotifier {
     observacionesBandas = "";
     mangueras = "";
     observacionesMangueras = "";
+    
+    tecnicoMecanicoCelularCorreoSeleccionado = "No seleccionado";
+    tecnicoMecanicoInterno = null;
+    tecnicoMecanicoCelularCorreoController.clear();
+    tecnicoMecanicoCelularCorreoIngresado = "";
     notifyListeners();
   }
 
@@ -303,31 +313,81 @@ class MotorController extends ChangeNotifier {
   }
 
   
-  bool agregarMotor(OrdenTrabajo ordenTrabajo) {
+  bool agregarMotor(OrdenTrabajo ordenTrabajo, Motor motor) {
     try {
       //Se válida que la revisión exista en la orden de trabajo
+      motor.aceite = aceite;
+      motor.aceiteObservaciones = observacionesAceite;
+      motor.filtroDeAire = filtroDeAire;
+      motor.filtroDeAireObservaciones = observacionesFiltroDeAire;
+      motor.cpoDeAceleracion = cpoDeAceleracion;
+      motor.cpoDeAceleracionObservaciones = observacionesCpoDeAceleracion;
+      motor.bujias = bujias;
+      motor.bujiasObservaciones = observacionesBujias;
+      motor.bandaCadenaDeTiempo = bandaCadenaTiempo;
+      motor.bandaCadenaDeTiempoObservaciones = observacionesBandaCadenaTiempo;
+      motor.soportes = soportes;
+      motor.soportesObservaciones = observacionesSoportes;
+      motor.bandas = bandas;
+      motor.bandasObservaciones = observacionesBandas;
+      motor.mangueras = mangueras;
+      motor.manguerasObservaciones = observacionesMangueras;
+      motor.completado = true;
+      if (ordenTrabajo.revision.target?.suspensionDireccion.target?.completado == true 
+        && ordenTrabajo.revision.target?.frenos.target?.completado == true
+        && ordenTrabajo.revision.target?.fluidos.target?.completado == true
+        && ordenTrabajo.revision.target?.electrico.target?.completado == true
+        && ordenTrabajo.revision.target?.motor.target?.completado == true) {      
+        ordenTrabajo.revision.target!.completado = true;
+        final nuevaInstruccionRevision = Bitacora(
+          instruccion: 'syncActualizarRevision',
+          usuarioPropietario: prefs.getString("userId")!,
+          idOrdenTrabajo: ordenTrabajo.id,
+        ); //Se crea la nueva instruccion a realizar en bitacora
+        dataBase.revisionBox.put(ordenTrabajo.revision.target!);
+        nuevaInstruccionRevision.revision.target = ordenTrabajo.revision.target;
+        dataBase.bitacoraBox.put(nuevaInstruccionRevision);
+      }
+    
+    final nuevaInstruccionMotor = Bitacora(
+      instruccion: 'syncAgregarMotor',
+      usuarioPropietario: prefs.getString("userId")!,
+      idOrdenTrabajo: ordenTrabajo.id,
+    ); //Se crea la nueva instruccion a realizar en bitacora
+    nuevaInstruccionMotor.motor.target = motor;
+    dataBase.motorBox.put(motor);
+    dataBase.bitacoraBox.put(nuevaInstruccionMotor);
+    notifyListeners();
+    return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  bool asignarTecnicoMecanicoInterno(OrdenTrabajo ordenTrabajo) {
+    if (tecnicoMecanicoInterno != null) {
       final fechaRegistro =  DateTime.now();
       final nuevoMotor = Motor(
-          aceite: aceite,
-          aceiteObservaciones: observacionesAceite,
-          filtroDeAire: filtroDeAire,
-          filtroDeAireObservaciones: observacionesFiltroDeAire,
-          cpoDeAceleracion: cpoDeAceleracion,
-          cpoDeAceleracionObservaciones: observacionesCpoDeAceleracion,
-          bujias: bujias,
-          bujiasObservaciones: observacionesBujias,
-          bandaCadenaDeTiempo: bandaCadenaTiempo,
-          bandaCadenaDeTiempoObservaciones: observacionesBandaCadenaTiempo,
-          soportes: soportes,
-          soportesObservaciones: observacionesSoportes,
-          bandas: bandas,
-          bandasObservaciones: observacionesBandas,
-          mangueras: mangueras,
-          manguerasObservaciones: observacionesMangueras,
-          completado: true,
-          fechaRegistro: fechaRegistro,
-        );
-      //Revisión
+        aceite: "",
+        aceiteObservaciones: "",
+        filtroDeAire: "",
+        filtroDeAireObservaciones: "",
+        cpoDeAceleracion: "",
+        cpoDeAceleracionObservaciones: "",
+        bujias: "",
+        bujiasObservaciones: "",
+        bandaCadenaDeTiempo: "",
+        bandaCadenaDeTiempoObservaciones: "",
+        soportes: "",
+        soportesObservaciones: "",
+        bandas: "",
+        bandasObservaciones: "",
+        mangueras: "",
+        manguerasObservaciones: "",
+        completado: false,
+        fechaRegistro: fechaRegistro,
+      );
+       //Revisión
       if (ordenTrabajo.estatus.target!.estatus == "Observación")  {
         final estatus = dataBase.estatusBox
           .query(Estatus_.estatus.equals("Revisión"))
@@ -348,6 +408,10 @@ class MotorController extends ChangeNotifier {
           completado: false,
           fechaRegistro: fechaRegistro,
         );
+        nuevoMotor.tecnicoMecanico.target = tecnicoMecanicoInterno;
+        tecnicoMecanicoInterno!.motores.add(nuevoMotor);
+        dataBase.usuariosBox.put(tecnicoMecanicoInterno!);
+
         nuevaRevision.motor.target = nuevoMotor;
         nuevoMotor.revision.target = nuevaRevision;
         nuevaRevision.ordenTrabajo.target = ordenTrabajo;
@@ -362,7 +426,7 @@ class MotorController extends ChangeNotifier {
         dataBase.revisionBox.put(nuevaRevision);
         dataBase.bitacoraBox.put(nuevaInstruccionRevision);
         final nuevaInstruccionMotor = Bitacora(
-          instruccion: 'syncAgregarMotor',
+          instruccion: 'syncAsignarMotor',
           usuarioPropietario: prefs.getString("userId")!,
           idOrdenTrabajo: ordenTrabajo.id,
         ); //Se crea la nueva instruccion a realizar en bitacora
@@ -371,28 +435,18 @@ class MotorController extends ChangeNotifier {
         dataBase.bitacoraBox.put(nuevaInstruccionMotor);
         notifyListeners();
         return true;
-
       } else {
+        nuevoMotor.tecnicoMecanico.target = tecnicoMecanicoInterno;
+        tecnicoMecanicoInterno!.motores.add(nuevoMotor);
+        dataBase.usuariosBox.put(tecnicoMecanicoInterno!);
+
         nuevoMotor.revision.target = ordenTrabajo.revision.target;
         ordenTrabajo.revision.target!.motor.target = nuevoMotor;
-        if (ordenTrabajo.revision.target?.suspensionDireccion.target != null 
-          && ordenTrabajo.revision.target?.frenos.target != null
-          && ordenTrabajo.revision.target?.fluidos.target != null
-          && ordenTrabajo.revision.target?.electrico.target != null
-          && ordenTrabajo.revision.target?.motor.target != null) {      
-          ordenTrabajo.revision.target!.completado = true;
-          final nuevaInstruccionRevision = Bitacora(
-            instruccion: 'syncActualizarRevision',
-            usuarioPropietario: prefs.getString("userId")!,
-            idOrdenTrabajo: ordenTrabajo.id,
-          ); //Se crea la nueva instruccion a realizar en bitacora
-          nuevaInstruccionRevision.revision.target = ordenTrabajo.revision.target;
-          dataBase.bitacoraBox.put(nuevaInstruccionRevision);
-        }
+
         dataBase.revisionBox.put(ordenTrabajo.revision.target!);
         dataBase.ordenTrabajoBox.put(ordenTrabajo);
         final nuevaInstruccionMotor = Bitacora(
-          instruccion: 'syncAgregarMotor',
+          instruccion: 'syncAsignarMotor',
           usuarioPropietario: prefs.getString("userId")!,
           idOrdenTrabajo: ordenTrabajo.id,
         ); //Se crea la nueva instruccion a realizar en bitacora
@@ -402,9 +456,25 @@ class MotorController extends ChangeNotifier {
         notifyListeners();
         return true;
       }
-    } catch (e) {
+    } else {
+      notifyListeners();
       return false;
     }
+  }
+
+  void enCambioTecnicoMecanicoCelularCorreo(String tecnicoMecanicoCelularCorreo) {
+    tecnicoMecanicoCelularCorreoIngresado = tecnicoMecanicoCelularCorreo;
+    notifyListeners();
+  }
+
+
+  void seleccionarTecnicoMecanicoCelularCorreo(String tecnicoMecanicoCelularCorreo) {
+    String correo = tecnicoMecanicoCelularCorreo.split(" ").last; //Se recupera el VIN del Vehiculo
+    tecnicoMecanicoCelularCorreoSeleccionado = tecnicoMecanicoCelularCorreo; 
+    tecnicoMecanicoCelularCorreoIngresado = tecnicoMecanicoCelularCorreo;
+    tecnicoMecanicoCelularCorreoController.text = tecnicoMecanicoCelularCorreo;
+    tecnicoMecanicoInterno = dataBase.usuariosBox.query(Usuarios_.correo.equals(correo)).build().findUnique();
+    notifyListeners();
   }
 
   void update(int id, String newNombre, String newApellidos, String newCurp, 

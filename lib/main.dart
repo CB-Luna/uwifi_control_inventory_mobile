@@ -33,7 +33,6 @@ import 'package:taller_alex_app_asesor/internationalization/internationalization
 
 import 'providers/database_providers/vehiculo_controller.dart';
 import 'providers/sync_ordenes_trabajo_externas_supabase_provider.dart';
-import 'providers/sync_emprendimientos_externos_emi_web_provider.dart';
 
 late ObjectBoxDatabase dataBase;
 late SupabaseClient supabaseClient;
@@ -110,10 +109,6 @@ void main() async {
         ChangeNotifierProvider<UsuarioController>(
           create: (context) =>
               UsuarioController(email: prefs.getString("userId")),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<SyncEmpExternosEmiWebProvider>(
-          create: (context) => SyncEmpExternosEmiWebProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<SyncOrdenesTrabajoExternasSupabaseProvider>(

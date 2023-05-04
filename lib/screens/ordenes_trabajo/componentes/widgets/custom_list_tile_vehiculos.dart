@@ -19,7 +19,7 @@ class CustomListTileVehiculos extends StatelessWidget {
       ),
       title: Text(vin),
       onTap: () {
-        controller.seleccionarVIN(vin);
+        controller.seleccionarClienteVINPlacas(vin);
         controller.limpiarInformacion();
       },
       hoverColor: Colors.grey[200],

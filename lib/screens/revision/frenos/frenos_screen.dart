@@ -211,7 +211,7 @@ class _FrenosScreen extends State<FrenosScreen> {
                           break;
                         case 1:
                           if (frenosProvider.validarSeccionDosFormulario()) {
-                            if (frenosProvider.agregarFrenos(widget.ordenTrabajo)) {
+                            if (frenosProvider.agregarFrenos(widget.ordenTrabajo, widget.ordenTrabajo.revision.target!.frenos.target!)) {
                                 frenosProvider.limpiarInformacion();
                                 await Navigator.push(
                                   context,

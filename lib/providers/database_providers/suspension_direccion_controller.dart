@@ -54,6 +54,11 @@ class SuspensionDireccionController extends ChangeNotifier {
   String terminalExteriorDer = "";
   String observacionesTerminalExteriorDer = "";
 
+  String tecnicoMecanicoCelularCorreoSeleccionado = "No seleccionado";
+  Usuarios? tecnicoMecanicoInterno;
+  //Se asigna un controller para que se pueda visualizar lo que se selecciona del Widget que abre el campo
+  TextEditingController tecnicoMecanicoCelularCorreoController = TextEditingController(); 
+  String tecnicoMecanicoCelularCorreoIngresado = "";
 
   bool validateForm(GlobalKey<FormState> suspensionDireccionKey) {
     return suspensionDireccionKey.currentState!.validate() ? true : false;
@@ -106,6 +111,11 @@ class SuspensionDireccionController extends ChangeNotifier {
     observacionesTerminalExteriorIzq = "";
     terminalExteriorDer = "";
     observacionesTerminalExteriorDer = "";
+
+    tecnicoMecanicoCelularCorreoSeleccionado = "No seleccionado";
+    tecnicoMecanicoInterno = null;
+    tecnicoMecanicoCelularCorreoController.clear();
+    tecnicoMecanicoCelularCorreoIngresado = "";
     notifyListeners();
   }
 
@@ -767,59 +777,138 @@ class SuspensionDireccionController extends ChangeNotifier {
     }
   }
   
-  bool agregarSuspensionDireccion(OrdenTrabajo ordenTrabajo) {
+  bool agregarSuspensionDireccion(OrdenTrabajo ordenTrabajo, SuspensionDireccion suspensionDireccion) {
     try {
-      //Se válida que la revisión exista en la orden de trabajo
+      //Se actualiza la infromación de la suspensión dirección
+      suspensionDireccion.rotulaSuperiorIzq = rotulaSuperiorIzq; 
+      suspensionDireccion.rotulaSuperiorIzqObservaciones = observacionesRotulaSuperiorIzq;
+      suspensionDireccion.rotulaSuperiorDer = rotulaSuperiorDer; 
+      suspensionDireccion.rotulaSuperiorDerObservaciones = observacionesRotulaSuperiorDer;
+      suspensionDireccion.rotulaInferiorIzq = rotulaInferiorIzq; 
+      suspensionDireccion.rotulaInferiorIzqObservaciones = observacionesRotulaInferiorIzq;
+      suspensionDireccion.rotulaInferiorDer = rotulaInferiorDer; 
+      suspensionDireccion.rotulaInferiorDerObservaciones = observacionesRotulaInferiorDer;
+      suspensionDireccion.bujeHorquillaSuperiorIzq = bujeHorquillaSuperiorIzq; 
+      suspensionDireccion.bujeHorquillaSuperiorIzqObservaciones = observacionesBujeHorquillaSuperiorIzq;
+      suspensionDireccion.bujeHorquillaSuperiorDer = bujeHorquillaSuperiorDer; 
+      suspensionDireccion.bujeHorquillaSuperiorDerObservaciones = observacionesBujeHorquillaSuperiorDer;
+      suspensionDireccion.bujeHorquillaInferiorIzq = bujeHorquillaInferiorIzq; 
+      suspensionDireccion.bujeHorquillaInferiorIzqObservaciones = observacionesBujeHorquillaInferiorIzq;
+      suspensionDireccion.bujeHorquillaInferiorDer = bujeHorquillaInferiorDer; 
+      suspensionDireccion.bujeHorquillaInferiorDerObservaciones = observacionesBujeHorquillaInferiorDer;
+      suspensionDireccion.amortiguadorDelanteroIzq = amortiguadorDelanteroIzq; 
+      suspensionDireccion.amortiguadorDelanteroIzqObservaciones = observacionesAmortiguadorDelanteroIzq;
+      suspensionDireccion.amortiguadorDelanteroDer = amortiguadorDelanteroDer; 
+      suspensionDireccion.amortiguadorDelanteroDerObservaciones = observacionesAmortiguadorDelanteroDer;
+      suspensionDireccion.amortiguadorTraseroIzq = amortiguadorTraseroIzq; 
+      suspensionDireccion.amortiguadorTraseroIzqObservaciones = observacionesAmortiguadorTraseroIzq;
+      suspensionDireccion.amortiguadorTraseroDer = amortiguadorTraseroDer; 
+      suspensionDireccion.amortiguadorTraseroDerObservaciones = observacionesAmortiguadorTraseroDer;
+      suspensionDireccion.bujeBarraEstabilizadoraIzq = bujeBarraEstabilizadoraIzq; 
+      suspensionDireccion.bujeBarraEstabilizadoraIzqObservaciones = observacionesBujeBarraEstabilizadoraIzq;
+      suspensionDireccion.bujeBarraEstabilizadoraDer = bujeBarraEstabilizadoraDer; 
+      suspensionDireccion.bujeBarraEstabilizadoraDerObservaciones = observacionesBujeBarraEstabilizadoraDer;
+      suspensionDireccion.linkKitDelanteroIzq = linkKitDelanteroIzq; 
+      suspensionDireccion.linkKitDelanteroIzqObservaciones = observacionesLinkKitDelanteroIzq;
+      suspensionDireccion.linkKitDelanteroDer = linkKitDelanteroDer; 
+      suspensionDireccion.linkKitDelanteroDerObservaciones = observacionesLinkKitDelanteroDer;
+      suspensionDireccion.linkKitTraseroIzq = linkKitTraseroIzq; 
+      suspensionDireccion.linkKitTraseroIzqObservaciones = observacionesLinkKitTraseroIzq;
+      suspensionDireccion.linkKitTraseroDer = linkKitTraseroDer; 
+      suspensionDireccion.linkKitTraseroDerObservaciones = observacionesLinkKitTraseroDer;
+      suspensionDireccion.terminalInteriorIzq = terminalInteriorIzq; 
+      suspensionDireccion.terminalInteriorIzqObservaciones = observacionesTerminalInteriorIzq;
+      suspensionDireccion.terminalInteriorDer = terminalInteriorDer; 
+      suspensionDireccion.terminalInteriorDerObservaciones = observacionesTerminalInteriorDer;
+      suspensionDireccion.terminalExteriorIzq = terminalExteriorIzq; 
+      suspensionDireccion.terminalExteriorIzqObservaciones = observacionesTerminalExteriorIzq;
+      suspensionDireccion.terminalExteriorDer = terminalExteriorDer; 
+      suspensionDireccion.terminalExteriorDerObservaciones = observacionesTerminalExteriorDer;
+      suspensionDireccion.completado = true;
+      if (ordenTrabajo.revision.target?.suspensionDireccion.target?.completado == true 
+        && ordenTrabajo.revision.target?.frenos.target?.completado == true
+        && ordenTrabajo.revision.target?.fluidos.target?.completado == true
+        && ordenTrabajo.revision.target?.electrico.target?.completado == true
+        && ordenTrabajo.revision.target?.motor.target?.completado == true) {      
+        ordenTrabajo.revision.target!.completado = true;
+        final nuevaInstruccionRevision = Bitacora(
+          instruccion: 'syncActualizarRevision',
+          usuarioPropietario: prefs.getString("userId")!,
+          idOrdenTrabajo: ordenTrabajo.id,
+        ); //Se crea la nueva instruccion a realizar en bitacora
+        dataBase.revisionBox.put(ordenTrabajo.revision.target!);
+        nuevaInstruccionRevision.revision.target = ordenTrabajo.revision.target;
+        dataBase.bitacoraBox.put(nuevaInstruccionRevision);
+      }
+      
+      final nuevaInstruccionSuspensionDireccion = Bitacora(
+        instruccion: 'syncAgregarSuspensionDireccion',
+        usuarioPropietario: prefs.getString("userId")!,
+        idOrdenTrabajo: ordenTrabajo.id,
+      ); //Se crea la nueva instruccion a realizar en bitacora
+      nuevaInstruccionSuspensionDireccion.suspensionDireccion.target = suspensionDireccion;
+      dataBase.suspensionDireccionBox.put(suspensionDireccion);
+      dataBase.bitacoraBox.put(nuevaInstruccionSuspensionDireccion);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  bool asignarTecnicoMecanicoInterno(OrdenTrabajo ordenTrabajo) {
+  
+    if (tecnicoMecanicoInterno != null) {
       final fechaRegistro =  DateTime.now();
       final nuevaSuspensionDireccion = SuspensionDireccion(
-          rotulaSuperiorIzq: rotulaSuperiorIzq, 
-          rotulaSuperiorIzqObservaciones: observacionesRotulaSuperiorIzq,
-          rotulaSuperiorDer: rotulaSuperiorDer, 
-          rotulaSuperiorDerObservaciones: observacionesRotulaSuperiorDer,
-          rotulaInferiorIzq: rotulaInferiorIzq, 
-          rotulaInferiorIzqObservaciones: observacionesRotulaInferiorIzq,
-          rotulaInferiorDer: rotulaInferiorDer, 
-          rotulaInferiorDerObservaciones: observacionesRotulaInferiorDer,
-          bujeHorquillaSuperiorIzq: bujeHorquillaSuperiorIzq, 
-          bujeHorquillaSuperiorIzqObservaciones: observacionesBujeHorquillaSuperiorIzq,
-          bujeHorquillaSuperiorDer: bujeHorquillaSuperiorDer, 
-          bujeHorquillaSuperiorDerObservaciones: observacionesBujeHorquillaSuperiorDer,
-          bujeHorquillaInferiorIzq: bujeHorquillaInferiorIzq, 
-          bujeHorquillaInferiorIzqObservaciones: observacionesBujeHorquillaInferiorIzq,
-          bujeHorquillaInferiorDer: bujeHorquillaInferiorDer, 
-          bujeHorquillaInferiorDerObservaciones: observacionesBujeHorquillaInferiorDer,
-          amortiguadorDelanteroIzq: amortiguadorDelanteroIzq, 
-          amortiguadorDelanteroIzqObservaciones: observacionesAmortiguadorDelanteroIzq,
-          amortiguadorDelanteroDer: amortiguadorDelanteroDer, 
-          amortiguadorDelanteroDerObservaciones: observacionesAmortiguadorDelanteroDer,
-          amortiguadorTraseroIzq: amortiguadorTraseroIzq, 
-          amortiguadorTraseroIzqObservaciones: observacionesAmortiguadorTraseroIzq,
-          amortiguadorTraseroDer: amortiguadorTraseroDer, 
-          amortiguadorTraseroDerObservaciones: observacionesAmortiguadorTraseroDer,
-          bujeBarraEstabilizadoraIzq: bujeBarraEstabilizadoraIzq, 
-          bujeBarraEstabilizadoraIzqObservaciones: observacionesBujeBarraEstabilizadoraIzq,
-          bujeBarraEstabilizadoraDer: bujeBarraEstabilizadoraDer, 
-          bujeBarraEstabilizadoraDerObservaciones: observacionesBujeBarraEstabilizadoraDer,
-          linkKitDelanteroIzq: linkKitDelanteroIzq, 
-          linkKitDelanteroIzqObservaciones: observacionesLinkKitDelanteroIzq,
-          linkKitDelanteroDer: linkKitDelanteroDer, 
-          linkKitDelanteroDerObservaciones: observacionesLinkKitDelanteroDer,
-          linkKitTraseroIzq: linkKitTraseroIzq, 
-          linkKitTraseroIzqObservaciones: observacionesLinkKitTraseroIzq,
-          linkKitTraseroDer: linkKitTraseroDer, 
-          linkKitTraseroDerObservaciones: observacionesLinkKitTraseroDer,
-          terminalInteriorIzq: terminalInteriorIzq, 
-          terminalInteriorIzqObservaciones: observacionesTerminalInteriorIzq,
-          terminalInteriorDer: terminalInteriorDer, 
-          terminalInteriorDerObservaciones: observacionesTerminalInteriorDer,
-          terminalExteriorIzq: terminalExteriorIzq, 
-          terminalExteriorIzqObservaciones: observacionesTerminalExteriorIzq,
-          terminalExteriorDer: terminalExteriorDer, 
-          terminalExteriorDerObservaciones: observacionesTerminalExteriorDer,
-          completado: true,
+          rotulaSuperiorIzq: "", 
+          rotulaSuperiorIzqObservaciones: "",
+          rotulaSuperiorDer: "", 
+          rotulaSuperiorDerObservaciones: "",
+          rotulaInferiorIzq: "", 
+          rotulaInferiorIzqObservaciones: "",
+          rotulaInferiorDer: "", 
+          rotulaInferiorDerObservaciones: "",
+          bujeHorquillaSuperiorIzq: "", 
+          bujeHorquillaSuperiorIzqObservaciones: "",
+          bujeHorquillaSuperiorDer: "", 
+          bujeHorquillaSuperiorDerObservaciones: "",
+          bujeHorquillaInferiorIzq: "", 
+          bujeHorquillaInferiorIzqObservaciones: "",
+          bujeHorquillaInferiorDer: "", 
+          bujeHorquillaInferiorDerObservaciones: "",
+          amortiguadorDelanteroIzq: "", 
+          amortiguadorDelanteroIzqObservaciones: "",
+          amortiguadorDelanteroDer: "", 
+          amortiguadorDelanteroDerObservaciones: "",
+          amortiguadorTraseroIzq: "", 
+          amortiguadorTraseroIzqObservaciones: "",
+          amortiguadorTraseroDer: "", 
+          amortiguadorTraseroDerObservaciones: "",
+          bujeBarraEstabilizadoraIzq: "", 
+          bujeBarraEstabilizadoraIzqObservaciones: "",
+          bujeBarraEstabilizadoraDer: "", 
+          bujeBarraEstabilizadoraDerObservaciones: "",
+          linkKitDelanteroIzq: "", 
+          linkKitDelanteroIzqObservaciones: "",
+          linkKitDelanteroDer: "", 
+          linkKitDelanteroDerObservaciones: "",
+          linkKitTraseroIzq: "", 
+          linkKitTraseroIzqObservaciones: "",
+          linkKitTraseroDer: "", 
+          linkKitTraseroDerObservaciones: "",
+          terminalInteriorIzq: "", 
+          terminalInteriorIzqObservaciones: "",
+          terminalInteriorDer: "", 
+          terminalInteriorDerObservaciones: "",
+          terminalExteriorIzq: "", 
+          terminalExteriorIzqObservaciones: "",
+          terminalExteriorDer: "", 
+          terminalExteriorDerObservaciones: "",
+          completado: false,
           fechaRegistro: fechaRegistro,
         );
-      //Revisión
+       //Revisión
       if (ordenTrabajo.estatus.target!.estatus == "Observación")  {
         final estatus = dataBase.estatusBox
           .query(Estatus_.estatus.equals("Revisión"))
@@ -840,6 +929,10 @@ class SuspensionDireccionController extends ChangeNotifier {
           completado: false,
           fechaRegistro: fechaRegistro,
         );
+        nuevaSuspensionDireccion.tecnicoMecanico.target = tecnicoMecanicoInterno;
+        tecnicoMecanicoInterno!.suspesionesDirecciones.add(nuevaSuspensionDireccion);
+        dataBase.usuariosBox.put(tecnicoMecanicoInterno!);
+
         nuevaRevision.suspensionDireccion.target = nuevaSuspensionDireccion;
         nuevaSuspensionDireccion.revision.target = nuevaRevision;
         nuevaRevision.ordenTrabajo.target = ordenTrabajo;
@@ -854,7 +947,7 @@ class SuspensionDireccionController extends ChangeNotifier {
         dataBase.revisionBox.put(nuevaRevision);
         dataBase.bitacoraBox.put(nuevaInstruccionRevision);
         final nuevaInstruccionSuspensionDireccion = Bitacora(
-          instruccion: 'syncAgregarSuspensionDireccion',
+          instruccion: 'syncAsignarSuspensionDireccion',
           usuarioPropietario: prefs.getString("userId")!,
           idOrdenTrabajo: ordenTrabajo.id,
         ); //Se crea la nueva instruccion a realizar en bitacora
@@ -863,28 +956,18 @@ class SuspensionDireccionController extends ChangeNotifier {
         dataBase.bitacoraBox.put(nuevaInstruccionSuspensionDireccion);
         notifyListeners();
         return true;
-
       } else {
+        nuevaSuspensionDireccion.tecnicoMecanico.target = tecnicoMecanicoInterno;
+        tecnicoMecanicoInterno!.suspesionesDirecciones.add(nuevaSuspensionDireccion);
+        dataBase.usuariosBox.put(tecnicoMecanicoInterno!);
+
         nuevaSuspensionDireccion.revision.target = ordenTrabajo.revision.target;
         ordenTrabajo.revision.target!.suspensionDireccion.target = nuevaSuspensionDireccion;
-        if (ordenTrabajo.revision.target?.suspensionDireccion.target != null 
-          && ordenTrabajo.revision.target?.frenos.target != null
-          && ordenTrabajo.revision.target?.fluidos.target != null
-          && ordenTrabajo.revision.target?.electrico.target != null
-          && ordenTrabajo.revision.target?.motor.target != null) {      
-          ordenTrabajo.revision.target!.completado = true;
-          final nuevaInstruccionRevision = Bitacora(
-            instruccion: 'syncActualizarRevision',
-            usuarioPropietario: prefs.getString("userId")!,
-            idOrdenTrabajo: ordenTrabajo.id,
-          ); //Se crea la nueva instruccion a realizar en bitacora
-          nuevaInstruccionRevision.revision.target = ordenTrabajo.revision.target;
-          dataBase.bitacoraBox.put(nuevaInstruccionRevision);
-        }
+
         dataBase.revisionBox.put(ordenTrabajo.revision.target!);
         dataBase.ordenTrabajoBox.put(ordenTrabajo);
         final nuevaInstruccionSuspensionDireccion = Bitacora(
-          instruccion: 'syncAgregarSuspensionDireccion',
+          instruccion: 'syncAsignarSuspensionDireccion',
           usuarioPropietario: prefs.getString("userId")!,
           idOrdenTrabajo: ordenTrabajo.id,
         ); //Se crea la nueva instruccion a realizar en bitacora
@@ -894,9 +977,25 @@ class SuspensionDireccionController extends ChangeNotifier {
         notifyListeners();
         return true;
       }
-    } catch (e) {
+    } else {
+      notifyListeners();
       return false;
     }
+  }
+
+  void enCambioTecnicoMecanicoCelularCorreo(String tecnicoMecanicoCelularCorreo) {
+    tecnicoMecanicoCelularCorreoIngresado = tecnicoMecanicoCelularCorreo;
+    notifyListeners();
+  }
+
+
+  void seleccionarTecnicoMecanicoCelularCorreo(String tecnicoMecanicoCelularCorreo) {
+    String correo = tecnicoMecanicoCelularCorreo.split(" ").last; //Se recupera el VIN del Vehiculo
+    tecnicoMecanicoCelularCorreoSeleccionado = tecnicoMecanicoCelularCorreo; 
+    tecnicoMecanicoCelularCorreoIngresado = tecnicoMecanicoCelularCorreo;
+    tecnicoMecanicoCelularCorreoController.text = tecnicoMecanicoCelularCorreo;
+    tecnicoMecanicoInterno = dataBase.usuariosBox.query(Usuarios_.correo.equals(correo)).build().findUnique();
+    notifyListeners();
   }
 
   void update(int id, String newNombre, String newApellidos, String newCurp, 
