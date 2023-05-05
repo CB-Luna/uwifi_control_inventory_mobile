@@ -133,6 +133,10 @@ void main() async {
           create: (_) => NetworkState(),
           lazy: false,
         ),
+        // ChangeNotifierProvider<FFAppState>(
+        //   create: (context) => FFAppState(),
+        //   lazy: false,
+        // ),
       ],
       child: const MyApp(),
     ),
@@ -161,7 +165,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'tallerAlex',
+      title: 'vehicleControlSystemRTA',
       localizationsDelegates: const [
         AppLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,

@@ -113,7 +113,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const OrdenesTrabajoScreen(),
+                                              const ControlDailyVehicleScreen(),
                                         ),
                                       );
                                     },

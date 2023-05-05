@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/providers/providers.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/clientes_screen.dart';
-import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/side_menu/custom_menu_item.dart';
 
 class SideMenu extends StatelessWidget {
@@ -72,28 +72,14 @@ class SideMenu extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            width: 35,
-                            height: 35,
+                            width: 100,
+                            height: 60,
                             clipBehavior: Clip.antiAlias,
                             decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
+                              shape: BoxShape.rectangle,
                             ),
                             child: Image.asset(
-                              'assets/images/tallerAlexLogo.png',
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                5, 0, 0, 0),
-                            child: Text(
-                              'Taller Mecánico',
-                              maxLines: 2,
-                              style: FlutterFlowTheme.of(context).bodyText2.override(
-                                    fontFamily:
-                                        FlutterFlowTheme.of(context).bodyText1Family,
-                                    color: FlutterFlowTheme.of(context).primaryBtnText,
-                                    fontSize: 14,
-                                  ),
+                              'assets/images/rta_logo.png',
                             ),
                           ),
                         ],
@@ -121,8 +107,8 @@ class SideMenu extends StatelessWidget {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             10, 0, 5, 0),
                                     child: Container(
-                                      width: 40,
-                                      height: 40,
+                                      width: 60,
+                                      height: 60,
                                       clipBehavior: Clip.antiAlias,
                                       decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
@@ -152,8 +138,8 @@ class SideMenu extends StatelessWidget {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             10, 0, 5, 0),
                                     child: Container(
-                                      width: 40,
-                                      height: 40,
+                                      width: 60,
+                                      height: 60,
                                       clipBehavior: Clip.antiAlias,
                                       decoration: BoxDecoration(
                                         color: const Color(0x00EEEEEE),
@@ -174,8 +160,9 @@ class SideMenu extends StatelessWidget {
                                 style: FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily:
                                           FlutterFlowTheme.of(context).bodyText1Family,
-                                      color: FlutterFlowTheme.of(context).white,
+                                      color: FlutterFlowTheme.of(context).alternate,
                                       fontSize: 15,
+                                      fontWeight: FontWeight.bold
                                     ),
                               ),
                             ),
@@ -185,13 +172,13 @@ class SideMenu extends StatelessWidget {
                     ),
 
                     CustomMenuItem(
-                      label: 'Órdenes',
+                      label: 'Reports',
                       iconData: Icons.home,
                       onTap: () async {
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const OrdenesTrabajoScreen(),
+                            builder: (context) => const ControlDailyVehicleScreen(),
                           ),
                         );
                       },
@@ -199,7 +186,7 @@ class SideMenu extends StatelessWidget {
 
                     if (currentUser.rol.target!.rol == "Cliente")
                     CustomMenuItem(
-                      label: 'Vehículos',
+                      label: 'Vehicles',
                       iconData: Icons.directions_car,
                       onTap: () async {
                      
@@ -208,14 +195,14 @@ class SideMenu extends StatelessWidget {
 
                     if (currentUser.rol.target!.rol == "Asesor")
                     CustomMenuItem(
-                      label: 'Clientes',
+                      label: 'Employees',
                       iconData: Icons.groups,
                       onTap: () async {
                         if (currentUser.rol.target!.rol == "Voluntario Estratégico") {
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
                             content: Text(
-                                "Este usuario no tiene permisos para esta acción."),
+                                "Permission Denied. You're not authorized to perform this action."),
                           ));
                         } else {
                           await Navigator.push(
@@ -229,7 +216,7 @@ class SideMenu extends StatelessWidget {
                     ),
                     
                     CustomMenuItem(
-                      label: 'Sinc. Información',
+                      label: 'Sync. Data',
                       iconData: Icons.sync_rounded,
                       lineHeight: 1.2,
                       onTap: () async {
@@ -238,7 +225,7 @@ class SideMenu extends StatelessWidget {
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
                             content: Text(
-                                "Este usuario no tiene permisos para esta acción."),
+                                "Permission Denied. You're not authorized to perform this action."),
                           ));
                         } else {
                           final connectivityResult =
@@ -275,7 +262,7 @@ class SideMenu extends StatelessWidget {
 
                     if (currentUser.rol.target!.rol == "Asesor")
                     CustomMenuItem(
-                      label: 'Sinc. Órdenes',
+                      label: 'Report Recover',
                       iconData: Icons.downloading_outlined,
                       lineHeight: 1.2,
                       onTap: () async {
@@ -284,7 +271,7 @@ class SideMenu extends StatelessWidget {
 
                     if (currentUser.rol.target!.rol == "Asesor")
                     CustomMenuItem(
-                      label: 'Sinc. Catálogos',
+                      label: 'Sync. Catalog',
                       iconData: Icons.fact_check_outlined,
                       lineHeight: 1.2,
                       onTap: () async {
@@ -293,7 +280,7 @@ class SideMenu extends StatelessWidget {
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
                             content: Text(
-                                "Este usuario no tiene permisos para esta acción."),
+                                "Permission Denied. You're not authorized to perform this action."),
                           ));
                         } else {
                           final connectivityResult =
@@ -327,7 +314,7 @@ class SideMenu extends StatelessWidget {
 
 
                     CustomMenuItem(
-                      label: 'Cerrar Sesión',
+                      label: 'Log Out',
                       iconData: Icons.logout,
                       onTap: () async {
                         await showModalBottomSheet(

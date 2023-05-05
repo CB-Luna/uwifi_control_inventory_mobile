@@ -19,7 +19,7 @@ class CustomBottomSheet extends StatelessWidget {
                   height: size.height * 0.1,
                   child: TextButton(
                     onPressed: () => Navigator.pop(context, 'camera'),
-                    child: const Text('Cámara'),
+                    child: const Text('Camera'),
                   ),
                 ),
               ),
@@ -30,7 +30,7 @@ class CustomBottomSheet extends StatelessWidget {
                   height: size.height * 0.1,
                   child: TextButton(
                     onPressed: () => Navigator.pop(context, 'gallery'),
-                    child: const Text('Galería'),
+                    child: const Text('Gallery'),
                   ),
                 ),
               ),

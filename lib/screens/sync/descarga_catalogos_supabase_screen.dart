@@ -4,7 +4,7 @@ import 'package:taller_alex_app_asesor/providers/catalogo_supabase_provider.dart
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:lottie/lottie.dart';
-import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class DescargaCatalogosSupabaseScreen extends StatefulWidget {
@@ -151,7 +151,7 @@ class _DescargaCatalogosSupabaseScreenState extends State<DescargaCatalogosSupab
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            const OrdenesTrabajoScreen(),
+                                            const ControlDailyVehicleScreen(),
                                       ),
                                     );
                                   },
@@ -204,7 +204,7 @@ class _DescargaCatalogosSupabaseScreenState extends State<DescargaCatalogosSupab
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  const OrdenesTrabajoScreen(),
+                                                  const ControlDailyVehicleScreen(),
                                             ),
                                           );
                                       },

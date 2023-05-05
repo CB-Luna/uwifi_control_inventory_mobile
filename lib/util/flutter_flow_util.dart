@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:json_path/json_path.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../main.dart';
@@ -16,6 +17,7 @@ export 'package:page_transition/page_transition.dart';
 
 T valueOrDefault<T>(T value, T defaultValue) =>
     (value is String && value.isEmpty) || value == null ? defaultValue : value;
+
 
 String dateTimeFormat(String format, DateTime dateTime) {
   if (dateTime == null) {
@@ -196,3 +198,20 @@ String maybeHandleOverflow(String original, int maxChars, String replacement) {
     return original;
   }
 }
+
+dynamic getJsonField(
+  dynamic response,
+  String jsonPath, [
+  bool isForList = false,
+]) {
+  final field = JsonPath(jsonPath).read(response);
+  if (field.isEmpty) {
+    return null;
+  }
+  if (field.length > 1) {
+    return field.map((f) => f.value).toList();
+  }
+  final value = field.first.value;
+  return isForList && value is! Iterable ? [value] : value;
+}
+

@@ -59,7 +59,7 @@ class _BottomSheetCerrarSesionState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 4, 0, 0),
                               child: Text(
-                                '¿Seguro que quieres Cerrar Sesión?',
+                                'Are you sure you want to log out?',
                                 textAlign: TextAlign.center,
                                 style: FlutterFlowTheme.of(context).title2.override(
                                       fontFamily:
@@ -80,7 +80,7 @@ class _BottomSheetCerrarSesionState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 8, 0, 0),
                               child: Text(
-                                'Toda la información que no hayas sincronizado se mantendrá guardada de forma local.',
+                                'All data that you input is will saved in your device.',
                                 textAlign: TextAlign.center,
                                 style: FlutterFlowTheme.of(context).bodyText2.override(
                                       fontFamily:
@@ -120,7 +120,7 @@ class _BottomSheetCerrarSesionState
                               onPressed: () async {
                                 Navigator.pop(context);
                               },
-                              text: 'CANCELAR',
+                              text: 'CANCEL',
                               options: FFButtonOptions(
                                 width: 150,
                                 height: 50,
@@ -144,7 +144,7 @@ class _BottomSheetCerrarSesionState
                               onPressed: () async {
                                 await userState.logout();
                               },
-                              text: 'ACEPTAR',
+                              text: 'ACCEPT',
                               options: FFButtonOptions(
                                 width: 150,
                                 height: 50,

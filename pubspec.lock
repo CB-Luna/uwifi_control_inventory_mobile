@@ -941,6 +941,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.3"
+  iregexp:
+    dependency: transitive
+    description:
+      name: iregexp
+      sha256: "0bab197b31adad22c32eef580cda11338dad24ee0e46187d994baef9acee7564"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   js:
     dependency: transitive
     description:
@@ -957,6 +965,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.7.0"
+  json_path:
+    dependency: "direct main"
+    description:
+      name: json_path
+      sha256: "80b9cbb21882f457972671ff8bd5ba86c74a492ddafe1f1ae301c150883cc390"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.3"
   jwt_decode:
     dependency: "direct main"
     description:
@@ -1013,6 +1029,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
+  maybe_just_nothing:
+    dependency: transitive
+    description:
+      name: maybe_just_nothing
+      sha256: "0c06326e26d08f6ed43247404376366dc4d756cef23a4f1db765f546224c35e0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.3"
   meta:
     dependency: transitive
     description:
@@ -1349,6 +1373,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
+  rfc_6901:
+    dependency: transitive
+    description:
+      name: rfc_6901
+      sha256: "8d97680dada633146cf75ab9382f2ce2b7e4bd63ceecd867416cf43b5832b988"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   rxdart:
     dependency: transitive
     description:
@@ -1445,6 +1477,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  simple_gradient_text:
+    dependency: "direct main"
+    description:
+      name: simple_gradient_text
+      sha256: "075a2cbabac021d3713d0d199b2d1b0d40f6293e1e9d37b25e84936ae43c90fa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1803,5 +1843,5 @@ packages:
     source: hosted
     version: "1.0.2"
 sdks:
-  dart: ">=2.18.0 <3.0.0"
+  dart: ">=2.19.0 <3.0.0"
   flutter: ">=3.0.0"

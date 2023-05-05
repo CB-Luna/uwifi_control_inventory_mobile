@@ -1,21 +1,29 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:substring_highlight/substring_highlight.dart';
+import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_widgets.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/vehiculo_controller.dart';
+import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
 
 import 'package:flutter/material.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_model.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:taller_alex_app_asesor/util/util.dart';
+
+import 'app_state.dart';
 
 class AgregarVehiculoScreen extends StatefulWidget {
   AgregarVehiculoScreen({Key? key}) : super(key: key);
@@ -48,943 +56,262 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
     final vehiculoProvider = Provider.of<VehiculoController>(context);
     return WillPopScope(
       onWillPop: () async => false,
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).white,
-        body: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: SingleChildScrollView(
-            child: Form(
-              key: vehiculoKey,
-              autovalidateMode: AutovalidateMode.disabled,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        20, 45, 20, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 80,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: InkWell(
-                            onTap: () async {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text(
-                                        '¿Seguro que quieres abandonar esta pantalla?'),
-                                    content: const Text(
-                                        'La información ingresada se perderá.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () async {
-                                          vehiculoProvider.limpiarInformacion();
-                                          //Se colocan dos pop para salir del ALertDiaglog y Regresar a la pantalla anterior
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
-                                        },
-                                        child:
-                                            const Text('Abandonar'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child:
-                                            const Text('Cancelar'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                              return;
-                            },
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
-                              children: [
-                                const Icon(
-                                  Icons.arrow_back_ios_rounded,
-                                  color: Colors.white,
-                                  size: 16,
-                                ),
-                                Text(
-                                  'Atrás',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: FlutterFlowTheme.of(context)
-                                            .bodyText1Family,
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0, 15, 0, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Registro de Vehículo',
-                          style:
-                              FlutterFlowTheme.of(context).title1.override(
-                                    fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyText1Family,
-                                    fontSize: 18,
-                                  ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FormField(
-                        builder: (state) {
-                          return Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional
-                                    .fromSTEB(0, 10, 0, 16),
-                                child: InkWell(
-                                  onTap: () async {
-                                    String? option =
-                                        await showModalBottomSheet(
-                                      context: context,
-                                      builder: (_) =>
-                                          const CustomBottomSheet(),
-                                    );
-
-                                    if (option == null) return;
-
-                                    final picker = ImagePicker();
-
-                                    late final XFile? pickedFile;
-
-                                    if (option == 'camera') {
-                                      pickedFile =
-                                          await picker.pickImage(
-                                        source: ImageSource.camera,
-                                        imageQuality: 50,
-                                      );
-                                    } else {
-                                      pickedFile =
-                                          await picker.pickImage(
-                                        source: ImageSource.gallery,
-                                        imageQuality: 50,
-                                      );
-                                    }
-
-                                    if (pickedFile == null) {
-                                      return;
-                                    }
-
-                                    setState(() {
-                                      image = pickedFile;
-                                      File file = File(image!.path);
-                                      List<int> fileInByte =
-                                          file.readAsBytesSync();
-                                      String base64 =
-                                          base64Encode(fileInByte);
-                                      vehiculoProvider.imagenVehiculo =
-                                          base64;
-                                      vehiculoProvider.path =
-                                          file.path;
-                                    });
-                                  },
-                                  child: Container(
-                                    width: MediaQuery.of(context)
-                                            .size
-                                            .width *
-                                        0.9,
-                                    height: 180,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: Image.asset(
-                                          'assets/images/animation_500_l3ur8tqa.gif',
-                                        ).image,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.circular(8),
-                                      border: Border.all(
-                                        color: FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
-                                        width: 1.5,
-                                      ),
-                                    ),
-                                    child: getImage(vehiculoProvider.path),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                        validator: (val) {
-                          if (vehiculoProvider.path == "" || vehiculoProvider.path == null) {
-                            return 'Para continuar, cargue la imagen del vehículo.';
-                          }
-                          return null;
-                        },
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 16),
-                    child: Autocomplete(
-                      optionsBuilder: (TextEditingValue textEditingValue) {
-                        if (textEditingValue.text == '') {
-                          return const Iterable<String>.empty();
-                        }
-                        return vehiculoProvider.listaMarcas.where((String option) {
-                          return option
-                              .toLowerCase()
-                              .contains(textEditingValue.text.toLowerCase());
-                        });
-                      },
-                      optionsViewBuilder: (context, Function(String) onSelected, options) {
-                        return Material(
-                          elevation: 4,
-                          child: ListView.separated(
-                            padding: EdgeInsets.zero,
-                            itemCount: options.length,
-                            separatorBuilder:(context, index) => const Divider(),
-                            itemBuilder: (context, index) {
-                              final option = options.elementAt(index);
-                              final title = option.toString();
-                              return ListTile(
-                                leading: Icon(
-                                  Icons.label_outline,
-                                  color: FlutterFlowTheme.of(context).primaryColor,
-                                ),
-                                onTap: () {
-                                  onSelected(option.toString());
-                                },
-                                title: SubstringHighlight(
-                                  text: title,
-                                  term: vehiculoProvider.marcaController.text,
-                                  textStyleHighlight: const TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                hoverColor: Colors.grey[200],
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      onSelected: (String selection) {
-                        vehiculoProvider.seleccionarMarca(selection);
-                      },
-                      fieldViewBuilder: (context, controller, focusNode, onEditingComplete) {
-                        vehiculoProvider.marcaController = controller;
-                        return TextFormField(
-                          controller: controller,
-                          focusNode: focusNode,
-                          autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
-                          textCapitalization:
-                              TextCapitalization.characters,
-                          onChanged: (value) {
-                              vehiculoProvider.enCambioMarca(value);
-                          },
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.label_outlined,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                            ),
-                            labelText: 'Marca*',
-                            labelStyle: FlutterFlowTheme.of(context)
-                                .title3
-                                .override(
-                                  fontFamily: 'Montserrat',
-                                  color: FlutterFlowTheme.of(context).grayDark,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                            hintText: 'Ingrese la marca del vehículo...',
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primaryColor,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primaryColor,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            contentPadding:
-                                const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                          textAlign: TextAlign.start,
-                          maxLines: 1,
-                          validator: (val) {
-                            if (val == "" ||
-                                val == null) {
-                              return 'La Marca del vehículo es requerida.';
-                            }
-                            if (val != vehiculoProvider.marcaSeleccionada) {
-                              return 'Seleccione una opción de marca válida.';
-                            }
-                            return null;
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 16),
-                    child: Autocomplete(
-                      optionsBuilder: (TextEditingValue textEditingValue) {
-                        if (textEditingValue.text == '') {
-                          return const Iterable<String>.empty();
-                        }
-                        return vehiculoProvider.listaModelos.where((String option) {
-                          return option
-                              .toLowerCase()
-                              .contains(textEditingValue.text.toLowerCase());
-                        });
-                      },
-                      optionsViewBuilder: (context, Function(String) onSelected, options) {
-                        return Material(
-                          elevation: 4,
-                          child: ListView.separated(
-                            padding: EdgeInsets.zero,
-                            itemCount: options.length,
-                            separatorBuilder:(context, index) => const Divider(),
-                            itemBuilder: (context, index) {
-                              final option = options.elementAt(index);
-                              final title = option.toString();
-                              return ListTile(
-                                leading: Icon(
-                                  Icons.label_outline,
-                                  color: FlutterFlowTheme.of(context).primaryColor,
-                                ),
-                                onTap: () {
-                                  onSelected(option.toString());
-                                },
-                                title: SubstringHighlight(
-                                  text: title,
-                                  term: vehiculoProvider.modeloController.text,
-                                  textStyleHighlight: const TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                hoverColor: Colors.grey[200],
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      onSelected: (String selection) {
-                        vehiculoProvider.seleccionarModelo(selection);
-                      },
-                      fieldViewBuilder: (context, controller, focusNode, onEditingComplete) {
-                        vehiculoProvider.modeloController = controller;
-                        return TextFormField(
-                          controller: controller,
-                          focusNode: focusNode,
-                          autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
-                          textCapitalization:
-                              TextCapitalization.characters,
-                          onChanged: (value) {
-                              vehiculoProvider.enCambioModelo(value);
-                          },
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.directions_car_outlined,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                            ),
-                            labelText: 'Modelo*',
-                            labelStyle: FlutterFlowTheme.of(context)
-                                .title3
-                                .override(
-                                  fontFamily: 'Montserrat',
-                                  color: FlutterFlowTheme.of(context).grayDark,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                            hintText: 'Ingrese el modelo del vehículo...',
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primaryColor,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primaryColor,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            contentPadding:
-                                const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                          textAlign: TextAlign.start,
-                          maxLines: 1,
-                          validator: (val) {
-                            if (val == "" ||
-                                val == null) {
-                              return 'El Modelo del vehículo es requerido.';
-                            }
-                            if (val != vehiculoProvider.modeloSeleccionado) {
-                              return 'Seleccione una opción de modelo válida.';
-                            }
-                            return null;
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 16),
-                    child: Autocomplete(
-                      optionsBuilder: (TextEditingValue textEditingValue) {
-                        if (textEditingValue.text == '') {
-                          return const Iterable<String>.empty();
-                        }
-                        return vehiculoProvider.listaAnios.where((String option) {
-                          return option
-                              .toLowerCase()
-                              .contains(textEditingValue.text.toLowerCase());
-                        });
-                      },
-                      optionsViewBuilder: (context, Function(String) onSelected, options) {
-                        return Material(
-                          elevation: 4,
-                          child: ListView.separated(
-                            padding: EdgeInsets.zero,
-                            itemCount: options.length,
-                            separatorBuilder:(context, index) => const Divider(),
-                            itemBuilder: (context, index) {
-                              final option = options.elementAt(index);
-                              final title = option.toString();
-                              return ListTile(
-                                leading: Icon(
-                                  Icons.date_range_outlined,
-                                  color: FlutterFlowTheme.of(context).primaryColor,
-                                ),
-                                onTap: () {
-                                  onSelected(option.toString());
-                                },
-                                title: SubstringHighlight(
-                                  text: title,
-                                  term: vehiculoProvider.anioController.text,
-                                  textStyleHighlight: const TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                hoverColor: Colors.grey[200],
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      onSelected: (String selection) {
-                        vehiculoProvider.seleccionarAnio(selection);
-                      },
-                      fieldViewBuilder: (context, controller, focusNode, onEditingComplete) {
-                        vehiculoProvider.anioController = controller;
-                        return TextFormField(
-                          controller: controller,
-                          focusNode: focusNode,
-                          autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
-                          textCapitalization:
-                              TextCapitalization.characters,
-                          onChanged: (value) {
-                              vehiculoProvider.enCambioAnio(value);
-                          },
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.date_range_outlined,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                            ),
-                            labelText: 'Año*',
-                            labelStyle: FlutterFlowTheme.of(context)
-                                .title3
-                                .override(
-                                  fontFamily: 'Montserrat',
-                                  color: FlutterFlowTheme.of(context).grayDark,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                            hintText: 'Ingrese el año del vehículo...',
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primaryColor,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primaryColor,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            contentPadding:
-                                const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                          textAlign: TextAlign.start,
-                          maxLines: 1,
-                          validator: (val) {
-                            if (val == "" ||
-                                val == null) {
-                              return 'El Año del vehículo es requerido.';
-                            }
-                            if (val != vehiculoProvider.anioSeleccionado) {
-                              return 'Seleccione una opción de año válida.';
-                            }
-                            return null;
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                    child: TextFormField(
-                      maxLength: 18,
-                      textCapitalization:
-                          TextCapitalization.characters,
-                      autovalidateMode:
-                          AutovalidateMode.onUserInteraction,
-                      onChanged: (value) {
-                        vehiculoProvider.vin = value;
-                      },
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.car_rental_outlined,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                        ),
-                        labelText: 'VIN*',
-                        labelStyle: FlutterFlowTheme.of(context)
-                            .title3
-                            .override(
-                              fontFamily: 'Montserrat',
-                              color: FlutterFlowTheme.of(context).grayDark,
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal,
-                            ),
-                        hintText: 'Ingrese VIN...',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding:
-                            const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                      textAlign: TextAlign.start,
-                      validator: FormBuilderValidators.compose([
-                        (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'El VIN es requerido.';
-                          } 
-                          return null;
-                        }
-                      ]),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 0),
-                    child: TextFormField(
-                      textCapitalization:
-                          TextCapitalization.characters,
-                      autovalidateMode:
-                          AutovalidateMode.onUserInteraction,
-                      onChanged: (value) {
-                        vehiculoProvider.placas = value;
-                      },
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.pin_outlined,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                        ),
-                        labelText: 'Placas*',
-                        labelStyle: FlutterFlowTheme.of(context)
-                            .title3
-                            .override(
-                              fontFamily: 'Montserrat',
-                              color: FlutterFlowTheme.of(context).grayDark,
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal,
-                            ),
-                        hintText: 'Ingrese el número de Placas...',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding:
-                            const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                      textAlign: TextAlign.start,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                            return 'El número de Placa es requerido.';
-                          } 
-                          return null;
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                    child: TextFormField(
-                      textCapitalization:
-                          TextCapitalization.words,
-                      autovalidateMode:
-                          AutovalidateMode.onUserInteraction,
-                      onChanged: (value) {
-                        vehiculoProvider.color = value;
-                      },
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.color_lens_outlined,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                        ),
-                        labelText: 'Color*',
-                        labelStyle: FlutterFlowTheme.of(context)
-                            .title3
-                            .override(
-                              fontFamily: 'Montserrat',
-                              color: FlutterFlowTheme.of(context).grayDark,
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal,
-                            ),
-                        hintText: 'Ingrese el color...',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding:
-                            const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                      textAlign: TextAlign.start,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                            return 'El Color es requerido.';
-                          } 
-                          return null;
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                    child: TextFormField(
-                      textCapitalization:
-                          TextCapitalization.characters,
-                      autovalidateMode:
-                          AutovalidateMode.onUserInteraction,
-                      onChanged: (value) {
-                        vehiculoProvider.motor = value;
-                      },
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.bolt_outlined,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                        ),
-                        labelText: 'Motor*',
-                        labelStyle: FlutterFlowTheme.of(context)
-                            .title3
-                            .override(
-                              fontFamily: 'Montserrat',
-                              color: FlutterFlowTheme.of(context).grayDark,
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal,
-                            ),
-                        hintText: 'Ingrese el motor...',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding:
-                            const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                      textAlign: TextAlign.start,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                            return 'El Motor es requerido.';
-                          } 
-                          return null;
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        if (vehiculoProvider
-                            .validateForm(vehiculoKey)) {
-                          final vehiculo = dataBase
-                              .vehiculoBox
-                              .query(Vehiculo_.vin
-                                  .equals(
-                                      vehiculoProvider
-                                          .vin))
-                              .build()
-                              .findFirst();
-                          if (vehiculo != null) {
-                            snackbarKey.currentState
-                                ?.showSnackBar(
-                                    const SnackBar(
-                              content: Text(
-                                  "El Vehículo ya se encuentra registrado."),
-                            ));
-                          } else {
-                            vehiculoProvider.addTemporal();
-                            Navigator.pop(context);
-                            snackbarKey.currentState
-                                ?.showSnackBar(
-                                    const SnackBar(
-                              content: Text(
-                                  "¡Vehículo asocidado éxitosamente!"),
-                            ));
-                          }
-                        } else {
-                          await showDialog(
-                            context: context,
-                            builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: const Text(
-                                    'Campos requeridos vacíos.'),
-                                content: const Text(
-                                    'Para continuar, debe llenar todos los campos solicitados e incluir una imagen del vehículo.'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(
-                                            alertDialogContext),
-                                    child:
-                                        const Text('Bien'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                          return;
-                        }
-                      },
-                      text: 'Registrar',
-                      options: FFButtonOptions(
-                        width: 200,
-                        height: 50,
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle1.override(
-                                  fontFamily: 'Lexend Deca',
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                        elevation: 3,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  )
-                ],
-              ),
-            ),
-          )
-        ),
+      child: Container(
+      // child: Scaffold(
+      //   key: scaffoldKey,
+      //   backgroundColor: FlutterFlowTheme.of(context).white,
+      //   body: GestureDetector(
+      //     onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      //     child: Scaffold(
+      //       key: scaffoldKey,
+      //       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      //       floatingActionButton: FloatingActionButton(
+      //         onPressed: () async {
+      //         },
+      //         backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
+      //         elevation: 8.0,
+      //         child: Icon(
+      //           Icons.add,
+      //           color: FlutterFlowTheme.of(context).white,
+      //           size: 24.0,
+      //         ),
+      //       ),
+      //       body: Stack(
+      //         alignment: AlignmentDirectional(0.0, -1.0),
+      //         children: [
+      //           Padding(
+      //             padding: EdgeInsetsDirectional.fromSTEB(0.0, 235.0, 0.0, 0.0),
+      //             child: SingleChildScrollView(
+      //               controller: ScrollController(),
+      //               child: Column(
+      //                 mainAxisSize: MainAxisSize.max,
+      //                 children: [
+      //                   Stack(
+      //                     children: [
+      //                       wrapWithModel(
+      //                         model: _model.backgroundModel,
+      //                         updateCallback: () => setState(() {}),
+      //                         child: BackgroundWidget(
+      //                           height:
+      //                               functions.multiply(FFAppState().hourHeight, 23),
+      //                         ),
+      //                       ),
+      //                       if (dateTimeFormat('d/M/y', FFAppState().selectedDay) ==
+      //                           dateTimeFormat('d/M/y', getCurrentTimestamp))
+      //                         Container(
+      //                           width: MediaQuery.of(context).size.width * 1.0,
+      //                           decoration: BoxDecoration(),
+      //                           child: wrapWithModel(
+      //                             model: _model.nowLineModel,
+      //                             updateCallback: () => setState(() {}),
+      //                             child: NowLineWidget(
+      //                               height: functions
+      //                                   .nowHeight(FFAppState().hourHeight),
+      //                             ),
+      //                           ),
+      //                         ),
+      //                       Padding(
+      //                         padding: EdgeInsetsDirectional.fromSTEB(
+      //                             0.0, 15.0, 0.0, 0.0),
+      //                         child: wrapWithModel(
+      //                           model: _model.eventsModel,
+      //                           updateCallback: () => setState(() {}),
+      //                           child: EventsWidget(
+      //                             height: functions.multiply(
+      //                                 FFAppState().hourHeight, 24),
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     ],
+      //                   ),
+      //                 ],
+      //               ),
+      //             ),
+      //           ),
+      //           Container(
+      //             width: MediaQuery.of(context).size.width * 1.0,
+      //             height: 235.0,
+      //             decoration: BoxDecoration(
+      //               color: FlutterFlowTheme.of(context).secondaryBackground,
+      //               boxShadow: [
+      //                 BoxShadow(
+      //                   blurRadius: 4.0,
+      //                   color: Color(0x11000000),
+      //                   offset: Offset(0.0, 6.0),
+      //                 )
+      //               ],
+      //               borderRadius: BorderRadius.only(
+      //                 bottomLeft: Radius.circular(20.0),
+      //                 bottomRight: Radius.circular(20.0),
+      //                 topLeft: Radius.circular(0.0),
+      //                 topRight: Radius.circular(0.0),
+      //               ),
+      //             ),
+      //             child: Padding(
+      //               padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+      //               child: Column(
+      //                 mainAxisSize: MainAxisSize.max,
+      //                 mainAxisAlignment: MainAxisAlignment.end,
+      //                 children: [
+      //                   Row(
+      //                     mainAxisSize: MainAxisSize.max,
+      //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                     children: [
+      //                       Container(
+      //                         width: 35.0,
+      //                         height: 35.0,
+      //                         child: Stack(
+      //                           children: [
+      //                             InkWell(
+      //                               splashColor: Colors.transparent,
+      //                               focusColor: Colors.transparent,
+      //                               hoverColor: Colors.transparent,
+      //                               highlightColor: Colors.transparent,
+      //                               onTap: () async {
+      //                               },
+      //                               child: Container(
+      //                                 width: 100.0,
+      //                                 height: 100.0,
+      //                                 decoration: BoxDecoration(
+      //                                   color: FlutterFlowTheme.of(context).accent1,
+      //                                   shape: BoxShape.circle,
+      //                                 ),
+      //                                 child: Column(
+      //                                   mainAxisSize: MainAxisSize.max,
+      //                                   mainAxisAlignment: MainAxisAlignment.center,
+      //                                   children: [
+      //                                     Padding(
+      //                                       padding: EdgeInsetsDirectional.fromSTEB(
+      //                                           0.0, 0.0, 3.0, 0.0),
+      //                                       child: Icon(
+      //                                         Icons.chevron_left_rounded,
+      //                                         color: FlutterFlowTheme.of(context)
+      //                                             .primaryBackground,
+      //                                         size: 28.0,
+      //                                       ),
+      //                                     ),
+      //                                   ],
+      //                                 ),
+      //                               ),
+      //                             ),
+      //                           ],
+      //                         ),
+      //                       ),
+      //                       FlutterFlowIconButton(
+      //                         borderColor: Colors.transparent,
+      //                         borderRadius: 30.0,
+      //                         borderWidth: 1.0,
+      //                         buttonSize: 40.0,
+      //                         icon: Icon(
+      //                           Icons.calendar_today,
+      //                           color: FlutterFlowTheme.of(context).secondaryText,
+      //                           size: 20.0,
+      //                         ),
+      //                         onPressed: () async {
+      //                         },
+      //                       ),
+      //                     ],
+      //                   ),
+      //                   Padding(
+      //                     padding:
+      //                         EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+      //                     child: Row(
+      //                       mainAxisSize: MainAxisSize.max,
+      //                       mainAxisAlignment: MainAxisAlignment.center,
+      //                       children: [
+      //                         SelectionArea(
+      //                             child: Text(
+      //                           getJsonField(
+      //                             functions.dateInfo(FFAppState().selectedDay!),
+      //                             r'''$.month''',
+      //                           ).toString(),
+      //                           style: FlutterFlowTheme.of(context)
+      //                               .bodyMedium
+      //                               .override(
+      //                                 fontFamily: 'Inter',
+      //                                 color: FlutterFlowTheme.of(context)
+      //                                     .secondaryText,
+      //                                 fontSize: 32.0,
+      //                               ),
+      //                         )),
+      //                       ],
+      //                     ),
+      //                   ),
+      //                   Padding(
+      //                     padding:
+      //                         EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 30.0),
+      //                     child: wrapWithModel(
+      //                       model: _model.weekDaysModel,
+      //                       updateCallback: () => setState(() {}),
+      //                       child: WeekDaysWidget(
+      //                         callback: () async {
+      //                           FFAppState().update(() {
+      //                             FFAppState().selectedDay =
+      //                                 FFAppState().selectedDay;
+      //                           });
+      //                         },
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 ],
+      //               ),
+      //             ),
+      //           ),
+      //           Align(
+      //             alignment: AlignmentDirectional(-0.85, 0.95),
+      //             child: ClipRRect(
+      //               child: BackdropFilter(
+      //                 filter: ImageFilter.blur(
+      //                   sigmaX: 4.0,
+      //                   sigmaY: 4.0,
+      //                 ),
+      //                 child: Container(
+      //                   width: 100.0,
+      //                   height: 60.0,
+      //                   decoration: BoxDecoration(
+      //                     color: FlutterFlowTheme.of(context).overlayWhite,
+      //                     borderRadius: BorderRadius.circular(30.0),
+      //                   ),
+      //                   child: Row(
+      //                     mainAxisSize: MainAxisSize.max,
+      //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                     children: [
+      //                       FlutterFlowIconButton(
+      //                         borderColor: Colors.transparent,
+      //                         borderRadius: 30.0,
+      //                         borderWidth: 1.0,
+      //                         buttonSize: 50.0,
+      //                         icon: FaIcon(
+      //                           FontAwesomeIcons.minus,
+      //                           color: FlutterFlowTheme.of(context).primaryText,
+      //                           size: 10.0,
+      //                         ),
+      //                         onPressed: () async {
+      //                         },
+      //                       ),
+      //                       FlutterFlowIconButton(
+      //                         borderColor: Colors.transparent,
+      //                         borderRadius: 30.0,
+      //                         borderWidth: 1.0,
+      //                         buttonSize: 50.0,
+      //                         icon: Icon(
+      //                           Icons.add,
+      //                           color: FlutterFlowTheme.of(context).primaryText,
+      //                           size: 15.0,
+      //                         ),
+      //                         onPressed: () async {
+      //                         },
+      //                       ),
+      //                     ],
+      //                   ),
+      //                 ),
+      //               ),
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+        // ),
       ),
     );
   }

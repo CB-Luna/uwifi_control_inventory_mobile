@@ -9,7 +9,7 @@ import 'package:taller_alex_app_asesor/providers/database_providers/usuario_cont
 import 'package:taller_alex_app_asesor/providers/providers.dart';
 import 'package:taller_alex_app_asesor/providers/roles_supabase_provider.dart';
 import 'package:taller_alex_app_asesor/providers/sync_ordenes_trabajo_externas_supabase_provider.dart';
-import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/toggle_icon.dart';
 import 'package:taller_alex_app_asesor/services/auth_service.dart';
 
@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).tertiaryColor,
             image: DecorationImage(
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.fill,
               image: Image.asset(
                 'assets/images/bgFleet@2x.png',
               ).image,
@@ -64,9 +64,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            'assets/images/tallerAlexLogo.png',
-                            width: 120,
-                            height: 120,
+                            'assets/images/rta_logo.png',
+                            width: 180,
+                            height: 180,
                             fit: BoxFit.fitWidth,
                           ),
                         ],
@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          'Taller Mecánico',
+                          'Control System Vehicle',
                           style: FlutterFlowTheme.of(context).title1.override(
                                 fontFamily: 'Outfit',
                                 color: FlutterFlowTheme.of(context).alternate,
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 24),
                             child: Text(
-                              'Atendemos su carro como si fuera nuestro',
+                              'Car Check Up',
                               style: FlutterFlowTheme.of(context).title3.override(
                                     fontFamily: 'Outfit',
                                     color: FlutterFlowTheme.of(context).alternate,
@@ -114,9 +114,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               controller: userState.emailController,
                               obscureText: false,
                               decoration: InputDecoration(
-                                labelText: 'Correo electrónico',
+                                labelText: 'Email',
                                 labelStyle: FlutterFlowTheme.of(context).bodyText2,
-                                hintText: 'Ingresa tu correo electrónico...',
+                                hintText: 'Input your email...',
                                 hintStyle: FlutterFlowTheme.of(context).bodyText2,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: const BorderSide(
@@ -163,9 +163,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                               validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'El correo es requerido';
+                                return 'Email is required';
                               } else if (!EmailValidator.validate(value)) {
-                                return 'Por favor ingresa un correo válido';
+                                return 'Please input a valid email';
                               }
                               return null;
                             },
@@ -187,9 +187,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               obscureText: !contrasenaVisibility,
                               obscuringCharacter: '*',
                               decoration: InputDecoration(
-                                labelText: 'Contraseña',
+                                labelText: 'Password',
                                 labelStyle: FlutterFlowTheme.of(context).bodyText2,
-                                hintText: 'Ingresa tu contraseña...',
+                                hintText: 'Input your password...',
                                 hintStyle: FlutterFlowTheme.of(context).bodyText2,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: const BorderSide(
@@ -259,7 +259,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                       child: Container(
-                        width: 146,
+                        width: 160,
                         height: 40,
                         decoration: const BoxDecoration(
                           color: Color(0x00EEEEEE),
@@ -273,7 +273,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Recordarme',
+                                'Remember Me',
                                 style:
                                     FlutterFlowTheme.of(context).bodyText1.override(
                                           fontFamily: 'Poppins',
@@ -323,7 +323,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '¿Aún no tienes cuenta?',
+                                  'Have you an account, yet?',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
@@ -334,7 +334,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                 ),
                                 Text(
-                                  'Crear Cuenta',
+                                  'Create Account',
                                   style: FlutterFlowTheme.of(context)
                                       .subtitle2
                                       .override(
@@ -387,7 +387,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const OrdenesTrabajoScreen(),
+                                          const ControlDailyVehicleScreen(),
                                     ),
                                   );
                                 } else {
@@ -395,7 +395,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   snackbarKey.currentState
                                       ?.showSnackBar(const SnackBar(
                                     content: Text(
-                                        "Credenciales no válidas o el usuario no ha sido registrado al sistema."),
+                                        "Wrong credentials! Invalid email or password."),
                                   ));
                                 }
                               } else {
@@ -492,7 +492,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           snackbarKey.currentState
                                             ?.showSnackBar(const SnackBar(
                                           content: Text(
-                                              "Falló al descargar Órdenes de Trabajo del Servidor para el Usuario Actual."),
+                                              "'Attempting Inspection Reports Data Recovery for Current User from Server' Failed."),
                                         ));
                                       }
                                       if (!mounted) return;
@@ -500,33 +500,33 @@ class _LoginScreenState extends State<LoginScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const OrdenesTrabajoScreen(),
+                                              const ControlDailyVehicleScreen(),
                                         ),
                                       );
                                     } else {
                                       snackbarKey.currentState
                                           ?.showSnackBar(const SnackBar(
                                         content: Text(
-                                            "Falló al descargar roles desde el Servidor."),
+                                            "'Attempting Rol Data Recovery from Server' Failed ."),
                                       ));
                                     }
                                   } else {
                                     snackbarKey.currentState
                                       ?.showSnackBar(const SnackBar(
                                     content: Text(
-                                        "Falló al recuperar datos del Usuario desde el Servidor."),
+                                        "'Attempting User Data Recovery from Server' Failed."),
                                     ));
                                   }
                                 } else {
                                   snackbarKey.currentState
                                       ?.showSnackBar(const SnackBar(
                                     content: Text(
-                                        "Credenciales inválidas, revise que la contraseña y el correo electrónico sean correctos."),
+                                        "Invalid Credentials! Invalid email or password."),
                                     ));
                                 }
                               }
                             },
-                            text: 'Ingresar',
+                            text: 'Sign In',
                             options: FFButtonOptions(
                               width: 130,
                               height: 50,
@@ -574,7 +574,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         //   ),
                                         // );
                                       },
-                                      text: '¿Olvidaste tu contraseña?',
+                                      text: 'Forget your password?',
                                       options: FFButtonOptions(
                                         width: 170,
                                         height: 30,

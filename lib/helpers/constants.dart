@@ -5,7 +5,8 @@ import 'package:pocketbase/pocketbase.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_animations.dart';
+
+import '../screens/widgets/flutter_flow_animations.dart';
 
 //***********< SERVIDORES DE POCKETBASE LOCALES >**************/
 
@@ -273,3 +274,182 @@ final animationsMap = {
     ),
   ),
 };
+
+// final animationsMap2 = {
+//     'containerOnActionTriggerAnimation1': AnimationInfo(
+//       trigger: AnimationTrigger.onActionTrigger,
+//       applyInitialState: true,
+//       effects: [
+//         FadeEffect(
+//           curve: Curves.easeInOut,
+//           delay: 0.ms,
+//           duration: 500.ms,
+//           begin: 0.0,
+//           end: 1.0,
+//         ),
+//         MoveEffect(
+//           curve: Curves.easeInOut,
+//           delay: 0.ms,
+//           duration: 500.ms,
+//           begin: const Offset(-100.0, 0.0),
+//           end: const Offset(0.0, 0.0),
+//         ),
+//       ],
+//     ),
+//     'containerOnActionTriggerAnimation2': AnimationInfo(
+//       trigger: AnimationTrigger.onActionTrigger,
+//       applyInitialState: true,
+//       effects: [
+//         MoveEffect(
+//           curve: Curves.easeInOut,
+//           delay: 0.ms,
+//           duration: 500.ms,
+//           begin: const Offset(0.0, 0.0),
+//           end: const Offset(335.0, 0.0),
+//         ),
+//         TiltEffect(
+//           curve: Curves.easeInOut,
+//           delay: 0.ms,
+//           duration: 500.ms,
+//           begin: const Offset(0, 0),
+//           end: const Offset(0, 0.524),
+//         ),
+//         ScaleEffect(
+//           curve: Curves.easeInOut,
+//           delay: 0.ms,
+//           duration: 500.ms,
+//           begin: 1.0,
+//           end: 0.8,
+//         ),
+//       ],
+//     ),
+//     'rowOnPageLoadAnimation': AnimationInfo(
+//       trigger: AnimationTrigger.onPageLoad,
+//       effects: [
+//         FadeEffect(
+//           curve: Curves.easeInOut,
+//           delay: 0.ms,
+//           duration: 800.ms,
+//           begin: 0.0,
+//           end: 1.0,
+//         ),
+//       ],
+//     ),
+//     'containerOnPageLoadAnimation1': AnimationInfo(
+//       trigger: AnimationTrigger.onPageLoad,
+//       effects: [
+//         MoveEffect(
+//           curve: Curves.easeIn,
+//           delay: 0.ms,
+//           duration: 600.ms,
+//           begin: const Offset(-400.0, 0.0),
+//           end: const Offset(0.0, 0.0),
+//         ),
+//         FadeEffect(
+//           curve: Curves.easeInOut,
+//           delay: 0.ms,
+//           duration: 1000.ms,
+//           begin: 0.0,
+//           end: 1.0,
+//         ),
+//       ],
+//     ),
+//     'containerOnPageLoadAnimation2': AnimationInfo(
+//       trigger: AnimationTrigger.onPageLoad,
+//       effects: [
+//         MoveEffect(
+//           curve: Curves.easeIn,
+//           delay: 0.ms,
+//           duration: 800.ms,
+//           begin: const Offset(-400.0, 0.0),
+//           end: const Offset(0.0, 0.0),
+//         ),
+//         FadeEffect(
+//           curve: Curves.easeInOut,
+//           delay: 0.ms,
+//           duration: 1000.ms,
+//           begin: 0.0,
+//           end: 1.0,
+//         ),
+//       ],
+//     ),
+//     'containerOnPageLoadAnimation3': AnimationInfo(
+//       trigger: AnimationTrigger.onPageLoad,
+//       effects: [
+//         MoveEffect(
+//           curve: Curves.easeIn,
+//           delay: 0.ms,
+//           duration: 800.ms,
+//           begin: const Offset(400.0, 0.0),
+//           end: const Offset(0.0, 0.0),
+//         ),
+//         FadeEffect(
+//           curve: Curves.easeInOut,
+//           delay: 0.ms,
+//           duration: 1000.ms,
+//           begin: 0.0,
+//           end: 1.0,
+//         ),
+//       ],
+//     ),
+//     'containerOnPageLoadAnimation4': AnimationInfo(
+//       trigger: AnimationTrigger.onPageLoad,
+//       effects: [
+//         MoveEffect(
+//           curve: Curves.easeIn,
+//           delay: 0.ms,
+//           duration: 600.ms,
+//           begin: const Offset(400.0, 0.0),
+//           end: const Offset(0.0, 0.0),
+//         ),
+//         FadeEffect(
+//           curve: Curves.easeInOut,
+//           delay: 0.ms,
+//           duration: 1000.ms,
+//           begin: 0.0,
+//           end: 1.0,
+//         ),
+//       ],
+//     ),
+//     'iconOnActionTriggerAnimation1': AnimationInfo(
+//       trigger: AnimationTrigger.onActionTrigger,
+//       applyInitialState: true,
+//       effects: [
+//         FadeEffect(
+//           curve: Curves.easeInOut,
+//           delay: 0.ms,
+//           duration: 500.ms,
+//           begin: 0.0,
+//           end: 1.0,
+//         ),
+//         MoveEffect(
+//           curve: Curves.easeInOut,
+//           delay: 0.ms,
+//           duration: 500.ms,
+//           begin: const Offset(14.0, 0.0),
+//           end: const Offset(0.0, 0.0),
+//         ),
+//       ],
+//     ),
+//     'iconOnActionTriggerAnimation2': AnimationInfo(
+//       trigger: AnimationTrigger.onActionTrigger,
+//       applyInitialState: true,
+//       effects: [
+//         FadeEffect(
+//           curve: Curves.easeInOut,
+//           delay: 0.ms,
+//           duration: 500.ms,
+//           begin: 0.0,
+//           end: 1.0,
+//         ),
+//         MoveEffect(
+//           curve: Curves.easeInOut,
+//           delay: 0.ms,
+//           duration: 500.ms,
+//           begin: const Offset(0.0, 0.0),
+//           end: const Offset(-14.0, 0.0),
+//         ),
+//       ],
+//     ),
+//   };
+  

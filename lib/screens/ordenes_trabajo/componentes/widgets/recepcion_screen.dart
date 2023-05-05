@@ -6,7 +6,7 @@ import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_widgets.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/observacion_screen.dart';
-import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/ordenes_trabajo_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
@@ -108,7 +108,7 @@ class _RecepcionScreenState extends State<RecepcionScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              const OrdenesTrabajoScreen(),
+                              const ControlDailyVehicleScreen(),
                         ),
                       );
                     },
