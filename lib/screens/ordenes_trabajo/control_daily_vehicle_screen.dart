@@ -104,7 +104,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                             ),
                             Expanded(
                               child: Text(
-                                'Control Vehicle',
+                                'Control Daily Vehicle',
                                 textAlign: TextAlign.center,
                                 style:
                                     FlutterFlowTheme.of(context).bodyText1.override(

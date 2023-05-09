@@ -16,6 +16,9 @@ class ObservacionController extends ChangeNotifier {
   }
 
   //Datos de las Observaciones
+  String? imageMileage;
+  String? pathMileage;
+
   String descripcion = "";
 
   DateTime? fechaObservacion; //Es null para inicializar sin valor el campo en el formulario 

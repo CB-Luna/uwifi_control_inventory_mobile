@@ -6,11 +6,13 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
 import 'package:taller_alex_app_asesor/providers/deeplink_bloc.dart';
 import 'package:taller_alex_app_asesor/providers/providers.dart';
 import 'package:taller_alex_app_asesor/database/object_box_database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:taller_alex_app_asesor/screens/clientes/app_state.dart';
 import 'providers/database_providers/cliente_controller.dart';
 import 'providers/database_providers/orden_servicio_controller.dart';
 import 'providers/database_providers/electrico_controller.dart';
@@ -64,6 +66,10 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider<ControlFormProvider>(
+          create: (context) => ControlFormProvider(),
+          lazy: false,
+        ),
         ChangeNotifierProvider<ClienteController>(
           create: (context) => ClienteController(),
           lazy: false,
@@ -133,10 +139,10 @@ void main() async {
           create: (_) => NetworkState(),
           lazy: false,
         ),
-        // ChangeNotifierProvider<FFAppState>(
-        //   create: (context) => FFAppState(),
-        //   lazy: false,
-        // ),
+        ChangeNotifierProvider<FFAppState>(
+          create: (context) => FFAppState(),
+          lazy: false,
+        ),
       ],
       child: const MyApp(),
     ),

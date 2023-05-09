@@ -7,6 +7,7 @@ import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/observacion_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
+import 'package:taller_alex_app_asesor/screens/clientes/agregar_vehiculo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/componentes/seccion_dos_formulario.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/componentes/seccion_tres_formulario.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/componentes/seccion_uno_formulario.dart';
@@ -14,10 +15,8 @@ import 'package:taller_alex_app_asesor/screens/observaciones/observacion_creada_
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/detalle_orden_trabajo_screen.dart';
 
 class ObservacionScreen extends StatefulWidget {
-  final OrdenTrabajo ordenTrabajo;
   const ObservacionScreen({
     super.key, 
-    required this.ordenTrabajo
   });
 
   @override
@@ -78,7 +77,7 @@ class _ObservacionScreen extends State<ObservacionScreen> {
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
                       child: Text(
-                        'Paso ${activeStep + 1} de 3',
+                        'Step ${activeStep + 1} of 3',
                         style: FlutterFlowTheme.of(context)
                             .title1
                             .override(
@@ -95,7 +94,7 @@ class _ObservacionScreen extends State<ObservacionScreen> {
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
                       child: Text(
-                        'Observaciones',
+                        'Control Daily Check Up',
                         style: FlutterFlowTheme.of(context)
                             .title1
                             .override(
@@ -130,33 +129,29 @@ class _ObservacionScreen extends State<ObservacionScreen> {
                           builder: (alertDialogContext) {
                             return AlertDialog(
                               title: const Text(
-                                  '¿Seguro que quieres abandonar esta pantalla?'),
+                                  'Are you sure you want to come back previous screen?'),
                               content: const Text(
-                                  'La información ingresada se perderá.'),
+                                  'The actual form data will be removed.'),
                               actions: [
                                 TextButton(
                                   onPressed: () async {
-                                    observacionProvider.limpiarInformacion();
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            DetalleOrdenTrabajoScreen(
-                                              ordenTrabajo: widget.ordenTrabajo,
-                                              pantalla: "pantallaRecepcion",
-                                            ),
+                                          AgregarVehiculoScreen(),
                                       ),
                                     );
                                   },
                                   child:
-                                      const Text('Abandonar'),
+                                      const Text('Continue'),
                                 ),
                                 TextButton(
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
                                   child:
-                                      const Text('Cancelar'),
+                                      const Text('Cancel'),
                                 ),
                               ],
                             );
@@ -174,7 +169,7 @@ class _ObservacionScreen extends State<ObservacionScreen> {
                       curveType: CurveType.concave,
                       child: Center(
                         child: Text(
-                          'Regresar',
+                          'Return',
                           style: FlutterFlowTheme.of(context)
                               .title1
                               .override(
@@ -193,93 +188,88 @@ class _ObservacionScreen extends State<ObservacionScreen> {
                     onTap: () async {
                       switch (activeStep) {
                         case 0:
-                          if (observacionProvider.validarSeccionUnoFormulario()) {
-                              setState(() {
-                                activeStep++;
-                              });
-                            } else {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Campos vacíos'),
-                                    content: const Text(
-                                        'Para continuar, debe llenar todos los campos solicitados.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: const Text('Bien'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                              return;
-                            }
+                        setState(() {
+                          activeStep++;
+                        });
+                          // if (observacionProvider.validarSeccionUnoFormulario()) {
+                          //     setState(() {
+                          //       activeStep++;
+                          //     });
+                          //   } else {
+                          //     await showDialog(
+                          //       context: context,
+                          //       builder: (alertDialogContext) {
+                          //         return AlertDialog(
+                          //           title: const Text('Campos vacíos'),
+                          //           content: const Text(
+                          //               'Para continuar, debe llenar todos los campos solicitados.'),
+                          //           actions: [
+                          //             TextButton(
+                          //               onPressed: () =>
+                          //                   Navigator.pop(alertDialogContext),
+                          //               child: const Text('Bien'),
+                          //             ),
+                          //           ],
+                          //         );
+                          //       },
+                          //     );
+                          //     return;
+                          //   }
                           break;
                         case 1:
-                          if (observacionProvider.validarSeccionDosFormulario()) {
-                              setState(() {
-                                activeStep++;
-                              });
-                            } else {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Campos vacíos'),
-                                    content: const Text(
-                                        'Para continuar, debe llenar todos los campos solicitados.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: const Text('Bien'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                              return;
-                            }
+                          setState(() {
+                            activeStep ++;
+                          });
+                          // if (observacionProvider.validarSeccionDosFormulario()) {
+                          //     setState(() {
+                          //       activeStep++;
+                          //     });
+                          //   } else {
+                          //     await showDialog(
+                          //       context: context,
+                          //       builder: (alertDialogContext) {
+                          //         return AlertDialog(
+                          //           title: const Text('Campos vacíos'),
+                          //           content: const Text(
+                          //               'Para continuar, debe llenar todos los campos solicitados.'),
+                          //           actions: [
+                          //             TextButton(
+                          //               onPressed: () =>
+                          //                   Navigator.pop(alertDialogContext),
+                          //               child: const Text('Bien'),
+                          //             ),
+                          //           ],
+                          //         );
+                          //       },
+                          //     );
+                          //     return;
+                          //   }
                           break;
                         case 2:
-                          if (observacionProvider.validarSeccionTresFormulario()) {
-                            if (observacionProvider.agregarObservacion(widget.ordenTrabajo, currentUser)) {
-                              observacionProvider.limpiarInformacion();
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ObservacionCreadaScreen(),
-                                ),
-                              );
-                            } else {
-                              snackbarKey.currentState?.showSnackBar(const SnackBar(
-                                content: Text("No se pudo agregar información de la observación, intente más tarde."),
-                              ));
-                            }
-                            } else {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Campos vacíos'),
-                                    content: const Text(
-                                        'Para continuar, debe llenar todos los campos solicitados.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: const Text('Bien'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                              return;
-                            }
+                          // if (observacionProvider.validarSeccionTresFormulario()) {
+                          //     snackbarKey.currentState?.showSnackBar(const SnackBar(
+                          //       content: Text("No se pudo agregar información de la observación, intente más tarde."),
+                          //     ));
+                          //   } else {
+                          //     await showDialog(
+                          //       context: context,
+                          //       builder: (alertDialogContext) {
+                          //         return AlertDialog(
+                          //           title: const Text('Campos vacíos'),
+                          //           content: const Text(
+                          //               'Para continuar, debe llenar todos los campos solicitados.'),
+                          //           actions: [
+                          //             TextButton(
+                          //               onPressed: () =>
+                          //                   Navigator.pop(alertDialogContext),
+                          //               child: const Text('Bien'),
+                          //             ),
+                          //           ],
+                          //         );
+                          //       },
+                          //     );
+                          //     return;
+                          //   }
                           break;
                         default:
                           break;
@@ -295,9 +285,9 @@ class _ObservacionScreen extends State<ObservacionScreen> {
                       child: Center(
                         child: Text(
                           activeStep == 2 ? 
-                          'Finalizar' 
+                          'Finish' 
                           :
-                          'Continuar',
+                          'Continue',
                           style: FlutterFlowTheme.of(context)
                               .title1
                               .override(

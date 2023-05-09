@@ -1,13 +1,15 @@
-import 'dart:ui';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/modelsFormularios/opciones_observaciones.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/observacion_controller.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/toggle_icon.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 
 class SeccionUnoFormulario extends StatefulWidget {
@@ -18,6 +20,7 @@ class SeccionUnoFormulario extends StatefulWidget {
 }
 
 class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
+  XFile? image;
   @override
   Widget build(BuildContext context) {
     final observacionProvider = Provider.of<ObservacionController>(context);
@@ -54,7 +57,7 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: Text(
-                        'Fecha de Observación',
+                        'Registration Date',
                         style: FlutterFlowTheme.of(context)
                             .title1
                             .override(
@@ -76,29 +79,17 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                     child: TextFormField(
-                      controller: observacionProvider.fechaObservacionController,
+                      readOnly: true,
+                      initialValue: "2020",
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
-                      onTap: () async {
-                        await DatePicker.showDatePicker(
-                          context,
-                          locale: LocaleType.es,
-                          showTitleActions: true,
-                          onConfirm: (date) {
-                            setState(() {
-                              observacionProvider.actualizarFechaObservacion(date);
-                            });
-                          },
-                          currentTime: getCurrentTimestamp,
-                        );
-                      },
                       obscureText: false,
                       decoration: InputDecoration(
-                        hintText: 'Ingresa la Fecha de la Observación...',
+                        hintText: 'Date...',
                         enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
-                              FlutterFlowTheme.of(context).lineColor,
+                              FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -106,21 +97,21 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
-                              FlutterFlowTheme.of(context).secondaryColor,
+                              FlutterFlowTheme.of(context).primaryColor,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).secondaryColor,
+                          color: FlutterFlowTheme.of(context).primaryColor,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).secondaryColor,
+                          color: FlutterFlowTheme.of(context).primaryColor,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -137,133 +128,7 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                       style: FlutterFlowTheme.of(context).bodyText1,
                       textAlign: TextAlign.start,
                       keyboardType: TextInputType.none,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'La Fecha de la Observación es requerida.';
-                        }
-                        return null;
-                      }),
-                  ),
-                  theme: ExpandableThemeData(
-                    tapHeaderToExpand: true,
-                    tapBodyToExpand: false,
-                    tapBodyToCollapse: false,
-                    headerAlignment:
-                        ExpandablePanelHeaderAlignment.center,
-                    hasIcon: true,
-                    iconColor:
-                        FlutterFlowTheme.of(context).secondaryColor,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(
-                16, 16, 16, 0),
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              decoration: const BoxDecoration(
-                color: Colors.transparent,
-              ),
-              child: ExpandableNotifier(
-                initialExpanded: false,
-                child: ExpandablePanel(
-                  header: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                    Padding(
-                      padding: const EdgeInsetsDirectional
-                          .fromSTEB(0, 0, 16, 0),
-                      child: Icon(
-                          observacionProvider.respuestaP1 == "" ? 
-                          Icons.check_box_outline_blank_rounded
-                          :
-                          Icons.check_box_rounded,
-                          color: FlutterFlowTheme.of(context).secondaryColor,
-                          size: 25,
-                        ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      child: Text(
-                        'Identificar tipo de falla reportada por el cliente.',
-                        style: FlutterFlowTheme.of(context)
-                            .title1
-                            .override(
-                              fontFamily: FlutterFlowTheme.of(context)
-                                  .title1Family,
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryText,
-                              fontSize: 18,
-                            ),
                       ),
-                    ),
-                    ],
-                  ),
-                  collapsed: Divider(
-                    thickness: 1.5,
-                    color: FlutterFlowTheme.of(context).lineColor,
-                  ),
-                  expanded: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
-                    child: TextFormField(
-                      textCapitalization: TextCapitalization.sentences,
-                      autovalidateMode:
-                          AutovalidateMode.onUserInteraction,
-                      onChanged: (value) {
-                        setState(() {
-                          observacionProvider.respuestaP1 = value;
-                        });
-                      },
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        hintText: 'Ingrese la falla tal y como la define el cliente...',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).lineColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                FlutterFlowTheme.of(context).secondaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).secondaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).secondaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        contentPadding:
-                            const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                      textAlign: TextAlign.start,
-                      maxLines: 4,
-                      validator: (val) {
-                        if (observacionProvider.respuestaP1 == "" ||
-                            observacionProvider.respuestaP1.isEmpty) {
-                          return 'La falla definida por el cliente es requerida.';
-                        }
-                        return null;
-                      }
-                    ),
                   ),
                   theme: ExpandableThemeData(
                     tapHeaderToExpand: true,
@@ -308,7 +173,7 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: Text(
-                        '¿La falla ya había sido reportada con anterioridad?',
+                        'Mileage',
                         style: FlutterFlowTheme.of(context)
                             .title1
                             .override(
@@ -326,122 +191,79 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                     thickness: 1.5,
                     color: FlutterFlowTheme.of(context).lineColor,
                   ),
-                  expanded: Builder(
-                    builder: (context) {
-                      return ListView.builder(
-                        controller: ScrollController(),
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                          0, 16, 0, 0),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: observacionProvider.opcionesP2.length,
-                        itemBuilder: (context, index) {
-                        OpcionesObservaciones item = observacionProvider.opcionesP2[index];
-                        return Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional
-                                  .fromSTEB(0, 0, 16, 0),
-                                child: ToggleIcon(
-                                  onPressed: () {
-                                    setState(() {
-                                      // Cuando se selecciona por segunda vez el mismo item entonces se mandaria una cadena vacia.
-                                      if (item.seleccion) {
-                                        observacionProvider.valorSeleccionP2 = "";
-                                        // Cambia el estado.
-                                        item.seleccion =
-                                            !item.seleccion;
-                                      } else {
-                                        // Cuando se selecciona por primera vez el item
-                                        for (var element in 
-                                          observacionProvider.opcionesP2) {
-                                          element.seleccion = false;
-                                        }
-                                        observacionProvider.valorSeleccionP2 = item.opcion;
-                                        item.seleccion =
-                                            !item.seleccion;
-                                      }
-                                    });
-                                  },
-                                  value: item.seleccion,
-                                  onIcon: Icon(
-                                    Icons.radio_button_checked_outlined,
-                                    color: FlutterFlowTheme.of(context).primaryColor,
-                                    size: 30,
-                                  ),
-                                  offIcon: Icon(
-                                    Icons.radio_button_off_outlined,
-                                    color: FlutterFlowTheme.of(context).primaryColor,
-                                    size: 30,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.7,
-                                decoration: BoxDecoration(
-                                  color: item.seleccion ?  FlutterFlowTheme.of(context).primaryColor : FlutterFlowTheme.of(context).white,
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      blurRadius: 5,
-                                      color: Color(0x2B202529),
-                                      offset: Offset(0, 3),
-                                      spreadRadius: 5,
-                                    )
-                                  ],
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      16, 16, 16, 16),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
-                                        child: BackdropFilter(
-                                          filter: ImageFilter.blur(
-                                            sigmaX: 10,
-                                            sigmaY: 5,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(10, 5, 10, 5),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Text(
-                                                  maybeHandleOverflow(
-                                                      item.opcion,
-                                                      40,
-                                                      "..."),
-                                                  style: FlutterFlowTheme.of(context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Outfit',
-                                                        color: item.seleccion ?  FlutterFlowTheme.of(context).white : FlutterFlowTheme.of(context).tertiaryColor,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
+                  expanded: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                      child: TextFormField(
+                        autovalidateMode:
+                            AutovalidateMode.onUserInteraction,
+                        onChanged: (value) {
                         },
-                      );
-                    },
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.speed_outlined,
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                          ),
+                          labelText: 'Mileage*',
+                          labelStyle: FlutterFlowTheme.of(context)
+                              .title3
+                              .override(
+                                fontFamily: 'Montserrat',
+                                color: FlutterFlowTheme.of(context).grayDark,
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal,
+                              ),
+                          hintText: 'Input the mileage...',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color:
+                                  FlutterFlowTheme.of(context).primaryColor.withOpacity(0.5),
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color:
+                                  FlutterFlowTheme.of(context).primaryColor,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          contentPadding:
+                              const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                          suffixText: 'Mi',
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                        textAlign: TextAlign.start,
+                        keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                              return 'The Mileage is required.';
+                            } 
+                            return null;
+                        },
+                      ),
+                    ),
                   ),
                   theme: ExpandableThemeData(
                     tapHeaderToExpand: true,
@@ -456,6 +278,214 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                 ),
               ),
             ),
+          ),
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(
+                16, 16, 16, 0),
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
+              ),
+              child: ExpandableNotifier(
+                initialExpanded: false,
+                child: ExpandablePanel(
+                  header: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional
+                          .fromSTEB(0, 0, 16, 0),
+                      child: Icon(
+                          observacionProvider.respuestaP1 == "" ? 
+                          Icons.check_box_outline_blank_rounded
+                          :
+                          Icons.check_box_rounded,
+                          color: FlutterFlowTheme.of(context).secondaryColor,
+                          size: 25,
+                        ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: Text(
+                        'Comments about Mileage',
+                        style: FlutterFlowTheme.of(context)
+                            .title1
+                            .override(
+                              fontFamily: FlutterFlowTheme.of(context)
+                                  .title1Family,
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryText,
+                              fontSize: 18,
+                            ),
+                      ),
+                    ),
+                    ],
+                  ),
+                  collapsed: Divider(
+                    thickness: 1.5,
+                    color: FlutterFlowTheme.of(context).lineColor,
+                  ),
+                  expanded: Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                    child: TextFormField(
+                      textCapitalization: TextCapitalization.sentences,
+                      autovalidateMode:
+                          AutovalidateMode.onUserInteraction,
+                      onChanged: (value) {
+                        setState(() {
+                          observacionProvider.respuestaP1 = value;
+                        });
+                      },
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        hintText: 'Input your personal comments...',
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color:
+                                FlutterFlowTheme.of(context).grayDark,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color:
+                                FlutterFlowTheme.of(context).dark400,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).dark400,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).dark400,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        contentPadding:
+                            const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                      ),
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                      textAlign: TextAlign.start,
+                      maxLines: 4,
+                      validator: (val) {
+                        return null;
+                      }
+                    ),
+                  ),
+                  theme: ExpandableThemeData(
+                    tapHeaderToExpand: true,
+                    tapBodyToExpand: false,
+                    tapBodyToCollapse: false,
+                    headerAlignment:
+                        ExpandablePanelHeaderAlignment.center,
+                    hasIcon: true,
+                    iconColor:
+                        FlutterFlowTheme.of(context).secondaryColor,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FormField(
+                builder: (state) {
+                  return Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsetsDirectional
+                            .fromSTEB(0, 10, 0, 16),
+                        child: InkWell(
+                          onTap: () async {
+                            String? option =
+                                await showModalBottomSheet(
+                              context: context,
+                              builder: (_) =>
+                                  const CustomBottomSheet(),
+                            );
+
+                            if (option == null) return;
+
+                            final picker = ImagePicker();
+
+                            late final XFile? pickedFile;
+
+                            if (option == 'camera') {
+                              pickedFile =
+                                  await picker.pickImage(
+                                source: ImageSource.camera,
+                                imageQuality: 50,
+                              );
+                            } else {
+                              pickedFile =
+                                  await picker.pickImage(
+                                source: ImageSource.gallery,
+                                imageQuality: 50,
+                              );
+                            }
+
+                            if (pickedFile == null) {
+                              return;
+                            }
+
+                            setState(() {
+                              image = pickedFile;
+                              File file = File(image!.path);
+                              List<int> fileInByte =
+                                  file.readAsBytesSync();
+                              String base64 =
+                                  base64Encode(fileInByte);
+                              observacionProvider.imageMileage =
+                                  base64;
+                              observacionProvider.pathMileage = 
+                                file.path;
+                            });
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context)
+                                    .size
+                                    .width *
+                                0.9,
+                            height: 180,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: Image.asset(
+                                  'assets/images/animation_500_l3ur8tqa.gif',
+                                ).image,
+                              ),
+                              borderRadius:
+                                  BorderRadius.circular(8),
+                              border: Border.all(
+                                color: FlutterFlowTheme.of(context).grayDark,
+                                width: 1.5,
+                              ),
+                            ),
+                            child: getImage(image?.path),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
           ),
         ],
       ),

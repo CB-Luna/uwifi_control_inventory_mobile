@@ -340,13 +340,6 @@ class _RecepcionScreenState extends State<RecepcionScreen> {
                       ),
                       FFButtonWidget(
                         onPressed: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ObservacionScreen(ordenTrabajo: widget.ordenTrabajo,),
-                            ),
-                          );
                         },
                         text: 'Agregar',
                         icon: const Icon(
