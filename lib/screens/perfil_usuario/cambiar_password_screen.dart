@@ -596,10 +596,6 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                     ));
                                     return;
                                   }
-                                  if (await userStateProvider.updatePassword(
-                                      widget.usuario,
-                                      actualPasswordEncrypted,
-                                      newPasswordEncrypted)) {
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -607,9 +603,6 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                             const PasswordActualizadoScreen(),
                                       ),
                                     );
-                                  } else {
-                                    return;
-                                  }
                                 } else {
                                   await showDialog(
                                     context: context,

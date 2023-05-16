@@ -1,31 +1,66 @@
 import 'package:flutter/material.dart';
-import 'package:taller_alex_app_asesor/main.dart';
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
-import 'package:taller_alex_app_asesor/objectbox.g.dart';
 class ControlFormProvider extends ChangeNotifier {
+  
+  
+  final step1FormKey = GlobalKey<FormState>();
+  final step2FormKey = GlobalKey<FormState>();
+  final step3FormKey = GlobalKey<FormState>();
+
+  bool validateForm(GlobalKey<FormState> stepFormKey) {
+    return stepFormKey.currentState!.validate()
+    ? true : false;
+  }
 
   GlobalKey<FormState> controlFormFormKey = GlobalKey<FormState>();
 
   //Data about Control Form
   bool accept = false;
-  // int idCliente = -1;
-  // int idVehiculo = -1;
-  // int idFormaPago = -1;
-  String gas = "";
-  String mileage = "";
 
-  bool validateForm(GlobalKey<FormState> ordenTrabajoKey) {
-    return ordenTrabajoKey.currentState!.validate() ? true : false;
-  }
+  TextEditingController mileageController = TextEditingController(text: ""); 
+  TextEditingController commentsMileageController = TextEditingController(text: ""); 
+  String? imageMileage;
+  String? pathMileage;
+
+  int gasPercent = 0;
+  TextEditingController gasController = TextEditingController(text: ""); 
+  TextEditingController commentsGasController = TextEditingController(text: ""); 
+  String commentsGas = "";
+  String? imageGas;
+  String? pathGas;
+
+  TextEditingController dentsController = TextEditingController(text: ""); 
+  TextEditingController commentsDentsController = TextEditingController(text: ""); 
+  String? imageDents;
+  String? pathDents;
+
+
+  DateTime? dateAdded; //Null to intialize the value in the text field
 
 
   void cleanData()
   {
-    // idCliente = -1;
-    // idVehiculo = -1; 
-    // idFormaPago = -1;
     accept = false;
+    
+    mileageController.text = "";
+    commentsMileageController.text = "";
+    imageMileage = null;
+    pathMileage = null;
+
+    gasPercent = 0;
+    gasController.text = "";
+    commentsGasController.text = "";
+    commentsGas = "";
+    imageGas = null;
+    pathGas = null;
+
+    dentsController.text = "";
+    commentsDentsController.text = "";
+    imageDents = null;
+    pathDents = null;
+
+    dateAdded = null;
+
     notifyListeners();
   }
 
@@ -34,27 +69,42 @@ class ControlFormProvider extends ChangeNotifier {
     notifyListeners();
   }
   
-  bool add(Usuarios usuario, String medida) {
+  bool add() {
     notifyListeners();
     return true;
   }
 
-  // void addImagen(int idEmprendimiento) {
-  //   final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
-  //   if (emprendimiento != null) {
-  //     final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
-  //     imagenLocal!.bitacora.add(nuevaInstruccion);
-  //     emprendimiento.emprendedor.target!.imagen.target = imagenLocal;
-  //     dataBase.imagenesBox.put(imagenLocal!);
-  //     dataBase.emprendedoresBox.put(emprendimiento.emprendedor.target!);
-  //     //print('Imagen Emprendedor agregada exitosamente');
-  //     notifyListeners();
-  //   } 
-  // }
+  void updateGasPercent(int valor) {
+    gasPercent = valor;
+    notifyListeners();
+  }
 
 
+  bool validateStepOneForm ()
+  {
+    if (mileageController.text != "") {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
+  bool validateStepTwoForm ()
+  {
+    if (gasPercent != 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-
+  bool validateStepThreeForm ()
+  {
+    if (dentsController.text != "") {
+      return true;
+    } else {
+      return false;
+    }
+  }
   
 }

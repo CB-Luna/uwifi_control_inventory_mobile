@@ -133,4 +133,28 @@ Widget? getWidgetImagePerfilUsuario(String? image, double height, double width) 
   );
 }
 
+Widget getAssetImageContainer(String? image, {double height = 180, double width = double.infinity}) {
+  if (image == null || image == '') {
+    return Image(
+      height: height,
+      width: width,
+      image: const AssetImage("assets/images/default_image_placeholder.jpeg"),
+      fit: BoxFit.cover,
+    );
+  } else if (image.startsWith('http') || image.startsWith('https')) {
+    return FadeInImage(
+      height: 180,
+      width: width,
+      placeholder: const AssetImage('assets/images/default_image_placeholder.jpeg'),
+      image: NetworkImage(image),
+      fit: BoxFit.cover,
+    );
+  }
+  return Image(
+    height: height,
+    width: width,
+    fit: BoxFit.cover,
+    image: AssetImage(image),
+  );
+}
 

@@ -1,11 +1,10 @@
 import 'package:taller_alex_app_asesor/modelsFormularios/data_draggable.dart';
 import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/observacion_screen.dart';
-import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/agregar_orden_trabajo_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'flutter_flow_util_local.dart';
 import 'hour_background_model.dart';
@@ -28,7 +27,8 @@ class HourBackgroundWidget extends StatefulWidget {
 class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
   late HourBackgroundModel _model;
   Color caughtColor = Colors.white;
-  String text = "";
+  String vin = "";
+  String image = "";
 
   @override
   void setState(VoidCallback callback) {
@@ -76,7 +76,8 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
         else{
           setState(() {
             caughtColor = data.color;
-            text = data.text;
+            vin = data.vin;
+            image = data.image;
           });
           controlFormProvider.updateDataSelected(data.accept);
         }
@@ -176,23 +177,38 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                         ),
                       ),
                       Center(
-                        child: Text(
-                          text,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: 'Inter',
-                                color: FlutterFlowTheme.of(context)
-                                    .white,
-                                fontSize: 85.0,
-                                fontWeight: FontWeight.w300,
+                        child: Visibility(
+                          visible: vin != "",
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: getAssetImageContainer(
+                                  image,
+                                  height: 120,
+                                  width: 200,
+                                  ),
                               ),
+                              Text(
+                                vin,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: FlutterFlowTheme.of(context)
+                                          .white,
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Align(
                         alignment: Alignment(0.0, 0.9),
                         child: 
-                        text != "" ? 
+                        vin != "" ? 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -229,7 +245,8 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                               controlFormProvider.cleanData();
                                               setState(() {
                                                 caughtColor = Colors.white;
-                                                text = "";
+                                                vin = "";
+                                                image = "";
                                               });
                                               Navigator.pop(context);
                                             },
@@ -282,7 +299,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                      const ObservacionScreen(),
+                                       ObservacionScreen(hour: widget.time!, period: widget.period!,),
                                     ),
                                   );
                                 },

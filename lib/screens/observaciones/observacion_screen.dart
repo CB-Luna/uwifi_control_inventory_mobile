@@ -2,21 +2,22 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:provider/provider.dart';
-import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/observacion_controller.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
+import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/agregar_vehiculo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/componentes/seccion_dos_formulario.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/componentes/seccion_tres_formulario.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/componentes/seccion_uno_formulario.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/observacion_creada_screen.dart';
-import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/detalle_orden_trabajo_screen.dart';
 
 class ObservacionScreen extends StatefulWidget {
+  final String hour;
+  final String period;
   const ObservacionScreen({
     super.key, 
+    required this.hour, 
+    required this.period, 
   });
 
   @override
@@ -31,13 +32,14 @@ class _ObservacionScreen extends State<ObservacionScreen> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      0: const SeccionUnoFormulario(),
+      0: SeccionUnoFormulario(
+        hour: widget.hour, 
+        period: widget.period,
+      ),
       1: const SeccionDosFormulario(),
       2: const SeccionTresFormulario(),
     };
-    final observacionProvider = Provider.of<ObservacionController>(context);
-    final usuarioProvider = Provider.of<UsuarioController>(context);
-    final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
+    final controlFormProvider = Provider.of<ControlFormProvider>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: SafeArea(
@@ -135,6 +137,7 @@ class _ObservacionScreen extends State<ObservacionScreen> {
                               actions: [
                                 TextButton(
                                   onPressed: () async {
+                                    controlFormProvider.cleanData();
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -188,88 +191,93 @@ class _ObservacionScreen extends State<ObservacionScreen> {
                     onTap: () async {
                       switch (activeStep) {
                         case 0:
-                        setState(() {
-                          activeStep++;
-                        });
-                          // if (observacionProvider.validarSeccionUnoFormulario()) {
-                          //     setState(() {
-                          //       activeStep++;
-                          //     });
-                          //   } else {
-                          //     await showDialog(
-                          //       context: context,
-                          //       builder: (alertDialogContext) {
-                          //         return AlertDialog(
-                          //           title: const Text('Campos vacíos'),
-                          //           content: const Text(
-                          //               'Para continuar, debe llenar todos los campos solicitados.'),
-                          //           actions: [
-                          //             TextButton(
-                          //               onPressed: () =>
-                          //                   Navigator.pop(alertDialogContext),
-                          //               child: const Text('Bien'),
-                          //             ),
-                          //           ],
-                          //         );
-                          //       },
-                          //     );
-                          //     return;
-                          //   }
+                          if (controlFormProvider.validateStepOneForm()) {
+                              setState(() {
+                                activeStep++;
+                              });
+                            } else {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: const Text('Empty required fields'),
+                                    content: const Text(
+                                        'You should input the required fields to continue.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: const Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              return;
+                            }
                           break;
                         case 1:
-                          setState(() {
-                            activeStep ++;
-                          });
-                          // if (observacionProvider.validarSeccionDosFormulario()) {
-                          //     setState(() {
-                          //       activeStep++;
-                          //     });
-                          //   } else {
-                          //     await showDialog(
-                          //       context: context,
-                          //       builder: (alertDialogContext) {
-                          //         return AlertDialog(
-                          //           title: const Text('Campos vacíos'),
-                          //           content: const Text(
-                          //               'Para continuar, debe llenar todos los campos solicitados.'),
-                          //           actions: [
-                          //             TextButton(
-                          //               onPressed: () =>
-                          //                   Navigator.pop(alertDialogContext),
-                          //               child: const Text('Bien'),
-                          //             ),
-                          //           ],
-                          //         );
-                          //       },
-                          //     );
-                          //     return;
-                          //   }
+                          if (controlFormProvider.validateStepTwoForm()) {
+                              setState(() {
+                                activeStep++;
+                              });
+                            } else {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: const Text('Empty required fields'),
+                                    content: const Text(
+                                        'You should input the required fields to continue.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: const Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              return;
+                            }
                           break;
                         case 2:
-                          // if (observacionProvider.validarSeccionTresFormulario()) {
-                          //     snackbarKey.currentState?.showSnackBar(const SnackBar(
-                          //       content: Text("No se pudo agregar información de la observación, intente más tarde."),
-                          //     ));
-                          //   } else {
-                          //     await showDialog(
-                          //       context: context,
-                          //       builder: (alertDialogContext) {
-                          //         return AlertDialog(
-                          //           title: const Text('Campos vacíos'),
-                          //           content: const Text(
-                          //               'Para continuar, debe llenar todos los campos solicitados.'),
-                          //           actions: [
-                          //             TextButton(
-                          //               onPressed: () =>
-                          //                   Navigator.pop(alertDialogContext),
-                          //               child: const Text('Bien'),
-                          //             ),
-                          //           ],
-                          //         );
-                          //       },
-                          //     );
-                          //     return;
-                          //   }
+                          if (controlFormProvider.validateStepThreeForm()) {
+                              if (controlFormProvider.add()) {
+                                controlFormProvider.cleanData();
+                                await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ObservacionCreadaScreen(),
+                                    ),
+                                  );
+                              } else {
+                                snackbarKey.currentState?.showSnackBar(const SnackBar(
+                                content: Text("It is not possible to save the data of this form, try later."),
+                              ));
+                              }
+                            } else {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: const Text('Empty required fields'),
+                                    content: const Text(
+                                        'You should input the required fields to continue.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: const Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              return;
+                            }
                           break;
                         default:
                           break;

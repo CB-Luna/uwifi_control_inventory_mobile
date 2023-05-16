@@ -332,7 +332,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                             .center,
                                                     children: [
                                                       Icon(
-                                                        Icons.check,
+                                                        Icons.inventory_outlined,
                                                         color: FlutterFlowTheme
                                                                 .of(context)
                                                             .secondaryColor,
@@ -343,7 +343,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 ),
                                               ),
                                               Text(
-                                                'Casos Activos',
+                                                'Control Forms Check Up',
                                                 textAlign:
                                                     TextAlign.center,
                                                 style: FlutterFlowTheme
@@ -506,10 +506,10 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                           children: [
                                                             Icon(
                                                               Icons
-                                                                  .close_rounded,
+                                                                  .local_shipping_outlined,
                                                               color: FlutterFlowTheme.of(
                                                                       context)
-                                                                  .primaryColor,
+                                                                  .tertiaryColor,
                                                               size: 15.0,
                                                             ),
                                                           ],
@@ -517,7 +517,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      'Pendientes',
+                                                      'Availables',
                                                       textAlign: TextAlign
                                                           .center,
                                                       style: FlutterFlowTheme
@@ -681,7 +681,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                           children: [
                                                             Icon(
                                                               Icons
-                                                                  .close_rounded,
+                                                                  .local_shipping_outlined,
                                                               color: FlutterFlowTheme.of(
                                                                       context)
                                                                   .tertiaryColor,
@@ -692,7 +692,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      'Cancelado',
+                                                      'In Repair',
                                                       textAlign: TextAlign
                                                           .center,
                                                       style: FlutterFlowTheme
@@ -864,7 +864,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 ),
                                               ),
                                               Text(
-                                                'Clientes Registrados',
+                                                'Today Form Check Up',
                                                 textAlign:
                                                     TextAlign.center,
                                                 style: FlutterFlowTheme
@@ -887,7 +887,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 .fromSTEB(
                                                     0.0, 10.0, 0.0, 0.0),
                                             child: Text(
-                                              '19',
+                                              'Unregistered',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText1
@@ -915,19 +915,37 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Icon(
-                                          Icons
-                                              .keyboard_arrow_right_outlined,
-                                          color:
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryBackground,
-                                          size: 24.0,
+                                        Visibility(
+                                          visible: false,
+                                          child: Icon(
+                                            Icons
+                                                .keyboard_arrow_right_outlined,
+                                            color:
+                                                FlutterFlowTheme.of(context)
+                                                    .primaryBackground,
+                                            size: 24.0,
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ),
                                 ],
                               ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 30.0, 0.0, 0.0),
+                          child: Container(
+                            width: 350,
+                            height: 300,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.rectangle,
+                            ),
+                            child: Image.asset(
+                              'assets/images/rta_logo.png',
                             ),
                           ),
                         ),

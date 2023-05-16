@@ -102,7 +102,7 @@ with TickerProviderStateMixin {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Cambiar a Modo Oscuro',
+                                      'Switch to Dark Mode',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1,
                                     ),
@@ -201,7 +201,7 @@ with TickerProviderStateMixin {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Cambiar a Modo Claro',
+                                      'Switch to Light Mode',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -272,7 +272,7 @@ with TickerProviderStateMixin {
                   ),
           ExpansionTile(
             title: Text(
-              'Información del dispositivo',
+              'Device Information',
               style: FlutterFlowTheme.of(context).bodyText1.override(
                     fontFamily: 'Poppins',
                     color: Colors.black,
@@ -289,7 +289,7 @@ with TickerProviderStateMixin {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Modelo: ${snapshot.data!.model ?? ''}",
+                          "Model: ${snapshot.data!.model ?? ''}",
                           style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
@@ -298,7 +298,7 @@ with TickerProviderStateMixin {
                               ),
                         ),
                         Text(
-                          "Fabricante: ${snapshot.data!.manufacturer ?? ''}",
+                          "Manufacturer: ${snapshot.data!.manufacturer ?? ''}",
                           style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
@@ -307,7 +307,7 @@ with TickerProviderStateMixin {
                               ),
                         ),
                         Text(
-                          "Marca: ${snapshot.data!.brand ?? ''}",
+                          "Brand: ${snapshot.data!.brand ?? ''}",
                           style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
@@ -316,7 +316,7 @@ with TickerProviderStateMixin {
                               ),
                         ),
                         Text(
-                          "Dispositivo: ${snapshot.data!.device ?? ''}",
+                          "Device: ${snapshot.data!.device ?? ''}",
                           style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),

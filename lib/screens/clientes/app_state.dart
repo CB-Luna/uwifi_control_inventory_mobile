@@ -30,14 +30,14 @@ class FFAppState extends ChangeNotifier {
     _trueValue = _value;
   }
 
-  DateTime? _selectedDay = DateTime.fromMillisecondsSinceEpoch(1667573100000);
+  DateTime? _selectedDay = DateTime.now();
   DateTime? get selectedDay => _selectedDay;
   set selectedDay(DateTime? _value) {
     _selectedDay = _value;
   }
 
   DateTime? _selectedDayIndicator =
-      DateTime.fromMillisecondsSinceEpoch(1667573100000);
+      DateTime.now();
   DateTime? get selectedDayIndicator => _selectedDayIndicator;
   set selectedDayIndicator(DateTime? _value) {
     _selectedDayIndicator = _value;

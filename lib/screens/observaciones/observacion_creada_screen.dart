@@ -36,7 +36,7 @@ class _ObservacionCreadaScreenState extends State<ObservacionCreadaScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Observación\nCreada!',
+                        '¡Control Form\nSaved!',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -49,7 +49,7 @@ class _ObservacionCreadaScreenState extends State<ObservacionCreadaScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(                                
-                        'El registro se ha guadado con éxito.',
+                        'The data of this form was saved successfully.',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -64,7 +64,7 @@ class _ObservacionCreadaScreenState extends State<ObservacionCreadaScreen> {
                       child: SizedBox(
                         child: Icon(
                           Icons.check_circle_outline,
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).secondaryColor,
                           size: 250,
                           )
                       ),
@@ -82,11 +82,11 @@ class _ObservacionCreadaScreenState extends State<ObservacionCreadaScreen> {
                             ),
                           );
                         },
-                        text: 'Listo',
+                        text: 'Continue',
                         options: FFButtonOptions(
                           width: 200,
                           height: 45,
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).secondaryColor,
                           textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                                 fontFamily: 'Poppins',
                                 color: Colors.white,

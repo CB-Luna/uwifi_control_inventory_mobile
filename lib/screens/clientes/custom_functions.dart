@@ -3,7 +3,7 @@ dynamic getHours() {
   // return a JSON array of strings, each string being an hour of the day
   var hours = {
     'hours': [
-      {'hour': '12:00', 'period': 'a.m.'},
+      {'hour': '00:00', 'period': 'a.m.'},
       {'hour': '1:00', 'period': 'a.m.'},
       {'hour': '2:00', 'period': 'a.m.'},
       {'hour': '3:00', 'period': 'a.m.'},
@@ -16,17 +16,17 @@ dynamic getHours() {
       {'hour': '10:00', 'period': 'a.m.'},
       {'hour': '11:00', 'period': 'a.m.'},
       {'hour': '12:00', 'period': 'p.m.'},
-      {'hour': '1:00', 'period': 'p.m.'},
-      {'hour': '2:00', 'period': 'p.m.'},
-      {'hour': '3:00', 'period': 'p.m.'},
-      {'hour': '4:00', 'period': 'p.m.'},
-      {'hour': '5:00', 'period': 'p.m.'},
-      {'hour': '6:00', 'period': 'p.m.'},
-      {'hour': '7:00', 'period': 'p.m.'},
-      {'hour': '8:00', 'period': 'p.m.'},
-      {'hour': '9:00', 'period': 'p.m.'},
-      {'hour': '10:00', 'period': 'p.m.'},
-      {'hour': '11:00', 'period': 'p.m.'},
+      {'hour': '13:00', 'period': 'p.m.'},
+      {'hour': '14:00', 'period': 'p.m.'},
+      {'hour': '15:00', 'period': 'p.m.'},
+      {'hour': '16:00', 'period': 'p.m.'},
+      {'hour': '17:00', 'period': 'p.m.'},
+      {'hour': '18:00', 'period': 'p.m.'},
+      {'hour': '19:00', 'period': 'p.m.'},
+      {'hour': '20:00', 'period': 'p.m.'},
+      {'hour': '21:00', 'period': 'p.m.'},
+      {'hour': '22:00', 'period': 'p.m.'},
+      {'hour': '23:00', 'period': 'p.m.'},
     ]
   };
   return hours;

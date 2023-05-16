@@ -3,17 +3,21 @@ import 'dart:io';
 
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/observacion_controller.dart';
+import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
-import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 
 class SeccionUnoFormulario extends StatefulWidget {
-  const SeccionUnoFormulario({super.key});
+  final String hour;
+  final String period;
+  const SeccionUnoFormulario({
+    super.key, 
+    required this.hour, 
+    required this.period});
 
   @override
   State<SeccionUnoFormulario> createState() => _SeccionUnoFormularioState();
@@ -23,7 +27,7 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
   XFile? image;
   @override
   Widget build(BuildContext context) {
-    final observacionProvider = Provider.of<ObservacionController>(context);
+    final controlFormProvider = Provider.of<ControlFormProvider>(context);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -36,7 +40,7 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                 color: Colors.transparent,
               ),
               child: ExpandableNotifier(
-                initialExpanded: false,
+                initialExpanded: true,
                 child: ExpandablePanel(
                   header: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -45,10 +49,6 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                       padding: const EdgeInsetsDirectional
                           .fromSTEB(0, 0, 16, 0),
                       child: Icon(
-                          observacionProvider.fechaObservacion == null
-                          ? 
-                          Icons.check_box_outline_blank_rounded
-                          :
                           Icons.check_box_rounded,
                           color: FlutterFlowTheme.of(context).secondaryColor,
                           size: 25,
@@ -80,7 +80,16 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                         const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                     child: TextFormField(
                       readOnly: true,
-                      initialValue: "2020",
+                      initialValue: DateFormat("MM/dd/yyyy hh:mm a").format(
+                        DateTime(
+                          DateTime.now().year, 
+                          DateTime.now().month, 
+                          DateTime.now().day, 
+                          int.parse(widget.hour.split(":").first), 
+                          int.parse(widget.hour.split(":").last), 
+                          0, 
+                          0)
+                        ),
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
                       obscureText: false,
@@ -153,7 +162,7 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                 color: Colors.transparent,
               ),
               child: ExpandableNotifier(
-                initialExpanded: false,
+                initialExpanded: true,
                 child: ExpandablePanel(
                   header: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -162,7 +171,7 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                       padding: const EdgeInsetsDirectional
                           .fromSTEB(0, 0, 16, 0),
                       child: Icon(
-                          observacionProvider.valorSeleccionP2 == "" ? 
+                          controlFormProvider.mileageController.text == "" ? 
                           Icons.check_box_outline_blank_rounded
                           :
                           Icons.check_box_rounded,
@@ -199,10 +208,9 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                         borderRadius: BorderRadius.circular(16.0),
                       ),
                       child: TextFormField(
+                        controller: controlFormProvider.mileageController,
                         autovalidateMode:
                             AutovalidateMode.onUserInteraction,
-                        onChanged: (value) {
-                        },
                         obscureText: false,
                         decoration: InputDecoration(
                           prefixIcon: Icon(
@@ -288,7 +296,7 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                 color: Colors.transparent,
               ),
               child: ExpandableNotifier(
-                initialExpanded: false,
+                initialExpanded: true,
                 child: ExpandablePanel(
                   header: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -297,7 +305,7 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                       padding: const EdgeInsetsDirectional
                           .fromSTEB(0, 0, 16, 0),
                       child: Icon(
-                          observacionProvider.respuestaP1 == "" ? 
+                          controlFormProvider.commentsMileageController.text == "" ? 
                           Icons.check_box_outline_blank_rounded
                           :
                           Icons.check_box_rounded,
@@ -330,14 +338,10 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                     child: TextFormField(
+                      controller: controlFormProvider.commentsMileageController,
                       textCapitalization: TextCapitalization.sentences,
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
-                      onChanged: (value) {
-                        setState(() {
-                          observacionProvider.respuestaP1 = value;
-                        });
-                      },
                       obscureText: false,
                       decoration: InputDecoration(
                         hintText: 'Input your personal comments...',
@@ -449,9 +453,9 @@ class _SeccionUnoFormularioState extends State<SeccionUnoFormulario> {
                                   file.readAsBytesSync();
                               String base64 =
                                   base64Encode(fileInByte);
-                              observacionProvider.imageMileage =
+                              controlFormProvider.imageMileage =
                                   base64;
-                              observacionProvider.pathMileage = 
+                              controlFormProvider.pathMileage = 
                                 file.path;
                             });
                           },

@@ -11,6 +11,7 @@ import 'package:taller_alex_app_asesor/screens/clientes/week_days_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/control_daily_vehicle_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'custom_functions.dart' as functions;
 import 'app_state.dart';
 import 'flutter_flow_util_local.dart';
@@ -62,7 +63,7 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                           updateCallback: () => setState(() {}),
                           child: BackgroundWidget(
                             height:
-                                functions.multiply(FFAppState().hourHeight, 23),
+                                functions.multiply(FFAppState().hourHeight, 34),
                           ),
                         ),
                       ],
@@ -184,9 +185,6 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                                 size: 20.0,
                               ),
                               onPressed: () async {
-                                FFAppState().update(() {
-                                  FFAppState().selectedDay = getCurrentTimestamp;
-                                });
                               },
                             ),
                           ],
@@ -201,7 +199,7 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                               SelectionArea(
                                   child: Text(
                                 getJsonField(
-                                  functions.dateInfo(FFAppState().selectedDay!),
+                                  functions.dateInfo(DateTime.now()),
                                   r'''$.month''',
                                 ).toString(),
                                 style: FlutterFlowTheme.of(context)
@@ -218,16 +216,12 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                         ),
                         Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 30.0),
+                              const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 30.0),
                           child: wrapWithModel(
                             model: _model.weekDaysModel,
                             updateCallback: () => setState(() {}),
                             child: WeekDaysWidget(
                               callback: () async {
-                                FFAppState().update(() {
-                                  FFAppState().selectedDay =
-                                      FFAppState().selectedDay;
-                                });
                               },
                             ),
                           ),
@@ -240,33 +234,58 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                   alignment: Alignment.bottomCenter,
                   child: CarouselSlider(
                     options: CarouselOptions(height: 200),
-                    items: [1,2,3,4,5].map((i) {
+                    items: optionsDraggable.map((data) {
                       return Builder(
                         builder: (BuildContext context) {
                           return Draggable(
-                            data: DraggableData(
-                              text: "text $i", 
-                              color: Colors.blue,
-                            ),
+                            data: data,
                             onDraggableCanceled: (velocity, offset) {
-                              
                             },
                             feedback: Container(
                               height: 100,
                               width: 180,
                               decoration: BoxDecoration(
-                                color: Colors.blue,
+                                color: data.color,
                               ),
                             ),
                             child: Container(
                               height: 200,
                               width: 290,
                               decoration: BoxDecoration(
-                                color: Colors.blue,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    blurRadius: 4,
+                                    color: Color(0x39000000),
+                                    offset: Offset(-4, 8),
+                                  )
+                                ],
+                                color: data.color.withOpacity(0.8),
+                                borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(50),
+                                  bottomRight: Radius.circular(50),
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20),
+                                ),
                               ),
                               child: Center(
-                                child: Text('text $i', style: TextStyle(fontSize: 16.0),
-                                                          ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: getAssetImageContainer(
+                                        data.image,
+                                        height: 120,
+                                        width: 200,
+                                        ),
+                                    ),
+                                    Text(
+                                      "VIN: ${data.vin}", 
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context).white,
+                                        fontSize: 15.0),
+                                    ),
+                                  ],
+                                ),
                               ),
                           ),
                           );

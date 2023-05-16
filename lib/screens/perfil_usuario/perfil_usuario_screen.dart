@@ -66,7 +66,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.8,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).grayLighter,
+                    color: FlutterFlowTheme.of(context).secondaryColor.withOpacity(0.4),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(0),
                       bottomRight: Radius.circular(0),
@@ -86,7 +86,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                       width: MediaQuery.of(context).size.width,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).grayLighter,
+                        color: FlutterFlowTheme.of(context).secondaryColor.withOpacity(0.4),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
@@ -128,7 +128,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                           size: 16,
                                         ),
                                         Text(
-                                          'Atrás',
+                                          'Back',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1
                                               .override(
@@ -155,7 +155,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             25, 0, 0, 0),
                                     child: AutoSizeText(
-                                      "Perfil de ${maybeHandleOverflow('${currentUser.nombre} ${currentUser.apellidoP}', 18, '...')}",
+                                      "Info. of ${maybeHandleOverflow('${currentUser.nombre} ${currentUser.apellidoP}', 18, '...')}",
                                       maxLines: 2,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1

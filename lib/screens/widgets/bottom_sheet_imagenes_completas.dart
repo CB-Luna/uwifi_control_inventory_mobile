@@ -17,7 +17,6 @@ class _BottomSheetImagenesCompletasState
     extends State<BottomSheetImagenesCompletas> {
   @override
   Widget build(BuildContext context) {
-    final UserState userState = Provider.of<UserState>(context);
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 350,

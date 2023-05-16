@@ -83,18 +83,6 @@ class _WeekDaysWidgetState extends State<WeekDaysWidget>
               focusColor: Colors.transparent,
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
-              onTap: () async {
-                if (dayItem != FFAppState().selectedDay) {
-                  FFAppState().update(() {
-                    FFAppState().selectedDayIndicator = dayItem;
-                  });
-                  await Future.delayed(const Duration(milliseconds: 200));
-                  FFAppState().update(() {
-                    FFAppState().selectedDay = dayItem;
-                  });
-                  await widget.callback?.call();
-                }
-              },
               child: DayPickerWidget(
                 key: Key('Key7qb_${dayIndex}_of_${day.length}'),
                 day: getJsonField(

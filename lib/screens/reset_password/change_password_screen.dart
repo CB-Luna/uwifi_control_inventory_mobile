@@ -247,14 +247,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 return;
                               }
 
-                              final res =
-                                  await AuthService.confirmPasswordReset(
-                                widget.token,
-                                nuevaContrasenaController.text,
-                                confNuevaContrasenaController.text,
-                              );
-
-                              if (res == false) return;
 
                               await userState.logout();
                             },

@@ -209,11 +209,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         ));
                       }
                       else {
-                        final res = await AuthService.requestPasswordReset(
-                          emailAddressController.text,
-                        );
-                        
-                        if (res == false) return;
 
                         if (!mounted) return;
                         await Navigator.push(
