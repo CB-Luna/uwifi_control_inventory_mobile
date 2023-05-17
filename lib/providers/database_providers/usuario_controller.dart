@@ -268,7 +268,7 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
 
   List<OrdenTrabajo> obtenerOrdenesTrabajo() {
     final List<OrdenTrabajo> ordenesTrabajo = [];
-    final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? -1);
+    final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? 1);
     if (usuarioActual != null) {
         for (var element in usuarioActual.ordenesTrabajo) {
         ordenesTrabajo.add(element);
@@ -279,7 +279,7 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
 
   List<Usuarios> obtenerClientes() {
     final List<Usuarios> clientes = [];
-    final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? -1);
+    final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? 1);
     if (usuarioActual != null) {
         for (var element in usuarioActual.clientes) {
         clientes.add(element);

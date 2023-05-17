@@ -30,6 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final UserState userState = Provider.of<UserState>(context, listen: false);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -55,6 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
               } else {
                 return FutureBuilder(
                   future: Future.wait([
+                    userState.readTokenPocketbase(),
                     displaySplashImage,
                   ]),
                   builder: (_, AsyncSnapshot<List> snapshot) {

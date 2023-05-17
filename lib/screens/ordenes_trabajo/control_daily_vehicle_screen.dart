@@ -1,6 +1,7 @@
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/providers/providers.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/add_employee_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,8 @@ import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/side_menu/side_menu.dart';
+
+import '../login_screen/login_screen.dart';
 
 
 class ControlDailyVehicleScreen extends StatefulWidget {
@@ -46,7 +49,8 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
+    final Usuarios? currentUser = usuarioProvider.usuarioCurrent;
+    final UserState userState = Provider.of<UserState>(context);
     ordenesTrabajo = [];
     ordenesTrabajo = usuarioProvider.obtenerOrdenesTrabajo();
     return WillPopScope(
@@ -934,18 +938,29 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 30.0, 0.0, 0.0),
-                          child: Container(
-                            width: 350,
-                            height: 300,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.rectangle,
-                            ),
-                            child: Image.asset(
-                              'assets/images/rta_logo.png',
+                        InkWell(
+                          onTap: () async {
+                            await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          LoginScreen(),
+                                    ),
+                                  );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 30.0, 0.0, 0.0),
+                            child: Container(
+                              width: 350,
+                              height: 300,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.rectangle,
+                              ),
+                              child: Image.asset(
+                                'assets/images/rta_logo.png',
+                              ),
                             ),
                           ),
                         ),
@@ -958,7 +973,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                   child: 
                   Align(
                     alignment: Alignment.bottomRight,
-                    child: (currentUser.rol.target!.rol == "Asesor")
+                    child: (currentUser?.rol.target?.rol == "Asesor")
                       ? Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
