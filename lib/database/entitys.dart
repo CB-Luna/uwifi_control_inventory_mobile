@@ -683,7 +683,6 @@ class Usuarios {
   String? apellidoM;
   String? telefono;
   String celular;
-  String rfc;
   String? domicilio;
   String correo;
   String password;
@@ -718,7 +717,6 @@ class Usuarios {
     this.apellidoM,
     this.telefono,
     required this.celular,
-    required this.rfc,
     this.domicilio,
     required this.correo,
     required this.password,

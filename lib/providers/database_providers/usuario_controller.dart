@@ -56,7 +56,6 @@ class UsuarioController extends ChangeNotifier {
       String? apellidoM,
       String? telefono,
       String celular,
-      String rfc,
       String? domicilio,
       String correo,
       String password,
@@ -73,7 +72,6 @@ class UsuarioController extends ChangeNotifier {
         correo: correo,
         password: password,
         idDBR: idDBR, 
-        rfc: rfc,
         domicilio: domicilio,
         imagen: imagenBase64,
         );
@@ -110,7 +108,6 @@ class UsuarioController extends ChangeNotifier {
       String? newApellidoM,
       String? newTelefono,
       String newCelular,
-      String newRFC,
       String? newDomicilio,
       String newPassword,
       String? newImagenBase64,
@@ -125,7 +122,6 @@ class UsuarioController extends ChangeNotifier {
       updateUsuario.nombre = newNombre;
       updateUsuario.telefono = newTelefono;
       updateUsuario.celular = newCelular;
-      updateUsuario.rfc = newRFC;
       updateUsuario.domicilio = newDomicilio;
       updateUsuario.password = newPassword;
       //Se agregan los roles actualizados

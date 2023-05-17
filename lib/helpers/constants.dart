@@ -9,9 +9,11 @@ import '../screens/widgets/flutter_flow_animations.dart';
 //***********< RTA VEHICLE CONTROL BD >**************/
 
 
-const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVka2lha25lcnhzdGtoeGJmZnh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzYzMzIxMTMsImV4cCI6MTk5MTkwODExM30.UYbQW-ze4hl8JsY2Y0JjzcY0IfgK44nA07Z5od7kCsY";
-const supabaseURL = "https://udkiaknerxstkhxbffxv.supabase.co"; 
-const supabaseGraphqlURL = "https://udkiaknerxstkhxbffxv.supabase.co/graphql/v1";
+//***********< RTA VEHICLE CONTROL BD >**************/
+
+const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhZG9obnhqYWdvb3F2cWF1ZnFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM2NDg2MDIsImV4cCI6MTk5OTIyNDYwMn0.YYFVT0MzXW5J35XwhwqnZ0vqgmuZRfswODbfCHH0bfE";
+const supabaseURL = "https://aadohnxjagooqvqaufqb.supabase.co"; 
+const supabaseGraphqlURL = "https://aadohnxjagooqvqaufqb.supabase.co/graphql/v1";
 
 //***********< REGEX >**************/
 

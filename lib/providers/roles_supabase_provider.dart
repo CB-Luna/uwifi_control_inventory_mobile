@@ -50,10 +50,10 @@ class RolesSupabaseProvider extends ChangeNotifier {
   Future<bool> getRoles() async {
     String queryGetRoles = """
       query Query {
-        rolesCollection {
+        rolCollection {
           edges {
             node {
-              id
+              id_rol_pk
               rol
               created_at
             }

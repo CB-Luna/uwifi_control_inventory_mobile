@@ -48,7 +48,6 @@ class ClienteController extends ChangeNotifier {
       nombre: nombre, 
       apellidoP: apellidoP,
       apellidoM: apellidoM, 
-      rfc: rfc,
       domicilio: domicilio,
       telefono: telefono, 
       celular: celular, 

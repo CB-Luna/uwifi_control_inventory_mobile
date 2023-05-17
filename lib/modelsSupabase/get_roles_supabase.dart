@@ -12,11 +12,11 @@ class GetRolesSupabase {
     final RolesCollection rolesCollection;
 
     factory GetRolesSupabase.fromMap(Map<String, dynamic> json) => GetRolesSupabase(
-        rolesCollection: RolesCollection.fromMap(json["rolesCollection"]),
+        rolesCollection: RolesCollection.fromMap(json["rolCollection"]),
     );
 
     Map<String, dynamic> toMap() => {
-        "rolesCollection": rolesCollection.toMap(),
+        "rolCollection": rolesCollection.toMap(),
     };
 }
 
@@ -64,13 +64,13 @@ class Node {
     final DateTime createdAt;
 
     factory Node.fromMap(Map<String, dynamic> json) => Node(
-        id: json["id"],
+        id: json["id_rol_pk"],
         rol: json["rol"],
         createdAt: DateTime.parse(json["created_at"]),
     );
 
     Map<String, dynamic> toMap() => {
-        "id": id,
+        "id_rol_pk": id,
         "rol": rol,
         "created_at": createdAt.toIso8601String(),
     };

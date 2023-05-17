@@ -111,7 +111,6 @@ class CatalogoSupabaseProvider extends ChangeNotifier {
               apellidoM: tecnicoMecanico['apellido_m'],
               celular: tecnicoMecanico['celular'],
               telefono: tecnicoMecanico['telefono'],
-              rfc: tecnicoMecanico['rfc'],
               domicilio: tecnicoMecanico['domicilio'],
               correo: tecnicoMecanico['email'],
               idDBR: tecnicoMecanico['id'],
@@ -149,7 +148,6 @@ class CatalogoSupabaseProvider extends ChangeNotifier {
               tecnicosMecanicosExistente.apellidoM = tecnicoMecanico['apellido_m'];
               tecnicosMecanicosExistente.celular = tecnicoMecanico['celular'];
               tecnicosMecanicosExistente.telefono = tecnicoMecanico['telefono'];
-              tecnicosMecanicosExistente.rfc = tecnicoMecanico['rfc'];
               tecnicosMecanicosExistente.domicilio = tecnicoMecanico['domicilio'];
               tecnicosMecanicosExistente.correo = tecnicoMecanico['email'];
               tecnicosMecanicosExistente.imagen = tecnicoMecanico['imagen'];

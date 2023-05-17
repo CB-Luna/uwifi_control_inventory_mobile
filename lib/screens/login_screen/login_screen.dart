@@ -435,31 +435,29 @@ class _LoginScreenState extends State<LoginScreen> {
                                       usuarioProvider.getUser(userId);
                                       usuarioProvider.update(
                                         userState.emailController.text,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.nombre,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.apellidoP,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.apellidoM,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.telefono,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.celular,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.rfc,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.domicilio,
+                                        getUsuarioSupabase.name,
+                                        getUsuarioSupabase.lastName,
+                                        getUsuarioSupabase.middleName,
+                                        getUsuarioSupabase.homephoneNumber,
+                                        getUsuarioSupabase.telephoneNumber,
+                                        getUsuarioSupabase.address,
                                         userState.passwordController.text,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.imagen,
-                                        [getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.roles.id],
+                                        getUsuarioSupabase.image,
+                                        [getUsuarioSupabase.rol.rolId.toString()],
                                       );
                                     } else {
                                       usuarioProvider.add(
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.nombre,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.apellidoP,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.apellidoM,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.telefono,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.celular,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.rfc,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.domicilio,
+                                        getUsuarioSupabase.name,
+                                        getUsuarioSupabase.lastName,
+                                        getUsuarioSupabase.middleName,
+                                        getUsuarioSupabase.homephoneNumber,
+                                        getUsuarioSupabase.telephoneNumber,
+                                        getUsuarioSupabase.address,
                                         loginResponseSupabase.user.email,
                                         userState.passwordController.text,
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.imagen,
-                                        [getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.roles.id],
-                                        getUsuarioSupabase.perfilUsuarioCollection.edges.first.node.id,
+                                        getUsuarioSupabase.image,
+                                        [getUsuarioSupabase.rol.rolId.toString()],
+                                        getUsuarioSupabase.id,
                                       );
                                       usuarioProvider.getUser(loginResponseSupabase.user.email);
                                     }

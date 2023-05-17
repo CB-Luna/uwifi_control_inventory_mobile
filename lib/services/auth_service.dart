@@ -38,45 +38,23 @@ abstract class AuthService {
   }
 
   static Future<GetUsuarioSupabase?> getUserByUserIDSupabase(String userId) async {
-    String queryGetUserByUserID = """
-      query Query {
-        perfil_usuarioCollection (filter: { perfil_usuario_id: { eq: "$userId"} }){
-          edges {
-            node {
-              created_at
-              perfil_usuario_id
-              nombre
-              apellido_p
-              apellido_m
-              rfc
-              domicilio
-              telefono
-              celular
-              imagen
-              roles {
-                id
-                rol
-              }
-            }
-          }
-        }
-      }
-      """;
     try {
-      //Se recupera la información del Usuario en Supabase
-      final record = await sbGQL.query(
-        QueryOptions(
-          document: gql(queryGetUserByUserID),
-          fetchPolicy: FetchPolicy.noCache,
-          onError: (error) {
-            return null;
-        },),
-      );
-      if (record.data != null) {
+      final user = supabaseClient.auth.currentUser;
+      if (user == null) return null;
+
+      final res = await supabaseClient
+          .from('users')
+          .select()
+          .eq('id_user_profile', userId);
+
+      if (res[0] != null) {
+        final userProfile = res[0];
+        final userProfileString = jsonEncode(userProfile).toString();
+        userProfile['id'] = user.id;
+        userProfile['email'] = user.email!;
         //Existen datos del Usuario en Supabase
-        print("***Usuario: ${jsonEncode(record.data).toString()}");
-        final responseUsuario = GetUsuarioSupabase.fromJson(jsonEncode(record.data).toString());
-        return responseUsuario;
+        final usuario = GetUsuarioSupabase.fromJson(jsonEncode(userProfile));
+        return usuario;
       } else {
         //No existen el Usuario en Supabase
         return null;

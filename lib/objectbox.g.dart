@@ -84,11 +84,6 @@ final _entities = <ModelEntity>[
             indexId: const IdUid(210, 5673280590788867277),
             relationTarget: 'Roles'),
         ModelProperty(
-            id: const IdUid(29, 2352000377987118230),
-            name: 'rfc',
-            type: 9,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(30, 8932174031785446642),
             name: 'imagen',
             type: 9,
@@ -2825,7 +2820,8 @@ ModelDefinition getObjectBoxModel() {
         8555609759623119270,
         6903190290684851827,
         6585524487399118671,
-        7788765518671870184
+        7788765518671870184,
+        2352000377987118230
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -2902,7 +2898,6 @@ ModelDefinition getObjectBoxModel() {
           final correoOffset = fbb.writeString(object.correo);
           final passwordOffset = fbb.writeString(object.password);
           final idDBROffset = fbb.writeString(object.idDBR);
-          final rfcOffset = fbb.writeString(object.rfc);
           final imagenOffset =
               object.imagen == null ? null : fbb.writeString(object.imagen!);
           final pathOffset =
@@ -2922,7 +2917,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(11, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(15, idDBROffset);
           fbb.addInt64(23, object.rol.targetId);
-          fbb.addOffset(28, rfcOffset);
           fbb.addOffset(29, imagenOffset);
           fbb.addOffset(30, pathOffset);
           fbb.addOffset(32, domicilioOffset);
@@ -2948,13 +2942,12 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGetNullable(buffer, rootOffset, 14),
               celular: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 16, ''),
-              rfc: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 60, ''),
               domicilio: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 68),
-              correo:
-                  const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, ''),
-              password: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
+              correo: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              password:
+                  const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
               imagen: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 62),
               path: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 64),
               interno: const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 76),
@@ -4823,32 +4816,29 @@ class Usuarios_ {
   static final rol =
       QueryRelationToOne<Usuarios, Roles>(_entities[0].properties[10]);
 
-  /// see [Usuarios.rfc]
-  static final rfc = QueryStringProperty<Usuarios>(_entities[0].properties[11]);
-
   /// see [Usuarios.imagen]
   static final imagen =
-      QueryStringProperty<Usuarios>(_entities[0].properties[12]);
+      QueryStringProperty<Usuarios>(_entities[0].properties[11]);
 
   /// see [Usuarios.path]
   static final path =
-      QueryStringProperty<Usuarios>(_entities[0].properties[13]);
+      QueryStringProperty<Usuarios>(_entities[0].properties[12]);
 
   /// see [Usuarios.domicilio]
   static final domicilio =
-      QueryStringProperty<Usuarios>(_entities[0].properties[14]);
+      QueryStringProperty<Usuarios>(_entities[0].properties[13]);
 
   /// see [Usuarios.ordenTrabajo]
   static final ordenTrabajo =
-      QueryRelationToOne<Usuarios, OrdenTrabajo>(_entities[0].properties[15]);
+      QueryRelationToOne<Usuarios, OrdenTrabajo>(_entities[0].properties[14]);
 
   /// see [Usuarios.asesor]
   static final asesor =
-      QueryRelationToOne<Usuarios, Usuarios>(_entities[0].properties[16]);
+      QueryRelationToOne<Usuarios, Usuarios>(_entities[0].properties[15]);
 
   /// see [Usuarios.interno]
   static final interno =
-      QueryBooleanProperty<Usuarios>(_entities[0].properties[17]);
+      QueryBooleanProperty<Usuarios>(_entities[0].properties[16]);
 
   /// see [Usuarios.bitacora]
   static final bitacora =

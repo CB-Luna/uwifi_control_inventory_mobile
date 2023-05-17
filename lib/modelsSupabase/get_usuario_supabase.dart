@@ -1,144 +1,269 @@
 import 'dart:convert';
-class GetUsuarioSupabase {
-    GetUsuarioSupabase({
-        required this.perfilUsuarioCollection,
-    });
 
-    final PerfilUsuarioCollection perfilUsuarioCollection;
+class GetUsuarioSupabase {
+    final String id;
+    final String email;
+    final DateTime dateAdded;
+    final String idUserProfile;
+    final int idSeq;
+    final String name;
+    final String? middleName;
+    final String lastName;
+    final DateTime birthday;
+    final String address;
+    final String telephoneNumber;
+    final String? homephoneNumber;
+    final String? image;
+    final int idRolFk;
+    final Rol rol;
+    final Company company;
+    final Configuration configuration;
+    final int idTheme;
+
+    GetUsuarioSupabase({
+        required this.id,
+        required this.email,
+        required this.dateAdded,
+        required this.idUserProfile,
+        required this.idSeq,
+        required this.name,
+        this.middleName,
+        required this.lastName,
+        required this.birthday,
+        required this.address,
+        required this.telephoneNumber,
+        this.homephoneNumber,
+        this.image,
+        required this.idRolFk,
+        required this.rol,
+        required this.company,
+        required this.configuration,
+        required this.idTheme,
+    });
 
     factory GetUsuarioSupabase.fromJson(String str) => GetUsuarioSupabase.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
     factory GetUsuarioSupabase.fromMap(Map<String, dynamic> json) => GetUsuarioSupabase(
-        perfilUsuarioCollection: PerfilUsuarioCollection.fromMap(json["perfil_usuarioCollection"]),
-    );
-
-    Map<String, dynamic> toMap() => {
-        "perfil_usuarioCollection": perfilUsuarioCollection.toMap(),
-    };
-}
-
-class PerfilUsuarioCollection {
-    PerfilUsuarioCollection({
-        required this.edges,
-    });
-
-    final List<Edge> edges;
-
-    factory PerfilUsuarioCollection.fromJson(String str) => PerfilUsuarioCollection.fromMap(json.decode(str));
-
-    String toJson() => json.encode(toMap());
-
-    factory PerfilUsuarioCollection.fromMap(Map<String, dynamic> json) => PerfilUsuarioCollection(
-        edges: List<Edge>.from(json["edges"].map((x) => Edge.fromMap(x))),
-    );
-
-    Map<String, dynamic> toMap() => {
-        "edges": List<dynamic>.from(edges.map((x) => x.toMap())),
-    };
-}
-
-class Edge {
-    Edge({
-        required this.node,
-    });
-
-    final Node node;
-
-    factory Edge.fromJson(String str) => Edge.fromMap(json.decode(str));
-
-    String toJson() => json.encode(toMap());
-
-    factory Edge.fromMap(Map<String, dynamic> json) => Edge(
-        node: Node.fromMap(json["node"]),
-    );
-
-    Map<String, dynamic> toMap() => {
-        "node": node.toMap(),
-    };
-}
-
-class Node {
-    Node({
-        required this.id,
-        required this.createdAt,
-        required this.rfc,
-        required this.roles,
-        this.imagen,
-        required this.nombre,
-        required this.celular,
-        this.telefono,
-        this.domicilio,
-        required this.apellidoM,
-        required this.apellidoP,
-    });
-
-    final String id;
-    final DateTime createdAt;
-    final String rfc;
-    final Roles roles;
-    final String? imagen;
-    final String nombre;
-    final String celular;
-    final String? telefono;
-    final String? domicilio;
-    final String apellidoM;
-    final String apellidoP;
-
-    factory Node.fromJson(String str) => Node.fromMap(json.decode(str));
-
-    String toJson() => json.encode(toMap());
-
-    factory Node.fromMap(Map<String, dynamic> json) => Node(
-        id: json["perfil_usuario_id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        rfc: json["rfc"],
-        roles: Roles.fromMap(json["roles"]),
-        imagen: json["imagen"],
-        nombre: json["nombre"],
-        celular: json["celular"],
-        telefono: json["telefono"],
-        domicilio: json["domicilio"],
-        apellidoM: json["apellido_m"],
-        apellidoP: json["apellido_p"],
-    );
-
-    Map<String, dynamic> toMap() => {
-        "perfil_usuario_id": id,
-        "created_at": createdAt.toIso8601String(),
-        "rfc": rfc,
-        "roles": roles.toMap(),
-        "imagen": imagen,
-        "nombre": nombre,
-        "celular": celular,
-        "telefono": telefono,
-        "domicilio": domicilio,
-        "apellido_m": apellidoM,
-        "apellido_p": apellidoP,
-    };
-}
-
-class Roles {
-    Roles({
-        required this.id,
-        required this.rol,
-    });
-
-    final String id;
-    final String rol;
-
-    factory Roles.fromJson(String str) => Roles.fromMap(json.decode(str));
-
-    String toJson() => json.encode(toMap());
-
-    factory Roles.fromMap(Map<String, dynamic> json) => Roles(
         id: json["id"],
-        rol: json["rol"],
+        email: json["email"],
+        dateAdded: DateTime.parse(json["date_added"]),
+        idUserProfile: json["id_user_profile"],
+        idSeq: json["id_seq"],
+        name: json["name"],
+        middleName: json["middle_name"],
+        lastName: json["last_name"],
+        birthday: DateTime.parse(json["birthday"]),
+        address: json["address"],
+        telephoneNumber: json["telephone_number"],
+        homephoneNumber: json["homephone_number"],
+        image: json["image"],
+        idRolFk: json["id_rol_fk"],
+        rol: Rol.fromMap(json["rol"]),
+        company: Company.fromMap(json["company"]),
+        configuration: Configuration.fromMap(json["configuration"]),
+        idTheme: json["id_theme"],
     );
 
     Map<String, dynamic> toMap() => {
         "id": id,
+        "email": email,
+        "date_added": dateAdded.toIso8601String(),
+        "id_user_profile": idUserProfile,
+        "id_seq": idSeq,
+        "name": name,
+        "middle_name": middleName,
+        "last_name": lastName,
+        "birthday": "${birthday.year.toString().padLeft(4, '0')}-${birthday.month.toString().padLeft(2, '0')}-${birthday.day.toString().padLeft(2, '0')}",
+        "address": address,
+        "telephone_number": telephoneNumber,
+        "homephone_number": homephoneNumber,
+        "image": image,
+        "id_rol_fk": idRolFk,
+        "rol": rol.toMap(),
+        "company": company.toMap(),
+        "configuration": configuration.toMap(),
+        "id_theme": idTheme,
+    };
+}
+
+class Company {
+    final int companyId;
+    final String company;
+
+    Company({
+        required this.companyId,
+        required this.company,
+    });
+
+    factory Company.fromJson(String str) => Company.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory Company.fromMap(Map<String, dynamic> json) => Company(
+        companyId: json["company_id"],
+        company: json["company"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "company_id": companyId,
+        "company": company,
+    };
+}
+
+class Configuration {
+    final Dark dark;
+    final Dark light;
+    final Logos logos;
+
+    Configuration({
+        required this.dark,
+        required this.light,
+        required this.logos,
+    });
+
+    factory Configuration.fromJson(String str) => Configuration.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory Configuration.fromMap(Map<String, dynamic> json) => Configuration(
+        dark: Dark.fromMap(json["dark"]),
+        light: Dark.fromMap(json["light"]),
+        logos: Logos.fromMap(json["logos"]),
+    );
+
+    Map<String, dynamic> toMap() => {
+        "dark": dark.toMap(),
+        "light": light.toMap(),
+        "logos": logos.toMap(),
+    };
+}
+
+class Dark {
+    final String primaryText;
+    final String primaryColor;
+    final String tertiaryColor;
+    final String secondaryColor;
+    final String primaryBackground;
+
+    Dark({
+        required this.primaryText,
+        required this.primaryColor,
+        required this.tertiaryColor,
+        required this.secondaryColor,
+        required this.primaryBackground,
+    });
+
+    factory Dark.fromJson(String str) => Dark.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory Dark.fromMap(Map<String, dynamic> json) => Dark(
+        primaryText: json["primaryText"],
+        primaryColor: json["primaryColor"],
+        tertiaryColor: json["tertiaryColor"],
+        secondaryColor: json["secondaryColor"],
+        primaryBackground: json["primaryBackground"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "primaryText": primaryText,
+        "primaryColor": primaryColor,
+        "tertiaryColor": tertiaryColor,
+        "secondaryColor": secondaryColor,
+        "primaryBackground": primaryBackground,
+    };
+}
+
+class Logos {
+    final String logoColor;
+    final String logoBlanco;
+    final String backgroundImage;
+    final String animationBackground;
+
+    Logos({
+        required this.logoColor,
+        required this.logoBlanco,
+        required this.backgroundImage,
+        required this.animationBackground,
+    });
+
+    factory Logos.fromJson(String str) => Logos.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory Logos.fromMap(Map<String, dynamic> json) => Logos(
+        logoColor: json["logoColor"],
+        logoBlanco: json["LogoBlanco"],
+        backgroundImage: json["backgroundImage"],
+        animationBackground: json["animationBackground"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "logoColor": logoColor,
+        "LogoBlanco": logoBlanco,
+        "backgroundImage": backgroundImage,
+        "animationBackground": animationBackground,
+    };
+}
+
+class Rol {
+    final int rolId;
+    final String rol;
+    final Permits permits;
+
+    Rol({
+        required this.rolId,
+        required this.rol,
+        required this.permits,
+    });
+
+    factory Rol.fromJson(String str) => Rol.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory Rol.fromMap(Map<String, dynamic> json) => Rol(
+        rolId: json["rol_id"],
+        rol: json["rol"],
+        permits: Permits.fromMap(json["permits"]),
+    );
+
+    Map<String, dynamic> toMap() => {
+        "rol_id": rolId,
         "rol": rol,
+        "permits": permits.toMap(),
+    };
+}
+
+class Permits {
+    final String home;
+    final String employees;
+    final String userProfile;
+    final String usersAdministration;
+
+    Permits({
+        required this.home,
+        required this.employees,
+        required this.userProfile,
+        required this.usersAdministration,
+    });
+
+    factory Permits.fromJson(String str) => Permits.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory Permits.fromMap(Map<String, dynamic> json) => Permits(
+        home: json["Home"],
+        employees: json["Employees"],
+        userProfile: json["User Profile"],
+        usersAdministration: json["Users Administration"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "Home": home,
+        "Employees": employees,
+        "User Profile": userProfile,
+        "Users Administration": usersAdministration,
     };
 }
