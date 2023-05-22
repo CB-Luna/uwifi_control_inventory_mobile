@@ -79,7 +79,7 @@ class _DetalleOrdenTrabajoScreenState extends State<DetalleOrdenTrabajoScreen>
   Widget build(BuildContext context) {
     final tabs = {
       'pantallaRecepcion': RecepcionScreen(ordenTrabajo: widget.ordenTrabajo,),
-      'pantallaRevision': RevisionScreen(ordenTrabajo: widget.ordenTrabajo,),
+      // 'pantallaRevision': RevisionScreen(),
       'pantallaOrdenServicio': OrdenServicioScreen(ordenTrabajo: widget.ordenTrabajo,),
       'pantallaCotizacion': MainTabOpcionesScreen(ordenTrabajo: widget.ordenTrabajo,),
       // 'terceraParte': TerceraParteFormularioObservacionesWidget(),

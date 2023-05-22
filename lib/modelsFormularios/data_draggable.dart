@@ -22,18 +22,18 @@ List<DraggableData> optionsDraggable = [
       id: 1,
       vin: "VINONETEST", 
       color: const Color(0xFF2E5099), 
-      image: "assets/images/van1.jpg",
+      image: "assets/images/van1.png",
     ),
   DraggableData(
       id: 2,
       vin: "VINTWOTEST", 
       color: const Color(0xFF2E5099), 
-      image: "assets/images/van2.jpeg",
+      image: "assets/images/van2.png",
     ),
   DraggableData(
       id: 3,
       vin: "VINTHREETEST", 
       color: const Color(0xFF2E5099), 
-      image: "assets/images/van3.jpeg",
+      image: "assets/images/van3.png",
     ),
 ];

@@ -81,7 +81,6 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                                     actions: [
                                       TextButton(
                                         onPressed: () async {
-                                          vehiculoProvider.limpiarInformacion();
                                           clienteProvider.limpiarInformacion();
                                           await Navigator.push(
                                             context,
@@ -843,16 +842,12 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     child: FFButtonWidget(
                       onPressed: () async {
                         if (clienteProvider
-                              .validateForm(clienteKey) &&
-                          vehiculoProvider.clienteAsociado) {
+                              .validateForm(clienteKey)) {
                         //Se crea cliente sin vehiculo
                         final idCliente = clienteProvider.add(usuarioProvider.usuarioCurrent);
                         //Se asigna el cliente al usuario actual
                         if (usuarioProvider.addCliente(idCliente)) {
                           //Se agrega vehículo
-                          vehiculoProvider.add(idCliente);
-                          vehiculoProvider
-                              .limpiarInformacion();
                           clienteProvider
                               .limpiarInformacion();
                           await Navigator.push(

@@ -4,8 +4,8 @@ class GetUsuarioSupabase {
     final String id;
     final String email;
     final DateTime dateAdded;
-    final String idUserProfile;
-    final int idSeq;
+    final String idPerfilUsuario;
+    final int idSecuencial;
     final String name;
     final String? middleName;
     final String lastName;
@@ -18,14 +18,14 @@ class GetUsuarioSupabase {
     final Rol rol;
     final Company company;
     final Configuration configuration;
-    final int idTheme;
+    final int idTema;
 
     GetUsuarioSupabase({
         required this.id,
         required this.email,
         required this.dateAdded,
-        required this.idUserProfile,
-        required this.idSeq,
+        required this.idPerfilUsuario,
+        required this.idSecuencial,
         required this.name,
         this.middleName,
         required this.lastName,
@@ -38,7 +38,7 @@ class GetUsuarioSupabase {
         required this.rol,
         required this.company,
         required this.configuration,
-        required this.idTheme,
+        required this.idTema,
     });
 
     factory GetUsuarioSupabase.fromJson(String str) => GetUsuarioSupabase.fromMap(json.decode(str));
@@ -49,8 +49,8 @@ class GetUsuarioSupabase {
         id: json["id"],
         email: json["email"],
         dateAdded: DateTime.parse(json["date_added"]),
-        idUserProfile: json["id_user_profile"],
-        idSeq: json["id_seq"],
+        idPerfilUsuario: json["perfil_usuario_id"],
+        idSecuencial: json["id_secuencial"],
         name: json["name"],
         middleName: json["middle_name"],
         lastName: json["last_name"],
@@ -62,16 +62,16 @@ class GetUsuarioSupabase {
         idRolFk: json["id_rol_fk"],
         rol: Rol.fromMap(json["rol"]),
         company: Company.fromMap(json["company"]),
-        configuration: Configuration.fromMap(json["configuration"]),
-        idTheme: json["id_theme"],
+        configuration: Configuration.fromMap(json["configuracion"]),
+        idTema: json["id_tema"],
     );
 
     Map<String, dynamic> toMap() => {
         "id": id,
         "email": email,
         "date_added": dateAdded.toIso8601String(),
-        "id_user_profile": idUserProfile,
-        "id_seq": idSeq,
+        "perfil_usuario_id": idPerfilUsuario,
+        "id_secuencial": idSecuencial,
         "name": name,
         "middle_name": middleName,
         "last_name": lastName,
@@ -84,7 +84,7 @@ class GetUsuarioSupabase {
         "rol": rol.toMap(),
         "company": company.toMap(),
         "configuration": configuration.toMap(),
-        "id_theme": idTheme,
+        "id_tema": idTema,
     };
 }
 
@@ -210,13 +210,13 @@ class Logos {
 
 class Rol {
     final int rolId;
-    final String rol;
-    final Permits permits;
+    final String nombre;
+    final Permisos permisos;
 
     Rol({
         required this.rolId,
-        required this.rol,
-        required this.permits,
+        required this.nombre,
+        required this.permisos,
     });
 
     factory Rol.fromJson(String str) => Rol.fromMap(json.decode(str));
@@ -225,35 +225,35 @@ class Rol {
 
     factory Rol.fromMap(Map<String, dynamic> json) => Rol(
         rolId: json["rol_id"],
-        rol: json["rol"],
-        permits: Permits.fromMap(json["permits"]),
+        nombre: json["nombre"],
+        permisos: Permisos.fromMap(json["permisos"]),
     );
 
     Map<String, dynamic> toMap() => {
         "rol_id": rolId,
-        "rol": rol,
-        "permits": permits.toMap(),
+        "nombre": nombre,
+        "permisos": permisos.toMap(),
     };
 }
 
-class Permits {
+class Permisos {
     final String home;
     final String employees;
     final String userProfile;
     final String usersAdministration;
 
-    Permits({
+    Permisos({
         required this.home,
         required this.employees,
         required this.userProfile,
         required this.usersAdministration,
     });
 
-    factory Permits.fromJson(String str) => Permits.fromMap(json.decode(str));
+    factory Permisos.fromJson(String str) => Permisos.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-    factory Permits.fromMap(Map<String, dynamic> json) => Permits(
+    factory Permisos.fromMap(Map<String, dynamic> json) => Permisos(
         home: json["Home"],
         employees: json["Employees"],
         userProfile: json["User Profile"],

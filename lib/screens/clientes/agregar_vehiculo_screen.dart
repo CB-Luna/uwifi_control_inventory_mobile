@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'custom_functions.dart' as functions;
-import 'app_state.dart';
 import 'flutter_flow_util_local.dart';
 
 class AgregarVehiculoScreen extends StatefulWidget {
@@ -49,10 +48,10 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             body: Stack(
-              alignment: AlignmentDirectional(0.0, -1.0),
+              alignment: const AlignmentDirectional(0.0, -1.0),
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 235.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 235.0, 0.0, 0.0),
                   child: SingleChildScrollView(
                     controller: ScrollController(),
                     child: Column(
@@ -75,14 +74,14 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                   height: 235.0,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         blurRadius: 4.0,
                         color: Color(0x11000000),
                         offset: Offset(0.0, 6.0),
                       )
                     ],
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(20.0),
                       bottomRight: Radius.circular(20.0),
                       topLeft: Radius.circular(0.0),
@@ -90,7 +89,7 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                     ),
                   ),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -99,79 +98,82 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
-                              width: 35.0,
-                              height: 35.0,
-                              child: Stack(
-                                children: [
-                                  InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: const Text(
-                                                'Are you sure you want to return main screen?'),
-                                            content: const Text(
-                                                'The recent input data will be deleted.'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () async {
-                                                  controlFormProvider.cleanData();
-                                                  await Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const ControlDailyVehicleScreen(),
-                                                    ),
-                                                  );
-                                                },
-                                                child:
-                                                    const Text('Continue'),
+                            InkWell(
+                              onTap: () async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: const Text(
+                                          'Are you sure you want to return main screen?'),
+                                      content: const Text(
+                                          'The recent input data will be deleted.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () async {
+                                            controlFormProvider.cleanData();
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const ControlDailyVehicleScreen(),
                                               ),
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child:
-                                                    const Text('Cancel'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                      return;
-                                    },
-                                    child: Container(
-                                      width: 100.0,
-                                      height: 100.0,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context).alternate,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                0.0, 0.0, 3.0, 0.0),
-                                            child: Icon(
-                                              Icons.chevron_left_rounded,
-                                              color: FlutterFlowTheme.of(context)
-                                                  .primaryBackground,
-                                              size: 28.0,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                            );
+                                          },
+                                          child:
+                                              const Text('Continue'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child:
+                                              const Text('Cancel'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                return;
+                              },
+                              child: Container(
+                                width: 80,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 4,
+                                      color: Color(0x39000000),
+                                      offset: Offset(-4, 8),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Icon(
+                                      Icons.arrow_back_ios_rounded,
+                                      color: FlutterFlowTheme.of(context).white,
+                                      size: 16,
                                     ),
-                                  ),
-                                ],
+                                    Text(
+                                      'Back',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: FlutterFlowTheme.of(context)
+                                                .bodyText1Family,
+                                            color: FlutterFlowTheme.of(context).white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             FlutterFlowIconButton(
@@ -191,7 +193,7 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                         ),
                         Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                              const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -245,18 +247,31 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                               height: 100,
                               width: 180,
                               decoration: BoxDecoration(
-                                color: data.color,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 10,
+                                    color: data.color.withOpacity(0.8),
+                                    offset: const Offset(6, 6),
+                                  )
+                                ],
+                                color: data.color.withOpacity(0.8),
+                                borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(20),
+                                  bottomRight: Radius.circular(20),
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20),
+                                ),
                               ),
                             ),
                             child: Container(
                               height: 200,
                               width: 290,
                               decoration: BoxDecoration(
-                                boxShadow: const [
+                                boxShadow: [
                                   BoxShadow(
-                                    blurRadius: 4,
-                                    color: Color(0x39000000),
-                                    offset: Offset(-4, 8),
+                                    blurRadius: 10,
+                                    color: data.color.withOpacity(0.8),
+                                    offset: const Offset(6, 6),
                                   )
                                 ],
                                 color: data.color.withOpacity(0.8),

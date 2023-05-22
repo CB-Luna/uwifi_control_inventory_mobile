@@ -55,23 +55,23 @@ class Edge {
 class Node {
     Node({
         required this.id,
-        required this.rol,
+        required this.nombre,
         required this.createdAt,
     });
 
     final String id;
-    final String rol;
+    final String nombre;
     final DateTime createdAt;
 
     factory Node.fromMap(Map<String, dynamic> json) => Node(
-        id: json["id_rol_pk"],
-        rol: json["rol"],
+        id: json["rol_id"],
+        nombre: json["nombre"],
         createdAt: DateTime.parse(json["created_at"]),
     );
 
     Map<String, dynamic> toMap() => {
-        "id_rol_pk": id,
-        "rol": rol,
+        "rol_id": id,
+        "nombre": nombre,
         "created_at": createdAt.toIso8601String(),
     };
 }

@@ -1,6 +1,8 @@
 import 'package:taller_alex_app_asesor/modelsFormularios/data_draggable.dart';
 import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/observacion_screen.dart';
+import 'package:taller_alex_app_asesor/screens/revision/revision_screen.dart';
+import 'package:taller_alex_app_asesor/screens/revision/revision_screen_dos.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -29,6 +31,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
   Color caughtColor = Colors.white;
   String vin = "";
   String image = "";
+  late DraggableData dataLate;
 
   @override
   void setState(VoidCallback callback) {
@@ -78,6 +81,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
             caughtColor = data.color;
             vin = data.vin;
             image = data.image;
+            dataLate = data;
           });
           controlFormProvider.updateDataSelected(data.accept);
         }
@@ -100,7 +104,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                     children: [
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
                         child: Container(
                           width: MediaQuery.of(context).size.width * 1.0,
                           height: 2.0,
@@ -117,7 +121,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                         ),
                         child: Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(10.0, 5.0, 0.0, 0.0),
+                              const EdgeInsetsDirectional.fromSTEB(10.0, 5.0, 0.0, 0.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,7 +141,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                           ),
                                     )),
                                     Align(
-                                      alignment: AlignmentDirectional(-1.0, 0.45),
+                                      alignment: const AlignmentDirectional(-1.0, 0.45),
                                       child: SelectionArea(
                                           child: Text(
                                         valueOrDefault<String>(
@@ -163,14 +167,14 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(0.0, 0.0),
+                        alignment: const AlignmentDirectional(0.0, 0.0),
                         child: Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 0.0),
+                              const EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 0.0),
                           child: Container(
                             width: MediaQuery.of(context).size.width * 1.0,
                             height: 2.0,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Color(0x80E0E3E7),
                             ),
                           ),
@@ -206,7 +210,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                         ),
                       ),
                       Align(
-                        alignment: Alignment(0.0, 0.9),
+                        alignment: const Alignment(0.0, 0.9),
                         child: 
                         vin != "" ? 
                         Row(
@@ -221,11 +225,12 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                 borderRadius:
                                     BorderRadius.circular(30
                                 ),
-                                boxShadow: const [
+                                boxShadow: [
                                   BoxShadow(
-                                    blurRadius: 3,
-                                    color: Color(0x33000000),
-                                    offset: Offset(0, 1),
+                                    blurRadius: 15,
+                                    color: FlutterFlowTheme.of(context)
+                                    .primaryColor.withOpacity(0.4),
+                                    offset: const Offset(4, 4),
                                   )
                                 ],
                               ),
@@ -281,15 +286,16 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                               height: 50,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
-                                    .primaryColor,
+                                    .grayLighter,
                                 borderRadius:
                                     BorderRadius.circular(30
                                 ),
-                                boxShadow: const [
+                                boxShadow: [
                                   BoxShadow(
-                                    blurRadius: 3,
-                                    color: Color(0x33000000),
-                                    offset: Offset(0, 1),
+                                    blurRadius: 15,
+                                    color: FlutterFlowTheme.of(context)
+                                    .grayLighter.withOpacity(0.4),
+                                    offset: const Offset(4, 4),
                                   )
                                 ],
                               ),
@@ -299,13 +305,13 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                       ObservacionScreen(hour: widget.time!, period: widget.period!,),
+                                       RevisionScreenDos(draggableData: dataLate, hour: widget.time!, period: widget.period!,),
                                     ),
                                   );
                                 },
                                 child: Icon(
                                   Icons.add,
-                                  color: FlutterFlowTheme.of(context).white,
+                                  color: FlutterFlowTheme.of(context).grayDark,
                                   size: 30,
                                 ),
                               ),

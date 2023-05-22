@@ -53,8 +53,8 @@ class RolesSupabaseProvider extends ChangeNotifier {
         rolCollection {
           edges {
             node {
-              id_rol_pk
-              rol
+              rol_id
+              nombre
               created_at
             }
           }
@@ -81,14 +81,14 @@ class RolesSupabaseProvider extends ChangeNotifier {
           final rolExistente = dataBase.rolesBox.query(Roles_.idDBR.equals(element.node.id)).build().findUnique();
           if (rolExistente == null) {
             final nuevoRol = Roles(
-            rol: element.node.rol,
+            rol: element.node.nombre,
             idDBR: element.node.id, 
             );
             dataBase.rolesBox.put(nuevoRol);
             //print('Rol Nuevo agregado exitosamente');
           } else {
               //Se actualiza el registro en Objectbox
-              rolExistente.rol = element.node.rol;
+              rolExistente.rol = element.node.nombre;
               dataBase.rolesBox.put(rolExistente);
           }
         }
