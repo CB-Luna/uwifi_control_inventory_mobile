@@ -12,11 +12,11 @@ class GetRolesSupabase {
     final RolesCollection rolesCollection;
 
     factory GetRolesSupabase.fromMap(Map<String, dynamic> json) => GetRolesSupabase(
-        rolesCollection: RolesCollection.fromMap(json["rolCollection"]),
+        rolesCollection: RolesCollection.fromMap(json["roleCollection"]),
     );
 
     Map<String, dynamic> toMap() => {
-        "rolCollection": rolesCollection.toMap(),
+        "roleCollection": rolesCollection.toMap(),
     };
 }
 
@@ -55,23 +55,23 @@ class Edge {
 class Node {
     Node({
         required this.id,
-        required this.nombre,
+        required this.name,
         required this.createdAt,
     });
 
     final String id;
-    final String nombre;
+    final String name;
     final DateTime createdAt;
 
     factory Node.fromMap(Map<String, dynamic> json) => Node(
-        id: json["rol_id"],
-        nombre: json["nombre"],
+        id: json["role_id"],
+        name: json["name"],
         createdAt: DateTime.parse(json["created_at"]),
     );
 
     Map<String, dynamic> toMap() => {
-        "rol_id": id,
-        "nombre": nombre,
+        "role_id": id,
+        "name": name,
         "created_at": createdAt.toIso8601String(),
     };
 }

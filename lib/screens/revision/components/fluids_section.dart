@@ -94,6 +94,7 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -111,6 +112,7 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -128,6 +130,7 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -145,6 +148,7 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -162,6 +166,7 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -179,6 +184,7 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -207,6 +213,7 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -224,6 +231,7 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -241,6 +249,7 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,

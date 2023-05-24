@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:taller_alex_app_asesor/providers/providers.dart';
 import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
@@ -58,7 +56,7 @@ class _BottomSheetImagenesCompletasState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 4, 0, 0),
                               child: Text(
-                                '¡Se excedió el límite de archivos permitidos!',
+                                '¡Max lenght of allowed files!',
                                 textAlign: TextAlign.center,
                                 style: AppTheme.of(context).title2.override(
                                       fontFamily:
@@ -79,7 +77,7 @@ class _BottomSheetImagenesCompletasState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 8, 0, 0),
                               child: Text(
-                                'Al continuar la imagen seleccionada reemplazará a la última imagen cargada ¿Deseas continuar?',
+                                "If you click on 'continue' the image selected will replace the last uploaded image, do you want to continue?",
                                 textAlign: TextAlign.center,
                                 style: AppTheme.of(context).bodyText2.override(
                                       fontFamily:
@@ -118,7 +116,7 @@ class _BottomSheetImagenesCompletasState
                               onPressed: () async {
                                 Navigator.pop(context, false);
                               },
-                              text: 'CANCELAR',
+                              text: 'CANCEL',
                               options: FFButtonOptions(
                                 width: 150,
                                 height: 50,
@@ -142,7 +140,7 @@ class _BottomSheetImagenesCompletasState
                               onPressed: () async {
                                 Navigator.pop(context, true);
                               },
-                              text: 'CONTINUAR',
+                              text: 'CONTINUE',
                               options: FFButtonOptions(
                                 width: 150,
                                 height: 50,

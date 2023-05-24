@@ -45,7 +45,7 @@ abstract class AuthService {
       final res = await supabaseClient
           .from('users')
           .select()
-          .eq('perfil_usuario_id', userId);
+          .eq('user_profile_id', userId);
 
       if (res[0] != null) {
         final userProfile = res[0];

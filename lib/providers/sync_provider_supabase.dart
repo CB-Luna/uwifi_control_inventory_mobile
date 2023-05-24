@@ -590,7 +590,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 final String clienteId = recordInviteCliente.user!.id;
                 final recordCliente = await supabaseClient.from('perfil_usuario').insert(
                   {
-                    'perfil_usuario_id': clienteId,
+                    'user_profile_id': clienteId,
                     'nombre': usuario.nombre,
                     'apellido_p': usuario.apellidoP,
                     'apellido_m': usuario.apellidoM,
@@ -601,10 +601,10 @@ class SyncProviderSupabase extends ChangeNotifier {
                     'celular': usuario.celular,
                     'domicilio': usuario.domicilio,
                   },
-                ).select<PostgrestList>('perfil_usuario_id');
+                ).select<PostgrestList>('user_profile_id');
                 if (recordCliente.isNotEmpty) {
                   //Se recupera el idDBR de Supabase del Usuario
-                  usuario.idDBR = recordCliente.first['perfil_usuario_id'].toString();
+                  usuario.idDBR = recordCliente.first['user_profile_id'].toString();
                   dataBase.usuariosBox.put(usuario);
                   //Se marca como ejecutada la instrucción en Bitacora
                   bitacora.executeSupabase = true;
@@ -634,7 +634,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             if(clienteId != null){
               final recordCliente = await supabaseClient.from('perfil_usuario').insert(
                 {
-                  'perfil_usuario_id': clienteId,
+                  'user_profile_id': clienteId,
                   'nombre': usuario.nombre,
                   'apellido_p': usuario.apellidoP,
                   'apellido_m': usuario.apellidoM,
@@ -645,10 +645,10 @@ class SyncProviderSupabase extends ChangeNotifier {
                   'celular': usuario.celular,
                   'domicilio': usuario.domicilio,
                 },
-              ).select<PostgrestList>('perfil_usuario_id');
+              ).select<PostgrestList>('user_profile_id');
               if (recordCliente.isNotEmpty) {
                 //Se recupera el idDBR de Supabase del Usuario
-                usuario.idDBR = recordCliente.first['perfil_usuario_id'].toString();
+                usuario.idDBR = recordCliente.first['user_profile_id'].toString();
                 dataBase.usuariosBox.put(usuario);
                 //Se marca como ejecutada la instrucción en Bitacora
                 bitacora.executeSupabase = true;

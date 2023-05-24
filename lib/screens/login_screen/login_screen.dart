@@ -445,7 +445,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           getUsuarioSupabase.address,
                                           userState.passwordController.text,
                                           getUsuarioSupabase.image,
-                                          [getUsuarioSupabase.rol.rolId.toString()],
+                                          [getUsuarioSupabase.role.id.toString()],
                                         );
                                       } else {
                                         usuarioProvider.add(
@@ -458,7 +458,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           loginResponseSupabase.user.email,
                                           userState.passwordController.text,
                                           getUsuarioSupabase.image,
-                                          [getUsuarioSupabase.rol.rolId.toString()],
+                                          [getUsuarioSupabase.role.id.toString()],
                                           getUsuarioSupabase.id,
                                         );
                                         usuarioProvider.getUser(loginResponseSupabase.user.email);

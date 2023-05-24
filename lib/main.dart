@@ -20,7 +20,7 @@ import 'providers/database_providers/fluidos_controller.dart';
 import 'providers/database_providers/frenos_controller.dart';
 import 'providers/database_providers/motor_controller.dart';
 import 'providers/database_providers/observacion_controller.dart';
-import 'providers/database_providers/orden_trabajo_controller.dart';
+import 'providers/database_providers/delivery_form_controller.dart';
 import 'providers/database_providers/suspension_direccion_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/catalogo_supabase_provider.dart';
@@ -78,8 +78,8 @@ void main() async {
           create: (context) => VehiculoController(),
           lazy: false,
         ),
-        ChangeNotifierProvider<OrdenTrabajoController>(
-          create: (context) => OrdenTrabajoController(),
+        ChangeNotifierProvider<DeliveryFormController>(
+          create: (context) => DeliveryFormController(),
           lazy: false,
         ),
         ChangeNotifierProvider<ObservacionController>(

@@ -94,6 +94,7 @@ class _EquipmentSectionState extends State<EquipmentSection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -111,6 +112,7 @@ class _EquipmentSectionState extends State<EquipmentSection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -128,6 +130,7 @@ class _EquipmentSectionState extends State<EquipmentSection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -145,6 +148,7 @@ class _EquipmentSectionState extends State<EquipmentSection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -162,6 +166,7 @@ class _EquipmentSectionState extends State<EquipmentSection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,

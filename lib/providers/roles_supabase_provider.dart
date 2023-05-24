@@ -50,11 +50,11 @@ class RolesSupabaseProvider extends ChangeNotifier {
   Future<bool> getRoles() async {
     String queryGetRoles = """
       query Query {
-        rolCollection {
+        roleCollection {
           edges {
             node {
-              rol_id
-              nombre
+              role_id
+              name
               created_at
             }
           }
@@ -81,14 +81,14 @@ class RolesSupabaseProvider extends ChangeNotifier {
           final rolExistente = dataBase.rolesBox.query(Roles_.idDBR.equals(element.node.id)).build().findUnique();
           if (rolExistente == null) {
             final nuevoRol = Roles(
-            rol: element.node.nombre,
+            rol: element.node.name,
             idDBR: element.node.id, 
             );
             dataBase.rolesBox.put(nuevoRol);
             //print('Rol Nuevo agregado exitosamente');
           } else {
               //Se actualiza el registro en Objectbox
-              rolExistente.rol = element.node.nombre;
+              rolExistente.rol = element.node.name;
               dataBase.rolesBox.put(rolExistente);
           }
         }

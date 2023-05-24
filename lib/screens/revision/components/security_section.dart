@@ -93,7 +93,8 @@ class _SecuritySectionState extends State<SecuritySection> {
 
                   }, 
                   isRight: false,
-                  isRegistered: true,
+                  isRegistered: true, 
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -111,6 +112,7 @@ class _SecuritySectionState extends State<SecuritySection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -128,6 +130,7 @@ class _SecuritySectionState extends State<SecuritySection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -145,6 +148,7 @@ class _SecuritySectionState extends State<SecuritySection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -162,6 +166,7 @@ class _SecuritySectionState extends State<SecuritySection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -179,6 +184,7 @@ class _SecuritySectionState extends State<SecuritySection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -207,6 +213,7 @@ class _SecuritySectionState extends State<SecuritySection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -224,6 +231,7 @@ class _SecuritySectionState extends State<SecuritySection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -241,6 +249,7 @@ class _SecuritySectionState extends State<SecuritySection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -258,6 +267,7 @@ class _SecuritySectionState extends State<SecuritySection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -275,6 +285,7 @@ class _SecuritySectionState extends State<SecuritySection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -292,6 +303,7 @@ class _SecuritySectionState extends State<SecuritySection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -309,6 +321,7 @@ class _SecuritySectionState extends State<SecuritySection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
@@ -326,6 +339,7 @@ class _SecuritySectionState extends State<SecuritySection> {
                   }, 
                   isRight: false,
                   isRegistered: true,
+                  images: [],
                 ),
                 Divider(
                   height: 4,
