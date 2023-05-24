@@ -62,11 +62,11 @@ class DeliveryFormController extends ChangeNotifier {
   String safetyHarness = "Good";
   String lanyardSafetyHarness = "Good";
 
-  String ignitionKey = "Good";
-  String binsBoxKey = "Good";
-  String vehicleRegistrationCopy = "Good";
-  String vehicleInsuranceCopy = "Good";
-  String bucketLiftOperatorManual = "Good";
+  String ignitionKey = "Yes";
+  String binsBoxKey = "Yes";
+  String vehicleRegistrationCopy = "Yes";
+  String vehicleInsuranceCopy = "Yes";
+  String bucketLiftOperatorManual = "Yes";
 
 
   //Images
@@ -778,11 +778,11 @@ class DeliveryFormController extends ChangeNotifier {
     firstAidKitSafetyVestImages.add(image);
     notifyListeners();
   }
-  void addbackUpAlarmImage(String image) {
+  void addBackUpAlarmImage(String image) {
     backUpAlarmImages.add(image);
     notifyListeners();
   }
-  void updatebackUpAlarmImage(String image) {
+  void updateBackUpAlarmImage(String image) {
     backUpAlarmImages.removeLast();
     backUpAlarmImages.add(image);
     notifyListeners();
@@ -965,11 +965,11 @@ class DeliveryFormController extends ChangeNotifier {
     safetyHarness = "Good";
     lanyardSafetyHarness = "Good";
 
-    ignitionKey = "Good";
-    binsBoxKey = "Good";
-    vehicleRegistrationCopy = "Good";
-    vehicleInsuranceCopy = "Good";
-    bucketLiftOperatorManual = "Good";
+    ignitionKey = "Yes";
+    binsBoxKey = "Yes";
+    vehicleRegistrationCopy = "Yes";
+    vehicleInsuranceCopy = "Yes";
+    bucketLiftOperatorManual = "Yes";
 
     //Images
     gasImages.clear();

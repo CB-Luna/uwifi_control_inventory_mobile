@@ -28,6 +28,7 @@ class ItemForm extends StatefulWidget {
     this.comments,
     this.report,
     this.updateReport,
+    this.reportYesNo = false,
   }) : super(key: key);
 
   final String textItem;
@@ -41,6 +42,7 @@ class ItemForm extends StatefulWidget {
   final TextEditingController? comments;
   final String? report;
   final void Function(String value)? updateReport;
+  final bool reportYesNo;
 
   @override
   State<ItemForm> createState() => _ItemFormState();
@@ -151,9 +153,14 @@ class _ItemFormState extends State<ItemForm> {
                                       5, 0, 5, 20),
                               child: DropDown(
                                 initialOption: widget.report!,
-                                options: const ['Good', 'Bad'],
+                                options: widget.reportYesNo ?
+                                ['Yes', 'No']
+                                :
+                                ['Good', 'Bad'],
                                 onChanged: (value) {
+                                  state.setState(() {
                                     widget.updateReport!(value!);
+                                  });
                                 },
                                 width: double.infinity,
                                 height: 50,
@@ -362,7 +369,9 @@ class _ItemFormState extends State<ItemForm> {
 
                                           );
                                           if (pickedFile != null) {
-                                            widget.updateImage!(pickedFile.path);
+                                            state.setState(() {
+                                              widget.updateImage!(pickedFile!.path);
+                                            });
                                           }
                                           return;
                                         }
@@ -503,7 +512,9 @@ class _ItemFormState extends State<ItemForm> {
 
                                           );
                                           if (pickedFile != null) {
-                                            widget.updateImage!(pickedFile.path);
+                                            state.setState(() {
+                                              widget.updateImage!(pickedFile!.path);
+                                            });
                                           }
                                           return;
                                         }
@@ -531,8 +542,10 @@ class _ItemFormState extends State<ItemForm> {
                                               base64: base64);
                                       // widget.images
                                       //     .add(base64);
-                                      widget.addImage!(
+                                      state.setState(() {
+                                        widget.addImage!(
                                         imagenesTemp[i].path);
+                                      });
                                     }
                                   },
                                   text: 'Add',

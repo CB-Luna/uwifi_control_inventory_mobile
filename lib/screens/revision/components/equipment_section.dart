@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/delivery_form_controller.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/header_shimmer.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/item_form.dart';
@@ -71,6 +73,7 @@ final animationsMap = {
 class _EquipmentSectionState extends State<EquipmentSection> {
   @override
   Widget build(BuildContext context) {
+    final deliveryFormProvider = Provider.of<DeliveryFormController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: Row(
@@ -88,13 +91,25 @@ class _EquipmentSectionState extends State<EquipmentSection> {
                 ),
                 // Ignition Key
                 ItemForm(
-                  textItem: "Ignition Key", 
+                  textItem: "Ignition Key",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.ignitionKeyImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addIgnitionKeyImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateIgnitionKeyImage(image);
+                  },
+                  comments: deliveryFormProvider.ignitionKeyComments,
+                  report: deliveryFormProvider.ignitionKey,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateIgnitionKey(report);
+                  },
+                  reportYesNo: true,
                 ),
                 Divider(
                   height: 4,
@@ -106,13 +121,25 @@ class _EquipmentSectionState extends State<EquipmentSection> {
 
                 // Bins/Box Key(s)
                 ItemForm(
-                  textItem: "Bins/Box Key(s)", 
+                  textItem: "Bins/Box Key(s)",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.binsBoxKeyImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addBinsBoxKeyImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateBinsBoxKeyImage(image);
+                  },
+                  comments: deliveryFormProvider.binsBoxKeyComments,
+                  report: deliveryFormProvider.binsBoxKey,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateBinsBoxKey(report);
+                  },
+                  reportYesNo: true,
                 ),
                 Divider(
                   height: 4,
@@ -124,13 +151,25 @@ class _EquipmentSectionState extends State<EquipmentSection> {
 
                 // Vehicle Registration Copy (Glovebox)
                 ItemForm(
-                  textItem: "Vehicle Registration Copy (Glovebox)", 
+                  textItem: "Vehicle Registration Copy (Glovebox)",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.vehicleRegistrationCopyImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addVehicleRegistrationCopyImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateVehicleRegistrationCopyImage(image);
+                  },
+                  comments: deliveryFormProvider.vehicleRegistrationCopyComments,
+                  report: deliveryFormProvider.vehicleRegistrationCopy,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateVehicleRegistrationCopy(report);
+                  },
+                  reportYesNo: true,
                 ),
                 Divider(
                   height: 4,
@@ -142,13 +181,25 @@ class _EquipmentSectionState extends State<EquipmentSection> {
 
                 // Vehicle Insurance Copy (Glovebox)
                 ItemForm(
-                  textItem: "Vehicle Insurance Copy (Glovebox)", 
+                  textItem: "Vehicle Insurance Copy (Glovebox)",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.vehicleInsuranceCopyImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addVehicleInsuranceCopyImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateVehicleInsuranceCopyImage(image);
+                  },
+                  comments: deliveryFormProvider.vehicleInsuranceCopyComments,
+                  report: deliveryFormProvider.vehicleInsuranceCopy,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateVehicleInsuranceCopy(report);
+                  },
+                  reportYesNo: true,
                 ),
                 Divider(
                   height: 4,
@@ -160,13 +211,25 @@ class _EquipmentSectionState extends State<EquipmentSection> {
 
                 // Bucket / Lift Operator Manual
                 ItemForm(
-                  textItem: "Bucket / Lift Operator Manual", 
+                  textItem: "Bucket / Lift Operator Manual",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.bucketLiftOperatorManualImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addBucketLiftOperatorManualImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateBucketLiftOperatorManualImage(image);
+                  },
+                  comments: deliveryFormProvider.bucketLiftOperatorManualComments,
+                  report: deliveryFormProvider.bucketLiftOperatorManual,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateBucketLiftOperatorManual(report);
+                  },
+                  reportYesNo: true,
                 ),
                 Divider(
                   height: 4,

@@ -392,13 +392,24 @@ class _LightsSectionState extends State<LightsSection> {
                 ),
                 // Wiper Blades front
                 ItemForm(
-                  textItem: "Wiper Blades front", 
+                  textItem: "Wiper Blades Front",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.wiperBladesFrontImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addWiperBladesFrontImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateWiperBladesFrontImage(image);
+                  },
+                  comments: deliveryFormProvider.wiperBladesFrontComments,
+                  report: deliveryFormProvider.wiperBladesFront,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateWiperBladesFront(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -408,15 +419,26 @@ class _LightsSectionState extends State<LightsSection> {
                   color: FlutterFlowTheme.of(context).grayLighter,
                 ),
 
-                // Wiper Blades back
+                // Wiper Blades Back
                 ItemForm(
-                  textItem: "Wiper Blades back", 
+                  textItem: "Wiper Blades Back",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.wiperBladesBackImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addWiperBladesBackImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateWiperBladesBackImage(image);
+                  },
+                  comments: deliveryFormProvider.wiperBladesBackComments,
+                  report: deliveryFormProvider.wiperBladesBack,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateWiperBladesBack(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -428,13 +450,24 @@ class _LightsSectionState extends State<LightsSection> {
 
                 // Windshield wiper front
                 ItemForm(
-                  textItem: "Windshield wiper front", 
+                  textItem: "Windshield Wiper Front",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.windshieldWiperFrontImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addWindshieldWiperFrontImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateWindshieldWiperFrontImage(image);
+                  },
+                  comments: deliveryFormProvider.windshieldWiperFrontComments,
+                  report: deliveryFormProvider.windshieldWiperFront,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateWindshieldWiperFront(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -446,13 +479,24 @@ class _LightsSectionState extends State<LightsSection> {
 
                 // Windshield wiper back
                 ItemForm(
-                  textItem: "Windshield wiper back", 
+                  textItem: "Windshield Wiper Back",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.windshieldWiperBackImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addWindshieldWiperBackImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateWindshieldWiperBackImage(image);
+                  },
+                  comments: deliveryFormProvider.windshieldWiperBackComments,
+                  report: deliveryFormProvider.windshieldWiperBack,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateWindshieldWiperBack(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -464,13 +508,24 @@ class _LightsSectionState extends State<LightsSection> {
 
                 // General Body	
                 ItemForm(
-                  textItem: "General Body	", 
+                  textItem: "General Body",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.generalBodyImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addGeneralBodyImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateGeneralBodyImage(image);
+                  },
+                  comments: deliveryFormProvider.generalBodyComments,
+                  report: deliveryFormProvider.generalBody,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateGeneralBody(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -482,13 +537,24 @@ class _LightsSectionState extends State<LightsSection> {
 
                 // Decaling
                 ItemForm(
-                  textItem: "Decaling", 
+                  textItem: "Decaling",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.decalingImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addDecalingImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateDecalingImage(image);
+                  },
+                  comments: deliveryFormProvider.decalingComments,
+                  report: deliveryFormProvider.decaling,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateDecaling(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -500,13 +566,24 @@ class _LightsSectionState extends State<LightsSection> {
 
                 // Tires
                 ItemForm(
-                  textItem: "Tires", 
+                  textItem: "Tires",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.tiresImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addTiresImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateTiresImage(image);
+                  },
+                  comments: deliveryFormProvider.tiresComments,
+                  report: deliveryFormProvider.tires,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateTires(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -518,13 +595,24 @@ class _LightsSectionState extends State<LightsSection> {
 
                 // Glass
                 ItemForm(
-                  textItem: "Glass", 
+                  textItem: "Glass",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.glassImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addGlassImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateGlassImage(image);
+                  },
+                  comments: deliveryFormProvider.glassComments,
+                  report: deliveryFormProvider.glass,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateGlass(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -536,13 +624,24 @@ class _LightsSectionState extends State<LightsSection> {
 
                 // Mirrors
                 ItemForm(
-                  textItem: "Mirrors", 
+                  textItem: "Mirrors",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.mirrorsImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addMirrorsImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateMirrorsImage(image);
+                  },
+                  comments: deliveryFormProvider.mirrorsComments,
+                  report: deliveryFormProvider.mirrors,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateMirrors(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -554,13 +653,24 @@ class _LightsSectionState extends State<LightsSection> {
 
                 // Parking
                 ItemForm(
-                  textItem: "Parking", 
+                  textItem: "Parking",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.parkingImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addParkingImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateParkingImage(image);
+                  },
+                  comments: deliveryFormProvider.parkingComments,
+                  report: deliveryFormProvider.parking,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateParking(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -572,13 +682,24 @@ class _LightsSectionState extends State<LightsSection> {
 
                 // Brakes
                 ItemForm(
-                  textItem: "Brakes", 
+                  textItem: "Brakes",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.brakesImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addBrakesImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateBrakesImage(image);
+                  },
+                  comments: deliveryFormProvider.brakesComments,
+                  report: deliveryFormProvider.brakes,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateBrakes(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -590,13 +711,24 @@ class _LightsSectionState extends State<LightsSection> {
 
                 // EMG Brakes
                 ItemForm(
-                  textItem: "EMG Brakes", 
+                  textItem: "EMG Brakes",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.emgBrakesImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addEMGBrakesImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateEMGBrakesImage(image);
+                  },
+                  comments: deliveryFormProvider.emgBrakesComments,
+                  report: deliveryFormProvider.emgBrakes,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateEMGBrakes(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -608,13 +740,24 @@ class _LightsSectionState extends State<LightsSection> {
 
                 // Horn
                 ItemForm(
-                  textItem: "Horn", 
+                  textItem: "Horn",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.hornImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addHornImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateHornImage(image);
+                  },
+                  comments: deliveryFormProvider.hornComments,
+                  report: deliveryFormProvider.horn,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateHorn(report);
+                  },
                 ),
                 Divider(
                   height: 4,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/delivery_form_controller.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/header_shimmer.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/item_form.dart';
@@ -71,6 +73,7 @@ final animationsMap = {
 class _FluidsSectionState extends State<FluidsSection> {
   @override
   Widget build(BuildContext context) {
+    final deliveryFormProvider = Provider.of<DeliveryFormController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: Row(
@@ -88,13 +91,24 @@ class _FluidsSectionState extends State<FluidsSection> {
                 ),
                 // Engine Oil
                 ItemForm(
-                  textItem: "Engine Oil", 
+                  textItem: "Engine Oil",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.engineOilImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addEngineOilImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateEngineOilImage(image);
+                  },
+                  comments: deliveryFormProvider.engineOilComments,
+                  report: deliveryFormProvider.engineOil,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateEngineOil(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -104,15 +118,26 @@ class _FluidsSectionState extends State<FluidsSection> {
                   color: FlutterFlowTheme.of(context).grayLighter,
                 ),
 
-                // Transsmission
+                // Transmission
                 ItemForm(
-                  textItem: "Transsmission", 
+                  textItem: "Transmission",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.transmissionImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addTransmissionImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateTransmissionImage(image);
+                  },
+                  comments: deliveryFormProvider.transmissionComments,
+                  report: deliveryFormProvider.transmission,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateTransmission(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -124,13 +149,24 @@ class _FluidsSectionState extends State<FluidsSection> {
 
                 // Coolant
                 ItemForm(
-                  textItem: "Coolant", 
+                  textItem: "Coolant",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.coolantImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addCoolantImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateCoolantImage(image);
+                  },
+                  comments: deliveryFormProvider.coolantComments,
+                  report: deliveryFormProvider.coolant,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateCoolant(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -142,13 +178,24 @@ class _FluidsSectionState extends State<FluidsSection> {
 
                 // Power Steering
                 ItemForm(
-                  textItem: "Power Steering", 
+                  textItem: "Power Steering",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.powerSteeringImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addPowerSteeringImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updatePowerSteeringImage(image);
+                  },
+                  comments: deliveryFormProvider.powerSteeringComments,
+                  report: deliveryFormProvider.powerSteering,
+                  updateReport: (report) {
+                    deliveryFormProvider.updatePowerSteering(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -160,13 +207,24 @@ class _FluidsSectionState extends State<FluidsSection> {
 
                 // Diesel Exhaust Fluid
                 ItemForm(
-                  textItem: "Diesel Exhaust Fluid", 
+                  textItem: "Diesel Exhaust Fluid",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.dieselExhaustFluidImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addDieselExhaustFluidImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateDieselExhaustFluidImage(image);
+                  },
+                  comments: deliveryFormProvider.dieselExhaustFluidComments,
+                  report: deliveryFormProvider.dieselExhaustFluid,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateDieselExhaustFluid(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -178,13 +236,24 @@ class _FluidsSectionState extends State<FluidsSection> {
 
                 // Windshield Washer Fluid
                 ItemForm(
-                  textItem: "Windshield Washer Fluid", 
+                  textItem: "Windshield Washer Fluid",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.windshieldWasherFluidImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addWindshieldWasherFluidImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateWindshieldWasherFluidImage(image);
+                  },
+                  comments: deliveryFormProvider.windshieldWasherFluidComments,
+                  report: deliveryFormProvider.windshieldWasherFluid,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateWindshieldWasherFluid(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -207,13 +276,24 @@ class _FluidsSectionState extends State<FluidsSection> {
                 ),
                 // Insulated
                 ItemForm(
-                  textItem: "Insulated", 
+                  textItem: "Insulated",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.insulatedImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addInsulatedImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateInsulatedImage(image);
+                  },
+                  comments: deliveryFormProvider.insulatedComments,
+                  report: deliveryFormProvider.insulated,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateInsulated(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -225,13 +305,24 @@ class _FluidsSectionState extends State<FluidsSection> {
 
                 // Holes Drilled
                 ItemForm(
-                  textItem: "Holes Drilled", 
+                  textItem: "Holes Drilled",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.holesDrilledImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addHolesDrilledImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateHolesDrilledImage(image);
+                  },
+                  comments: deliveryFormProvider.holesDrilledComments,
+                  report: deliveryFormProvider.holesDrilled,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateHolesDrilled(report);
+                  },
                 ),
                 Divider(
                   height: 4,
@@ -243,13 +334,24 @@ class _FluidsSectionState extends State<FluidsSection> {
 
                 // Bucket liner
                 ItemForm(
-                  textItem: "Bucket liner", 
+                  textItem: "Bucker Liner",
                   onPressed: () {
 
                   }, 
                   isRight: false,
                   isRegistered: true,
-                  images: [],
+                  images: deliveryFormProvider.bucketLinerImages,
+                  addImage: (image) {
+                    deliveryFormProvider.addBucketLinerImage(image);
+                  },
+                  updateImage: (image) {
+                    deliveryFormProvider.updateBucketLinerImage(image);
+                  },
+                  comments: deliveryFormProvider.bucketLinerComments,
+                  report: deliveryFormProvider.bucketLiner,
+                  updateReport: (report) {
+                    deliveryFormProvider.updateBucketLiner(report);
+                  },
                 ),
                 Divider(
                   height: 4,
