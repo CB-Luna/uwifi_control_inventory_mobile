@@ -262,13 +262,13 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
   }
 
 
-  List<OrdenTrabajo> obtenerOrdenesTrabajo() {
-    final List<OrdenTrabajo> ordenesTrabajo = [];
+  List<ControlForm> obtenerOrdenesTrabajo() {
+    final List<ControlForm> ordenesTrabajo = [];
     final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? 1);
     if (usuarioActual != null) {
-        for (var element in usuarioActual.ordenesTrabajo) {
-        ordenesTrabajo.add(element);
-      }
+      //   for (var element in usuarioActual.ordenesTrabajo) {
+      //   ordenesTrabajo.add(element);
+      // }
     }
     return ordenesTrabajo;
   }

@@ -7,7 +7,7 @@ class ObjectBoxDatabase {
 
   late final Box<Usuarios> usuariosBox;
   late final Box<Vehiculo> vehiculoBox;
-  late final Box<OrdenTrabajo> ordenTrabajoBox;
+  late final Box<ControlForm> controlFormBox;
   late final Box<FormaPago> formaPagoBox;
   late final Box<Observaciones> observacionesBox;
   late final Box<Revision> revisionBox;
@@ -33,7 +33,7 @@ class ObjectBoxDatabase {
     // Add any additional setup code, e.g. build queries.
     usuariosBox = Box<Usuarios>(store);
     vehiculoBox = Box<Vehiculo>(store);
-    ordenTrabajoBox = Box<OrdenTrabajo>(store);
+    controlFormBox = Box<ControlForm>(store);
     formaPagoBox = Box<FormaPago>(store);
     observacionesBox = Box<Observaciones>(store);
     revisionBox = Box<Revision>(store);

@@ -61,7 +61,7 @@ class ClienteController extends ChangeNotifier {
     final nuevaInstruccion = Bitacora(
       instruccion: 'syncAgregarCliente',
       usuarioPropietario: prefs.getString("userId")!,
-      idOrdenTrabajo: 0,
+      idControlForm: 0,
     ); //Se crea la nueva instruccion a realizar en bitacora
     final rol = dataBase.rolesBox
           .query(Roles_.rol.equals("Cliente"))

@@ -14,14 +14,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/app_state.dart';
 import 'providers/database_providers/cliente_controller.dart';
-import 'providers/database_providers/orden_servicio_controller.dart';
-import 'providers/database_providers/electrico_controller.dart';
-import 'providers/database_providers/fluidos_controller.dart';
-import 'providers/database_providers/frenos_controller.dart';
-import 'providers/database_providers/motor_controller.dart';
-import 'providers/database_providers/observacion_controller.dart';
 import 'providers/database_providers/delivery_form_controller.dart';
-import 'providers/database_providers/suspension_direccion_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/catalogo_supabase_provider.dart';
 import 'package:taller_alex_app_asesor/providers/roles_supabase_provider.dart';
@@ -32,7 +25,6 @@ import 'package:taller_alex_app_asesor/services/navigation_service.dart';
 import 'package:taller_alex_app_asesor/internationalization/internationalization.dart';
 
 import 'providers/database_providers/vehiculo_controller.dart';
-import 'providers/sync_ordenes_trabajo_externas_supabase_provider.dart';
 
 late ObjectBoxDatabase dataBase;
 late SupabaseClient supabaseClient;
@@ -82,41 +74,9 @@ void main() async {
           create: (context) => DeliveryFormController(),
           lazy: false,
         ),
-        ChangeNotifierProvider<ObservacionController>(
-          create: (context) => ObservacionController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<SuspensionDireccionController>(
-          create: (context) => SuspensionDireccionController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<MotorController>(
-          create: (context) => MotorController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<FluidosController>(
-          create: (context) => FluidosController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<FrenosController>(
-          create: (context) => FrenosController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<ElectricoController>(
-          create: (context) => ElectricoController(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<OrdenServicioController>(
-          create: (context) => OrdenServicioController(),
-          lazy: false,
-        ),
         ChangeNotifierProvider<UsuarioController>(
           create: (context) =>
               UsuarioController(email: prefs.getString("userId")),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<SyncOrdenesTrabajoExternasSupabaseProvider>(
-          create: (context) => SyncOrdenesTrabajoExternasSupabaseProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<SyncProviderSupabase>(

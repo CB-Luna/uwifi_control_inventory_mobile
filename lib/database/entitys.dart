@@ -2,42 +2,27 @@ import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class OrdenTrabajo {
+class ControlForm {
   int id;
-  DateTime fechaOrden;
-  String gasolina;
-  String kilometrajeMillaje;
-  String descripcionFalla;
-  DateTime fechaRegistro;
-  bool completado;
+  bool typeForm;
+  DateTime dateAdded;
   @Unique()
   String? idDBR;
-  final asesor = ToOne<Usuarios>();
-  final cliente = ToOne<Usuarios>();
-  final vehiculo = ToOne<Vehiculo>();
-  final formaPago = ToOne<FormaPago>();
-  final revision = ToOne<Revision>();
-  final ordenServicio = ToOne<OrdenServicio>();
-  final estatus = ToOne<Estatus>();
-  @Backlink()
-  final observacion = ToMany<Observaciones>();
+  final employee = ToOne<Usuarios>();
+  final vehicle = ToOne<Vehiculo>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
 
 
-  OrdenTrabajo({
+  ControlForm({
     this.id = 0,
-    required this.fechaOrden,
-    required this.gasolina,
-    required this.kilometrajeMillaje,
-    required this.descripcionFalla,
-    required this.completado,
-    DateTime? fechaRegistro,
+    required this.typeForm,
+    DateTime? dateAdded,
     this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+  }) : dateAdded = dateAdded ?? DateTime.now();
 
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
 }
 
 @Entity()
@@ -48,8 +33,6 @@ class Estatus {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  @Backlink()
-  final ordenTrabajo = ToMany<OrdenTrabajo>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
 
@@ -84,7 +67,6 @@ class Observaciones {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  final ordenTrabajo = ToOne<OrdenTrabajo>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
 
@@ -117,7 +99,6 @@ class Revision {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  final ordenTrabajo = ToOne<OrdenTrabajo>();
   final suspensionDireccion = ToOne<SuspensionDireccion>();
   final motor = ToOne<Motor>();
   final fluidos = ToOne<Fluidos>();
@@ -145,7 +126,6 @@ class OrdenServicio {
   double costoTotal;
   @Unique()
   String? idDBR;
-  final ordenTrabajo = ToOne<OrdenTrabajo>();
   @Backlink()
   final servicios = ToMany<Servicio>();
   @Backlink()
@@ -638,11 +618,11 @@ class Bitacora {
   String usuarioPropietario;
   String instruccion;
   String? instruccionAdicional;
-  int idOrdenTrabajo;
+  int idControlForm;
   DateTime fechaRegistro;
   bool executeSupabase;
   final vehiculo = ToOne<Vehiculo>();
-  final ordenTrabajo = ToOne<OrdenTrabajo>();
+  final controlForm = ToOne<ControlForm>();
   final observacion = ToOne<Observaciones>();
   final revision = ToOne<Revision>();
   final suspensionDireccion = ToOne<SuspensionDireccion>();
@@ -665,7 +645,7 @@ class Bitacora {
     required this.usuarioPropietario,
     required this.instruccion,
     this.instruccionAdicional,
-    required this.idOrdenTrabajo,
+    required this.idControlForm,
     DateTime? fechaRegistro,
     this.executeSupabase = false,
   }) : fechaRegistro = fechaRegistro ?? DateTime.now();
@@ -696,11 +676,9 @@ class Usuarios {
   final rol = ToOne<Roles>();
   final roles = ToMany<Roles>();
   final pagos = ToMany<Pagos>();
-  final asesor = ToOne<Usuarios>(); //Para Rol de C Y M
-  final clientes = ToMany<Usuarios>(); //Para Rol de A
-  final tecnicosMecanicos = ToMany<Usuarios>(); //Para Rol de A
-  final ordenesTrabajo = ToMany<OrdenTrabajo>(); //Para Rol de A, C Y M
-  final ordenTrabajo = ToOne<OrdenTrabajo>(); //Para Rol de C Y M
+  final asesor = ToOne<Usuarios>(); 
+  final clientes = ToMany<Usuarios>(); 
+  final tecnicosMecanicos = ToMany<Usuarios>(); 
   final vehiculos = ToMany<Vehiculo>();
 
   //Relaciones del Técnico-Mecánico
@@ -823,8 +801,6 @@ class FormaPago {
   DateTime fechaRegistro;
   @Unique()
   String idDBR;
-  @Backlink()
-  final ordenTrabajo = ToMany<OrdenTrabajo>();
 
   FormaPago({
     this.id = 0,

@@ -8,7 +8,6 @@ import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/providers.dart';
 import 'package:taller_alex_app_asesor/providers/roles_supabase_provider.dart';
-import 'package:taller_alex_app_asesor/providers/sync_ordenes_trabajo_externas_supabase_provider.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/toggle_icon.dart';
 import 'package:taller_alex_app_asesor/services/auth_service.dart';
@@ -30,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
     final UserState userState = Provider.of<UserState>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final rolesSupabaseProvider = Provider.of<RolesSupabaseProvider>(context);
-    final syncOrdenesTrabajoExternaSupabase = Provider.of<SyncOrdenesTrabajoExternasSupabaseProvider>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -481,7 +479,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                         case "Técnico-Mecánico":
                                           break;
                                         case "Cliente":
-                                          procesoExistoso = await syncOrdenesTrabajoExternaSupabase.getOrdenesTrabajoExternasSupabaseCliente(usuarioProvider.usuarioCurrent!);
                                           break;
                                         default:
                                           break;
