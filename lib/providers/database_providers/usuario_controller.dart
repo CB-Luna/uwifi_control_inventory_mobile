@@ -11,6 +11,10 @@ import 'package:uuid/uuid.dart';
 
 class UsuarioController extends ChangeNotifier {
   List<Usuarios> usuarios = [];
+
+  ControlForm? controlFormReceived;
+  ControlForm? controlFormDelivered;
+  
   var uuid = Uuid();
 
   Usuarios? usuarioCurrent;
@@ -85,13 +89,13 @@ class UsuarioController extends ChangeNotifier {
     //Se crea el objeto imagenes para el Usuario
     //Se agregan los roles
     for (var i = 0; i < rolesIdDBR.length; i++) {
-      final nuevoRol = dataBase.rolesBox.query(Roles_.idDBR.equals(rolesIdDBR[i])).build().findUnique(); //Se recupera el rol del Usuario
+      final nuevoRol = dataBase.roleBox.query(Role_.idDBR.equals(rolesIdDBR[i])).build().findUnique(); //Se recupera el rol del Usuario
       if (nuevoRol != null) {
         nuevoUsuario.roles.add(nuevoRol);
       }
     }
     //Se asiga el rol actual que ocupará
-    final rolActual = dataBase.rolesBox.query(Roles_.idDBR.equals(rolesIdDBR[0])).build().findUnique(); //Se recupera el rol actual del Usuario
+    final rolActual = dataBase.roleBox.query(Role_.idDBR.equals(rolesIdDBR[0])).build().findUnique(); //Se recupera el rol actual del Usuario
     if (rolActual != null) {
       nuevoUsuario.rol.target = rolActual;
       dataBase.usuariosBox.put(nuevoUsuario);
@@ -127,13 +131,13 @@ class UsuarioController extends ChangeNotifier {
       //Se agregan los roles actualizados
       updateUsuario.roles.clear();
       for (var i = 0; i < newRolesIdDBR.length; i++) {
-        final nuevoRol = dataBase.rolesBox.query(Roles_.idDBR.equals(newRolesIdDBR[i])).build().findUnique(); //Se recupera el rol del Usuario
+        final nuevoRol = dataBase.roleBox.query(Role_.idDBR.equals(newRolesIdDBR[i])).build().findUnique(); //Se recupera el rol del Usuario
         if (nuevoRol != null) {
           updateUsuario.roles.add(nuevoRol);
         }
       } 
       //Se asiga el rol actual que ocupará
-      final rolActual = dataBase.rolesBox.query(Roles_.idDBR.equals(newRolesIdDBR[0])).build().findUnique(); //Se recupera el rol actual del Usuario
+      final rolActual = dataBase.roleBox.query(Role_.idDBR.equals(newRolesIdDBR[0])).build().findUnique(); //Se recupera el rol actual del Usuario
       if (rolActual != null) {
         updateUsuario.rol.target = rolActual;
       }
@@ -167,7 +171,7 @@ class UsuarioController extends ChangeNotifier {
 void updateRol(int id, int newIdRol) {
     var updateUsuario = dataBase.usuariosBox.get(id);
     if (updateUsuario != null) {
-      final updateRol = dataBase.rolesBox.get(newIdRol);
+      final updateRol = dataBase.roleBox.get(newIdRol);
       if (updateRol != null) {
         updateUsuario.rol.target = updateRol; //Se actualiza el rol del Usuario
       }
@@ -289,9 +293,9 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual != null) {
         for (var cliente in usuarioActual.clientes) {
-        for (var vehiculo in cliente.vehiculos) {
-          opcionesVehiculos.add("${cliente.nombre} ${cliente.apellidoP} ${cliente.apellidoM} ${vehiculo.placas} ${vehiculo.vin}");
-        }
+        // for (var vehiculo in cliente.vehiculo) {
+        //   opcionesVehiculos.add("${cliente.nombre} ${cliente.apellidoP} ${cliente.apellidoM} ${vehiculo.placas} ${vehiculo.vin}");
+        // }
       }
     }
     return opcionesVehiculos;
@@ -301,13 +305,28 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     List<Usuarios> tecnicosMecanicosInternos = [];
     List<String> opcionesTecnicosMecanicos = [];
     tecnicosMecanicosInternos = dataBase.usuariosBox.query(
-            Usuarios_.rol.equals(dataBase.rolesBox.query(
-                Roles_.rol.equals("Técnico-Mecánico"))
+            Usuarios_.rol.equals(dataBase.roleBox.query(
+                Role_.role.equals("Técnico-Mecánico"))
                 .build().findFirst()?.id ?? 0).and(Usuarios_.interno.equals(true))).build().find();
     for (var tecnicoMecanico in tecnicosMecanicosInternos) {
       opcionesTecnicosMecanicos.add("${tecnicoMecanico.nombre} ${tecnicoMecanico.apellidoP} ${tecnicoMecanico.apellidoM} ${tecnicoMecanico.celular} ${tecnicoMecanico.correo}");
     }
     return opcionesTecnicosMecanicos;
+  }
+
+  void recoverTodayControlForms() {
+    if (usuarioCurrent != null) {
+      for (var element in usuarioCurrent!.controlForms) {
+        if (element.today == true) {
+          if (element.typeForm) {
+            controlFormReceived = element;
+          }
+          if (!element.typeForm) {
+            controlFormDelivered = element;
+          }
+        }
+      }
+    }
   }
 
 }

@@ -5,16 +5,15 @@ import 'package:provider/provider.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/modelsFormularios/data_draggable.dart';
+import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/receiving_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/vehiculo_controller.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/agregar_vehiculo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/equipment_section.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/fluids_section.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/lights_section.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/measures_section.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/menu_form_button.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/security_section.dart';
-
+import 'package:taller_alex_app_asesor/screens/revision/control_form_created.dart';
+import 'package:taller_alex_app_asesor/screens/revision/control_form_not_created.dart';
 class RevisionScreenDos extends StatefulWidget {
   final String hour;
   final String period;
@@ -87,6 +86,9 @@ class _RevisionScreenDosState extends State<RevisionScreenDos> {
   @override
   Widget build(BuildContext context) {
     final vehiculoController = Provider.of<VehiculoController>(context);
+    final receivingFromProvider = Provider.of<ReceivingFormController>(context);
+    final userProvider = Provider.of<UsuarioController>(context);
+    final controlFormProvider = Provider.of<ControlFormProvider>(context);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).background,
@@ -172,7 +174,47 @@ class _RevisionScreenDosState extends State<RevisionScreenDos> {
                       ),
                       child: InkWell(
                         onTap: () async {
-
+                          if (receivingFromProvider.validateForm()) {
+                            if (receivingFromProvider.addControlForm(userProvider.usuarioCurrent)) {
+                              receivingFromProvider.cleanInformation();
+                              controlFormProvider.cleanData();
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ControlFormCreatedScreen(),
+                                ),
+                              );
+                            } else {
+                              receivingFromProvider.cleanInformation();
+                              controlFormProvider.cleanData();
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ControlFormNotCreatedScreen(),
+                                ),
+                              );
+                            }
+                          } else {
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: const Text('Invalid action'),
+                                  content: const Text(
+                                      "The value of 'Mileage' and '% Gas/Diesel' are required."),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: const Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
@@ -211,7 +253,7 @@ class _RevisionScreenDosState extends State<RevisionScreenDos> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Delivery Form',
+                      'Receiving Form',
                       textAlign: TextAlign.center,
                       style:
                           FlutterFlowTheme.of(context).bodyText1.override(

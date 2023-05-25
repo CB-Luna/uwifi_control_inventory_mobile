@@ -3,10 +3,10 @@ import 'dart:io' as libraryIO;
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:taller_alex_app_asesor/database/image.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/save_imagenes_local.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_imagenes_completas.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
@@ -19,7 +19,7 @@ class ItemForm extends StatefulWidget {
     Key? key,
     required this.textItem,
     required this.onPressed,
-    this.isRegistered = true,
+    this.readOnly = false,
     this.applyFuction = false,
     required this.isRight,
     required this.images,
@@ -29,27 +29,29 @@ class ItemForm extends StatefulWidget {
     this.report,
     this.updateReport,
     this.reportYesNo = false,
+    this.isRegistered = false,
   }) : super(key: key);
 
   final String textItem;
   final void Function() onPressed;
-  final bool isRegistered;
+  final bool readOnly;
   final bool applyFuction;
   final bool isRight;
-  final List<String> images;
-  final void Function(String value)? addImage;
-  final void Function(String value)? updateImage;
+  final List<ImageEvidence> images;
+  final void Function(ImageEvidence value)? addImage;
+  final void Function(ImageEvidence value)? updateImage;
   final TextEditingController? comments;
   final String? report;
   final void Function(String value)? updateReport;
   final bool reportYesNo;
+  final bool isRegistered;
 
   @override
   State<ItemForm> createState() => _ItemFormState();
 }
 
 class _ItemFormState extends State<ItemForm> {
-  List<XFile> imagenesTemp = [];
+  List<XFile> imagesTemp = [];
   final animationsMap = {
     'moveLoadAnimationLR': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -107,7 +109,6 @@ class _ItemFormState extends State<ItemForm> {
 
   @override
   Widget build(BuildContext context) {
-    imagenesTemp = [];
     return Padding(
     padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 8),
     child: Row(
@@ -323,7 +324,7 @@ class _ItemFormState extends State<ItemForm> {
                                     if (option == null) return;
 
                                     final picker = ImagePicker();
-                                    // imagenesTemp = [];
+                                    // imagesTemp = [];
                                     XFile? pickedFile;
                                     List<XFile>? pickedFiles;
                                     if (option == 'camera') {
@@ -334,7 +335,7 @@ class _ItemFormState extends State<ItemForm> {
                                           source: ImageSource.camera,
                                         );
                                         if (pickedFile != null) {
-                                          imagenesTemp.add(pickedFile);
+                                          imagesTemp.add(pickedFile);
                                         }
                                       } else {
                                         bool? booleano =
@@ -369,8 +370,23 @@ class _ItemFormState extends State<ItemForm> {
 
                                           );
                                           if (pickedFile != null) {
+                                            libraryIO.File file =
+                                            libraryIO.File(
+                                                pickedFile.path);
+
+                                            List<int> fileInByte =
+                                                file.readAsBytesSync();
+
+                                            String base64 =
+                                                base64Encode(fileInByte);
+
+                                            var updateImagenEvidence =
+                                                ImageEvidence(
+                                                    path:
+                                                        pickedFile.path,
+                                                    base64: base64);
                                             state.setState(() {
-                                              widget.updateImage!(pickedFile!.path);
+                                              widget.updateImage!(updateImagenEvidence);
                                             });
                                           }
                                           return;
@@ -400,7 +416,7 @@ class _ItemFormState extends State<ItemForm> {
                                             for (int i = 0;
                                                 i < pickedFiles.length;
                                                 i++) {
-                                              imagenesTemp
+                                              imagesTemp
                                                   .add(pickedFiles[i]);
                                             }
                                             break;
@@ -409,7 +425,7 @@ class _ItemFormState extends State<ItemForm> {
                                               for (int i = 0;
                                                   i < pickedFiles.length;
                                                   i++) {
-                                                imagenesTemp
+                                                imagesTemp
                                                     .add(pickedFiles[i]);
                                               }
                                             } else {
@@ -427,7 +443,7 @@ class _ItemFormState extends State<ItemForm> {
                                               for (int i = 0;
                                                   i < pickedFiles.length;
                                                   i++) {
-                                                imagenesTemp
+                                                imagesTemp
                                                     .add(pickedFiles[i]);
                                               }
                                             } else {
@@ -445,7 +461,7 @@ class _ItemFormState extends State<ItemForm> {
                                               for (int i = 0;
                                                   i < pickedFiles.length;
                                                   i++) {
-                                                imagenesTemp
+                                                imagesTemp
                                                     .add(pickedFiles[i]);
                                               }
                                             } else {
@@ -463,7 +479,7 @@ class _ItemFormState extends State<ItemForm> {
                                               for (int i = 0;
                                                   i < pickedFiles.length;
                                                   i++) {
-                                                imagenesTemp
+                                                imagesTemp
                                                     .add(pickedFiles[i]);
                                               }
                                             } else {
@@ -512,8 +528,23 @@ class _ItemFormState extends State<ItemForm> {
 
                                           );
                                           if (pickedFile != null) {
+                                            libraryIO.File file =
+                                            libraryIO.File(
+                                                pickedFile.path);
+
+                                            List<int> fileInByte =
+                                                file.readAsBytesSync();
+
+                                            String base64 =
+                                                base64Encode(fileInByte);
+
+                                            var updateImagenEvidence =
+                                                ImageEvidence(
+                                                    path:
+                                                        pickedFile.path,
+                                                    base64: base64);
                                             state.setState(() {
-                                              widget.updateImage!(pickedFile!.path);
+                                              widget.updateImage!(updateImagenEvidence);
                                             });
                                           }
                                           return;
@@ -521,11 +552,11 @@ class _ItemFormState extends State<ItemForm> {
                                       }
                                     }
                                     for (var i = 0;
-                                        i < imagenesTemp.length;
+                                        i < imagesTemp.length;
                                         i++) {
                                       libraryIO.File file =
                                           libraryIO.File(
-                                              imagenesTemp[i].path);
+                                              imagesTemp[i].path);
 
                                       List<int> fileInByte =
                                           file.readAsBytesSync();
@@ -533,18 +564,15 @@ class _ItemFormState extends State<ItemForm> {
                                       String base64 =
                                           base64Encode(fileInByte);
 
-                                      var newImagenLocal =
-                                          SaveImagenesLocal(
-                                              nombre:
-                                                  imagenesTemp[i].name,
+                                      var newImagenEvidence =
+                                          ImageEvidence(
                                               path:
-                                                  imagenesTemp[i].path,
+                                                  imagesTemp[i].path,
                                               base64: base64);
-                                      // widget.images
-                                      //     .add(base64);
                                       state.setState(() {
                                         widget.addImage!(
-                                        imagenesTemp[i].path);
+                                        newImagenEvidence);
+                                        imagesTemp.clear();
                                       });
                                     }
                                   },
@@ -587,7 +615,20 @@ class _ItemFormState extends State<ItemForm> {
                           padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.pop(context);
+                              if (widget.report == "Bad" || widget.report == "No") {
+                                if (widget.images.isEmpty) {
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "You need to add images like a evidence."),
+                                  ));
+                                  return;
+                                } else {
+                                  Navigator.pop(context);
+                                }
+                              } else {
+                                Navigator.pop(context);
+                              }
                             },
                             child: ClayContainer(
                               height: 50,
@@ -636,15 +677,15 @@ class _ItemFormState extends State<ItemForm> {
             spread: 1,
             borderRadius: 25,
             curveType: CurveType.concave,
-            color: widget.isRegistered ?
+            color: widget.report == "Good" || widget.report == "Yes" || widget.readOnly || widget.isRegistered ?
             FlutterFlowTheme.of(context).buenoColor
             :
             FlutterFlowTheme.of(context).primaryColor,
-            surfaceColor: widget.isRegistered ?
+            surfaceColor: widget.report == "Good" || widget.report == "Yes" || widget.readOnly || widget.isRegistered ?
             FlutterFlowTheme.of(context).buenoColor
             :
             FlutterFlowTheme.of(context).primaryColor,
-            parentColor: widget.isRegistered ?
+            parentColor: widget.report == "Good" || widget.report == "Yes" || widget.readOnly || widget.isRegistered ?
             FlutterFlowTheme.of(context).buenoColor
             :
             FlutterFlowTheme.of(context).primaryColor,
@@ -653,8 +694,8 @@ class _ItemFormState extends State<ItemForm> {
                 borderRadius: BorderRadius.circular(25),
               ),
               child: Icon(
-                widget.isRegistered ? Icons.check : Icons.close,
-                color: widget.isRegistered ?
+                widget.report == "Good" || widget.report == "Yes" || widget.readOnly || widget.isRegistered ? Icons.check : Icons.close,
+                color: widget.report == "Good" || widget.report == "Yes" || widget.readOnly || widget.isRegistered ?
                 FlutterFlowTheme.of(context).grayDark
                 :
                 FlutterFlowTheme.of(context).white,

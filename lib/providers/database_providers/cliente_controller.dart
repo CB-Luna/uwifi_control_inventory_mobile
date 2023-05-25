@@ -63,8 +63,8 @@ class ClienteController extends ChangeNotifier {
       usuarioPropietario: prefs.getString("userId")!,
       idControlForm: 0,
     ); //Se crea la nueva instruccion a realizar en bitacora
-    final rol = dataBase.rolesBox
-          .query(Roles_.rol.equals("Cliente"))
+    final rol = dataBase.roleBox
+          .query(Role_.role.equals("Cliente"))
           .build()
           .findFirst();
     nuevoCliente.rol.target = rol;

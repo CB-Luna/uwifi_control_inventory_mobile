@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/agregar_vehiculo_screen.dart';
 import 'package:taller_alex_app_asesor/util/util.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/side_menu/side_menu.dart';
@@ -17,12 +19,17 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+
   @override
   void initState() {
     super.initState();
+    setState(() {
+      context.read<UsuarioController>().recoverTodayControlForms();
+    });
   }
   @override
   Widget build(BuildContext context) {
+    final usuarioProvider = Provider.of<UsuarioController>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -264,11 +271,13 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            snackbarKey.currentState
-                                ?.showSnackBar(const SnackBar(
-                              content: Text(
-                                  "Received Form hadn't registered yet."),
-                            ));
+                            if (usuarioProvider.controlFormReceived == null) {
+                              snackbarKey.currentState
+                                  ?.showSnackBar(const SnackBar(
+                                content: Text(
+                                    "Received Form hadn't registered yet."),
+                              ));
+                            }
                           },
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
@@ -379,7 +388,10 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 .fromSTEB(
                                                     0.0, 10.0, 0.0, 0.0),
                                             child: Text(
-                                              'Unregistered',
+                                              usuarioProvider.controlFormReceived == null ?
+                                              'Unregistered'
+                                                :
+                                              'Registered',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText1
@@ -425,11 +437,13 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            snackbarKey.currentState
-                                ?.showSnackBar(const SnackBar(
-                              content: Text(
-                                  "Delivered Form hadn't registered yet."),
-                            ));
+                            if (usuarioProvider.controlFormDelivered == null) {
+                              snackbarKey.currentState
+                                  ?.showSnackBar(const SnackBar(
+                                content: Text(
+                                    "Delivered Form hadn't registered yet."),
+                              ));
+                            }
                           },
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
@@ -540,7 +554,10 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 .fromSTEB(
                                                     0.0, 10.0, 0.0, 0.0),
                                             child: Text(
-                                              'Unregistered',
+                                              usuarioProvider.controlFormDelivered == null ?
+                                              'Unregistered'
+                                                :
+                                              'Registered',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText1

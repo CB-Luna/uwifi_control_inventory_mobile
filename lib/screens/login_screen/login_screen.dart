@@ -473,7 +473,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       }
                                       //Se descargan los proyectos por cada tipo de Usuario
                                       bool procesoExistoso = false;
-                                      switch (usuarioProvider.usuarioCurrent!.rol.target!.rol) {
+                                      switch (usuarioProvider.usuarioCurrent!.rol.target!.role) {
                                         case "Asesor":
                                           break;
                                         case "Técnico-Mecánico":

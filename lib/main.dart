@@ -14,7 +14,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/app_state.dart';
 import 'providers/database_providers/cliente_controller.dart';
-import 'providers/database_providers/delivery_form_controller.dart';
+import 'providers/database_providers/receiving_form_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/catalogo_supabase_provider.dart';
 import 'package:taller_alex_app_asesor/providers/roles_supabase_provider.dart';
@@ -70,8 +70,8 @@ void main() async {
           create: (context) => VehiculoController(),
           lazy: false,
         ),
-        ChangeNotifierProvider<DeliveryFormController>(
-          create: (context) => DeliveryFormController(),
+        ChangeNotifierProvider<ReceivingFormController>(
+          create: (context) => ReceivingFormController(),
           lazy: false,
         ),
         ChangeNotifierProvider<UsuarioController>(

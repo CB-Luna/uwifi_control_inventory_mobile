@@ -461,7 +461,7 @@ class _ClientesScreenState extends State<ClientesScreen> {
                                                         ),
                                                         child: Center(
                                                           child: Text(
-                                                            cliente.vehiculos.toList().length.toString(),
+                                                            "${cliente.vehicle.target?.color}",
                                                             style: FlutterFlowTheme.of(context)
                                                                 .title1
                                                                 .override(

@@ -1,22 +1,33 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
+import 'package:taller_alex_app_asesor/database/image.dart';
 
 @Entity()
 class ControlForm {
   int id;
   bool typeForm;
+  bool today;
   DateTime dateAdded;
   @Unique()
   String? idDBR;
   final employee = ToOne<Usuarios>();
-  final vehicle = ToOne<Vehiculo>();
+  final vehicle = ToOne<Vehicle>();
+  final measures = ToOne<Measures>();
+  final lights = ToOne<Lights>();
+  final carBodywork = ToOne<CarBodywork>();
+  final fluidsCheck = ToOne<FluidsCheck>();
+  final bucketInspection = ToOne<BucketInspection>();
+  final security = ToOne<Security>();
+  final extra = ToOne<Extra>();
+  final equipment = ToOne<Equipment>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
-
 
   ControlForm({
     this.id = 0,
     required this.typeForm,
+    this.today = true,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();
@@ -26,590 +37,598 @@ class ControlForm {
 }
 
 @Entity()
-class Estatus {
+class Status {
   int id;
-  double avance;
-  String estatus;
-  DateTime fechaRegistro;
+  String status;
+  DateTime dateAdded;
   @Unique()
   String? idDBR;
   @Backlink()
   final bitacora = ToMany<Bitacora>();
 
 
-  Estatus({
+  Status({
     this.id = 0,
-    required this.avance,
-    required this.estatus,
-    DateTime? fechaRegistro,
+    required this.status,
+    DateTime? dateAdded,
     this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+  }) : dateAdded = dateAdded ?? DateTime.now();
 
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
 }
 
 @Entity()
-class Observaciones {
+class Company {
   int id;
-  DateTime fechaObservacion;
-  String respuestaP1;
-  String respuestaP2;
-  String respuestaP3;
-  String respuestaP4;
-  String respuestaP5;
-  String respuestaP6;
-  String respuestaP7;
-  String respuestaP8;
-  String respuestaP9;
-  String respuestaP10;
-  String nombreAsesor;
-  DateTime fechaRegistro;
+  String company;
+  DateTime dateAdded;
   @Unique()
   String? idDBR;
   @Backlink()
   final bitacora = ToMany<Bitacora>();
 
-  Observaciones({
-    this.id = 0,
-    required this.fechaObservacion,
-    required this.respuestaP1,
-    required this.respuestaP2,
-    required this.respuestaP3,
-    required this.respuestaP4,
-    required this.respuestaP5,
-    required this.respuestaP6,
-    required this.respuestaP7,
-    required this.respuestaP8,
-    required this.respuestaP9,
-    required this.respuestaP10,
-    required this.nombreAsesor,
-    DateTime? fechaRegistro,
-    this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+  Company({
+    this.id = 0,
+    required this.company,
+    DateTime? dateAdded,
+    this.idDBR,
+  }) : dateAdded = dateAdded ?? DateTime.now();
+
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
 }
 
 @Entity()
-class Revision {
+class Role {
   int id;
-  bool completado;
-  DateTime fechaRegistro;
+  String role;
+  DateTime dateAdded;
+  @Unique()
+  String idDBR;
+  final bitacora = ToOne<Bitacora>();
+  final usuarios = ToMany<Usuarios>();
+
+  Role({
+    this.id = 0,
+    required this.role,
+    DateTime? dateAdded,
+    required this.idDBR,
+  }) : dateAdded = dateAdded ?? DateTime.now();
+
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
+}
+
+@Entity()
+class Measures {
+  int id;
+  String gas;
+  String gasComments;
+  late List<ImageEvidence> gasImages;
+  int mileage;
+  String mileageComments;
+  late List<ImageEvidence> mileageImages;
+  DateTime dateAdded;
   @Unique()
   String? idDBR;
-  final suspensionDireccion = ToOne<SuspensionDireccion>();
-  final motor = ToOne<Motor>();
-  final fluidos = ToOne<Fluidos>();
-  final frenos = ToOne<Frenos>();
-  final electrico = ToOne<Electrico>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
+  final controlForm = ToOne<ControlForm>();
 
-  Revision({
+  Measures({
     this.id = 0,
-    required this.completado,
-    DateTime? fechaRegistro,
+    required this.gas,
+    required this.gasComments,
+    List<ImageEvidence>? gasImages,
+    required this.mileage,
+    required this.mileageComments,
+    List<ImageEvidence>? mileageImages,
+    DateTime? dateAdded,
     this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+  }) : dateAdded = dateAdded ?? DateTime.now();
 
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
 }
 
 @Entity()
-class OrdenServicio {
+class Lights {
   int id;
-  DateTime fechaRegistro;
-  DateTime fechaEntrega;
-  double costoTotal;
+  String headLights;
+  String headLightsComments;
+  late List<ImageEvidence> headLightsImages;
+  String brakeLights;
+  String brakeLightsComments;
+  late List<ImageEvidence> brakeLightsImages;
+  String reverseLights;
+  String reverseLightsComments;
+  late List<ImageEvidence> reverseLightsImages;
+  String warningLights;
+  String warningLightsComments;
+  late List<ImageEvidence> warningLightsImages;
+  String turnSignals;
+  String turnSignalsComments;
+  late List<ImageEvidence> turnSignalsImages;
+  String fourWayFlashers;
+  String fourWayFlashersComments;
+  late List<ImageEvidence> fourWayFlashersImages;
+  String dashLights;
+  String dashLightsComments;
+  late List<ImageEvidence> dashLightsImages;
+  String strobeLights;
+  String strobeLightsComments;
+  late List<ImageEvidence> strobeLightsImages;
+  String cabRoofLights;
+  String cabRoofLightsComments;
+  late List<ImageEvidence> cabRoofLightsImages;
+  String clearenceLights;
+  String clearenceLightsComments;
+  late List<ImageEvidence> clearenceLightsImages;
+  DateTime dateAdded;
   @Unique()
   String? idDBR;
-  @Backlink()
-  final servicios = ToMany<Servicio>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
+  final controlForm = ToOne<ControlForm>();
 
-  OrdenServicio({
+  Lights({
     this.id = 0,
-    required this.costoTotal,
-    required this.fechaEntrega,
-    DateTime? fechaRegistro,
+    required this.headLights,
+    required this.headLightsComments,
+    List<ImageEvidence>? headLightsImages,
+    required this.brakeLights,
+    required this.brakeLightsComments,
+    List<ImageEvidence>? brakeLightsImages,
+    required this.reverseLights,
+    required this.reverseLightsComments,
+    List<ImageEvidence>? reverseLightsImages,
+    required this.warningLights,
+    required this.warningLightsComments,
+    List<ImageEvidence>? warningLightsImages,
+    required this.turnSignals,
+    required this.turnSignalsComments,
+    List<ImageEvidence>? turnSignalsImages,
+    required this.fourWayFlashers,
+    required this.fourWayFlashersComments,
+    List<ImageEvidence>? fourWayFlashersImages,
+    required this.dashLights,
+    required this.dashLightsComments,
+    List<ImageEvidence>? dashLightsImages,
+    required this.strobeLights,
+    required this.strobeLightsComments,
+    List<ImageEvidence>? strobeLightsImages,
+    required this.cabRoofLights,
+    required this.cabRoofLightsComments,
+    List<ImageEvidence>? cabRoofLightsImages,
+    required this.clearenceLights,
+    required this.clearenceLightsComments,
+    List<ImageEvidence>? clearenceLightsImages,
+    DateTime? dateAdded,
     this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+  }) : dateAdded = dateAdded ?? DateTime.now();
 
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
 }
 
 @Entity()
-class Servicio {
+class CarBodywork {
   int id;
-  String servicio;
-  double costoServicio;
-  String imagen;
-  String path;
-  bool autorizado;
-  DateTime fechaRegistro;
-  DateTime fechaEntrega;
+  String wiperBladesFront;
+  String wiperBladesFrontComments;
+  late List<ImageEvidence> wiperBladesFrontImages;
+  String wiperBladesBack;
+  String wiperBladesBackComments;
+  late List<ImageEvidence> wiperBladesBackImages;
+  String windshieldWiperFront;
+  String windshieldWiperFrontComments;
+  late List<ImageEvidence> windshieldWiperFrontImages;
+  String windshieldWiperBack;
+  String windshieldWiperBackComments;
+  late List<ImageEvidence> windshieldWiperBackImages;
+  String generalBody;
+  String generalBodyComments;
+  late List<ImageEvidence> generalBodyImages;
+  String decaling;
+  String decalingComments;
+  late List<ImageEvidence> decalingImages;
+  String tires;
+  String tiresComments;
+  late List<ImageEvidence> tiresImages;
+  String glass;
+  String glassComments;
+  late List<ImageEvidence> glassImages;
+  String mirrors;
+  String mirrorsComments;
+  late List<ImageEvidence> mirrorsImages;
+  String parking;
+  String parkingComments;
+  late List<ImageEvidence> parkingImages;
+  String brakes;
+  String brakesComments;
+  late List<ImageEvidence> brakesImages;
+  String emgBrakes;
+  String emgBrakesComments;
+  late List<ImageEvidence> emgBrakesImages;
+  String horn;
+  String hornComments;
+  late List<ImageEvidence> hornImages;
+
+  DateTime dateAdded;
   @Unique()
   String? idDBR;
-  final ordenServicio = ToOne<OrdenServicio>();
-  @Backlink()
-  final productos = ToMany<Producto>();
-  @Backlink()
-  final bitacora = ToMany<Bitacora>();
-
-  Servicio({
-    this.id = 0,
-    required this.servicio,
-    required this.costoServicio,
-    required this.imagen,
-    required this.path,
-    required this.autorizado,
-    required this.fechaEntrega,
-    DateTime? fechaRegistro,
-    this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class TipoServicio {
-  int id;
-  String tipoServicio;
-  DateTime fechaRegistro;
-  String imagen;
-  String path;
-  double costo;
-  @Unique()
-  String? idDBR;
-
-  TipoServicio({
-    this.id = 0,
-    required this.tipoServicio,
-    required this.imagen,
-    required this.path,
-    required this.costo,
-    DateTime? fechaRegistro,
-    this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class Producto {
-  int id;
-  String producto;
-  int cantidad;
-  double costo;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  final servicio = ToOne<Servicio>();
-  @Backlink()
-  final bitacora = ToMany<Bitacora>();
-
-  Producto({
-    this.id = 0,
-    required this.producto,
-    required this.cantidad,
-    required this.costo,
-    DateTime? fechaRegistro,
-    this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class TipoProducto {
-  int id;
-  String tipoProducto;
-  DateTime fechaRegistro;
-  double costo;
-  @Unique()
-  String? idDBR;
-
-  TipoProducto({
-    this.id = 0,
-    required this.tipoProducto,
-    required this.costo,
-    DateTime? fechaRegistro,
-    this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class SuspensionDireccion {
-  int id;
-  String rotulaSuperiorIzq;
-  String? rotulaSuperiorIzqObservaciones;
-  String rotulaSuperiorDer;
-  String? rotulaSuperiorDerObservaciones;
-  String rotulaInferiorIzq;
-  String? rotulaInferiorIzqObservaciones;
-  String rotulaInferiorDer;
-  String? rotulaInferiorDerObservaciones;
-  String bujeHorquillaSuperiorIzq;
-  String? bujeHorquillaSuperiorIzqObservaciones;
-  String bujeHorquillaSuperiorDer;
-  String? bujeHorquillaSuperiorDerObservaciones;
-  String bujeHorquillaInferiorIzq;
-  String? bujeHorquillaInferiorIzqObservaciones;
-  String bujeHorquillaInferiorDer;
-  String? bujeHorquillaInferiorDerObservaciones;
-  String amortiguadorDelanteroIzq;
-  String? amortiguadorDelanteroIzqObservaciones;
-  String amortiguadorDelanteroDer;
-  String? amortiguadorDelanteroDerObservaciones;
-  String amortiguadorTraseroIzq;
-  String? amortiguadorTraseroIzqObservaciones;
-  String amortiguadorTraseroDer;
-  String? amortiguadorTraseroDerObservaciones;
-  String bujeBarraEstabilizadoraIzq;
-  String? bujeBarraEstabilizadoraIzqObservaciones;
-  String bujeBarraEstabilizadoraDer;
-  String? bujeBarraEstabilizadoraDerObservaciones;
-  String linkKitDelanteroIzq;
-  String? linkKitDelanteroIzqObservaciones;
-  String linkKitDelanteroDer;
-  String? linkKitDelanteroDerObservaciones;
-  String linkKitTraseroIzq;
-  String? linkKitTraseroIzqObservaciones;
-  String linkKitTraseroDer;
-  String? linkKitTraseroDerObservaciones;
-  String terminalInteriorIzq;
-  String? terminalInteriorIzqObservaciones;
-  String terminalInteriorDer;
-  String? terminalInteriorDerObservaciones;
-  String terminalExteriorIzq;
-  String? terminalExteriorIzqObservaciones;
-  String terminalExteriorDer;
-  String? terminalExteriorDerObservaciones;
-  bool completado;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  final revision = ToOne<Revision>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
-  final tecnicoMecanico = ToOne<Usuarios>();
+  final controlForm = ToOne<ControlForm>();
 
-  SuspensionDireccion({
+  CarBodywork({
     this.id = 0,
-    required this.rotulaSuperiorIzq,
-    this.rotulaSuperiorIzqObservaciones,
-    required this.rotulaSuperiorDer,
-    this.rotulaSuperiorDerObservaciones,
-    required this.rotulaInferiorIzq,
-    this.rotulaInferiorIzqObservaciones,
-    required this.rotulaInferiorDer,
-    this.rotulaInferiorDerObservaciones,
-    required this.bujeHorquillaSuperiorIzq,
-    this.bujeHorquillaSuperiorIzqObservaciones,
-    required this.bujeHorquillaSuperiorDer,
-    this.bujeHorquillaSuperiorDerObservaciones,
-    required this.bujeHorquillaInferiorIzq,
-    this.bujeHorquillaInferiorIzqObservaciones,
-    required this.bujeHorquillaInferiorDer,
-    this.bujeHorquillaInferiorDerObservaciones,
-    required this.amortiguadorDelanteroIzq,
-    this.amortiguadorDelanteroIzqObservaciones,
-    required this.amortiguadorDelanteroDer,
-    this.amortiguadorDelanteroDerObservaciones,
-    required this.amortiguadorTraseroIzq,
-    this.amortiguadorTraseroIzqObservaciones,
-    required this.amortiguadorTraseroDer,
-    this.amortiguadorTraseroDerObservaciones,
-    required this.bujeBarraEstabilizadoraIzq,
-    this.bujeBarraEstabilizadoraIzqObservaciones,
-    required this.bujeBarraEstabilizadoraDer,
-    this.bujeBarraEstabilizadoraDerObservaciones,
-    required this.linkKitDelanteroIzq,
-    this.linkKitDelanteroIzqObservaciones,
-    required this.linkKitDelanteroDer,
-    this.linkKitDelanteroDerObservaciones,
-    required this.linkKitTraseroIzq,
-    this.linkKitTraseroIzqObservaciones,
-    required this.linkKitTraseroDer,
-    this.linkKitTraseroDerObservaciones,
-    required this.terminalInteriorIzq,
-    this.terminalInteriorIzqObservaciones,
-    required this.terminalInteriorDer,
-    this.terminalInteriorDerObservaciones,
-    required this.terminalExteriorIzq,
-    this.terminalExteriorIzqObservaciones,
-    required this.terminalExteriorDer,
-    this.terminalExteriorDerObservaciones,
-    required this.completado,
-    DateTime? fechaRegistro,
+    required this.wiperBladesFront,
+    required this.wiperBladesFrontComments,
+    List<ImageEvidence>? wiperBladesFrontImages,
+    required this.wiperBladesBack,
+    required this.wiperBladesBackComments,
+    List<ImageEvidence>? wiperBladesBackImages,
+    required this.windshieldWiperFront,
+    required this.windshieldWiperFrontComments,
+    List<ImageEvidence>? windshieldWiperFrontImages,
+    required this.windshieldWiperBack,
+    required this.windshieldWiperBackComments,
+    List<ImageEvidence>? windshieldWiperBackImages,
+    required this.generalBody,
+    required this.generalBodyComments,
+    List<ImageEvidence>? generalBodyImages,
+    required this.decaling,
+    required this.decalingComments,
+    List<ImageEvidence>? decalingImages,
+    required this.tires,
+    required this.tiresComments,
+    List<ImageEvidence>? tiresImages,
+    required this.glass,
+    required this.glassComments,
+    List<ImageEvidence>? glassImages,
+    required this.mirrors,
+    required this.mirrorsComments,
+    List<ImageEvidence>? mirrorsImages,
+    required this.parking,
+    required this.parkingComments,
+    List<ImageEvidence>? parkingImages,
+    required this.brakes,
+    required this.brakesComments,
+    List<ImageEvidence>? brakesImages,
+    required this.emgBrakes,
+    required this.emgBrakesComments,
+    List<ImageEvidence>? emgBrakesImages,
+    required this.horn,
+    required this.hornComments,
+    List<ImageEvidence>? hornImages,
+    DateTime? dateAdded,
     this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+  }) : dateAdded = dateAdded ?? DateTime.now();
 
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
 }
 
 @Entity()
-class Motor {
+class FluidsCheck {
   int id;
-  String aceite;
-  String? aceiteObservaciones;
-  String filtroDeAire;
-  String? filtroDeAireObservaciones;
-  String cpoDeAceleracion;
-  String? cpoDeAceleracionObservaciones;
-  String bujias;
-  String? bujiasObservaciones;
-  String bandaCadenaDeTiempo;
-  String? bandaCadenaDeTiempoObservaciones;
-  String soportes;
-  String? soportesObservaciones;
-  String bandas;
-  String? bandasObservaciones;
-  String mangueras;
-  String? manguerasObservaciones;
-  bool completado;
-  DateTime fechaRegistro;
+  String engineOil;
+  String engineOilComments;
+  late List<ImageEvidence> engineOilImages;
+  String transmission;
+  String transmissionComments;
+  late List<ImageEvidence> transmissionImages;
+  String coolant;
+  String coolantComments;
+  late List<ImageEvidence> coolantImages;
+  String powerSteering;
+  String powerSteeringComments;
+  late List<ImageEvidence> powerSteeringImages;
+  String dieselExhaustFluid;
+  String dieselExhaustFluidComments;
+  late List<ImageEvidence> dieselExhaustFluidImages;
+  String windshieldWasherFluid;
+  String windshieldWasherFluidComments;
+  late List<ImageEvidence> windshieldWasherFluidImages;
+  DateTime dateAdded;
   @Unique()
   String? idDBR;
-  final revision = ToOne<Revision>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
-  final tecnicoMecanico = ToOne<Usuarios>();
+  final controlForm = ToOne<ControlForm>();
 
-  Motor({
+  FluidsCheck({
     this.id = 0,
-    required this.aceite,
-    this.aceiteObservaciones,
-    required this.filtroDeAire,
-    this.filtroDeAireObservaciones,
-    required this.cpoDeAceleracion,
-    this.cpoDeAceleracionObservaciones,
-    required this.bujias,
-    this.bujiasObservaciones,
-    required this.bandaCadenaDeTiempo,
-    this.bandaCadenaDeTiempoObservaciones,
-    required this.soportes,
-    this.soportesObservaciones,
-    required this.bandas,
-    this.bandasObservaciones,
-    required this.mangueras,
-    this.manguerasObservaciones,
-    required this.completado,
-    DateTime? fechaRegistro,
+    required this.engineOil,
+    required this.engineOilComments,
+    List<ImageEvidence>? engineOilImages,
+    required this.transmission,
+    required this.transmissionComments,
+    List<ImageEvidence>? transmissionImages,
+    required this.coolant,
+    required this.coolantComments,
+    List<ImageEvidence>? coolantImages,
+    required this.powerSteering,
+    required this.powerSteeringComments,
+    List<ImageEvidence>? powerSteeringImages,
+    required this.dieselExhaustFluid,
+    required this.dieselExhaustFluidComments,
+    List<ImageEvidence>? dieselExhaustFluidImages,
+    required this.windshieldWasherFluid,
+    required this.windshieldWasherFluidComments,
+    List<ImageEvidence>? windshieldWasherFluidImages,
+    DateTime? dateAdded,
     this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+  }) : dateAdded = dateAdded ?? DateTime.now();
 
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
 }
 
 @Entity()
-class Fluidos {
+class BucketInspection {
   int id;
-  String atf;
-  String? atfObservaciones;
-  String power;
-  String? powerObservaciones;
-  String frenos;
-  String? frenosObservaciones;
-  String anticongelante;
-  String? anticongelanteObservaciones;
-  String wipers;
-  String? wipersObservaciones;
-  bool completado;
-  DateTime fechaRegistro;
+  String insulated;
+  String insulatedComments;
+  late List<ImageEvidence> insulatedImages;
+  String holesDrilled;
+  String holesDrilledComments;
+  late List<ImageEvidence> holesDrilledImages;
+  String bucketLiner;
+  String bucketLinerComments;
+  late List<ImageEvidence> bucketLinerImages;
+
+  DateTime dateAdded;
   @Unique()
   String? idDBR;
-  final revision = ToOne<Revision>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
-  final tecnicoMecanico = ToOne<Usuarios>();
+  final controlForm = ToOne<ControlForm>();
 
-  Fluidos({
+  BucketInspection({
     this.id = 0,
-    required this.atf,
-    this.atfObservaciones,
-    required this.power,
-    this.powerObservaciones,
-    required this.frenos,
-    this.frenosObservaciones,
-    required this.anticongelante,
-    this.anticongelanteObservaciones,
-    required this.wipers,
-    this.wipersObservaciones,
-    required this.completado,
-    DateTime? fechaRegistro,
+    required this.insulated,
+    required this.insulatedComments,
+    List<ImageEvidence>? insulatedImages,
+    required this.holesDrilled,
+    required this.holesDrilledComments,
+    List<ImageEvidence>? holesDrilledImages,
+    required this.bucketLiner,
+    required this.bucketLinerComments,
+    List<ImageEvidence>? bucketLinerImages,
+    DateTime? dateAdded,
     this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+  }) : dateAdded = dateAdded ?? DateTime.now();
 
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
 }
 
 @Entity()
-class Frenos {
+class Security {
   int id;
-  String balatasDelanteras;
-  String? balatasDelanterasObservaciones;
-  String balatasTraserasDiscoTambor;
-  String? balatasTraserasDiscoTamborObservaciones;
-  String manguerasLineas;
-  String? manguerasLineasObservaciones;
-  String cilindroMaestro;
-  String? cilindroMaestroObservaciones;
-  String birlosYTuercas;
-  String? birlosYTuercasObservaciones;
-  bool completado;
-  DateTime fechaRegistro;
+  String rtaMagnet;
+  String rtaMagnetComments;
+  late List<ImageEvidence> rtaMagnetImages;
+  String triangleReflectors;
+  String triangleReflectorsComments;
+  late List<ImageEvidence> triangleReflectorsImages;
+  String wheelChocks;
+  String wheelChocksComments;
+  late List<ImageEvidence> wheelChocksImages;
+  String fireExtinguisher;
+  String fireExtinguisherComments;
+  late List<ImageEvidence> fireExtinguisherImages;
+  String firstAidKitSafetyVest;
+  String firstAidKitSafetyVestComments;
+  late List<ImageEvidence> firstAidKitSafetyVestImages;
+  String backUpAlarm;
+  String backUpAlarmComments;
+  late List<ImageEvidence> backUpAlarmImages;
+  DateTime dateAdded;
   @Unique()
   String? idDBR;
-  final revision = ToOne<Revision>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
-  final tecnicoMecanico = ToOne<Usuarios>();
+  final controlForm = ToOne<ControlForm>();
 
-  Frenos({
+  Security ({
     this.id = 0,
-    required this.balatasDelanteras,
-    this.balatasDelanterasObservaciones,
-    required this.balatasTraserasDiscoTambor,
-    this.balatasTraserasDiscoTamborObservaciones,
-    required this.manguerasLineas,
-    this.manguerasLineasObservaciones,
-    required this.cilindroMaestro,
-    this.cilindroMaestroObservaciones,
-    required this.birlosYTuercas,
-    this.birlosYTuercasObservaciones,
-    required this.completado,
-    DateTime? fechaRegistro,
+    required this.rtaMagnet,
+    required this.rtaMagnetComments,
+    List<ImageEvidence>? rtaMagnetImages,
+    required this.triangleReflectors,
+    required this.triangleReflectorsComments,
+    List<ImageEvidence>? triangleReflectorsImages,
+    required this.wheelChocks,
+    required this.wheelChocksComments,
+    List<ImageEvidence>? wheelChocksImages,
+    required this.fireExtinguisher,
+    required this.fireExtinguisherComments,
+    List<ImageEvidence>? fireExtinguisherImages,
+    required this.firstAidKitSafetyVest,
+    required this.firstAidKitSafetyVestComments,
+    List<ImageEvidence>? firstAidKitSafetyVestImages,
+    required this.backUpAlarm,
+    required this.backUpAlarmComments,
+    List<ImageEvidence>? backUpAlarmImages,
+    DateTime? dateAdded,
     this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+  }) : dateAdded = dateAdded ?? DateTime.now();
 
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
 }
 
 @Entity()
-class Electrico {
+class Extra {
   int id;
-  String terminalesDeBaterias;
-  String? terminalesDeBateriasObservaciones;
-  String lucesFrenos;
-  String? lucesFrenosObservaciones;
-  String lucesDireccionales;
-  String? lucesDireccionalesObservaciones;
-  String lucesCuartos;
-  String? lucesCuartosObservaciones;
-  String checkEngine;
-  String? checkEngineObservaciones;
-  bool completado;
-  DateTime fechaRegistro;
+  String ladder;
+  String ladderComments;
+  late List<ImageEvidence> ladderImages;
+  String stepLadder;
+  String stepLadderComments;
+  late List<ImageEvidence> stepLadderImages;
+  String ladderStraps;
+  String ladderStrapsComments;
+  late List<ImageEvidence> ladderStrapsImages;
+  String hydraulicFluidForBucket;
+  String hydraulicFluidForBucketComments;
+  late List<ImageEvidence> hydraulicFluidForBucketImages;
+  String fiberReelRack;
+  String fiberReelRackComments;
+  late List<ImageEvidence> fiberReelRackImages;
+  String binsLockedAndSecure;
+  String binsLockedAndSecureComments;
+  late List<ImageEvidence> binsLockedAndSecureImages;
+  String safetyHarness;
+  String safetyHarnessComments;
+  late List<ImageEvidence> safetyHarnessImages;
+  String lanyardSafetyHarness;
+  String lanyardSafetyHarnessComments;
+  late List<ImageEvidence> lanyardSafetyHarnessImages;
+
+  DateTime dateAdded;
   @Unique()
   String? idDBR;
-  final revision = ToOne<Revision>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
-  final tecnicoMecanico = ToOne<Usuarios>();
+  final controlForm = ToOne<ControlForm>();
 
-  Electrico({
+  Extra ({
     this.id = 0,
-    required this.terminalesDeBaterias,
-    this.terminalesDeBateriasObservaciones,
-    required this.lucesFrenos,
-    this.lucesFrenosObservaciones,
-    required this.lucesDireccionales,
-    this.lucesDireccionalesObservaciones,
-    required this.lucesCuartos,
-    this.lucesCuartosObservaciones,
-    required this.checkEngine,
-    this.checkEngineObservaciones,
-    required this.completado,
-    DateTime? fechaRegistro,
+    required this.ladder,
+    required this.ladderComments,
+    List<ImageEvidence>? ladderImages,
+    required this.stepLadder,
+    required this.stepLadderComments,
+    List<ImageEvidence>? stepLadderImages,
+    required this.ladderStraps,
+    required this.ladderStrapsComments,
+    List<ImageEvidence>? ladderStrapsImages,
+    required this.hydraulicFluidForBucket,
+    required this.hydraulicFluidForBucketComments,
+    List<ImageEvidence>? hydraulicFluidForBucketImages,
+    required this.fiberReelRack,
+    required this.fiberReelRackComments,
+    List<ImageEvidence>? fiberReelRackImages,
+    required this.binsLockedAndSecure,
+    required this.binsLockedAndSecureComments,
+    List<ImageEvidence>? binsLockedAndSecureImages,
+    required this.safetyHarness,
+    required this.safetyHarnessComments,
+    List<ImageEvidence>? safetyHarnessImages,
+    required this.lanyardSafetyHarness,
+    required this.lanyardSafetyHarnessComments,
+    List<ImageEvidence>? lanyardSafetyHarnessImages,
+    DateTime? dateAdded,
     this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+  }) : dateAdded = dateAdded ?? DateTime.now();
 
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
 }
 
 @Entity()
-class Vehiculo {
+class Equipment {
   int id;
-  String marca;
-  String modelo;
-  String anio;
-  String imagen;
+  String ignitionKey;
+  String ignitionKeyComments;
+  late List<ImageEvidence> ignitionKeyImages;
+  String binsBoxKey;
+  String binsBoxKeyComments;
+  late List<ImageEvidence> binsBoxKeyImages;
+  String vehicleRegistrationCopy;
+  String vehicleRegistrationCopyComments;
+  late List<ImageEvidence> vehicleRegistrationCopyImages;
+  String vehicleInsuranceCopy;
+  String vehicleInsuranceCopyComments;
+  late List<ImageEvidence> vehicleInsuranceCopyImages;
+  String bucketLiftOperatorManual;
+  String bucketLiftOperatorManualComments;
+  late List<ImageEvidence> bucketLiftOperatorManualImages;
+  DateTime dateAdded;
+  @Unique()
+  String? idDBR;
+  @Backlink()
+  final bitacora = ToMany<Bitacora>();
+  final controlForm = ToOne<ControlForm>();
+
+  Equipment ({
+    this.id = 0,
+    required this.ignitionKey,
+    required this.ignitionKeyComments,
+    List<ImageEvidence>? ignitionKeyImages,
+    required this.binsBoxKey,
+    required this.binsBoxKeyComments,
+    List<ImageEvidence>? binsBoxKeyImages,
+    required this.vehicleRegistrationCopy,
+    required this.vehicleRegistrationCopyComments,
+    List<ImageEvidence>? vehicleRegistrationCopyImages,
+    required this.vehicleInsuranceCopy,
+    required this.vehicleInsuranceCopyComments,
+    List<ImageEvidence>? vehicleInsuranceCopyImages,
+    required this.bucketLiftOperatorManual,
+    required this.bucketLiftOperatorManualComments,
+    List<ImageEvidence>? bucketLiftOperatorManualImages,
+    DateTime? dateAdded,
+    this.idDBR,
+  }) : dateAdded = dateAdded ?? DateTime.now();
+
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
+}
+
+
+
+@Entity()
+class Vehicle {
+  int id;
+  String make;
+  String model;
+  String year;
+  String image;
   String path;
   @Unique()
   String vin;
   @Unique()
-  String placas;
+  String licesePlates;
   String motor;
   String color;
-  DateTime fechaRegistro;
+  DateTime oilChangeDue;
+  DateTime registrationDue;
+  DateTime insuranceRenewalDue;
+  DateTime dateAdded;
   @Unique()
   String? idDBR;
   @Backlink()
   final bitacora = ToMany<Bitacora>();
-  final cliente = ToOne<Usuarios>();
+  final status = ToOne<Status>();
+  final company = ToOne<Company>();
 
-  Vehiculo({
+  Vehicle({
     this.id = 0,
-    required this.marca,
-    required this.modelo,
-    required this.anio,
-    required this.imagen,
+    required this.make,
+    required this.model,
+    required this.year,
+    required this.image,
     required this.path,
     required this.vin,
-    required this.placas,
+    required this.licesePlates,
     required this.motor,
     required this.color,
-    DateTime? fechaRegistro,
+    required this.oilChangeDue,
+    required this.registrationDue,
+    required this.insuranceRenewalDue,
+    DateTime? dateAdded,
     this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+  }) : dateAdded = dateAdded ?? DateTime.now();
 
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class Pagos {
-  int id;
-  double montoAbonado;
-  DateTime fechaMovimiento;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  @Unique()
-  String? idEmiWeb;
-  int idEmprendimiento;
-  final usuario = ToOne<Usuarios>();
-  final bitacora = ToMany<Bitacora>();
-
-  Pagos({
-    this.id = 0,
-    this.montoAbonado = 0.0,
-    required this.fechaMovimiento,
-    DateTime? fechaRegistro,
-    this.idDBR,
-    this.idEmiWeb,
-    required this.idEmprendimiento,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
 }
 
 @Entity()
@@ -621,24 +640,21 @@ class Bitacora {
   int idControlForm;
   DateTime fechaRegistro;
   bool executeSupabase;
-  final vehiculo = ToOne<Vehiculo>();
+  final vehicle = ToOne<Vehicle>();
   final controlForm = ToOne<ControlForm>();
-  final observacion = ToOne<Observaciones>();
-  final revision = ToOne<Revision>();
-  final suspensionDireccion = ToOne<SuspensionDireccion>();
-  final motor = ToOne<Motor>();
-  final fluidos = ToOne<Fluidos>();
-  final frenos = ToOne<Frenos>();
-  final electrico = ToOne<Electrico>();
-  final ordenServicio  = ToOne<OrdenServicio>();
-  final servicio = ToOne<Servicio>();
-  final producto = ToOne<Producto>();
-  final estatus = ToOne<Estatus>();
+  final measures = ToOne<Measures>();
+  final lights = ToOne<Lights>();
+  final carBodywork = ToOne<CarBodywork>();
+  final fluidsCheck = ToOne<FluidsCheck>();
+  final bucketInspection = ToOne<BucketInspection>();
+  final security = ToOne<Security>();
+  final extra = ToOne<Extra>();
+  final equipment = ToOne<Equipment>();
+  final status = ToOne<Status>();
+  final company = ToOne<Company>();
   final usuario = ToOne<Usuarios>();
   @Backlink()
   final usuarios = ToMany<Usuarios>();
-  @Backlink()
-  final pagos = ToMany<Pagos>();
 
   Bitacora({
     this.id = 0,
@@ -673,20 +689,14 @@ class Usuarios {
   @Unique()
   String idDBR;
   final bitacora = ToMany<Bitacora>();
-  final rol = ToOne<Roles>();
-  final roles = ToMany<Roles>();
-  final pagos = ToMany<Pagos>();
+  final rol = ToOne<Role>();
+  final roles = ToMany<Role>();
   final asesor = ToOne<Usuarios>(); 
   final clientes = ToMany<Usuarios>(); 
   final tecnicosMecanicos = ToMany<Usuarios>(); 
-  final vehiculos = ToMany<Vehiculo>();
-
-  //Relaciones del Técnico-Mecánico
-  final suspesionesDirecciones = ToMany<SuspensionDireccion>();
-  final motores = ToMany<Motor>();
-  final fluidos = ToMany<Fluidos>();
-  final frenos = ToMany<Frenos>();
-  final electricos = ToMany<Electrico>();
+  final vehicle = ToOne<Vehicle>();
+  @Backlink()
+  final controlForms = ToMany<ControlForm>();
   
   Usuarios({
     this.id = 0,
@@ -709,109 +719,6 @@ class Usuarios {
       DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
 }
 
-@Entity()
-class Roles {
-  int id;
-  String rol;
-  DateTime fechaRegistro;
-  @Unique()
-  String idDBR;
-  final bitacora = ToOne<Bitacora>();
-  final usuarios = ToMany<Usuarios>();
-
-  Roles({
-    this.id = 0,
-    required this.rol,
-    DateTime? fechaRegistro,
-    required this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class Anio {
-  int id;
-  String anio;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  final modelo = ToOne<Modelo>();
-
-  Anio({
-    this.id = 0,
-    required this.anio,
-    DateTime? fechaRegistro,
-    this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class Modelo {
-  int id;
-  String modelo;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  final marca = ToOne<Marca>();
-  @Backlink()
-  final anios = ToMany<Anio>();
-
-  Modelo({
-    this.id = 0,
-    required this.modelo,
-    DateTime? fechaRegistro,
-    this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-@Entity()
-class Marca {
-  int id;
-  String marca;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  @Backlink()
-  final modelos = ToMany<Modelo>();
-
-  Marca({
-    this.id = 0,
-    required this.marca,
-    DateTime? fechaRegistro,
-    this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-
-@Entity()
-class FormaPago {
-  int id;
-  String formaPago;
-  DateTime fechaRegistro;
-  @Unique()
-  String idDBR;
-
-  FormaPago({
-    this.id = 0,
-    required this.formaPago,
-    DateTime? fechaRegistro,
-    required this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
 
 
 

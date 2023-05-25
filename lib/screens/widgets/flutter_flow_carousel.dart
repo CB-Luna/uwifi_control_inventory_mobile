@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'dart:io';
 
+import 'package:taller_alex_app_asesor/database/image.dart';
+
 class FlutterFlowCarousel extends StatefulWidget {
   const FlutterFlowCarousel({
     Key? key,
@@ -14,7 +16,7 @@ class FlutterFlowCarousel extends StatefulWidget {
 
   final double width;
   final double height;
-  final List<String> listaImagenes;
+  final List<ImageEvidence> listaImagenes;
 
   @override
   _FlutterFlowCarouselState createState() => _FlutterFlowCarouselState();
@@ -32,7 +34,7 @@ class _FlutterFlowCarouselState extends State<FlutterFlowCarousel> {
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Image.file(
-                File(i),
+                File(i.path),
                 fit: BoxFit.cover,
               ),
         );

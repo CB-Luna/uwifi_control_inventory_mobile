@@ -22,7 +22,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(10, 252808688812742776),
       name: 'Usuarios',
-      lastPropertyId: const IdUid(37, 7115806576092254573),
+      lastPropertyId: const IdUid(39, 393360818016159356),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -82,7 +82,7 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(210, 5673280590788867277),
-            relationTarget: 'Roles'),
+            relationTarget: 'Role'),
         ModelProperty(
             id: const IdUid(30, 8932174031785446642),
             name: 'imagen',
@@ -109,7 +109,14 @@ final _entities = <ModelEntity>[
             id: const IdUid(37, 7115806576092254573),
             name: 'interno',
             type: 1,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(39, 393360818016159356),
+            name: 'vehicleId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(420, 2054800604445002333),
+            relationTarget: 'Vehicle')
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -117,13 +124,9 @@ final _entities = <ModelEntity>[
             name: 'bitacora',
             targetId: const IdUid(27, 1774905738150923512)),
         ModelRelation(
-            id: const IdUid(62, 9163628031946481713),
-            name: 'pagos',
-            targetId: const IdUid(58, 6428801880818699617)),
-        ModelRelation(
             id: const IdUid(69, 6600950642535277297),
             name: 'roles',
-            targetId: const IdUid(39, 5004962762570684805)),
+            targetId: const IdUid(97, 4052095333394296256)),
         ModelRelation(
             id: const IdUid(84, 5411951088038235824),
             name: 'clientes',
@@ -131,37 +134,16 @@ final _entities = <ModelEntity>[
         ModelRelation(
             id: const IdUid(85, 3090980319680596649),
             name: 'tecnicosMecanicos',
-            targetId: const IdUid(10, 252808688812742776)),
-        ModelRelation(
-            id: const IdUid(87, 1176537328766838454),
-            name: 'vehiculos',
-            targetId: const IdUid(65, 5787722657754964069)),
-        ModelRelation(
-            id: const IdUid(88, 6994368768961604055),
-            name: 'suspesionesDirecciones',
-            targetId: const IdUid(74, 8182885394159286166)),
-        ModelRelation(
-            id: const IdUid(89, 7171015875642997631),
-            name: 'motores',
-            targetId: const IdUid(73, 3609614765671064101)),
-        ModelRelation(
-            id: const IdUid(90, 6929442407370177314),
-            name: 'fluidos',
-            targetId: const IdUid(70, 7402766830593382424)),
-        ModelRelation(
-            id: const IdUid(91, 8650399258645622385),
-            name: 'frenos',
-            targetId: const IdUid(71, 111540169671743370)),
-        ModelRelation(
-            id: const IdUid(92, 4454853059839861178),
-            name: 'electricos',
-            targetId: const IdUid(69, 194731522577233837))
+            targetId: const IdUid(10, 252808688812742776))
       ],
-      backlinks: <ModelBacklink>[]),
+      backlinks: <ModelBacklink>[
+        ModelBacklink(
+            name: 'controlForms', srcEntity: 'ControlForm', srcField: '')
+      ]),
   ModelEntity(
       id: const IdUid(27, 1774905738150923512),
       name: 'Bitacora',
-      lastPropertyId: const IdUid(42, 4800100120392120930),
+      lastPropertyId: const IdUid(54, 4949095522373307717),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -185,76 +167,6 @@ final _entities = <ModelEntity>[
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(21, 561059605981752271),
-            name: 'vehiculoId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(279, 4800753572139945092),
-            relationTarget: 'Vehiculo'),
-        ModelProperty(
-            id: const IdUid(23, 2129861730720673334),
-            name: 'observacionId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(297, 8685125260427970668),
-            relationTarget: 'Observaciones'),
-        ModelProperty(
-            id: const IdUid(25, 3918405948041939496),
-            name: 'suspensionDireccionId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(299, 3403559951066700930),
-            relationTarget: 'SuspensionDireccion'),
-        ModelProperty(
-            id: const IdUid(26, 1880547944969244836),
-            name: 'motorId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(300, 9038695532186726245),
-            relationTarget: 'Motor'),
-        ModelProperty(
-            id: const IdUid(27, 3365272668340359628),
-            name: 'fluidosId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(301, 2303801916463691192),
-            relationTarget: 'Fluidos'),
-        ModelProperty(
-            id: const IdUid(28, 7287601138491933738),
-            name: 'frenosId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(302, 6692076237910304150),
-            relationTarget: 'Frenos'),
-        ModelProperty(
-            id: const IdUid(29, 5331836423271060866),
-            name: 'electricoId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(303, 4414320023330082672),
-            relationTarget: 'Electrico'),
-        ModelProperty(
-            id: const IdUid(30, 7654551223914586010),
-            name: 'servicioId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(330, 5249064443956429852),
-            relationTarget: 'Servicio'),
-        ModelProperty(
-            id: const IdUid(31, 6988111336556761),
-            name: 'productoId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(331, 3361789893351489509),
-            relationTarget: 'Producto'),
-        ModelProperty(
-            id: const IdUid(33, 4535282600813447593),
-            name: 'estatusId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(334, 504837245352985312),
-            relationTarget: 'Estatus'),
-        ModelProperty(
             id: const IdUid(35, 245771756674032572),
             name: 'usuarioPropietario',
             type: 9,
@@ -272,20 +184,6 @@ final _entities = <ModelEntity>[
             type: 1,
             flags: 0),
         ModelProperty(
-            id: const IdUid(39, 2108000366401092803),
-            name: 'ordenServicioId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(345, 2071126468008917387),
-            relationTarget: 'OrdenServicio'),
-        ModelProperty(
-            id: const IdUid(40, 7122234269288979042),
-            name: 'revisionId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(355, 8629614743217635052),
-            relationTarget: 'Revision'),
-        ModelProperty(
             id: const IdUid(41, 2457664418451866272),
             name: 'idControlForm',
             type: 6,
@@ -296,1439 +194,93 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(372, 7871258116235721040),
-            relationTarget: 'ControlForm')
+            relationTarget: 'ControlForm'),
+        ModelProperty(
+            id: const IdUid(43, 1408073293692008185),
+            name: 'measuresId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(376, 263922831672018031),
+            relationTarget: 'Measures'),
+        ModelProperty(
+            id: const IdUid(44, 1138938114752442633),
+            name: 'lightsId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(377, 40880772659364979),
+            relationTarget: 'Lights'),
+        ModelProperty(
+            id: const IdUid(45, 4195233311585393226),
+            name: 'carBodyworkId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(378, 2010376632410013126),
+            relationTarget: 'CarBodywork'),
+        ModelProperty(
+            id: const IdUid(46, 4668631312615613734),
+            name: 'fluidsCheckId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(379, 8501202086134165031),
+            relationTarget: 'FluidsCheck'),
+        ModelProperty(
+            id: const IdUid(48, 1017402764522477897),
+            name: 'securityId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(381, 105497353321209891),
+            relationTarget: 'Security'),
+        ModelProperty(
+            id: const IdUid(49, 585266921959677158),
+            name: 'extraId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(382, 4442815967066988465),
+            relationTarget: 'Extra'),
+        ModelProperty(
+            id: const IdUid(50, 4460623311570316080),
+            name: 'equipmentId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(383, 8146326558909109447),
+            relationTarget: 'Equipment'),
+        ModelProperty(
+            id: const IdUid(51, 6358376319212308688),
+            name: 'bucketInspectionId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(411, 8701175118663334704),
+            relationTarget: 'BucketInspection'),
+        ModelProperty(
+            id: const IdUid(52, 2592111304080072713),
+            name: 'statusId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(416, 1928035110659229249),
+            relationTarget: 'Status'),
+        ModelProperty(
+            id: const IdUid(53, 1016443553456847887),
+            name: 'companyId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(417, 6487682921463916362),
+            relationTarget: 'Company'),
+        ModelProperty(
+            id: const IdUid(54, 4949095522373307717),
+            name: 'vehicleId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(419, 8940549541967530173),
+            relationTarget: 'Vehicle')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'usuarios', srcEntity: 'Usuarios', srcField: ''),
-        ModelBacklink(name: 'pagos', srcEntity: 'Pagos', srcField: '')
-      ]),
-  ModelEntity(
-      id: const IdUid(39, 5004962762570684805),
-      name: 'Roles',
-      lastPropertyId: const IdUid(7, 6054280734454924450),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 9120360617098614714),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 8175506260800690164),
-            name: 'rol',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 1629138227601864338),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 3030501079695674721),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(121, 836541551050324843)),
-        ModelProperty(
-            id: const IdUid(6, 7472638587980563205),
-            name: 'bitacoraId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(123, 1234571576087817606),
-            relationTarget: 'Bitacora')
-      ],
-      relations: <ModelRelation>[
-        ModelRelation(
-            id: const IdUid(17, 2284205245851171279),
-            name: 'usuarios',
-            targetId: const IdUid(10, 252808688812742776))
-      ],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(58, 6428801880818699617),
-      name: 'Pagos',
-      lastPropertyId: const IdUid(10, 5801515247847733125),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 4115903305292342690),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 4203156006095368368),
-            name: 'montoAbonado',
-            type: 8,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 2622731725629235359),
-            name: 'fechaMovimiento',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 7079987813871341317),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 7803421008754010390),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(198, 7168385615663272966)),
-        ModelProperty(
-            id: const IdUid(8, 8776328160547757904),
-            name: 'usuarioId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(201, 5830096455343665109),
-            relationTarget: 'Usuarios'),
-        ModelProperty(
-            id: const IdUid(9, 8582847983321332165),
-            name: 'idEmiWeb',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(271, 8536477397944553514)),
-        ModelProperty(
-            id: const IdUid(10, 5801515247847733125),
-            name: 'idEmprendimiento',
-            type: 6,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[
-        ModelRelation(
-            id: const IdUid(61, 8919084738549353227),
-            name: 'bitacora',
-            targetId: const IdUid(27, 1774905738150923512))
-      ],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(65, 5787722657754964069),
-      name: 'Vehiculo',
-      lastPropertyId: const IdUid(16, 379514907682064106),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 8777486557899970350),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 269017718122273037),
-            name: 'marca',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 3301870542098382372),
-            name: 'modelo',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 3036183745290217451),
-            name: 'anio',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 8151815759241758472),
-            name: 'vin',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(282, 6911453516338894503)),
-        ModelProperty(
-            id: const IdUid(6, 8060557377120300020),
-            name: 'placas',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(283, 1457835175629472431)),
-        ModelProperty(
-            id: const IdUid(9, 5656616589418219150),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(10, 1317518254346203629),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(284, 2257360482014751691)),
-        ModelProperty(
-            id: const IdUid(11, 1762205881541880644),
-            name: 'clienteId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(285, 6308860898793184874),
-            relationTarget: 'Usuarios'),
-        ModelProperty(
-            id: const IdUid(13, 874652329641763868),
-            name: 'motor',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(14, 7811304686810842807),
-            name: 'color',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(15, 8577152736759332686),
-            name: 'imagen',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(16, 379514907682064106),
-            name: 'path',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
-      ]),
-  ModelEntity(
-      id: const IdUid(66, 6169138316575027919),
-      name: 'FormaPago',
-      lastPropertyId: const IdUid(4, 1847249199789191708),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 2225479898424516674),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 3405801118963612563),
-            name: 'formaPago',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 1415095316563273851),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 1847249199789191708),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(289, 818254706982232906))
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(68, 3713927666656252399),
-      name: 'Observaciones',
-      lastPropertyId: const IdUid(16, 2211411520720391891),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 7649954976526474598),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 7770854650492431421),
-            name: 'fechaObservacion',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 5505397589679894767),
-            name: 'respuestaP1',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 699863168351027397),
-            name: 'respuestaP2',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 2350854603691429285),
-            name: 'respuestaP3',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(6, 7908047968288145105),
-            name: 'respuestaP4',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(7, 8352425832288518353),
-            name: 'respuestaP5',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(8, 4400134888944794752),
-            name: 'respuestaP6',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(9, 6520458733199875118),
-            name: 'respuestaP7',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(10, 459494196219413966),
-            name: 'respuestaP8',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(11, 2685074739700608388),
-            name: 'respuestaP9',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(12, 3813717749858696997),
-            name: 'respuestaP10',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(13, 2852379985617170245),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(14, 6570187720589570573),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(295, 7318119897512116915)),
-        ModelProperty(
-            id: const IdUid(16, 2211411520720391891),
-            name: 'nombreAsesor',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
-      ]),
-  ModelEntity(
-      id: const IdUid(69, 194731522577233837),
-      name: 'Electrico',
-      lastPropertyId: const IdUid(17, 8739892236177320422),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 3899599197910438393),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 1582286473411789249),
-            name: 'terminalesDeBaterias',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 7810307374051011471),
-            name: 'terminalesDeBateriasObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 8273892317905702198),
-            name: 'lucesFrenos',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 5829707091731756906),
-            name: 'lucesFrenosObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(6, 8589511875773959310),
-            name: 'lucesDireccionales',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(7, 2037225785371025010),
-            name: 'lucesDireccionalesObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(8, 6695808902686629258),
-            name: 'lucesCuartos',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(9, 2899779761605154913),
-            name: 'lucesCuartosObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(10, 2943495617865334423),
-            name: 'checkEngine',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(11, 2044919953711266738),
-            name: 'checkEngineObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(12, 2687713125527562977),
-            name: 'completado',
-            type: 1,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(13, 1354923012247420241),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(14, 8098841996086351966),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(304, 7623393226964576846)),
-        ModelProperty(
-            id: const IdUid(16, 3688190060364945344),
-            name: 'revisionId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(356, 8944888087688617558),
-            relationTarget: 'Revision'),
-        ModelProperty(
-            id: const IdUid(17, 8739892236177320422),
-            name: 'tecnicoMecanicoId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(362, 1997357243947596908),
-            relationTarget: 'Usuarios')
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
-      ]),
-  ModelEntity(
-      id: const IdUid(70, 7402766830593382424),
-      name: 'Fluidos',
-      lastPropertyId: const IdUid(17, 7324212287374962127),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 5286832443788918267),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 3232318583791222270),
-            name: 'atf',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 3564655150886546987),
-            name: 'atfObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 1430041349471906575),
-            name: 'power',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 1356915949558732810),
-            name: 'powerObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(6, 8467277798439327185),
-            name: 'frenos',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(7, 8483743287805547205),
-            name: 'frenosObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(8, 3773888057419244273),
-            name: 'anticongelante',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(9, 6803321901637660678),
-            name: 'anticongelanteObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(10, 19444752648793607),
-            name: 'wipers',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(11, 2939295981831265925),
-            name: 'wipersObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(12, 7362246488296728318),
-            name: 'completado',
-            type: 1,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(13, 4902618966093921228),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(14, 2844263264656519334),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(306, 911150289122399543)),
-        ModelProperty(
-            id: const IdUid(16, 3572954889694640449),
-            name: 'revisionId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(357, 1770250886993691909),
-            relationTarget: 'Revision'),
-        ModelProperty(
-            id: const IdUid(17, 7324212287374962127),
-            name: 'tecnicoMecanicoId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(363, 2687505166158413747),
-            relationTarget: 'Usuarios')
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
-      ]),
-  ModelEntity(
-      id: const IdUid(71, 111540169671743370),
-      name: 'Frenos',
-      lastPropertyId: const IdUid(17, 2788338322206546199),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 8606077505997039808),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 7612025267406553371),
-            name: 'balatasDelanteras',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 237150343599318434),
-            name: 'balatasDelanterasObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 2249394492417416893),
-            name: 'balatasTraserasDiscoTambor',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 3166664666191090494),
-            name: 'balatasTraserasDiscoTamborObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(6, 406838970515822255),
-            name: 'manguerasLineas',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(7, 1898752098293455102),
-            name: 'manguerasLineasObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(8, 5874668608103936528),
-            name: 'cilindroMaestro',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(9, 6154261140377607033),
-            name: 'cilindroMaestroObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(10, 3104039877479998052),
-            name: 'birlosYTuercas',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(11, 8648978120146378054),
-            name: 'birlosYTuercasObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(12, 3659038920267373606),
-            name: 'completado',
-            type: 1,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(13, 5692491892694608755),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(14, 4686251601549853557),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(308, 7954708597295856759)),
-        ModelProperty(
-            id: const IdUid(16, 2179343323560761209),
-            name: 'revisionId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(358, 3605606892129463176),
-            relationTarget: 'Revision'),
-        ModelProperty(
-            id: const IdUid(17, 2788338322206546199),
-            name: 'tecnicoMecanicoId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(364, 3835145183713832074),
-            relationTarget: 'Usuarios')
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
-      ]),
-  ModelEntity(
-      id: const IdUid(73, 3609614765671064101),
-      name: 'Motor',
-      lastPropertyId: const IdUid(25, 3452492096527425309),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 3378316707571434912),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 392262610981897710),
-            name: 'aceite',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 8385911088565035072),
-            name: 'aceiteObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(6, 8591389061362627185),
-            name: 'cpoDeAceleracion',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(7, 7148434606585059497),
-            name: 'cpoDeAceleracionObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(8, 6235846545681265367),
-            name: 'bujias',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(9, 7461868005591746992),
-            name: 'bujiasObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(10, 5130616632241858063),
-            name: 'bandaCadenaDeTiempo',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(11, 2028680134501150908),
-            name: 'bandaCadenaDeTiempoObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(12, 438771135047589049),
-            name: 'soportes',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(13, 7523751442063410605),
-            name: 'soportesObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(14, 5048346201712343731),
-            name: 'bandas',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(15, 6163186675891091559),
-            name: 'bandasObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(16, 1153696306003445686),
-            name: 'mangueras',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(17, 2249414385226059275),
-            name: 'manguerasObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(18, 9072881332819282290),
-            name: 'completado',
-            type: 1,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(19, 639812413296443104),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(20, 6855194185502422996),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(317, 4499173726230872981)),
-        ModelProperty(
-            id: const IdUid(22, 6477881401001478570),
-            name: 'filtroDeAire',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(23, 2016822154535446518),
-            name: 'filtroDeAireObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(24, 6228579808324990306),
-            name: 'revisionId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(359, 3823747044694402973),
-            relationTarget: 'Revision'),
-        ModelProperty(
-            id: const IdUid(25, 3452492096527425309),
-            name: 'tecnicoMecanicoId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(365, 2355467996358001870),
-            relationTarget: 'Usuarios')
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
-      ]),
-  ModelEntity(
-      id: const IdUid(74, 8182885394159286166),
-      name: 'SuspensionDireccion',
-      lastPropertyId: const IdUid(52, 8296062866026521728),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 8816192752205185822),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 5915720470869899953),
-            name: 'rotulaSuperiorIzq',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 7267995918292218964),
-            name: 'rotulaSuperiorIzqObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 9216901714370915133),
-            name: 'rotulaSuperiorDer',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 6174938900235582323),
-            name: 'rotulaSuperiorDerObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(6, 7399528940602323142),
-            name: 'rotulaInferiorIzq',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(7, 8067283106061788084),
-            name: 'rotulaInferiorIzqObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(8, 689901634706923966),
-            name: 'rotulaInferiorDer',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(9, 3403734889957091002),
-            name: 'rotulaInferiorDerObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(10, 3475926414246198157),
-            name: 'bujeHorquillaSuperiorIzq',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(11, 1351704315098087135),
-            name: 'bujeHorquillaSuperiorIzqObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(12, 3409339742082844834),
-            name: 'bujeHorquillaSuperiorDer',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(13, 1714627067698003951),
-            name: 'bujeHorquillaSuperiorDerObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(14, 8882616308481342819),
-            name: 'bujeHorquillaInferiorIzq',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(15, 8981075485654037389),
-            name: 'bujeHorquillaInferiorIzqObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(16, 4122732220353037990),
-            name: 'bujeHorquillaInferiorDer',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(17, 2728811241870841570),
-            name: 'bujeHorquillaInferiorDerObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(18, 7820075417804272261),
-            name: 'amortiguadorDelanteroIzq',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(19, 7970114796588337864),
-            name: 'amortiguadorDelanteroIzqObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(20, 2749306330643444737),
-            name: 'amortiguadorDelanteroDer',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(21, 8607937809412422),
-            name: 'amortiguadorDelanteroDerObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(22, 9042560685937533101),
-            name: 'amortiguadorTraseroIzq',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(23, 143223895900408298),
-            name: 'amortiguadorTraseroIzqObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(24, 5494306436436646227),
-            name: 'amortiguadorTraseroDer',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(25, 4174386317734713449),
-            name: 'amortiguadorTraseroDerObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(26, 7559802069558347998),
-            name: 'bujeBarraEstabilizadoraIzq',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(27, 759441433079310132),
-            name: 'bujeBarraEstabilizadoraIzqObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(28, 6940129557200722607),
-            name: 'bujeBarraEstabilizadoraDer',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(29, 1580832237462881225),
-            name: 'bujeBarraEstabilizadoraDerObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(30, 9121755658058211878),
-            name: 'linkKitDelanteroIzq',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(31, 2084840029599708081),
-            name: 'linkKitDelanteroIzqObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(32, 3282486932384088688),
-            name: 'linkKitDelanteroDer',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(33, 1438633415460386111),
-            name: 'linkKitDelanteroDerObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(34, 6899237661904916822),
-            name: 'linkKitTraseroIzq',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(35, 5727857029759928970),
-            name: 'linkKitTraseroIzqObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(36, 7871509143000216491),
-            name: 'linkKitTraseroDer',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(37, 621968723033748951),
-            name: 'linkKitTraseroDerObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(38, 6241926712891156122),
-            name: 'terminalInteriorIzq',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(39, 7853507940034261267),
-            name: 'terminalInteriorIzqObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(40, 734574511219299792),
-            name: 'terminalInteriorDer',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(41, 443059315001386998),
-            name: 'terminalInteriorDerObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(42, 4137525549701440244),
-            name: 'terminalExteriorIzq',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(43, 8987456970247917143),
-            name: 'terminalExteriorIzqObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(44, 8066717926158358997),
-            name: 'terminalExteriorDer',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(45, 3588603006249227714),
-            name: 'terminalExteriorDerObservaciones',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(47, 5423197799235748702),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(48, 539200898874793609),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(320, 8517032296365500676)),
-        ModelProperty(
-            id: const IdUid(50, 2512232729201797121),
-            name: 'completado',
-            type: 1,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(51, 6922946760873952614),
-            name: 'revisionId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(361, 4921891675391413447),
-            relationTarget: 'Revision'),
-        ModelProperty(
-            id: const IdUid(52, 8296062866026521728),
-            name: 'tecnicoMecanicoId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(366, 7718119294156092371),
-            relationTarget: 'Usuarios')
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
-      ]),
-  ModelEntity(
-      id: const IdUid(76, 7992280240775612538),
-      name: 'Producto',
-      lastPropertyId: const IdUid(7, 6051791476480567790),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 633205492787897739),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 8392913615014330985),
-            name: 'producto',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 4499334555563066290),
-            name: 'cantidad',
-            type: 6,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 473540877700771468),
-            name: 'costo',
-            type: 8,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 5285214767097775784),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(6, 164142765578155626),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(324, 2276371521522702829)),
-        ModelProperty(
-            id: const IdUid(7, 6051791476480567790),
-            name: 'servicioId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(325, 3823128915946583116),
-            relationTarget: 'Servicio')
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
-      ]),
-  ModelEntity(
-      id: const IdUid(77, 2743501254910091798),
-      name: 'Servicio',
-      lastPropertyId: const IdUid(12, 8325763251011132126),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 2259646061796668055),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 2325151380291453067),
-            name: 'servicio',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 3746890772857768643),
-            name: 'costoServicio',
-            type: 8,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 2822199496222054622),
-            name: 'autorizado',
-            type: 1,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(6, 7318790662708284409),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(7, 2099027275996410089),
-            name: 'fechaEntrega',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(8, 3508794536146117736),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(326, 5777926947307451852)),
-        ModelProperty(
-            id: const IdUid(10, 2016605017757956177),
-            name: 'imagen',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(11, 5828188708304762308),
-            name: 'path',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(12, 8325763251011132126),
-            name: 'ordenServicioId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(347, 7705174580670337953),
-            relationTarget: 'OrdenServicio')
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'productos', srcEntity: 'Producto', srcField: ''),
-        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
-      ]),
-  ModelEntity(
-      id: const IdUid(78, 7969214193083467450),
-      name: 'TipoProducto',
-      lastPropertyId: const IdUid(5, 9090682104077850223),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 3435239766130670289),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 6101338124253117635),
-            name: 'tipoProducto',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 5161982749825288098),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 4362560124698977937),
-            name: 'costo',
-            type: 8,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 9090682104077850223),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(328, 801619231935516592))
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(79, 8431482435154692484),
-      name: 'TipoServicio',
-      lastPropertyId: const IdUid(7, 8897193515001642107),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 1372329611842198773),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 6639052366466886907),
-            name: 'tipoServicio',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 1753824477111234699),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 5952273703979672651),
-            name: 'costo',
-            type: 8,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 6671325618153653554),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(329, 7387390563203056319)),
-        ModelProperty(
-            id: const IdUid(6, 8755928181593528194),
-            name: 'imagen',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(7, 8897193515001642107),
-            name: 'path',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(80, 8177890023282011956),
-      name: 'Estatus',
-      lastPropertyId: const IdUid(7, 2953742968786170798),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 8414589768240169581),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(4, 8885416856685155434),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 8036328873746816342),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(335, 7247475376651258602)),
-        ModelProperty(
-            id: const IdUid(6, 8176290949278981940),
-            name: 'avance',
-            type: 8,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(7, 2953742968786170798),
-            name: 'estatus',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
-      ]),
-  ModelEntity(
-      id: const IdUid(81, 2641322679545348634),
-      name: 'OrdenServicio',
-      lastPropertyId: const IdUid(6, 5844943379902337314),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 2656486150849867410),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 7944503815991233540),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 6524024833306945642),
-            name: 'fechaEntrega',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 9183866744924227174),
-            name: 'costoTotal',
-            type: 8,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 130372104415231116),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(343, 4196360993135839853))
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'servicios', srcEntity: 'Servicio', srcField: ''),
-        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
-      ]),
-  ModelEntity(
-      id: const IdUid(82, 7390367631800539092),
-      name: 'Revision',
-      lastPropertyId: const IdUid(10, 1999877334393239664),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 7177154962008707056),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 3456054432801704327),
-            name: 'completado',
-            type: 1,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 5630590910122487290),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 2743153165281518501),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(348, 6919265969950515024)),
-        ModelProperty(
-            id: const IdUid(6, 5979108585375922629),
-            name: 'suspensionDireccionId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(350, 3433005883221835885),
-            relationTarget: 'SuspensionDireccion'),
-        ModelProperty(
-            id: const IdUid(7, 4405027249150098759),
-            name: 'motorId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(351, 6490798697442199075),
-            relationTarget: 'Motor'),
-        ModelProperty(
-            id: const IdUid(8, 7938494145439495975),
-            name: 'fluidosId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(352, 5170564838381844129),
-            relationTarget: 'Fluidos'),
-        ModelProperty(
-            id: const IdUid(9, 3618585044190150185),
-            name: 'frenosId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(353, 2221883928487093256),
-            relationTarget: 'Frenos'),
-        ModelProperty(
-            id: const IdUid(10, 1999877334393239664),
-            name: 'electricoId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(354, 7877422317358216693),
-            relationTarget: 'Electrico')
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
-      ]),
-  ModelEntity(
-      id: const IdUid(83, 4540381477586942588),
-      name: 'Anio',
-      lastPropertyId: const IdUid(5, 6812086042248250917),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 1047708076302862853),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 1614239616672212573),
-            name: 'anio',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 8853656486221049544),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 8395330672504007179),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(367, 7646703735232380052)),
-        ModelProperty(
-            id: const IdUid(5, 6812086042248250917),
-            name: 'modeloId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(368, 3546407887822673826),
-            relationTarget: 'Modelo')
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(84, 4655965125693160849),
-      name: 'Marca',
-      lastPropertyId: const IdUid(4, 3702325525227703568),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 9108104200675519911),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 2493979150133518886),
-            name: 'marca',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 8013226797324899029),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 3702325525227703568),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(369, 6762428426565170123))
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'modelos', srcEntity: 'Modelo', srcField: '')
-      ]),
-  ModelEntity(
-      id: const IdUid(85, 4316068055351042612),
-      name: 'Modelo',
-      lastPropertyId: const IdUid(5, 5597260614483222915),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 3847913522364585292),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 1384787049970137027),
-            name: 'modelo',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 4399571303823743012),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 58903509103500262),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(370, 6413021797842903566)),
-        ModelProperty(
-            id: const IdUid(5, 5597260614483222915),
-            name: 'marcaId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(371, 1211053708311660978),
-            relationTarget: 'Marca')
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'anios', srcEntity: 'Anio', srcField: '')
+        ModelBacklink(name: 'usuarios', srcEntity: 'Usuarios', srcField: '')
       ]),
   ModelEntity(
       id: const IdUid(86, 283646429578876451),
       name: 'ControlForm',
-      lastPropertyId: const IdUid(6, 4968957818395113321),
+      lastPropertyId: const IdUid(16, 8508696798102400446),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1765,7 +317,1079 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(375, 5109090144384492697),
-            relationTarget: 'Vehiculo')
+            relationTarget: 'Vehicle'),
+        ModelProperty(
+            id: const IdUid(7, 9150909545264128235),
+            name: 'measuresId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(388, 4626339537674908557),
+            relationTarget: 'Measures'),
+        ModelProperty(
+            id: const IdUid(8, 6788677312820454396),
+            name: 'lightsId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(389, 1080738433399291753),
+            relationTarget: 'Lights'),
+        ModelProperty(
+            id: const IdUid(9, 7902367091547443915),
+            name: 'carBodyworkId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(390, 6964699696323522363),
+            relationTarget: 'CarBodywork'),
+        ModelProperty(
+            id: const IdUid(10, 6156332927596122814),
+            name: 'fluidsCheckId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(391, 496185777107324813),
+            relationTarget: 'FluidsCheck'),
+        ModelProperty(
+            id: const IdUid(12, 6319806637083549128),
+            name: 'securityId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(393, 2707715113785547372),
+            relationTarget: 'Security'),
+        ModelProperty(
+            id: const IdUid(13, 7442866940337625838),
+            name: 'extraId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(394, 6907220557239226145),
+            relationTarget: 'Extra'),
+        ModelProperty(
+            id: const IdUid(14, 2227071491150425204),
+            name: 'equipmentId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(395, 3683821233501424578),
+            relationTarget: 'Equipment'),
+        ModelProperty(
+            id: const IdUid(15, 5065703079577799848),
+            name: 'bucketInspectionId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(410, 8460461020124898604),
+            relationTarget: 'BucketInspection'),
+        ModelProperty(
+            id: const IdUid(16, 8508696798102400446),
+            name: 'today',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(88, 5449780156064882583),
+      name: 'CarBodywork',
+      lastPropertyId: const IdUid(30, 4861213486138912837),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8619704549570291130),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 4857664604114749455),
+            name: 'wiperBladesFront',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 6314607860315248665),
+            name: 'wiperBladesFrontComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 2932307915314939476),
+            name: 'wiperBladesBack',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 7798330572794639680),
+            name: 'wiperBladesBackComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 6141137134455852994),
+            name: 'windshieldWiperFront',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 3972296533681936088),
+            name: 'windshieldWiperFrontComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 2508672601353175811),
+            name: 'windshieldWiperBack',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 3017322609851710155),
+            name: 'windshieldWiperBackComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 7042986062575097577),
+            name: 'generalBody',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 7370161818909769733),
+            name: 'generalBodyComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 8248962142047861753),
+            name: 'decaling',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 5561649135905036482),
+            name: 'decalingComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 6215244236227135641),
+            name: 'tires',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 5869098321528518587),
+            name: 'tiresComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(16, 3697251397158094005),
+            name: 'glass',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(17, 8447404666841583943),
+            name: 'glassComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(18, 6670366128981306869),
+            name: 'mirrors',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(19, 785053915727178349),
+            name: 'mirrorsComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(20, 6060806140683192414),
+            name: 'parking',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(21, 4146340390175637448),
+            name: 'parkingComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(22, 809987713072591549),
+            name: 'brakes',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(23, 4431062595118052256),
+            name: 'brakesComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(24, 6779107806492877344),
+            name: 'emgBrakes',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(25, 4969051730456815061),
+            name: 'emgBrakesComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(26, 4284389978323354647),
+            name: 'horn',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(27, 5555757982127059662),
+            name: 'hornComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(28, 5156744286049715689),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(29, 3055348980492333125),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(386, 4040159493289477701)),
+        ModelProperty(
+            id: const IdUid(30, 4861213486138912837),
+            name: 'controlFormId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(387, 691673281428625991),
+            relationTarget: 'ControlForm')
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(89, 1967166146969188),
+      name: 'Equipment',
+      lastPropertyId: const IdUid(14, 4518607710027017519),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 3072725452176787783),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 3117283363978561298),
+            name: 'ignitionKey',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 8333329632647553251),
+            name: 'ignitionKeyComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 6647390367307691303),
+            name: 'binsBoxKey',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 407614740461923814),
+            name: 'binsBoxKeyComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 342899109221328277),
+            name: 'vehicleRegistrationCopy',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 7112308235468494341),
+            name: 'vehicleRegistrationCopyComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 8276059830138579913),
+            name: 'vehicleInsuranceCopy',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 8274120943336880262),
+            name: 'vehicleInsuranceCopyComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 6976004256566867194),
+            name: 'bucketLiftOperatorManual',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 4005164948417234132),
+            name: 'bucketLiftOperatorManualComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 8416327103387530775),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 5074896634966387663),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(396, 4862452392618367177)),
+        ModelProperty(
+            id: const IdUid(14, 4518607710027017519),
+            name: 'controlFormId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(397, 3197766616825007307),
+            relationTarget: 'ControlForm')
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(90, 8674602881210305817),
+      name: 'Extra',
+      lastPropertyId: const IdUid(24, 6795083874400837418),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8709972951884373675),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 1120059456245895815),
+            name: 'ladder',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 1037887145633687304),
+            name: 'ladderComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 8239322748961962644),
+            name: 'stepLadder',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 1233130022738625999),
+            name: 'stepLadderComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 8778011736686096440),
+            name: 'hydraulicFluidForBucket',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 4811805052614413042),
+            name: 'hydraulicFluidForBucketComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 2661459276366961272),
+            name: 'fiberReelRack',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 189966141925577642),
+            name: 'fiberReelRackComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 1182077901815853265),
+            name: 'binsLockedAndSecure',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 8340552215351434739),
+            name: 'binsLockedAndSecureComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 8138788067722238621),
+            name: 'safetyHarness',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 8505113813885290654),
+            name: 'safetyHarnessComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(18, 7262620592751800397),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(19, 8624371709447272904),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(398, 6032785798160785110)),
+        ModelProperty(
+            id: const IdUid(20, 4336579854941035342),
+            name: 'controlFormId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(399, 2708309320918311437),
+            relationTarget: 'ControlForm'),
+        ModelProperty(
+            id: const IdUid(21, 6747819966582817219),
+            name: 'ladderStraps',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(22, 2740760801230344559),
+            name: 'ladderStrapsComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(23, 6021848753556347590),
+            name: 'lanyardSafetyHarness',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(24, 6795083874400837418),
+            name: 'lanyardSafetyHarnessComments',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(91, 6931545903134634049),
+      name: 'FluidsCheck',
+      lastPropertyId: const IdUid(18, 412239462255856612),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8448294045453716533),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 8359333279617470635),
+            name: 'engineOil',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 4405371747956559906),
+            name: 'engineOilComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 3273246250361849684),
+            name: 'transmission',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 8340302310659703556),
+            name: 'transmissionComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 1259784602810267069),
+            name: 'coolant',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 766461438078361605),
+            name: 'coolantComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 4233194197929438063),
+            name: 'powerSteering',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 8609117659014426069),
+            name: 'powerSteeringComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 8299996407209707061),
+            name: 'windshieldWasherFluid',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 8328158170129160362),
+            name: 'windshieldWasherFluidComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 368117682411838208),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 9096587913245800763),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(400, 1217690629761694733)),
+        ModelProperty(
+            id: const IdUid(16, 272467616661832083),
+            name: 'controlFormId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(401, 2060194445474862906),
+            relationTarget: 'ControlForm'),
+        ModelProperty(
+            id: const IdUid(17, 2859559509048373666),
+            name: 'dieselExhaustFluid',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(18, 412239462255856612),
+            name: 'dieselExhaustFluidComments',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(92, 2259630358692179159),
+      name: 'Lights',
+      lastPropertyId: const IdUid(26, 6130594748209463564),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8208627816511894110),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 6047004084709836420),
+            name: 'headLights',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 1405479752962223955),
+            name: 'headLightsComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 8503768092651271886),
+            name: 'brakeLights',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 5280006957504909935),
+            name: 'brakeLightsComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 2465634570145103391),
+            name: 'reverseLights',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 7241861824106150908),
+            name: 'reverseLightsComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 8239416834238681024),
+            name: 'warningLights',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 3050678265290041081),
+            name: 'warningLightsComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 462449233599553700),
+            name: 'turnSignals',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 8580934387460718362),
+            name: 'turnSignalsComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 1198146444113834834),
+            name: 'dashLights',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 6648187002647248499),
+            name: 'dashLightsComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(16, 6568051649441053855),
+            name: 'strobeLights',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(17, 2541792204828558717),
+            name: 'strobeLightsComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(18, 7082171303520639033),
+            name: 'cabRoofLights',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(19, 4999511497438034127),
+            name: 'cabRoofLightsComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(20, 1870679960917748335),
+            name: 'clearenceLights',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(21, 472741667402047784),
+            name: 'clearenceLightsComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(22, 2554692808429424872),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(23, 3059416477415854098),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(402, 2125595531649186268)),
+        ModelProperty(
+            id: const IdUid(24, 376586885543290336),
+            name: 'controlFormId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(403, 8696872441789594896),
+            relationTarget: 'ControlForm'),
+        ModelProperty(
+            id: const IdUid(25, 7206245804118223822),
+            name: 'fourWayFlashers',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(26, 6130594748209463564),
+            name: 'fourWayFlashersComments',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(93, 2233886934526070371),
+      name: 'Measures',
+      lastPropertyId: const IdUid(8, 1349797551475487582),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 5173735046304740244),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 441633590608724092),
+            name: 'gas',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 9176377168275984732),
+            name: 'gasComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 4901451049974007829),
+            name: 'mileage',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 3752230765420637088),
+            name: 'mileageComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 510904680295417049),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 3643296565612311359),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(404, 4948419500790357301)),
+        ModelProperty(
+            id: const IdUid(8, 1349797551475487582),
+            name: 'controlFormId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(405, 4985468126259660819),
+            relationTarget: 'ControlForm')
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(94, 5644194863526468119),
+      name: 'Security',
+      lastPropertyId: const IdUid(20, 9135334680922231986),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 6663492625810694939),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 2213878320476735662),
+            name: 'rtaMagnet',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 6767144360413407304),
+            name: 'rtaMagnetComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 6375108429317891250),
+            name: 'triangleReflectors',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 3070268730124949522),
+            name: 'triangleReflectorsComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 8154471083753542136),
+            name: 'wheelChocks',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 3087051519473631442),
+            name: 'wheelChocksComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 7841690536174758992),
+            name: 'fireExtinguisher',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 448622215395985354),
+            name: 'fireExtinguisherComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 8302026893968923691),
+            name: 'backUpAlarm',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 490080706405471104),
+            name: 'backUpAlarmComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 2315426250172158846),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 243947351103443722),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(406, 9095751880144883814)),
+        ModelProperty(
+            id: const IdUid(16, 5892128162037807776),
+            name: 'controlFormId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(407, 9019948739099780499),
+            relationTarget: 'ControlForm'),
+        ModelProperty(
+            id: const IdUid(19, 3760431652062174028),
+            name: 'firstAidKitSafetyVest',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(20, 9135334680922231986),
+            name: 'firstAidKitSafetyVestComments',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(95, 6627618922528083180),
+      name: 'BucketInspection',
+      lastPropertyId: const IdUid(10, 4502744291640685571),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 2215812487156471029),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 3759966310685337768),
+            name: 'insulated',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 1842639606934335421),
+            name: 'insulatedComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 8414077743308917853),
+            name: 'holesDrilled',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 3587379113484372313),
+            name: 'holesDrilledComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 3126833118459054351),
+            name: 'bucketLiner',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 7947269768364501881),
+            name: 'bucketLinerComments',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 5545972869869232542),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 3098747219753164134),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(408, 8292894974272749624)),
+        ModelProperty(
+            id: const IdUid(10, 4502744291640685571),
+            name: 'controlFormId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(409, 2155515461166987875),
+            relationTarget: 'ControlForm')
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(96, 2204100493351827724),
+      name: 'Company',
+      lastPropertyId: const IdUid(4, 5483261049025145217),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 1990190387171952169),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 5883599551323822621),
+            name: 'company',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 7716905942146128879),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 5483261049025145217),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(412, 4981138639668232364))
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(97, 4052095333394296256),
+      name: 'Role',
+      lastPropertyId: const IdUid(5, 2006292341464236205),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 1120608919096143979),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 5368560685332317129),
+            name: 'role',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 680253610766291074),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 2858837025365832615),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(413, 1190219723845232731)),
+        ModelProperty(
+            id: const IdUid(5, 2006292341464236205),
+            name: 'bitacoraId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(414, 2275477307342719568),
+            relationTarget: 'Bitacora')
+      ],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(93, 4439914579551300934),
+            name: 'usuarios',
+            targetId: const IdUid(10, 252808688812742776))
+      ],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(98, 4907560803572122681),
+      name: 'Status',
+      lastPropertyId: const IdUid(4, 5584602233699730989),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 4661672479596905138),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 2500316856417719453),
+            name: 'status',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 4558209150887984640),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 5584602233699730989),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(415, 7428404536933406429))
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(99, 8193815974638102829),
+      name: 'Vehicle',
+      lastPropertyId: const IdUid(17, 2392770978932015033),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 5171326281111880325),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 1360795067369486650),
+            name: 'make',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 6511545282247935467),
+            name: 'model',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 8917761268606995569),
+            name: 'year',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 8400343372362527324),
+            name: 'image',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 7467789804052333224),
+            name: 'path',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 3516490678714010667),
+            name: 'vin',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(421, 8203889751631662671)),
+        ModelProperty(
+            id: const IdUid(8, 3019793955076622132),
+            name: 'licesePlates',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(422, 7713453128820497698)),
+        ModelProperty(
+            id: const IdUid(9, 4880312502650608536),
+            name: 'motor',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 4061390792292035318),
+            name: 'color',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 3087375510280926034),
+            name: 'oilChangeDue',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 251371643102140460),
+            name: 'registrationDue',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 2938032336750196780),
+            name: 'insuranceRenewalDue',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 4219254653978239483),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 994325740940550622),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(423, 1082261063868053730)),
+        ModelProperty(
+            id: const IdUid(16, 3644817046309974834),
+            name: 'statusId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(424, 4738256906674152801),
+            relationTarget: 'Status'),
+        ModelProperty(
+            id: const IdUid(17, 2392770978932015033),
+            name: 'companyId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(425, 8708627097459420669),
+            relationTarget: 'Company')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -1793,9 +1417,9 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(86, 283646429578876451),
-      lastIndexId: const IdUid(375, 5109090144384492697),
-      lastRelationId: const IdUid(92, 4454853059839861178),
+      lastEntityId: const IdUid(99, 8193815974638102829),
+      lastIndexId: const IdUid(425, 8708627097459420669),
+      lastRelationId: const IdUid(93, 4439914579551300934),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -1860,7 +1484,28 @@ ModelDefinition getObjectBoxModel() {
         5967866020755512418,
         3167743746507035878,
         804684152773215409,
-        5935206935227986130
+        5935206935227986130,
+        6428801880818699617,
+        6169138316575027919,
+        3713927666656252399,
+        194731522577233837,
+        7402766830593382424,
+        111540169671743370,
+        3609614765671064101,
+        8182885394159286166,
+        7992280240775612538,
+        2743501254910091798,
+        7969214193083467450,
+        8431482435154692484,
+        2641322679545348634,
+        7390367631800539092,
+        4540381477586942588,
+        4655965125693160849,
+        4316068055351042612,
+        8367470477068670691,
+        5004962762570684805,
+        8177890023282011956,
+        5787722657754964069
       ],
       retiredIndexUids: const [
         8990521503430950587,
@@ -2014,7 +1659,22 @@ ModelDefinition getObjectBoxModel() {
         4588799358054363302,
         1815195187478967690,
         7553900630667516810,
-        2182435642457260945
+        2182435642457260945,
+        8685125260427970668,
+        3403559951066700930,
+        9038695532186726245,
+        2303801916463691192,
+        6692076237910304150,
+        4414320023330082672,
+        5249064443956429852,
+        3361789893351489509,
+        2071126468008917387,
+        8629614743217635052,
+        3465217592313559940,
+        8154917778766995021,
+        504837245352985312,
+        4800753572139945092,
+        7566237706448790608
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -2754,7 +2414,271 @@ ModelDefinition getObjectBoxModel() {
         605237792120356083,
         2971104627899873739,
         5050726085676383011,
-        7723558054890044016
+        7723558054890044016,
+        2129861730720673334,
+        3918405948041939496,
+        1880547944969244836,
+        3365272668340359628,
+        7287601138491933738,
+        5331836423271060866,
+        7654551223914586010,
+        6988111336556761,
+        2108000366401092803,
+        7122234269288979042,
+        4115903305292342690,
+        4203156006095368368,
+        2622731725629235359,
+        7079987813871341317,
+        7803421008754010390,
+        8776328160547757904,
+        8582847983321332165,
+        5801515247847733125,
+        2225479898424516674,
+        3405801118963612563,
+        1415095316563273851,
+        1847249199789191708,
+        7649954976526474598,
+        7770854650492431421,
+        5505397589679894767,
+        699863168351027397,
+        2350854603691429285,
+        7908047968288145105,
+        8352425832288518353,
+        4400134888944794752,
+        6520458733199875118,
+        459494196219413966,
+        2685074739700608388,
+        3813717749858696997,
+        2852379985617170245,
+        6570187720589570573,
+        2211411520720391891,
+        3899599197910438393,
+        1582286473411789249,
+        7810307374051011471,
+        8273892317905702198,
+        5829707091731756906,
+        8589511875773959310,
+        2037225785371025010,
+        6695808902686629258,
+        2899779761605154913,
+        2943495617865334423,
+        2044919953711266738,
+        2687713125527562977,
+        1354923012247420241,
+        8098841996086351966,
+        3688190060364945344,
+        8739892236177320422,
+        5286832443788918267,
+        3232318583791222270,
+        3564655150886546987,
+        1430041349471906575,
+        1356915949558732810,
+        8467277798439327185,
+        8483743287805547205,
+        3773888057419244273,
+        6803321901637660678,
+        19444752648793607,
+        2939295981831265925,
+        7362246488296728318,
+        4902618966093921228,
+        2844263264656519334,
+        3572954889694640449,
+        7324212287374962127,
+        8606077505997039808,
+        7612025267406553371,
+        237150343599318434,
+        2249394492417416893,
+        3166664666191090494,
+        406838970515822255,
+        1898752098293455102,
+        5874668608103936528,
+        6154261140377607033,
+        3104039877479998052,
+        8648978120146378054,
+        3659038920267373606,
+        5692491892694608755,
+        4686251601549853557,
+        2179343323560761209,
+        2788338322206546199,
+        3378316707571434912,
+        392262610981897710,
+        8385911088565035072,
+        8591389061362627185,
+        7148434606585059497,
+        6235846545681265367,
+        7461868005591746992,
+        5130616632241858063,
+        2028680134501150908,
+        438771135047589049,
+        7523751442063410605,
+        5048346201712343731,
+        6163186675891091559,
+        1153696306003445686,
+        2249414385226059275,
+        9072881332819282290,
+        639812413296443104,
+        6855194185502422996,
+        6477881401001478570,
+        2016822154535446518,
+        6228579808324990306,
+        3452492096527425309,
+        8816192752205185822,
+        5915720470869899953,
+        7267995918292218964,
+        9216901714370915133,
+        6174938900235582323,
+        7399528940602323142,
+        8067283106061788084,
+        689901634706923966,
+        3403734889957091002,
+        3475926414246198157,
+        1351704315098087135,
+        3409339742082844834,
+        1714627067698003951,
+        8882616308481342819,
+        8981075485654037389,
+        4122732220353037990,
+        2728811241870841570,
+        7820075417804272261,
+        7970114796588337864,
+        2749306330643444737,
+        8607937809412422,
+        9042560685937533101,
+        143223895900408298,
+        5494306436436646227,
+        4174386317734713449,
+        7559802069558347998,
+        759441433079310132,
+        6940129557200722607,
+        1580832237462881225,
+        9121755658058211878,
+        2084840029599708081,
+        3282486932384088688,
+        1438633415460386111,
+        6899237661904916822,
+        5727857029759928970,
+        7871509143000216491,
+        621968723033748951,
+        6241926712891156122,
+        7853507940034261267,
+        734574511219299792,
+        443059315001386998,
+        4137525549701440244,
+        8987456970247917143,
+        8066717926158358997,
+        3588603006249227714,
+        5423197799235748702,
+        539200898874793609,
+        2512232729201797121,
+        6922946760873952614,
+        8296062866026521728,
+        633205492787897739,
+        8392913615014330985,
+        4499334555563066290,
+        473540877700771468,
+        5285214767097775784,
+        164142765578155626,
+        6051791476480567790,
+        2259646061796668055,
+        2325151380291453067,
+        3746890772857768643,
+        2822199496222054622,
+        7318790662708284409,
+        2099027275996410089,
+        3508794536146117736,
+        2016605017757956177,
+        5828188708304762308,
+        8325763251011132126,
+        3435239766130670289,
+        6101338124253117635,
+        5161982749825288098,
+        4362560124698977937,
+        9090682104077850223,
+        1372329611842198773,
+        6639052366466886907,
+        1753824477111234699,
+        5952273703979672651,
+        6671325618153653554,
+        8755928181593528194,
+        8897193515001642107,
+        2656486150849867410,
+        7944503815991233540,
+        6524024833306945642,
+        9183866744924227174,
+        130372104415231116,
+        7177154962008707056,
+        3456054432801704327,
+        5630590910122487290,
+        2743153165281518501,
+        5979108585375922629,
+        4405027249150098759,
+        7938494145439495975,
+        3618585044190150185,
+        1999877334393239664,
+        1047708076302862853,
+        1614239616672212573,
+        8853656486221049544,
+        8395330672504007179,
+        6812086042248250917,
+        9108104200675519911,
+        2493979150133518886,
+        8013226797324899029,
+        3702325525227703568,
+        3847913522364585292,
+        1384787049970137027,
+        4399571303823743012,
+        58903509103500262,
+        5597260614483222915,
+        9140308478971006509,
+        7320531943348508169,
+        8209828940354797388,
+        7314008145230004031,
+        1384611994281291966,
+        1131624931295256176,
+        7545413979078774194,
+        2291661141300923695,
+        2419464682080760847,
+        6290705259185504023,
+        1574338224319550687,
+        3146862166309081842,
+        3959221128487783948,
+        8327562087796932737,
+        8311821151923800052,
+        2162588654290179846,
+        9120360617098614714,
+        8175506260800690164,
+        1629138227601864338,
+        3030501079695674721,
+        7472638587980563205,
+        8414589768240169581,
+        8885416856685155434,
+        8036328873746816342,
+        8176290949278981940,
+        2953742968786170798,
+        4535282600813447593,
+        1615463161634441644,
+        5594566637414151026,
+        2099450193580148103,
+        84249236102165216,
+        8001471012433612350,
+        9172298155122529491,
+        41845454037208225,
+        4314011827176067510,
+        561059605981752271,
+        2492340329675437855,
+        8777486557899970350,
+        269017718122273037,
+        3301870542098382372,
+        3036183745290217451,
+        8151815759241758472,
+        8060557377120300020,
+        5656616589418219150,
+        1317518254346203629,
+        1762205881541880644,
+        874652329641763868,
+        7811304686810842807,
+        8577152736759332686,
+        379514907682064106
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -2789,7 +2713,14 @@ ModelDefinition getObjectBoxModel() {
         7743390360918718064,
         5207316558226170877,
         2084439730118676088,
-        5641546153511965211
+        5641546153511965211,
+        9163628031946481713,
+        6994368768961604055,
+        7171015875642997631,
+        6929442407370177314,
+        8650399258645622385,
+        4454853059839861178,
+        1176537328766838454
       ],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -2798,20 +2729,16 @@ ModelDefinition getObjectBoxModel() {
   final bindings = <Type, EntityDefinition>{
     Usuarios: EntityDefinition<Usuarios>(
         model: _entities[0],
-        toOneRelations: (Usuarios object) => [object.rol, object.asesor],
+        toOneRelations: (Usuarios object) =>
+            [object.rol, object.asesor, object.vehicle],
         toManyRelations: (Usuarios object) => {
               RelInfo<Usuarios>.toMany(30, object.id): object.bitacora,
-              RelInfo<Usuarios>.toMany(62, object.id): object.pagos,
               RelInfo<Usuarios>.toMany(69, object.id): object.roles,
               RelInfo<Usuarios>.toMany(84, object.id): object.clientes,
               RelInfo<Usuarios>.toMany(85, object.id): object.tecnicosMecanicos,
-              RelInfo<Usuarios>.toMany(87, object.id): object.vehiculos,
-              RelInfo<Usuarios>.toMany(88, object.id):
-                  object.suspesionesDirecciones,
-              RelInfo<Usuarios>.toMany(89, object.id): object.motores,
-              RelInfo<Usuarios>.toMany(90, object.id): object.fluidos,
-              RelInfo<Usuarios>.toMany(91, object.id): object.frenos,
-              RelInfo<Usuarios>.toMany(92, object.id): object.electricos
+              RelInfo<ControlForm>.toOneBacklink(5, object.id,
+                      (ControlForm srcObject) => srcObject.employee):
+                  object.controlForms
             },
         getId: (Usuarios object) => object.id,
         setId: (Usuarios object, int id) {
@@ -2837,7 +2764,7 @@ ModelDefinition getObjectBoxModel() {
           final domicilioOffset = object.domicilio == null
               ? null
               : fbb.writeString(object.domicilio!);
-          fbb.startTable(38);
+          fbb.startTable(40);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
           fbb.addOffset(2, apellidoPOffset);
@@ -2854,6 +2781,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(32, domicilioOffset);
           fbb.addInt64(35, object.asesor.targetId);
           fbb.addBool(36, object.interno);
+          fbb.addInt64(38, object.vehicle.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2890,52 +2818,44 @@ ModelDefinition getObjectBoxModel() {
           object.asesor.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 74, 0);
           object.asesor.attach(store);
+          object.vehicle.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 80, 0);
+          object.vehicle.attach(store);
           InternalToManyAccess.setRelInfo(object.bitacora, store,
               RelInfo<Usuarios>.toMany(30, object.id), store.box<Usuarios>());
-          InternalToManyAccess.setRelInfo(object.pagos, store,
-              RelInfo<Usuarios>.toMany(62, object.id), store.box<Usuarios>());
           InternalToManyAccess.setRelInfo(object.roles, store,
               RelInfo<Usuarios>.toMany(69, object.id), store.box<Usuarios>());
           InternalToManyAccess.setRelInfo(object.clientes, store,
               RelInfo<Usuarios>.toMany(84, object.id), store.box<Usuarios>());
           InternalToManyAccess.setRelInfo(object.tecnicosMecanicos, store,
               RelInfo<Usuarios>.toMany(85, object.id), store.box<Usuarios>());
-          InternalToManyAccess.setRelInfo(object.vehiculos, store,
-              RelInfo<Usuarios>.toMany(87, object.id), store.box<Usuarios>());
-          InternalToManyAccess.setRelInfo(object.suspesionesDirecciones, store,
-              RelInfo<Usuarios>.toMany(88, object.id), store.box<Usuarios>());
-          InternalToManyAccess.setRelInfo(object.motores, store,
-              RelInfo<Usuarios>.toMany(89, object.id), store.box<Usuarios>());
-          InternalToManyAccess.setRelInfo(object.fluidos, store,
-              RelInfo<Usuarios>.toMany(90, object.id), store.box<Usuarios>());
-          InternalToManyAccess.setRelInfo(object.frenos, store,
-              RelInfo<Usuarios>.toMany(91, object.id), store.box<Usuarios>());
-          InternalToManyAccess.setRelInfo(object.electricos, store,
-              RelInfo<Usuarios>.toMany(92, object.id), store.box<Usuarios>());
+          InternalToManyAccess.setRelInfo(
+              object.controlForms,
+              store,
+              RelInfo<ControlForm>.toOneBacklink(
+                  5, object.id, (ControlForm srcObject) => srcObject.employee),
+              store.box<Usuarios>());
           return object;
         }),
     Bitacora: EntityDefinition<Bitacora>(
         model: _entities[1],
         toOneRelations: (Bitacora object) => [
-              object.vehiculo,
-              object.observacion,
-              object.suspensionDireccion,
-              object.motor,
-              object.fluidos,
-              object.frenos,
-              object.electrico,
-              object.servicio,
-              object.producto,
-              object.estatus,
               object.usuario,
-              object.ordenServicio,
-              object.revision,
-              object.controlForm
+              object.controlForm,
+              object.measures,
+              object.lights,
+              object.carBodywork,
+              object.fluidsCheck,
+              object.security,
+              object.extra,
+              object.equipment,
+              object.bucketInspection,
+              object.status,
+              object.company,
+              object.vehicle
             ],
-        toManyRelations: (Bitacora object) => {
-              RelInfo<Usuarios>.toManyBacklink(30, object.id): object.usuarios,
-              RelInfo<Pagos>.toManyBacklink(61, object.id): object.pagos
-            },
+        toManyRelations: (Bitacora object) =>
+            {RelInfo<Usuarios>.toManyBacklink(30, object.id): object.usuarios},
         getId: (Bitacora object) => object.id,
         setId: (Bitacora object, int id) {
           object.id = id;
@@ -2947,28 +2867,27 @@ ModelDefinition getObjectBoxModel() {
           final instruccionOffset = fbb.writeString(object.instruccion);
           final usuarioPropietarioOffset =
               fbb.writeString(object.usuarioPropietario);
-          fbb.startTable(43);
+          fbb.startTable(55);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(12, instruccionAdicionalOffset);
           fbb.addOffset(14, instruccionOffset);
-          fbb.addInt64(20, object.vehiculo.targetId);
-          fbb.addInt64(22, object.observacion.targetId);
-          fbb.addInt64(24, object.suspensionDireccion.targetId);
-          fbb.addInt64(25, object.motor.targetId);
-          fbb.addInt64(26, object.fluidos.targetId);
-          fbb.addInt64(27, object.frenos.targetId);
-          fbb.addInt64(28, object.electrico.targetId);
-          fbb.addInt64(29, object.servicio.targetId);
-          fbb.addInt64(30, object.producto.targetId);
-          fbb.addInt64(32, object.estatus.targetId);
           fbb.addOffset(34, usuarioPropietarioOffset);
           fbb.addInt64(36, object.usuario.targetId);
           fbb.addBool(37, object.executeSupabase);
-          fbb.addInt64(38, object.ordenServicio.targetId);
-          fbb.addInt64(39, object.revision.targetId);
           fbb.addInt64(40, object.idControlForm);
           fbb.addInt64(41, object.controlForm.targetId);
+          fbb.addInt64(42, object.measures.targetId);
+          fbb.addInt64(43, object.lights.targetId);
+          fbb.addInt64(44, object.carBodywork.targetId);
+          fbb.addInt64(45, object.fluidsCheck.targetId);
+          fbb.addInt64(47, object.security.targetId);
+          fbb.addInt64(48, object.extra.targetId);
+          fbb.addInt64(49, object.equipment.targetId);
+          fbb.addInt64(50, object.bucketInspection.targetId);
+          fbb.addInt64(51, object.status.targetId);
+          fbb.addInt64(52, object.company.targetId);
+          fbb.addInt64(53, object.vehicle.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2991,1575 +2910,66 @@ ModelDefinition getObjectBoxModel() {
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
               executeSupabase: const fb.BoolReader()
                   .vTableGet(buffer, rootOffset, 78, false));
-          object.vehiculo.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 44, 0);
-          object.vehiculo.attach(store);
-          object.observacion.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 48, 0);
-          object.observacion.attach(store);
-          object.suspensionDireccion.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 52, 0);
-          object.suspensionDireccion.attach(store);
-          object.motor.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 54, 0);
-          object.motor.attach(store);
-          object.fluidos.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 56, 0);
-          object.fluidos.attach(store);
-          object.frenos.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 58, 0);
-          object.frenos.attach(store);
-          object.electrico.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 60, 0);
-          object.electrico.attach(store);
-          object.servicio.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 62, 0);
-          object.servicio.attach(store);
-          object.producto.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 64, 0);
-          object.producto.attach(store);
-          object.estatus.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 68, 0);
-          object.estatus.attach(store);
           object.usuario.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 76, 0);
           object.usuario.attach(store);
-          object.ordenServicio.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 80, 0);
-          object.ordenServicio.attach(store);
-          object.revision.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 82, 0);
-          object.revision.attach(store);
           object.controlForm.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 86, 0);
           object.controlForm.attach(store);
+          object.measures.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 88, 0);
+          object.measures.attach(store);
+          object.lights.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 90, 0);
+          object.lights.attach(store);
+          object.carBodywork.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 92, 0);
+          object.carBodywork.attach(store);
+          object.fluidsCheck.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 94, 0);
+          object.fluidsCheck.attach(store);
+          object.security.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 98, 0);
+          object.security.attach(store);
+          object.extra.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 100, 0);
+          object.extra.attach(store);
+          object.equipment.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 102, 0);
+          object.equipment.attach(store);
+          object.bucketInspection.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 104, 0);
+          object.bucketInspection.attach(store);
+          object.status.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 106, 0);
+          object.status.attach(store);
+          object.company.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 108, 0);
+          object.company.attach(store);
+          object.vehicle.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 110, 0);
+          object.vehicle.attach(store);
           InternalToManyAccess.setRelInfo(
               object.usuarios,
               store,
               RelInfo<Usuarios>.toManyBacklink(30, object.id),
               store.box<Bitacora>());
-          InternalToManyAccess.setRelInfo(
-              object.pagos,
-              store,
-              RelInfo<Pagos>.toManyBacklink(61, object.id),
-              store.box<Bitacora>());
-          return object;
-        }),
-    Roles: EntityDefinition<Roles>(
-        model: _entities[2],
-        toOneRelations: (Roles object) => [object.bitacora],
-        toManyRelations: (Roles object) =>
-            {RelInfo<Roles>.toMany(17, object.id): object.usuarios},
-        getId: (Roles object) => object.id,
-        setId: (Roles object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Roles object, fb.Builder fbb) {
-          final rolOffset = fbb.writeString(object.rol);
-          final idDBROffset = fbb.writeString(object.idDBR);
-          fbb.startTable(8);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, rolOffset);
-          fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(3, idDBROffset);
-          fbb.addInt64(5, object.bitacora.targetId);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Roles(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              rol: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''));
-          object.bitacora.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
-          object.bitacora.attach(store);
-          InternalToManyAccess.setRelInfo(object.usuarios, store,
-              RelInfo<Roles>.toMany(17, object.id), store.box<Roles>());
-          return object;
-        }),
-    Pagos: EntityDefinition<Pagos>(
-        model: _entities[3],
-        toOneRelations: (Pagos object) => [object.usuario],
-        toManyRelations: (Pagos object) =>
-            {RelInfo<Pagos>.toMany(61, object.id): object.bitacora},
-        getId: (Pagos object) => object.id,
-        setId: (Pagos object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Pagos object, fb.Builder fbb) {
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          final idEmiWebOffset = object.idEmiWeb == null
-              ? null
-              : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(11);
-          fbb.addInt64(0, object.id);
-          fbb.addFloat64(1, object.montoAbonado);
-          fbb.addInt64(2, object.fechaMovimiento.millisecondsSinceEpoch);
-          fbb.addInt64(3, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(4, idDBROffset);
-          fbb.addInt64(7, object.usuario.targetId);
-          fbb.addOffset(8, idEmiWebOffset);
-          fbb.addInt64(9, object.idEmprendimiento);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Pagos(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              montoAbonado:
-                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 6, 0),
-              fechaMovimiento: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 12),
-              idEmiWeb: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 20),
-              idEmprendimiento:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0));
-          object.usuario.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
-          object.usuario.attach(store);
-          InternalToManyAccess.setRelInfo(object.bitacora, store,
-              RelInfo<Pagos>.toMany(61, object.id), store.box<Pagos>());
-          return object;
-        }),
-    Vehiculo: EntityDefinition<Vehiculo>(
-        model: _entities[4],
-        toOneRelations: (Vehiculo object) => [object.cliente],
-        toManyRelations: (Vehiculo object) => {
-              RelInfo<Bitacora>.toOneBacklink(21, object.id,
-                  (Bitacora srcObject) => srcObject.vehiculo): object.bitacora
-            },
-        getId: (Vehiculo object) => object.id,
-        setId: (Vehiculo object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Vehiculo object, fb.Builder fbb) {
-          final marcaOffset = fbb.writeString(object.marca);
-          final modeloOffset = fbb.writeString(object.modelo);
-          final anioOffset = fbb.writeString(object.anio);
-          final vinOffset = fbb.writeString(object.vin);
-          final placasOffset = fbb.writeString(object.placas);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          final motorOffset = fbb.writeString(object.motor);
-          final colorOffset = fbb.writeString(object.color);
-          final imagenOffset = fbb.writeString(object.imagen);
-          final pathOffset = fbb.writeString(object.path);
-          fbb.startTable(17);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, marcaOffset);
-          fbb.addOffset(2, modeloOffset);
-          fbb.addOffset(3, anioOffset);
-          fbb.addOffset(4, vinOffset);
-          fbb.addOffset(5, placasOffset);
-          fbb.addInt64(8, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(9, idDBROffset);
-          fbb.addInt64(10, object.cliente.targetId);
-          fbb.addOffset(12, motorOffset);
-          fbb.addOffset(13, colorOffset);
-          fbb.addOffset(14, imagenOffset);
-          fbb.addOffset(15, pathOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Vehiculo(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              marca: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              modelo: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''),
-              anio: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
-              imagen: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 32, ''),
-              path: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 34, ''),
-              vin: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 12, ''),
-              placas: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, ''),
-              motor: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 28, ''),
-              color: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 30, ''),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 22));
-          object.cliente.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
-          object.cliente.attach(store);
-          InternalToManyAccess.setRelInfo(
-              object.bitacora,
-              store,
-              RelInfo<Bitacora>.toOneBacklink(
-                  21, object.id, (Bitacora srcObject) => srcObject.vehiculo),
-              store.box<Vehiculo>());
-          return object;
-        }),
-    FormaPago: EntityDefinition<FormaPago>(
-        model: _entities[5],
-        toOneRelations: (FormaPago object) => [],
-        toManyRelations: (FormaPago object) => {},
-        getId: (FormaPago object) => object.id,
-        setId: (FormaPago object, int id) {
-          object.id = id;
-        },
-        objectToFB: (FormaPago object, fb.Builder fbb) {
-          final formaPagoOffset = fbb.writeString(object.formaPago);
-          final idDBROffset = fbb.writeString(object.idDBR);
-          fbb.startTable(5);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, formaPagoOffset);
-          fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(3, idDBROffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = FormaPago(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              formaPago: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''));
-
-          return object;
-        }),
-    Observaciones: EntityDefinition<Observaciones>(
-        model: _entities[6],
-        toOneRelations: (Observaciones object) => [],
-        toManyRelations: (Observaciones object) => {
-              RelInfo<Bitacora>.toOneBacklink(23, object.id,
-                      (Bitacora srcObject) => srcObject.observacion):
-                  object.bitacora
-            },
-        getId: (Observaciones object) => object.id,
-        setId: (Observaciones object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Observaciones object, fb.Builder fbb) {
-          final respuestaP1Offset = fbb.writeString(object.respuestaP1);
-          final respuestaP2Offset = fbb.writeString(object.respuestaP2);
-          final respuestaP3Offset = fbb.writeString(object.respuestaP3);
-          final respuestaP4Offset = fbb.writeString(object.respuestaP4);
-          final respuestaP5Offset = fbb.writeString(object.respuestaP5);
-          final respuestaP6Offset = fbb.writeString(object.respuestaP6);
-          final respuestaP7Offset = fbb.writeString(object.respuestaP7);
-          final respuestaP8Offset = fbb.writeString(object.respuestaP8);
-          final respuestaP9Offset = fbb.writeString(object.respuestaP9);
-          final respuestaP10Offset = fbb.writeString(object.respuestaP10);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          final nombreAsesorOffset = fbb.writeString(object.nombreAsesor);
-          fbb.startTable(17);
-          fbb.addInt64(0, object.id);
-          fbb.addInt64(1, object.fechaObservacion.millisecondsSinceEpoch);
-          fbb.addOffset(2, respuestaP1Offset);
-          fbb.addOffset(3, respuestaP2Offset);
-          fbb.addOffset(4, respuestaP3Offset);
-          fbb.addOffset(5, respuestaP4Offset);
-          fbb.addOffset(6, respuestaP5Offset);
-          fbb.addOffset(7, respuestaP6Offset);
-          fbb.addOffset(8, respuestaP7Offset);
-          fbb.addOffset(9, respuestaP8Offset);
-          fbb.addOffset(10, respuestaP9Offset);
-          fbb.addOffset(11, respuestaP10Offset);
-          fbb.addInt64(12, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(13, idDBROffset);
-          fbb.addOffset(15, nombreAsesorOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Observaciones(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              fechaObservacion: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0)),
-              respuestaP1: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''),
-              respuestaP2: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
-              respuestaP3: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 12, ''),
-              respuestaP4: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, ''),
-              respuestaP5: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 16, ''),
-              respuestaP6: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 18, ''),
-              respuestaP7:
-                  const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
-              respuestaP8: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
-              respuestaP9: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 24, ''),
-              respuestaP10: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, ''),
-              nombreAsesor: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 30));
-          InternalToManyAccess.setRelInfo(
-              object.bitacora,
-              store,
-              RelInfo<Bitacora>.toOneBacklink(
-                  23, object.id, (Bitacora srcObject) => srcObject.observacion),
-              store.box<Observaciones>());
-          return object;
-        }),
-    Electrico: EntityDefinition<Electrico>(
-        model: _entities[7],
-        toOneRelations: (Electrico object) =>
-            [object.revision, object.tecnicoMecanico],
-        toManyRelations: (Electrico object) => {
-              RelInfo<Bitacora>.toOneBacklink(29, object.id,
-                  (Bitacora srcObject) => srcObject.electrico): object.bitacora
-            },
-        getId: (Electrico object) => object.id,
-        setId: (Electrico object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Electrico object, fb.Builder fbb) {
-          final terminalesDeBateriasOffset =
-              fbb.writeString(object.terminalesDeBaterias);
-          final terminalesDeBateriasObservacionesOffset =
-              object.terminalesDeBateriasObservaciones == null
-                  ? null
-                  : fbb.writeString(object.terminalesDeBateriasObservaciones!);
-          final lucesFrenosOffset = fbb.writeString(object.lucesFrenos);
-          final lucesFrenosObservacionesOffset =
-              object.lucesFrenosObservaciones == null
-                  ? null
-                  : fbb.writeString(object.lucesFrenosObservaciones!);
-          final lucesDireccionalesOffset =
-              fbb.writeString(object.lucesDireccionales);
-          final lucesDireccionalesObservacionesOffset =
-              object.lucesDireccionalesObservaciones == null
-                  ? null
-                  : fbb.writeString(object.lucesDireccionalesObservaciones!);
-          final lucesCuartosOffset = fbb.writeString(object.lucesCuartos);
-          final lucesCuartosObservacionesOffset =
-              object.lucesCuartosObservaciones == null
-                  ? null
-                  : fbb.writeString(object.lucesCuartosObservaciones!);
-          final checkEngineOffset = fbb.writeString(object.checkEngine);
-          final checkEngineObservacionesOffset =
-              object.checkEngineObservaciones == null
-                  ? null
-                  : fbb.writeString(object.checkEngineObservaciones!);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(18);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, terminalesDeBateriasOffset);
-          fbb.addOffset(2, terminalesDeBateriasObservacionesOffset);
-          fbb.addOffset(3, lucesFrenosOffset);
-          fbb.addOffset(4, lucesFrenosObservacionesOffset);
-          fbb.addOffset(5, lucesDireccionalesOffset);
-          fbb.addOffset(6, lucesDireccionalesObservacionesOffset);
-          fbb.addOffset(7, lucesCuartosOffset);
-          fbb.addOffset(8, lucesCuartosObservacionesOffset);
-          fbb.addOffset(9, checkEngineOffset);
-          fbb.addOffset(10, checkEngineObservacionesOffset);
-          fbb.addBool(11, object.completado);
-          fbb.addInt64(12, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(13, idDBROffset);
-          fbb.addInt64(15, object.revision.targetId);
-          fbb.addInt64(16, object.tecnicoMecanico.targetId);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Electrico(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              terminalesDeBaterias: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              terminalesDeBateriasObservaciones:
-                  const fb.StringReader(asciiOptimization: true)
-                      .vTableGetNullable(buffer, rootOffset, 8),
-              lucesFrenos: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
-              lucesFrenosObservaciones: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 12),
-              lucesDireccionales: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, ''),
-              lucesDireccionalesObservaciones:
-                  const fb.StringReader(asciiOptimization: true)
-                      .vTableGetNullable(buffer, rootOffset, 16),
-              lucesCuartos: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, ''),
-              lucesCuartosObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20),
-              checkEngine: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
-              checkEngineObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 24),
-              completado: const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 30));
-          object.revision.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
-          object.revision.attach(store);
-          object.tecnicoMecanico.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0);
-          object.tecnicoMecanico.attach(store);
-          InternalToManyAccess.setRelInfo(
-              object.bitacora,
-              store,
-              RelInfo<Bitacora>.toOneBacklink(
-                  29, object.id, (Bitacora srcObject) => srcObject.electrico),
-              store.box<Electrico>());
-          return object;
-        }),
-    Fluidos: EntityDefinition<Fluidos>(
-        model: _entities[8],
-        toOneRelations: (Fluidos object) =>
-            [object.revision, object.tecnicoMecanico],
-        toManyRelations: (Fluidos object) => {
-              RelInfo<Bitacora>.toOneBacklink(
-                      27, object.id, (Bitacora srcObject) => srcObject.fluidos):
-                  object.bitacora
-            },
-        getId: (Fluidos object) => object.id,
-        setId: (Fluidos object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Fluidos object, fb.Builder fbb) {
-          final atfOffset = fbb.writeString(object.atf);
-          final atfObservacionesOffset = object.atfObservaciones == null
-              ? null
-              : fbb.writeString(object.atfObservaciones!);
-          final powerOffset = fbb.writeString(object.power);
-          final powerObservacionesOffset = object.powerObservaciones == null
-              ? null
-              : fbb.writeString(object.powerObservaciones!);
-          final frenosOffset = fbb.writeString(object.frenos);
-          final frenosObservacionesOffset = object.frenosObservaciones == null
-              ? null
-              : fbb.writeString(object.frenosObservaciones!);
-          final anticongelanteOffset = fbb.writeString(object.anticongelante);
-          final anticongelanteObservacionesOffset =
-              object.anticongelanteObservaciones == null
-                  ? null
-                  : fbb.writeString(object.anticongelanteObservaciones!);
-          final wipersOffset = fbb.writeString(object.wipers);
-          final wipersObservacionesOffset = object.wipersObservaciones == null
-              ? null
-              : fbb.writeString(object.wipersObservaciones!);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(18);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, atfOffset);
-          fbb.addOffset(2, atfObservacionesOffset);
-          fbb.addOffset(3, powerOffset);
-          fbb.addOffset(4, powerObservacionesOffset);
-          fbb.addOffset(5, frenosOffset);
-          fbb.addOffset(6, frenosObservacionesOffset);
-          fbb.addOffset(7, anticongelanteOffset);
-          fbb.addOffset(8, anticongelanteObservacionesOffset);
-          fbb.addOffset(9, wipersOffset);
-          fbb.addOffset(10, wipersObservacionesOffset);
-          fbb.addBool(11, object.completado);
-          fbb.addInt64(12, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(13, idDBROffset);
-          fbb.addInt64(15, object.revision.targetId);
-          fbb.addInt64(16, object.tecnicoMecanico.targetId);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Fluidos(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              atf: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              atfObservaciones: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 8),
-              power: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
-              powerObservaciones: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 12),
-              frenos: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, ''),
-              frenosObservaciones: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 16),
-              anticongelante: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 18, ''),
-              anticongelanteObservaciones:
-                  const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20),
-              wipers: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
-              wipersObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 24),
-              completado: const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 30));
-          object.revision.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
-          object.revision.attach(store);
-          object.tecnicoMecanico.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0);
-          object.tecnicoMecanico.attach(store);
-          InternalToManyAccess.setRelInfo(
-              object.bitacora,
-              store,
-              RelInfo<Bitacora>.toOneBacklink(
-                  27, object.id, (Bitacora srcObject) => srcObject.fluidos),
-              store.box<Fluidos>());
-          return object;
-        }),
-    Frenos: EntityDefinition<Frenos>(
-        model: _entities[9],
-        toOneRelations: (Frenos object) =>
-            [object.revision, object.tecnicoMecanico],
-        toManyRelations: (Frenos object) => {
-              RelInfo<Bitacora>.toOneBacklink(
-                      28, object.id, (Bitacora srcObject) => srcObject.frenos):
-                  object.bitacora
-            },
-        getId: (Frenos object) => object.id,
-        setId: (Frenos object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Frenos object, fb.Builder fbb) {
-          final balatasDelanterasOffset =
-              fbb.writeString(object.balatasDelanteras);
-          final balatasDelanterasObservacionesOffset =
-              object.balatasDelanterasObservaciones == null
-                  ? null
-                  : fbb.writeString(object.balatasDelanterasObservaciones!);
-          final balatasTraserasDiscoTamborOffset =
-              fbb.writeString(object.balatasTraserasDiscoTambor);
-          final balatasTraserasDiscoTamborObservacionesOffset =
-              object.balatasTraserasDiscoTamborObservaciones == null
-                  ? null
-                  : fbb.writeString(
-                      object.balatasTraserasDiscoTamborObservaciones!);
-          final manguerasLineasOffset = fbb.writeString(object.manguerasLineas);
-          final manguerasLineasObservacionesOffset =
-              object.manguerasLineasObservaciones == null
-                  ? null
-                  : fbb.writeString(object.manguerasLineasObservaciones!);
-          final cilindroMaestroOffset = fbb.writeString(object.cilindroMaestro);
-          final cilindroMaestroObservacionesOffset =
-              object.cilindroMaestroObservaciones == null
-                  ? null
-                  : fbb.writeString(object.cilindroMaestroObservaciones!);
-          final birlosYTuercasOffset = fbb.writeString(object.birlosYTuercas);
-          final birlosYTuercasObservacionesOffset =
-              object.birlosYTuercasObservaciones == null
-                  ? null
-                  : fbb.writeString(object.birlosYTuercasObservaciones!);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(18);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, balatasDelanterasOffset);
-          fbb.addOffset(2, balatasDelanterasObservacionesOffset);
-          fbb.addOffset(3, balatasTraserasDiscoTamborOffset);
-          fbb.addOffset(4, balatasTraserasDiscoTamborObservacionesOffset);
-          fbb.addOffset(5, manguerasLineasOffset);
-          fbb.addOffset(6, manguerasLineasObservacionesOffset);
-          fbb.addOffset(7, cilindroMaestroOffset);
-          fbb.addOffset(8, cilindroMaestroObservacionesOffset);
-          fbb.addOffset(9, birlosYTuercasOffset);
-          fbb.addOffset(10, birlosYTuercasObservacionesOffset);
-          fbb.addBool(11, object.completado);
-          fbb.addInt64(12, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(13, idDBROffset);
-          fbb.addInt64(15, object.revision.targetId);
-          fbb.addInt64(16, object.tecnicoMecanico.targetId);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Frenos(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              balatasDelanteras: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              balatasDelanterasObservaciones:
-                  const fb.StringReader(asciiOptimization: true)
-                      .vTableGetNullable(buffer, rootOffset, 8),
-              balatasTraserasDiscoTambor: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
-              balatasTraserasDiscoTamborObservaciones:
-                  const fb.StringReader(asciiOptimization: true)
-                      .vTableGetNullable(buffer, rootOffset, 12),
-              manguerasLineas: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, ''),
-              manguerasLineasObservaciones: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 16),
-              cilindroMaestro: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, ''),
-              cilindroMaestroObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20),
-              birlosYTuercas: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
-              birlosYTuercasObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 24),
-              completado: const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 30));
-          object.revision.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
-          object.revision.attach(store);
-          object.tecnicoMecanico.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0);
-          object.tecnicoMecanico.attach(store);
-          InternalToManyAccess.setRelInfo(
-              object.bitacora,
-              store,
-              RelInfo<Bitacora>.toOneBacklink(
-                  28, object.id, (Bitacora srcObject) => srcObject.frenos),
-              store.box<Frenos>());
-          return object;
-        }),
-    Motor: EntityDefinition<Motor>(
-        model: _entities[10],
-        toOneRelations: (Motor object) =>
-            [object.revision, object.tecnicoMecanico],
-        toManyRelations: (Motor object) => {
-              RelInfo<Bitacora>.toOneBacklink(
-                      26, object.id, (Bitacora srcObject) => srcObject.motor):
-                  object.bitacora
-            },
-        getId: (Motor object) => object.id,
-        setId: (Motor object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Motor object, fb.Builder fbb) {
-          final aceiteOffset = fbb.writeString(object.aceite);
-          final aceiteObservacionesOffset = object.aceiteObservaciones == null
-              ? null
-              : fbb.writeString(object.aceiteObservaciones!);
-          final cpoDeAceleracionOffset =
-              fbb.writeString(object.cpoDeAceleracion);
-          final cpoDeAceleracionObservacionesOffset =
-              object.cpoDeAceleracionObservaciones == null
-                  ? null
-                  : fbb.writeString(object.cpoDeAceleracionObservaciones!);
-          final bujiasOffset = fbb.writeString(object.bujias);
-          final bujiasObservacionesOffset = object.bujiasObservaciones == null
-              ? null
-              : fbb.writeString(object.bujiasObservaciones!);
-          final bandaCadenaDeTiempoOffset =
-              fbb.writeString(object.bandaCadenaDeTiempo);
-          final bandaCadenaDeTiempoObservacionesOffset =
-              object.bandaCadenaDeTiempoObservaciones == null
-                  ? null
-                  : fbb.writeString(object.bandaCadenaDeTiempoObservaciones!);
-          final soportesOffset = fbb.writeString(object.soportes);
-          final soportesObservacionesOffset =
-              object.soportesObservaciones == null
-                  ? null
-                  : fbb.writeString(object.soportesObservaciones!);
-          final bandasOffset = fbb.writeString(object.bandas);
-          final bandasObservacionesOffset = object.bandasObservaciones == null
-              ? null
-              : fbb.writeString(object.bandasObservaciones!);
-          final manguerasOffset = fbb.writeString(object.mangueras);
-          final manguerasObservacionesOffset =
-              object.manguerasObservaciones == null
-                  ? null
-                  : fbb.writeString(object.manguerasObservaciones!);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          final filtroDeAireOffset = fbb.writeString(object.filtroDeAire);
-          final filtroDeAireObservacionesOffset =
-              object.filtroDeAireObservaciones == null
-                  ? null
-                  : fbb.writeString(object.filtroDeAireObservaciones!);
-          fbb.startTable(26);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, aceiteOffset);
-          fbb.addOffset(2, aceiteObservacionesOffset);
-          fbb.addOffset(5, cpoDeAceleracionOffset);
-          fbb.addOffset(6, cpoDeAceleracionObservacionesOffset);
-          fbb.addOffset(7, bujiasOffset);
-          fbb.addOffset(8, bujiasObservacionesOffset);
-          fbb.addOffset(9, bandaCadenaDeTiempoOffset);
-          fbb.addOffset(10, bandaCadenaDeTiempoObservacionesOffset);
-          fbb.addOffset(11, soportesOffset);
-          fbb.addOffset(12, soportesObservacionesOffset);
-          fbb.addOffset(13, bandasOffset);
-          fbb.addOffset(14, bandasObservacionesOffset);
-          fbb.addOffset(15, manguerasOffset);
-          fbb.addOffset(16, manguerasObservacionesOffset);
-          fbb.addBool(17, object.completado);
-          fbb.addInt64(18, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(19, idDBROffset);
-          fbb.addOffset(21, filtroDeAireOffset);
-          fbb.addOffset(22, filtroDeAireObservacionesOffset);
-          fbb.addInt64(23, object.revision.targetId);
-          fbb.addInt64(24, object.tecnicoMecanico.targetId);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Motor(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              aceite: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              aceiteObservaciones: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 8),
-              filtroDeAire: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 46, ''),
-              filtroDeAireObservaciones: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 48),
-              cpoDeAceleracion: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, ''),
-              cpoDeAceleracionObservaciones: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 16),
-              bujias: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 18, ''),
-              bujiasObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20),
-              bandaCadenaDeTiempo: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
-              bandaCadenaDeTiempoObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 24),
-              soportes: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, ''),
-              soportesObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 28),
-              bandas: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 30, ''),
-              bandasObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32),
-              mangueras: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''),
-              manguerasObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 36),
-              completado: const fb.BoolReader().vTableGet(buffer, rootOffset, 38, false),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 42));
-          object.revision.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0);
-          object.revision.attach(store);
-          object.tecnicoMecanico.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 52, 0);
-          object.tecnicoMecanico.attach(store);
-          InternalToManyAccess.setRelInfo(
-              object.bitacora,
-              store,
-              RelInfo<Bitacora>.toOneBacklink(
-                  26, object.id, (Bitacora srcObject) => srcObject.motor),
-              store.box<Motor>());
-          return object;
-        }),
-    SuspensionDireccion: EntityDefinition<SuspensionDireccion>(
-        model: _entities[11],
-        toOneRelations: (SuspensionDireccion object) =>
-            [object.revision, object.tecnicoMecanico],
-        toManyRelations: (SuspensionDireccion object) => {
-              RelInfo<Bitacora>.toOneBacklink(25, object.id,
-                      (Bitacora srcObject) => srcObject.suspensionDireccion):
-                  object.bitacora
-            },
-        getId: (SuspensionDireccion object) => object.id,
-        setId: (SuspensionDireccion object, int id) {
-          object.id = id;
-        },
-        objectToFB: (SuspensionDireccion object, fb.Builder fbb) {
-          final rotulaSuperiorIzqOffset =
-              fbb.writeString(object.rotulaSuperiorIzq);
-          final rotulaSuperiorIzqObservacionesOffset =
-              object.rotulaSuperiorIzqObservaciones == null
-                  ? null
-                  : fbb.writeString(object.rotulaSuperiorIzqObservaciones!);
-          final rotulaSuperiorDerOffset =
-              fbb.writeString(object.rotulaSuperiorDer);
-          final rotulaSuperiorDerObservacionesOffset =
-              object.rotulaSuperiorDerObservaciones == null
-                  ? null
-                  : fbb.writeString(object.rotulaSuperiorDerObservaciones!);
-          final rotulaInferiorIzqOffset =
-              fbb.writeString(object.rotulaInferiorIzq);
-          final rotulaInferiorIzqObservacionesOffset =
-              object.rotulaInferiorIzqObservaciones == null
-                  ? null
-                  : fbb.writeString(object.rotulaInferiorIzqObservaciones!);
-          final rotulaInferiorDerOffset =
-              fbb.writeString(object.rotulaInferiorDer);
-          final rotulaInferiorDerObservacionesOffset =
-              object.rotulaInferiorDerObservaciones == null
-                  ? null
-                  : fbb.writeString(object.rotulaInferiorDerObservaciones!);
-          final bujeHorquillaSuperiorIzqOffset =
-              fbb.writeString(object.bujeHorquillaSuperiorIzq);
-          final bujeHorquillaSuperiorIzqObservacionesOffset = object
-                      .bujeHorquillaSuperiorIzqObservaciones ==
-                  null
-              ? null
-              : fbb.writeString(object.bujeHorquillaSuperiorIzqObservaciones!);
-          final bujeHorquillaSuperiorDerOffset =
-              fbb.writeString(object.bujeHorquillaSuperiorDer);
-          final bujeHorquillaSuperiorDerObservacionesOffset = object
-                      .bujeHorquillaSuperiorDerObservaciones ==
-                  null
-              ? null
-              : fbb.writeString(object.bujeHorquillaSuperiorDerObservaciones!);
-          final bujeHorquillaInferiorIzqOffset =
-              fbb.writeString(object.bujeHorquillaInferiorIzq);
-          final bujeHorquillaInferiorIzqObservacionesOffset = object
-                      .bujeHorquillaInferiorIzqObservaciones ==
-                  null
-              ? null
-              : fbb.writeString(object.bujeHorquillaInferiorIzqObservaciones!);
-          final bujeHorquillaInferiorDerOffset =
-              fbb.writeString(object.bujeHorquillaInferiorDer);
-          final bujeHorquillaInferiorDerObservacionesOffset = object
-                      .bujeHorquillaInferiorDerObservaciones ==
-                  null
-              ? null
-              : fbb.writeString(object.bujeHorquillaInferiorDerObservaciones!);
-          final amortiguadorDelanteroIzqOffset =
-              fbb.writeString(object.amortiguadorDelanteroIzq);
-          final amortiguadorDelanteroIzqObservacionesOffset = object
-                      .amortiguadorDelanteroIzqObservaciones ==
-                  null
-              ? null
-              : fbb.writeString(object.amortiguadorDelanteroIzqObservaciones!);
-          final amortiguadorDelanteroDerOffset =
-              fbb.writeString(object.amortiguadorDelanteroDer);
-          final amortiguadorDelanteroDerObservacionesOffset = object
-                      .amortiguadorDelanteroDerObservaciones ==
-                  null
-              ? null
-              : fbb.writeString(object.amortiguadorDelanteroDerObservaciones!);
-          final amortiguadorTraseroIzqOffset =
-              fbb.writeString(object.amortiguadorTraseroIzq);
-          final amortiguadorTraseroIzqObservacionesOffset =
-              object.amortiguadorTraseroIzqObservaciones == null
-                  ? null
-                  : fbb
-                      .writeString(object.amortiguadorTraseroIzqObservaciones!);
-          final amortiguadorTraseroDerOffset =
-              fbb.writeString(object.amortiguadorTraseroDer);
-          final amortiguadorTraseroDerObservacionesOffset =
-              object.amortiguadorTraseroDerObservaciones == null
-                  ? null
-                  : fbb
-                      .writeString(object.amortiguadorTraseroDerObservaciones!);
-          final bujeBarraEstabilizadoraIzqOffset =
-              fbb.writeString(object.bujeBarraEstabilizadoraIzq);
-          final bujeBarraEstabilizadoraIzqObservacionesOffset =
-              object.bujeBarraEstabilizadoraIzqObservaciones == null
-                  ? null
-                  : fbb.writeString(
-                      object.bujeBarraEstabilizadoraIzqObservaciones!);
-          final bujeBarraEstabilizadoraDerOffset =
-              fbb.writeString(object.bujeBarraEstabilizadoraDer);
-          final bujeBarraEstabilizadoraDerObservacionesOffset =
-              object.bujeBarraEstabilizadoraDerObservaciones == null
-                  ? null
-                  : fbb.writeString(
-                      object.bujeBarraEstabilizadoraDerObservaciones!);
-          final linkKitDelanteroIzqOffset =
-              fbb.writeString(object.linkKitDelanteroIzq);
-          final linkKitDelanteroIzqObservacionesOffset =
-              object.linkKitDelanteroIzqObservaciones == null
-                  ? null
-                  : fbb.writeString(object.linkKitDelanteroIzqObservaciones!);
-          final linkKitDelanteroDerOffset =
-              fbb.writeString(object.linkKitDelanteroDer);
-          final linkKitDelanteroDerObservacionesOffset =
-              object.linkKitDelanteroDerObservaciones == null
-                  ? null
-                  : fbb.writeString(object.linkKitDelanteroDerObservaciones!);
-          final linkKitTraseroIzqOffset =
-              fbb.writeString(object.linkKitTraseroIzq);
-          final linkKitTraseroIzqObservacionesOffset =
-              object.linkKitTraseroIzqObservaciones == null
-                  ? null
-                  : fbb.writeString(object.linkKitTraseroIzqObservaciones!);
-          final linkKitTraseroDerOffset =
-              fbb.writeString(object.linkKitTraseroDer);
-          final linkKitTraseroDerObservacionesOffset =
-              object.linkKitTraseroDerObservaciones == null
-                  ? null
-                  : fbb.writeString(object.linkKitTraseroDerObservaciones!);
-          final terminalInteriorIzqOffset =
-              fbb.writeString(object.terminalInteriorIzq);
-          final terminalInteriorIzqObservacionesOffset =
-              object.terminalInteriorIzqObservaciones == null
-                  ? null
-                  : fbb.writeString(object.terminalInteriorIzqObservaciones!);
-          final terminalInteriorDerOffset =
-              fbb.writeString(object.terminalInteriorDer);
-          final terminalInteriorDerObservacionesOffset =
-              object.terminalInteriorDerObservaciones == null
-                  ? null
-                  : fbb.writeString(object.terminalInteriorDerObservaciones!);
-          final terminalExteriorIzqOffset =
-              fbb.writeString(object.terminalExteriorIzq);
-          final terminalExteriorIzqObservacionesOffset =
-              object.terminalExteriorIzqObservaciones == null
-                  ? null
-                  : fbb.writeString(object.terminalExteriorIzqObservaciones!);
-          final terminalExteriorDerOffset =
-              fbb.writeString(object.terminalExteriorDer);
-          final terminalExteriorDerObservacionesOffset =
-              object.terminalExteriorDerObservaciones == null
-                  ? null
-                  : fbb.writeString(object.terminalExteriorDerObservaciones!);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(53);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, rotulaSuperiorIzqOffset);
-          fbb.addOffset(2, rotulaSuperiorIzqObservacionesOffset);
-          fbb.addOffset(3, rotulaSuperiorDerOffset);
-          fbb.addOffset(4, rotulaSuperiorDerObservacionesOffset);
-          fbb.addOffset(5, rotulaInferiorIzqOffset);
-          fbb.addOffset(6, rotulaInferiorIzqObservacionesOffset);
-          fbb.addOffset(7, rotulaInferiorDerOffset);
-          fbb.addOffset(8, rotulaInferiorDerObservacionesOffset);
-          fbb.addOffset(9, bujeHorquillaSuperiorIzqOffset);
-          fbb.addOffset(10, bujeHorquillaSuperiorIzqObservacionesOffset);
-          fbb.addOffset(11, bujeHorquillaSuperiorDerOffset);
-          fbb.addOffset(12, bujeHorquillaSuperiorDerObservacionesOffset);
-          fbb.addOffset(13, bujeHorquillaInferiorIzqOffset);
-          fbb.addOffset(14, bujeHorquillaInferiorIzqObservacionesOffset);
-          fbb.addOffset(15, bujeHorquillaInferiorDerOffset);
-          fbb.addOffset(16, bujeHorquillaInferiorDerObservacionesOffset);
-          fbb.addOffset(17, amortiguadorDelanteroIzqOffset);
-          fbb.addOffset(18, amortiguadorDelanteroIzqObservacionesOffset);
-          fbb.addOffset(19, amortiguadorDelanteroDerOffset);
-          fbb.addOffset(20, amortiguadorDelanteroDerObservacionesOffset);
-          fbb.addOffset(21, amortiguadorTraseroIzqOffset);
-          fbb.addOffset(22, amortiguadorTraseroIzqObservacionesOffset);
-          fbb.addOffset(23, amortiguadorTraseroDerOffset);
-          fbb.addOffset(24, amortiguadorTraseroDerObservacionesOffset);
-          fbb.addOffset(25, bujeBarraEstabilizadoraIzqOffset);
-          fbb.addOffset(26, bujeBarraEstabilizadoraIzqObservacionesOffset);
-          fbb.addOffset(27, bujeBarraEstabilizadoraDerOffset);
-          fbb.addOffset(28, bujeBarraEstabilizadoraDerObservacionesOffset);
-          fbb.addOffset(29, linkKitDelanteroIzqOffset);
-          fbb.addOffset(30, linkKitDelanteroIzqObservacionesOffset);
-          fbb.addOffset(31, linkKitDelanteroDerOffset);
-          fbb.addOffset(32, linkKitDelanteroDerObservacionesOffset);
-          fbb.addOffset(33, linkKitTraseroIzqOffset);
-          fbb.addOffset(34, linkKitTraseroIzqObservacionesOffset);
-          fbb.addOffset(35, linkKitTraseroDerOffset);
-          fbb.addOffset(36, linkKitTraseroDerObservacionesOffset);
-          fbb.addOffset(37, terminalInteriorIzqOffset);
-          fbb.addOffset(38, terminalInteriorIzqObservacionesOffset);
-          fbb.addOffset(39, terminalInteriorDerOffset);
-          fbb.addOffset(40, terminalInteriorDerObservacionesOffset);
-          fbb.addOffset(41, terminalExteriorIzqOffset);
-          fbb.addOffset(42, terminalExteriorIzqObservacionesOffset);
-          fbb.addOffset(43, terminalExteriorDerOffset);
-          fbb.addOffset(44, terminalExteriorDerObservacionesOffset);
-          fbb.addInt64(46, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(47, idDBROffset);
-          fbb.addBool(49, object.completado);
-          fbb.addInt64(50, object.revision.targetId);
-          fbb.addInt64(51, object.tecnicoMecanico.targetId);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = SuspensionDireccion(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              rotulaSuperiorIzq: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              rotulaSuperiorIzqObservaciones: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 8),
-              rotulaSuperiorDer: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
-              rotulaSuperiorDerObservaciones: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 12),
-              rotulaInferiorIzq: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, ''),
-              rotulaInferiorIzqObservaciones: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 16),
-              rotulaInferiorDer: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 18, ''),
-              rotulaInferiorDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20),
-              bujeHorquillaSuperiorIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
-              bujeHorquillaSuperiorIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 24),
-              bujeHorquillaSuperiorDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, ''),
-              bujeHorquillaSuperiorDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 28),
-              bujeHorquillaInferiorIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 30, ''),
-              bujeHorquillaInferiorIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32),
-              bujeHorquillaInferiorDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''),
-              bujeHorquillaInferiorDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 36),
-              amortiguadorDelanteroIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 38, ''),
-              amortiguadorDelanteroIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 40),
-              amortiguadorDelanteroDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 42, ''),
-              amortiguadorDelanteroDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 44),
-              amortiguadorTraseroIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 46, ''),
-              amortiguadorTraseroIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 48),
-              amortiguadorTraseroDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 50, ''),
-              amortiguadorTraseroDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 52),
-              bujeBarraEstabilizadoraIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 54, ''),
-              bujeBarraEstabilizadoraIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 56),
-              bujeBarraEstabilizadoraDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 58, ''),
-              bujeBarraEstabilizadoraDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 60),
-              linkKitDelanteroIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 62, ''),
-              linkKitDelanteroIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 64),
-              linkKitDelanteroDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 66, ''),
-              linkKitDelanteroDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 68),
-              linkKitTraseroIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 70, ''),
-              linkKitTraseroIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 72),
-              linkKitTraseroDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 74, ''),
-              linkKitTraseroDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 76),
-              terminalInteriorIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 78, ''),
-              terminalInteriorIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 80),
-              terminalInteriorDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 82, ''),
-              terminalInteriorDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 84),
-              terminalExteriorIzq: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 86, ''),
-              terminalExteriorIzqObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 88),
-              terminalExteriorDer: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 90, ''),
-              terminalExteriorDerObservaciones: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 92),
-              completado: const fb.BoolReader().vTableGet(buffer, rootOffset, 102, false),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 96, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 98));
-          object.revision.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 104, 0);
-          object.revision.attach(store);
-          object.tecnicoMecanico.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 106, 0);
-          object.tecnicoMecanico.attach(store);
-          InternalToManyAccess.setRelInfo(
-              object.bitacora,
-              store,
-              RelInfo<Bitacora>.toOneBacklink(25, object.id,
-                  (Bitacora srcObject) => srcObject.suspensionDireccion),
-              store.box<SuspensionDireccion>());
-          return object;
-        }),
-    Producto: EntityDefinition<Producto>(
-        model: _entities[12],
-        toOneRelations: (Producto object) => [object.servicio],
-        toManyRelations: (Producto object) => {
-              RelInfo<Bitacora>.toOneBacklink(31, object.id,
-                  (Bitacora srcObject) => srcObject.producto): object.bitacora
-            },
-        getId: (Producto object) => object.id,
-        setId: (Producto object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Producto object, fb.Builder fbb) {
-          final productoOffset = fbb.writeString(object.producto);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(8);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, productoOffset);
-          fbb.addInt64(2, object.cantidad);
-          fbb.addFloat64(3, object.costo);
-          fbb.addInt64(4, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(5, idDBROffset);
-          fbb.addInt64(6, object.servicio.targetId);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Producto(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              producto: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              cantidad:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0),
-              costo:
-                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 14));
-          object.servicio.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
-          object.servicio.attach(store);
-          InternalToManyAccess.setRelInfo(
-              object.bitacora,
-              store,
-              RelInfo<Bitacora>.toOneBacklink(
-                  31, object.id, (Bitacora srcObject) => srcObject.producto),
-              store.box<Producto>());
-          return object;
-        }),
-    Servicio: EntityDefinition<Servicio>(
-        model: _entities[13],
-        toOneRelations: (Servicio object) => [object.ordenServicio],
-        toManyRelations: (Servicio object) => {
-              RelInfo<Producto>.toOneBacklink(
-                      7, object.id, (Producto srcObject) => srcObject.servicio):
-                  object.productos,
-              RelInfo<Bitacora>.toOneBacklink(30, object.id,
-                  (Bitacora srcObject) => srcObject.servicio): object.bitacora
-            },
-        getId: (Servicio object) => object.id,
-        setId: (Servicio object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Servicio object, fb.Builder fbb) {
-          final servicioOffset = fbb.writeString(object.servicio);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          final imagenOffset = fbb.writeString(object.imagen);
-          final pathOffset = fbb.writeString(object.path);
-          fbb.startTable(13);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, servicioOffset);
-          fbb.addFloat64(2, object.costoServicio);
-          fbb.addBool(4, object.autorizado);
-          fbb.addInt64(5, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addInt64(6, object.fechaEntrega.millisecondsSinceEpoch);
-          fbb.addOffset(7, idDBROffset);
-          fbb.addOffset(9, imagenOffset);
-          fbb.addOffset(10, pathOffset);
-          fbb.addInt64(11, object.ordenServicio.targetId);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Servicio(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              servicio: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              costoServicio:
-                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0),
-              imagen: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 22, ''),
-              path: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 24, ''),
-              autorizado: const fb.BoolReader()
-                  .vTableGet(buffer, rootOffset, 12, false),
-              fechaEntrega: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0)),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 18));
-          object.ordenServicio.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
-          object.ordenServicio.attach(store);
-          InternalToManyAccess.setRelInfo(
-              object.productos,
-              store,
-              RelInfo<Producto>.toOneBacklink(
-                  7, object.id, (Producto srcObject) => srcObject.servicio),
-              store.box<Servicio>());
-          InternalToManyAccess.setRelInfo(
-              object.bitacora,
-              store,
-              RelInfo<Bitacora>.toOneBacklink(
-                  30, object.id, (Bitacora srcObject) => srcObject.servicio),
-              store.box<Servicio>());
-          return object;
-        }),
-    TipoProducto: EntityDefinition<TipoProducto>(
-        model: _entities[14],
-        toOneRelations: (TipoProducto object) => [],
-        toManyRelations: (TipoProducto object) => {},
-        getId: (TipoProducto object) => object.id,
-        setId: (TipoProducto object, int id) {
-          object.id = id;
-        },
-        objectToFB: (TipoProducto object, fb.Builder fbb) {
-          final tipoProductoOffset = fbb.writeString(object.tipoProducto);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(6);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, tipoProductoOffset);
-          fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addFloat64(3, object.costo);
-          fbb.addOffset(4, idDBROffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = TipoProducto(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              tipoProducto: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              costo:
-                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 12));
-
-          return object;
-        }),
-    TipoServicio: EntityDefinition<TipoServicio>(
-        model: _entities[15],
-        toOneRelations: (TipoServicio object) => [],
-        toManyRelations: (TipoServicio object) => {},
-        getId: (TipoServicio object) => object.id,
-        setId: (TipoServicio object, int id) {
-          object.id = id;
-        },
-        objectToFB: (TipoServicio object, fb.Builder fbb) {
-          final tipoServicioOffset = fbb.writeString(object.tipoServicio);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          final imagenOffset = fbb.writeString(object.imagen);
-          final pathOffset = fbb.writeString(object.path);
-          fbb.startTable(8);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, tipoServicioOffset);
-          fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addFloat64(3, object.costo);
-          fbb.addOffset(4, idDBROffset);
-          fbb.addOffset(5, imagenOffset);
-          fbb.addOffset(6, pathOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = TipoServicio(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              tipoServicio: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              imagen: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, ''),
-              path: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 16, ''),
-              costo:
-                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 12));
-
-          return object;
-        }),
-    Estatus: EntityDefinition<Estatus>(
-        model: _entities[16],
-        toOneRelations: (Estatus object) => [],
-        toManyRelations: (Estatus object) => {
-              RelInfo<Bitacora>.toOneBacklink(
-                      33, object.id, (Bitacora srcObject) => srcObject.estatus):
-                  object.bitacora
-            },
-        getId: (Estatus object) => object.id,
-        setId: (Estatus object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Estatus object, fb.Builder fbb) {
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          final estatusOffset = fbb.writeString(object.estatus);
-          fbb.startTable(8);
-          fbb.addInt64(0, object.id);
-          fbb.addInt64(3, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(4, idDBROffset);
-          fbb.addFloat64(5, object.avance);
-          fbb.addOffset(6, estatusOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Estatus(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              avance:
-                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0),
-              estatus: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 16, ''),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 12));
-          InternalToManyAccess.setRelInfo(
-              object.bitacora,
-              store,
-              RelInfo<Bitacora>.toOneBacklink(
-                  33, object.id, (Bitacora srcObject) => srcObject.estatus),
-              store.box<Estatus>());
-          return object;
-        }),
-    OrdenServicio: EntityDefinition<OrdenServicio>(
-        model: _entities[17],
-        toOneRelations: (OrdenServicio object) => [],
-        toManyRelations: (OrdenServicio object) => {
-              RelInfo<Servicio>.toOneBacklink(12, object.id,
-                      (Servicio srcObject) => srcObject.ordenServicio):
-                  object.servicios,
-              RelInfo<Bitacora>.toOneBacklink(39, object.id,
-                      (Bitacora srcObject) => srcObject.ordenServicio):
-                  object.bitacora
-            },
-        getId: (OrdenServicio object) => object.id,
-        setId: (OrdenServicio object, int id) {
-          object.id = id;
-        },
-        objectToFB: (OrdenServicio object, fb.Builder fbb) {
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(7);
-          fbb.addInt64(0, object.id);
-          fbb.addInt64(1, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addInt64(2, object.fechaEntrega.millisecondsSinceEpoch);
-          fbb.addFloat64(3, object.costoTotal);
-          fbb.addOffset(4, idDBROffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = OrdenServicio(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              costoTotal:
-                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0),
-              fechaEntrega: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 12));
-          InternalToManyAccess.setRelInfo(
-              object.servicios,
-              store,
-              RelInfo<Servicio>.toOneBacklink(12, object.id,
-                  (Servicio srcObject) => srcObject.ordenServicio),
-              store.box<OrdenServicio>());
-          InternalToManyAccess.setRelInfo(
-              object.bitacora,
-              store,
-              RelInfo<Bitacora>.toOneBacklink(39, object.id,
-                  (Bitacora srcObject) => srcObject.ordenServicio),
-              store.box<OrdenServicio>());
-          return object;
-        }),
-    Revision: EntityDefinition<Revision>(
-        model: _entities[18],
-        toOneRelations: (Revision object) => [
-              object.suspensionDireccion,
-              object.motor,
-              object.fluidos,
-              object.frenos,
-              object.electrico
-            ],
-        toManyRelations: (Revision object) => {
-              RelInfo<Bitacora>.toOneBacklink(40, object.id,
-                  (Bitacora srcObject) => srcObject.revision): object.bitacora
-            },
-        getId: (Revision object) => object.id,
-        setId: (Revision object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Revision object, fb.Builder fbb) {
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(11);
-          fbb.addInt64(0, object.id);
-          fbb.addBool(1, object.completado);
-          fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(3, idDBROffset);
-          fbb.addInt64(5, object.suspensionDireccion.targetId);
-          fbb.addInt64(6, object.motor.targetId);
-          fbb.addInt64(7, object.fluidos.targetId);
-          fbb.addInt64(8, object.frenos.targetId);
-          fbb.addInt64(9, object.electrico.targetId);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Revision(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              completado:
-                  const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 10));
-          object.suspensionDireccion.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
-          object.suspensionDireccion.attach(store);
-          object.motor.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
-          object.motor.attach(store);
-          object.fluidos.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
-          object.fluidos.attach(store);
-          object.frenos.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
-          object.frenos.attach(store);
-          object.electrico.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
-          object.electrico.attach(store);
-          InternalToManyAccess.setRelInfo(
-              object.bitacora,
-              store,
-              RelInfo<Bitacora>.toOneBacklink(
-                  40, object.id, (Bitacora srcObject) => srcObject.revision),
-              store.box<Revision>());
-          return object;
-        }),
-    Anio: EntityDefinition<Anio>(
-        model: _entities[19],
-        toOneRelations: (Anio object) => [object.modelo],
-        toManyRelations: (Anio object) => {},
-        getId: (Anio object) => object.id,
-        setId: (Anio object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Anio object, fb.Builder fbb) {
-          final anioOffset = fbb.writeString(object.anio);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(6);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, anioOffset);
-          fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(3, idDBROffset);
-          fbb.addInt64(4, object.modelo.targetId);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Anio(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              anio: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 10));
-          object.modelo.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
-          object.modelo.attach(store);
-          return object;
-        }),
-    Marca: EntityDefinition<Marca>(
-        model: _entities[20],
-        toOneRelations: (Marca object) => [],
-        toManyRelations: (Marca object) => {
-              RelInfo<Modelo>.toOneBacklink(
-                      5, object.id, (Modelo srcObject) => srcObject.marca):
-                  object.modelos
-            },
-        getId: (Marca object) => object.id,
-        setId: (Marca object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Marca object, fb.Builder fbb) {
-          final marcaOffset = fbb.writeString(object.marca);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(5);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, marcaOffset);
-          fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(3, idDBROffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Marca(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              marca: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 10));
-          InternalToManyAccess.setRelInfo(
-              object.modelos,
-              store,
-              RelInfo<Modelo>.toOneBacklink(
-                  5, object.id, (Modelo srcObject) => srcObject.marca),
-              store.box<Marca>());
-          return object;
-        }),
-    Modelo: EntityDefinition<Modelo>(
-        model: _entities[21],
-        toOneRelations: (Modelo object) => [object.marca],
-        toManyRelations: (Modelo object) => {
-              RelInfo<Anio>.toOneBacklink(
-                      5, object.id, (Anio srcObject) => srcObject.modelo):
-                  object.anios
-            },
-        getId: (Modelo object) => object.id,
-        setId: (Modelo object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Modelo object, fb.Builder fbb) {
-          final modeloOffset = fbb.writeString(object.modelo);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(6);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, modeloOffset);
-          fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(3, idDBROffset);
-          fbb.addInt64(4, object.marca.targetId);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Modelo(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              modelo: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 10));
-          object.marca.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
-          object.marca.attach(store);
-          InternalToManyAccess.setRelInfo(
-              object.anios,
-              store,
-              RelInfo<Anio>.toOneBacklink(
-                  5, object.id, (Anio srcObject) => srcObject.modelo),
-              store.box<Modelo>());
           return object;
         }),
     ControlForm: EntityDefinition<ControlForm>(
-        model: _entities[22],
-        toOneRelations: (ControlForm object) =>
-            [object.employee, object.vehicle],
+        model: _entities[2],
+        toOneRelations: (ControlForm object) => [
+              object.employee,
+              object.vehicle,
+              object.measures,
+              object.lights,
+              object.carBodywork,
+              object.fluidsCheck,
+              object.security,
+              object.extra,
+              object.equipment,
+              object.bucketInspection
+            ],
         toManyRelations: (ControlForm object) => {
               RelInfo<Bitacora>.toOneBacklink(42, object.id,
                       (Bitacora srcObject) => srcObject.controlForm):
@@ -4572,13 +2982,22 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (ControlForm object, fb.Builder fbb) {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(7);
+          fbb.startTable(17);
           fbb.addInt64(0, object.id);
           fbb.addBool(1, object.typeForm);
           fbb.addInt64(2, object.dateAdded.millisecondsSinceEpoch);
           fbb.addOffset(3, idDBROffset);
           fbb.addInt64(4, object.employee.targetId);
           fbb.addInt64(5, object.vehicle.targetId);
+          fbb.addInt64(6, object.measures.targetId);
+          fbb.addInt64(7, object.lights.targetId);
+          fbb.addInt64(8, object.carBodywork.targetId);
+          fbb.addInt64(9, object.fluidsCheck.targetId);
+          fbb.addInt64(11, object.security.targetId);
+          fbb.addInt64(12, object.extra.targetId);
+          fbb.addInt64(13, object.equipment.targetId);
+          fbb.addInt64(14, object.bucketInspection.targetId);
+          fbb.addBool(15, object.today);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4590,6 +3009,8 @@ ModelDefinition getObjectBoxModel() {
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               typeForm:
                   const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false),
+              today: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 34, false),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true)
@@ -4600,12 +3021,1019 @@ ModelDefinition getObjectBoxModel() {
           object.vehicle.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           object.vehicle.attach(store);
+          object.measures.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          object.measures.attach(store);
+          object.lights.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          object.lights.attach(store);
+          object.carBodywork.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          object.carBodywork.attach(store);
+          object.fluidsCheck.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          object.fluidsCheck.attach(store);
+          object.security.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
+          object.security.attach(store);
+          object.extra.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
+          object.extra.attach(store);
+          object.equipment.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
+          object.equipment.attach(store);
+          object.bucketInspection.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
+          object.bucketInspection.attach(store);
           InternalToManyAccess.setRelInfo(
               object.bitacora,
               store,
               RelInfo<Bitacora>.toOneBacklink(
                   42, object.id, (Bitacora srcObject) => srcObject.controlForm),
               store.box<ControlForm>());
+          return object;
+        }),
+    CarBodywork: EntityDefinition<CarBodywork>(
+        model: _entities[3],
+        toOneRelations: (CarBodywork object) => [object.controlForm],
+        toManyRelations: (CarBodywork object) => {
+              RelInfo<Bitacora>.toOneBacklink(45, object.id,
+                      (Bitacora srcObject) => srcObject.carBodywork):
+                  object.bitacora
+            },
+        getId: (CarBodywork object) => object.id,
+        setId: (CarBodywork object, int id) {
+          object.id = id;
+        },
+        objectToFB: (CarBodywork object, fb.Builder fbb) {
+          final wiperBladesFrontOffset =
+              fbb.writeString(object.wiperBladesFront);
+          final wiperBladesFrontCommentsOffset =
+              fbb.writeString(object.wiperBladesFrontComments);
+          final wiperBladesBackOffset = fbb.writeString(object.wiperBladesBack);
+          final wiperBladesBackCommentsOffset =
+              fbb.writeString(object.wiperBladesBackComments);
+          final windshieldWiperFrontOffset =
+              fbb.writeString(object.windshieldWiperFront);
+          final windshieldWiperFrontCommentsOffset =
+              fbb.writeString(object.windshieldWiperFrontComments);
+          final windshieldWiperBackOffset =
+              fbb.writeString(object.windshieldWiperBack);
+          final windshieldWiperBackCommentsOffset =
+              fbb.writeString(object.windshieldWiperBackComments);
+          final generalBodyOffset = fbb.writeString(object.generalBody);
+          final generalBodyCommentsOffset =
+              fbb.writeString(object.generalBodyComments);
+          final decalingOffset = fbb.writeString(object.decaling);
+          final decalingCommentsOffset =
+              fbb.writeString(object.decalingComments);
+          final tiresOffset = fbb.writeString(object.tires);
+          final tiresCommentsOffset = fbb.writeString(object.tiresComments);
+          final glassOffset = fbb.writeString(object.glass);
+          final glassCommentsOffset = fbb.writeString(object.glassComments);
+          final mirrorsOffset = fbb.writeString(object.mirrors);
+          final mirrorsCommentsOffset = fbb.writeString(object.mirrorsComments);
+          final parkingOffset = fbb.writeString(object.parking);
+          final parkingCommentsOffset = fbb.writeString(object.parkingComments);
+          final brakesOffset = fbb.writeString(object.brakes);
+          final brakesCommentsOffset = fbb.writeString(object.brakesComments);
+          final emgBrakesOffset = fbb.writeString(object.emgBrakes);
+          final emgBrakesCommentsOffset =
+              fbb.writeString(object.emgBrakesComments);
+          final hornOffset = fbb.writeString(object.horn);
+          final hornCommentsOffset = fbb.writeString(object.hornComments);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(31);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, wiperBladesFrontOffset);
+          fbb.addOffset(2, wiperBladesFrontCommentsOffset);
+          fbb.addOffset(3, wiperBladesBackOffset);
+          fbb.addOffset(4, wiperBladesBackCommentsOffset);
+          fbb.addOffset(5, windshieldWiperFrontOffset);
+          fbb.addOffset(6, windshieldWiperFrontCommentsOffset);
+          fbb.addOffset(7, windshieldWiperBackOffset);
+          fbb.addOffset(8, windshieldWiperBackCommentsOffset);
+          fbb.addOffset(9, generalBodyOffset);
+          fbb.addOffset(10, generalBodyCommentsOffset);
+          fbb.addOffset(11, decalingOffset);
+          fbb.addOffset(12, decalingCommentsOffset);
+          fbb.addOffset(13, tiresOffset);
+          fbb.addOffset(14, tiresCommentsOffset);
+          fbb.addOffset(15, glassOffset);
+          fbb.addOffset(16, glassCommentsOffset);
+          fbb.addOffset(17, mirrorsOffset);
+          fbb.addOffset(18, mirrorsCommentsOffset);
+          fbb.addOffset(19, parkingOffset);
+          fbb.addOffset(20, parkingCommentsOffset);
+          fbb.addOffset(21, brakesOffset);
+          fbb.addOffset(22, brakesCommentsOffset);
+          fbb.addOffset(23, emgBrakesOffset);
+          fbb.addOffset(24, emgBrakesCommentsOffset);
+          fbb.addOffset(25, hornOffset);
+          fbb.addOffset(26, hornCommentsOffset);
+          fbb.addInt64(27, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addOffset(28, idDBROffset);
+          fbb.addInt64(29, object.controlForm.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = CarBodywork(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              wiperBladesFront: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              wiperBladesFrontComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              wiperBladesBack: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              wiperBladesBackComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, ''),
+              windshieldWiperFront: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              windshieldWiperFrontComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, ''),
+              windshieldWiperBack: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              windshieldWiperBackComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
+              generalBody: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
+              generalBodyComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 24, ''),
+              decaling: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, ''),
+              decalingComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 28, ''),
+              tires: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 30, ''),
+              tiresComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 32, ''),
+              glass: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''),
+              glassComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 36, ''),
+              mirrors: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 38, ''),
+              mirrorsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 40, ''),
+              parking: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 42, ''),
+              parkingComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 44, ''),
+              brakes: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 46, ''),
+              brakesComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 48, ''),
+              emgBrakes: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 50, ''),
+              emgBrakesComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 52, ''),
+              horn: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 54, ''),
+              hornComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 56, ''),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 58, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 60));
+          object.controlForm.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 62, 0);
+          object.controlForm.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  45, object.id, (Bitacora srcObject) => srcObject.carBodywork),
+              store.box<CarBodywork>());
+          return object;
+        }),
+    Equipment: EntityDefinition<Equipment>(
+        model: _entities[4],
+        toOneRelations: (Equipment object) => [object.controlForm],
+        toManyRelations: (Equipment object) => {
+              RelInfo<Bitacora>.toOneBacklink(50, object.id,
+                  (Bitacora srcObject) => srcObject.equipment): object.bitacora
+            },
+        getId: (Equipment object) => object.id,
+        setId: (Equipment object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Equipment object, fb.Builder fbb) {
+          final ignitionKeyOffset = fbb.writeString(object.ignitionKey);
+          final ignitionKeyCommentsOffset =
+              fbb.writeString(object.ignitionKeyComments);
+          final binsBoxKeyOffset = fbb.writeString(object.binsBoxKey);
+          final binsBoxKeyCommentsOffset =
+              fbb.writeString(object.binsBoxKeyComments);
+          final vehicleRegistrationCopyOffset =
+              fbb.writeString(object.vehicleRegistrationCopy);
+          final vehicleRegistrationCopyCommentsOffset =
+              fbb.writeString(object.vehicleRegistrationCopyComments);
+          final vehicleInsuranceCopyOffset =
+              fbb.writeString(object.vehicleInsuranceCopy);
+          final vehicleInsuranceCopyCommentsOffset =
+              fbb.writeString(object.vehicleInsuranceCopyComments);
+          final bucketLiftOperatorManualOffset =
+              fbb.writeString(object.bucketLiftOperatorManual);
+          final bucketLiftOperatorManualCommentsOffset =
+              fbb.writeString(object.bucketLiftOperatorManualComments);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(15);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, ignitionKeyOffset);
+          fbb.addOffset(2, ignitionKeyCommentsOffset);
+          fbb.addOffset(3, binsBoxKeyOffset);
+          fbb.addOffset(4, binsBoxKeyCommentsOffset);
+          fbb.addOffset(5, vehicleRegistrationCopyOffset);
+          fbb.addOffset(6, vehicleRegistrationCopyCommentsOffset);
+          fbb.addOffset(7, vehicleInsuranceCopyOffset);
+          fbb.addOffset(8, vehicleInsuranceCopyCommentsOffset);
+          fbb.addOffset(9, bucketLiftOperatorManualOffset);
+          fbb.addOffset(10, bucketLiftOperatorManualCommentsOffset);
+          fbb.addInt64(11, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addOffset(12, idDBROffset);
+          fbb.addInt64(13, object.controlForm.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Equipment(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              ignitionKey: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              ignitionKeyComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              binsBoxKey: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              binsBoxKeyComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, ''),
+              vehicleRegistrationCopy: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              vehicleRegistrationCopyComments:
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 16, ''),
+              vehicleInsuranceCopy: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              vehicleInsuranceCopyComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
+              bucketLiftOperatorManual: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
+              bucketLiftOperatorManualComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 24, ''),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 28));
+          object.controlForm.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
+          object.controlForm.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  50, object.id, (Bitacora srcObject) => srcObject.equipment),
+              store.box<Equipment>());
+          return object;
+        }),
+    Extra: EntityDefinition<Extra>(
+        model: _entities[5],
+        toOneRelations: (Extra object) => [object.controlForm],
+        toManyRelations: (Extra object) => {
+              RelInfo<Bitacora>.toOneBacklink(
+                      49, object.id, (Bitacora srcObject) => srcObject.extra):
+                  object.bitacora
+            },
+        getId: (Extra object) => object.id,
+        setId: (Extra object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Extra object, fb.Builder fbb) {
+          final ladderOffset = fbb.writeString(object.ladder);
+          final ladderCommentsOffset = fbb.writeString(object.ladderComments);
+          final stepLadderOffset = fbb.writeString(object.stepLadder);
+          final stepLadderCommentsOffset =
+              fbb.writeString(object.stepLadderComments);
+          final hydraulicFluidForBucketOffset =
+              fbb.writeString(object.hydraulicFluidForBucket);
+          final hydraulicFluidForBucketCommentsOffset =
+              fbb.writeString(object.hydraulicFluidForBucketComments);
+          final fiberReelRackOffset = fbb.writeString(object.fiberReelRack);
+          final fiberReelRackCommentsOffset =
+              fbb.writeString(object.fiberReelRackComments);
+          final binsLockedAndSecureOffset =
+              fbb.writeString(object.binsLockedAndSecure);
+          final binsLockedAndSecureCommentsOffset =
+              fbb.writeString(object.binsLockedAndSecureComments);
+          final safetyHarnessOffset = fbb.writeString(object.safetyHarness);
+          final safetyHarnessCommentsOffset =
+              fbb.writeString(object.safetyHarnessComments);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          final ladderStrapsOffset = fbb.writeString(object.ladderStraps);
+          final ladderStrapsCommentsOffset =
+              fbb.writeString(object.ladderStrapsComments);
+          final lanyardSafetyHarnessOffset =
+              fbb.writeString(object.lanyardSafetyHarness);
+          final lanyardSafetyHarnessCommentsOffset =
+              fbb.writeString(object.lanyardSafetyHarnessComments);
+          fbb.startTable(25);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, ladderOffset);
+          fbb.addOffset(2, ladderCommentsOffset);
+          fbb.addOffset(3, stepLadderOffset);
+          fbb.addOffset(4, stepLadderCommentsOffset);
+          fbb.addOffset(7, hydraulicFluidForBucketOffset);
+          fbb.addOffset(8, hydraulicFluidForBucketCommentsOffset);
+          fbb.addOffset(9, fiberReelRackOffset);
+          fbb.addOffset(10, fiberReelRackCommentsOffset);
+          fbb.addOffset(11, binsLockedAndSecureOffset);
+          fbb.addOffset(12, binsLockedAndSecureCommentsOffset);
+          fbb.addOffset(13, safetyHarnessOffset);
+          fbb.addOffset(14, safetyHarnessCommentsOffset);
+          fbb.addInt64(17, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addOffset(18, idDBROffset);
+          fbb.addInt64(19, object.controlForm.targetId);
+          fbb.addOffset(20, ladderStrapsOffset);
+          fbb.addOffset(21, ladderStrapsCommentsOffset);
+          fbb.addOffset(22, lanyardSafetyHarnessOffset);
+          fbb.addOffset(23, lanyardSafetyHarnessCommentsOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Extra(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              ladder: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              ladderComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              stepLadder: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              stepLadderComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, ''),
+              ladderStraps: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 44, ''),
+              ladderStrapsComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 46, ''),
+              hydraulicFluidForBucket:
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 18, ''),
+              hydraulicFluidForBucketComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
+              fiberReelRack: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
+              fiberReelRackComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 24, ''),
+              binsLockedAndSecure: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, ''),
+              binsLockedAndSecureComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 28, ''),
+              safetyHarness: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 30, ''),
+              safetyHarnessComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 32, ''),
+              lanyardSafetyHarness: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 48, ''),
+              lanyardSafetyHarnessComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 50, ''),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 40));
+          object.controlForm.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0);
+          object.controlForm.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  49, object.id, (Bitacora srcObject) => srcObject.extra),
+              store.box<Extra>());
+          return object;
+        }),
+    FluidsCheck: EntityDefinition<FluidsCheck>(
+        model: _entities[6],
+        toOneRelations: (FluidsCheck object) => [object.controlForm],
+        toManyRelations: (FluidsCheck object) => {
+              RelInfo<Bitacora>.toOneBacklink(46, object.id,
+                      (Bitacora srcObject) => srcObject.fluidsCheck):
+                  object.bitacora
+            },
+        getId: (FluidsCheck object) => object.id,
+        setId: (FluidsCheck object, int id) {
+          object.id = id;
+        },
+        objectToFB: (FluidsCheck object, fb.Builder fbb) {
+          final engineOilOffset = fbb.writeString(object.engineOil);
+          final engineOilCommentsOffset =
+              fbb.writeString(object.engineOilComments);
+          final transmissionOffset = fbb.writeString(object.transmission);
+          final transmissionCommentsOffset =
+              fbb.writeString(object.transmissionComments);
+          final coolantOffset = fbb.writeString(object.coolant);
+          final coolantCommentsOffset = fbb.writeString(object.coolantComments);
+          final powerSteeringOffset = fbb.writeString(object.powerSteering);
+          final powerSteeringCommentsOffset =
+              fbb.writeString(object.powerSteeringComments);
+          final windshieldWasherFluidOffset =
+              fbb.writeString(object.windshieldWasherFluid);
+          final windshieldWasherFluidCommentsOffset =
+              fbb.writeString(object.windshieldWasherFluidComments);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          final dieselExhaustFluidOffset =
+              fbb.writeString(object.dieselExhaustFluid);
+          final dieselExhaustFluidCommentsOffset =
+              fbb.writeString(object.dieselExhaustFluidComments);
+          fbb.startTable(19);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, engineOilOffset);
+          fbb.addOffset(2, engineOilCommentsOffset);
+          fbb.addOffset(3, transmissionOffset);
+          fbb.addOffset(4, transmissionCommentsOffset);
+          fbb.addOffset(5, coolantOffset);
+          fbb.addOffset(6, coolantCommentsOffset);
+          fbb.addOffset(7, powerSteeringOffset);
+          fbb.addOffset(8, powerSteeringCommentsOffset);
+          fbb.addOffset(11, windshieldWasherFluidOffset);
+          fbb.addOffset(12, windshieldWasherFluidCommentsOffset);
+          fbb.addInt64(13, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addOffset(14, idDBROffset);
+          fbb.addInt64(15, object.controlForm.targetId);
+          fbb.addOffset(16, dieselExhaustFluidOffset);
+          fbb.addOffset(17, dieselExhaustFluidCommentsOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = FluidsCheck(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              engineOil: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              engineOilComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              transmission: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              transmissionComments:
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 12, ''),
+              coolant: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              coolantComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, ''),
+              powerSteering: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              powerSteeringComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
+              dieselExhaustFluid: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 36, ''),
+              dieselExhaustFluidComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 38, ''),
+              windshieldWasherFluid: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, ''),
+              windshieldWasherFluidComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 28, ''),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32));
+          object.controlForm.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
+          object.controlForm.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  46, object.id, (Bitacora srcObject) => srcObject.fluidsCheck),
+              store.box<FluidsCheck>());
+          return object;
+        }),
+    Lights: EntityDefinition<Lights>(
+        model: _entities[7],
+        toOneRelations: (Lights object) => [object.controlForm],
+        toManyRelations: (Lights object) => {
+              RelInfo<Bitacora>.toOneBacklink(
+                      44, object.id, (Bitacora srcObject) => srcObject.lights):
+                  object.bitacora
+            },
+        getId: (Lights object) => object.id,
+        setId: (Lights object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Lights object, fb.Builder fbb) {
+          final headLightsOffset = fbb.writeString(object.headLights);
+          final headLightsCommentsOffset =
+              fbb.writeString(object.headLightsComments);
+          final brakeLightsOffset = fbb.writeString(object.brakeLights);
+          final brakeLightsCommentsOffset =
+              fbb.writeString(object.brakeLightsComments);
+          final reverseLightsOffset = fbb.writeString(object.reverseLights);
+          final reverseLightsCommentsOffset =
+              fbb.writeString(object.reverseLightsComments);
+          final warningLightsOffset = fbb.writeString(object.warningLights);
+          final warningLightsCommentsOffset =
+              fbb.writeString(object.warningLightsComments);
+          final turnSignalsOffset = fbb.writeString(object.turnSignals);
+          final turnSignalsCommentsOffset =
+              fbb.writeString(object.turnSignalsComments);
+          final dashLightsOffset = fbb.writeString(object.dashLights);
+          final dashLightsCommentsOffset =
+              fbb.writeString(object.dashLightsComments);
+          final strobeLightsOffset = fbb.writeString(object.strobeLights);
+          final strobeLightsCommentsOffset =
+              fbb.writeString(object.strobeLightsComments);
+          final cabRoofLightsOffset = fbb.writeString(object.cabRoofLights);
+          final cabRoofLightsCommentsOffset =
+              fbb.writeString(object.cabRoofLightsComments);
+          final clearenceLightsOffset = fbb.writeString(object.clearenceLights);
+          final clearenceLightsCommentsOffset =
+              fbb.writeString(object.clearenceLightsComments);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          final fourWayFlashersOffset = fbb.writeString(object.fourWayFlashers);
+          final fourWayFlashersCommentsOffset =
+              fbb.writeString(object.fourWayFlashersComments);
+          fbb.startTable(27);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, headLightsOffset);
+          fbb.addOffset(2, headLightsCommentsOffset);
+          fbb.addOffset(3, brakeLightsOffset);
+          fbb.addOffset(4, brakeLightsCommentsOffset);
+          fbb.addOffset(5, reverseLightsOffset);
+          fbb.addOffset(6, reverseLightsCommentsOffset);
+          fbb.addOffset(7, warningLightsOffset);
+          fbb.addOffset(8, warningLightsCommentsOffset);
+          fbb.addOffset(9, turnSignalsOffset);
+          fbb.addOffset(10, turnSignalsCommentsOffset);
+          fbb.addOffset(13, dashLightsOffset);
+          fbb.addOffset(14, dashLightsCommentsOffset);
+          fbb.addOffset(15, strobeLightsOffset);
+          fbb.addOffset(16, strobeLightsCommentsOffset);
+          fbb.addOffset(17, cabRoofLightsOffset);
+          fbb.addOffset(18, cabRoofLightsCommentsOffset);
+          fbb.addOffset(19, clearenceLightsOffset);
+          fbb.addOffset(20, clearenceLightsCommentsOffset);
+          fbb.addInt64(21, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addOffset(22, idDBROffset);
+          fbb.addInt64(23, object.controlForm.targetId);
+          fbb.addOffset(24, fourWayFlashersOffset);
+          fbb.addOffset(25, fourWayFlashersCommentsOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Lights(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              headLights: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              headLightsComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              brakeLights: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              brakeLightsComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, ''),
+              reverseLights: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              reverseLightsComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, ''),
+              warningLights: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              warningLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
+              turnSignals: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
+              turnSignalsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 24, ''),
+              fourWayFlashers: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 52, ''),
+              fourWayFlashersComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 54, ''),
+              dashLights: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 30, ''),
+              dashLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 32, ''),
+              strobeLights: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''),
+              strobeLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 36, ''),
+              cabRoofLights: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 38, ''),
+              cabRoofLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 40, ''),
+              clearenceLights: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 42, ''),
+              clearenceLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 44, ''),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 46, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 48));
+          object.controlForm.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0);
+          object.controlForm.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  44, object.id, (Bitacora srcObject) => srcObject.lights),
+              store.box<Lights>());
+          return object;
+        }),
+    Measures: EntityDefinition<Measures>(
+        model: _entities[8],
+        toOneRelations: (Measures object) => [object.controlForm],
+        toManyRelations: (Measures object) => {
+              RelInfo<Bitacora>.toOneBacklink(43, object.id,
+                  (Bitacora srcObject) => srcObject.measures): object.bitacora
+            },
+        getId: (Measures object) => object.id,
+        setId: (Measures object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Measures object, fb.Builder fbb) {
+          final gasOffset = fbb.writeString(object.gas);
+          final gasCommentsOffset = fbb.writeString(object.gasComments);
+          final mileageCommentsOffset = fbb.writeString(object.mileageComments);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, gasOffset);
+          fbb.addOffset(2, gasCommentsOffset);
+          fbb.addInt64(3, object.mileage);
+          fbb.addOffset(4, mileageCommentsOffset);
+          fbb.addInt64(5, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addOffset(6, idDBROffset);
+          fbb.addInt64(7, object.controlForm.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Measures(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              gas: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              gasComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              mileage:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0),
+              mileageComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, ''),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 16));
+          object.controlForm.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          object.controlForm.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  43, object.id, (Bitacora srcObject) => srcObject.measures),
+              store.box<Measures>());
+          return object;
+        }),
+    Security: EntityDefinition<Security>(
+        model: _entities[9],
+        toOneRelations: (Security object) => [object.controlForm],
+        toManyRelations: (Security object) => {
+              RelInfo<Bitacora>.toOneBacklink(48, object.id,
+                  (Bitacora srcObject) => srcObject.security): object.bitacora
+            },
+        getId: (Security object) => object.id,
+        setId: (Security object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Security object, fb.Builder fbb) {
+          final rtaMagnetOffset = fbb.writeString(object.rtaMagnet);
+          final rtaMagnetCommentsOffset =
+              fbb.writeString(object.rtaMagnetComments);
+          final triangleReflectorsOffset =
+              fbb.writeString(object.triangleReflectors);
+          final triangleReflectorsCommentsOffset =
+              fbb.writeString(object.triangleReflectorsComments);
+          final wheelChocksOffset = fbb.writeString(object.wheelChocks);
+          final wheelChocksCommentsOffset =
+              fbb.writeString(object.wheelChocksComments);
+          final fireExtinguisherOffset =
+              fbb.writeString(object.fireExtinguisher);
+          final fireExtinguisherCommentsOffset =
+              fbb.writeString(object.fireExtinguisherComments);
+          final backUpAlarmOffset = fbb.writeString(object.backUpAlarm);
+          final backUpAlarmCommentsOffset =
+              fbb.writeString(object.backUpAlarmComments);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          final firstAidKitSafetyVestOffset =
+              fbb.writeString(object.firstAidKitSafetyVest);
+          final firstAidKitSafetyVestCommentsOffset =
+              fbb.writeString(object.firstAidKitSafetyVestComments);
+          fbb.startTable(21);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, rtaMagnetOffset);
+          fbb.addOffset(2, rtaMagnetCommentsOffset);
+          fbb.addOffset(3, triangleReflectorsOffset);
+          fbb.addOffset(4, triangleReflectorsCommentsOffset);
+          fbb.addOffset(5, wheelChocksOffset);
+          fbb.addOffset(6, wheelChocksCommentsOffset);
+          fbb.addOffset(7, fireExtinguisherOffset);
+          fbb.addOffset(8, fireExtinguisherCommentsOffset);
+          fbb.addOffset(11, backUpAlarmOffset);
+          fbb.addOffset(12, backUpAlarmCommentsOffset);
+          fbb.addInt64(13, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addOffset(14, idDBROffset);
+          fbb.addInt64(15, object.controlForm.targetId);
+          fbb.addOffset(18, firstAidKitSafetyVestOffset);
+          fbb.addOffset(19, firstAidKitSafetyVestCommentsOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Security(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              rtaMagnet: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              rtaMagnetComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              triangleReflectors: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              triangleReflectorsComments:
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 12, ''),
+              wheelChocks: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              wheelChocksComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, ''),
+              fireExtinguisher: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              fireExtinguisherComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
+              firstAidKitSafetyVest: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 40, ''),
+              firstAidKitSafetyVestComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 42, ''),
+              backUpAlarm: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, ''),
+              backUpAlarmComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 28, ''),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32));
+          object.controlForm.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
+          object.controlForm.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  48, object.id, (Bitacora srcObject) => srcObject.security),
+              store.box<Security>());
+          return object;
+        }),
+    BucketInspection: EntityDefinition<BucketInspection>(
+        model: _entities[10],
+        toOneRelations: (BucketInspection object) => [object.controlForm],
+        toManyRelations: (BucketInspection object) => {
+              RelInfo<Bitacora>.toOneBacklink(51, object.id,
+                      (Bitacora srcObject) => srcObject.bucketInspection):
+                  object.bitacora
+            },
+        getId: (BucketInspection object) => object.id,
+        setId: (BucketInspection object, int id) {
+          object.id = id;
+        },
+        objectToFB: (BucketInspection object, fb.Builder fbb) {
+          final insulatedOffset = fbb.writeString(object.insulated);
+          final insulatedCommentsOffset =
+              fbb.writeString(object.insulatedComments);
+          final holesDrilledOffset = fbb.writeString(object.holesDrilled);
+          final holesDrilledCommentsOffset =
+              fbb.writeString(object.holesDrilledComments);
+          final bucketLinerOffset = fbb.writeString(object.bucketLiner);
+          final bucketLinerCommentsOffset =
+              fbb.writeString(object.bucketLinerComments);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(11);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, insulatedOffset);
+          fbb.addOffset(2, insulatedCommentsOffset);
+          fbb.addOffset(3, holesDrilledOffset);
+          fbb.addOffset(4, holesDrilledCommentsOffset);
+          fbb.addOffset(5, bucketLinerOffset);
+          fbb.addOffset(6, bucketLinerCommentsOffset);
+          fbb.addInt64(7, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addOffset(8, idDBROffset);
+          fbb.addInt64(9, object.controlForm.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = BucketInspection(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              insulated: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              insulatedComments: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              holesDrilled: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              holesDrilledComments:
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 12, ''),
+              bucketLiner: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              bucketLinerComments:
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 16, ''),
+              dateAdded:
+                  DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20));
+          object.controlForm.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          object.controlForm.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(51, object.id,
+                  (Bitacora srcObject) => srcObject.bucketInspection),
+              store.box<BucketInspection>());
+          return object;
+        }),
+    Company: EntityDefinition<Company>(
+        model: _entities[11],
+        toOneRelations: (Company object) => [],
+        toManyRelations: (Company object) => {
+              RelInfo<Bitacora>.toOneBacklink(
+                      53, object.id, (Bitacora srcObject) => srcObject.company):
+                  object.bitacora
+            },
+        getId: (Company object) => object.id,
+        setId: (Company object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Company object, fb.Builder fbb) {
+          final companyOffset = fbb.writeString(object.company);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, companyOffset);
+          fbb.addInt64(2, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addOffset(3, idDBROffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Company(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              company: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 10));
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  53, object.id, (Bitacora srcObject) => srcObject.company),
+              store.box<Company>());
+          return object;
+        }),
+    Role: EntityDefinition<Role>(
+        model: _entities[12],
+        toOneRelations: (Role object) => [object.bitacora],
+        toManyRelations: (Role object) =>
+            {RelInfo<Role>.toMany(93, object.id): object.usuarios},
+        getId: (Role object) => object.id,
+        setId: (Role object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Role object, fb.Builder fbb) {
+          final roleOffset = fbb.writeString(object.role);
+          final idDBROffset = fbb.writeString(object.idDBR);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, roleOffset);
+          fbb.addInt64(2, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addOffset(3, idDBROffset);
+          fbb.addInt64(4, object.bitacora.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Role(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              role: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''));
+          object.bitacora.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          object.bitacora.attach(store);
+          InternalToManyAccess.setRelInfo(object.usuarios, store,
+              RelInfo<Role>.toMany(93, object.id), store.box<Role>());
+          return object;
+        }),
+    Status: EntityDefinition<Status>(
+        model: _entities[13],
+        toOneRelations: (Status object) => [],
+        toManyRelations: (Status object) => {
+              RelInfo<Bitacora>.toOneBacklink(
+                      52, object.id, (Bitacora srcObject) => srcObject.status):
+                  object.bitacora
+            },
+        getId: (Status object) => object.id,
+        setId: (Status object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Status object, fb.Builder fbb) {
+          final statusOffset = fbb.writeString(object.status);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, statusOffset);
+          fbb.addInt64(2, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addOffset(3, idDBROffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Status(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              status: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 10));
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  52, object.id, (Bitacora srcObject) => srcObject.status),
+              store.box<Status>());
+          return object;
+        }),
+    Vehicle: EntityDefinition<Vehicle>(
+        model: _entities[14],
+        toOneRelations: (Vehicle object) => [object.status, object.company],
+        toManyRelations: (Vehicle object) => {
+              RelInfo<Bitacora>.toOneBacklink(
+                      54, object.id, (Bitacora srcObject) => srcObject.vehicle):
+                  object.bitacora
+            },
+        getId: (Vehicle object) => object.id,
+        setId: (Vehicle object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Vehicle object, fb.Builder fbb) {
+          final makeOffset = fbb.writeString(object.make);
+          final modelOffset = fbb.writeString(object.model);
+          final yearOffset = fbb.writeString(object.year);
+          final imageOffset = fbb.writeString(object.image);
+          final pathOffset = fbb.writeString(object.path);
+          final vinOffset = fbb.writeString(object.vin);
+          final licesePlatesOffset = fbb.writeString(object.licesePlates);
+          final motorOffset = fbb.writeString(object.motor);
+          final colorOffset = fbb.writeString(object.color);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(18);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, makeOffset);
+          fbb.addOffset(2, modelOffset);
+          fbb.addOffset(3, yearOffset);
+          fbb.addOffset(4, imageOffset);
+          fbb.addOffset(5, pathOffset);
+          fbb.addOffset(6, vinOffset);
+          fbb.addOffset(7, licesePlatesOffset);
+          fbb.addOffset(8, motorOffset);
+          fbb.addOffset(9, colorOffset);
+          fbb.addInt64(10, object.oilChangeDue.millisecondsSinceEpoch);
+          fbb.addInt64(11, object.registrationDue.millisecondsSinceEpoch);
+          fbb.addInt64(12, object.insuranceRenewalDue.millisecondsSinceEpoch);
+          fbb.addInt64(13, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addOffset(14, idDBROffset);
+          fbb.addInt64(15, object.status.targetId);
+          fbb.addInt64(16, object.company.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Vehicle(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              make: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              model: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              year: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              image: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, ''),
+              path: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              vin: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, ''),
+              licesePlates: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              motor: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 20, ''),
+              color: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
+              oilChangeDue: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0)),
+              registrationDue: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
+              insuranceRenewalDue: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0)),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32));
+          object.status.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
+          object.status.attach(store);
+          object.company.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0);
+          object.company.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  54, object.id, (Bitacora srcObject) => srcObject.vehicle),
+              store.box<Vehicle>());
           return object;
         })
   };
@@ -4656,7 +4084,7 @@ class Usuarios_ {
 
   /// see [Usuarios.rol]
   static final rol =
-      QueryRelationToOne<Usuarios, Roles>(_entities[0].properties[10]);
+      QueryRelationToOne<Usuarios, Role>(_entities[0].properties[10]);
 
   /// see [Usuarios.imagen]
   static final imagen =
@@ -4678,50 +4106,25 @@ class Usuarios_ {
   static final interno =
       QueryBooleanProperty<Usuarios>(_entities[0].properties[15]);
 
+  /// see [Usuarios.vehicle]
+  static final vehicle =
+      QueryRelationToOne<Usuarios, Vehicle>(_entities[0].properties[16]);
+
   /// see [Usuarios.bitacora]
   static final bitacora =
       QueryRelationToMany<Usuarios, Bitacora>(_entities[0].relations[0]);
 
-  /// see [Usuarios.pagos]
-  static final pagos =
-      QueryRelationToMany<Usuarios, Pagos>(_entities[0].relations[1]);
-
   /// see [Usuarios.roles]
   static final roles =
-      QueryRelationToMany<Usuarios, Roles>(_entities[0].relations[2]);
+      QueryRelationToMany<Usuarios, Role>(_entities[0].relations[1]);
 
   /// see [Usuarios.clientes]
   static final clientes =
-      QueryRelationToMany<Usuarios, Usuarios>(_entities[0].relations[3]);
+      QueryRelationToMany<Usuarios, Usuarios>(_entities[0].relations[2]);
 
   /// see [Usuarios.tecnicosMecanicos]
   static final tecnicosMecanicos =
-      QueryRelationToMany<Usuarios, Usuarios>(_entities[0].relations[4]);
-
-  /// see [Usuarios.vehiculos]
-  static final vehiculos =
-      QueryRelationToMany<Usuarios, Vehiculo>(_entities[0].relations[5]);
-
-  /// see [Usuarios.suspesionesDirecciones]
-  static final suspesionesDirecciones =
-      QueryRelationToMany<Usuarios, SuspensionDireccion>(
-          _entities[0].relations[6]);
-
-  /// see [Usuarios.motores]
-  static final motores =
-      QueryRelationToMany<Usuarios, Motor>(_entities[0].relations[7]);
-
-  /// see [Usuarios.fluidos]
-  static final fluidos =
-      QueryRelationToMany<Usuarios, Fluidos>(_entities[0].relations[8]);
-
-  /// see [Usuarios.frenos]
-  static final frenos =
-      QueryRelationToMany<Usuarios, Frenos>(_entities[0].relations[9]);
-
-  /// see [Usuarios.electricos]
-  static final electricos =
-      QueryRelationToMany<Usuarios, Electrico>(_entities[0].relations[10]);
+      QueryRelationToMany<Usuarios, Usuarios>(_entities[0].relations[3]);
 }
 
 /// [Bitacora] entity fields to define ObjectBox queries.
@@ -4741,1046 +4144,824 @@ class Bitacora_ {
   static final instruccion =
       QueryStringProperty<Bitacora>(_entities[1].properties[3]);
 
-  /// see [Bitacora.vehiculo]
-  static final vehiculo =
-      QueryRelationToOne<Bitacora, Vehiculo>(_entities[1].properties[4]);
-
-  /// see [Bitacora.observacion]
-  static final observacion =
-      QueryRelationToOne<Bitacora, Observaciones>(_entities[1].properties[5]);
-
-  /// see [Bitacora.suspensionDireccion]
-  static final suspensionDireccion =
-      QueryRelationToOne<Bitacora, SuspensionDireccion>(
-          _entities[1].properties[6]);
-
-  /// see [Bitacora.motor]
-  static final motor =
-      QueryRelationToOne<Bitacora, Motor>(_entities[1].properties[7]);
-
-  /// see [Bitacora.fluidos]
-  static final fluidos =
-      QueryRelationToOne<Bitacora, Fluidos>(_entities[1].properties[8]);
-
-  /// see [Bitacora.frenos]
-  static final frenos =
-      QueryRelationToOne<Bitacora, Frenos>(_entities[1].properties[9]);
-
-  /// see [Bitacora.electrico]
-  static final electrico =
-      QueryRelationToOne<Bitacora, Electrico>(_entities[1].properties[10]);
-
-  /// see [Bitacora.servicio]
-  static final servicio =
-      QueryRelationToOne<Bitacora, Servicio>(_entities[1].properties[11]);
-
-  /// see [Bitacora.producto]
-  static final producto =
-      QueryRelationToOne<Bitacora, Producto>(_entities[1].properties[12]);
-
-  /// see [Bitacora.estatus]
-  static final estatus =
-      QueryRelationToOne<Bitacora, Estatus>(_entities[1].properties[13]);
-
   /// see [Bitacora.usuarioPropietario]
   static final usuarioPropietario =
-      QueryStringProperty<Bitacora>(_entities[1].properties[14]);
+      QueryStringProperty<Bitacora>(_entities[1].properties[4]);
 
   /// see [Bitacora.usuario]
   static final usuario =
-      QueryRelationToOne<Bitacora, Usuarios>(_entities[1].properties[15]);
+      QueryRelationToOne<Bitacora, Usuarios>(_entities[1].properties[5]);
 
   /// see [Bitacora.executeSupabase]
   static final executeSupabase =
-      QueryBooleanProperty<Bitacora>(_entities[1].properties[16]);
-
-  /// see [Bitacora.ordenServicio]
-  static final ordenServicio =
-      QueryRelationToOne<Bitacora, OrdenServicio>(_entities[1].properties[17]);
-
-  /// see [Bitacora.revision]
-  static final revision =
-      QueryRelationToOne<Bitacora, Revision>(_entities[1].properties[18]);
+      QueryBooleanProperty<Bitacora>(_entities[1].properties[6]);
 
   /// see [Bitacora.idControlForm]
   static final idControlForm =
-      QueryIntegerProperty<Bitacora>(_entities[1].properties[19]);
+      QueryIntegerProperty<Bitacora>(_entities[1].properties[7]);
 
   /// see [Bitacora.controlForm]
   static final controlForm =
-      QueryRelationToOne<Bitacora, ControlForm>(_entities[1].properties[20]);
-}
-
-/// [Roles] entity fields to define ObjectBox queries.
-class Roles_ {
-  /// see [Roles.id]
-  static final id = QueryIntegerProperty<Roles>(_entities[2].properties[0]);
-
-  /// see [Roles.rol]
-  static final rol = QueryStringProperty<Roles>(_entities[2].properties[1]);
-
-  /// see [Roles.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Roles>(_entities[2].properties[2]);
-
-  /// see [Roles.idDBR]
-  static final idDBR = QueryStringProperty<Roles>(_entities[2].properties[3]);
-
-  /// see [Roles.bitacora]
-  static final bitacora =
-      QueryRelationToOne<Roles, Bitacora>(_entities[2].properties[4]);
-
-  /// see [Roles.usuarios]
-  static final usuarios =
-      QueryRelationToMany<Roles, Usuarios>(_entities[2].relations[0]);
-}
-
-/// [Pagos] entity fields to define ObjectBox queries.
-class Pagos_ {
-  /// see [Pagos.id]
-  static final id = QueryIntegerProperty<Pagos>(_entities[3].properties[0]);
-
-  /// see [Pagos.montoAbonado]
-  static final montoAbonado =
-      QueryDoubleProperty<Pagos>(_entities[3].properties[1]);
-
-  /// see [Pagos.fechaMovimiento]
-  static final fechaMovimiento =
-      QueryIntegerProperty<Pagos>(_entities[3].properties[2]);
-
-  /// see [Pagos.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Pagos>(_entities[3].properties[3]);
-
-  /// see [Pagos.idDBR]
-  static final idDBR = QueryStringProperty<Pagos>(_entities[3].properties[4]);
-
-  /// see [Pagos.usuario]
-  static final usuario =
-      QueryRelationToOne<Pagos, Usuarios>(_entities[3].properties[5]);
-
-  /// see [Pagos.idEmiWeb]
-  static final idEmiWeb =
-      QueryStringProperty<Pagos>(_entities[3].properties[6]);
-
-  /// see [Pagos.idEmprendimiento]
-  static final idEmprendimiento =
-      QueryIntegerProperty<Pagos>(_entities[3].properties[7]);
-
-  /// see [Pagos.bitacora]
-  static final bitacora =
-      QueryRelationToMany<Pagos, Bitacora>(_entities[3].relations[0]);
-}
-
-/// [Vehiculo] entity fields to define ObjectBox queries.
-class Vehiculo_ {
-  /// see [Vehiculo.id]
-  static final id = QueryIntegerProperty<Vehiculo>(_entities[4].properties[0]);
-
-  /// see [Vehiculo.marca]
-  static final marca =
-      QueryStringProperty<Vehiculo>(_entities[4].properties[1]);
-
-  /// see [Vehiculo.modelo]
-  static final modelo =
-      QueryStringProperty<Vehiculo>(_entities[4].properties[2]);
-
-  /// see [Vehiculo.anio]
-  static final anio = QueryStringProperty<Vehiculo>(_entities[4].properties[3]);
-
-  /// see [Vehiculo.vin]
-  static final vin = QueryStringProperty<Vehiculo>(_entities[4].properties[4]);
-
-  /// see [Vehiculo.placas]
-  static final placas =
-      QueryStringProperty<Vehiculo>(_entities[4].properties[5]);
-
-  /// see [Vehiculo.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Vehiculo>(_entities[4].properties[6]);
-
-  /// see [Vehiculo.idDBR]
-  static final idDBR =
-      QueryStringProperty<Vehiculo>(_entities[4].properties[7]);
-
-  /// see [Vehiculo.cliente]
-  static final cliente =
-      QueryRelationToOne<Vehiculo, Usuarios>(_entities[4].properties[8]);
-
-  /// see [Vehiculo.motor]
-  static final motor =
-      QueryStringProperty<Vehiculo>(_entities[4].properties[9]);
-
-  /// see [Vehiculo.color]
-  static final color =
-      QueryStringProperty<Vehiculo>(_entities[4].properties[10]);
-
-  /// see [Vehiculo.imagen]
-  static final imagen =
-      QueryStringProperty<Vehiculo>(_entities[4].properties[11]);
-
-  /// see [Vehiculo.path]
-  static final path =
-      QueryStringProperty<Vehiculo>(_entities[4].properties[12]);
-}
-
-/// [FormaPago] entity fields to define ObjectBox queries.
-class FormaPago_ {
-  /// see [FormaPago.id]
-  static final id = QueryIntegerProperty<FormaPago>(_entities[5].properties[0]);
-
-  /// see [FormaPago.formaPago]
-  static final formaPago =
-      QueryStringProperty<FormaPago>(_entities[5].properties[1]);
-
-  /// see [FormaPago.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<FormaPago>(_entities[5].properties[2]);
-
-  /// see [FormaPago.idDBR]
-  static final idDBR =
-      QueryStringProperty<FormaPago>(_entities[5].properties[3]);
-}
-
-/// [Observaciones] entity fields to define ObjectBox queries.
-class Observaciones_ {
-  /// see [Observaciones.id]
-  static final id =
-      QueryIntegerProperty<Observaciones>(_entities[6].properties[0]);
-
-  /// see [Observaciones.fechaObservacion]
-  static final fechaObservacion =
-      QueryIntegerProperty<Observaciones>(_entities[6].properties[1]);
-
-  /// see [Observaciones.respuestaP1]
-  static final respuestaP1 =
-      QueryStringProperty<Observaciones>(_entities[6].properties[2]);
-
-  /// see [Observaciones.respuestaP2]
-  static final respuestaP2 =
-      QueryStringProperty<Observaciones>(_entities[6].properties[3]);
-
-  /// see [Observaciones.respuestaP3]
-  static final respuestaP3 =
-      QueryStringProperty<Observaciones>(_entities[6].properties[4]);
-
-  /// see [Observaciones.respuestaP4]
-  static final respuestaP4 =
-      QueryStringProperty<Observaciones>(_entities[6].properties[5]);
-
-  /// see [Observaciones.respuestaP5]
-  static final respuestaP5 =
-      QueryStringProperty<Observaciones>(_entities[6].properties[6]);
-
-  /// see [Observaciones.respuestaP6]
-  static final respuestaP6 =
-      QueryStringProperty<Observaciones>(_entities[6].properties[7]);
-
-  /// see [Observaciones.respuestaP7]
-  static final respuestaP7 =
-      QueryStringProperty<Observaciones>(_entities[6].properties[8]);
-
-  /// see [Observaciones.respuestaP8]
-  static final respuestaP8 =
-      QueryStringProperty<Observaciones>(_entities[6].properties[9]);
-
-  /// see [Observaciones.respuestaP9]
-  static final respuestaP9 =
-      QueryStringProperty<Observaciones>(_entities[6].properties[10]);
-
-  /// see [Observaciones.respuestaP10]
-  static final respuestaP10 =
-      QueryStringProperty<Observaciones>(_entities[6].properties[11]);
-
-  /// see [Observaciones.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Observaciones>(_entities[6].properties[12]);
-
-  /// see [Observaciones.idDBR]
-  static final idDBR =
-      QueryStringProperty<Observaciones>(_entities[6].properties[13]);
-
-  /// see [Observaciones.nombreAsesor]
-  static final nombreAsesor =
-      QueryStringProperty<Observaciones>(_entities[6].properties[14]);
-}
-
-/// [Electrico] entity fields to define ObjectBox queries.
-class Electrico_ {
-  /// see [Electrico.id]
-  static final id = QueryIntegerProperty<Electrico>(_entities[7].properties[0]);
-
-  /// see [Electrico.terminalesDeBaterias]
-  static final terminalesDeBaterias =
-      QueryStringProperty<Electrico>(_entities[7].properties[1]);
-
-  /// see [Electrico.terminalesDeBateriasObservaciones]
-  static final terminalesDeBateriasObservaciones =
-      QueryStringProperty<Electrico>(_entities[7].properties[2]);
-
-  /// see [Electrico.lucesFrenos]
-  static final lucesFrenos =
-      QueryStringProperty<Electrico>(_entities[7].properties[3]);
-
-  /// see [Electrico.lucesFrenosObservaciones]
-  static final lucesFrenosObservaciones =
-      QueryStringProperty<Electrico>(_entities[7].properties[4]);
-
-  /// see [Electrico.lucesDireccionales]
-  static final lucesDireccionales =
-      QueryStringProperty<Electrico>(_entities[7].properties[5]);
-
-  /// see [Electrico.lucesDireccionalesObservaciones]
-  static final lucesDireccionalesObservaciones =
-      QueryStringProperty<Electrico>(_entities[7].properties[6]);
-
-  /// see [Electrico.lucesCuartos]
-  static final lucesCuartos =
-      QueryStringProperty<Electrico>(_entities[7].properties[7]);
-
-  /// see [Electrico.lucesCuartosObservaciones]
-  static final lucesCuartosObservaciones =
-      QueryStringProperty<Electrico>(_entities[7].properties[8]);
-
-  /// see [Electrico.checkEngine]
-  static final checkEngine =
-      QueryStringProperty<Electrico>(_entities[7].properties[9]);
-
-  /// see [Electrico.checkEngineObservaciones]
-  static final checkEngineObservaciones =
-      QueryStringProperty<Electrico>(_entities[7].properties[10]);
-
-  /// see [Electrico.completado]
-  static final completado =
-      QueryBooleanProperty<Electrico>(_entities[7].properties[11]);
-
-  /// see [Electrico.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Electrico>(_entities[7].properties[12]);
-
-  /// see [Electrico.idDBR]
-  static final idDBR =
-      QueryStringProperty<Electrico>(_entities[7].properties[13]);
-
-  /// see [Electrico.revision]
-  static final revision =
-      QueryRelationToOne<Electrico, Revision>(_entities[7].properties[14]);
-
-  /// see [Electrico.tecnicoMecanico]
-  static final tecnicoMecanico =
-      QueryRelationToOne<Electrico, Usuarios>(_entities[7].properties[15]);
-}
-
-/// [Fluidos] entity fields to define ObjectBox queries.
-class Fluidos_ {
-  /// see [Fluidos.id]
-  static final id = QueryIntegerProperty<Fluidos>(_entities[8].properties[0]);
-
-  /// see [Fluidos.atf]
-  static final atf = QueryStringProperty<Fluidos>(_entities[8].properties[1]);
-
-  /// see [Fluidos.atfObservaciones]
-  static final atfObservaciones =
-      QueryStringProperty<Fluidos>(_entities[8].properties[2]);
-
-  /// see [Fluidos.power]
-  static final power = QueryStringProperty<Fluidos>(_entities[8].properties[3]);
-
-  /// see [Fluidos.powerObservaciones]
-  static final powerObservaciones =
-      QueryStringProperty<Fluidos>(_entities[8].properties[4]);
-
-  /// see [Fluidos.frenos]
-  static final frenos =
-      QueryStringProperty<Fluidos>(_entities[8].properties[5]);
-
-  /// see [Fluidos.frenosObservaciones]
-  static final frenosObservaciones =
-      QueryStringProperty<Fluidos>(_entities[8].properties[6]);
-
-  /// see [Fluidos.anticongelante]
-  static final anticongelante =
-      QueryStringProperty<Fluidos>(_entities[8].properties[7]);
-
-  /// see [Fluidos.anticongelanteObservaciones]
-  static final anticongelanteObservaciones =
-      QueryStringProperty<Fluidos>(_entities[8].properties[8]);
-
-  /// see [Fluidos.wipers]
-  static final wipers =
-      QueryStringProperty<Fluidos>(_entities[8].properties[9]);
-
-  /// see [Fluidos.wipersObservaciones]
-  static final wipersObservaciones =
-      QueryStringProperty<Fluidos>(_entities[8].properties[10]);
-
-  /// see [Fluidos.completado]
-  static final completado =
-      QueryBooleanProperty<Fluidos>(_entities[8].properties[11]);
-
-  /// see [Fluidos.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Fluidos>(_entities[8].properties[12]);
-
-  /// see [Fluidos.idDBR]
-  static final idDBR =
-      QueryStringProperty<Fluidos>(_entities[8].properties[13]);
-
-  /// see [Fluidos.revision]
-  static final revision =
-      QueryRelationToOne<Fluidos, Revision>(_entities[8].properties[14]);
-
-  /// see [Fluidos.tecnicoMecanico]
-  static final tecnicoMecanico =
-      QueryRelationToOne<Fluidos, Usuarios>(_entities[8].properties[15]);
-}
-
-/// [Frenos] entity fields to define ObjectBox queries.
-class Frenos_ {
-  /// see [Frenos.id]
-  static final id = QueryIntegerProperty<Frenos>(_entities[9].properties[0]);
-
-  /// see [Frenos.balatasDelanteras]
-  static final balatasDelanteras =
-      QueryStringProperty<Frenos>(_entities[9].properties[1]);
-
-  /// see [Frenos.balatasDelanterasObservaciones]
-  static final balatasDelanterasObservaciones =
-      QueryStringProperty<Frenos>(_entities[9].properties[2]);
-
-  /// see [Frenos.balatasTraserasDiscoTambor]
-  static final balatasTraserasDiscoTambor =
-      QueryStringProperty<Frenos>(_entities[9].properties[3]);
-
-  /// see [Frenos.balatasTraserasDiscoTamborObservaciones]
-  static final balatasTraserasDiscoTamborObservaciones =
-      QueryStringProperty<Frenos>(_entities[9].properties[4]);
-
-  /// see [Frenos.manguerasLineas]
-  static final manguerasLineas =
-      QueryStringProperty<Frenos>(_entities[9].properties[5]);
-
-  /// see [Frenos.manguerasLineasObservaciones]
-  static final manguerasLineasObservaciones =
-      QueryStringProperty<Frenos>(_entities[9].properties[6]);
-
-  /// see [Frenos.cilindroMaestro]
-  static final cilindroMaestro =
-      QueryStringProperty<Frenos>(_entities[9].properties[7]);
-
-  /// see [Frenos.cilindroMaestroObservaciones]
-  static final cilindroMaestroObservaciones =
-      QueryStringProperty<Frenos>(_entities[9].properties[8]);
-
-  /// see [Frenos.birlosYTuercas]
-  static final birlosYTuercas =
-      QueryStringProperty<Frenos>(_entities[9].properties[9]);
-
-  /// see [Frenos.birlosYTuercasObservaciones]
-  static final birlosYTuercasObservaciones =
-      QueryStringProperty<Frenos>(_entities[9].properties[10]);
-
-  /// see [Frenos.completado]
-  static final completado =
-      QueryBooleanProperty<Frenos>(_entities[9].properties[11]);
-
-  /// see [Frenos.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Frenos>(_entities[9].properties[12]);
-
-  /// see [Frenos.idDBR]
-  static final idDBR = QueryStringProperty<Frenos>(_entities[9].properties[13]);
-
-  /// see [Frenos.revision]
-  static final revision =
-      QueryRelationToOne<Frenos, Revision>(_entities[9].properties[14]);
-
-  /// see [Frenos.tecnicoMecanico]
-  static final tecnicoMecanico =
-      QueryRelationToOne<Frenos, Usuarios>(_entities[9].properties[15]);
-}
-
-/// [Motor] entity fields to define ObjectBox queries.
-class Motor_ {
-  /// see [Motor.id]
-  static final id = QueryIntegerProperty<Motor>(_entities[10].properties[0]);
-
-  /// see [Motor.aceite]
-  static final aceite = QueryStringProperty<Motor>(_entities[10].properties[1]);
-
-  /// see [Motor.aceiteObservaciones]
-  static final aceiteObservaciones =
-      QueryStringProperty<Motor>(_entities[10].properties[2]);
-
-  /// see [Motor.cpoDeAceleracion]
-  static final cpoDeAceleracion =
-      QueryStringProperty<Motor>(_entities[10].properties[3]);
-
-  /// see [Motor.cpoDeAceleracionObservaciones]
-  static final cpoDeAceleracionObservaciones =
-      QueryStringProperty<Motor>(_entities[10].properties[4]);
-
-  /// see [Motor.bujias]
-  static final bujias = QueryStringProperty<Motor>(_entities[10].properties[5]);
-
-  /// see [Motor.bujiasObservaciones]
-  static final bujiasObservaciones =
-      QueryStringProperty<Motor>(_entities[10].properties[6]);
-
-  /// see [Motor.bandaCadenaDeTiempo]
-  static final bandaCadenaDeTiempo =
-      QueryStringProperty<Motor>(_entities[10].properties[7]);
-
-  /// see [Motor.bandaCadenaDeTiempoObservaciones]
-  static final bandaCadenaDeTiempoObservaciones =
-      QueryStringProperty<Motor>(_entities[10].properties[8]);
-
-  /// see [Motor.soportes]
-  static final soportes =
-      QueryStringProperty<Motor>(_entities[10].properties[9]);
-
-  /// see [Motor.soportesObservaciones]
-  static final soportesObservaciones =
-      QueryStringProperty<Motor>(_entities[10].properties[10]);
-
-  /// see [Motor.bandas]
-  static final bandas =
-      QueryStringProperty<Motor>(_entities[10].properties[11]);
-
-  /// see [Motor.bandasObservaciones]
-  static final bandasObservaciones =
-      QueryStringProperty<Motor>(_entities[10].properties[12]);
-
-  /// see [Motor.mangueras]
-  static final mangueras =
-      QueryStringProperty<Motor>(_entities[10].properties[13]);
-
-  /// see [Motor.manguerasObservaciones]
-  static final manguerasObservaciones =
-      QueryStringProperty<Motor>(_entities[10].properties[14]);
-
-  /// see [Motor.completado]
-  static final completado =
-      QueryBooleanProperty<Motor>(_entities[10].properties[15]);
-
-  /// see [Motor.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Motor>(_entities[10].properties[16]);
-
-  /// see [Motor.idDBR]
-  static final idDBR = QueryStringProperty<Motor>(_entities[10].properties[17]);
-
-  /// see [Motor.filtroDeAire]
-  static final filtroDeAire =
-      QueryStringProperty<Motor>(_entities[10].properties[18]);
-
-  /// see [Motor.filtroDeAireObservaciones]
-  static final filtroDeAireObservaciones =
-      QueryStringProperty<Motor>(_entities[10].properties[19]);
-
-  /// see [Motor.revision]
-  static final revision =
-      QueryRelationToOne<Motor, Revision>(_entities[10].properties[20]);
-
-  /// see [Motor.tecnicoMecanico]
-  static final tecnicoMecanico =
-      QueryRelationToOne<Motor, Usuarios>(_entities[10].properties[21]);
-}
-
-/// [SuspensionDireccion] entity fields to define ObjectBox queries.
-class SuspensionDireccion_ {
-  /// see [SuspensionDireccion.id]
-  static final id =
-      QueryIntegerProperty<SuspensionDireccion>(_entities[11].properties[0]);
-
-  /// see [SuspensionDireccion.rotulaSuperiorIzq]
-  static final rotulaSuperiorIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[1]);
-
-  /// see [SuspensionDireccion.rotulaSuperiorIzqObservaciones]
-  static final rotulaSuperiorIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[2]);
-
-  /// see [SuspensionDireccion.rotulaSuperiorDer]
-  static final rotulaSuperiorDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[3]);
-
-  /// see [SuspensionDireccion.rotulaSuperiorDerObservaciones]
-  static final rotulaSuperiorDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[4]);
-
-  /// see [SuspensionDireccion.rotulaInferiorIzq]
-  static final rotulaInferiorIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[5]);
-
-  /// see [SuspensionDireccion.rotulaInferiorIzqObservaciones]
-  static final rotulaInferiorIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[6]);
-
-  /// see [SuspensionDireccion.rotulaInferiorDer]
-  static final rotulaInferiorDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[7]);
-
-  /// see [SuspensionDireccion.rotulaInferiorDerObservaciones]
-  static final rotulaInferiorDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[8]);
-
-  /// see [SuspensionDireccion.bujeHorquillaSuperiorIzq]
-  static final bujeHorquillaSuperiorIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[9]);
-
-  /// see [SuspensionDireccion.bujeHorquillaSuperiorIzqObservaciones]
-  static final bujeHorquillaSuperiorIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[10]);
-
-  /// see [SuspensionDireccion.bujeHorquillaSuperiorDer]
-  static final bujeHorquillaSuperiorDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[11]);
-
-  /// see [SuspensionDireccion.bujeHorquillaSuperiorDerObservaciones]
-  static final bujeHorquillaSuperiorDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[12]);
-
-  /// see [SuspensionDireccion.bujeHorquillaInferiorIzq]
-  static final bujeHorquillaInferiorIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[13]);
-
-  /// see [SuspensionDireccion.bujeHorquillaInferiorIzqObservaciones]
-  static final bujeHorquillaInferiorIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[14]);
-
-  /// see [SuspensionDireccion.bujeHorquillaInferiorDer]
-  static final bujeHorquillaInferiorDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[15]);
-
-  /// see [SuspensionDireccion.bujeHorquillaInferiorDerObservaciones]
-  static final bujeHorquillaInferiorDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[16]);
-
-  /// see [SuspensionDireccion.amortiguadorDelanteroIzq]
-  static final amortiguadorDelanteroIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[17]);
-
-  /// see [SuspensionDireccion.amortiguadorDelanteroIzqObservaciones]
-  static final amortiguadorDelanteroIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[18]);
-
-  /// see [SuspensionDireccion.amortiguadorDelanteroDer]
-  static final amortiguadorDelanteroDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[19]);
-
-  /// see [SuspensionDireccion.amortiguadorDelanteroDerObservaciones]
-  static final amortiguadorDelanteroDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[20]);
-
-  /// see [SuspensionDireccion.amortiguadorTraseroIzq]
-  static final amortiguadorTraseroIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[21]);
-
-  /// see [SuspensionDireccion.amortiguadorTraseroIzqObservaciones]
-  static final amortiguadorTraseroIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[22]);
-
-  /// see [SuspensionDireccion.amortiguadorTraseroDer]
-  static final amortiguadorTraseroDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[23]);
-
-  /// see [SuspensionDireccion.amortiguadorTraseroDerObservaciones]
-  static final amortiguadorTraseroDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[24]);
-
-  /// see [SuspensionDireccion.bujeBarraEstabilizadoraIzq]
-  static final bujeBarraEstabilizadoraIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[25]);
-
-  /// see [SuspensionDireccion.bujeBarraEstabilizadoraIzqObservaciones]
-  static final bujeBarraEstabilizadoraIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[26]);
-
-  /// see [SuspensionDireccion.bujeBarraEstabilizadoraDer]
-  static final bujeBarraEstabilizadoraDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[27]);
-
-  /// see [SuspensionDireccion.bujeBarraEstabilizadoraDerObservaciones]
-  static final bujeBarraEstabilizadoraDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[28]);
-
-  /// see [SuspensionDireccion.linkKitDelanteroIzq]
-  static final linkKitDelanteroIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[29]);
-
-  /// see [SuspensionDireccion.linkKitDelanteroIzqObservaciones]
-  static final linkKitDelanteroIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[30]);
-
-  /// see [SuspensionDireccion.linkKitDelanteroDer]
-  static final linkKitDelanteroDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[31]);
-
-  /// see [SuspensionDireccion.linkKitDelanteroDerObservaciones]
-  static final linkKitDelanteroDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[32]);
-
-  /// see [SuspensionDireccion.linkKitTraseroIzq]
-  static final linkKitTraseroIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[33]);
-
-  /// see [SuspensionDireccion.linkKitTraseroIzqObservaciones]
-  static final linkKitTraseroIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[34]);
-
-  /// see [SuspensionDireccion.linkKitTraseroDer]
-  static final linkKitTraseroDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[35]);
-
-  /// see [SuspensionDireccion.linkKitTraseroDerObservaciones]
-  static final linkKitTraseroDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[36]);
-
-  /// see [SuspensionDireccion.terminalInteriorIzq]
-  static final terminalInteriorIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[37]);
-
-  /// see [SuspensionDireccion.terminalInteriorIzqObservaciones]
-  static final terminalInteriorIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[38]);
-
-  /// see [SuspensionDireccion.terminalInteriorDer]
-  static final terminalInteriorDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[39]);
-
-  /// see [SuspensionDireccion.terminalInteriorDerObservaciones]
-  static final terminalInteriorDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[40]);
-
-  /// see [SuspensionDireccion.terminalExteriorIzq]
-  static final terminalExteriorIzq =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[41]);
-
-  /// see [SuspensionDireccion.terminalExteriorIzqObservaciones]
-  static final terminalExteriorIzqObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[42]);
-
-  /// see [SuspensionDireccion.terminalExteriorDer]
-  static final terminalExteriorDer =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[43]);
-
-  /// see [SuspensionDireccion.terminalExteriorDerObservaciones]
-  static final terminalExteriorDerObservaciones =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[44]);
-
-  /// see [SuspensionDireccion.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<SuspensionDireccion>(_entities[11].properties[45]);
-
-  /// see [SuspensionDireccion.idDBR]
-  static final idDBR =
-      QueryStringProperty<SuspensionDireccion>(_entities[11].properties[46]);
-
-  /// see [SuspensionDireccion.completado]
-  static final completado =
-      QueryBooleanProperty<SuspensionDireccion>(_entities[11].properties[47]);
-
-  /// see [SuspensionDireccion.revision]
-  static final revision = QueryRelationToOne<SuspensionDireccion, Revision>(
-      _entities[11].properties[48]);
-
-  /// see [SuspensionDireccion.tecnicoMecanico]
-  static final tecnicoMecanico =
-      QueryRelationToOne<SuspensionDireccion, Usuarios>(
-          _entities[11].properties[49]);
-}
-
-/// [Producto] entity fields to define ObjectBox queries.
-class Producto_ {
-  /// see [Producto.id]
-  static final id = QueryIntegerProperty<Producto>(_entities[12].properties[0]);
-
-  /// see [Producto.producto]
-  static final producto =
-      QueryStringProperty<Producto>(_entities[12].properties[1]);
-
-  /// see [Producto.cantidad]
-  static final cantidad =
-      QueryIntegerProperty<Producto>(_entities[12].properties[2]);
-
-  /// see [Producto.costo]
-  static final costo =
-      QueryDoubleProperty<Producto>(_entities[12].properties[3]);
-
-  /// see [Producto.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Producto>(_entities[12].properties[4]);
-
-  /// see [Producto.idDBR]
-  static final idDBR =
-      QueryStringProperty<Producto>(_entities[12].properties[5]);
-
-  /// see [Producto.servicio]
-  static final servicio =
-      QueryRelationToOne<Producto, Servicio>(_entities[12].properties[6]);
-}
-
-/// [Servicio] entity fields to define ObjectBox queries.
-class Servicio_ {
-  /// see [Servicio.id]
-  static final id = QueryIntegerProperty<Servicio>(_entities[13].properties[0]);
-
-  /// see [Servicio.servicio]
-  static final servicio =
-      QueryStringProperty<Servicio>(_entities[13].properties[1]);
-
-  /// see [Servicio.costoServicio]
-  static final costoServicio =
-      QueryDoubleProperty<Servicio>(_entities[13].properties[2]);
-
-  /// see [Servicio.autorizado]
-  static final autorizado =
-      QueryBooleanProperty<Servicio>(_entities[13].properties[3]);
-
-  /// see [Servicio.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Servicio>(_entities[13].properties[4]);
-
-  /// see [Servicio.fechaEntrega]
-  static final fechaEntrega =
-      QueryIntegerProperty<Servicio>(_entities[13].properties[5]);
-
-  /// see [Servicio.idDBR]
-  static final idDBR =
-      QueryStringProperty<Servicio>(_entities[13].properties[6]);
-
-  /// see [Servicio.imagen]
-  static final imagen =
-      QueryStringProperty<Servicio>(_entities[13].properties[7]);
-
-  /// see [Servicio.path]
-  static final path =
-      QueryStringProperty<Servicio>(_entities[13].properties[8]);
-
-  /// see [Servicio.ordenServicio]
-  static final ordenServicio =
-      QueryRelationToOne<Servicio, OrdenServicio>(_entities[13].properties[9]);
-}
-
-/// [TipoProducto] entity fields to define ObjectBox queries.
-class TipoProducto_ {
-  /// see [TipoProducto.id]
-  static final id =
-      QueryIntegerProperty<TipoProducto>(_entities[14].properties[0]);
-
-  /// see [TipoProducto.tipoProducto]
-  static final tipoProducto =
-      QueryStringProperty<TipoProducto>(_entities[14].properties[1]);
-
-  /// see [TipoProducto.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<TipoProducto>(_entities[14].properties[2]);
-
-  /// see [TipoProducto.costo]
-  static final costo =
-      QueryDoubleProperty<TipoProducto>(_entities[14].properties[3]);
-
-  /// see [TipoProducto.idDBR]
-  static final idDBR =
-      QueryStringProperty<TipoProducto>(_entities[14].properties[4]);
-}
-
-/// [TipoServicio] entity fields to define ObjectBox queries.
-class TipoServicio_ {
-  /// see [TipoServicio.id]
-  static final id =
-      QueryIntegerProperty<TipoServicio>(_entities[15].properties[0]);
-
-  /// see [TipoServicio.tipoServicio]
-  static final tipoServicio =
-      QueryStringProperty<TipoServicio>(_entities[15].properties[1]);
-
-  /// see [TipoServicio.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<TipoServicio>(_entities[15].properties[2]);
-
-  /// see [TipoServicio.costo]
-  static final costo =
-      QueryDoubleProperty<TipoServicio>(_entities[15].properties[3]);
-
-  /// see [TipoServicio.idDBR]
-  static final idDBR =
-      QueryStringProperty<TipoServicio>(_entities[15].properties[4]);
-
-  /// see [TipoServicio.imagen]
-  static final imagen =
-      QueryStringProperty<TipoServicio>(_entities[15].properties[5]);
-
-  /// see [TipoServicio.path]
-  static final path =
-      QueryStringProperty<TipoServicio>(_entities[15].properties[6]);
-}
-
-/// [Estatus] entity fields to define ObjectBox queries.
-class Estatus_ {
-  /// see [Estatus.id]
-  static final id = QueryIntegerProperty<Estatus>(_entities[16].properties[0]);
-
-  /// see [Estatus.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Estatus>(_entities[16].properties[1]);
-
-  /// see [Estatus.idDBR]
-  static final idDBR =
-      QueryStringProperty<Estatus>(_entities[16].properties[2]);
-
-  /// see [Estatus.avance]
-  static final avance =
-      QueryDoubleProperty<Estatus>(_entities[16].properties[3]);
-
-  /// see [Estatus.estatus]
-  static final estatus =
-      QueryStringProperty<Estatus>(_entities[16].properties[4]);
-}
-
-/// [OrdenServicio] entity fields to define ObjectBox queries.
-class OrdenServicio_ {
-  /// see [OrdenServicio.id]
-  static final id =
-      QueryIntegerProperty<OrdenServicio>(_entities[17].properties[0]);
-
-  /// see [OrdenServicio.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<OrdenServicio>(_entities[17].properties[1]);
-
-  /// see [OrdenServicio.fechaEntrega]
-  static final fechaEntrega =
-      QueryIntegerProperty<OrdenServicio>(_entities[17].properties[2]);
-
-  /// see [OrdenServicio.costoTotal]
-  static final costoTotal =
-      QueryDoubleProperty<OrdenServicio>(_entities[17].properties[3]);
-
-  /// see [OrdenServicio.idDBR]
-  static final idDBR =
-      QueryStringProperty<OrdenServicio>(_entities[17].properties[4]);
-}
-
-/// [Revision] entity fields to define ObjectBox queries.
-class Revision_ {
-  /// see [Revision.id]
-  static final id = QueryIntegerProperty<Revision>(_entities[18].properties[0]);
-
-  /// see [Revision.completado]
-  static final completado =
-      QueryBooleanProperty<Revision>(_entities[18].properties[1]);
-
-  /// see [Revision.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Revision>(_entities[18].properties[2]);
-
-  /// see [Revision.idDBR]
-  static final idDBR =
-      QueryStringProperty<Revision>(_entities[18].properties[3]);
-
-  /// see [Revision.suspensionDireccion]
-  static final suspensionDireccion =
-      QueryRelationToOne<Revision, SuspensionDireccion>(
-          _entities[18].properties[4]);
-
-  /// see [Revision.motor]
-  static final motor =
-      QueryRelationToOne<Revision, Motor>(_entities[18].properties[5]);
-
-  /// see [Revision.fluidos]
-  static final fluidos =
-      QueryRelationToOne<Revision, Fluidos>(_entities[18].properties[6]);
-
-  /// see [Revision.frenos]
-  static final frenos =
-      QueryRelationToOne<Revision, Frenos>(_entities[18].properties[7]);
-
-  /// see [Revision.electrico]
-  static final electrico =
-      QueryRelationToOne<Revision, Electrico>(_entities[18].properties[8]);
-}
-
-/// [Anio] entity fields to define ObjectBox queries.
-class Anio_ {
-  /// see [Anio.id]
-  static final id = QueryIntegerProperty<Anio>(_entities[19].properties[0]);
-
-  /// see [Anio.anio]
-  static final anio = QueryStringProperty<Anio>(_entities[19].properties[1]);
-
-  /// see [Anio.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Anio>(_entities[19].properties[2]);
-
-  /// see [Anio.idDBR]
-  static final idDBR = QueryStringProperty<Anio>(_entities[19].properties[3]);
-
-  /// see [Anio.modelo]
-  static final modelo =
-      QueryRelationToOne<Anio, Modelo>(_entities[19].properties[4]);
-}
-
-/// [Marca] entity fields to define ObjectBox queries.
-class Marca_ {
-  /// see [Marca.id]
-  static final id = QueryIntegerProperty<Marca>(_entities[20].properties[0]);
-
-  /// see [Marca.marca]
-  static final marca = QueryStringProperty<Marca>(_entities[20].properties[1]);
-
-  /// see [Marca.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Marca>(_entities[20].properties[2]);
-
-  /// see [Marca.idDBR]
-  static final idDBR = QueryStringProperty<Marca>(_entities[20].properties[3]);
-}
-
-/// [Modelo] entity fields to define ObjectBox queries.
-class Modelo_ {
-  /// see [Modelo.id]
-  static final id = QueryIntegerProperty<Modelo>(_entities[21].properties[0]);
-
-  /// see [Modelo.modelo]
-  static final modelo =
-      QueryStringProperty<Modelo>(_entities[21].properties[1]);
-
-  /// see [Modelo.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Modelo>(_entities[21].properties[2]);
-
-  /// see [Modelo.idDBR]
-  static final idDBR = QueryStringProperty<Modelo>(_entities[21].properties[3]);
-
-  /// see [Modelo.marca]
-  static final marca =
-      QueryRelationToOne<Modelo, Marca>(_entities[21].properties[4]);
+      QueryRelationToOne<Bitacora, ControlForm>(_entities[1].properties[8]);
+
+  /// see [Bitacora.measures]
+  static final measures =
+      QueryRelationToOne<Bitacora, Measures>(_entities[1].properties[9]);
+
+  /// see [Bitacora.lights]
+  static final lights =
+      QueryRelationToOne<Bitacora, Lights>(_entities[1].properties[10]);
+
+  /// see [Bitacora.carBodywork]
+  static final carBodywork =
+      QueryRelationToOne<Bitacora, CarBodywork>(_entities[1].properties[11]);
+
+  /// see [Bitacora.fluidsCheck]
+  static final fluidsCheck =
+      QueryRelationToOne<Bitacora, FluidsCheck>(_entities[1].properties[12]);
+
+  /// see [Bitacora.security]
+  static final security =
+      QueryRelationToOne<Bitacora, Security>(_entities[1].properties[13]);
+
+  /// see [Bitacora.extra]
+  static final extra =
+      QueryRelationToOne<Bitacora, Extra>(_entities[1].properties[14]);
+
+  /// see [Bitacora.equipment]
+  static final equipment =
+      QueryRelationToOne<Bitacora, Equipment>(_entities[1].properties[15]);
+
+  /// see [Bitacora.bucketInspection]
+  static final bucketInspection =
+      QueryRelationToOne<Bitacora, BucketInspection>(
+          _entities[1].properties[16]);
+
+  /// see [Bitacora.status]
+  static final status =
+      QueryRelationToOne<Bitacora, Status>(_entities[1].properties[17]);
+
+  /// see [Bitacora.company]
+  static final company =
+      QueryRelationToOne<Bitacora, Company>(_entities[1].properties[18]);
+
+  /// see [Bitacora.vehicle]
+  static final vehicle =
+      QueryRelationToOne<Bitacora, Vehicle>(_entities[1].properties[19]);
 }
 
 /// [ControlForm] entity fields to define ObjectBox queries.
 class ControlForm_ {
   /// see [ControlForm.id]
   static final id =
-      QueryIntegerProperty<ControlForm>(_entities[22].properties[0]);
+      QueryIntegerProperty<ControlForm>(_entities[2].properties[0]);
 
   /// see [ControlForm.typeForm]
   static final typeForm =
-      QueryBooleanProperty<ControlForm>(_entities[22].properties[1]);
+      QueryBooleanProperty<ControlForm>(_entities[2].properties[1]);
 
   /// see [ControlForm.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<ControlForm>(_entities[22].properties[2]);
+      QueryIntegerProperty<ControlForm>(_entities[2].properties[2]);
 
   /// see [ControlForm.idDBR]
   static final idDBR =
-      QueryStringProperty<ControlForm>(_entities[22].properties[3]);
+      QueryStringProperty<ControlForm>(_entities[2].properties[3]);
 
   /// see [ControlForm.employee]
   static final employee =
-      QueryRelationToOne<ControlForm, Usuarios>(_entities[22].properties[4]);
+      QueryRelationToOne<ControlForm, Usuarios>(_entities[2].properties[4]);
 
   /// see [ControlForm.vehicle]
   static final vehicle =
-      QueryRelationToOne<ControlForm, Vehiculo>(_entities[22].properties[5]);
+      QueryRelationToOne<ControlForm, Vehicle>(_entities[2].properties[5]);
+
+  /// see [ControlForm.measures]
+  static final measures =
+      QueryRelationToOne<ControlForm, Measures>(_entities[2].properties[6]);
+
+  /// see [ControlForm.lights]
+  static final lights =
+      QueryRelationToOne<ControlForm, Lights>(_entities[2].properties[7]);
+
+  /// see [ControlForm.carBodywork]
+  static final carBodywork =
+      QueryRelationToOne<ControlForm, CarBodywork>(_entities[2].properties[8]);
+
+  /// see [ControlForm.fluidsCheck]
+  static final fluidsCheck =
+      QueryRelationToOne<ControlForm, FluidsCheck>(_entities[2].properties[9]);
+
+  /// see [ControlForm.security]
+  static final security =
+      QueryRelationToOne<ControlForm, Security>(_entities[2].properties[10]);
+
+  /// see [ControlForm.extra]
+  static final extra =
+      QueryRelationToOne<ControlForm, Extra>(_entities[2].properties[11]);
+
+  /// see [ControlForm.equipment]
+  static final equipment =
+      QueryRelationToOne<ControlForm, Equipment>(_entities[2].properties[12]);
+
+  /// see [ControlForm.bucketInspection]
+  static final bucketInspection =
+      QueryRelationToOne<ControlForm, BucketInspection>(
+          _entities[2].properties[13]);
+
+  /// see [ControlForm.today]
+  static final today =
+      QueryBooleanProperty<ControlForm>(_entities[2].properties[14]);
+}
+
+/// [CarBodywork] entity fields to define ObjectBox queries.
+class CarBodywork_ {
+  /// see [CarBodywork.id]
+  static final id =
+      QueryIntegerProperty<CarBodywork>(_entities[3].properties[0]);
+
+  /// see [CarBodywork.wiperBladesFront]
+  static final wiperBladesFront =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[1]);
+
+  /// see [CarBodywork.wiperBladesFrontComments]
+  static final wiperBladesFrontComments =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[2]);
+
+  /// see [CarBodywork.wiperBladesBack]
+  static final wiperBladesBack =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[3]);
+
+  /// see [CarBodywork.wiperBladesBackComments]
+  static final wiperBladesBackComments =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[4]);
+
+  /// see [CarBodywork.windshieldWiperFront]
+  static final windshieldWiperFront =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[5]);
+
+  /// see [CarBodywork.windshieldWiperFrontComments]
+  static final windshieldWiperFrontComments =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[6]);
+
+  /// see [CarBodywork.windshieldWiperBack]
+  static final windshieldWiperBack =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[7]);
+
+  /// see [CarBodywork.windshieldWiperBackComments]
+  static final windshieldWiperBackComments =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[8]);
+
+  /// see [CarBodywork.generalBody]
+  static final generalBody =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[9]);
+
+  /// see [CarBodywork.generalBodyComments]
+  static final generalBodyComments =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[10]);
+
+  /// see [CarBodywork.decaling]
+  static final decaling =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[11]);
+
+  /// see [CarBodywork.decalingComments]
+  static final decalingComments =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[12]);
+
+  /// see [CarBodywork.tires]
+  static final tires =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[13]);
+
+  /// see [CarBodywork.tiresComments]
+  static final tiresComments =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[14]);
+
+  /// see [CarBodywork.glass]
+  static final glass =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[15]);
+
+  /// see [CarBodywork.glassComments]
+  static final glassComments =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[16]);
+
+  /// see [CarBodywork.mirrors]
+  static final mirrors =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[17]);
+
+  /// see [CarBodywork.mirrorsComments]
+  static final mirrorsComments =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[18]);
+
+  /// see [CarBodywork.parking]
+  static final parking =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[19]);
+
+  /// see [CarBodywork.parkingComments]
+  static final parkingComments =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[20]);
+
+  /// see [CarBodywork.brakes]
+  static final brakes =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[21]);
+
+  /// see [CarBodywork.brakesComments]
+  static final brakesComments =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[22]);
+
+  /// see [CarBodywork.emgBrakes]
+  static final emgBrakes =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[23]);
+
+  /// see [CarBodywork.emgBrakesComments]
+  static final emgBrakesComments =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[24]);
+
+  /// see [CarBodywork.horn]
+  static final horn =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[25]);
+
+  /// see [CarBodywork.hornComments]
+  static final hornComments =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[26]);
+
+  /// see [CarBodywork.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<CarBodywork>(_entities[3].properties[27]);
+
+  /// see [CarBodywork.idDBR]
+  static final idDBR =
+      QueryStringProperty<CarBodywork>(_entities[3].properties[28]);
+
+  /// see [CarBodywork.controlForm]
+  static final controlForm =
+      QueryRelationToOne<CarBodywork, ControlForm>(_entities[3].properties[29]);
+}
+
+/// [Equipment] entity fields to define ObjectBox queries.
+class Equipment_ {
+  /// see [Equipment.id]
+  static final id = QueryIntegerProperty<Equipment>(_entities[4].properties[0]);
+
+  /// see [Equipment.ignitionKey]
+  static final ignitionKey =
+      QueryStringProperty<Equipment>(_entities[4].properties[1]);
+
+  /// see [Equipment.ignitionKeyComments]
+  static final ignitionKeyComments =
+      QueryStringProperty<Equipment>(_entities[4].properties[2]);
+
+  /// see [Equipment.binsBoxKey]
+  static final binsBoxKey =
+      QueryStringProperty<Equipment>(_entities[4].properties[3]);
+
+  /// see [Equipment.binsBoxKeyComments]
+  static final binsBoxKeyComments =
+      QueryStringProperty<Equipment>(_entities[4].properties[4]);
+
+  /// see [Equipment.vehicleRegistrationCopy]
+  static final vehicleRegistrationCopy =
+      QueryStringProperty<Equipment>(_entities[4].properties[5]);
+
+  /// see [Equipment.vehicleRegistrationCopyComments]
+  static final vehicleRegistrationCopyComments =
+      QueryStringProperty<Equipment>(_entities[4].properties[6]);
+
+  /// see [Equipment.vehicleInsuranceCopy]
+  static final vehicleInsuranceCopy =
+      QueryStringProperty<Equipment>(_entities[4].properties[7]);
+
+  /// see [Equipment.vehicleInsuranceCopyComments]
+  static final vehicleInsuranceCopyComments =
+      QueryStringProperty<Equipment>(_entities[4].properties[8]);
+
+  /// see [Equipment.bucketLiftOperatorManual]
+  static final bucketLiftOperatorManual =
+      QueryStringProperty<Equipment>(_entities[4].properties[9]);
+
+  /// see [Equipment.bucketLiftOperatorManualComments]
+  static final bucketLiftOperatorManualComments =
+      QueryStringProperty<Equipment>(_entities[4].properties[10]);
+
+  /// see [Equipment.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<Equipment>(_entities[4].properties[11]);
+
+  /// see [Equipment.idDBR]
+  static final idDBR =
+      QueryStringProperty<Equipment>(_entities[4].properties[12]);
+
+  /// see [Equipment.controlForm]
+  static final controlForm =
+      QueryRelationToOne<Equipment, ControlForm>(_entities[4].properties[13]);
+}
+
+/// [Extra] entity fields to define ObjectBox queries.
+class Extra_ {
+  /// see [Extra.id]
+  static final id = QueryIntegerProperty<Extra>(_entities[5].properties[0]);
+
+  /// see [Extra.ladder]
+  static final ladder = QueryStringProperty<Extra>(_entities[5].properties[1]);
+
+  /// see [Extra.ladderComments]
+  static final ladderComments =
+      QueryStringProperty<Extra>(_entities[5].properties[2]);
+
+  /// see [Extra.stepLadder]
+  static final stepLadder =
+      QueryStringProperty<Extra>(_entities[5].properties[3]);
+
+  /// see [Extra.stepLadderComments]
+  static final stepLadderComments =
+      QueryStringProperty<Extra>(_entities[5].properties[4]);
+
+  /// see [Extra.hydraulicFluidForBucket]
+  static final hydraulicFluidForBucket =
+      QueryStringProperty<Extra>(_entities[5].properties[5]);
+
+  /// see [Extra.hydraulicFluidForBucketComments]
+  static final hydraulicFluidForBucketComments =
+      QueryStringProperty<Extra>(_entities[5].properties[6]);
+
+  /// see [Extra.fiberReelRack]
+  static final fiberReelRack =
+      QueryStringProperty<Extra>(_entities[5].properties[7]);
+
+  /// see [Extra.fiberReelRackComments]
+  static final fiberReelRackComments =
+      QueryStringProperty<Extra>(_entities[5].properties[8]);
+
+  /// see [Extra.binsLockedAndSecure]
+  static final binsLockedAndSecure =
+      QueryStringProperty<Extra>(_entities[5].properties[9]);
+
+  /// see [Extra.binsLockedAndSecureComments]
+  static final binsLockedAndSecureComments =
+      QueryStringProperty<Extra>(_entities[5].properties[10]);
+
+  /// see [Extra.safetyHarness]
+  static final safetyHarness =
+      QueryStringProperty<Extra>(_entities[5].properties[11]);
+
+  /// see [Extra.safetyHarnessComments]
+  static final safetyHarnessComments =
+      QueryStringProperty<Extra>(_entities[5].properties[12]);
+
+  /// see [Extra.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<Extra>(_entities[5].properties[13]);
+
+  /// see [Extra.idDBR]
+  static final idDBR = QueryStringProperty<Extra>(_entities[5].properties[14]);
+
+  /// see [Extra.controlForm]
+  static final controlForm =
+      QueryRelationToOne<Extra, ControlForm>(_entities[5].properties[15]);
+
+  /// see [Extra.ladderStraps]
+  static final ladderStraps =
+      QueryStringProperty<Extra>(_entities[5].properties[16]);
+
+  /// see [Extra.ladderStrapsComments]
+  static final ladderStrapsComments =
+      QueryStringProperty<Extra>(_entities[5].properties[17]);
+
+  /// see [Extra.lanyardSafetyHarness]
+  static final lanyardSafetyHarness =
+      QueryStringProperty<Extra>(_entities[5].properties[18]);
+
+  /// see [Extra.lanyardSafetyHarnessComments]
+  static final lanyardSafetyHarnessComments =
+      QueryStringProperty<Extra>(_entities[5].properties[19]);
+}
+
+/// [FluidsCheck] entity fields to define ObjectBox queries.
+class FluidsCheck_ {
+  /// see [FluidsCheck.id]
+  static final id =
+      QueryIntegerProperty<FluidsCheck>(_entities[6].properties[0]);
+
+  /// see [FluidsCheck.engineOil]
+  static final engineOil =
+      QueryStringProperty<FluidsCheck>(_entities[6].properties[1]);
+
+  /// see [FluidsCheck.engineOilComments]
+  static final engineOilComments =
+      QueryStringProperty<FluidsCheck>(_entities[6].properties[2]);
+
+  /// see [FluidsCheck.transmission]
+  static final transmission =
+      QueryStringProperty<FluidsCheck>(_entities[6].properties[3]);
+
+  /// see [FluidsCheck.transmissionComments]
+  static final transmissionComments =
+      QueryStringProperty<FluidsCheck>(_entities[6].properties[4]);
+
+  /// see [FluidsCheck.coolant]
+  static final coolant =
+      QueryStringProperty<FluidsCheck>(_entities[6].properties[5]);
+
+  /// see [FluidsCheck.coolantComments]
+  static final coolantComments =
+      QueryStringProperty<FluidsCheck>(_entities[6].properties[6]);
+
+  /// see [FluidsCheck.powerSteering]
+  static final powerSteering =
+      QueryStringProperty<FluidsCheck>(_entities[6].properties[7]);
+
+  /// see [FluidsCheck.powerSteeringComments]
+  static final powerSteeringComments =
+      QueryStringProperty<FluidsCheck>(_entities[6].properties[8]);
+
+  /// see [FluidsCheck.windshieldWasherFluid]
+  static final windshieldWasherFluid =
+      QueryStringProperty<FluidsCheck>(_entities[6].properties[9]);
+
+  /// see [FluidsCheck.windshieldWasherFluidComments]
+  static final windshieldWasherFluidComments =
+      QueryStringProperty<FluidsCheck>(_entities[6].properties[10]);
+
+  /// see [FluidsCheck.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<FluidsCheck>(_entities[6].properties[11]);
+
+  /// see [FluidsCheck.idDBR]
+  static final idDBR =
+      QueryStringProperty<FluidsCheck>(_entities[6].properties[12]);
+
+  /// see [FluidsCheck.controlForm]
+  static final controlForm =
+      QueryRelationToOne<FluidsCheck, ControlForm>(_entities[6].properties[13]);
+
+  /// see [FluidsCheck.dieselExhaustFluid]
+  static final dieselExhaustFluid =
+      QueryStringProperty<FluidsCheck>(_entities[6].properties[14]);
+
+  /// see [FluidsCheck.dieselExhaustFluidComments]
+  static final dieselExhaustFluidComments =
+      QueryStringProperty<FluidsCheck>(_entities[6].properties[15]);
+}
+
+/// [Lights] entity fields to define ObjectBox queries.
+class Lights_ {
+  /// see [Lights.id]
+  static final id = QueryIntegerProperty<Lights>(_entities[7].properties[0]);
+
+  /// see [Lights.headLights]
+  static final headLights =
+      QueryStringProperty<Lights>(_entities[7].properties[1]);
+
+  /// see [Lights.headLightsComments]
+  static final headLightsComments =
+      QueryStringProperty<Lights>(_entities[7].properties[2]);
+
+  /// see [Lights.brakeLights]
+  static final brakeLights =
+      QueryStringProperty<Lights>(_entities[7].properties[3]);
+
+  /// see [Lights.brakeLightsComments]
+  static final brakeLightsComments =
+      QueryStringProperty<Lights>(_entities[7].properties[4]);
+
+  /// see [Lights.reverseLights]
+  static final reverseLights =
+      QueryStringProperty<Lights>(_entities[7].properties[5]);
+
+  /// see [Lights.reverseLightsComments]
+  static final reverseLightsComments =
+      QueryStringProperty<Lights>(_entities[7].properties[6]);
+
+  /// see [Lights.warningLights]
+  static final warningLights =
+      QueryStringProperty<Lights>(_entities[7].properties[7]);
+
+  /// see [Lights.warningLightsComments]
+  static final warningLightsComments =
+      QueryStringProperty<Lights>(_entities[7].properties[8]);
+
+  /// see [Lights.turnSignals]
+  static final turnSignals =
+      QueryStringProperty<Lights>(_entities[7].properties[9]);
+
+  /// see [Lights.turnSignalsComments]
+  static final turnSignalsComments =
+      QueryStringProperty<Lights>(_entities[7].properties[10]);
+
+  /// see [Lights.dashLights]
+  static final dashLights =
+      QueryStringProperty<Lights>(_entities[7].properties[11]);
+
+  /// see [Lights.dashLightsComments]
+  static final dashLightsComments =
+      QueryStringProperty<Lights>(_entities[7].properties[12]);
+
+  /// see [Lights.strobeLights]
+  static final strobeLights =
+      QueryStringProperty<Lights>(_entities[7].properties[13]);
+
+  /// see [Lights.strobeLightsComments]
+  static final strobeLightsComments =
+      QueryStringProperty<Lights>(_entities[7].properties[14]);
+
+  /// see [Lights.cabRoofLights]
+  static final cabRoofLights =
+      QueryStringProperty<Lights>(_entities[7].properties[15]);
+
+  /// see [Lights.cabRoofLightsComments]
+  static final cabRoofLightsComments =
+      QueryStringProperty<Lights>(_entities[7].properties[16]);
+
+  /// see [Lights.clearenceLights]
+  static final clearenceLights =
+      QueryStringProperty<Lights>(_entities[7].properties[17]);
+
+  /// see [Lights.clearenceLightsComments]
+  static final clearenceLightsComments =
+      QueryStringProperty<Lights>(_entities[7].properties[18]);
+
+  /// see [Lights.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<Lights>(_entities[7].properties[19]);
+
+  /// see [Lights.idDBR]
+  static final idDBR = QueryStringProperty<Lights>(_entities[7].properties[20]);
+
+  /// see [Lights.controlForm]
+  static final controlForm =
+      QueryRelationToOne<Lights, ControlForm>(_entities[7].properties[21]);
+
+  /// see [Lights.fourWayFlashers]
+  static final fourWayFlashers =
+      QueryStringProperty<Lights>(_entities[7].properties[22]);
+
+  /// see [Lights.fourWayFlashersComments]
+  static final fourWayFlashersComments =
+      QueryStringProperty<Lights>(_entities[7].properties[23]);
+}
+
+/// [Measures] entity fields to define ObjectBox queries.
+class Measures_ {
+  /// see [Measures.id]
+  static final id = QueryIntegerProperty<Measures>(_entities[8].properties[0]);
+
+  /// see [Measures.gas]
+  static final gas = QueryStringProperty<Measures>(_entities[8].properties[1]);
+
+  /// see [Measures.gasComments]
+  static final gasComments =
+      QueryStringProperty<Measures>(_entities[8].properties[2]);
+
+  /// see [Measures.mileage]
+  static final mileage =
+      QueryIntegerProperty<Measures>(_entities[8].properties[3]);
+
+  /// see [Measures.mileageComments]
+  static final mileageComments =
+      QueryStringProperty<Measures>(_entities[8].properties[4]);
+
+  /// see [Measures.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<Measures>(_entities[8].properties[5]);
+
+  /// see [Measures.idDBR]
+  static final idDBR =
+      QueryStringProperty<Measures>(_entities[8].properties[6]);
+
+  /// see [Measures.controlForm]
+  static final controlForm =
+      QueryRelationToOne<Measures, ControlForm>(_entities[8].properties[7]);
+}
+
+/// [Security] entity fields to define ObjectBox queries.
+class Security_ {
+  /// see [Security.id]
+  static final id = QueryIntegerProperty<Security>(_entities[9].properties[0]);
+
+  /// see [Security.rtaMagnet]
+  static final rtaMagnet =
+      QueryStringProperty<Security>(_entities[9].properties[1]);
+
+  /// see [Security.rtaMagnetComments]
+  static final rtaMagnetComments =
+      QueryStringProperty<Security>(_entities[9].properties[2]);
+
+  /// see [Security.triangleReflectors]
+  static final triangleReflectors =
+      QueryStringProperty<Security>(_entities[9].properties[3]);
+
+  /// see [Security.triangleReflectorsComments]
+  static final triangleReflectorsComments =
+      QueryStringProperty<Security>(_entities[9].properties[4]);
+
+  /// see [Security.wheelChocks]
+  static final wheelChocks =
+      QueryStringProperty<Security>(_entities[9].properties[5]);
+
+  /// see [Security.wheelChocksComments]
+  static final wheelChocksComments =
+      QueryStringProperty<Security>(_entities[9].properties[6]);
+
+  /// see [Security.fireExtinguisher]
+  static final fireExtinguisher =
+      QueryStringProperty<Security>(_entities[9].properties[7]);
+
+  /// see [Security.fireExtinguisherComments]
+  static final fireExtinguisherComments =
+      QueryStringProperty<Security>(_entities[9].properties[8]);
+
+  /// see [Security.backUpAlarm]
+  static final backUpAlarm =
+      QueryStringProperty<Security>(_entities[9].properties[9]);
+
+  /// see [Security.backUpAlarmComments]
+  static final backUpAlarmComments =
+      QueryStringProperty<Security>(_entities[9].properties[10]);
+
+  /// see [Security.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<Security>(_entities[9].properties[11]);
+
+  /// see [Security.idDBR]
+  static final idDBR =
+      QueryStringProperty<Security>(_entities[9].properties[12]);
+
+  /// see [Security.controlForm]
+  static final controlForm =
+      QueryRelationToOne<Security, ControlForm>(_entities[9].properties[13]);
+
+  /// see [Security.firstAidKitSafetyVest]
+  static final firstAidKitSafetyVest =
+      QueryStringProperty<Security>(_entities[9].properties[14]);
+
+  /// see [Security.firstAidKitSafetyVestComments]
+  static final firstAidKitSafetyVestComments =
+      QueryStringProperty<Security>(_entities[9].properties[15]);
+}
+
+/// [BucketInspection] entity fields to define ObjectBox queries.
+class BucketInspection_ {
+  /// see [BucketInspection.id]
+  static final id =
+      QueryIntegerProperty<BucketInspection>(_entities[10].properties[0]);
+
+  /// see [BucketInspection.insulated]
+  static final insulated =
+      QueryStringProperty<BucketInspection>(_entities[10].properties[1]);
+
+  /// see [BucketInspection.insulatedComments]
+  static final insulatedComments =
+      QueryStringProperty<BucketInspection>(_entities[10].properties[2]);
+
+  /// see [BucketInspection.holesDrilled]
+  static final holesDrilled =
+      QueryStringProperty<BucketInspection>(_entities[10].properties[3]);
+
+  /// see [BucketInspection.holesDrilledComments]
+  static final holesDrilledComments =
+      QueryStringProperty<BucketInspection>(_entities[10].properties[4]);
+
+  /// see [BucketInspection.bucketLiner]
+  static final bucketLiner =
+      QueryStringProperty<BucketInspection>(_entities[10].properties[5]);
+
+  /// see [BucketInspection.bucketLinerComments]
+  static final bucketLinerComments =
+      QueryStringProperty<BucketInspection>(_entities[10].properties[6]);
+
+  /// see [BucketInspection.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<BucketInspection>(_entities[10].properties[7]);
+
+  /// see [BucketInspection.idDBR]
+  static final idDBR =
+      QueryStringProperty<BucketInspection>(_entities[10].properties[8]);
+
+  /// see [BucketInspection.controlForm]
+  static final controlForm = QueryRelationToOne<BucketInspection, ControlForm>(
+      _entities[10].properties[9]);
+}
+
+/// [Company] entity fields to define ObjectBox queries.
+class Company_ {
+  /// see [Company.id]
+  static final id = QueryIntegerProperty<Company>(_entities[11].properties[0]);
+
+  /// see [Company.company]
+  static final company =
+      QueryStringProperty<Company>(_entities[11].properties[1]);
+
+  /// see [Company.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<Company>(_entities[11].properties[2]);
+
+  /// see [Company.idDBR]
+  static final idDBR =
+      QueryStringProperty<Company>(_entities[11].properties[3]);
+}
+
+/// [Role] entity fields to define ObjectBox queries.
+class Role_ {
+  /// see [Role.id]
+  static final id = QueryIntegerProperty<Role>(_entities[12].properties[0]);
+
+  /// see [Role.role]
+  static final role = QueryStringProperty<Role>(_entities[12].properties[1]);
+
+  /// see [Role.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<Role>(_entities[12].properties[2]);
+
+  /// see [Role.idDBR]
+  static final idDBR = QueryStringProperty<Role>(_entities[12].properties[3]);
+
+  /// see [Role.bitacora]
+  static final bitacora =
+      QueryRelationToOne<Role, Bitacora>(_entities[12].properties[4]);
+
+  /// see [Role.usuarios]
+  static final usuarios =
+      QueryRelationToMany<Role, Usuarios>(_entities[12].relations[0]);
+}
+
+/// [Status] entity fields to define ObjectBox queries.
+class Status_ {
+  /// see [Status.id]
+  static final id = QueryIntegerProperty<Status>(_entities[13].properties[0]);
+
+  /// see [Status.status]
+  static final status =
+      QueryStringProperty<Status>(_entities[13].properties[1]);
+
+  /// see [Status.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<Status>(_entities[13].properties[2]);
+
+  /// see [Status.idDBR]
+  static final idDBR = QueryStringProperty<Status>(_entities[13].properties[3]);
+}
+
+/// [Vehicle] entity fields to define ObjectBox queries.
+class Vehicle_ {
+  /// see [Vehicle.id]
+  static final id = QueryIntegerProperty<Vehicle>(_entities[14].properties[0]);
+
+  /// see [Vehicle.make]
+  static final make = QueryStringProperty<Vehicle>(_entities[14].properties[1]);
+
+  /// see [Vehicle.model]
+  static final model =
+      QueryStringProperty<Vehicle>(_entities[14].properties[2]);
+
+  /// see [Vehicle.year]
+  static final year = QueryStringProperty<Vehicle>(_entities[14].properties[3]);
+
+  /// see [Vehicle.image]
+  static final image =
+      QueryStringProperty<Vehicle>(_entities[14].properties[4]);
+
+  /// see [Vehicle.path]
+  static final path = QueryStringProperty<Vehicle>(_entities[14].properties[5]);
+
+  /// see [Vehicle.vin]
+  static final vin = QueryStringProperty<Vehicle>(_entities[14].properties[6]);
+
+  /// see [Vehicle.licesePlates]
+  static final licesePlates =
+      QueryStringProperty<Vehicle>(_entities[14].properties[7]);
+
+  /// see [Vehicle.motor]
+  static final motor =
+      QueryStringProperty<Vehicle>(_entities[14].properties[8]);
+
+  /// see [Vehicle.color]
+  static final color =
+      QueryStringProperty<Vehicle>(_entities[14].properties[9]);
+
+  /// see [Vehicle.oilChangeDue]
+  static final oilChangeDue =
+      QueryIntegerProperty<Vehicle>(_entities[14].properties[10]);
+
+  /// see [Vehicle.registrationDue]
+  static final registrationDue =
+      QueryIntegerProperty<Vehicle>(_entities[14].properties[11]);
+
+  /// see [Vehicle.insuranceRenewalDue]
+  static final insuranceRenewalDue =
+      QueryIntegerProperty<Vehicle>(_entities[14].properties[12]);
+
+  /// see [Vehicle.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<Vehicle>(_entities[14].properties[13]);
+
+  /// see [Vehicle.idDBR]
+  static final idDBR =
+      QueryStringProperty<Vehicle>(_entities[14].properties[14]);
+
+  /// see [Vehicle.status]
+  static final status =
+      QueryRelationToOne<Vehicle, Status>(_entities[14].properties[15]);
+
+  /// see [Vehicle.company]
+  static final company =
+      QueryRelationToOne<Vehicle, Company>(_entities[14].properties[16]);
 }

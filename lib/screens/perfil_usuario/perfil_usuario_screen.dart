@@ -30,8 +30,8 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
   void initState() {
     super.initState();
     listRoles = [];
-    dataBase.rolesBox.getAll().forEach((element) {
-      listRoles.add(element.rol);
+    dataBase.roleBox.getAll().forEach((element) {
+      listRoles.add(element.role);
     });
   }
 
@@ -337,7 +337,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                 ),
                               ),
                               Text(
-                                currentUser.rol.target!.rol,
+                                currentUser.rol.target!.role,
                                 style: FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily:
                                           FlutterFlowTheme.of(context).bodyText1Family,

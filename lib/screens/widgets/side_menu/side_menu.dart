@@ -184,7 +184,7 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-                    if (currentUser.rol.target!.rol == "Cliente")
+                    if (currentUser.rol.target!.role == "Cliente")
                     CustomMenuItem(
                       label: 'Vehicles',
                       iconData: Icons.directions_car,
@@ -193,12 +193,12 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-                    if (currentUser.rol.target!.rol == "Asesor")
+                    if (currentUser.rol.target!.role == "Asesor")
                     CustomMenuItem(
                       label: 'Employees',
                       iconData: Icons.groups,
                       onTap: () async {
-                        if (currentUser.rol.target!.rol == "Voluntario Estratégico") {
+                        if (currentUser.rol.target!.role == "Voluntario Estratégico") {
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
                             content: Text(
@@ -220,8 +220,8 @@ class SideMenu extends StatelessWidget {
                       iconData: Icons.sync_rounded,
                       lineHeight: 1.2,
                       onTap: () async {
-                        if (currentUser.rol.target!.rol == "Amigo del Cambio" ||
-                            currentUser.rol.target!.rol == "Emprendedor") {
+                        if (currentUser.rol.target!.role == "Amigo del Cambio" ||
+                            currentUser.rol.target!.role == "Emprendedor") {
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
                             content: Text(
@@ -260,7 +260,7 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-                    if (currentUser.rol.target!.rol == "Asesor")
+                    if (currentUser.rol.target!.role == "Asesor")
                     CustomMenuItem(
                       label: 'Report Recover',
                       iconData: Icons.downloading_outlined,
@@ -269,14 +269,14 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-                    if (currentUser.rol.target!.rol == "Asesor")
+                    if (currentUser.rol.target!.role == "Asesor")
                     CustomMenuItem(
                       label: 'Sync. Catalog',
                       iconData: Icons.fact_check_outlined,
                       lineHeight: 1.2,
                       onTap: () async {
-                        if (currentUser.rol.target!.rol == "Amigo del Cambio" ||
-                            currentUser.rol.target!.rol == "Emprendedor") {
+                        if (currentUser.rol.target!.role == "Amigo del Cambio" ||
+                            currentUser.rol.target!.role == "Emprendedor") {
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
                             content: Text(

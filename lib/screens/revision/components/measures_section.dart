@@ -7,10 +7,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:semicircle_indicator/semicircle_indicator.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
+import 'package:taller_alex_app_asesor/database/image.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/save_imagenes_local.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/delivery_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/receiving_form_controller.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/expanded_text.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/header_shimmer.dart';
@@ -86,6 +86,7 @@ final animationsMap = {
 class _MeasuresSectionState extends State<MeasuresSection> {
   @override
   Widget build(BuildContext context) {
+    final receivingFormController = Provider.of<ReceivingFormController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: Row(
@@ -113,7 +114,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                     ));
                   }, 
                   isRight: false,
-                  isRegistered: true,
+                  readOnly: true,
                   images: const [],
                 ),
                 ExpandedText(
@@ -140,7 +141,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                     ));
                   }, 
                   isRight: false,
-                  isRegistered: true,
+                  readOnly: true,
                   images: const [],
                 ),
                 ExpandedText(
@@ -167,7 +168,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                     ));
                   }, 
                   isRight: false,
-                  isRegistered: true,
+                  readOnly: true,
                   images: const [],
                 ),
                 ExpandedText(
@@ -194,7 +195,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                     ));
                   }, 
                   isRight: false,
-                  isRegistered: true,
+                  readOnly: true,
                   images: const [],
                 ),
                 ExpandedText(
@@ -221,7 +222,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                     ));
                   }, 
                   isRight: false,
-                  isRegistered: true,
+                  readOnly: true,
                   images: const [],
                 ),
                 ExpandedText(
@@ -248,7 +249,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                     ));
                   }, 
                   isRight: false,
-                  isRegistered: true,
+                  readOnly: true,
                   images: const [],
                 ),
                 ExpandedText(
@@ -275,7 +276,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                     ));
                   }, 
                   isRight: false,
-                  isRegistered: true,
+                  readOnly: true,
                   images: const [],
                 ),
                 ExpandedText(
@@ -302,7 +303,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                     ));
                   }, 
                   isRight: false,
-                  isRegistered: true,
+                  readOnly: true,
                   images: const [],
                 ),
                 ExpandedText(
@@ -329,7 +330,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                     ));
                   }, 
                   isRight: false,
-                  isRegistered: true,
+                  readOnly: true,
                   images: const [],
                 ),
                 ExpandedText(
@@ -356,7 +357,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                     ));
                   }, 
                   isRight: false,
-                  isRegistered: true,
+                  readOnly: true,
                   images: const [],
                 ),
                 ExpandedText(
@@ -391,14 +392,14 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                       barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
-                        final deliveryFormProvider = Provider.of<DeliveryFormController>(context);
-                        List<XFile> imagenesTemp = [];
+                        List<XFile> imagesTemp = [];
+                        final receivingFormProvider = Provider.of<ReceivingFormController>(context);
                         return AlertDialog(
                           scrollable: true,
                           title: const Text("Mileage"),
                           content: SizedBox( // Need to use container to add size constraint.
                             width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 0.5,
+                            height: MediaQuery.of(context).size.height * 0.55,
                             child: Center(
                               child: Column(
                                 children: [
@@ -406,10 +407,13 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         5, 0, 5, 20),
                                     child: TextFormField(
-                                      controller: deliveryFormProvider.mileageController,
+                                      initialValue: receivingFormProvider.mileage,
                                       autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
                                       obscureText: false,
+                                      onChanged: (value) {
+                                        receivingFormProvider.updateMileage(value);
+                                      },
                                       decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.speed_outlined,
@@ -474,7 +478,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         5, 0, 5, 20),
                                     child: TextFormField(
-                                      controller: deliveryFormProvider.mileageComments,
+                                      controller: receivingFormProvider.mileageComments,
                                       maxLength: 500,
                                       textCapitalization:
                                           TextCapitalization.sentences,
@@ -561,14 +565,14 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                           width: 180,
                                                           height: 100,
                                                           listaImagenes:
-                                                              deliveryFormProvider.mileageImages)),
+                                                              receivingFormProvider.mileageImages)),
                                                 ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(0, 10, 0, 0),
                                                   child: Text(
-                                                    "Total: ${deliveryFormProvider.mileageImages.length}",
+                                                    "Total: ${receivingFormProvider.mileageImages.length}",
                                                     style: FlutterFlowTheme.of(context)
                                                         .title3
                                                         .override(
@@ -597,18 +601,18 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                               if (option == null) return;
 
                                               final picker = ImagePicker();
-                                              // imagenesTemp = [];
+                                              // imagesTemp = [];
                                               XFile? pickedFile;
                                               List<XFile>? pickedFiles;
                                               if (option == 'camera') {
-                                                if (deliveryFormProvider.mileageImages.length <
+                                                if (receivingFormProvider.mileageImages.length <
                                                     5) {
                                                   pickedFile =
                                                       await picker.pickImage(
                                                     source: ImageSource.camera,
                                                   );
                                                   if (pickedFile != null) {
-                                                    imagenesTemp.add(pickedFile);
+                                                    imagesTemp.add(pickedFile);
                                                   }
                                                 } else {
                                                   bool? booleano =
@@ -643,15 +647,30 @@ class _MeasuresSectionState extends State<MeasuresSection> {
 
                                                     );
                                                     if (pickedFile != null) {
-                                                      deliveryFormProvider.updateMileageImage(
-                                                        pickedFile.path);
+                                                      libraryIO.File file =
+                                                      libraryIO.File(
+                                                          pickedFile.path);
+
+                                                      List<int> fileInByte =
+                                                          file.readAsBytesSync();
+
+                                                      String base64 =
+                                                          base64Encode(fileInByte);
+
+                                                      var updateImageEvidence =
+                                                          ImageEvidence(
+                                                              path:
+                                                                  pickedFile.path,
+                                                              base64: base64);
+                                                        receivingFormProvider.updateMileageImage(
+                                                          updateImageEvidence);
                                                     }
                                                     return;
                                                   }
                                                 }
                                               } else {
                                                 //Se selecciona galería
-                                                if (deliveryFormProvider.mileageImages.length <
+                                                if (receivingFormProvider.mileageImages.length <
                                                     5) {
                                                   pickedFiles =
                                                       await picker.pickMultiImage(
@@ -668,12 +687,12 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                     ));
                                                     return;
                                                   }
-                                                  switch (deliveryFormProvider.mileageImages.length) {
+                                                  switch (receivingFormProvider.mileageImages.length) {
                                                     case 0:
                                                       for (int i = 0;
                                                           i < pickedFiles.length;
                                                           i++) {
-                                                        imagenesTemp
+                                                        imagesTemp
                                                             .add(pickedFiles[i]);
                                                       }
                                                       break;
@@ -682,7 +701,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                         for (int i = 0;
                                                             i < pickedFiles.length;
                                                             i++) {
-                                                          imagenesTemp
+                                                          imagesTemp
                                                               .add(pickedFiles[i]);
                                                         }
                                                       } else {
@@ -700,7 +719,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                         for (int i = 0;
                                                             i < pickedFiles.length;
                                                             i++) {
-                                                          imagenesTemp
+                                                          imagesTemp
                                                               .add(pickedFiles[i]);
                                                         }
                                                       } else {
@@ -718,7 +737,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                         for (int i = 0;
                                                             i < pickedFiles.length;
                                                             i++) {
-                                                          imagenesTemp
+                                                          imagesTemp
                                                               .add(pickedFiles[i]);
                                                         }
                                                       } else {
@@ -736,7 +755,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                         for (int i = 0;
                                                             i < pickedFiles.length;
                                                             i++) {
-                                                          imagenesTemp
+                                                          imagesTemp
                                                               .add(pickedFiles[i]);
                                                         }
                                                       } else {
@@ -785,19 +804,34 @@ class _MeasuresSectionState extends State<MeasuresSection> {
 
                                                     );
                                                     if (pickedFile != null) {
-                                                      deliveryFormProvider.updateMileageImage(
-                                                        pickedFile.path);
+                                                      libraryIO.File file =
+                                                      libraryIO.File(
+                                                          pickedFile.path);
+
+                                                      List<int> fileInByte =
+                                                          file.readAsBytesSync();
+
+                                                      String base64 =
+                                                          base64Encode(fileInByte);
+
+                                                      var updateImageEvidence =
+                                                          ImageEvidence(
+                                                              path:
+                                                                  pickedFile.path,
+                                                              base64: base64);
+                                                        receivingFormProvider.updateMileageImage(
+                                                          updateImageEvidence);
                                                     }
                                                     return;
                                                   }
                                                 }
                                               }
                                               for (var i = 0;
-                                                  i < imagenesTemp.length;
+                                                  i < imagesTemp.length;
                                                   i++) {
                                                 libraryIO.File file =
                                                     libraryIO.File(
-                                                        imagenesTemp[i].path);
+                                                        imagesTemp[i].path);
 
                                                 List<int> fileInByte =
                                                     file.readAsBytesSync();
@@ -805,17 +839,14 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                 String base64 =
                                                     base64Encode(fileInByte);
 
-                                                var newImagenLocal =
-                                                    SaveImagenesLocal(
-                                                        nombre:
-                                                            imagenesTemp[i].name,
+                                                var newImageEvidence =
+                                                    ImageEvidence(
                                                         path:
-                                                            imagenesTemp[i].path,
+                                                            imagesTemp[i].path,
                                                         base64: base64);
-                                                // widget.images
-                                                //     .add(base64);
-                                                deliveryFormProvider.addMileageImage(
-                                                  imagenesTemp[i].path);
+                                                receivingFormProvider.addMileageImage(
+                                                  newImageEvidence);
+                                                imagesTemp.clear();
                                               }
                                             },
                                             text: 'Add',
@@ -900,8 +931,9 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                     );
                   },  
                   isRight: false,
-                  isRegistered: false,
+                  readOnly: false,
                   images: const [],
+                  isRegistered: receivingFormController.isMileageRegistered,
                 ),
                 Divider(
                   height: 4,
@@ -920,8 +952,12 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                       barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
-                        final deliveryFormProvider = Provider.of<DeliveryFormController>(context);
-                        List<XFile> imagenesTemp = [];
+                        List<XFile> imagesTemp = [];
+                        final receivingFormProvider = Provider.of<ReceivingFormController>(context);
+                        List<String> imagesString = [];
+                        for (var element in receivingFormProvider.gasImages) {
+                          imagesString.add(element.path);
+                        }
                         return AlertDialog(
                           scrollable: true,
                           title: const Text("% Gas/Diesel"),
@@ -932,7 +968,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                               child: Column(
                                 children: [
                                   SemicircularIndicator(
-                                    progress: deliveryFormProvider.gasDieselPercent * 0.01,
+                                    progress: receivingFormProvider.gasDieselPercent * 0.01,
                                     radius: 100,
                                     color: FlutterFlowTheme.of(context).primaryColor,
                                     backgroundColor: FlutterFlowTheme.of(context).grayLighter,
@@ -940,7 +976,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                     bottomPadding: 0,
                                     contain: true,
                                     child: Text(
-                                      "${deliveryFormProvider.gasDieselPercent} %",
+                                      "${receivingFormProvider.gasDieselPercent} %",
                                       style: TextStyle(
                                           fontSize: 32,
                                           fontWeight: FontWeight.w600,
@@ -972,12 +1008,12 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                         min: 0.0,
                                         max: 100.0,
                                         interval: 1.0,
-                                        value: deliveryFormProvider.gasDieselPercent, 
+                                        value: receivingFormProvider.gasDieselPercent, 
                                         stepSize: 1.0,
                                         activeColor: FlutterFlowTheme.of(context).secondaryColor,
                                         inactiveColor: FlutterFlowTheme.of(context).grayLighter,
                                         onChanged: ((value) {
-                                          deliveryFormProvider.updateGasDieselPercent(value.truncate());
+                                          receivingFormProvider.updateGasDieselPercent(value.truncate());
                                         })
                                       ),
                                   ),
@@ -985,7 +1021,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         5, 0, 5, 10),
                                     child: TextFormField(
-                                      controller: deliveryFormProvider.gasComments,
+                                      controller: receivingFormProvider.gasComments,
                                       maxLength: 500,
                                       textCapitalization:
                                           TextCapitalization.sentences,
@@ -1072,14 +1108,14 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                           width: 180,
                                                           height: 100,
                                                           listaImagenes:
-                                                              deliveryFormProvider.gasImages)),
+                                                              receivingFormProvider.gasImages)),
                                                 ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(0, 10, 0, 0),
                                                   child: Text(
-                                                    "Total: ${deliveryFormProvider.gasImages.length}",
+                                                    "Total: ${receivingFormProvider.gasImages.length}",
                                                     style: FlutterFlowTheme.of(context)
                                                         .title3
                                                         .override(
@@ -1108,18 +1144,18 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                               if (option == null) return;
 
                                               final picker = ImagePicker();
-                                              // imagenesTemp = [];
+                                              // imagesTemp = [];
                                               XFile? pickedFile;
                                               List<XFile>? pickedFiles;
                                               if (option == 'camera') {
-                                                if (deliveryFormProvider.gasImages.length <
+                                                if (receivingFormProvider.gasImages.length <
                                                     5) {
                                                   pickedFile =
                                                       await picker.pickImage(
                                                     source: ImageSource.camera,
                                                   );
                                                   if (pickedFile != null) {
-                                                    imagenesTemp.add(pickedFile);
+                                                    imagesTemp.add(pickedFile);
                                                   }
                                                 } else {
                                                   bool? booleano =
@@ -1154,15 +1190,30 @@ class _MeasuresSectionState extends State<MeasuresSection> {
 
                                                     );
                                                     if (pickedFile != null) {
-                                                      deliveryFormProvider.updateGasImage
-                                                        (pickedFile.path);
+                                                      libraryIO.File file =
+                                                      libraryIO.File(
+                                                          pickedFile.path);
+
+                                                      List<int> fileInByte =
+                                                          file.readAsBytesSync();
+
+                                                      String base64 =
+                                                          base64Encode(fileInByte);
+
+                                                      var updateImageEvidence =
+                                                          ImageEvidence(
+                                                              path:
+                                                                  pickedFile.path,
+                                                              base64: base64);
+                                                        receivingFormProvider.updateGasImage(
+                                                          updateImageEvidence);
                                                     }
                                                     return;
                                                   }
                                                 }
                                               } else {
                                                 //Se selecciona galería
-                                                if (deliveryFormProvider.gasImages.length <
+                                                if (receivingFormProvider.gasImages.length <
                                                     5) {
                                                   pickedFiles =
                                                       await picker.pickMultiImage(
@@ -1179,12 +1230,12 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                     ));
                                                     return;
                                                   }
-                                                  switch (deliveryFormProvider.gasImages.length) {
+                                                  switch (receivingFormProvider.gasImages.length) {
                                                     case 0:
                                                       for (int i = 0;
                                                           i < pickedFiles.length;
                                                           i++) {
-                                                        imagenesTemp
+                                                        imagesTemp
                                                             .add(pickedFiles[i]);
                                                       }
                                                       break;
@@ -1193,7 +1244,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                         for (int i = 0;
                                                             i < pickedFiles.length;
                                                             i++) {
-                                                          imagenesTemp
+                                                          imagesTemp
                                                               .add(pickedFiles[i]);
                                                         }
                                                       } else {
@@ -1211,7 +1262,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                         for (int i = 0;
                                                             i < pickedFiles.length;
                                                             i++) {
-                                                          imagenesTemp
+                                                          imagesTemp
                                                               .add(pickedFiles[i]);
                                                         }
                                                       } else {
@@ -1229,7 +1280,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                         for (int i = 0;
                                                             i < pickedFiles.length;
                                                             i++) {
-                                                          imagenesTemp
+                                                          imagesTemp
                                                               .add(pickedFiles[i]);
                                                         }
                                                       } else {
@@ -1247,7 +1298,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                         for (int i = 0;
                                                             i < pickedFiles.length;
                                                             i++) {
-                                                          imagenesTemp
+                                                          imagesTemp
                                                               .add(pickedFiles[i]);
                                                         }
                                                       } else {
@@ -1296,19 +1347,34 @@ class _MeasuresSectionState extends State<MeasuresSection> {
 
                                                     );
                                                     if (pickedFile != null) {
-                                                      deliveryFormProvider.updateGasImage
-                                                        (pickedFile.path);
+                                                      libraryIO.File file =
+                                                      libraryIO.File(
+                                                          pickedFile.path);
+
+                                                      List<int> fileInByte =
+                                                          file.readAsBytesSync();
+
+                                                      String base64 =
+                                                          base64Encode(fileInByte);
+
+                                                      var updateImageEvidence =
+                                                          ImageEvidence(
+                                                              path:
+                                                                  pickedFile.path,
+                                                              base64: base64);
+                                                        receivingFormProvider.updateGasImage(
+                                                          updateImageEvidence);
                                                     }
                                                     return;
                                                   }
                                                 }
                                               }
                                               for (var i = 0;
-                                                  i < imagenesTemp.length;
+                                                  i < imagesTemp.length;
                                                   i++) {
                                                 libraryIO.File file =
                                                     libraryIO.File(
-                                                        imagenesTemp[i].path);
+                                                        imagesTemp[i].path);
 
                                                 List<int> fileInByte =
                                                     file.readAsBytesSync();
@@ -1316,17 +1382,14 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                 String base64 =
                                                     base64Encode(fileInByte);
 
-                                                var newImagenLocal =
-                                                    SaveImagenesLocal(
-                                                        nombre:
-                                                            imagenesTemp[i].name,
+                                                var newImageEvidence =
+                                                    ImageEvidence(
                                                         path:
-                                                            imagenesTemp[i].path,
+                                                            imagesTemp[i].path,
                                                         base64: base64);
-                                                // widget.images
-                                                //     .add(base64);
-                                                deliveryFormProvider.addGasImage
-                                                  (imagenesTemp[i].path);
+                                                receivingFormProvider.addGasImage
+                                                  (newImageEvidence);
+                                                imagesTemp.clear();
                                               }
                                             },
                                             text: 'Add',
@@ -1411,8 +1474,9 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                     );
                   }, 
                   isRight: false,
-                  isRegistered: false,
+                  readOnly: false,
                   images: const [],
+                  isRegistered: receivingFormController.isGasRegistered,
                 ),
                 Divider(
                   height: 4,

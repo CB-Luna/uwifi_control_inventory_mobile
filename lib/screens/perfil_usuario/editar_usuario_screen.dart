@@ -50,10 +50,10 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   @override
   void initState() {
     super.initState();
-    rolUsuario = widget.usuario.rol.target!.rol;
+    rolUsuario = widget.usuario.rol.target!.role;
     listRoles = [];
     for (var element in widget.usuario.roles) {
-      listRoles.add(element.rol);
+      listRoles.add(element.role);
     }
     newImagen = "";
     imagenTemp = widget.usuario.path;
@@ -371,9 +371,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                                 widget.usuario.telefono) {
                                           if (usuarioProvider.validateForm(formKey)) {
                                             if (rolUsuario !=
-                                                    widget.usuario.rol.target!.rol) {
-                                              final idRol = dataBase.rolesBox
-                                                  .query(Roles_.rol.equals(rolUsuario))
+                                                    widget.usuario.rol.target!.role) {
+                                              final idRol = dataBase.roleBox
+                                                  .query(Role_.role.equals(rolUsuario))
                                                   .build()
                                                   .findFirst()
                                                   ?.id;
@@ -439,9 +439,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                           }
                                         } else {
                                           if (rolUsuario !=
-                                                  widget.usuario.rol.target!.rol) {
-                                            final idRol = dataBase.rolesBox
-                                                .query(Roles_.rol.equals(rolUsuario))
+                                                  widget.usuario.rol.target!.role) {
+                                            final idRol = dataBase.roleBox
+                                                .query(Role_.role.equals(rolUsuario))
                                                 .build()
                                                 .findFirst()
                                                 ?.id;
@@ -492,9 +492,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                                   widget.usuario.telefono) {
                                             if (usuarioProvider.validateForm(formKey)) {
                                               if (rolUsuario !=
-                                                      widget.usuario.rol.target!.rol) {
-                                                final idRol = dataBase.rolesBox
-                                                    .query(Roles_.rol.equals(rolUsuario))
+                                                      widget.usuario.rol.target!.role) {
+                                                final idRol = dataBase.roleBox
+                                                    .query(Role_.role.equals(rolUsuario))
                                                     .build()
                                                     .findFirst()
                                                     ?.id;
@@ -543,9 +543,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                             }
                                           } else {
                                             if (rolUsuario !=
-                                                    widget.usuario.rol.target!.rol) {
-                                                final idRol = dataBase.rolesBox
-                                                    .query(Roles_.rol.equals(rolUsuario))
+                                                    widget.usuario.rol.target!.role) {
+                                                final idRol = dataBase.roleBox
+                                                    .query(Role_.role.equals(rolUsuario))
                                                     .build()
                                                     .findFirst()
                                                     ?.id;

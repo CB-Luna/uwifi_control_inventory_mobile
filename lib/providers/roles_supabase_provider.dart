@@ -78,18 +78,18 @@ class RolesSupabaseProvider extends ChangeNotifier {
         final responseListRoles = getRolesSupabaseFromMap(jsonEncode(records.data).toString());
         for (var element in responseListRoles.rolesCollection.edges) {
           //Se valida que el nuevo rol aún no existe en Objectbox
-          final rolExistente = dataBase.rolesBox.query(Roles_.idDBR.equals(element.node.id)).build().findUnique();
+          final rolExistente = dataBase.roleBox.query(Role_.idDBR.equals(element.node.id)).build().findUnique();
           if (rolExistente == null) {
-            final nuevoRol = Roles(
-            rol: element.node.name,
+            final nuevoRol = Role(
+            role: element.node.name,
             idDBR: element.node.id, 
             );
-            dataBase.rolesBox.put(nuevoRol);
+            dataBase.roleBox.put(nuevoRol);
             //print('Rol Nuevo agregado exitosamente');
           } else {
               //Se actualiza el registro en Objectbox
-              rolExistente.rol = element.node.name;
-              dataBase.rolesBox.put(rolExistente);
+              rolExistente.role = element.node.name;
+              dataBase.roleBox.put(rolExistente);
           }
         }
         return true;

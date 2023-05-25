@@ -68,7 +68,7 @@ class SyncProviderSupabase extends ChangeNotifier {
           }
         case "syncAgregarVehiculo":
           final vehiculoToSync = getFirstVehiculo(
-              dataBase.vehiculoBox.getAll(), instruccionesBitacora[i].id);
+              dataBase.vehicleBox.getAll(), instruccionesBitacora[i].id);
           if (vehiculoToSync != null) {
             final responseSyncAddVehiculo = await syncAddVehiculo(
                 vehiculoToSync, instruccionesBitacora[i]);
@@ -150,8 +150,8 @@ class SyncProviderSupabase extends ChangeNotifier {
     return null;
   }
 
-  Vehiculo? getFirstVehiculo(
-      List<Vehiculo> vehiculos, int idInstruccionesBitacora) {
+  Vehicle? getFirstVehiculo(
+      List<Vehicle> vehiculos, int idInstruccionesBitacora) {
     for (var i = 0; i < vehiculos.length; i++) {
       if (vehiculos[i].bitacora.isEmpty) {
       } else {
@@ -180,110 +180,6 @@ class SyncProviderSupabase extends ChangeNotifier {
     return null;
   }
 
-  Observaciones? getFirstObservacion(
-      List<Observaciones> observaciones, int idInstruccionesBitacora) {
-    for (var i = 0; i < observaciones.length; i++) {
-      if (observaciones[i].bitacora.isEmpty) {
-      } else {
-        for (var j = 0; j < observaciones[i].bitacora.length; j++) {
-          if (observaciones[i].bitacora[j].id == idInstruccionesBitacora) {
-            return observaciones[i];
-          }
-        }
-      }
-    }
-    return null;
-  }
-
-  Revision? getFirstRevision(
-      List<Revision> revision, int idInstruccionesBitacora) {
-    for (var i = 0; i < revision.length; i++) {
-      if (revision[i].bitacora.isEmpty) {
-      } else {
-        for (var j = 0; j < revision[i].bitacora.length; j++) {
-          if (revision[i].bitacora[j].id == idInstruccionesBitacora) {
-            return revision[i];
-          }
-        }
-      }
-    }
-    return null;
-  }
-
-  SuspensionDireccion? getFirstSuspensionDireccion(
-      List<SuspensionDireccion> suspensionDireccion, int idInstruccionesBitacora) {
-    for (var i = 0; i < suspensionDireccion.length; i++) {
-      if (suspensionDireccion[i].bitacora.isEmpty) {
-      } else {
-        for (var j = 0; j < suspensionDireccion[i].bitacora.length; j++) {
-          if (suspensionDireccion[i].bitacora[j].id == idInstruccionesBitacora) {
-            return suspensionDireccion[i];
-          }
-        }
-      }
-    }
-    return null;
-  }
-
-  Electrico? getFirstElectrico(
-      List<Electrico> electrico, int idInstruccionesBitacora) {
-    for (var i = 0; i < electrico.length; i++) {
-      if (electrico[i].bitacora.isEmpty) {
-      } else {
-        for (var j = 0; j < electrico[i].bitacora.length; j++) {
-          if (electrico[i].bitacora[j].id == idInstruccionesBitacora) {
-            return electrico[i];
-          }
-        }
-      }
-    }
-    return null;
-  }
-
-  Fluidos? getFirstFluido(
-      List<Fluidos> fluidos, int idInstruccionesBitacora) {
-    for (var i = 0; i < fluidos.length; i++) {
-      if (fluidos[i].bitacora.isEmpty) {
-      } else {
-        for (var j = 0; j < fluidos[i].bitacora.length; j++) {
-          if (fluidos[i].bitacora[j].id == idInstruccionesBitacora) {
-            return fluidos[i];
-          }
-        }
-      }
-    }
-    return null;
-  }
-
-  Frenos? getFirstFreno(
-      List<Frenos> frenos, int idInstruccionesBitacora) {
-    for (var i = 0; i < frenos.length; i++) {
-      if (frenos[i].bitacora.isEmpty) {
-      } else {
-        for (var j = 0; j < frenos[i].bitacora.length; j++) {
-          if (frenos[i].bitacora[j].id == idInstruccionesBitacora) {
-            return frenos[i];
-          }
-        }
-      }
-    }
-    return null;
-  }
-
-  Motor? getFirstMotor(
-      List<Motor> motor, int idInstruccionesBitacora) {
-    for (var i = 0; i < motor.length; i++) {
-      if (motor[i].bitacora.isEmpty) {
-      } else {
-        for (var j = 0; j < motor[i].bitacora.length; j++) {
-          if (motor[i].bitacora[j].id == idInstruccionesBitacora) {
-            return motor[i];
-          }
-        }
-      }
-    }
-    return null;
-  }
 
   Future<SyncInstruction> syncAddCliente(
       Usuarios usuario, Bitacora bitacora) async {
@@ -409,28 +305,27 @@ class SyncProviderSupabase extends ChangeNotifier {
   }
 
   Future<SyncInstruction> syncAddVehiculo(
-      Vehiculo vehiculo, Bitacora bitacora) async {
+      Vehicle vehiculo, Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
         if (vehiculo.idDBR == null) {
           //Registrar el vehiculo
           final recordVehiculo = await supabaseClient.from('vehiculo').insert(
             {
-              'marca': vehiculo.marca,
-              'modelo': vehiculo.modelo,
-              'anio': vehiculo.anio,
-              'imagen': vehiculo.imagen,
+              'marca': vehiculo.make,
+              'modelo': vehiculo.model,
+              'anio': vehiculo.year,
+              'imagen': vehiculo.image,
               'vin': vehiculo.vin,
-              'placas': vehiculo.placas,
+              'placas': vehiculo.licesePlates,
               'color': vehiculo.color,
               'motor': vehiculo.motor,
-              'id_cliente_fk': vehiculo.cliente.target!.idDBR,
             },
           ).select<PostgrestList>('id');
           if (recordVehiculo.isNotEmpty) {
             //Se recupera el idDBR de Supabase del Vehiculo
             vehiculo.idDBR = recordVehiculo.first['id'].toString();
-            dataBase.vehiculoBox.put(vehiculo);
+            dataBase.vehicleBox.put(vehiculo);
             //Se marca como ejecutada la instrucción en Bitacora
             bitacora.executeSupabase = true;
             dataBase.bitacoraBox.put(bitacora);
