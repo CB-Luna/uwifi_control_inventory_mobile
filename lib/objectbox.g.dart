@@ -20,130 +20,9 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(10, 252808688812742776),
-      name: 'Usuarios',
-      lastPropertyId: const IdUid(39, 393360818016159356),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 2635581039067582434),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 8585539283016018259),
-            name: 'nombre',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 4453572026011528588),
-            name: 'apellidoP',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 769480280417967138),
-            name: 'apellidoM',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(6, 8241390027662058716),
-            name: 'telefono',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(7, 8831865134001231809),
-            name: 'celular',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(8, 4366827260158841734),
-            name: 'correo',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(9, 715728503018425294),
-            name: 'password',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(12, 7064291300252248252),
-            name: 'fechaRegistro',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(16, 2225226539771083672),
-            name: 'idDBR',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(70, 177953814522194844)),
-        ModelProperty(
-            id: const IdUid(24, 6133859733044332540),
-            name: 'rolId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(210, 5673280590788867277),
-            relationTarget: 'Role'),
-        ModelProperty(
-            id: const IdUid(30, 8932174031785446642),
-            name: 'imagen',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(31, 9122619162300007543),
-            name: 'path',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(33, 720007507906714044),
-            name: 'domicilio',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(36, 5053047566368863611),
-            name: 'asesorId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(341, 7688649936878772558),
-            relationTarget: 'Usuarios'),
-        ModelProperty(
-            id: const IdUid(37, 7115806576092254573),
-            name: 'interno',
-            type: 1,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(39, 393360818016159356),
-            name: 'vehicleId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(420, 2054800604445002333),
-            relationTarget: 'Vehicle')
-      ],
-      relations: <ModelRelation>[
-        ModelRelation(
-            id: const IdUid(30, 6849141679018238392),
-            name: 'bitacora',
-            targetId: const IdUid(27, 1774905738150923512)),
-        ModelRelation(
-            id: const IdUid(69, 6600950642535277297),
-            name: 'roles',
-            targetId: const IdUid(97, 4052095333394296256)),
-        ModelRelation(
-            id: const IdUid(84, 5411951088038235824),
-            name: 'clientes',
-            targetId: const IdUid(10, 252808688812742776)),
-        ModelRelation(
-            id: const IdUid(85, 3090980319680596649),
-            name: 'tecnicosMecanicos',
-            targetId: const IdUid(10, 252808688812742776))
-      ],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(
-            name: 'controlForms', srcEntity: 'ControlForm', srcField: '')
-      ]),
-  ModelEntity(
       id: const IdUid(27, 1774905738150923512),
       name: 'Bitacora',
-      lastPropertyId: const IdUid(54, 4949095522373307717),
+      lastPropertyId: const IdUid(55, 2937029939842389045),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -171,13 +50,6 @@ final _entities = <ModelEntity>[
             name: 'usuarioPropietario',
             type: 9,
             flags: 0),
-        ModelProperty(
-            id: const IdUid(37, 962279002678131142),
-            name: 'usuarioId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(340, 1215468110805298241),
-            relationTarget: 'Usuarios'),
         ModelProperty(
             id: const IdUid(38, 6977709619624885474),
             name: 'executeSupabase',
@@ -271,11 +143,18 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(419, 8940549541967530173),
-            relationTarget: 'Vehicle')
+            relationTarget: 'Vehicle'),
+        ModelProperty(
+            id: const IdUid(55, 2937029939842389045),
+            name: 'userId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(426, 8388412147556799022),
+            relationTarget: 'Users')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'usuarios', srcEntity: 'Usuarios', srcField: '')
+        ModelBacklink(name: 'users', srcEntity: 'Users', srcField: '')
       ]),
   ModelEntity(
       id: const IdUid(86, 283646429578876451),
@@ -310,7 +189,7 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(374, 2639272973053853247),
-            relationTarget: 'Usuarios'),
+            relationTarget: 'Users'),
         ModelProperty(
             id: const IdUid(6, 4968957818395113321),
             name: 'vehicleId',
@@ -1255,9 +1134,9 @@ final _entities = <ModelEntity>[
       ],
       relations: <ModelRelation>[
         ModelRelation(
-            id: const IdUid(93, 4439914579551300934),
-            name: 'usuarios',
-            targetId: const IdUid(10, 252808688812742776))
+            id: const IdUid(94, 3237800967580094266),
+            name: 'users',
+            targetId: const IdUid(100, 5432875809935853718))
       ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
@@ -1394,6 +1273,123 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
         ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(100, 5432875809935853718),
+      name: 'Users',
+      lastPropertyId: const IdUid(18, 553158857743073357),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 1691159711547820181),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 3460433347477270932),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 3033483373682294491),
+            name: 'lastName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 2443136898171810946),
+            name: 'middleName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 9122187376204749239),
+            name: 'homePhone',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 5922378953111682933),
+            name: 'mobilePhone',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 6889851152382912693),
+            name: 'address',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 1257063976417241475),
+            name: 'correo',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 8362457446259075757),
+            name: 'password',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 6441840090107351576),
+            name: 'image',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 619203549248598002),
+            name: 'path',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 5041920040199715700),
+            name: 'birthDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 5308168927245456385),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(427, 5085355049960878404)),
+        ModelProperty(
+            id: const IdUid(15, 4992689228785755337),
+            name: 'roleId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(428, 2108228131932044823),
+            relationTarget: 'Role'),
+        ModelProperty(
+            id: const IdUid(16, 4573653470492482829),
+            name: 'companyId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(429, 6503931786110492839),
+            relationTarget: 'Company'),
+        ModelProperty(
+            id: const IdUid(17, 7270470185246463268),
+            name: 'vehicleId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(430, 2449500294187427335),
+            relationTarget: 'Vehicle'),
+        ModelProperty(
+            id: const IdUid(18, 553158857743073357),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(95, 6290694263020334239),
+            name: 'bitacora',
+            targetId: const IdUid(27, 1774905738150923512)),
+        ModelRelation(
+            id: const IdUid(96, 7279223846688382106),
+            name: 'roles',
+            targetId: const IdUid(97, 4052095333394296256)),
+        ModelRelation(
+            id: const IdUid(97, 7907540417784017008),
+            name: 'status',
+            targetId: const IdUid(98, 4907560803572122681))
+      ],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(
+            name: 'controlForms', srcEntity: 'ControlForm', srcField: '')
       ])
 ];
 
@@ -1417,9 +1413,9 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(99, 8193815974638102829),
-      lastIndexId: const IdUid(425, 8708627097459420669),
-      lastRelationId: const IdUid(93, 4439914579551300934),
+      lastEntityId: const IdUid(100, 5432875809935853718),
+      lastIndexId: const IdUid(430, 2449500294187427335),
+      lastRelationId: const IdUid(97, 7907540417784017008),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -1505,7 +1501,8 @@ ModelDefinition getObjectBoxModel() {
         8367470477068670691,
         5004962762570684805,
         8177890023282011956,
-        5787722657754964069
+        5787722657754964069,
+        252808688812742776
       ],
       retiredIndexUids: const [
         8990521503430950587,
@@ -1674,7 +1671,8 @@ ModelDefinition getObjectBoxModel() {
         8154917778766995021,
         504837245352985312,
         4800753572139945092,
-        7566237706448790608
+        7566237706448790608,
+        1215468110805298241
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -2678,7 +2676,26 @@ ModelDefinition getObjectBoxModel() {
         874652329641763868,
         7811304686810842807,
         8577152736759332686,
-        379514907682064106
+        379514907682064106,
+        962279002678131142,
+        2635581039067582434,
+        8585539283016018259,
+        4453572026011528588,
+        769480280417967138,
+        8241390027662058716,
+        8831865134001231809,
+        4366827260158841734,
+        715728503018425294,
+        7064291300252248252,
+        2225226539771083672,
+        6133859733044332540,
+        8932174031785446642,
+        9122619162300007543,
+        720007507906714044,
+        5053047566368863611,
+        7115806576092254573,
+        393360818016159356,
+        474264797233057089
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -2720,127 +2737,17 @@ ModelDefinition getObjectBoxModel() {
         6929442407370177314,
         8650399258645622385,
         4454853059839861178,
-        1176537328766838454
+        1176537328766838454,
+        4439914579551300934
       ],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
       version: 1);
 
   final bindings = <Type, EntityDefinition>{
-    Usuarios: EntityDefinition<Usuarios>(
-        model: _entities[0],
-        toOneRelations: (Usuarios object) =>
-            [object.rol, object.asesor, object.vehicle],
-        toManyRelations: (Usuarios object) => {
-              RelInfo<Usuarios>.toMany(30, object.id): object.bitacora,
-              RelInfo<Usuarios>.toMany(69, object.id): object.roles,
-              RelInfo<Usuarios>.toMany(84, object.id): object.clientes,
-              RelInfo<Usuarios>.toMany(85, object.id): object.tecnicosMecanicos,
-              RelInfo<ControlForm>.toOneBacklink(5, object.id,
-                      (ControlForm srcObject) => srcObject.employee):
-                  object.controlForms
-            },
-        getId: (Usuarios object) => object.id,
-        setId: (Usuarios object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Usuarios object, fb.Builder fbb) {
-          final nombreOffset = fbb.writeString(object.nombre);
-          final apellidoPOffset = fbb.writeString(object.apellidoP);
-          final apellidoMOffset = object.apellidoM == null
-              ? null
-              : fbb.writeString(object.apellidoM!);
-          final telefonoOffset = object.telefono == null
-              ? null
-              : fbb.writeString(object.telefono!);
-          final celularOffset = fbb.writeString(object.celular);
-          final correoOffset = fbb.writeString(object.correo);
-          final passwordOffset = fbb.writeString(object.password);
-          final idDBROffset = fbb.writeString(object.idDBR);
-          final imagenOffset =
-              object.imagen == null ? null : fbb.writeString(object.imagen!);
-          final pathOffset =
-              object.path == null ? null : fbb.writeString(object.path!);
-          final domicilioOffset = object.domicilio == null
-              ? null
-              : fbb.writeString(object.domicilio!);
-          fbb.startTable(40);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, nombreOffset);
-          fbb.addOffset(2, apellidoPOffset);
-          fbb.addOffset(3, apellidoMOffset);
-          fbb.addOffset(5, telefonoOffset);
-          fbb.addOffset(6, celularOffset);
-          fbb.addOffset(7, correoOffset);
-          fbb.addOffset(8, passwordOffset);
-          fbb.addInt64(11, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addOffset(15, idDBROffset);
-          fbb.addInt64(23, object.rol.targetId);
-          fbb.addOffset(29, imagenOffset);
-          fbb.addOffset(30, pathOffset);
-          fbb.addOffset(32, domicilioOffset);
-          fbb.addInt64(35, object.asesor.targetId);
-          fbb.addBool(36, object.interno);
-          fbb.addInt64(38, object.vehicle.targetId);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Usuarios(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              nombre: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              apellidoP: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''),
-              apellidoM: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 10),
-              telefono: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 14),
-              celular: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 16, ''),
-              domicilio: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 68),
-              correo: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 18, ''),
-              password:
-                  const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
-              imagen: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 62),
-              path: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 64),
-              interno: const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 76),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''));
-          object.rol.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0);
-          object.rol.attach(store);
-          object.asesor.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 74, 0);
-          object.asesor.attach(store);
-          object.vehicle.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 80, 0);
-          object.vehicle.attach(store);
-          InternalToManyAccess.setRelInfo(object.bitacora, store,
-              RelInfo<Usuarios>.toMany(30, object.id), store.box<Usuarios>());
-          InternalToManyAccess.setRelInfo(object.roles, store,
-              RelInfo<Usuarios>.toMany(69, object.id), store.box<Usuarios>());
-          InternalToManyAccess.setRelInfo(object.clientes, store,
-              RelInfo<Usuarios>.toMany(84, object.id), store.box<Usuarios>());
-          InternalToManyAccess.setRelInfo(object.tecnicosMecanicos, store,
-              RelInfo<Usuarios>.toMany(85, object.id), store.box<Usuarios>());
-          InternalToManyAccess.setRelInfo(
-              object.controlForms,
-              store,
-              RelInfo<ControlForm>.toOneBacklink(
-                  5, object.id, (ControlForm srcObject) => srcObject.employee),
-              store.box<Usuarios>());
-          return object;
-        }),
     Bitacora: EntityDefinition<Bitacora>(
-        model: _entities[1],
+        model: _entities[0],
         toOneRelations: (Bitacora object) => [
-              object.usuario,
               object.controlForm,
               object.measures,
               object.lights,
@@ -2852,10 +2759,11 @@ ModelDefinition getObjectBoxModel() {
               object.bucketInspection,
               object.status,
               object.company,
-              object.vehicle
+              object.vehicle,
+              object.user
             ],
         toManyRelations: (Bitacora object) =>
-            {RelInfo<Usuarios>.toManyBacklink(30, object.id): object.usuarios},
+            {RelInfo<Users>.toManyBacklink(95, object.id): object.users},
         getId: (Bitacora object) => object.id,
         setId: (Bitacora object, int id) {
           object.id = id;
@@ -2867,13 +2775,12 @@ ModelDefinition getObjectBoxModel() {
           final instruccionOffset = fbb.writeString(object.instruccion);
           final usuarioPropietarioOffset =
               fbb.writeString(object.usuarioPropietario);
-          fbb.startTable(55);
+          fbb.startTable(56);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(12, instruccionAdicionalOffset);
           fbb.addOffset(14, instruccionOffset);
           fbb.addOffset(34, usuarioPropietarioOffset);
-          fbb.addInt64(36, object.usuario.targetId);
           fbb.addBool(37, object.executeSupabase);
           fbb.addInt64(40, object.idControlForm);
           fbb.addInt64(41, object.controlForm.targetId);
@@ -2888,6 +2795,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(51, object.status.targetId);
           fbb.addInt64(52, object.company.targetId);
           fbb.addInt64(53, object.vehicle.targetId);
+          fbb.addInt64(54, object.user.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2910,9 +2818,6 @@ ModelDefinition getObjectBoxModel() {
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
               executeSupabase: const fb.BoolReader()
                   .vTableGet(buffer, rootOffset, 78, false));
-          object.usuario.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 76, 0);
-          object.usuario.attach(store);
           object.controlForm.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 86, 0);
           object.controlForm.attach(store);
@@ -2949,15 +2854,18 @@ ModelDefinition getObjectBoxModel() {
           object.vehicle.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 110, 0);
           object.vehicle.attach(store);
+          object.user.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 112, 0);
+          object.user.attach(store);
           InternalToManyAccess.setRelInfo(
-              object.usuarios,
+              object.users,
               store,
-              RelInfo<Usuarios>.toManyBacklink(30, object.id),
+              RelInfo<Users>.toManyBacklink(95, object.id),
               store.box<Bitacora>());
           return object;
         }),
     ControlForm: EntityDefinition<ControlForm>(
-        model: _entities[2],
+        model: _entities[1],
         toOneRelations: (ControlForm object) => [
               object.employee,
               object.vehicle,
@@ -3054,7 +2962,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     CarBodywork: EntityDefinition<CarBodywork>(
-        model: _entities[3],
+        model: _entities[2],
         toOneRelations: (CarBodywork object) => [object.controlForm],
         toManyRelations: (CarBodywork object) => {
               RelInfo<Bitacora>.toOneBacklink(45, object.id,
@@ -3191,7 +3099,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Equipment: EntityDefinition<Equipment>(
-        model: _entities[4],
+        model: _entities[3],
         toOneRelations: (Equipment object) => [object.controlForm],
         toManyRelations: (Equipment object) => {
               RelInfo<Bitacora>.toOneBacklink(50, object.id,
@@ -3278,7 +3186,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Extra: EntityDefinition<Extra>(
-        model: _entities[5],
+        model: _entities[4],
         toOneRelations: (Extra object) => [object.controlForm],
         toManyRelations: (Extra object) => {
               RelInfo<Bitacora>.toOneBacklink(
@@ -3386,7 +3294,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     FluidsCheck: EntityDefinition<FluidsCheck>(
-        model: _entities[6],
+        model: _entities[5],
         toOneRelations: (FluidsCheck object) => [object.controlForm],
         toManyRelations: (FluidsCheck object) => {
               RelInfo<Bitacora>.toOneBacklink(46, object.id,
@@ -3479,7 +3387,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Lights: EntityDefinition<Lights>(
-        model: _entities[7],
+        model: _entities[6],
         toOneRelations: (Lights object) => [object.controlForm],
         toManyRelations: (Lights object) => {
               RelInfo<Bitacora>.toOneBacklink(
@@ -3598,7 +3506,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Measures: EntityDefinition<Measures>(
-        model: _entities[8],
+        model: _entities[7],
         toOneRelations: (Measures object) => [object.controlForm],
         toManyRelations: (Measures object) => {
               RelInfo<Bitacora>.toOneBacklink(43, object.id,
@@ -3656,7 +3564,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Security: EntityDefinition<Security>(
-        model: _entities[9],
+        model: _entities[8],
         toOneRelations: (Security object) => [object.controlForm],
         toManyRelations: (Security object) => {
               RelInfo<Bitacora>.toOneBacklink(48, object.id,
@@ -3750,7 +3658,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     BucketInspection: EntityDefinition<BucketInspection>(
-        model: _entities[10],
+        model: _entities[9],
         toOneRelations: (BucketInspection object) => [object.controlForm],
         toManyRelations: (BucketInspection object) => {
               RelInfo<Bitacora>.toOneBacklink(51, object.id,
@@ -3822,7 +3730,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Company: EntityDefinition<Company>(
-        model: _entities[11],
+        model: _entities[10],
         toOneRelations: (Company object) => [],
         toManyRelations: (Company object) => {
               RelInfo<Bitacora>.toOneBacklink(
@@ -3866,10 +3774,10 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Role: EntityDefinition<Role>(
-        model: _entities[12],
+        model: _entities[11],
         toOneRelations: (Role object) => [object.bitacora],
         toManyRelations: (Role object) =>
-            {RelInfo<Role>.toMany(93, object.id): object.usuarios},
+            {RelInfo<Role>.toMany(94, object.id): object.users},
         getId: (Role object) => object.id,
         setId: (Role object, int id) {
           object.id = id;
@@ -3901,12 +3809,12 @@ ModelDefinition getObjectBoxModel() {
           object.bitacora.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           object.bitacora.attach(store);
-          InternalToManyAccess.setRelInfo(object.usuarios, store,
-              RelInfo<Role>.toMany(93, object.id), store.box<Role>());
+          InternalToManyAccess.setRelInfo(object.users, store,
+              RelInfo<Role>.toMany(94, object.id), store.box<Role>());
           return object;
         }),
     Status: EntityDefinition<Status>(
-        model: _entities[13],
+        model: _entities[12],
         toOneRelations: (Status object) => [],
         toManyRelations: (Status object) => {
               RelInfo<Bitacora>.toOneBacklink(
@@ -3950,7 +3858,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Vehicle: EntityDefinition<Vehicle>(
-        model: _entities[14],
+        model: _entities[13],
         toOneRelations: (Vehicle object) => [object.status, object.company],
         toManyRelations: (Vehicle object) => {
               RelInfo<Bitacora>.toOneBacklink(
@@ -4035,933 +3943,1029 @@ ModelDefinition getObjectBoxModel() {
                   54, object.id, (Bitacora srcObject) => srcObject.vehicle),
               store.box<Vehicle>());
           return object;
+        }),
+    Users: EntityDefinition<Users>(
+        model: _entities[14],
+        toOneRelations: (Users object) =>
+            [object.role, object.company, object.vehicle],
+        toManyRelations: (Users object) => {
+              RelInfo<Users>.toMany(95, object.id): object.bitacora,
+              RelInfo<Users>.toMany(96, object.id): object.roles,
+              RelInfo<Users>.toMany(97, object.id): object.status,
+              RelInfo<ControlForm>.toOneBacklink(5, object.id,
+                      (ControlForm srcObject) => srcObject.employee):
+                  object.controlForms
+            },
+        getId: (Users object) => object.id,
+        setId: (Users object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Users object, fb.Builder fbb) {
+          final nameOffset = fbb.writeString(object.name);
+          final lastNameOffset = fbb.writeString(object.lastName);
+          final middleNameOffset = object.middleName == null
+              ? null
+              : fbb.writeString(object.middleName!);
+          final homePhoneOffset = object.homePhone == null
+              ? null
+              : fbb.writeString(object.homePhone!);
+          final mobilePhoneOffset = fbb.writeString(object.mobilePhone);
+          final addressOffset =
+              object.address == null ? null : fbb.writeString(object.address!);
+          final correoOffset = fbb.writeString(object.correo);
+          final passwordOffset = fbb.writeString(object.password);
+          final imageOffset =
+              object.image == null ? null : fbb.writeString(object.image!);
+          final pathOffset =
+              object.path == null ? null : fbb.writeString(object.path!);
+          final idDBROffset = fbb.writeString(object.idDBR);
+          fbb.startTable(19);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, nameOffset);
+          fbb.addOffset(2, lastNameOffset);
+          fbb.addOffset(3, middleNameOffset);
+          fbb.addOffset(4, homePhoneOffset);
+          fbb.addOffset(5, mobilePhoneOffset);
+          fbb.addOffset(6, addressOffset);
+          fbb.addOffset(7, correoOffset);
+          fbb.addOffset(8, passwordOffset);
+          fbb.addOffset(9, imageOffset);
+          fbb.addOffset(10, pathOffset);
+          fbb.addInt64(11, object.birthDate.millisecondsSinceEpoch);
+          fbb.addOffset(13, idDBROffset);
+          fbb.addInt64(14, object.role.targetId);
+          fbb.addInt64(15, object.company.targetId);
+          fbb.addInt64(16, object.vehicle.targetId);
+          fbb.addInt64(17, object.dateAdded.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Users(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              name: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              lastName: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              middleName: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 10),
+              homePhone: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12),
+              mobilePhone: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              address: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 16),
+              correo: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              password: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
+              image: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 22),
+              path: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 24),
+              birthDate: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 30, ''));
+          object.role.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
+          object.role.attach(store);
+          object.company.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
+          object.company.attach(store);
+          object.vehicle.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0);
+          object.vehicle.attach(store);
+          InternalToManyAccess.setRelInfo(object.bitacora, store,
+              RelInfo<Users>.toMany(95, object.id), store.box<Users>());
+          InternalToManyAccess.setRelInfo(object.roles, store,
+              RelInfo<Users>.toMany(96, object.id), store.box<Users>());
+          InternalToManyAccess.setRelInfo(object.status, store,
+              RelInfo<Users>.toMany(97, object.id), store.box<Users>());
+          InternalToManyAccess.setRelInfo(
+              object.controlForms,
+              store,
+              RelInfo<ControlForm>.toOneBacklink(
+                  5, object.id, (ControlForm srcObject) => srcObject.employee),
+              store.box<Users>());
+          return object;
         })
   };
 
   return ModelDefinition(model, bindings);
 }
 
-/// [Usuarios] entity fields to define ObjectBox queries.
-class Usuarios_ {
-  /// see [Usuarios.id]
-  static final id = QueryIntegerProperty<Usuarios>(_entities[0].properties[0]);
-
-  /// see [Usuarios.nombre]
-  static final nombre =
-      QueryStringProperty<Usuarios>(_entities[0].properties[1]);
-
-  /// see [Usuarios.apellidoP]
-  static final apellidoP =
-      QueryStringProperty<Usuarios>(_entities[0].properties[2]);
-
-  /// see [Usuarios.apellidoM]
-  static final apellidoM =
-      QueryStringProperty<Usuarios>(_entities[0].properties[3]);
-
-  /// see [Usuarios.telefono]
-  static final telefono =
-      QueryStringProperty<Usuarios>(_entities[0].properties[4]);
-
-  /// see [Usuarios.celular]
-  static final celular =
-      QueryStringProperty<Usuarios>(_entities[0].properties[5]);
-
-  /// see [Usuarios.correo]
-  static final correo =
-      QueryStringProperty<Usuarios>(_entities[0].properties[6]);
-
-  /// see [Usuarios.password]
-  static final password =
-      QueryStringProperty<Usuarios>(_entities[0].properties[7]);
-
-  /// see [Usuarios.fechaRegistro]
-  static final fechaRegistro =
-      QueryIntegerProperty<Usuarios>(_entities[0].properties[8]);
-
-  /// see [Usuarios.idDBR]
-  static final idDBR =
-      QueryStringProperty<Usuarios>(_entities[0].properties[9]);
-
-  /// see [Usuarios.rol]
-  static final rol =
-      QueryRelationToOne<Usuarios, Role>(_entities[0].properties[10]);
-
-  /// see [Usuarios.imagen]
-  static final imagen =
-      QueryStringProperty<Usuarios>(_entities[0].properties[11]);
-
-  /// see [Usuarios.path]
-  static final path =
-      QueryStringProperty<Usuarios>(_entities[0].properties[12]);
-
-  /// see [Usuarios.domicilio]
-  static final domicilio =
-      QueryStringProperty<Usuarios>(_entities[0].properties[13]);
-
-  /// see [Usuarios.asesor]
-  static final asesor =
-      QueryRelationToOne<Usuarios, Usuarios>(_entities[0].properties[14]);
-
-  /// see [Usuarios.interno]
-  static final interno =
-      QueryBooleanProperty<Usuarios>(_entities[0].properties[15]);
-
-  /// see [Usuarios.vehicle]
-  static final vehicle =
-      QueryRelationToOne<Usuarios, Vehicle>(_entities[0].properties[16]);
-
-  /// see [Usuarios.bitacora]
-  static final bitacora =
-      QueryRelationToMany<Usuarios, Bitacora>(_entities[0].relations[0]);
-
-  /// see [Usuarios.roles]
-  static final roles =
-      QueryRelationToMany<Usuarios, Role>(_entities[0].relations[1]);
-
-  /// see [Usuarios.clientes]
-  static final clientes =
-      QueryRelationToMany<Usuarios, Usuarios>(_entities[0].relations[2]);
-
-  /// see [Usuarios.tecnicosMecanicos]
-  static final tecnicosMecanicos =
-      QueryRelationToMany<Usuarios, Usuarios>(_entities[0].relations[3]);
-}
-
 /// [Bitacora] entity fields to define ObjectBox queries.
 class Bitacora_ {
   /// see [Bitacora.id]
-  static final id = QueryIntegerProperty<Bitacora>(_entities[1].properties[0]);
+  static final id = QueryIntegerProperty<Bitacora>(_entities[0].properties[0]);
 
   /// see [Bitacora.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Bitacora>(_entities[1].properties[1]);
+      QueryIntegerProperty<Bitacora>(_entities[0].properties[1]);
 
   /// see [Bitacora.instruccionAdicional]
   static final instruccionAdicional =
-      QueryStringProperty<Bitacora>(_entities[1].properties[2]);
+      QueryStringProperty<Bitacora>(_entities[0].properties[2]);
 
   /// see [Bitacora.instruccion]
   static final instruccion =
-      QueryStringProperty<Bitacora>(_entities[1].properties[3]);
+      QueryStringProperty<Bitacora>(_entities[0].properties[3]);
 
   /// see [Bitacora.usuarioPropietario]
   static final usuarioPropietario =
-      QueryStringProperty<Bitacora>(_entities[1].properties[4]);
-
-  /// see [Bitacora.usuario]
-  static final usuario =
-      QueryRelationToOne<Bitacora, Usuarios>(_entities[1].properties[5]);
+      QueryStringProperty<Bitacora>(_entities[0].properties[4]);
 
   /// see [Bitacora.executeSupabase]
   static final executeSupabase =
-      QueryBooleanProperty<Bitacora>(_entities[1].properties[6]);
+      QueryBooleanProperty<Bitacora>(_entities[0].properties[5]);
 
   /// see [Bitacora.idControlForm]
   static final idControlForm =
-      QueryIntegerProperty<Bitacora>(_entities[1].properties[7]);
+      QueryIntegerProperty<Bitacora>(_entities[0].properties[6]);
 
   /// see [Bitacora.controlForm]
   static final controlForm =
-      QueryRelationToOne<Bitacora, ControlForm>(_entities[1].properties[8]);
+      QueryRelationToOne<Bitacora, ControlForm>(_entities[0].properties[7]);
 
   /// see [Bitacora.measures]
   static final measures =
-      QueryRelationToOne<Bitacora, Measures>(_entities[1].properties[9]);
+      QueryRelationToOne<Bitacora, Measures>(_entities[0].properties[8]);
 
   /// see [Bitacora.lights]
   static final lights =
-      QueryRelationToOne<Bitacora, Lights>(_entities[1].properties[10]);
+      QueryRelationToOne<Bitacora, Lights>(_entities[0].properties[9]);
 
   /// see [Bitacora.carBodywork]
   static final carBodywork =
-      QueryRelationToOne<Bitacora, CarBodywork>(_entities[1].properties[11]);
+      QueryRelationToOne<Bitacora, CarBodywork>(_entities[0].properties[10]);
 
   /// see [Bitacora.fluidsCheck]
   static final fluidsCheck =
-      QueryRelationToOne<Bitacora, FluidsCheck>(_entities[1].properties[12]);
+      QueryRelationToOne<Bitacora, FluidsCheck>(_entities[0].properties[11]);
 
   /// see [Bitacora.security]
   static final security =
-      QueryRelationToOne<Bitacora, Security>(_entities[1].properties[13]);
+      QueryRelationToOne<Bitacora, Security>(_entities[0].properties[12]);
 
   /// see [Bitacora.extra]
   static final extra =
-      QueryRelationToOne<Bitacora, Extra>(_entities[1].properties[14]);
+      QueryRelationToOne<Bitacora, Extra>(_entities[0].properties[13]);
 
   /// see [Bitacora.equipment]
   static final equipment =
-      QueryRelationToOne<Bitacora, Equipment>(_entities[1].properties[15]);
+      QueryRelationToOne<Bitacora, Equipment>(_entities[0].properties[14]);
 
   /// see [Bitacora.bucketInspection]
   static final bucketInspection =
       QueryRelationToOne<Bitacora, BucketInspection>(
-          _entities[1].properties[16]);
+          _entities[0].properties[15]);
 
   /// see [Bitacora.status]
   static final status =
-      QueryRelationToOne<Bitacora, Status>(_entities[1].properties[17]);
+      QueryRelationToOne<Bitacora, Status>(_entities[0].properties[16]);
 
   /// see [Bitacora.company]
   static final company =
-      QueryRelationToOne<Bitacora, Company>(_entities[1].properties[18]);
+      QueryRelationToOne<Bitacora, Company>(_entities[0].properties[17]);
 
   /// see [Bitacora.vehicle]
   static final vehicle =
-      QueryRelationToOne<Bitacora, Vehicle>(_entities[1].properties[19]);
+      QueryRelationToOne<Bitacora, Vehicle>(_entities[0].properties[18]);
+
+  /// see [Bitacora.user]
+  static final user =
+      QueryRelationToOne<Bitacora, Users>(_entities[0].properties[19]);
 }
 
 /// [ControlForm] entity fields to define ObjectBox queries.
 class ControlForm_ {
   /// see [ControlForm.id]
   static final id =
-      QueryIntegerProperty<ControlForm>(_entities[2].properties[0]);
+      QueryIntegerProperty<ControlForm>(_entities[1].properties[0]);
 
   /// see [ControlForm.typeForm]
   static final typeForm =
-      QueryBooleanProperty<ControlForm>(_entities[2].properties[1]);
+      QueryBooleanProperty<ControlForm>(_entities[1].properties[1]);
 
   /// see [ControlForm.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<ControlForm>(_entities[2].properties[2]);
+      QueryIntegerProperty<ControlForm>(_entities[1].properties[2]);
 
   /// see [ControlForm.idDBR]
   static final idDBR =
-      QueryStringProperty<ControlForm>(_entities[2].properties[3]);
+      QueryStringProperty<ControlForm>(_entities[1].properties[3]);
 
   /// see [ControlForm.employee]
   static final employee =
-      QueryRelationToOne<ControlForm, Usuarios>(_entities[2].properties[4]);
+      QueryRelationToOne<ControlForm, Users>(_entities[1].properties[4]);
 
   /// see [ControlForm.vehicle]
   static final vehicle =
-      QueryRelationToOne<ControlForm, Vehicle>(_entities[2].properties[5]);
+      QueryRelationToOne<ControlForm, Vehicle>(_entities[1].properties[5]);
 
   /// see [ControlForm.measures]
   static final measures =
-      QueryRelationToOne<ControlForm, Measures>(_entities[2].properties[6]);
+      QueryRelationToOne<ControlForm, Measures>(_entities[1].properties[6]);
 
   /// see [ControlForm.lights]
   static final lights =
-      QueryRelationToOne<ControlForm, Lights>(_entities[2].properties[7]);
+      QueryRelationToOne<ControlForm, Lights>(_entities[1].properties[7]);
 
   /// see [ControlForm.carBodywork]
   static final carBodywork =
-      QueryRelationToOne<ControlForm, CarBodywork>(_entities[2].properties[8]);
+      QueryRelationToOne<ControlForm, CarBodywork>(_entities[1].properties[8]);
 
   /// see [ControlForm.fluidsCheck]
   static final fluidsCheck =
-      QueryRelationToOne<ControlForm, FluidsCheck>(_entities[2].properties[9]);
+      QueryRelationToOne<ControlForm, FluidsCheck>(_entities[1].properties[9]);
 
   /// see [ControlForm.security]
   static final security =
-      QueryRelationToOne<ControlForm, Security>(_entities[2].properties[10]);
+      QueryRelationToOne<ControlForm, Security>(_entities[1].properties[10]);
 
   /// see [ControlForm.extra]
   static final extra =
-      QueryRelationToOne<ControlForm, Extra>(_entities[2].properties[11]);
+      QueryRelationToOne<ControlForm, Extra>(_entities[1].properties[11]);
 
   /// see [ControlForm.equipment]
   static final equipment =
-      QueryRelationToOne<ControlForm, Equipment>(_entities[2].properties[12]);
+      QueryRelationToOne<ControlForm, Equipment>(_entities[1].properties[12]);
 
   /// see [ControlForm.bucketInspection]
   static final bucketInspection =
       QueryRelationToOne<ControlForm, BucketInspection>(
-          _entities[2].properties[13]);
+          _entities[1].properties[13]);
 
   /// see [ControlForm.today]
   static final today =
-      QueryBooleanProperty<ControlForm>(_entities[2].properties[14]);
+      QueryBooleanProperty<ControlForm>(_entities[1].properties[14]);
 }
 
 /// [CarBodywork] entity fields to define ObjectBox queries.
 class CarBodywork_ {
   /// see [CarBodywork.id]
   static final id =
-      QueryIntegerProperty<CarBodywork>(_entities[3].properties[0]);
+      QueryIntegerProperty<CarBodywork>(_entities[2].properties[0]);
 
   /// see [CarBodywork.wiperBladesFront]
   static final wiperBladesFront =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[1]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[1]);
 
   /// see [CarBodywork.wiperBladesFrontComments]
   static final wiperBladesFrontComments =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[2]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[2]);
 
   /// see [CarBodywork.wiperBladesBack]
   static final wiperBladesBack =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[3]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[3]);
 
   /// see [CarBodywork.wiperBladesBackComments]
   static final wiperBladesBackComments =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[4]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[4]);
 
   /// see [CarBodywork.windshieldWiperFront]
   static final windshieldWiperFront =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[5]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[5]);
 
   /// see [CarBodywork.windshieldWiperFrontComments]
   static final windshieldWiperFrontComments =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[6]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[6]);
 
   /// see [CarBodywork.windshieldWiperBack]
   static final windshieldWiperBack =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[7]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[7]);
 
   /// see [CarBodywork.windshieldWiperBackComments]
   static final windshieldWiperBackComments =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[8]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[8]);
 
   /// see [CarBodywork.generalBody]
   static final generalBody =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[9]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[9]);
 
   /// see [CarBodywork.generalBodyComments]
   static final generalBodyComments =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[10]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[10]);
 
   /// see [CarBodywork.decaling]
   static final decaling =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[11]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[11]);
 
   /// see [CarBodywork.decalingComments]
   static final decalingComments =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[12]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[12]);
 
   /// see [CarBodywork.tires]
   static final tires =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[13]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[13]);
 
   /// see [CarBodywork.tiresComments]
   static final tiresComments =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[14]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[14]);
 
   /// see [CarBodywork.glass]
   static final glass =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[15]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[15]);
 
   /// see [CarBodywork.glassComments]
   static final glassComments =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[16]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[16]);
 
   /// see [CarBodywork.mirrors]
   static final mirrors =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[17]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[17]);
 
   /// see [CarBodywork.mirrorsComments]
   static final mirrorsComments =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[18]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[18]);
 
   /// see [CarBodywork.parking]
   static final parking =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[19]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[19]);
 
   /// see [CarBodywork.parkingComments]
   static final parkingComments =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[20]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[20]);
 
   /// see [CarBodywork.brakes]
   static final brakes =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[21]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[21]);
 
   /// see [CarBodywork.brakesComments]
   static final brakesComments =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[22]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[22]);
 
   /// see [CarBodywork.emgBrakes]
   static final emgBrakes =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[23]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[23]);
 
   /// see [CarBodywork.emgBrakesComments]
   static final emgBrakesComments =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[24]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[24]);
 
   /// see [CarBodywork.horn]
   static final horn =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[25]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[25]);
 
   /// see [CarBodywork.hornComments]
   static final hornComments =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[26]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[26]);
 
   /// see [CarBodywork.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<CarBodywork>(_entities[3].properties[27]);
+      QueryIntegerProperty<CarBodywork>(_entities[2].properties[27]);
 
   /// see [CarBodywork.idDBR]
   static final idDBR =
-      QueryStringProperty<CarBodywork>(_entities[3].properties[28]);
+      QueryStringProperty<CarBodywork>(_entities[2].properties[28]);
 
   /// see [CarBodywork.controlForm]
   static final controlForm =
-      QueryRelationToOne<CarBodywork, ControlForm>(_entities[3].properties[29]);
+      QueryRelationToOne<CarBodywork, ControlForm>(_entities[2].properties[29]);
 }
 
 /// [Equipment] entity fields to define ObjectBox queries.
 class Equipment_ {
   /// see [Equipment.id]
-  static final id = QueryIntegerProperty<Equipment>(_entities[4].properties[0]);
+  static final id = QueryIntegerProperty<Equipment>(_entities[3].properties[0]);
 
   /// see [Equipment.ignitionKey]
   static final ignitionKey =
-      QueryStringProperty<Equipment>(_entities[4].properties[1]);
+      QueryStringProperty<Equipment>(_entities[3].properties[1]);
 
   /// see [Equipment.ignitionKeyComments]
   static final ignitionKeyComments =
-      QueryStringProperty<Equipment>(_entities[4].properties[2]);
+      QueryStringProperty<Equipment>(_entities[3].properties[2]);
 
   /// see [Equipment.binsBoxKey]
   static final binsBoxKey =
-      QueryStringProperty<Equipment>(_entities[4].properties[3]);
+      QueryStringProperty<Equipment>(_entities[3].properties[3]);
 
   /// see [Equipment.binsBoxKeyComments]
   static final binsBoxKeyComments =
-      QueryStringProperty<Equipment>(_entities[4].properties[4]);
+      QueryStringProperty<Equipment>(_entities[3].properties[4]);
 
   /// see [Equipment.vehicleRegistrationCopy]
   static final vehicleRegistrationCopy =
-      QueryStringProperty<Equipment>(_entities[4].properties[5]);
+      QueryStringProperty<Equipment>(_entities[3].properties[5]);
 
   /// see [Equipment.vehicleRegistrationCopyComments]
   static final vehicleRegistrationCopyComments =
-      QueryStringProperty<Equipment>(_entities[4].properties[6]);
+      QueryStringProperty<Equipment>(_entities[3].properties[6]);
 
   /// see [Equipment.vehicleInsuranceCopy]
   static final vehicleInsuranceCopy =
-      QueryStringProperty<Equipment>(_entities[4].properties[7]);
+      QueryStringProperty<Equipment>(_entities[3].properties[7]);
 
   /// see [Equipment.vehicleInsuranceCopyComments]
   static final vehicleInsuranceCopyComments =
-      QueryStringProperty<Equipment>(_entities[4].properties[8]);
+      QueryStringProperty<Equipment>(_entities[3].properties[8]);
 
   /// see [Equipment.bucketLiftOperatorManual]
   static final bucketLiftOperatorManual =
-      QueryStringProperty<Equipment>(_entities[4].properties[9]);
+      QueryStringProperty<Equipment>(_entities[3].properties[9]);
 
   /// see [Equipment.bucketLiftOperatorManualComments]
   static final bucketLiftOperatorManualComments =
-      QueryStringProperty<Equipment>(_entities[4].properties[10]);
+      QueryStringProperty<Equipment>(_entities[3].properties[10]);
 
   /// see [Equipment.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<Equipment>(_entities[4].properties[11]);
+      QueryIntegerProperty<Equipment>(_entities[3].properties[11]);
 
   /// see [Equipment.idDBR]
   static final idDBR =
-      QueryStringProperty<Equipment>(_entities[4].properties[12]);
+      QueryStringProperty<Equipment>(_entities[3].properties[12]);
 
   /// see [Equipment.controlForm]
   static final controlForm =
-      QueryRelationToOne<Equipment, ControlForm>(_entities[4].properties[13]);
+      QueryRelationToOne<Equipment, ControlForm>(_entities[3].properties[13]);
 }
 
 /// [Extra] entity fields to define ObjectBox queries.
 class Extra_ {
   /// see [Extra.id]
-  static final id = QueryIntegerProperty<Extra>(_entities[5].properties[0]);
+  static final id = QueryIntegerProperty<Extra>(_entities[4].properties[0]);
 
   /// see [Extra.ladder]
-  static final ladder = QueryStringProperty<Extra>(_entities[5].properties[1]);
+  static final ladder = QueryStringProperty<Extra>(_entities[4].properties[1]);
 
   /// see [Extra.ladderComments]
   static final ladderComments =
-      QueryStringProperty<Extra>(_entities[5].properties[2]);
+      QueryStringProperty<Extra>(_entities[4].properties[2]);
 
   /// see [Extra.stepLadder]
   static final stepLadder =
-      QueryStringProperty<Extra>(_entities[5].properties[3]);
+      QueryStringProperty<Extra>(_entities[4].properties[3]);
 
   /// see [Extra.stepLadderComments]
   static final stepLadderComments =
-      QueryStringProperty<Extra>(_entities[5].properties[4]);
+      QueryStringProperty<Extra>(_entities[4].properties[4]);
 
   /// see [Extra.hydraulicFluidForBucket]
   static final hydraulicFluidForBucket =
-      QueryStringProperty<Extra>(_entities[5].properties[5]);
+      QueryStringProperty<Extra>(_entities[4].properties[5]);
 
   /// see [Extra.hydraulicFluidForBucketComments]
   static final hydraulicFluidForBucketComments =
-      QueryStringProperty<Extra>(_entities[5].properties[6]);
+      QueryStringProperty<Extra>(_entities[4].properties[6]);
 
   /// see [Extra.fiberReelRack]
   static final fiberReelRack =
-      QueryStringProperty<Extra>(_entities[5].properties[7]);
+      QueryStringProperty<Extra>(_entities[4].properties[7]);
 
   /// see [Extra.fiberReelRackComments]
   static final fiberReelRackComments =
-      QueryStringProperty<Extra>(_entities[5].properties[8]);
+      QueryStringProperty<Extra>(_entities[4].properties[8]);
 
   /// see [Extra.binsLockedAndSecure]
   static final binsLockedAndSecure =
-      QueryStringProperty<Extra>(_entities[5].properties[9]);
+      QueryStringProperty<Extra>(_entities[4].properties[9]);
 
   /// see [Extra.binsLockedAndSecureComments]
   static final binsLockedAndSecureComments =
-      QueryStringProperty<Extra>(_entities[5].properties[10]);
+      QueryStringProperty<Extra>(_entities[4].properties[10]);
 
   /// see [Extra.safetyHarness]
   static final safetyHarness =
-      QueryStringProperty<Extra>(_entities[5].properties[11]);
+      QueryStringProperty<Extra>(_entities[4].properties[11]);
 
   /// see [Extra.safetyHarnessComments]
   static final safetyHarnessComments =
-      QueryStringProperty<Extra>(_entities[5].properties[12]);
+      QueryStringProperty<Extra>(_entities[4].properties[12]);
 
   /// see [Extra.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<Extra>(_entities[5].properties[13]);
+      QueryIntegerProperty<Extra>(_entities[4].properties[13]);
 
   /// see [Extra.idDBR]
-  static final idDBR = QueryStringProperty<Extra>(_entities[5].properties[14]);
+  static final idDBR = QueryStringProperty<Extra>(_entities[4].properties[14]);
 
   /// see [Extra.controlForm]
   static final controlForm =
-      QueryRelationToOne<Extra, ControlForm>(_entities[5].properties[15]);
+      QueryRelationToOne<Extra, ControlForm>(_entities[4].properties[15]);
 
   /// see [Extra.ladderStraps]
   static final ladderStraps =
-      QueryStringProperty<Extra>(_entities[5].properties[16]);
+      QueryStringProperty<Extra>(_entities[4].properties[16]);
 
   /// see [Extra.ladderStrapsComments]
   static final ladderStrapsComments =
-      QueryStringProperty<Extra>(_entities[5].properties[17]);
+      QueryStringProperty<Extra>(_entities[4].properties[17]);
 
   /// see [Extra.lanyardSafetyHarness]
   static final lanyardSafetyHarness =
-      QueryStringProperty<Extra>(_entities[5].properties[18]);
+      QueryStringProperty<Extra>(_entities[4].properties[18]);
 
   /// see [Extra.lanyardSafetyHarnessComments]
   static final lanyardSafetyHarnessComments =
-      QueryStringProperty<Extra>(_entities[5].properties[19]);
+      QueryStringProperty<Extra>(_entities[4].properties[19]);
 }
 
 /// [FluidsCheck] entity fields to define ObjectBox queries.
 class FluidsCheck_ {
   /// see [FluidsCheck.id]
   static final id =
-      QueryIntegerProperty<FluidsCheck>(_entities[6].properties[0]);
+      QueryIntegerProperty<FluidsCheck>(_entities[5].properties[0]);
 
   /// see [FluidsCheck.engineOil]
   static final engineOil =
-      QueryStringProperty<FluidsCheck>(_entities[6].properties[1]);
+      QueryStringProperty<FluidsCheck>(_entities[5].properties[1]);
 
   /// see [FluidsCheck.engineOilComments]
   static final engineOilComments =
-      QueryStringProperty<FluidsCheck>(_entities[6].properties[2]);
+      QueryStringProperty<FluidsCheck>(_entities[5].properties[2]);
 
   /// see [FluidsCheck.transmission]
   static final transmission =
-      QueryStringProperty<FluidsCheck>(_entities[6].properties[3]);
+      QueryStringProperty<FluidsCheck>(_entities[5].properties[3]);
 
   /// see [FluidsCheck.transmissionComments]
   static final transmissionComments =
-      QueryStringProperty<FluidsCheck>(_entities[6].properties[4]);
+      QueryStringProperty<FluidsCheck>(_entities[5].properties[4]);
 
   /// see [FluidsCheck.coolant]
   static final coolant =
-      QueryStringProperty<FluidsCheck>(_entities[6].properties[5]);
+      QueryStringProperty<FluidsCheck>(_entities[5].properties[5]);
 
   /// see [FluidsCheck.coolantComments]
   static final coolantComments =
-      QueryStringProperty<FluidsCheck>(_entities[6].properties[6]);
+      QueryStringProperty<FluidsCheck>(_entities[5].properties[6]);
 
   /// see [FluidsCheck.powerSteering]
   static final powerSteering =
-      QueryStringProperty<FluidsCheck>(_entities[6].properties[7]);
+      QueryStringProperty<FluidsCheck>(_entities[5].properties[7]);
 
   /// see [FluidsCheck.powerSteeringComments]
   static final powerSteeringComments =
-      QueryStringProperty<FluidsCheck>(_entities[6].properties[8]);
+      QueryStringProperty<FluidsCheck>(_entities[5].properties[8]);
 
   /// see [FluidsCheck.windshieldWasherFluid]
   static final windshieldWasherFluid =
-      QueryStringProperty<FluidsCheck>(_entities[6].properties[9]);
+      QueryStringProperty<FluidsCheck>(_entities[5].properties[9]);
 
   /// see [FluidsCheck.windshieldWasherFluidComments]
   static final windshieldWasherFluidComments =
-      QueryStringProperty<FluidsCheck>(_entities[6].properties[10]);
+      QueryStringProperty<FluidsCheck>(_entities[5].properties[10]);
 
   /// see [FluidsCheck.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<FluidsCheck>(_entities[6].properties[11]);
+      QueryIntegerProperty<FluidsCheck>(_entities[5].properties[11]);
 
   /// see [FluidsCheck.idDBR]
   static final idDBR =
-      QueryStringProperty<FluidsCheck>(_entities[6].properties[12]);
+      QueryStringProperty<FluidsCheck>(_entities[5].properties[12]);
 
   /// see [FluidsCheck.controlForm]
   static final controlForm =
-      QueryRelationToOne<FluidsCheck, ControlForm>(_entities[6].properties[13]);
+      QueryRelationToOne<FluidsCheck, ControlForm>(_entities[5].properties[13]);
 
   /// see [FluidsCheck.dieselExhaustFluid]
   static final dieselExhaustFluid =
-      QueryStringProperty<FluidsCheck>(_entities[6].properties[14]);
+      QueryStringProperty<FluidsCheck>(_entities[5].properties[14]);
 
   /// see [FluidsCheck.dieselExhaustFluidComments]
   static final dieselExhaustFluidComments =
-      QueryStringProperty<FluidsCheck>(_entities[6].properties[15]);
+      QueryStringProperty<FluidsCheck>(_entities[5].properties[15]);
 }
 
 /// [Lights] entity fields to define ObjectBox queries.
 class Lights_ {
   /// see [Lights.id]
-  static final id = QueryIntegerProperty<Lights>(_entities[7].properties[0]);
+  static final id = QueryIntegerProperty<Lights>(_entities[6].properties[0]);
 
   /// see [Lights.headLights]
   static final headLights =
-      QueryStringProperty<Lights>(_entities[7].properties[1]);
+      QueryStringProperty<Lights>(_entities[6].properties[1]);
 
   /// see [Lights.headLightsComments]
   static final headLightsComments =
-      QueryStringProperty<Lights>(_entities[7].properties[2]);
+      QueryStringProperty<Lights>(_entities[6].properties[2]);
 
   /// see [Lights.brakeLights]
   static final brakeLights =
-      QueryStringProperty<Lights>(_entities[7].properties[3]);
+      QueryStringProperty<Lights>(_entities[6].properties[3]);
 
   /// see [Lights.brakeLightsComments]
   static final brakeLightsComments =
-      QueryStringProperty<Lights>(_entities[7].properties[4]);
+      QueryStringProperty<Lights>(_entities[6].properties[4]);
 
   /// see [Lights.reverseLights]
   static final reverseLights =
-      QueryStringProperty<Lights>(_entities[7].properties[5]);
+      QueryStringProperty<Lights>(_entities[6].properties[5]);
 
   /// see [Lights.reverseLightsComments]
   static final reverseLightsComments =
-      QueryStringProperty<Lights>(_entities[7].properties[6]);
+      QueryStringProperty<Lights>(_entities[6].properties[6]);
 
   /// see [Lights.warningLights]
   static final warningLights =
-      QueryStringProperty<Lights>(_entities[7].properties[7]);
+      QueryStringProperty<Lights>(_entities[6].properties[7]);
 
   /// see [Lights.warningLightsComments]
   static final warningLightsComments =
-      QueryStringProperty<Lights>(_entities[7].properties[8]);
+      QueryStringProperty<Lights>(_entities[6].properties[8]);
 
   /// see [Lights.turnSignals]
   static final turnSignals =
-      QueryStringProperty<Lights>(_entities[7].properties[9]);
+      QueryStringProperty<Lights>(_entities[6].properties[9]);
 
   /// see [Lights.turnSignalsComments]
   static final turnSignalsComments =
-      QueryStringProperty<Lights>(_entities[7].properties[10]);
+      QueryStringProperty<Lights>(_entities[6].properties[10]);
 
   /// see [Lights.dashLights]
   static final dashLights =
-      QueryStringProperty<Lights>(_entities[7].properties[11]);
+      QueryStringProperty<Lights>(_entities[6].properties[11]);
 
   /// see [Lights.dashLightsComments]
   static final dashLightsComments =
-      QueryStringProperty<Lights>(_entities[7].properties[12]);
+      QueryStringProperty<Lights>(_entities[6].properties[12]);
 
   /// see [Lights.strobeLights]
   static final strobeLights =
-      QueryStringProperty<Lights>(_entities[7].properties[13]);
+      QueryStringProperty<Lights>(_entities[6].properties[13]);
 
   /// see [Lights.strobeLightsComments]
   static final strobeLightsComments =
-      QueryStringProperty<Lights>(_entities[7].properties[14]);
+      QueryStringProperty<Lights>(_entities[6].properties[14]);
 
   /// see [Lights.cabRoofLights]
   static final cabRoofLights =
-      QueryStringProperty<Lights>(_entities[7].properties[15]);
+      QueryStringProperty<Lights>(_entities[6].properties[15]);
 
   /// see [Lights.cabRoofLightsComments]
   static final cabRoofLightsComments =
-      QueryStringProperty<Lights>(_entities[7].properties[16]);
+      QueryStringProperty<Lights>(_entities[6].properties[16]);
 
   /// see [Lights.clearenceLights]
   static final clearenceLights =
-      QueryStringProperty<Lights>(_entities[7].properties[17]);
+      QueryStringProperty<Lights>(_entities[6].properties[17]);
 
   /// see [Lights.clearenceLightsComments]
   static final clearenceLightsComments =
-      QueryStringProperty<Lights>(_entities[7].properties[18]);
+      QueryStringProperty<Lights>(_entities[6].properties[18]);
 
   /// see [Lights.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<Lights>(_entities[7].properties[19]);
+      QueryIntegerProperty<Lights>(_entities[6].properties[19]);
 
   /// see [Lights.idDBR]
-  static final idDBR = QueryStringProperty<Lights>(_entities[7].properties[20]);
+  static final idDBR = QueryStringProperty<Lights>(_entities[6].properties[20]);
 
   /// see [Lights.controlForm]
   static final controlForm =
-      QueryRelationToOne<Lights, ControlForm>(_entities[7].properties[21]);
+      QueryRelationToOne<Lights, ControlForm>(_entities[6].properties[21]);
 
   /// see [Lights.fourWayFlashers]
   static final fourWayFlashers =
-      QueryStringProperty<Lights>(_entities[7].properties[22]);
+      QueryStringProperty<Lights>(_entities[6].properties[22]);
 
   /// see [Lights.fourWayFlashersComments]
   static final fourWayFlashersComments =
-      QueryStringProperty<Lights>(_entities[7].properties[23]);
+      QueryStringProperty<Lights>(_entities[6].properties[23]);
 }
 
 /// [Measures] entity fields to define ObjectBox queries.
 class Measures_ {
   /// see [Measures.id]
-  static final id = QueryIntegerProperty<Measures>(_entities[8].properties[0]);
+  static final id = QueryIntegerProperty<Measures>(_entities[7].properties[0]);
 
   /// see [Measures.gas]
-  static final gas = QueryStringProperty<Measures>(_entities[8].properties[1]);
+  static final gas = QueryStringProperty<Measures>(_entities[7].properties[1]);
 
   /// see [Measures.gasComments]
   static final gasComments =
-      QueryStringProperty<Measures>(_entities[8].properties[2]);
+      QueryStringProperty<Measures>(_entities[7].properties[2]);
 
   /// see [Measures.mileage]
   static final mileage =
-      QueryIntegerProperty<Measures>(_entities[8].properties[3]);
+      QueryIntegerProperty<Measures>(_entities[7].properties[3]);
 
   /// see [Measures.mileageComments]
   static final mileageComments =
-      QueryStringProperty<Measures>(_entities[8].properties[4]);
+      QueryStringProperty<Measures>(_entities[7].properties[4]);
 
   /// see [Measures.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<Measures>(_entities[8].properties[5]);
+      QueryIntegerProperty<Measures>(_entities[7].properties[5]);
 
   /// see [Measures.idDBR]
   static final idDBR =
-      QueryStringProperty<Measures>(_entities[8].properties[6]);
+      QueryStringProperty<Measures>(_entities[7].properties[6]);
 
   /// see [Measures.controlForm]
   static final controlForm =
-      QueryRelationToOne<Measures, ControlForm>(_entities[8].properties[7]);
+      QueryRelationToOne<Measures, ControlForm>(_entities[7].properties[7]);
 }
 
 /// [Security] entity fields to define ObjectBox queries.
 class Security_ {
   /// see [Security.id]
-  static final id = QueryIntegerProperty<Security>(_entities[9].properties[0]);
+  static final id = QueryIntegerProperty<Security>(_entities[8].properties[0]);
 
   /// see [Security.rtaMagnet]
   static final rtaMagnet =
-      QueryStringProperty<Security>(_entities[9].properties[1]);
+      QueryStringProperty<Security>(_entities[8].properties[1]);
 
   /// see [Security.rtaMagnetComments]
   static final rtaMagnetComments =
-      QueryStringProperty<Security>(_entities[9].properties[2]);
+      QueryStringProperty<Security>(_entities[8].properties[2]);
 
   /// see [Security.triangleReflectors]
   static final triangleReflectors =
-      QueryStringProperty<Security>(_entities[9].properties[3]);
+      QueryStringProperty<Security>(_entities[8].properties[3]);
 
   /// see [Security.triangleReflectorsComments]
   static final triangleReflectorsComments =
-      QueryStringProperty<Security>(_entities[9].properties[4]);
+      QueryStringProperty<Security>(_entities[8].properties[4]);
 
   /// see [Security.wheelChocks]
   static final wheelChocks =
-      QueryStringProperty<Security>(_entities[9].properties[5]);
+      QueryStringProperty<Security>(_entities[8].properties[5]);
 
   /// see [Security.wheelChocksComments]
   static final wheelChocksComments =
-      QueryStringProperty<Security>(_entities[9].properties[6]);
+      QueryStringProperty<Security>(_entities[8].properties[6]);
 
   /// see [Security.fireExtinguisher]
   static final fireExtinguisher =
-      QueryStringProperty<Security>(_entities[9].properties[7]);
+      QueryStringProperty<Security>(_entities[8].properties[7]);
 
   /// see [Security.fireExtinguisherComments]
   static final fireExtinguisherComments =
-      QueryStringProperty<Security>(_entities[9].properties[8]);
+      QueryStringProperty<Security>(_entities[8].properties[8]);
 
   /// see [Security.backUpAlarm]
   static final backUpAlarm =
-      QueryStringProperty<Security>(_entities[9].properties[9]);
+      QueryStringProperty<Security>(_entities[8].properties[9]);
 
   /// see [Security.backUpAlarmComments]
   static final backUpAlarmComments =
-      QueryStringProperty<Security>(_entities[9].properties[10]);
+      QueryStringProperty<Security>(_entities[8].properties[10]);
 
   /// see [Security.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<Security>(_entities[9].properties[11]);
+      QueryIntegerProperty<Security>(_entities[8].properties[11]);
 
   /// see [Security.idDBR]
   static final idDBR =
-      QueryStringProperty<Security>(_entities[9].properties[12]);
+      QueryStringProperty<Security>(_entities[8].properties[12]);
 
   /// see [Security.controlForm]
   static final controlForm =
-      QueryRelationToOne<Security, ControlForm>(_entities[9].properties[13]);
+      QueryRelationToOne<Security, ControlForm>(_entities[8].properties[13]);
 
   /// see [Security.firstAidKitSafetyVest]
   static final firstAidKitSafetyVest =
-      QueryStringProperty<Security>(_entities[9].properties[14]);
+      QueryStringProperty<Security>(_entities[8].properties[14]);
 
   /// see [Security.firstAidKitSafetyVestComments]
   static final firstAidKitSafetyVestComments =
-      QueryStringProperty<Security>(_entities[9].properties[15]);
+      QueryStringProperty<Security>(_entities[8].properties[15]);
 }
 
 /// [BucketInspection] entity fields to define ObjectBox queries.
 class BucketInspection_ {
   /// see [BucketInspection.id]
   static final id =
-      QueryIntegerProperty<BucketInspection>(_entities[10].properties[0]);
+      QueryIntegerProperty<BucketInspection>(_entities[9].properties[0]);
 
   /// see [BucketInspection.insulated]
   static final insulated =
-      QueryStringProperty<BucketInspection>(_entities[10].properties[1]);
+      QueryStringProperty<BucketInspection>(_entities[9].properties[1]);
 
   /// see [BucketInspection.insulatedComments]
   static final insulatedComments =
-      QueryStringProperty<BucketInspection>(_entities[10].properties[2]);
+      QueryStringProperty<BucketInspection>(_entities[9].properties[2]);
 
   /// see [BucketInspection.holesDrilled]
   static final holesDrilled =
-      QueryStringProperty<BucketInspection>(_entities[10].properties[3]);
+      QueryStringProperty<BucketInspection>(_entities[9].properties[3]);
 
   /// see [BucketInspection.holesDrilledComments]
   static final holesDrilledComments =
-      QueryStringProperty<BucketInspection>(_entities[10].properties[4]);
+      QueryStringProperty<BucketInspection>(_entities[9].properties[4]);
 
   /// see [BucketInspection.bucketLiner]
   static final bucketLiner =
-      QueryStringProperty<BucketInspection>(_entities[10].properties[5]);
+      QueryStringProperty<BucketInspection>(_entities[9].properties[5]);
 
   /// see [BucketInspection.bucketLinerComments]
   static final bucketLinerComments =
-      QueryStringProperty<BucketInspection>(_entities[10].properties[6]);
+      QueryStringProperty<BucketInspection>(_entities[9].properties[6]);
 
   /// see [BucketInspection.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<BucketInspection>(_entities[10].properties[7]);
+      QueryIntegerProperty<BucketInspection>(_entities[9].properties[7]);
 
   /// see [BucketInspection.idDBR]
   static final idDBR =
-      QueryStringProperty<BucketInspection>(_entities[10].properties[8]);
+      QueryStringProperty<BucketInspection>(_entities[9].properties[8]);
 
   /// see [BucketInspection.controlForm]
   static final controlForm = QueryRelationToOne<BucketInspection, ControlForm>(
-      _entities[10].properties[9]);
+      _entities[9].properties[9]);
 }
 
 /// [Company] entity fields to define ObjectBox queries.
 class Company_ {
   /// see [Company.id]
-  static final id = QueryIntegerProperty<Company>(_entities[11].properties[0]);
+  static final id = QueryIntegerProperty<Company>(_entities[10].properties[0]);
 
   /// see [Company.company]
   static final company =
-      QueryStringProperty<Company>(_entities[11].properties[1]);
+      QueryStringProperty<Company>(_entities[10].properties[1]);
 
   /// see [Company.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<Company>(_entities[11].properties[2]);
+      QueryIntegerProperty<Company>(_entities[10].properties[2]);
 
   /// see [Company.idDBR]
   static final idDBR =
-      QueryStringProperty<Company>(_entities[11].properties[3]);
+      QueryStringProperty<Company>(_entities[10].properties[3]);
 }
 
 /// [Role] entity fields to define ObjectBox queries.
 class Role_ {
   /// see [Role.id]
-  static final id = QueryIntegerProperty<Role>(_entities[12].properties[0]);
+  static final id = QueryIntegerProperty<Role>(_entities[11].properties[0]);
 
   /// see [Role.role]
-  static final role = QueryStringProperty<Role>(_entities[12].properties[1]);
+  static final role = QueryStringProperty<Role>(_entities[11].properties[1]);
 
   /// see [Role.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<Role>(_entities[12].properties[2]);
+      QueryIntegerProperty<Role>(_entities[11].properties[2]);
 
   /// see [Role.idDBR]
-  static final idDBR = QueryStringProperty<Role>(_entities[12].properties[3]);
+  static final idDBR = QueryStringProperty<Role>(_entities[11].properties[3]);
 
   /// see [Role.bitacora]
   static final bitacora =
-      QueryRelationToOne<Role, Bitacora>(_entities[12].properties[4]);
+      QueryRelationToOne<Role, Bitacora>(_entities[11].properties[4]);
 
-  /// see [Role.usuarios]
-  static final usuarios =
-      QueryRelationToMany<Role, Usuarios>(_entities[12].relations[0]);
+  /// see [Role.users]
+  static final users =
+      QueryRelationToMany<Role, Users>(_entities[11].relations[0]);
 }
 
 /// [Status] entity fields to define ObjectBox queries.
 class Status_ {
   /// see [Status.id]
-  static final id = QueryIntegerProperty<Status>(_entities[13].properties[0]);
+  static final id = QueryIntegerProperty<Status>(_entities[12].properties[0]);
 
   /// see [Status.status]
   static final status =
-      QueryStringProperty<Status>(_entities[13].properties[1]);
+      QueryStringProperty<Status>(_entities[12].properties[1]);
 
   /// see [Status.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<Status>(_entities[13].properties[2]);
+      QueryIntegerProperty<Status>(_entities[12].properties[2]);
 
   /// see [Status.idDBR]
-  static final idDBR = QueryStringProperty<Status>(_entities[13].properties[3]);
+  static final idDBR = QueryStringProperty<Status>(_entities[12].properties[3]);
 }
 
 /// [Vehicle] entity fields to define ObjectBox queries.
 class Vehicle_ {
   /// see [Vehicle.id]
-  static final id = QueryIntegerProperty<Vehicle>(_entities[14].properties[0]);
+  static final id = QueryIntegerProperty<Vehicle>(_entities[13].properties[0]);
 
   /// see [Vehicle.make]
-  static final make = QueryStringProperty<Vehicle>(_entities[14].properties[1]);
+  static final make = QueryStringProperty<Vehicle>(_entities[13].properties[1]);
 
   /// see [Vehicle.model]
   static final model =
-      QueryStringProperty<Vehicle>(_entities[14].properties[2]);
+      QueryStringProperty<Vehicle>(_entities[13].properties[2]);
 
   /// see [Vehicle.year]
-  static final year = QueryStringProperty<Vehicle>(_entities[14].properties[3]);
+  static final year = QueryStringProperty<Vehicle>(_entities[13].properties[3]);
 
   /// see [Vehicle.image]
   static final image =
-      QueryStringProperty<Vehicle>(_entities[14].properties[4]);
+      QueryStringProperty<Vehicle>(_entities[13].properties[4]);
 
   /// see [Vehicle.path]
-  static final path = QueryStringProperty<Vehicle>(_entities[14].properties[5]);
+  static final path = QueryStringProperty<Vehicle>(_entities[13].properties[5]);
 
   /// see [Vehicle.vin]
-  static final vin = QueryStringProperty<Vehicle>(_entities[14].properties[6]);
+  static final vin = QueryStringProperty<Vehicle>(_entities[13].properties[6]);
 
   /// see [Vehicle.licesePlates]
   static final licesePlates =
-      QueryStringProperty<Vehicle>(_entities[14].properties[7]);
+      QueryStringProperty<Vehicle>(_entities[13].properties[7]);
 
   /// see [Vehicle.motor]
   static final motor =
-      QueryStringProperty<Vehicle>(_entities[14].properties[8]);
+      QueryStringProperty<Vehicle>(_entities[13].properties[8]);
 
   /// see [Vehicle.color]
   static final color =
-      QueryStringProperty<Vehicle>(_entities[14].properties[9]);
+      QueryStringProperty<Vehicle>(_entities[13].properties[9]);
 
   /// see [Vehicle.oilChangeDue]
   static final oilChangeDue =
-      QueryIntegerProperty<Vehicle>(_entities[14].properties[10]);
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[10]);
 
   /// see [Vehicle.registrationDue]
   static final registrationDue =
-      QueryIntegerProperty<Vehicle>(_entities[14].properties[11]);
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[11]);
 
   /// see [Vehicle.insuranceRenewalDue]
   static final insuranceRenewalDue =
-      QueryIntegerProperty<Vehicle>(_entities[14].properties[12]);
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[12]);
 
   /// see [Vehicle.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<Vehicle>(_entities[14].properties[13]);
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[13]);
 
   /// see [Vehicle.idDBR]
   static final idDBR =
-      QueryStringProperty<Vehicle>(_entities[14].properties[14]);
+      QueryStringProperty<Vehicle>(_entities[13].properties[14]);
 
   /// see [Vehicle.status]
   static final status =
-      QueryRelationToOne<Vehicle, Status>(_entities[14].properties[15]);
+      QueryRelationToOne<Vehicle, Status>(_entities[13].properties[15]);
 
   /// see [Vehicle.company]
   static final company =
-      QueryRelationToOne<Vehicle, Company>(_entities[14].properties[16]);
+      QueryRelationToOne<Vehicle, Company>(_entities[13].properties[16]);
+}
+
+/// [Users] entity fields to define ObjectBox queries.
+class Users_ {
+  /// see [Users.id]
+  static final id = QueryIntegerProperty<Users>(_entities[14].properties[0]);
+
+  /// see [Users.name]
+  static final name = QueryStringProperty<Users>(_entities[14].properties[1]);
+
+  /// see [Users.lastName]
+  static final lastName =
+      QueryStringProperty<Users>(_entities[14].properties[2]);
+
+  /// see [Users.middleName]
+  static final middleName =
+      QueryStringProperty<Users>(_entities[14].properties[3]);
+
+  /// see [Users.homePhone]
+  static final homePhone =
+      QueryStringProperty<Users>(_entities[14].properties[4]);
+
+  /// see [Users.mobilePhone]
+  static final mobilePhone =
+      QueryStringProperty<Users>(_entities[14].properties[5]);
+
+  /// see [Users.address]
+  static final address =
+      QueryStringProperty<Users>(_entities[14].properties[6]);
+
+  /// see [Users.correo]
+  static final correo = QueryStringProperty<Users>(_entities[14].properties[7]);
+
+  /// see [Users.password]
+  static final password =
+      QueryStringProperty<Users>(_entities[14].properties[8]);
+
+  /// see [Users.image]
+  static final image = QueryStringProperty<Users>(_entities[14].properties[9]);
+
+  /// see [Users.path]
+  static final path = QueryStringProperty<Users>(_entities[14].properties[10]);
+
+  /// see [Users.birthDate]
+  static final birthDate =
+      QueryIntegerProperty<Users>(_entities[14].properties[11]);
+
+  /// see [Users.idDBR]
+  static final idDBR = QueryStringProperty<Users>(_entities[14].properties[12]);
+
+  /// see [Users.role]
+  static final role =
+      QueryRelationToOne<Users, Role>(_entities[14].properties[13]);
+
+  /// see [Users.company]
+  static final company =
+      QueryRelationToOne<Users, Company>(_entities[14].properties[14]);
+
+  /// see [Users.vehicle]
+  static final vehicle =
+      QueryRelationToOne<Users, Vehicle>(_entities[14].properties[15]);
+
+  /// see [Users.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<Users>(_entities[14].properties[16]);
+
+  /// see [Users.bitacora]
+  static final bitacora =
+      QueryRelationToMany<Users, Bitacora>(_entities[14].relations[0]);
+
+  /// see [Users.roles]
+  static final roles =
+      QueryRelationToMany<Users, Role>(_entities[14].relations[1]);
+
+  /// see [Users.status]
+  static final status =
+      QueryRelationToMany<Users, Status>(_entities[14].relations[2]);
 }

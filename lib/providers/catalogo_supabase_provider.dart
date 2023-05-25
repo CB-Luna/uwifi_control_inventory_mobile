@@ -65,8 +65,8 @@ class CatalogoSupabaseProvider extends ChangeNotifier {
       final recordsTecnicosMecanicos = await supabaseClient.from('users').select().eq('rol_fk', '2');
       //Se recupera toda la colección de tecnicosMecanicos en ObjectBox
       final tecnicosMecanicosObjectBox = 
-        dataBase.usuariosBox.query(
-            Usuarios_.rol.equals(dataBase.roleBox.query(
+        dataBase.usersBox.query(
+            Users_.role.equals(dataBase.roleBox.query(
                 Role_.role.equals("Técnico-Mecánico"))
                 .build().findFirst()?.id ?? 0)).build().find();
       for (var element in tecnicosMecanicosObjectBox) {
@@ -77,23 +77,23 @@ class CatalogoSupabaseProvider extends ChangeNotifier {
         final listTecnicosMecanicos = recordsTecnicosMecanicos as List<dynamic>;
         for (var tecnicoMecanico in listTecnicosMecanicos) {
           //Se valida que el nuevo tecnicosMecanicos aún no existe en Objectbox
-          final tecnicosMecanicosExistente = dataBase.usuariosBox
-              .query(Usuarios_.idDBR.equals(tecnicoMecanico['id'].toString()))
+          final tecnicosMecanicosExistente = dataBase.usersBox
+              .query(Users_.idDBR.equals(tecnicoMecanico['id'].toString()))
               .build()
               .findUnique();
           if (tecnicosMecanicosExistente == null) {
-            final nuevoTecnicoMecanico = Usuarios(
-              nombre: tecnicoMecanico['nombre'],
-              apellidoP: tecnicoMecanico['apellido_p'],
-              apellidoM: tecnicoMecanico['apellido_m'],
-              celular: tecnicoMecanico['celular'],
-              telefono: tecnicoMecanico['telefono'],
-              domicilio: tecnicoMecanico['domicilio'],
+            final nuevoTecnicoMecanico = Users(
+              name: tecnicoMecanico['nombre'],
+              lastName: tecnicoMecanico['apellido_p'],
+              middleName: tecnicoMecanico['apellido_m'],
+              mobilePhone: tecnicoMecanico['celular'],
+              homePhone: tecnicoMecanico['telefono'],
+              address: tecnicoMecanico['domicilio'],
               correo: tecnicoMecanico['email'],
               idDBR: tecnicoMecanico['id'],
-              imagen: tecnicoMecanico['imagen'],
+              image: tecnicoMecanico['imagen'],
               password: "default",
-              interno: tecnicoMecanico['interno'],
+              birthDate: DateTime.now(),
             );
             // //Se agregan los roles
             // for (var i = 0; i < rolesIdDBR.length; i++) {
@@ -105,24 +105,14 @@ class CatalogoSupabaseProvider extends ChangeNotifier {
             //Se asiga el rol actual que ocupará
             final rolActual = dataBase.roleBox.query(Role_.idDBR.equals(tecnicoMecanico['rol_fk'].toString())).build().findUnique(); //Se recupera el rol actual del Usuario
             if (rolActual != null) {
-              nuevoTecnicoMecanico.rol.target = rolActual;
-              dataBase.usuariosBox.put(nuevoTecnicoMecanico);
+              nuevoTecnicoMecanico.role.target = rolActual;
+              dataBase.usersBox.put(nuevoTecnicoMecanico);
             }
-            dataBase.usuariosBox.put(nuevoTecnicoMecanico);
+            dataBase.usersBox.put(nuevoTecnicoMecanico);
             listaTecnicosMecanicosAEliminar.remove(tecnicoMecanico['id'].toString());
             notifyListeners();
           } else {
             //Se actualiza el registro en Objectbox
-              tecnicosMecanicosExistente.nombre = tecnicoMecanico['nombre'];
-              tecnicosMecanicosExistente.apellidoP = tecnicoMecanico['apellido_p'];
-              tecnicosMecanicosExistente.apellidoM = tecnicoMecanico['apellido_m'];
-              tecnicosMecanicosExistente.celular = tecnicoMecanico['celular'];
-              tecnicosMecanicosExistente.telefono = tecnicoMecanico['telefono'];
-              tecnicosMecanicosExistente.domicilio = tecnicoMecanico['domicilio'];
-              tecnicosMecanicosExistente.correo = tecnicoMecanico['email'];
-              tecnicosMecanicosExistente.imagen = tecnicoMecanico['imagen'];
-              tecnicosMecanicosExistente.idDBR = tecnicoMecanico['id'];
-              tecnicosMecanicosExistente.interno = tecnicoMecanico['interno'];
             // //Se agregan los roles
             // for (var i = 0; i < rolesIdDBR.length; i++) {
             //   final nuevoRol = dataBase.rolesBox.query(Roles_.idDBR.equals(rolesIdDBR[i])).build().findUnique(); //Se recupera el rol del Usuario
@@ -133,21 +123,21 @@ class CatalogoSupabaseProvider extends ChangeNotifier {
             //Se asiga el rol actual que ocupará
             final rolActual = dataBase.roleBox.query(Role_.idDBR.equals(tecnicoMecanico['rol_fk'].toString())).build().findUnique(); //Se recupera el rol actual del Usuario
             if (rolActual != null) {
-              tecnicosMecanicosExistente.rol.target = rolActual;
+              tecnicosMecanicosExistente.role.target = rolActual;
             }
-            dataBase.usuariosBox.put(tecnicosMecanicosExistente);
+            dataBase.usersBox.put(tecnicosMecanicosExistente);
             listaTecnicosMecanicosAEliminar.remove(tecnicoMecanico['id'].toString());
             notifyListeners();
           }
         }
         if (listaTecnicosMecanicosAEliminar.isNotEmpty) {
           for (var element in listaTecnicosMecanicosAEliminar) {
-            final tecnicosMecanicosExistente = dataBase.usuariosBox
-                .query(Usuarios_.idDBR.equals(element!))
+            final tecnicosMecanicosExistente = dataBase.usersBox
+                .query(Users_.idDBR.equals(element!))
                 .build()
                 .findUnique();
             if (tecnicosMecanicosExistente != null) {
-              dataBase.usuariosBox.remove(tecnicosMecanicosExistente.id);
+              dataBase.usersBox.remove(tecnicosMecanicosExistente.id);
             }
           }
         }

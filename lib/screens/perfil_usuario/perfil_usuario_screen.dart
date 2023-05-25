@@ -49,7 +49,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
       );
     }
 
-    final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
+    final Users currentUser = usuarioProvider.usuarioCurrent!;
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -155,7 +155,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             25, 0, 0, 0),
                                     child: AutoSizeText(
-                                      "Info. of ${maybeHandleOverflow('${currentUser.nombre} ${currentUser.apellidoP}', 18, '...')}",
+                                      "Info. of ${maybeHandleOverflow('${currentUser.name} ${currentUser.lastName}', 18, '...')}",
                                       maxLines: 2,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
@@ -222,7 +222,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                               color: FlutterFlowTheme.of(context).primaryColor,
                               child: Center(
                                 child: Text(
-                                  "${currentUser.nombre.substring(0, 1)} ${currentUser.apellidoP.substring(0, 1)}",
+                                  "${currentUser.name.substring(0, 1)} ${currentUser.lastName.substring(0, 1)}",
                                   style:
                                       FlutterFlowTheme.of(context).bodyText1.override(
                                             fontFamily: FlutterFlowTheme.of(context)
@@ -251,14 +251,14 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                       fit: BoxFit.contain,
                                     ),
                                     allowRotation: false,
-                                    tag: currentUser.nombre,
+                                    tag: currentUser.name,
                                     useHeroAnimation: true,
                                   ),
                                 ),
                               );
                             },
                             child: Hero(
-                              tag: currentUser.nombre,
+                              tag: currentUser.name,
                               transitionOnUserGestures: true,
                               child: Container(
                                 width: 200,
@@ -286,7 +286,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 2, 0),
                           child: Text(
-                            "${currentUser.nombre} ${currentUser.apellidoP}",
+                            "${currentUser.name} ${currentUser.lastName}",
                             style: FlutterFlowTheme.of(context).bodyText1.override(
                                   fontFamily:
                                       FlutterFlowTheme.of(context).bodyText1Family,
@@ -337,7 +337,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                 ),
                               ),
                               Text(
-                                currentUser.rol.target!.role,
+                                currentUser.role.target!.role,
                                 style: FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily:
                                           FlutterFlowTheme.of(context).bodyText1Family,

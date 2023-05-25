@@ -37,7 +37,7 @@ class SideMenu extends StatelessWidget {
       );
     }
 
-    final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
+    final Users currentUser = usuarioProvider.usuarioCurrent!;
 
     return SafeArea(
       child: SizedBox(
@@ -101,7 +101,7 @@ class SideMenu extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            currentUser.imagen == null
+                            currentUser.image == null
                                 ? Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -117,7 +117,7 @@ class SideMenu extends StatelessWidget {
                                         color: FlutterFlowTheme.of(context).primaryColor,
                                         child: Center(
                                           child: Text(
-                                            "${currentUser.nombre.substring(0, 1)} ${currentUser.apellidoP.substring(0, 1)}",
+                                            "${currentUser.name.substring(0, 1)} ${currentUser.lastName.substring(0, 1)}",
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText1
                                                 .override(
@@ -155,7 +155,7 @@ class SideMenu extends StatelessWidget {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 0, 0),
                               child: Text(
-                                maybeHandleOverflow("${usuarioProvider.usuarioCurrent!.nombre} ${usuarioProvider.usuarioCurrent!.apellidoP}", 16, "..."),
+                                maybeHandleOverflow("${usuarioProvider.usuarioCurrent!.name} ${usuarioProvider.usuarioCurrent!.lastName}", 16, "..."),
                                 maxLines: 2,
                                 style: FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily:
@@ -184,7 +184,7 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-                    if (currentUser.rol.target!.role == "Cliente")
+                    if (currentUser.role.target!.role == "Cliente")
                     CustomMenuItem(
                       label: 'Vehicles',
                       iconData: Icons.directions_car,
@@ -193,12 +193,12 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-                    if (currentUser.rol.target!.role == "Asesor")
+                    if (currentUser.role.target!.role == "Asesor")
                     CustomMenuItem(
                       label: 'Employees',
                       iconData: Icons.groups,
                       onTap: () async {
-                        if (currentUser.rol.target!.role == "Voluntario Estratégico") {
+                        if (currentUser.role.target!.role == "Voluntario Estratégico") {
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
                             content: Text(
@@ -220,8 +220,8 @@ class SideMenu extends StatelessWidget {
                       iconData: Icons.sync_rounded,
                       lineHeight: 1.2,
                       onTap: () async {
-                        if (currentUser.rol.target!.role == "Amigo del Cambio" ||
-                            currentUser.rol.target!.role == "Emprendedor") {
+                        if (currentUser.role.target!.role == "Amigo del Cambio" ||
+                            currentUser.role.target!.role == "Emprendedor") {
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
                             content: Text(
@@ -260,7 +260,7 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-                    if (currentUser.rol.target!.role == "Asesor")
+                    if (currentUser.role.target!.role == "Asesor")
                     CustomMenuItem(
                       label: 'Report Recover',
                       iconData: Icons.downloading_outlined,
@@ -269,14 +269,14 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-                    if (currentUser.rol.target!.role == "Asesor")
+                    if (currentUser.role.target!.role == "Asesor")
                     CustomMenuItem(
                       label: 'Sync. Catalog',
                       iconData: Icons.fact_check_outlined,
                       lineHeight: 1.2,
                       onTap: () async {
-                        if (currentUser.rol.target!.role == "Amigo del Cambio" ||
-                            currentUser.rol.target!.role == "Emprendedor") {
+                        if (currentUser.role.target!.role == "Amigo del Cambio" ||
+                            currentUser.role.target!.role == "Emprendedor") {
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
                             content: Text(

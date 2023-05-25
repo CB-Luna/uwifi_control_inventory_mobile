@@ -11,7 +11,7 @@ class ControlForm {
   DateTime dateAdded;
   @Unique()
   String? idDBR;
-  final employee = ToOne<Usuarios>();
+  final employee = ToOne<Users>();
   final vehicle = ToOne<Vehicle>();
   final measures = ToOne<Measures>();
   final lights = ToOne<Lights>();
@@ -88,7 +88,7 @@ class Role {
   @Unique()
   String idDBR;
   final bitacora = ToOne<Bitacora>();
-  final usuarios = ToMany<Usuarios>();
+  final users = ToMany<Users>();
 
   Role({
     this.id = 0,
@@ -652,9 +652,9 @@ class Bitacora {
   final equipment = ToOne<Equipment>();
   final status = ToOne<Status>();
   final company = ToOne<Company>();
-  final usuario = ToOne<Usuarios>();
+  final user = ToOne<Users>();
   @Backlink()
-  final usuarios = ToMany<Usuarios>();
+  final users = ToMany<Users>();
 
   Bitacora({
     this.id = 0,
@@ -672,51 +672,50 @@ class Bitacora {
 
 
 @Entity()
-class Usuarios {
+class Users {
   int id;
-  String nombre;
-  String apellidoP;
-  String? apellidoM;
-  String? telefono;
-  String celular;
-  String? domicilio;
+  String name;
+  String lastName;
+  String? middleName;
+  String? homePhone;
+  String mobilePhone;
+  String? address;
   String correo;
   String password;
-  String? imagen;
+  String? image;
   String? path;
-  bool? interno;
-  DateTime fechaRegistro;
+  DateTime birthDate;
+  DateTime dateAdded;
   @Unique()
   String idDBR;
   final bitacora = ToMany<Bitacora>();
-  final rol = ToOne<Role>();
+  final role = ToOne<Role>();
   final roles = ToMany<Role>();
-  final asesor = ToOne<Usuarios>(); 
-  final clientes = ToMany<Usuarios>(); 
-  final tecnicosMecanicos = ToMany<Usuarios>(); 
+  final company = ToOne<Company>(); 
+  final status = ToMany<Status>(); 
   final vehicle = ToOne<Vehicle>();
   @Backlink()
   final controlForms = ToMany<ControlForm>();
   
-  Usuarios({
+  Users({
     this.id = 0,
-    required this.nombre,
-    required this.apellidoP,
-    this.apellidoM,
-    this.telefono,
-    required this.celular,
-    this.domicilio,
+    required this.name,
+    required this.lastName,
+    this.middleName,
+    this.homePhone,
+    required this.mobilePhone,
+    this.address,
     required this.correo,
     required this.password,
-    this.imagen,
+    this.image,
     this.path,
-    this.interno,
-    DateTime? fechaRegistro,
+    required this.birthDate,
+    DateTime? dateAdded,
     required this.idDBR,
-  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+  }) : dateAdded = dateAdded ?? DateTime.now();
 
-  String get fechaRegistroFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
 }
 
 

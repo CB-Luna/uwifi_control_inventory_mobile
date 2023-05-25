@@ -5,7 +5,7 @@ import 'package:taller_alex_app_asesor/objectbox.g.dart';
 class ObjectBoxDatabase {
   late final Store store;
 
-  late final Box<Usuarios> usuariosBox;
+  late final Box<Users> usersBox;
   late final Box<Vehicle> vehicleBox;
   late final Box<ControlForm> controlFormBox;
   late final Box<Measures> measuresFormBox;
@@ -22,7 +22,7 @@ class ObjectBoxDatabase {
 
   ObjectBoxDatabase._create(this.store) {
     // Add any additional setup code, e.g. build queries.
-    usuariosBox = Box<Usuarios>(store);
+    usersBox = Box<Users>(store);
     vehicleBox = Box<Vehicle>(store);
     controlFormBox = Box<ControlForm>(store);
     measuresFormBox = Box<Measures>(store);

@@ -18,7 +18,7 @@ class CambiarPasswordScreen extends StatefulWidget {
     required this.usuario,
   }) : super(key: key);
 
-  final Usuarios usuario;
+  final Users usuario;
 
   @override
   State<CambiarPasswordScreen> createState() => _CambiarPasswordScreenState();
@@ -170,7 +170,7 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               25, 0, 0, 0),
                                       child: AutoSizeText(
-                                        "Perfil de ${maybeHandleOverflow('${widget.usuario.nombre} ${widget.usuario.apellidoP}', 25, '...')}",
+                                        "Perfil de ${maybeHandleOverflow('${widget.usuario.name} ${widget.usuario.lastName}', 25, '...')}",
                                         maxLines: 2,
                                         style: AppTheme.of(context)
                                             .bodyText1

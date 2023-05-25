@@ -10,14 +10,14 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class UsuarioController extends ChangeNotifier {
-  List<Usuarios> usuarios = [];
+  List<Users> usuarios = [];
 
   ControlForm? controlFormReceived;
   ControlForm? controlFormDelivered;
   
   var uuid = Uuid();
 
-  Usuarios? usuarioCurrent;
+  Users? usuarioCurrent;
   //Usuario
   String nombre = '';
   String apellidoP = '';
@@ -37,7 +37,7 @@ class UsuarioController extends ChangeNotifier {
     //print("Currentuser: $currentUser");
     if (email != null) {
       final query =
-          dataBase.usuariosBox.query(Usuarios_.correo.equals(email)).build();
+          dataBase.usersBox.query(Users_.correo.equals(email)).build();
       currentUser = currentUser;
       usuarioCurrent = query.findFirst();
       //print(usuarioCurrent?.nombre ?? "SIN NOMBRE");
@@ -67,17 +67,18 @@ class UsuarioController extends ChangeNotifier {
       List<String> rolesIdDBR,
       String idDBR,
       ) async {
-    final nuevoUsuario = Usuarios(
-        nombre: nombre,
-        apellidoP: apellidoP,
-        apellidoM: apellidoM,
-        telefono: telefono,
-        celular: celular,
+    final nuevoUsuario = Users(
+        name: nombre,
+        lastName: apellidoP,
+        middleName: apellidoM,
+        homePhone: telefono,
+        mobilePhone: celular,
         correo: correo,
         password: password,
         idDBR: idDBR, 
-        domicilio: domicilio,
-        imagen: imagenBase64,
+        address: domicilio,
+        image: imagenBase64,
+        birthDate: DateTime.now()
         );
     if (imagenBase64 != null) {
       final uInt8ListImagen = base64Decode(imagenBase64);
@@ -97,8 +98,8 @@ class UsuarioController extends ChangeNotifier {
     //Se asiga el rol actual que ocupará
     final rolActual = dataBase.roleBox.query(Role_.idDBR.equals(rolesIdDBR[0])).build().findUnique(); //Se recupera el rol actual del Usuario
     if (rolActual != null) {
-      nuevoUsuario.rol.target = rolActual;
-      dataBase.usuariosBox.put(nuevoUsuario);
+      nuevoUsuario.role.target = rolActual;
+      dataBase.usersBox.put(nuevoUsuario);
       usuarios.add(nuevoUsuario);
       //print('Usuario agregado exitosamente');
       notifyListeners();
@@ -118,15 +119,15 @@ class UsuarioController extends ChangeNotifier {
       List<String> newRolesIdDBR,
       ) async {
     // Se recupera el usuario por id
-    final updateUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(correo)).build().findUnique();
+    final updateUsuario = dataBase.usersBox.query(Users_.correo.equals(correo)).build().findUnique();
     if (updateUsuario != null) {
-      updateUsuario.nombre = newNombre;
-      updateUsuario.apellidoP = newApellidoP;
-      updateUsuario.apellidoM = newApellidoM;
-      updateUsuario.nombre = newNombre;
-      updateUsuario.telefono = newTelefono;
-      updateUsuario.celular = newCelular;
-      updateUsuario.domicilio = newDomicilio;
+      updateUsuario.name = newNombre;
+      updateUsuario.lastName = newApellidoP;
+      updateUsuario.middleName= newApellidoM;
+      updateUsuario.name = newNombre;
+      updateUsuario.homePhone = newTelefono;
+      updateUsuario.mobilePhone = newCelular;
+      updateUsuario.address = newDomicilio;
       updateUsuario.password = newPassword;
       //Se agregan los roles actualizados
       updateUsuario.roles.clear();
@@ -139,7 +140,7 @@ class UsuarioController extends ChangeNotifier {
       //Se asiga el rol actual que ocupará
       final rolActual = dataBase.roleBox.query(Role_.idDBR.equals(newRolesIdDBR[0])).build().findUnique(); //Se recupera el rol actual del Usuario
       if (rolActual != null) {
-        updateUsuario.rol.target = rolActual;
+        updateUsuario.role.target = rolActual;
       }
       if (newImagenBase64 != null) {
           //print("Se actualiza imagen USUARIO");
@@ -149,17 +150,17 @@ class UsuarioController extends ChangeNotifier {
           final tempDir = await getTemporaryDirectory();
           File file = await File('${tempDir.path}/${uuid.v1()}.jpg').create();
           file.writeAsBytesSync(uInt8ListImagen);
-          updateUsuario.imagen = newImagenBase64;
+          updateUsuario.image = newImagenBase64;
           updateUsuario.path = file.path;
       } else {
-        if (updateUsuario.imagen != null) {
+        if (updateUsuario.image != null) {
           // Se eliminan los datos de la imagen actual del usuario
-          updateUsuario.imagen = null;
+          updateUsuario.image = null;
           updateUsuario.path = null;
         }
       }
       // Se actualiza el usuario con éxito
-      dataBase.usuariosBox.put(updateUsuario); 
+      dataBase.usersBox.put(updateUsuario); 
       return true;
     } else {
       // No se encontró el usuario a actualizar en ObjectBox
@@ -169,13 +170,13 @@ class UsuarioController extends ChangeNotifier {
   }
 
 void updateRol(int id, int newIdRol) {
-    var updateUsuario = dataBase.usuariosBox.get(id);
+    var updateUsuario = dataBase.usersBox.get(id);
     if (updateUsuario != null) {
       final updateRol = dataBase.roleBox.get(newIdRol);
       if (updateRol != null) {
-        updateUsuario.rol.target = updateRol; //Se actualiza el rol del Usuario
+        updateUsuario.role.target = updateRol; //Se actualiza el rol del Usuario
       }
-      dataBase.usuariosBox.put(updateUsuario);
+      dataBase.usersBox.put(updateUsuario);
       //print('Usuario actualizado exitosamente');
     }
     notifyListeners();
@@ -196,13 +197,13 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     notifyListeners();
   }
   getAll() {
-    usuarios = dataBase.usuariosBox.getAll();
+    usuarios = dataBase.usersBox.getAll();
     notifyListeners();
   }
 
   //Usuario existente o no en la base de Datos
   bool validateUsuario(String email) {
-    final usuarios = dataBase.usuariosBox.getAll();
+    final usuarios = dataBase.usersBox.getAll();
     for (int i = 0; i < usuarios.length; i++) {
       if (usuarios[i].correo == email) {
         return true;
@@ -211,8 +212,8 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     return false;
   }
 
-  Usuarios? validateUserOffline(String email, String password) {
-    final usuarios = dataBase.usuariosBox.getAll();
+  Users? validateUserOffline(String email, String password) {
+    final usuarios = dataBase.usersBox.getAll();
     for (int i = 0; i < usuarios.length; i++) {
       if (usuarios[i].correo == email && usuarios[i].password == password) {
         return usuarios[i];
@@ -223,7 +224,7 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
 
   //Se recupera ID del Usuario ya existente
   void getUserID(String email) {
-    final usuarios = dataBase.usuariosBox.getAll();
+    final usuarios = dataBase.usersBox.getAll();
     for (int i = 0; i < usuarios.length; i++) {
       if (usuarios[i].correo == email) {
         currentUserId = usuarios[i].id;
@@ -237,7 +238,7 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
   //Se recupera informacion del Usuario ya existente
   void getUser(String email) {
     final query =
-        dataBase.usuariosBox.query(Usuarios_.correo.equals(email)).build();
+        dataBase.usersBox.query(Users_.correo.equals(email)).build();
     currentUser = email;
     usuarioCurrent = query.findFirst();
   }
@@ -246,16 +247,15 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
   void updatePasswordLocal(String password) {
     if (usuarioCurrent != null) {
       usuarioCurrent!.password = password;
-      dataBase.usuariosBox.put(usuarioCurrent!);
+      dataBase.usersBox.put(usuarioCurrent!);
     }
   }
 
 
   bool addCliente(int idCliente) {
-    final cliente = dataBase.usuariosBox.get(idCliente);
+    final cliente = dataBase.usersBox.get(idCliente);
     if (cliente != null) {
-      usuarioCurrent!.clientes.add(cliente);
-      dataBase.usuariosBox.put(usuarioCurrent!);
+      dataBase.usersBox.put(usuarioCurrent!);
       //print('Emprendimiento modificado exitosamente');
       notifyListeners();
       return true;
@@ -268,7 +268,7 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
 
   List<ControlForm> obtenerOrdenesTrabajo() {
     final List<ControlForm> ordenesTrabajo = [];
-    final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? 1);
+    final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? 1);
     if (usuarioActual != null) {
       //   for (var element in usuarioActual.ordenesTrabajo) {
       //   ordenesTrabajo.add(element);
@@ -277,40 +277,30 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     return ordenesTrabajo;
   }
 
-  List<Usuarios> obtenerClientes() {
-    final List<Usuarios> clientes = [];
-    final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? 1);
+  List<Users> obtenerClientes() {
+    final List<Users> clientes = [];
+    final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? 1);
     if (usuarioActual != null) {
-        for (var element in usuarioActual.clientes) {
-        clientes.add(element);
-      }
     }
     return clientes;
   }
 
   List<String> obtenerOpcionesVehiculos() {
     final List<String> opcionesVehiculos = [];
-    final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? -1);
+    final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual != null) {
-        for (var cliente in usuarioActual.clientes) {
+        // for (var cliente in usuarioActual.clientes) {
         // for (var vehiculo in cliente.vehiculo) {
         //   opcionesVehiculos.add("${cliente.nombre} ${cliente.apellidoP} ${cliente.apellidoM} ${vehiculo.placas} ${vehiculo.vin}");
         // }
-      }
+      // }
     }
     return opcionesVehiculos;
   }
 
   List<String> obtenerTecnicosMecanicosInternos() {
-    List<Usuarios> tecnicosMecanicosInternos = [];
+    List<Users> tecnicosMecanicosInternos = [];
     List<String> opcionesTecnicosMecanicos = [];
-    tecnicosMecanicosInternos = dataBase.usuariosBox.query(
-            Usuarios_.rol.equals(dataBase.roleBox.query(
-                Role_.role.equals("Técnico-Mecánico"))
-                .build().findFirst()?.id ?? 0).and(Usuarios_.interno.equals(true))).build().find();
-    for (var tecnicoMecanico in tecnicosMecanicosInternos) {
-      opcionesTecnicosMecanicos.add("${tecnicoMecanico.nombre} ${tecnicoMecanico.apellidoP} ${tecnicoMecanico.apellidoM} ${tecnicoMecanico.celular} ${tecnicoMecanico.correo}");
-    }
     return opcionesTecnicosMecanicos;
   }
 

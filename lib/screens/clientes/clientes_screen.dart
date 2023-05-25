@@ -23,7 +23,7 @@ class ClientesScreen extends StatefulWidget {
 class _ClientesScreenState extends State<ClientesScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  List<Usuarios> clientes = [];
+  List<Users> clientes = [];
 
   @override
   void initState() {
@@ -293,13 +293,13 @@ class _ClientesScreenState extends State<ClientesScreen> {
                           if (searchController.text != '') {
                             clientes.removeWhere((element) {
                               final nombreCliente = removeDiacritics(
-                                      '${element.nombre} ${element.apellidoP} ${element.apellidoM}')
+                                      '${element.name} ${element.lastName} ${element.middleName}')
                                   .toLowerCase();
                               final correo =
                                   removeDiacritics(element.correo)
                                       .toLowerCase();
                               final celular =
-                                  removeDiacritics(element.celular)
+                                  removeDiacritics(element.mobilePhone)
                                       .toLowerCase();
                               final tempBusqueda =
                                   removeDiacritics(searchController.text)
@@ -376,9 +376,9 @@ class _ClientesScreenState extends State<ClientesScreen> {
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    maybeHandleOverflow("${cliente.nombre} ${
-                                                      cliente.apellidoP} ${
-                                                        cliente.apellidoM}", 30, "..."),
+                                                    maybeHandleOverflow("${cliente.name} ${
+                                                      cliente.lastName} ${
+                                                        cliente.middleName}", 30, "..."),
                                                     maxLines: 1,
                                                     overflow:
                                                         TextOverflow.ellipsis,
@@ -412,7 +412,7 @@ class _ClientesScreenState extends State<ClientesScreen> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    "No. Celular: ${cliente.celular}",
+                                                    "No. Celular: ${cliente.mobilePhone}",
                                                     maxLines: 1,
                                                     overflow: TextOverflow.ellipsis,
                                                     style: FlutterFlowTheme.of(context)

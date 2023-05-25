@@ -13,7 +13,6 @@ import 'package:taller_alex_app_asesor/database/object_box_database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/app_state.dart';
-import 'providers/database_providers/cliente_controller.dart';
 import 'providers/database_providers/receiving_form_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/catalogo_supabase_provider.dart';
@@ -60,10 +59,6 @@ void main() async {
       providers: [
         ChangeNotifierProvider<ControlFormProvider>(
           create: (context) => ControlFormProvider(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<ClienteController>(
-          create: (context) => ClienteController(),
           lazy: false,
         ),
         ChangeNotifierProvider<VehiculoController>(

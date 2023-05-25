@@ -27,7 +27,7 @@ class EditarUsuarioScreen extends StatefulWidget {
     required this.usuario,
   }) : super(key: key);
 
-  final Usuarios usuario;
+  final Users usuario;
 
   @override
   State<EditarUsuarioScreen> createState() => _EditarUsuarioScreenState();
@@ -50,17 +50,17 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   @override
   void initState() {
     super.initState();
-    rolUsuario = widget.usuario.rol.target!.role;
+    rolUsuario = widget.usuario.role.target!.role;
     listRoles = [];
     for (var element in widget.usuario.roles) {
       listRoles.add(element.role);
     }
     newImagen = "";
     imagenTemp = widget.usuario.path;
-    nombreController = TextEditingController(text: widget.usuario.nombre);
-    apellidoPController = TextEditingController(text: widget.usuario.apellidoP);
-    apellidoMController = TextEditingController(text: widget.usuario.apellidoM);
-    telefonoController = TextEditingController(text: widget.usuario.telefono);
+    nombreController = TextEditingController(text: widget.usuario.name);
+    apellidoPController = TextEditingController(text: widget.usuario.lastName);
+    apellidoMController = TextEditingController(text: widget.usuario.middleName);
+    telefonoController = TextEditingController(text: widget.usuario.homePhone);
   }
 
   @override
@@ -180,7 +180,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               25, 0, 0, 0),
                                       child: AutoSizeText(
-                                        "Perfil de ${maybeHandleOverflow('${widget.usuario.nombre} ${widget.usuario.apellidoP}', 25, '...')}",
+                                        "Perfil de ${maybeHandleOverflow('${widget.usuario.name} ${widget.usuario.lastName}', 25, '...')}",
                                         maxLines: 2,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
@@ -222,7 +222,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                       color: FlutterFlowTheme.of(context).primaryColor,
                                       child: Center(
                                         child: Text(
-                                          "${widget.usuario.nombre.substring(0, 1)} ${widget.usuario.apellidoP.substring(0, 1)}",
+                                          "${widget.usuario.name.substring(0, 1)} ${widget.usuario.lastName.substring(0, 1)}",
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1
                                               .override(
@@ -362,16 +362,16 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                         if (imagenTemp != widget.usuario.path) {
                                           //print("Sí");
                                           if (nombreController.text !=
-                                                widget.usuario.nombre ||
+                                                widget.usuario.name ||
                                             apellidoPController.text !=
-                                                widget.usuario.apellidoP ||
+                                                widget.usuario.lastName ||
                                             apellidoMController.text !=
-                                                widget.usuario.apellidoM ||
+                                                widget.usuario.middleName ||
                                             telefonoController.text !=
-                                                widget.usuario.telefono) {
+                                                widget.usuario.homePhone) {
                                           if (usuarioProvider.validateForm(formKey)) {
                                             if (rolUsuario !=
-                                                    widget.usuario.rol.target!.role) {
+                                                    widget.usuario.role.target!.role) {
                                               final idRol = dataBase.roleBox
                                                   .query(Role_.role.equals(rolUsuario))
                                                   .build()
@@ -439,7 +439,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                           }
                                         } else {
                                           if (rolUsuario !=
-                                                  widget.usuario.rol.target!.role) {
+                                                  widget.usuario.role.target!.role) {
                                             final idRol = dataBase.roleBox
                                                 .query(Role_.role.equals(rolUsuario))
                                                 .build()
@@ -483,16 +483,16 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                         } else {
                                           //print("No");
                                           if (nombreController.text !=
-                                                  widget.usuario.nombre ||
+                                                  widget.usuario.name ||
                                               apellidoPController.text !=
-                                                  widget.usuario.apellidoP ||
+                                                  widget.usuario.lastName ||
                                               apellidoMController.text !=
-                                                  widget.usuario.apellidoM ||
+                                                  widget.usuario.middleName ||
                                               telefonoController.text !=
-                                                  widget.usuario.telefono) {
+                                                  widget.usuario.homePhone) {
                                             if (usuarioProvider.validateForm(formKey)) {
                                               if (rolUsuario !=
-                                                      widget.usuario.rol.target!.role) {
+                                                      widget.usuario.role.target!.role) {
                                                 final idRol = dataBase.roleBox
                                                     .query(Role_.role.equals(rolUsuario))
                                                     .build()
@@ -543,7 +543,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                             }
                                           } else {
                                             if (rolUsuario !=
-                                                    widget.usuario.rol.target!.role) {
+                                                    widget.usuario.role.target!.role) {
                                                 final idRol = dataBase.roleBox
                                                     .query(Role_.role.equals(rolUsuario))
                                                     .build()

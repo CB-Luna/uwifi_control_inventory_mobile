@@ -1129,7 +1129,7 @@ class ReceivingFormController extends ChangeNotifier {
 
 
   
-  bool addControlForm(Usuarios? user) {
+  bool addControlForm(Users? user) {
     try {
       final measures = Measures(
         gas: "$gasDieselPercent %", 
@@ -1371,7 +1371,7 @@ class ReceivingFormController extends ChangeNotifier {
 
         //Employee
         user.controlForms.add(controlForm);
-        dataBase.usuariosBox.put(user);
+        dataBase.usersBox.put(user);
 
         final nuevaInstruccion = Bitacora(
           instruccion: 'syncAddControlForm',
