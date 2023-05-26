@@ -1381,11 +1381,7 @@ final _entities = <ModelEntity>[
         ModelRelation(
             id: const IdUid(96, 7279223846688382106),
             name: 'roles',
-            targetId: const IdUid(97, 4052095333394296256)),
-        ModelRelation(
-            id: const IdUid(97, 7907540417784017008),
-            name: 'status',
-            targetId: const IdUid(98, 4907560803572122681))
+            targetId: const IdUid(97, 4052095333394296256))
       ],
       backlinks: <ModelBacklink>[
         ModelBacklink(
@@ -2738,7 +2734,8 @@ ModelDefinition getObjectBoxModel() {
         8650399258645622385,
         4454853059839861178,
         1176537328766838454,
-        4439914579551300934
+        4439914579551300934,
+        7907540417784017008
       ],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -3951,7 +3948,6 @@ ModelDefinition getObjectBoxModel() {
         toManyRelations: (Users object) => {
               RelInfo<Users>.toMany(95, object.id): object.bitacora,
               RelInfo<Users>.toMany(96, object.id): object.roles,
-              RelInfo<Users>.toMany(97, object.id): object.status,
               RelInfo<ControlForm>.toOneBacklink(5, object.id,
                       (ControlForm srcObject) => srcObject.employee):
                   object.controlForms
@@ -4039,8 +4035,6 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<Users>.toMany(95, object.id), store.box<Users>());
           InternalToManyAccess.setRelInfo(object.roles, store,
               RelInfo<Users>.toMany(96, object.id), store.box<Users>());
-          InternalToManyAccess.setRelInfo(object.status, store,
-              RelInfo<Users>.toMany(97, object.id), store.box<Users>());
           InternalToManyAccess.setRelInfo(
               object.controlForms,
               store,
@@ -4964,8 +4958,4 @@ class Users_ {
   /// see [Users.roles]
   static final roles =
       QueryRelationToMany<Users, Role>(_entities[14].relations[1]);
-
-  /// see [Users.status]
-  static final status =
-      QueryRelationToMany<Users, Status>(_entities[14].relations[2]);
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -711,6 +713,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                             ),
                                           ),
                                           Text(
+                                            usuarioProvider.usuarioCurrent?.vehicle.target?.make ??
                                             'RAM',
                                             textAlign:
                                                 TextAlign.center,
@@ -801,6 +804,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                             ),
                                           ),
                                           Text(
+                                            usuarioProvider.usuarioCurrent?.vehicle.target?.model??
                                             'Ram 4500 HD Chassis',
                                             textAlign:
                                                 TextAlign.center,
@@ -925,6 +929,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                             ),
                                           ),
                                           Text(
+                                            usuarioProvider.usuarioCurrent?.vehicle.target?.year ??
                                             '2022',
                                             textAlign:
                                                 TextAlign.center,
@@ -1015,7 +1020,8 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                             ),
                                           ),
                                           Text(
-                                            '022',
+                                            "${usuarioProvider.usuarioCurrent?.vehicle.target?.id??
+                                            022}",
                                             textAlign:
                                                 TextAlign.center,
                                             style: FlutterFlowTheme
@@ -1045,6 +1051,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                               .fromSTEB(
                                   0.0, 15.0, 0.0, 0.0),
                           child: GradientText(
+                            usuarioProvider.usuarioCurrent?.vehicle.target?.company.target?.company ??
                             'CRY',
                             style: FlutterFlowTheme.of(
                                     context)
@@ -1081,7 +1088,14 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                             decoration: const BoxDecoration(
                               shape: BoxShape.rectangle,
                             ),
-                            child: Image.asset(
+                            child: 
+                            usuarioProvider.usuarioCurrent?.vehicle.target?.path != null ?
+                            Image.file(
+                              File(usuarioProvider.usuarioCurrent!.vehicle.target!.path),
+                              fit: BoxFit.contain,
+                            )
+                            :
+                            Image.asset(
                               'assets/images/van2.png',
                             ),
                           ),

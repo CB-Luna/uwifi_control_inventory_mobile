@@ -60,7 +60,7 @@ class _BottomSheetSincronizarWidgetState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 4, 0, 0),
                               child: Text(
-                                '¿Seguro que quieres Sincronizar?',
+                                'Are you sure you want to sync?',
                                 textAlign: TextAlign.center,
                                 style: AppTheme.of(context).title2.override(
                                       fontFamily:
@@ -81,7 +81,7 @@ class _BottomSheetSincronizarWidgetState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 8, 0, 0),
                               child: Text(
-                                'Toda la información capturada en los emprendimientos se registrarán en la nube (necesitas conexón a internet).',
+                                'All the input data in the control forms are going to saved in the cloud (Intenet Conection is required).',
                                 textAlign: TextAlign.center,
                                 style: AppTheme.of(context).bodyText2.override(
                                       fontFamily:
@@ -121,7 +121,7 @@ class _BottomSheetSincronizarWidgetState
                               onPressed: () async {
                                 Navigator.pop(context);
                               },
-                              text: 'CANCELAR',
+                              text: 'CANCEL',
                               options: FFButtonOptions(
                                 width: 150,
                                 height: 50,
@@ -153,7 +153,7 @@ class _BottomSheetSincronizarWidgetState
                                     ),
                                   );
                                 },
-                                text: 'SINCRONIZAR',
+                                text: 'SYNC',
                                 options: FFButtonOptions(
                                   width: 150,
                                   height: 50,

@@ -19,6 +19,7 @@ class GetUsuarioSupabase {
     final Company company;
     final Configuracion configuracion;
     final int idTema;
+    final int? idVehicleFk;
 
     GetUsuarioSupabase({
         required this.id,
@@ -39,6 +40,7 @@ class GetUsuarioSupabase {
         required this.company,
         required this.configuracion,
         required this.idTema,
+        this.idVehicleFk,
     });
 
     factory GetUsuarioSupabase.fromJson(String str) => GetUsuarioSupabase.fromMap(json.decode(str));
@@ -64,6 +66,7 @@ class GetUsuarioSupabase {
         company: Company.fromMap(json["company"]),
         configuracion: Configuracion.fromMap(json["configuracion"]),
         idTema: json["id_tema"],
+        idVehicleFk: json["id_vehicle_fk"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -85,6 +88,7 @@ class GetUsuarioSupabase {
         "company": company.toMap(),
         "configuracion": configuracion.toMap(),
         "id_tema": idTema,
+        "id_vehicle_fk": idVehicleFk,
     };
 }
 

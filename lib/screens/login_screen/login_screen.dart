@@ -444,6 +444,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           userState.passwordController.text,
                                           getUsuarioSupabase.image,
                                           [getUsuarioSupabase.role.id.toString()],
+                                          getUsuarioSupabase.birthdate,
+                                          getUsuarioSupabase.company.companyId.toString(),
+                                          getUsuarioSupabase.idVehicleFk.toString(),
                                         );
                                       } else {
                                         usuarioProvider.add(
@@ -458,6 +461,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           getUsuarioSupabase.image,
                                           [getUsuarioSupabase.role.id.toString()],
                                           getUsuarioSupabase.id,
+                                          getUsuarioSupabase.birthdate,
+                                          getUsuarioSupabase.company.companyId.toString(),
+                                          getUsuarioSupabase.idVehicleFk.toString(),
                                         );
                                         usuarioProvider.getUser(loginResponseSupabase.user.email);
                                       }
@@ -471,26 +477,26 @@ class _LoginScreenState extends State<LoginScreen> {
                                         await prefs.remove('email');
                                         await prefs.remove('password');
                                       }
-                                      //Se descargan los proyectos por cada tipo de Usuario
-                                      bool procesoExistoso = false;
-                                      switch (usuarioProvider.usuarioCurrent!.role.target!.role) {
-                                        case "Asesor":
-                                          break;
-                                        case "Técnico-Mecánico":
-                                          break;
-                                        case "Cliente":
-                                          break;
-                                        default:
-                                          break;
-                                      }
+                                      // //Se descargan los proyectos por cada tipo de Usuario
+                                      // bool procesoExistoso = false;
+                                      // switch (usuarioProvider.usuarioCurrent!.role.target!.role) {
+                                      //   case "Asesor":
+                                      //     break;
+                                      //   case "Técnico-Mecánico":
+                                      //     break;
+                                      //   case "Cliente":
+                                      //     break;
+                                      //   default:
+                                      //     break;
+                                      // }
         
-                                      if (!procesoExistoso) {
-                                          snackbarKey.currentState
-                                            ?.showSnackBar(const SnackBar(
-                                          content: Text(
-                                              "'Attempting Inspection Reports Data Recovery for Current User from Server' Failed."),
-                                        ));
-                                      }
+                                      // if (!procesoExistoso) {
+                                      //     snackbarKey.currentState
+                                      //       ?.showSnackBar(const SnackBar(
+                                      //     content: Text(
+                                      //         "'Attempting Inspection Reports Data Recovery for Current User from Server' Failed."),
+                                      //   ));
+                                      // }
                                       if (!mounted) return;
                                       await Navigator.push(
                                         context,

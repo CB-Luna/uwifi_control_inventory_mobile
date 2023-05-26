@@ -220,8 +220,8 @@ class SideMenu extends StatelessWidget {
                       iconData: Icons.sync_rounded,
                       lineHeight: 1.2,
                       onTap: () async {
-                        if (currentUser.role.target!.role == "Amigo del Cambio" ||
-                            currentUser.role.target!.role == "Emprendedor") {
+                        if (currentUser.role.target!.role == "Admin" ||
+                            currentUser.role.target!.role == "Manager") {
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
                             content: Text(

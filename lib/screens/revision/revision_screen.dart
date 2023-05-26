@@ -109,14 +109,8 @@ class _RevisionScreenState extends State<RevisionScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: InkWell(
-                    onTap: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              AgregarVehiculoScreen(),
-                        ),
-                      );
+                    onTap: () {
+                    
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.max,

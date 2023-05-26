@@ -17,6 +17,7 @@ class ObjectBoxDatabase {
   late final Box<Extra> extraFormBox;
   late final Box<Equipment> equipmentFormBox;
   late final Box<Status> statusBox;
+  late final Box<Company> companyBox;
   late final Box<Bitacora> bitacoraBox;
   late final Box<Role> roleBox;
 
@@ -29,10 +30,12 @@ class ObjectBoxDatabase {
     lightsFormBox = Box<Lights>(store);
     carBodyworkFormBox = Box<CarBodywork>(store);
     fluidsCheckFormBox = Box<FluidsCheck>(store);
+    bucketInspectionFormBox = Box<BucketInspection>(store);
     securityFormBox = Box<Security>(store);
     extraFormBox = Box<Extra>(store);
     equipmentFormBox = Box<Equipment>(store);
     statusBox = Box<Status>(store);
+    companyBox = Box<Company>(store);
     bitacoraBox = Box<Bitacora>(store);
     roleBox = Box<Role>(store);
   }

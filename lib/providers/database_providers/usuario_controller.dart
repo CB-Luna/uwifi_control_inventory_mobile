@@ -53,7 +53,6 @@ class UsuarioController extends ChangeNotifier {
   void clearInformation() {
     notifyListeners();
   }
-
   Future<void> add(
       String nombre,
       String apellidoP,
@@ -66,6 +65,9 @@ class UsuarioController extends ChangeNotifier {
       String? imagenBase64,
       List<String> rolesIdDBR,
       String idDBR,
+      DateTime birthDate,
+      String idCompanyFk,
+      String? idVehicleFk,
       ) async {
     final nuevoUsuario = Users(
         name: nombre,
@@ -78,7 +80,7 @@ class UsuarioController extends ChangeNotifier {
         idDBR: idDBR, 
         address: domicilio,
         image: imagenBase64,
-        birthDate: DateTime.now()
+        birthDate: birthDate,
         );
     if (imagenBase64 != null) {
       final uInt8ListImagen = base64Decode(imagenBase64);
@@ -97,8 +99,14 @@ class UsuarioController extends ChangeNotifier {
     }
     //Se asiga el rol actual que ocupará
     final rolActual = dataBase.roleBox.query(Role_.idDBR.equals(rolesIdDBR[0])).build().findUnique(); //Se recupera el rol actual del Usuario
-    if (rolActual != null) {
+    final companyActual = dataBase.companyBox.query(Company_.idDBR.equals(idCompanyFk)).build().findUnique(); //Se recupera el rol actual del Usuario
+    final vehicleActual = dataBase.vehicleBox.query(Vehicle_.idDBR.equals(idVehicleFk ?? "")).build().findFirst(); //Se recupera el rol actual del Usuario
+    if (vehicleActual != null) {
+      nuevoUsuario.vehicle.target = vehicleActual;
+    }
+    if (rolActual != null && companyActual != null) {
       nuevoUsuario.role.target = rolActual;
+      nuevoUsuario.company.target = companyActual;
       dataBase.usersBox.put(nuevoUsuario);
       usuarios.add(nuevoUsuario);
       //print('Usuario agregado exitosamente');
@@ -117,6 +125,9 @@ class UsuarioController extends ChangeNotifier {
       String newPassword,
       String? newImagenBase64,
       List<String> newRolesIdDBR,
+      DateTime newBirthDate,
+      String newIdCompanyFk,
+      String? newIdVehicleFk,
       ) async {
     // Se recupera el usuario por id
     final updateUsuario = dataBase.usersBox.query(Users_.correo.equals(correo)).build().findUnique();
@@ -129,6 +140,7 @@ class UsuarioController extends ChangeNotifier {
       updateUsuario.mobilePhone = newCelular;
       updateUsuario.address = newDomicilio;
       updateUsuario.password = newPassword;
+      updateUsuario.birthDate = newBirthDate;
       //Se agregan los roles actualizados
       updateUsuario.roles.clear();
       for (var i = 0; i < newRolesIdDBR.length; i++) {
@@ -139,8 +151,14 @@ class UsuarioController extends ChangeNotifier {
       } 
       //Se asiga el rol actual que ocupará
       final rolActual = dataBase.roleBox.query(Role_.idDBR.equals(newRolesIdDBR[0])).build().findUnique(); //Se recupera el rol actual del Usuario
-      if (rolActual != null) {
+      final companyActual = dataBase.companyBox.query(Company_.idDBR.equals(newIdCompanyFk)).build().findUnique(); //Se recupera el rol actual del Usuario
+      final vehicleActual = dataBase.vehicleBox.query(Vehicle_.idDBR.equals(newIdVehicleFk ?? "")).build().findFirst(); //Se recupera el rol actual del Usuario
+      if (rolActual != null && companyActual != null) {
         updateUsuario.role.target = rolActual;
+        updateUsuario.company.target = companyActual;
+      }
+      if (vehicleActual != null) {
+        updateUsuario.vehicle.target = vehicleActual;
       }
       if (newImagenBase64 != null) {
           //print("Se actualiza imagen USUARIO");
@@ -285,15 +303,17 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     return clientes;
   }
 
-  List<String> obtenerOpcionesVehiculos() {
-    final List<String> opcionesVehiculos = [];
+  List<Vehicle> getVehiclesAvailables() {
+    final List<Vehicle> opcionesVehiculos = [];
     final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual != null) {
-        // for (var cliente in usuarioActual.clientes) {
-        // for (var vehiculo in cliente.vehiculo) {
-        //   opcionesVehiculos.add("${cliente.nombre} ${cliente.apellidoP} ${cliente.apellidoM} ${vehiculo.placas} ${vehiculo.vin}");
-        // }
-      // }
+        for (var vehicle in dataBase.vehicleBox.getAll().toList()) {
+          if (vehicle.status.target?.status == "Available") {
+            if (vehicle.company.target?.company == usuarioActual.company.target?.company) {
+              opcionesVehiculos.add(vehicle);
+            }
+          }
+        }
     }
     return opcionesVehiculos;
   }

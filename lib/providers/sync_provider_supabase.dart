@@ -38,20 +38,20 @@ class SyncProviderSupabase extends ChangeNotifier {
     // Se recuperan instrucciones fallidas anteriores
     for (var i = 0; i < instruccionesBitacora.length; i++) {
       switch (instruccionesBitacora[i].instruccion) {
-        case "syncAgregarCliente":
-          final clienteToSync = getFirstCliente(
-              dataBase.usersBox.getAll(), instruccionesBitacora[i].id);
-          if (clienteToSync != null) {
-            final responseSyncAddCliente = await syncAddCliente(
-                clienteToSync, instruccionesBitacora[i]);
-            if (responseSyncAddCliente.exitoso) {
-              banderasExistoSync.add(responseSyncAddCliente.exitoso);
+        case "syncAddControlForm":
+          final controlFormToSync = getFirstControlForm(
+              dataBase.controlFormBox.getAll(), instruccionesBitacora[i].id);
+          if (controlFormToSync != null) {
+            final responseSyncAddControlForm = await syncAddControlForm(
+                controlFormToSync, instruccionesBitacora[i]);
+            if (responseSyncAddControlForm.exitoso) {
+              banderasExistoSync.add(responseSyncAddControlForm.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(responseSyncAddCliente.exitoso);
+              banderasExistoSync.add(responseSyncAddControlForm.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
-                  instruccion: responseSyncAddCliente.descripcion,
+                  instruccion: responseSyncAddControlForm.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               instruccionesFallidas.add(instruccionNoSincronizada);
               continue;
@@ -62,34 +62,6 @@ class SyncProviderSupabase extends ChangeNotifier {
             final instruccionNoSincronizada = InstruccionNoSincronizada(
                 instruccion:
                     "Problemas en sincronizar al Servidor Local un cliente no recuperado.",
-                fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
-            continue;
-          }
-        case "syncAgregarVehiculo":
-          final vehiculoToSync = getFirstVehiculo(
-              dataBase.vehicleBox.getAll(), instruccionesBitacora[i].id);
-          if (vehiculoToSync != null) {
-            final responseSyncAddVehiculo = await syncAddVehiculo(
-                vehiculoToSync, instruccionesBitacora[i]);
-            if (responseSyncAddVehiculo.exitoso) {
-              banderasExistoSync.add(responseSyncAddVehiculo.exitoso);
-              continue;
-            } else {
-              //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(responseSyncAddVehiculo.exitoso);
-              final instruccionNoSincronizada = InstruccionNoSincronizada(
-                  instruccion: responseSyncAddVehiculo.descripcion,
-                  fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
-              continue;
-            }
-          } else {
-            //Recuperamos la instrucción que no se ejecutó
-            banderasExistoSync.add(false);
-            final instruccionNoSincronizada = InstruccionNoSincronizada(
-                instruccion:
-                    "Problemas en sincronizar al Servidor Local un vehículo no recuperado.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
@@ -166,13 +138,13 @@ class SyncProviderSupabase extends ChangeNotifier {
   }
 
   ControlForm? getFirstControlForm(
-      List<ControlForm> ordenesTrabajo, int idInstruccionesBitacora) {
-    for (var i = 0; i < ordenesTrabajo.length; i++) {
-      if (ordenesTrabajo[i].bitacora.isEmpty) {
+      List<ControlForm> controlForm, int idInstruccionesBitacora) {
+    for (var i = 0; i < controlForm.length; i++) {
+      if (controlForm[i].bitacora.isEmpty) {
       } else {
-        for (var j = 0; j < ordenesTrabajo[i].bitacora.length; j++) {
-          if (ordenesTrabajo[i].bitacora[j].id == idInstruccionesBitacora) {
-            return ordenesTrabajo[i];
+        for (var j = 0; j < controlForm[i].bitacora.length; j++) {
+          if (controlForm[i].bitacora[j].id == idInstruccionesBitacora) {
+            return controlForm[i];
           }
         }
       }
@@ -302,39 +274,59 @@ class SyncProviderSupabase extends ChangeNotifier {
     }
   }
 
-  Future<SyncInstruction> syncAddVehiculo(
-      Vehicle vehiculo, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddControlForm(
+      ControlForm controlForm, Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
-        if (vehiculo.idDBR == null) {
-          //Registrar el vehiculo
-          final recordVehiculo = await supabaseClient.from('vehiculo').insert(
+        if (controlForm.idDBR == null) {
+          //Registrar measures
+          final recordMeasure = await supabaseClient.from('measures').insert(
             {
-              'marca': vehiculo.make,
-              'modelo': vehiculo.model,
-              'anio': vehiculo.year,
-              'imagen': vehiculo.image,
-              'vin': vehiculo.vin,
-              'placas': vehiculo.licesePlates,
-              'color': vehiculo.color,
-              'motor': vehiculo.motor,
+              'gas': controlForm.measures.target!.gas,
+              'gas_comments': controlForm.measures.target!.gasComments,
+              // 'gas_image': controlForm.measures.target?.gasImages.isEmpty == true ? null : controlForm.measures.target?.gasImages.first.base64,
+              'mileage': controlForm.measures.target!.mileage,
+              'mileage_comments': controlForm.measures.target!.mileageComments,
+              // 'milage_image': controlForm.measures.target?.mileageImages.isEmpty == true ? null : controlForm.measures.target?.mileageImages.first.base64,
+              'date_added': controlForm.measures.target!.dateAdded.toIso8601String(),
             },
-          ).select<PostgrestList>('id');
-          if (recordVehiculo.isNotEmpty) {
-            //Se recupera el idDBR de Supabase del Vehiculo
-            vehiculo.idDBR = recordVehiculo.first['id'].toString();
-            dataBase.vehicleBox.put(vehiculo);
-            //Se marca como ejecutada la instrucción en Bitacora
-            bitacora.executeSupabase = true;
-            dataBase.bitacoraBox.put(bitacora);
-            dataBase.bitacoraBox.remove(bitacora.id);
-            return SyncInstruction(exitoso: true, descripcion: "");
+          ).select<PostgrestList>('id_measure');
+          if (recordMeasure.isNotEmpty) {
+            final recordControlForm = await supabaseClient.from('control_form').insert(
+              {
+                'id_vehicle_fk': controlForm.vehicle.target!.idDBR,
+                'id_user_fk': controlForm.employee.target!.idDBR,
+                'type_form': controlForm.typeForm,
+                'id_measure_fk': recordMeasure.first['id_measure'],
+                'date_added': controlForm.dateAdded.toIso8601String(),
+              },
+            ).select<PostgrestList>('id_control_form');
+            //Registrar control Form
+            if (recordControlForm.isNotEmpty) {
+              //Se recupera el idDBR de Supabase del Measure
+              controlForm.measures.target!.idDBR = recordMeasure.first['id_measure'].toString();
+              dataBase.measuresFormBox.put(controlForm.measures.target!);
+              //Se recupera el idDBR de Supabase del Control Form
+              controlForm.idDBR = recordControlForm.first['id_control_form'].toString();
+              dataBase.controlFormBox.put(controlForm);
+              //Se marca como ejecutada la instrucción en Bitacora
+              bitacora.executeSupabase = true;
+              dataBase.bitacoraBox.put(bitacora);
+              dataBase.bitacoraBox.remove(bitacora.id);
+              return SyncInstruction(exitoso: true, descripcion: "");
+            } else {
+              return SyncInstruction(
+              exitoso: false,
+              descripcion:
+                  "Failed to sync all data Control Form on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
+            }
           } else {
             return SyncInstruction(
-            exitoso: false,
-            descripcion:
-                "Falló en proceso de sincronizar alta de Vehiculo en el Servidor Local: Problema al postear los datos del Vehiculo con VIN '${vehiculo.vin}'.");
+              exitoso: false,
+              descripcion:
+                  "Failed to sync data measure Control Form on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
           }
+          
         } else {
           //Se marca como ejecutada la instrucción en Bitacora
           bitacora.executeSupabase = true;
@@ -351,7 +343,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Falló en proceso de sincronizar alta de Vehiculo con VIN '${vehiculo.vin}' en el Servidor Local, detalles: '$e'");
+              "Failed to sync data measure Control Form on Local Server with vehicle ID ${controlForm.vehicle.target!.idDBR}:, details: '$e'");
     }
   }
 

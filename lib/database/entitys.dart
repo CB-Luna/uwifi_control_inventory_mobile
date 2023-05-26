@@ -692,7 +692,6 @@ class Users {
   final role = ToOne<Role>();
   final roles = ToMany<Role>();
   final company = ToOne<Company>(); 
-  final status = ToMany<Status>(); 
   final vehicle = ToOne<Vehicle>();
   @Backlink()
   final controlForms = ToMany<ControlForm>();

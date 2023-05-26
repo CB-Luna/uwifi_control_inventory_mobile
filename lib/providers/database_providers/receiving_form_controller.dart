@@ -1132,7 +1132,7 @@ class ReceivingFormController extends ChangeNotifier {
   bool addControlForm(Users? user) {
     try {
       final measures = Measures(
-        gas: "$gasDieselPercent %", 
+        gas: "$gasDieselPercent%", 
         gasComments: gasComments.text, 
         gasImages: gasImages,
         mileage: int.parse(mileage), 
