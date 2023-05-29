@@ -16,6 +16,7 @@ class ReceivingFormController extends ChangeNotifier {
   bool isGasRegistered = false;
   String mileage = ""; 
   bool isMileageRegistered = false;
+  int pendingMeasures = 2;
 
   //Reports
   String headLights = "Good";
@@ -43,6 +44,8 @@ class ReceivingFormController extends ChangeNotifier {
   String emgBrakes = "Good";
   String horn = "Good";
 
+  int badStateLights = 0;
+
   String engineOil = "Good";
   String transmission = "Good";
   String coolant = "Good";
@@ -53,6 +56,8 @@ class ReceivingFormController extends ChangeNotifier {
   String insulated = "Good";
   String holesDrilled = "Good";
   String bucketLiner = "Good";
+
+  int badStateFluids = 0;
 
   String rtaMagnet = "Good";
   String triangleReflectors = "Good";
@@ -70,11 +75,15 @@ class ReceivingFormController extends ChangeNotifier {
   String safetyHarness = "Good";
   String lanyardSafetyHarness = "Good";
 
+  int badStateSecurity = 0;
+
   String ignitionKey = "Yes";
   String binsBoxKey = "Yes";
   String vehicleRegistrationCopy = "Yes";
   String vehicleInsuranceCopy = "Yes";
   String bucketLiftOperatorManual = "Yes";
+
+  int badStateEquipment = 0;
 
 
   //Images
@@ -207,6 +216,11 @@ class ReceivingFormController extends ChangeNotifier {
   //Extras
   void updateGasDieselPercent(int value) {
     gasDieselPercent = value;
+    if (isGasRegistered == false) {
+      if (pendingMeasures == 2 || pendingMeasures == 1) {
+        pendingMeasures -= 1;
+      }
+    }
     isGasRegistered = true;
     notifyListeners();
   }
@@ -214,8 +228,18 @@ class ReceivingFormController extends ChangeNotifier {
   void updateMileage(String value) {
     mileage = value;
     if (value == "" || value.isEmpty) {
+      if (isMileageRegistered == true) {
+        if (pendingMeasures == 0 || pendingMeasures == 1) {
+          pendingMeasures += 1;
+        }
+      }
       isMileageRegistered = false;
     } else {
+      if (isMileageRegistered == false) {
+        if (pendingMeasures == 2 || pendingMeasures == 1) {
+          pendingMeasures -= 1;
+        }
+      }
       isMileageRegistered = true;
     }
     notifyListeners();
@@ -224,42 +248,132 @@ class ReceivingFormController extends ChangeNotifier {
   //Reports
 
   void updateHeadLights(String report) {
+    if (report == "Good") {
+      if (headLights == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (headLights == "Good") {
+        badStateLights += 1;
+      }
+    }
     headLights = report;
     notifyListeners();
   }
   void updateBrakeLights(String report) {
+    if (report == "Good") {
+      if (brakeLights == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (brakeLights == "Good") {
+        badStateLights += 1;
+      }
+    }
     brakeLights = report;
     notifyListeners();
   }
   void updateReverseLights(String report) {
+    if (report == "Good") {
+      if (reverseLights == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (reverseLights == "Good") {
+        badStateLights += 1;
+      }
+    }
     reverseLights = report;
     notifyListeners();
   }
   void updateWarningLights(String report) {
+    if (report == "Good") {
+      if (warningLights == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (warningLights == "Good") {
+        badStateLights += 1;
+      }
+    }
     warningLights = report;
     notifyListeners();
   }
   void updateTurnSignals(String report) {
+    if (report == "Good") {
+      if (turnSignals == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (turnSignals == "Good") {
+        badStateLights += 1;
+      }
+    }
     turnSignals = report;
     notifyListeners();
   }
   void updateFourWayFlashers(String report) {
+    if (report == "Good") {
+      if (fourWayFlashers == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (fourWayFlashers == "Good") {
+        badStateLights += 1;
+      }
+    }
     fourWayFlashers = report;
     notifyListeners();
   }
   void updateDashLights(String report) {
+    if (report == "Good") {
+      if (dashLights == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (dashLights == "Good") {
+        badStateLights += 1;
+      }
+    }
     dashLights = report;
     notifyListeners();
   }
   void updateStrobeLights(String report) {
+    if (report == "Good") {
+      if (strobeLights == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (strobeLights == "Good") {
+        badStateLights += 1;
+      }
+    }
     strobeLights = report;
     notifyListeners();
   }
   void updateCabRoofLights(String report) {
+    if (report == "Good") {
+      if (cabRoofLights == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (cabRoofLights == "Good") {
+        badStateLights += 1;
+      }
+    }
     cabRoofLights = report;
     notifyListeners();
   }
   void updateClearenceLights(String report) {
+    if (report == "Good") {
+      if (clearenceLights == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (clearenceLights == "Good") {
+        badStateLights += 1;
+      }
+    }
     clearenceLights = report;
     notifyListeners();
   }
@@ -267,171 +381,540 @@ class ReceivingFormController extends ChangeNotifier {
 
 
   void updateWiperBladesFront(String report) {
+    if (report == "Good") {
+      if (wiperBladesFront == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (wiperBladesFront == "Good") {
+        badStateLights += 1;
+      }
+    }
     wiperBladesFront = report;
     notifyListeners();
   }
   void updateWiperBladesBack(String report) {
+    if (report == "Good") {
+      if (wiperBladesBack == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (wiperBladesBack == "Good") {
+        badStateLights += 1;
+      }
+    }
     wiperBladesBack = report;
     notifyListeners();
   }
   void updateWindshieldWiperFront(String report) {
+    if (report == "Good") {
+      if (windshieldWiperFront == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (windshieldWiperFront == "Good") {
+        badStateLights += 1;
+      }
+    }
     windshieldWiperFront = report;
     notifyListeners();
   }
   void updateWindshieldWiperBack(String report) {
+    if (report == "Good") {
+      if (windshieldWiperBack == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (windshieldWiperBack == "Good") {
+        badStateLights += 1;
+      }
+    }
     windshieldWiperBack = report;
     notifyListeners();
   }
   void updateGeneralBody(String report) {
+    if (report == "Good") {
+      if (generalBody == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (generalBody == "Good") {
+        badStateLights += 1;
+      }
+    }
     generalBody = report;
     notifyListeners();
   }
   void updateDecaling(String report) {
+    if (report == "Good") {
+      if (decaling == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (decaling == "Good") {
+        badStateLights += 1;
+      }
+    }
     decaling = report;
     notifyListeners();
   }
   void updateTires(String report) {
+    if (report == "Good") {
+      if (tires == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (tires == "Good") {
+        badStateLights += 1;
+      }
+    }
     tires = report;
     notifyListeners();
   }
   void updateGlass(String report) {
+    if (report == "Good") {
+      if (glass == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (glass == "Good") {
+        badStateLights += 1;
+      }
+    }
     glass = report;
     notifyListeners();
   }
   void updateMirrors(String report) {
+    if (report == "Good") {
+      if (mirrors == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (mirrors == "Good") {
+        badStateLights += 1;
+      }
+    }
     mirrors = report;
     notifyListeners();
   }
   void updateParking(String report) {
+    if (report == "Good") {
+      if (parking == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (parking == "Good") {
+        badStateLights += 1;
+      }
+    }
     parking = report;
     notifyListeners();
   }
   void updateBrakes(String report) {
+    if (report == "Good") {
+      if (brakes== "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (brakes== "Good") {
+        badStateLights += 1;
+      }
+    }
     brakes = report;
     notifyListeners();
   }
   void updateEMGBrakes(String report) {
+    if (report == "Good") {
+      if (emgBrakes == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (emgBrakes == "Good") {
+        badStateLights += 1;
+      }
+    }
     emgBrakes = report;
     notifyListeners();
   }
   void updateHorn(String report) {
+    if (report == "Good") {
+      if (horn == "Bad") {
+        badStateLights -= 1;
+      }
+    } else {
+      if (horn == "Good") {
+        badStateLights += 1;
+      }
+    }
     horn = report;
     notifyListeners();
   }
 
   void updateEngineOil(String report) {
+    if (report == "Good") {
+      if (engineOil == "Bad") {
+        badStateFluids -= 1;
+      }
+    } else {
+      if (engineOil == "Good") {
+        badStateFluids += 1;
+      }
+    }
     engineOil = report;
     notifyListeners();
   }
   void updateTransmission(String report) {
+    if (report == "Good") {
+      if (transmission== "Bad") {
+        badStateFluids -= 1;
+      }
+    } else {
+      if (transmission== "Good") {
+        badStateFluids += 1;
+      }
+    }
     transmission = report;
     notifyListeners();
   }
   void updateCoolant(String report) {
+    if (report == "Good") {
+      if (coolant == "Bad") {
+        badStateFluids -= 1;
+      }
+    } else {
+      if (coolant == "Good") {
+        badStateFluids += 1;
+      }
+    }
     coolant = report;
     notifyListeners();
   }
   void updatePowerSteering(String report) {
+    if (report == "Good") {
+      if (powerSteering == "Bad") {
+        badStateFluids -= 1;
+      }
+    } else {
+      if (powerSteering == "Good") {
+        badStateFluids += 1;
+      }
+    }
     powerSteering = report;
     notifyListeners();
   }
   void updateDieselExhaustFluid(String report) {
+    if (report == "Good") {
+      if (dieselExhaustFluid == "Bad") {
+        badStateFluids -= 1;
+      }
+    } else {
+      if (dieselExhaustFluid == "Good") {
+        badStateFluids += 1;
+      }
+    }
     dieselExhaustFluid = report;
     notifyListeners();
   }
   void updateWindshieldWasherFluid(String report) {
+    if (report == "Good") {
+      if (windshieldWasherFluid == "Bad") {
+        badStateFluids -= 1;
+      }
+    } else {
+      if (windshieldWasherFluid == "Good") {
+        badStateFluids += 1;
+      }
+    }
     windshieldWasherFluid = report;
     notifyListeners();
   }
 
   void updateInsulated(String report) {
+    if (report == "Good") {
+      if (insulated == "Bad") {
+        badStateFluids -= 1;
+      }
+    } else {
+      if (insulated == "Good") {
+        badStateFluids += 1;
+      }
+    }
     insulated = report;
     notifyListeners();
   }
   void updateHolesDrilled(String report) {
+    if (report == "Good") {
+      if (holesDrilled == "Bad") {
+        badStateFluids -= 1;
+      }
+    } else {
+      if (holesDrilled == "Good") {
+        badStateFluids += 1;
+      }
+    }
     holesDrilled = report;
     notifyListeners();
   }
   void updateBucketLiner(String report) {
+    if (report == "Good") {
+      if (bucketLiner == "Bad") {
+        badStateFluids -= 1;
+      }
+    } else {
+      if (bucketLiner == "Good") {
+        badStateFluids += 1;
+      }
+    }
     bucketLiner = report;
     notifyListeners();
   }
 
   void updateRTAMagnet(String report) {
+    if (report == "Good") {
+      if (rtaMagnet == "Bad") {
+        badStateSecurity -= 1;
+      }
+    } else {
+      if (rtaMagnet == "Good") {
+        badStateSecurity += 1;
+      }
+    }
     rtaMagnet = report;
     notifyListeners();
   }
   void updateTriangleReflectors(String report) {
+    if (report == "Good") {
+      if (triangleReflectors == "Bad") {
+        badStateSecurity -= 1;
+      }
+    } else {
+      if (triangleReflectors == "Good") {
+        badStateSecurity += 1;
+      }
+    }
     triangleReflectors = report;
     notifyListeners();
   }
   void updateWheelChocks(String report) {
+    if (report == "Good") {
+      if (wheelChocks == "Bad") {
+        badStateSecurity -= 1;
+      }
+    } else {
+      if (wheelChocks == "Good") {
+        badStateSecurity += 1;
+      }
+    }
     wheelChocks = report;
     notifyListeners();
   }
   void updateFireExtinguisher(String report) {
+    if (report == "Good") {
+      if (fireExtinguisher == "Bad") {
+        badStateSecurity -= 1;
+      }
+    } else {
+      if (fireExtinguisher == "Good") {
+        badStateSecurity += 1;
+      }
+    }
     fireExtinguisher = report;
     notifyListeners();
   }
   void updateFirstAidKitSafetyVest(String report) {
+    if (report == "Good") {
+      if (firstAidKitSafetyVest == "Bad") {
+        badStateSecurity -= 1;
+      }
+    } else {
+      if (firstAidKitSafetyVest == "Good") {
+        badStateSecurity += 1;
+      }
+    }
     firstAidKitSafetyVest = report;
     notifyListeners();
   }
   void updateBackUpAlarm(String report) {
+    if (report == "Good") {
+      if (backUpAlarm == "Bad") {
+        badStateSecurity -= 1;
+      }
+    } else {
+      if (backUpAlarm == "Good") {
+        badStateSecurity += 1;
+      }
+    }
     backUpAlarm = report;
     notifyListeners();
   }
 
   void updateLadder(String report) {
+    if (report == "Good") {
+      if (ladder == "Bad") {
+        badStateSecurity -= 1;
+      }
+    } else {
+      if (ladder == "Good") {
+        badStateSecurity += 1;
+      }
+    }
     ladder = report;
     notifyListeners();
   }
   void updateStepLadder(String report) {
+    if (report == "Good") {
+      if (stepLadder == "Bad") {
+        badStateSecurity -= 1;
+      }
+    } else {
+      if (stepLadder == "Good") {
+        badStateSecurity += 1;
+      }
+    }
     stepLadder = report;
     notifyListeners();
   }
   void updateLadderStraps(String report) {
+    if (report == "Good") {
+      if (ladderStraps == "Bad") {
+        badStateSecurity -= 1;
+      }
+    } else {
+      if (ladderStraps == "Good") {
+        badStateSecurity += 1;
+      }
+    }
     ladderStraps = report;
     notifyListeners();
   }
   void updateHydraulicFluidForBucket(String report) {
+    if (report == "Good") {
+      if (hydraulicFluidForBucket == "Bad") {
+        badStateSecurity -= 1;
+      }
+    } else {
+      if (hydraulicFluidForBucket == "Good") {
+        badStateSecurity += 1;
+      }
+    }
     hydraulicFluidForBucket = report;
     notifyListeners();
   }
   void updateFiberReelRack(String report) {
+    if (report == "Good") {
+      if (fiberReelRack == "Bad") {
+        badStateSecurity -= 1;
+      }
+    } else {
+      if (fiberReelRack == "Good") {
+        badStateSecurity += 1;
+      }
+    }
     fiberReelRack = report;
     notifyListeners();
   }
   void updateBinsLockedAndSecure(String report) {
+    if (report == "Good") {
+      if (binsLockedAndSecure == "Bad") {
+        badStateSecurity -= 1;
+      }
+    } else {
+      if (binsLockedAndSecure == "Good") {
+        badStateSecurity += 1;
+      }
+    }
     binsLockedAndSecure = report;
     notifyListeners();
   }
   void updateSafetyHarness(String report) {
+    if (report == "Good") {
+      if (safetyHarness == "Bad") {
+        badStateSecurity -= 1;
+      }
+    } else {
+      if (safetyHarness == "Good") {
+        badStateSecurity += 1;
+      }
+    }
     safetyHarness = report;
     notifyListeners();
   }
   void updateLanyardSafetyHarness(String report) {
+    if (report == "Good") {
+      if (lanyardSafetyHarness == "Bad") {
+        badStateSecurity -= 1;
+      }
+    } else {
+      if (lanyardSafetyHarness == "Good") {
+        badStateSecurity += 1;
+      }
+    }
     lanyardSafetyHarness = report;
     notifyListeners();
   }
 
   void updateIgnitionKey(String report) {
+    if (report == "Yes") {
+      if (ignitionKey == "No") {
+        badStateEquipment -= 1;
+      }
+    } else {
+      if (ignitionKey == "Yes") {
+        badStateEquipment += 1;
+      }
+    }
     ignitionKey = report;
     notifyListeners();
   }
   void updateBinsBoxKey(String report) {
+    if (report == "Yes") {
+      if (binsBoxKey == "No") {
+        badStateEquipment -= 1;
+      }
+    } else {
+      if (binsBoxKey == "Yes") {
+        badStateEquipment += 1;
+      }
+    }
     binsBoxKey = report;
     notifyListeners();
   }
   void updateVehicleRegistrationCopy(String report) {
+    if (report == "Yes") {
+      if (vehicleRegistrationCopy == "No") {
+        badStateEquipment -= 1;
+      }
+    } else {
+      if (vehicleRegistrationCopy == "Yes") {
+        badStateEquipment += 1;
+      }
+    }
     vehicleRegistrationCopy = report;
     notifyListeners();
   }
   void updateVehicleInsuranceCopy(String report) {
+    if (report == "Yes") {
+      if (vehicleInsuranceCopy == "No") {
+        badStateEquipment -= 1;
+      }
+    } else {
+      if (vehicleInsuranceCopy == "Yes") {
+        badStateEquipment += 1;
+      }
+    }
     vehicleInsuranceCopy = report;
     notifyListeners();
   }
   void updateBucketLiftOperatorManual(String report) {
+    if (report == "Yes") {
+      if (bucketLiftOperatorManual == "No") {
+        badStateEquipment -= 1;
+      }
+    } else {
+      if (bucketLiftOperatorManual == "Yes") {
+        badStateEquipment += 1;
+      }
+    }
     bucketLiftOperatorManual = report;
     notifyListeners();
   }
@@ -933,6 +1416,7 @@ class ReceivingFormController extends ChangeNotifier {
     isGasRegistered = false;
     mileage = "";
     isMileageRegistered = false;
+    pendingMeasures = 2;
 
     //Reports
     brakeLights = "Good";
@@ -959,6 +1443,8 @@ class ReceivingFormController extends ChangeNotifier {
     emgBrakes = "Good";
     horn = "Good";
 
+    badStateLights = 0;
+
     engineOil = "Good";
     transmission = "Good";
     coolant = "Good";
@@ -969,6 +1455,8 @@ class ReceivingFormController extends ChangeNotifier {
     insulated = "Good";
     holesDrilled = "Good";
     bucketLiner = "Good";
+
+    badStateFluids = 0;
 
     rtaMagnet = "Good";
     triangleReflectors = "Good";
@@ -986,11 +1474,15 @@ class ReceivingFormController extends ChangeNotifier {
     safetyHarness = "Good";
     lanyardSafetyHarness = "Good";
 
+    badStateSecurity = 0;
+
     ignitionKey = "Yes";
     binsBoxKey = "Yes";
     vehicleRegistrationCopy = "Yes";
     vehicleInsuranceCopy = "Yes";
     bucketLiftOperatorManual = "Yes";
+
+    badStateEquipment = 0;
 
     //Images
     gasImages.clear();

@@ -2,6 +2,7 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/modelsFormularios/data_draggable.dart';
@@ -330,26 +331,56 @@ class _RevisionScreenDosState extends State<RevisionScreenDos> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    MenuFormButton(
-                      icon: Icons.speed_outlined, 
-                      onPressed: () {
-                        vehiculoController.setTapedOption(0);
-                      },
-                      isTaped: vehiculoController.isTaped == 0,
+                    badge.Badge(
+                      badgeContent: Text(
+                        "${receivingFromProvider.pendingMeasures}",
+                          style: TextStyle(
+                              color: FlutterFlowTheme.of(context).white)),
+                      showBadge: receivingFromProvider.pendingMeasures != 0,
+                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                      position: badge.BadgePosition.topEnd(),
+                      elevation: 4,
+                      child: MenuFormButton(
+                        icon: Icons.speed_outlined, 
+                        onPressed: () {
+                          vehiculoController.setTapedOption(0);
+                        },
+                        isTaped: vehiculoController.isTaped == 0,
+                      ),
                     ),
-                    MenuFormButton(
-                      icon: Icons.flare, 
-                      onPressed: () {
-                        vehiculoController.setTapedOption(1);
-                      },
-                      isTaped: vehiculoController.isTaped == 1,
+                    badge.Badge(
+                      badgeContent: Text(
+                        "${receivingFromProvider.badStateLights}",
+                          style: TextStyle(
+                              color: FlutterFlowTheme.of(context).white)),
+                      showBadge: receivingFromProvider.badStateLights != 0,
+                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                      position: badge.BadgePosition.topEnd(),
+                      elevation: 4,
+                      child: MenuFormButton(
+                        icon: Icons.flare, 
+                        onPressed: () {
+                          vehiculoController.setTapedOption(1);
+                        },
+                        isTaped: vehiculoController.isTaped == 1,
+                      ),
                     ),
-                    MenuFormButton(
-                      icon: Icons.invert_colors, 
-                      onPressed: () {
-                        vehiculoController.setTapedOption(2);
-                      },
-                      isTaped: vehiculoController.isTaped == 2,
+                    badge.Badge(
+                      badgeContent: Text(
+                        "${receivingFromProvider.badStateFluids}",
+                          style: TextStyle(
+                              color: FlutterFlowTheme.of(context).white)),
+                      showBadge: receivingFromProvider.badStateFluids != 0,
+                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                      position: badge.BadgePosition.topEnd(),
+                      elevation: 4,
+                      child: MenuFormButton(
+                        icon: Icons.invert_colors, 
+                        onPressed: () {
+                          vehiculoController.setTapedOption(2);
+                        },
+                        isTaped: vehiculoController.isTaped == 2,
+                      ),
                     ),
                     MenuFormButton(
                       icon: Icons.health_and_safety, 

@@ -4,6 +4,7 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:semicircle_indicator/semicircle_indicator.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -11,6 +12,7 @@ import 'package:taller_alex_app_asesor/database/image.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/receiving_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/expanded_text.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/header_shimmer.dart';
@@ -87,6 +89,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
   @override
   Widget build(BuildContext context) {
     final receivingFormController = Provider.of<ReceivingFormController>(context);
+    final userController = Provider.of<UsuarioController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: Row(
@@ -119,7 +122,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width, 
-                  text: "12",
+                  text: userController.usuarioCurrent?.vehicle.target?.idDBR ?? "12",
                 ),
                 Divider(
                   height: 4,
@@ -146,7 +149,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width, 
-                  text: "Mercedes",
+                  text: userController.usuarioCurrent?.vehicle.target?.make ?? "Mercedes",
                 ),
                 Divider(
                   height: 4,
@@ -173,7 +176,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width, 
-                  text: "A1",
+                  text: userController.usuarioCurrent?.vehicle.target?.model ?? "A1",
                 ),
                 Divider(
                   height: 4,
@@ -200,7 +203,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width, 
-                  text: "2019",
+                  text: userController.usuarioCurrent?.vehicle.target?.year ?? "2019",
                 ),
                 Divider(
                   height: 4,
@@ -227,7 +230,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width, 
-                  text: "PRUEBAVINCARRO01",
+                  text: userController.usuarioCurrent?.vehicle.target?.vin ?? "PRUEBAVINCARRO01",
                 ),
                 Divider(
                   height: 4,
@@ -254,7 +257,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width, 
-                  text: "H52-86R",
+                  text: userController.usuarioCurrent?.vehicle.target?.licesePlates ?? "H52-86R",
                 ),
                 Divider(
                   height: 4,
@@ -308,7 +311,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width, 
-                  text: "12-MAY-2024",
+                  text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.registrationDue ?? DateTime.now()),
                 ),
                 Divider(
                   height: 4,
@@ -335,7 +338,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width, 
-                  text: "12-MAY-2024",
+                  text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.insuranceRenewalDue?? DateTime.now()),
                 ),
                 Divider(
                   height: 4,
@@ -362,7 +365,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width, 
-                  text: "08-SEP-2024",
+                  text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.oilChangeDue ?? DateTime.now()),
                 ),
                 Divider(
                   height: 4,

@@ -90,7 +90,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 40, 0, 0),
                                   child: Text(
-                                    '¡Sincronizando información!',
+                                    'Sync data!',
                                     textAlign: TextAlign.center,
                                     style: AppTheme.of(context).bodyText1.override(
                                           fontFamily:
@@ -107,7 +107,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 10, 0, 0),
                                   child: Text(
-                                    'Los datos de los emprendimientos\nse están sincronizando a la\nbase de Datos, no apague la\nconexión Wi-Fi o datos móviles hasta\nque se complete el proceso.',
+                                    "Control data form\nsynchronizing\nto Data Base, don't interrput internet connection\nuntil the proccess finish.",
                                     textAlign: TextAlign.center,
                                     maxLines: 5,
                                     style: AppTheme.of(context).bodyText1.override(
@@ -128,7 +128,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                             const EdgeInsetsDirectional.fromSTEB(
                                                 0, 70, 0, 0),
                                         child: getProgressIndicatorAnimated(
-                                            "Sincronizando..."),
+                                            "Sync..."),
                                       ),
                                   )
                                   : 
@@ -179,7 +179,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                       );
                                       syncProviderSupabase.procesoTerminado(false);
                                     },
-                                    text: 'Listo',
+                                    text: 'Continue',
                                     options: FFButtonOptions(
                                       width: 130,
                                       height: 45,
@@ -207,7 +207,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           0, 10, 0, 0),
                                       child: Text(
-                                        'Sincronización incompleta.\nPara más información\nvea los detalles registrados.',
+                                        'Faild sync.\nDeploy the details\nto more information.',
                                         textAlign: TextAlign.center,
                                         maxLines: 4,
                                         style: AppTheme.of(context).bodyText1.override(
@@ -247,7 +247,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                     ),
                                                   ),
                                                   Text(
-                                                    'Detalles Registrados',
+                                                    'Details',
                                                     style: AppTheme.of(context)
                                                         .title1
                                                         .override(
@@ -306,7 +306,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                                             .fromSTEB(
                                                                         16, 0, 16, 5),
                                                                 child: Text(
-                                                                  'Instruccion: ${error.instruccion}',
+                                                                  'Action: ${error.instruccion}',
                                                                   maxLines: 2,
                                                                   style: AppTheme.of(
                                                                           context)
@@ -330,7 +330,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                                             .fromSTEB(
                                                                         16, 0, 16, 0),
                                                                 child: Text(
-                                                                  'Fecha: ${dateTimeFormat('dd-MM-y hh:mm:ss', error.fecha)}',
+                                                                  'Date: ${dateTimeFormat('dd-MM-y hh:mm:ss', error.fecha)}',
                                                                   maxLines: 1,
                                                                   style: AppTheme.of(
                                                                           context)
@@ -384,7 +384,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                             ),
                                           );
                                         },
-                                        text: 'Cerrar',
+                                        text: 'Close',
                                         options: FFButtonOptions(
                                           width: 130,
                                           height: 45,
