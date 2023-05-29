@@ -257,7 +257,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width, 
-                  text: userController.usuarioCurrent?.vehicle.target?.licesePlates ?? "H52-86R",
+                  text: userController.usuarioCurrent?.vehicle.target?.licensePlates ?? "H52-86R",
                 ),
                 Divider(
                   height: 4,

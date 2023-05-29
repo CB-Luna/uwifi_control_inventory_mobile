@@ -1,7 +1,5 @@
-import 'package:taller_alex_app_asesor/modelsFormularios/data_draggable.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
-import 'package:taller_alex_app_asesor/screens/observaciones/observacion_screen.dart';
-import 'package:taller_alex_app_asesor/screens/revision/revision_screen.dart';
 import 'package:taller_alex_app_asesor/screens/revision/revision_screen_dos.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 
@@ -29,9 +27,8 @@ class HourBackgroundWidget extends StatefulWidget {
 class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
   late HourBackgroundModel _model;
   Color caughtColor = Colors.white;
-  String vin = "";
+  String licensePlates = "";
   String image = "";
-  late DraggableData dataLate;
 
   @override
   void setState(VoidCallback callback) {
@@ -56,7 +53,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
   Widget build(BuildContext context) {
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
     return DragTarget(
-      onAccept: (DraggableData data) async{
+      onAccept: (Vehicle data) async{
         if (controlFormProvider.accept) {
           await showDialog(
             context: context,
@@ -78,12 +75,10 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
         } 
         else{
           setState(() {
-            caughtColor = data.color;
-            vin = data.vin;
-            image = data.image;
-            dataLate = data;
+            caughtColor = FlutterFlowTheme.of(context).alternate;
+            licensePlates = data.licensePlates;
+            image = data.path;
           });
-          controlFormProvider.updateDataSelected(data.accept);
         }
       },
       builder: (context, acceptedData, rejectedData) {
@@ -182,19 +177,19 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                       ),
                       Center(
                         child: Visibility(
-                          visible: vin != "",
+                          visible: licensePlates != "",
                           child: Row(
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: getAssetImageContainer(
+                                child: getImageContainer(
                                   image,
                                   height: 120,
                                   width: 200,
                                   ),
                               ),
                               Text(
-                                vin,
+                                "License Plates: $licensePlates",
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -212,7 +207,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                       Align(
                         alignment: const Alignment(0.0, 0.9),
                         child: 
-                        vin != "" ? 
+                        licensePlates != "" ? 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -250,7 +245,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                               controlFormProvider.cleanData();
                                               setState(() {
                                                 caughtColor = Colors.white;
-                                                vin = "";
+                                                licensePlates = "";
                                                 image = "";
                                               });
                                               Navigator.pop(context);
@@ -305,7 +300,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                       RevisionScreenDos(draggableData: dataLate, hour: widget.time!, period: widget.period!,),
+                                       RevisionScreenDos(hour: widget.time!, period: widget.period!,),
                                     ),
                                   );
                                 },

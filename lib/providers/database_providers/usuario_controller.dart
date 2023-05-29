@@ -307,15 +307,52 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     final List<Vehicle> opcionesVehiculos = [];
     final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual != null) {
-        for (var vehicle in dataBase.vehicleBox.getAll().toList()) {
-          if (vehicle.status.target?.status == "Available") {
-            if (vehicle.company.target?.company == usuarioActual.company.target?.company) {
-              opcionesVehiculos.add(vehicle);
+        if (usuarioActual.vehicle.target != null) {
+          opcionesVehiculos.add(usuarioActual.vehicle.target!);
+        } else {
+          for (var vehicle in dataBase.vehicleBox.getAll().toList()) {
+            if (vehicle.status.target?.status == "Available") {
+              if (vehicle.company.target?.company == usuarioActual.company.target?.company) {
+                opcionesVehiculos.add(vehicle);
+              }
             }
           }
         }
     }
     return opcionesVehiculos;
+  }
+  
+
+  ControlForm? getControlFormReceivedToday() {
+    ControlForm? controlFormToday;
+    final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
+    if (usuarioActual != null) {
+        for (var controlForm in dataBase.controlFormBox.getAll().toList()) {
+          if (controlForm.today && (controlForm.typeForm == true)) {
+            if (controlForm.employee.target?.idDBR == usuarioActual.idDBR) {
+              controlFormToday = controlForm;
+            } else {
+              print("No es igual");
+            }
+          }
+        }
+    }
+    return controlFormToday;
+  }
+
+  ControlForm? getControlFormDeliveredToday() {
+    ControlForm? controlFormToday;
+    final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
+    if (usuarioActual != null) {
+        for (var controlForm in dataBase.controlFormBox.getAll().toList()) {
+          if (controlForm.today && (controlForm.typeForm == false)) {
+            if (controlForm.employee.target?.idDBR == usuarioActual.idDBR) {
+              controlFormToday = controlForm;
+            }
+          }
+        }
+    }
+    return controlFormToday;
   }
 
   List<String> obtenerTecnicosMecanicosInternos() {

@@ -4,25 +4,21 @@ import 'package:im_stepper/stepper.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/modelsFormularios/data_draggable.dart';
 import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/agregar_vehiculo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/componentes/seccion_dos_formulario.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/componentes/seccion_tres_formulario.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/componentes/seccion_uno_formulario.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/observacion_creada_screen.dart';
-import 'package:taller_alex_app_asesor/screens/revision/revision_screen.dart';
 import 'package:taller_alex_app_asesor/screens/revision/revision_screen_dos.dart';
 
 class ObservacionScreen extends StatefulWidget {
-  final DraggableData data;
   final String hour;
   final String period;
   const ObservacionScreen({
     super.key, 
     required this.hour, 
     required this.period, 
-    required this.data, 
   });
 
   @override
@@ -147,7 +143,7 @@ class _ObservacionScreen extends State<ObservacionScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                          RevisionScreenDos(draggableData: widget.data, hour: widget.hour, period: widget.period,),
+                                          RevisionScreenDos(hour: widget.hour, period: widget.period,),
                                       ),
                                     );
                                   },

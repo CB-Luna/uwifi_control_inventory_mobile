@@ -236,7 +236,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
               model: element.node.model,
               year: element.node.year,
               vin: element.node.vin,
-              licesePlates: element.node.licensePlates,
+              licensePlates: element.node.licensePlates,
               motor: element.node.motor,
               color: element.node.color,
               path: file.path,
@@ -271,7 +271,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
               vehicleExistente.model = element.node.model;
               vehicleExistente.year = element.node.year;
               vehicleExistente.vin = element.node.vin;
-              vehicleExistente.licesePlates = element.node.licensePlates;
+              vehicleExistente.licensePlates = element.node.licensePlates;
               vehicleExistente.motor = element.node.motor;
               vehicleExistente.color = element.node.color;
               vehicleExistente.path = file.path;

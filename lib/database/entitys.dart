@@ -595,7 +595,7 @@ class Vehicle {
   @Unique()
   String vin;
   @Unique()
-  String licesePlates;
+  String licensePlates;
   String motor;
   String color;
   DateTime oilChangeDue;
@@ -617,7 +617,7 @@ class Vehicle {
     required this.image,
     required this.path,
     required this.vin,
-    required this.licesePlates,
+    required this.licensePlates,
     required this.motor,
     required this.color,
     required this.oilChangeDue,

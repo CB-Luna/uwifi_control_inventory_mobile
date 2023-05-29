@@ -1174,7 +1174,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(99, 8193815974638102829),
       name: 'Vehicle',
-      lastPropertyId: const IdUid(17, 2392770978932015033),
+      lastPropertyId: const IdUid(18, 598775386392949340),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1213,12 +1213,6 @@ final _entities = <ModelEntity>[
             type: 9,
             flags: 2080,
             indexId: const IdUid(421, 8203889751631662671)),
-        ModelProperty(
-            id: const IdUid(8, 3019793955076622132),
-            name: 'licesePlates',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(422, 7713453128820497698)),
         ModelProperty(
             id: const IdUid(9, 4880312502650608536),
             name: 'motor',
@@ -1268,7 +1262,13 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(425, 8708627097459420669),
-            relationTarget: 'Company')
+            relationTarget: 'Company'),
+        ModelProperty(
+            id: const IdUid(18, 598775386392949340),
+            name: 'licensePlates',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(431, 7457722984787952526))
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -1410,7 +1410,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(100, 5432875809935853718),
-      lastIndexId: const IdUid(430, 2449500294187427335),
+      lastIndexId: const IdUid(431, 7457722984787952526),
       lastRelationId: const IdUid(97, 7907540417784017008),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -1668,7 +1668,8 @@ ModelDefinition getObjectBoxModel() {
         504837245352985312,
         4800753572139945092,
         7566237706448790608,
-        1215468110805298241
+        1215468110805298241,
+        7713453128820497698
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -2691,7 +2692,8 @@ ModelDefinition getObjectBoxModel() {
         5053047566368863611,
         7115806576092254573,
         393360818016159356,
-        474264797233057089
+        474264797233057089,
+        3019793955076622132
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3873,12 +3875,12 @@ ModelDefinition getObjectBoxModel() {
           final imageOffset = fbb.writeString(object.image);
           final pathOffset = fbb.writeString(object.path);
           final vinOffset = fbb.writeString(object.vin);
-          final licesePlatesOffset = fbb.writeString(object.licesePlates);
           final motorOffset = fbb.writeString(object.motor);
           final colorOffset = fbb.writeString(object.color);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(18);
+          final licensePlatesOffset = fbb.writeString(object.licensePlates);
+          fbb.startTable(19);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, makeOffset);
           fbb.addOffset(2, modelOffset);
@@ -3886,7 +3888,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(4, imageOffset);
           fbb.addOffset(5, pathOffset);
           fbb.addOffset(6, vinOffset);
-          fbb.addOffset(7, licesePlatesOffset);
           fbb.addOffset(8, motorOffset);
           fbb.addOffset(9, colorOffset);
           fbb.addInt64(10, object.oilChangeDue.millisecondsSinceEpoch);
@@ -3896,6 +3897,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(14, idDBROffset);
           fbb.addInt64(15, object.status.targetId);
           fbb.addInt64(16, object.company.targetId);
+          fbb.addOffset(17, licensePlatesOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3917,8 +3919,8 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 14, ''),
               vin: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 16, ''),
-              licesePlates: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 18, ''),
+              licensePlates: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 38, ''),
               motor: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 20, ''),
               color: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
@@ -4846,45 +4848,45 @@ class Vehicle_ {
   /// see [Vehicle.vin]
   static final vin = QueryStringProperty<Vehicle>(_entities[13].properties[6]);
 
-  /// see [Vehicle.licesePlates]
-  static final licesePlates =
-      QueryStringProperty<Vehicle>(_entities[13].properties[7]);
-
   /// see [Vehicle.motor]
   static final motor =
-      QueryStringProperty<Vehicle>(_entities[13].properties[8]);
+      QueryStringProperty<Vehicle>(_entities[13].properties[7]);
 
   /// see [Vehicle.color]
   static final color =
-      QueryStringProperty<Vehicle>(_entities[13].properties[9]);
+      QueryStringProperty<Vehicle>(_entities[13].properties[8]);
 
   /// see [Vehicle.oilChangeDue]
   static final oilChangeDue =
-      QueryIntegerProperty<Vehicle>(_entities[13].properties[10]);
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[9]);
 
   /// see [Vehicle.registrationDue]
   static final registrationDue =
-      QueryIntegerProperty<Vehicle>(_entities[13].properties[11]);
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[10]);
 
   /// see [Vehicle.insuranceRenewalDue]
   static final insuranceRenewalDue =
-      QueryIntegerProperty<Vehicle>(_entities[13].properties[12]);
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[11]);
 
   /// see [Vehicle.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<Vehicle>(_entities[13].properties[13]);
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[12]);
 
   /// see [Vehicle.idDBR]
   static final idDBR =
-      QueryStringProperty<Vehicle>(_entities[13].properties[14]);
+      QueryStringProperty<Vehicle>(_entities[13].properties[13]);
 
   /// see [Vehicle.status]
   static final status =
-      QueryRelationToOne<Vehicle, Status>(_entities[13].properties[15]);
+      QueryRelationToOne<Vehicle, Status>(_entities[13].properties[14]);
 
   /// see [Vehicle.company]
   static final company =
-      QueryRelationToOne<Vehicle, Company>(_entities[13].properties[16]);
+      QueryRelationToOne<Vehicle, Company>(_entities[13].properties[15]);
+
+  /// see [Vehicle.licensePlates]
+  static final licensePlates =
+      QueryStringProperty<Vehicle>(_entities[13].properties[16]);
 }
 
 /// [Users] entity fields to define ObjectBox queries.

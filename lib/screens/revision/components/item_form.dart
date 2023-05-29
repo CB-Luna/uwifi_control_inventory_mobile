@@ -695,10 +695,7 @@ class _ItemFormState extends State<ItemForm> {
               ),
               child: Icon(
                 widget.report == "Good" || widget.report == "Yes" || widget.readOnly || widget.isRegistered ? Icons.check : Icons.close,
-                color: widget.report == "Good" || widget.report == "Yes" || widget.readOnly || widget.isRegistered ?
-                FlutterFlowTheme.of(context).grayDark
-                :
-                FlutterFlowTheme.of(context).white,
+                color: FlutterFlowTheme.of(context).white,
                 size: 20,
               ),
             ),

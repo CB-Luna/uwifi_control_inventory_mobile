@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badge;
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/modelsFormularios/data_draggable.dart';
 import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/receiving_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
@@ -18,10 +17,10 @@ import 'package:taller_alex_app_asesor/screens/revision/control_form_not_created
 class RevisionScreenDos extends StatefulWidget {
   final String hour;
   final String period;
-  final DraggableData draggableData; 
   const RevisionScreenDos({
     super.key, 
-    required this.draggableData, required this.hour, required this.period, 
+    required this.hour, 
+    required this.period, 
     });
 
   @override
@@ -177,7 +176,7 @@ class _RevisionScreenDosState extends State<RevisionScreenDos> {
                         onTap: () async {
                           if (receivingFromProvider.validateForm()) {
                             if (receivingFromProvider.addControlForm(userProvider.usuarioCurrent)) {
-                              receivingFromProvider.cleanInformation();
+                              // receivingFromProvider.cleanInformation();
                               controlFormProvider.cleanData();
                               await Navigator.push(
                                 context,

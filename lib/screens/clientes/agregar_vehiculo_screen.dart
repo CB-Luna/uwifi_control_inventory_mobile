@@ -1,10 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/modelsFormularios/data_draggable.dart';
 import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/background_widget.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/calendar_model.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/week_days_widget.dart';
@@ -28,18 +29,22 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
   late CalendarModel _model;
+  List<Vehicle> vehicleAvailables = [];
   double left = 0.0;
   double top = 0.0;
 
     @override
   void initState() {
     super.initState();
+    vehicleAvailables = context.read<UsuarioController>().getVehiclesAvailables();
     _model = createModel(context, () => CalendarModel());
   }
 
   @override
   Widget build(BuildContext context) {
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
+    final usuarioProvider = Provider.of<UsuarioController>(context);
+    vehicleAvailables = usuarioProvider.getVehiclesAvailables();
     return WillPopScope(
       onWillPop: () async => false,
       child: GestureDetector(
@@ -236,7 +241,7 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                   alignment: Alignment.bottomCenter,
                   child: CarouselSlider(
                     options: CarouselOptions(height: 200),
-                    items: optionsDraggable.map((data) {
+                    items: vehicleAvailables.map((data) {
                       return Builder(
                         builder: (BuildContext context) {
                           return Draggable(
@@ -250,11 +255,11 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                                 boxShadow: [
                                   BoxShadow(
                                     blurRadius: 10,
-                                    color: data.color.withOpacity(0.8),
+                                    color: FlutterFlowTheme.of(context).alternate.withOpacity(0.8),
                                     offset: const Offset(6, 6),
                                   )
                                 ],
-                                color: data.color.withOpacity(0.8),
+                                color: FlutterFlowTheme.of(context).alternate.withOpacity(0.8),
                                 borderRadius: const BorderRadius.only(
                                   bottomLeft: Radius.circular(20),
                                   bottomRight: Radius.circular(20),
@@ -270,11 +275,11 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                                 boxShadow: [
                                   BoxShadow(
                                     blurRadius: 10,
-                                    color: data.color.withOpacity(0.8),
+                                    color: FlutterFlowTheme.of(context).alternate.withOpacity(0.8),
                                     offset: const Offset(6, 6),
                                   )
                                 ],
-                                color: data.color.withOpacity(0.8),
+                                color: FlutterFlowTheme.of(context).alternate.withOpacity(0.8),
                                 borderRadius: const BorderRadius.only(
                                   bottomLeft: Radius.circular(50),
                                   bottomRight: Radius.circular(50),
@@ -287,14 +292,14 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: getAssetImageContainer(
-                                        data.image,
+                                      child: getImageContainer(
+                                        data.path,
                                         height: 120,
                                         width: 200,
                                         ),
                                     ),
                                     Text(
-                                      "VIN: ${data.vin}", 
+                                      "License Plates: ${data.licensePlates}", 
                                       style: TextStyle(
                                         color: FlutterFlowTheme.of(context).white,
                                         fontSize: 15.0),
