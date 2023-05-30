@@ -71,18 +71,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          'Control System Vehicle',
-                          style: FlutterFlowTheme.of(context).title1.override(
-                                fontFamily: 'Outfit',
-                                color: FlutterFlowTheme.of(context).alternate,
-                                fontSize: 36,
-                              ),
-                        ),
-                      ],
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                        'Control System Vehicle',
+                        style: FlutterFlowTheme.of(context).title1.override(
+                              fontFamily: 'Outfit',
+                              color: FlutterFlowTheme.of(context).alternate,
+                              fontSize: 36,
+                            ),
+                      ),
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.max,
