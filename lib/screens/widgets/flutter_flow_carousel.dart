@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'dart:io';
 
-import 'package:taller_alex_app_asesor/database/image.dart';
-
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 class FlutterFlowCarousel extends StatefulWidget {
   const FlutterFlowCarousel({
     Key? key,

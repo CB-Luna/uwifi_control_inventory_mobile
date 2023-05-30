@@ -6,25 +6,26 @@ import 'package:badges/badges.dart' as badge;
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/receiving_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/delivered_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/vehiculo_controller.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/agregar_vehiculo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/menu_form_button.dart';
-import 'package:taller_alex_app_asesor/screens/revision/control_form_created.dart';
-import 'package:taller_alex_app_asesor/screens/revision/control_form_not_created.dart';
-class RevisionScreenDos extends StatefulWidget {
+import 'package:taller_alex_app_asesor/screens/revision/control_form_d_creted.dart';
+import 'package:taller_alex_app_asesor/screens/revision/control_form_d_not_created.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
+class DeliveredSchedulerScreen extends StatefulWidget {
   final String hour;
   final String period;
-  const RevisionScreenDos({
+  const DeliveredSchedulerScreen({
     super.key, 
     required this.hour, 
     required this.period, 
     });
 
   @override
-  State<RevisionScreenDos> createState() => _RevisionScreenDosState();
+  State<DeliveredSchedulerScreen> createState() => _DeliveredSchedulerScreenState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -82,11 +83,11 @@ final animationsMap = {
     ),
   };
 
-class _RevisionScreenDosState extends State<RevisionScreenDos> {
+class _DeliveredSchedulerScreenState extends State<DeliveredSchedulerScreen> {
   @override
   Widget build(BuildContext context) {
     final vehiculoController = Provider.of<VehiculoController>(context);
-    final receivingFromProvider = Provider.of<ReceivingFormController>(context);
+    final deliveredFromProvider = Provider.of<DeliveredFormController>(context);
     final userProvider = Provider.of<UsuarioController>(context);
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
     return Scaffold(
@@ -124,7 +125,7 @@ class _RevisionScreenDosState extends State<RevisionScreenDos> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  AgregarVehiculoScreen(),
+                                  AgregarVehiculoScreen(typeForm: false,),
                             ),
                           );
                         },
@@ -174,25 +175,25 @@ class _RevisionScreenDosState extends State<RevisionScreenDos> {
                       ),
                       child: InkWell(
                         onTap: () async {
-                          if (receivingFromProvider.validateForm()) {
-                            if (receivingFromProvider.addControlForm(userProvider.usuarioCurrent)) {
-                              // receivingFromProvider.cleanInformation();
+                          if (deliveredFromProvider.validateForm()) {
+                            if (deliveredFromProvider.addControlForm(userProvider.usuarioCurrent)) {
+                              // deliveredFromProvider.cleanInformation();
                               controlFormProvider.cleanData();
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      const ControlFormCreatedScreen(),
+                                      const ControlFormDCreatedScreen(),
                                 ),
                               );
                             } else {
-                              receivingFromProvider.cleanInformation();
+                              deliveredFromProvider.cleanInformation();
                               controlFormProvider.cleanData();
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      const ControlFormNotCreatedScreen(),
+                                      const ControlFormDNotCreatedScreen(),
                                 ),
                               );
                             }
@@ -253,7 +254,7 @@ class _RevisionScreenDosState extends State<RevisionScreenDos> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Receiving Form',
+                      'Delivered Form',
                       textAlign: TextAlign.center,
                       style:
                           FlutterFlowTheme.of(context).bodyText1.override(
@@ -289,7 +290,9 @@ class _RevisionScreenDosState extends State<RevisionScreenDos> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              "Jane Cooper",
+                              maybeHandleOverflow("${
+                                userProvider.usuarioCurrent?.name} ${
+                                userProvider.usuarioCurrent?.lastName}", 20, "..."),
                               style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily:
                                     FlutterFlowTheme.of(context).bodyText1Family,
@@ -299,7 +302,7 @@ class _RevisionScreenDosState extends State<RevisionScreenDos> {
                               ),
                             ),
                             Text(
-                              "021",
+                              "${userProvider.usuarioCurrent?.company.target?.company}",
                               style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily:
                                     FlutterFlowTheme.of(context).bodyText1Family,
@@ -309,7 +312,10 @@ class _RevisionScreenDosState extends State<RevisionScreenDos> {
                               ),
                             ),
                             Text(
-                              "10-MAY-2022",
+                              DateFormat(
+                               'MMM-dd-yyyy').
+                                format(
+                                  getCurrentTimestamp),
                               style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily:
                                     FlutterFlowTheme.of(context).bodyText1Family,
@@ -332,68 +338,68 @@ class _RevisionScreenDosState extends State<RevisionScreenDos> {
                   children: [
                     badge.Badge(
                       badgeContent: Text(
-                        "${receivingFromProvider.pendingMeasures}",
+                        "${deliveredFromProvider.pendingMeasures}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: receivingFromProvider.pendingMeasures != 0,
+                      showBadge: deliveredFromProvider.pendingMeasures != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
                         icon: Icons.speed_outlined, 
                         onPressed: () {
-                          vehiculoController.setTapedOption(0);
+                          vehiculoController.setTapedOptionDelivered(0);
                         },
-                        isTaped: vehiculoController.isTaped == 0,
+                        isTaped: vehiculoController.isTapedDelivered == 0,
                       ),
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${receivingFromProvider.badStateLights}",
+                        "${deliveredFromProvider.badStateLights}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: receivingFromProvider.badStateLights != 0,
+                      showBadge: deliveredFromProvider.badStateLights != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
                         icon: Icons.flare, 
                         onPressed: () {
-                          vehiculoController.setTapedOption(1);
+                          vehiculoController.setTapedOptionDelivered(1);
                         },
-                        isTaped: vehiculoController.isTaped == 1,
+                        isTaped: vehiculoController.isTapedDelivered == 1,
                       ),
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${receivingFromProvider.badStateFluids}",
+                        "${deliveredFromProvider.badStateFluids}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: receivingFromProvider.badStateFluids != 0,
+                      showBadge: deliveredFromProvider.badStateFluids != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
                         icon: Icons.invert_colors, 
                         onPressed: () {
-                          vehiculoController.setTapedOption(2);
+                          vehiculoController.setTapedOptionDelivered(2);
                         },
-                        isTaped: vehiculoController.isTaped == 2,
+                        isTaped: vehiculoController.isTapedDelivered == 2,
                       ),
                     ),
                     MenuFormButton(
                       icon: Icons.health_and_safety, 
                       onPressed: () {
-                        vehiculoController.setTapedOption(3);
+                        vehiculoController.setTapedOptionDelivered(3);
                       },
-                      isTaped: vehiculoController.isTaped == 3,
+                      isTaped: vehiculoController.isTapedDelivered == 3,
                     ),
                     MenuFormButton(
                       icon: Icons.build, 
                       onPressed: () {
-                        vehiculoController.setTapedOption(4);
+                        vehiculoController.setTapedOptionDelivered(4);
                       },
-                      isTaped: vehiculoController.isTaped == 4,
+                      isTaped: vehiculoController.isTapedDelivered == 4,
                     ),
                   ],
                 ),
@@ -416,8 +422,8 @@ class _RevisionScreenDosState extends State<RevisionScreenDos> {
                       scrollDirection: Axis.vertical,
                       itemCount: 1,
                       itemBuilder: (context, index) {
-                        final section = vehiculoController.menuTaped[
-                            vehiculoController.isTaped];
+                        final section = vehiculoController.menuTapedDelivered [
+                            vehiculoController.isTapedDelivered];
                         return section;
                       });
                 },

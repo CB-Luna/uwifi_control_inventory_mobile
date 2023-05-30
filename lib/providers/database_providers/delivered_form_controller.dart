@@ -6,9 +6,10 @@ import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
-class ReceivingFormController extends ChangeNotifier {
 
-  GlobalKey<FormState> receivingFormKey = GlobalKey<FormState>();
+class DeliveredFormController extends ChangeNotifier {
+
+  GlobalKey<FormState> deliveredFormKey = GlobalKey<FormState>();
 
   //***********************<Variables>************************
   //Extras
@@ -1875,7 +1876,7 @@ class ReceivingFormController extends ChangeNotifier {
       );
 
       final controlForm = ControlForm(
-        typeForm: true, //Receiving
+        typeForm: false, //Delivered
       );
       
       final vehicle = user?.vehicle.target;

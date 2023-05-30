@@ -4,14 +4,14 @@ import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/control_daily_veh
 
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-class ControlFormCreatedScreen extends StatefulWidget {
-  const ControlFormCreatedScreen({Key? key}) : super(key: key);
+class ControlFormDCreatedScreen extends StatefulWidget {
+  const ControlFormDCreatedScreen({Key? key}) : super(key: key);
 
   @override
-  State<ControlFormCreatedScreen> createState() => _ControlFormCreatedScreenState();
+  State<ControlFormDCreatedScreen> createState() => _ControlFormDCreatedScreenState();
 }
 
-class _ControlFormCreatedScreenState extends State<ControlFormCreatedScreen> {
+class _ControlFormDCreatedScreenState extends State<ControlFormDCreatedScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -36,7 +36,7 @@ class _ControlFormCreatedScreenState extends State<ControlFormCreatedScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Receiving\nControl Form\nCreated!',
+                        '¡Delivered\nControl Form\nCreated!',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',

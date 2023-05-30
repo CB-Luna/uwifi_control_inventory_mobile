@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/receiving_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/delivered_form_controller.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/header_shimmer.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/item_form.dart';
 
-class FluidsSection extends StatefulWidget {
+class FluidsSectionD extends StatefulWidget {
   
-  const FluidsSection({super.key});
+  const FluidsSectionD({super.key});
 
   @override
-  State<FluidsSection> createState() => _FluidsSectionState();
+  State<FluidsSectionD> createState() => _FluidsSectionDState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -70,10 +70,10 @@ final animationsMap = {
     ),
   };
 
-class _FluidsSectionState extends State<FluidsSection> {
+class _FluidsSectionDState extends State<FluidsSectionD> {
   @override
   Widget build(BuildContext context) {
-    final receivingFormProvider = Provider.of<ReceivingFormController>(context);
+    final deliveredFormProvider = Provider.of<DeliveredFormController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: Row(
@@ -97,17 +97,17 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.engineOilImages,
+                  images: deliveredFormProvider.engineOilImages,
                   addImage: (image) {
-                    receivingFormProvider.addEngineOilImage(image);
+                    deliveredFormProvider.addEngineOilImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateEngineOilImage(image);
+                    deliveredFormProvider.updateEngineOilImage(image);
                   },
-                  comments: receivingFormProvider.engineOilComments,
-                  report: receivingFormProvider.engineOil,
+                  comments: deliveredFormProvider.engineOilComments,
+                  report: deliveredFormProvider.engineOil,
                   updateReport: (report) {
-                    receivingFormProvider.updateEngineOil(report);
+                    deliveredFormProvider.updateEngineOil(report);
                   },
                 ),
                 Divider(
@@ -126,17 +126,17 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.transmissionImages,
+                  images: deliveredFormProvider.transmissionImages,
                   addImage: (image) {
-                    receivingFormProvider.addTransmissionImage(image);
+                    deliveredFormProvider.addTransmissionImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateTransmissionImage(image);
+                    deliveredFormProvider.updateTransmissionImage(image);
                   },
-                  comments: receivingFormProvider.transmissionComments,
-                  report: receivingFormProvider.transmission,
+                  comments: deliveredFormProvider.transmissionComments,
+                  report: deliveredFormProvider.transmission,
                   updateReport: (report) {
-                    receivingFormProvider.updateTransmission(report);
+                    deliveredFormProvider.updateTransmission(report);
                   },
                 ),
                 Divider(
@@ -155,17 +155,17 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.coolantImages,
+                  images: deliveredFormProvider.coolantImages,
                   addImage: (image) {
-                    receivingFormProvider.addCoolantImage(image);
+                    deliveredFormProvider.addCoolantImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateCoolantImage(image);
+                    deliveredFormProvider.updateCoolantImage(image);
                   },
-                  comments: receivingFormProvider.coolantComments,
-                  report: receivingFormProvider.coolant,
+                  comments: deliveredFormProvider.coolantComments,
+                  report: deliveredFormProvider.coolant,
                   updateReport: (report) {
-                    receivingFormProvider.updateCoolant(report);
+                    deliveredFormProvider.updateCoolant(report);
                   },
                 ),
                 Divider(
@@ -184,17 +184,17 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.powerSteeringImages,
+                  images: deliveredFormProvider.powerSteeringImages,
                   addImage: (image) {
-                    receivingFormProvider.addPowerSteeringImage(image);
+                    deliveredFormProvider.addPowerSteeringImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updatePowerSteeringImage(image);
+                    deliveredFormProvider.updatePowerSteeringImage(image);
                   },
-                  comments: receivingFormProvider.powerSteeringComments,
-                  report: receivingFormProvider.powerSteering,
+                  comments: deliveredFormProvider.powerSteeringComments,
+                  report: deliveredFormProvider.powerSteering,
                   updateReport: (report) {
-                    receivingFormProvider.updatePowerSteering(report);
+                    deliveredFormProvider.updatePowerSteering(report);
                   },
                 ),
                 Divider(
@@ -213,17 +213,17 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.dieselExhaustFluidImages,
+                  images: deliveredFormProvider.dieselExhaustFluidImages,
                   addImage: (image) {
-                    receivingFormProvider.addDieselExhaustFluidImage(image);
+                    deliveredFormProvider.addDieselExhaustFluidImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateDieselExhaustFluidImage(image);
+                    deliveredFormProvider.updateDieselExhaustFluidImage(image);
                   },
-                  comments: receivingFormProvider.dieselExhaustFluidComments,
-                  report: receivingFormProvider.dieselExhaustFluid,
+                  comments: deliveredFormProvider.dieselExhaustFluidComments,
+                  report: deliveredFormProvider.dieselExhaustFluid,
                   updateReport: (report) {
-                    receivingFormProvider.updateDieselExhaustFluid(report);
+                    deliveredFormProvider.updateDieselExhaustFluid(report);
                   },
                 ),
                 Divider(
@@ -242,17 +242,17 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.windshieldWasherFluidImages,
+                  images: deliveredFormProvider.windshieldWasherFluidImages,
                   addImage: (image) {
-                    receivingFormProvider.addWindshieldWasherFluidImage(image);
+                    deliveredFormProvider.addWindshieldWasherFluidImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateWindshieldWasherFluidImage(image);
+                    deliveredFormProvider.updateWindshieldWasherFluidImage(image);
                   },
-                  comments: receivingFormProvider.windshieldWasherFluidComments,
-                  report: receivingFormProvider.windshieldWasherFluid,
+                  comments: deliveredFormProvider.windshieldWasherFluidComments,
+                  report: deliveredFormProvider.windshieldWasherFluid,
                   updateReport: (report) {
-                    receivingFormProvider.updateWindshieldWasherFluid(report);
+                    deliveredFormProvider.updateWindshieldWasherFluid(report);
                   },
                 ),
                 Divider(
@@ -282,17 +282,17 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.insulatedImages,
+                  images: deliveredFormProvider.insulatedImages,
                   addImage: (image) {
-                    receivingFormProvider.addInsulatedImage(image);
+                    deliveredFormProvider.addInsulatedImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateInsulatedImage(image);
+                    deliveredFormProvider.updateInsulatedImage(image);
                   },
-                  comments: receivingFormProvider.insulatedComments,
-                  report: receivingFormProvider.insulated,
+                  comments: deliveredFormProvider.insulatedComments,
+                  report: deliveredFormProvider.insulated,
                   updateReport: (report) {
-                    receivingFormProvider.updateInsulated(report);
+                    deliveredFormProvider.updateInsulated(report);
                   },
                 ),
                 Divider(
@@ -311,17 +311,17 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.holesDrilledImages,
+                  images: deliveredFormProvider.holesDrilledImages,
                   addImage: (image) {
-                    receivingFormProvider.addHolesDrilledImage(image);
+                    deliveredFormProvider.addHolesDrilledImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateHolesDrilledImage(image);
+                    deliveredFormProvider.updateHolesDrilledImage(image);
                   },
-                  comments: receivingFormProvider.holesDrilledComments,
-                  report: receivingFormProvider.holesDrilled,
+                  comments: deliveredFormProvider.holesDrilledComments,
+                  report: deliveredFormProvider.holesDrilled,
                   updateReport: (report) {
-                    receivingFormProvider.updateHolesDrilled(report);
+                    deliveredFormProvider.updateHolesDrilled(report);
                   },
                 ),
                 Divider(
@@ -340,17 +340,17 @@ class _FluidsSectionState extends State<FluidsSection> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.bucketLinerImages,
+                  images: deliveredFormProvider.bucketLinerImages,
                   addImage: (image) {
-                    receivingFormProvider.addBucketLinerImage(image);
+                    deliveredFormProvider.addBucketLinerImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateBucketLinerImage(image);
+                    deliveredFormProvider.updateBucketLinerImage(image);
                   },
-                  comments: receivingFormProvider.bucketLinerComments,
-                  report: receivingFormProvider.bucketLiner,
+                  comments: deliveredFormProvider.bucketLinerComments,
+                  report: deliveredFormProvider.bucketLiner,
                   updateReport: (report) {
-                    receivingFormProvider.updateBucketLiner(report);
+                    deliveredFormProvider.updateBucketLiner(report);
                   },
                 ),
                 Divider(

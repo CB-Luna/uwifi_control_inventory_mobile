@@ -7,6 +7,7 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/delivered_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/receiving_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/agregar_vehiculo_screen.dart';
@@ -39,7 +40,8 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    final receivingFormProvider = Provider.of<ReceivingFormController>(context);
+    final receivedFormProvider = Provider.of<ReceivingFormController>(context);
+    final deliveredFormProvider = Provider.of<DeliveredFormController>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     controlFormReceived = usuarioProvider.getControlFormReceivedToday();
     controlFormDelivered = usuarioProvider.getControlFormDeliveredToday();
@@ -348,7 +350,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          AgregarVehiculoScreen(),
+                                          AgregarVehiculoScreen(typeForm: true,),
                                     ),
                                   );
                                 } else {
@@ -448,11 +450,11 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 10.0, 10.0, 10.0, 10.0),
                                         child: badge.Badge(
                                           badgeContent: Text(
-                                            "${receivingFormProvider
-                                            .pendingMeasures + receivingFormProvider
-                                            .badStateLights + receivingFormProvider
-                                            .badStateSecurity + receivingFormProvider
-                                            .badStateFluids + receivingFormProvider
+                                            "${receivedFormProvider
+                                            .pendingMeasures + receivedFormProvider
+                                            .badStateLights + receivedFormProvider
+                                            .badStateSecurity + receivedFormProvider
+                                            .badStateFluids + receivedFormProvider
                                             .badStateEquipment}",
                                               style: TextStyle(
                                                   color: FlutterFlowTheme.of(context).white)),
@@ -512,7 +514,21 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                         "Received Form hadn't registered yet."),
                                   ));
                                 } else {
-
+                                  if (controlFormDelivered == null) {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              AgregarVehiculoScreen(typeForm: false,),
+                                        ),
+                                      );
+                                    } else {
+                                      snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "Delivered Form is already has been registered."),
+                                      ));
+                                    }
                                 }
                               },
                               child: Padding(
@@ -604,10 +620,15 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 10.0, 10.0, 10.0, 10.0),
                                         child: badge.Badge(
                                           badgeContent: Text(
-                                            "2",
+                                            "${deliveredFormProvider
+                                            .pendingMeasures + deliveredFormProvider
+                                            .badStateLights + deliveredFormProvider
+                                            .badStateSecurity + deliveredFormProvider
+                                            .badStateFluids + deliveredFormProvider
+                                            .badStateEquipment}",
                                               style: TextStyle(
                                                   color: FlutterFlowTheme.of(context).white)),
-                                          showBadge: true,
+                                          showBadge: controlFormDelivered == null,
                                           badgeColor: FlutterFlowTheme.of(context).secondaryColor,
                                           position: badge.BadgePosition.bottomEnd(),
                                           child: ClayContainer(
@@ -618,17 +639,29 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                             borderRadius: 25,
                                             curveType: CurveType.concave,
                                             color: 
+                                            controlFormDelivered != null ?
+                                            FlutterFlowTheme.of(context).buenoColor
+                                            :
                                             FlutterFlowTheme.of(context).primaryColor,
                                             surfaceColor: 
+                                            controlFormDelivered != null ?
+                                            FlutterFlowTheme.of(context).buenoColor
+                                            :
                                             FlutterFlowTheme.of(context).primaryColor,
                                             parentColor: 
+                                            controlFormDelivered != null ?
+                                            FlutterFlowTheme.of(context).buenoColor
+                                            :
                                             FlutterFlowTheme.of(context).primaryColor,
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(25),
                                               ),
                                               child: Icon(
-                                                Icons.close_outlined,
+                                                controlFormDelivered != null ?
+                                                 Icons.check
+                                                 :
+                                                 Icons.close,
                                                 color:
                                                 FlutterFlowTheme.of(context).white,
                                                 size: 20,

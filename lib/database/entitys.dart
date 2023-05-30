@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:taller_alex_app_asesor/database/image.dart';
+import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 
 @Entity()
 class ControlForm {
@@ -106,10 +106,12 @@ class Measures {
   int id;
   String gas;
   String gasComments;
-  late List<ImageEvidence> gasImages;
+  List<String> gasImages;
+  List<String> gasPath;
   int mileage;
   String mileageComments;
-  late List<ImageEvidence> mileageImages;
+  List<String> mileageImages;
+  List<String> mileagePath;
   DateTime dateAdded;
   @Unique()
   String? idDBR;
@@ -121,10 +123,12 @@ class Measures {
     this.id = 0,
     required this.gas,
     required this.gasComments,
-    List<ImageEvidence>? gasImages,
+    required this.gasImages,
+    required this.gasPath,
     required this.mileage,
     required this.mileageComments,
-    List<ImageEvidence>? mileageImages,
+    required this.mileageImages,
+    required this.mileagePath,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();
@@ -138,34 +142,44 @@ class Lights {
   int id;
   String headLights;
   String headLightsComments;
-  late List<ImageEvidence> headLightsImages;
+  List<String> headLightsImages;
+  List<String> headLightsPath;
   String brakeLights;
   String brakeLightsComments;
-  late List<ImageEvidence> brakeLightsImages;
+  List<String> brakeLightsImages;
+  List<String> brakeLightsPath;
   String reverseLights;
   String reverseLightsComments;
-  late List<ImageEvidence> reverseLightsImages;
+  List<String> reverseLightsImages;
+  List<String> reverseLightsPath;
   String warningLights;
   String warningLightsComments;
-  late List<ImageEvidence> warningLightsImages;
+  List<String> warningLightsImages;
+  List<String> warningLightsPath;
   String turnSignals;
   String turnSignalsComments;
-  late List<ImageEvidence> turnSignalsImages;
+  List<String> turnSignalsImages;
+  List<String> turnSignalsPath;
   String fourWayFlashers;
   String fourWayFlashersComments;
-  late List<ImageEvidence> fourWayFlashersImages;
+  List<String> fourWayFlashersImages;
+  List<String> fourWayFlashersPath;
   String dashLights;
   String dashLightsComments;
-  late List<ImageEvidence> dashLightsImages;
+  List<String> dashLightsImages;
+  List<String> dashLightsPath;
   String strobeLights;
   String strobeLightsComments;
-  late List<ImageEvidence> strobeLightsImages;
+  List<String> strobeLightsImages;
+  List<String> strobeLightsPath;
   String cabRoofLights;
   String cabRoofLightsComments;
-  late List<ImageEvidence> cabRoofLightsImages;
+  List<String> cabRoofLightsImages;
+  List<String> cabRoofLightsPath;
   String clearenceLights;
   String clearenceLightsComments;
-  late List<ImageEvidence> clearenceLightsImages;
+  List<String> clearenceLightsImages;
+  List<String> clearenceLightsPath;
   DateTime dateAdded;
   @Unique()
   String? idDBR;
@@ -177,34 +191,44 @@ class Lights {
     this.id = 0,
     required this.headLights,
     required this.headLightsComments,
-    List<ImageEvidence>? headLightsImages,
+    required this.headLightsImages,
+    required this.headLightsPath,
     required this.brakeLights,
     required this.brakeLightsComments,
-    List<ImageEvidence>? brakeLightsImages,
+    required this.brakeLightsImages,
+    required this.brakeLightsPath,
     required this.reverseLights,
     required this.reverseLightsComments,
-    List<ImageEvidence>? reverseLightsImages,
+    required this.reverseLightsImages,
+    required this.reverseLightsPath,
     required this.warningLights,
     required this.warningLightsComments,
-    List<ImageEvidence>? warningLightsImages,
+    required this.warningLightsImages,
+    required this.warningLightsPath,
     required this.turnSignals,
     required this.turnSignalsComments,
-    List<ImageEvidence>? turnSignalsImages,
+    required this.turnSignalsImages,
+    required this.turnSignalsPath,
     required this.fourWayFlashers,
     required this.fourWayFlashersComments,
-    List<ImageEvidence>? fourWayFlashersImages,
+    required this.fourWayFlashersImages,
+    required this.fourWayFlashersPath,
     required this.dashLights,
     required this.dashLightsComments,
-    List<ImageEvidence>? dashLightsImages,
+    required this.dashLightsImages,
+    required this.dashLightsPath,
     required this.strobeLights,
     required this.strobeLightsComments,
-    List<ImageEvidence>? strobeLightsImages,
+    required this.strobeLightsImages,
+    required this.strobeLightsPath,
     required this.cabRoofLights,
     required this.cabRoofLightsComments,
-    List<ImageEvidence>? cabRoofLightsImages,
+    required this.cabRoofLightsImages,
+    required this.cabRoofLightsPath,
     required this.clearenceLights,
     required this.clearenceLightsComments,
-    List<ImageEvidence>? clearenceLightsImages,
+    required this.clearenceLightsImages,
+    required this.clearenceLightsPath,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();
@@ -218,43 +242,56 @@ class CarBodywork {
   int id;
   String wiperBladesFront;
   String wiperBladesFrontComments;
-  late List<ImageEvidence> wiperBladesFrontImages;
+  List<String> wiperBladesFrontImages;
+  List<String> wiperBladesFrontPath;
   String wiperBladesBack;
   String wiperBladesBackComments;
-  late List<ImageEvidence> wiperBladesBackImages;
+  List<String> wiperBladesBackImages;
+  List<String> wiperBladesBackPath;
   String windshieldWiperFront;
   String windshieldWiperFrontComments;
-  late List<ImageEvidence> windshieldWiperFrontImages;
+  List<String> windshieldWiperFrontImages;
+  List<String> windshieldWiperFrontPath;
   String windshieldWiperBack;
   String windshieldWiperBackComments;
-  late List<ImageEvidence> windshieldWiperBackImages;
+  List<String> windshieldWiperBackImages;
+  List<String> windshieldWiperBackPath;
   String generalBody;
   String generalBodyComments;
-  late List<ImageEvidence> generalBodyImages;
+  List<String> generalBodyImages;
+  List<String> generalBodyPath;
   String decaling;
   String decalingComments;
-  late List<ImageEvidence> decalingImages;
+  List<String> decalingImages;
+  List<String> decalingPath;
   String tires;
   String tiresComments;
-  late List<ImageEvidence> tiresImages;
+  List<String> tiresImages;
+  List<String> tiresPath;
   String glass;
   String glassComments;
-  late List<ImageEvidence> glassImages;
+  List<String> glassImages;
+  List<String> glassPath;
   String mirrors;
   String mirrorsComments;
-  late List<ImageEvidence> mirrorsImages;
+  List<String> mirrorsImages;
+  List<String> mirrorsPath;
   String parking;
   String parkingComments;
-  late List<ImageEvidence> parkingImages;
+  List<String> parkingImages;
+  List<String> parkingPath;
   String brakes;
   String brakesComments;
-  late List<ImageEvidence> brakesImages;
+  List<String> brakesImages;
+  List<String> brakesPath;
   String emgBrakes;
   String emgBrakesComments;
-  late List<ImageEvidence> emgBrakesImages;
+  List<String> emgBrakesImages;
+  List<String> emgBrakesPath;
   String horn;
   String hornComments;
-  late List<ImageEvidence> hornImages;
+  List<String> hornImages;
+  List<String> hornPath;
 
   DateTime dateAdded;
   @Unique()
@@ -267,43 +304,56 @@ class CarBodywork {
     this.id = 0,
     required this.wiperBladesFront,
     required this.wiperBladesFrontComments,
-    List<ImageEvidence>? wiperBladesFrontImages,
+    required this.wiperBladesFrontImages,
+    required this.wiperBladesFrontPath,
     required this.wiperBladesBack,
     required this.wiperBladesBackComments,
-    List<ImageEvidence>? wiperBladesBackImages,
+    required this.wiperBladesBackImages,
+    required this.wiperBladesBackPath,
     required this.windshieldWiperFront,
     required this.windshieldWiperFrontComments,
-    List<ImageEvidence>? windshieldWiperFrontImages,
+    required this.windshieldWiperFrontImages,
+    required this.windshieldWiperFrontPath,
     required this.windshieldWiperBack,
     required this.windshieldWiperBackComments,
-    List<ImageEvidence>? windshieldWiperBackImages,
+    required this.windshieldWiperBackImages,
+    required this.windshieldWiperBackPath,
     required this.generalBody,
     required this.generalBodyComments,
-    List<ImageEvidence>? generalBodyImages,
+    required this.generalBodyImages,
+    required this.generalBodyPath,
     required this.decaling,
     required this.decalingComments,
-    List<ImageEvidence>? decalingImages,
+    required this.decalingImages,
+    required this.decalingPath,
     required this.tires,
     required this.tiresComments,
-    List<ImageEvidence>? tiresImages,
+    required this.tiresImages,
+    required this.tiresPath,
     required this.glass,
     required this.glassComments,
-    List<ImageEvidence>? glassImages,
+    required this.glassImages,
+    required this.glassPath,
     required this.mirrors,
     required this.mirrorsComments,
-    List<ImageEvidence>? mirrorsImages,
+    required this.mirrorsImages,
+    required this.mirrorsPath,
     required this.parking,
     required this.parkingComments,
-    List<ImageEvidence>? parkingImages,
+    required this.parkingImages,
+    required this.parkingPath,
     required this.brakes,
     required this.brakesComments,
-    List<ImageEvidence>? brakesImages,
+    required this.brakesImages,
+    required this.brakesPath,
     required this.emgBrakes,
     required this.emgBrakesComments,
-    List<ImageEvidence>? emgBrakesImages,
+    required this.emgBrakesImages,
+    required this.emgBrakesPath,
     required this.horn,
     required this.hornComments,
-    List<ImageEvidence>? hornImages,
+    required this.hornImages,
+    required this.hornPath,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();
@@ -317,22 +367,28 @@ class FluidsCheck {
   int id;
   String engineOil;
   String engineOilComments;
-  late List<ImageEvidence> engineOilImages;
+  List<String> engineOilImages;
+  List<String> engineOilPath;
   String transmission;
   String transmissionComments;
-  late List<ImageEvidence> transmissionImages;
+  List<String> transmissionImages;
+  List<String> transmissionPath;
   String coolant;
   String coolantComments;
-  late List<ImageEvidence> coolantImages;
+  List<String> coolantImages;
+  List<String> coolantPath;
   String powerSteering;
   String powerSteeringComments;
-  late List<ImageEvidence> powerSteeringImages;
+  List<String> powerSteeringImages;
+  List<String> powerSteeringPath;
   String dieselExhaustFluid;
   String dieselExhaustFluidComments;
-  late List<ImageEvidence> dieselExhaustFluidImages;
+  List<String> dieselExhaustFluidImages;
+  List<String> dieselExhaustFluidPath;
   String windshieldWasherFluid;
   String windshieldWasherFluidComments;
-  late List<ImageEvidence> windshieldWasherFluidImages;
+  List<String> windshieldWasherFluidImages;
+  List<String> windshieldWasherFluidPath;
   DateTime dateAdded;
   @Unique()
   String? idDBR;
@@ -344,22 +400,28 @@ class FluidsCheck {
     this.id = 0,
     required this.engineOil,
     required this.engineOilComments,
-    List<ImageEvidence>? engineOilImages,
+    required this.engineOilImages,
+    required this.engineOilPath,
     required this.transmission,
     required this.transmissionComments,
-    List<ImageEvidence>? transmissionImages,
+    required this.transmissionImages,
+    required this.transmissionPath,
     required this.coolant,
     required this.coolantComments,
-    List<ImageEvidence>? coolantImages,
+    required this.coolantImages,
+    required this.coolantPath,
     required this.powerSteering,
     required this.powerSteeringComments,
-    List<ImageEvidence>? powerSteeringImages,
+    required this.powerSteeringImages,
+    required this.powerSteeringPath,
     required this.dieselExhaustFluid,
     required this.dieselExhaustFluidComments,
-    List<ImageEvidence>? dieselExhaustFluidImages,
+    required this.dieselExhaustFluidImages,
+    required this.dieselExhaustFluidPath,
     required this.windshieldWasherFluid,
     required this.windshieldWasherFluidComments,
-    List<ImageEvidence>? windshieldWasherFluidImages,
+    required this.windshieldWasherFluidImages,
+    required this.windshieldWasherFluidPath,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();
@@ -373,13 +435,16 @@ class BucketInspection {
   int id;
   String insulated;
   String insulatedComments;
-  late List<ImageEvidence> insulatedImages;
+  List<String> insulatedImages;
+  List<String> insulatedPath;
   String holesDrilled;
   String holesDrilledComments;
-  late List<ImageEvidence> holesDrilledImages;
+  List<String> holesDrilledImages;
+  List<String> holesDrilledPath;
   String bucketLiner;
   String bucketLinerComments;
-  late List<ImageEvidence> bucketLinerImages;
+  List<String> bucketLinerImages;
+  List<String> bucketLinerPath;
 
   DateTime dateAdded;
   @Unique()
@@ -392,13 +457,16 @@ class BucketInspection {
     this.id = 0,
     required this.insulated,
     required this.insulatedComments,
-    List<ImageEvidence>? insulatedImages,
+    required this.insulatedImages,
+    required this.insulatedPath,
     required this.holesDrilled,
     required this.holesDrilledComments,
-    List<ImageEvidence>? holesDrilledImages,
+    required this.holesDrilledImages,
+    required this.holesDrilledPath,
     required this.bucketLiner,
     required this.bucketLinerComments,
-    List<ImageEvidence>? bucketLinerImages,
+    required this.bucketLinerImages,
+    required this.bucketLinerPath,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();
@@ -412,22 +480,28 @@ class Security {
   int id;
   String rtaMagnet;
   String rtaMagnetComments;
-  late List<ImageEvidence> rtaMagnetImages;
+  List<String> rtaMagnetImages;
+  List<String> rtaMagnetPath;
   String triangleReflectors;
   String triangleReflectorsComments;
-  late List<ImageEvidence> triangleReflectorsImages;
+  List<String> triangleReflectorsImages;
+  List<String> triangleReflectorsPath;
   String wheelChocks;
   String wheelChocksComments;
-  late List<ImageEvidence> wheelChocksImages;
+  List<String> wheelChocksImages;
+  List<String> wheelChocksPath;
   String fireExtinguisher;
   String fireExtinguisherComments;
-  late List<ImageEvidence> fireExtinguisherImages;
+  List<String> fireExtinguisherImages;
+  List<String> fireExtinguisherPath;
   String firstAidKitSafetyVest;
   String firstAidKitSafetyVestComments;
-  late List<ImageEvidence> firstAidKitSafetyVestImages;
+  List<String> firstAidKitSafetyVestImages;
+  List<String> firstAidKitSafetyVestPath;
   String backUpAlarm;
   String backUpAlarmComments;
-  late List<ImageEvidence> backUpAlarmImages;
+  List<String> backUpAlarmImages;
+  List<String> backUpAlarmPath;
   DateTime dateAdded;
   @Unique()
   String? idDBR;
@@ -439,22 +513,28 @@ class Security {
     this.id = 0,
     required this.rtaMagnet,
     required this.rtaMagnetComments,
-    List<ImageEvidence>? rtaMagnetImages,
+    required this.rtaMagnetImages,
+    required this.rtaMagnetPath,
     required this.triangleReflectors,
     required this.triangleReflectorsComments,
-    List<ImageEvidence>? triangleReflectorsImages,
+    required this.triangleReflectorsImages,
+    required this.triangleReflectorsPath,
     required this.wheelChocks,
     required this.wheelChocksComments,
-    List<ImageEvidence>? wheelChocksImages,
+    required this.wheelChocksImages,
+    required this.wheelChocksPath,
     required this.fireExtinguisher,
     required this.fireExtinguisherComments,
-    List<ImageEvidence>? fireExtinguisherImages,
+    required this.fireExtinguisherImages,
+    required this.fireExtinguisherPath,
     required this.firstAidKitSafetyVest,
     required this.firstAidKitSafetyVestComments,
-    List<ImageEvidence>? firstAidKitSafetyVestImages,
+    required this.firstAidKitSafetyVestImages,
+    required this.firstAidKitSafetyVestPath,
     required this.backUpAlarm,
     required this.backUpAlarmComments,
-    List<ImageEvidence>? backUpAlarmImages,
+    required this.backUpAlarmImages,
+    required this.backUpAlarmPath,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();
@@ -468,28 +548,36 @@ class Extra {
   int id;
   String ladder;
   String ladderComments;
-  late List<ImageEvidence> ladderImages;
+  List<String> ladderImages;
+  List<String> ladderPath;
   String stepLadder;
   String stepLadderComments;
-  late List<ImageEvidence> stepLadderImages;
+  List<String> stepLadderImages;
+  List<String> stepLadderPath;
   String ladderStraps;
   String ladderStrapsComments;
-  late List<ImageEvidence> ladderStrapsImages;
+  List<String> ladderStrapsImages;
+  List<String> ladderStrapsPath;
   String hydraulicFluidForBucket;
   String hydraulicFluidForBucketComments;
-  late List<ImageEvidence> hydraulicFluidForBucketImages;
+  List<String> hydraulicFluidForBucketImages;
+  List<String> hydraulicFluidForBucketPath;
   String fiberReelRack;
   String fiberReelRackComments;
-  late List<ImageEvidence> fiberReelRackImages;
+  List<String> fiberReelRackImages;
+  List<String> fiberReelRackPath;
   String binsLockedAndSecure;
   String binsLockedAndSecureComments;
-  late List<ImageEvidence> binsLockedAndSecureImages;
+  List<String> binsLockedAndSecureImages;
+  List<String> binsLockedAndSecurePath;
   String safetyHarness;
   String safetyHarnessComments;
-  late List<ImageEvidence> safetyHarnessImages;
+  List<String> safetyHarnessImages;
+  List<String> safetyHarnessPath;
   String lanyardSafetyHarness;
   String lanyardSafetyHarnessComments;
-  late List<ImageEvidence> lanyardSafetyHarnessImages;
+  List<String> lanyardSafetyHarnessImages;
+  List<String> lanyardSafetyHarnessPath;
 
   DateTime dateAdded;
   @Unique()
@@ -502,28 +590,36 @@ class Extra {
     this.id = 0,
     required this.ladder,
     required this.ladderComments,
-    List<ImageEvidence>? ladderImages,
+    required this.ladderImages,
+    required this.ladderPath,
     required this.stepLadder,
     required this.stepLadderComments,
-    List<ImageEvidence>? stepLadderImages,
+    required this.stepLadderImages,
+    required this.stepLadderPath,
     required this.ladderStraps,
     required this.ladderStrapsComments,
-    List<ImageEvidence>? ladderStrapsImages,
+    required this.ladderStrapsImages,
+    required this.ladderStrapsPath,
     required this.hydraulicFluidForBucket,
     required this.hydraulicFluidForBucketComments,
-    List<ImageEvidence>? hydraulicFluidForBucketImages,
+    required this.hydraulicFluidForBucketImages,
+    required this.hydraulicFluidForBucketPath,
     required this.fiberReelRack,
     required this.fiberReelRackComments,
-    List<ImageEvidence>? fiberReelRackImages,
+    required this.fiberReelRackImages,
+    required this.fiberReelRackPath,
     required this.binsLockedAndSecure,
     required this.binsLockedAndSecureComments,
-    List<ImageEvidence>? binsLockedAndSecureImages,
+    required this.binsLockedAndSecureImages,
+    required this.binsLockedAndSecurePath,
     required this.safetyHarness,
     required this.safetyHarnessComments,
-    List<ImageEvidence>? safetyHarnessImages,
+    required this.safetyHarnessImages,
+    required this.safetyHarnessPath,
     required this.lanyardSafetyHarness,
     required this.lanyardSafetyHarnessComments,
-    List<ImageEvidence>? lanyardSafetyHarnessImages,
+    required this.lanyardSafetyHarnessImages,
+    required this.lanyardSafetyHarnessPath,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();
@@ -537,19 +633,24 @@ class Equipment {
   int id;
   String ignitionKey;
   String ignitionKeyComments;
-  late List<ImageEvidence> ignitionKeyImages;
+  List<String> ignitionKeyImages;
+  List<String> ignitionKeyPath;
   String binsBoxKey;
   String binsBoxKeyComments;
-  late List<ImageEvidence> binsBoxKeyImages;
+  List<String> binsBoxKeyImages;
+  List<String> binsBoxKeyPath;
   String vehicleRegistrationCopy;
   String vehicleRegistrationCopyComments;
-  late List<ImageEvidence> vehicleRegistrationCopyImages;
+  List<String> vehicleRegistrationCopyImages;
+  List<String> vehicleRegistrationCopyPath;
   String vehicleInsuranceCopy;
   String vehicleInsuranceCopyComments;
-  late List<ImageEvidence> vehicleInsuranceCopyImages;
+  List<String> vehicleInsuranceCopyImages;
+  List<String> vehicleInsuranceCopyPath;
   String bucketLiftOperatorManual;
   String bucketLiftOperatorManualComments;
-  late List<ImageEvidence> bucketLiftOperatorManualImages;
+  List<String> bucketLiftOperatorManualImages;
+  List<String> bucketLiftOperatorManualPath;
   DateTime dateAdded;
   @Unique()
   String? idDBR;
@@ -561,19 +662,24 @@ class Equipment {
     this.id = 0,
     required this.ignitionKey,
     required this.ignitionKeyComments,
-    List<ImageEvidence>? ignitionKeyImages,
+    required this.ignitionKeyImages,
+    required this.ignitionKeyPath,
     required this.binsBoxKey,
     required this.binsBoxKeyComments,
-    List<ImageEvidence>? binsBoxKeyImages,
+    required this.binsBoxKeyImages,
+    required this.binsBoxKeyPath,
     required this.vehicleRegistrationCopy,
     required this.vehicleRegistrationCopyComments,
-    List<ImageEvidence>? vehicleRegistrationCopyImages,
+    required this.vehicleRegistrationCopyImages,
+    required this.vehicleRegistrationCopyPath,
     required this.vehicleInsuranceCopy,
     required this.vehicleInsuranceCopyComments,
-    List<ImageEvidence>? vehicleInsuranceCopyImages,
+    required this.vehicleInsuranceCopyImages,
+    required this.vehicleInsuranceCopyPath,
     required this.bucketLiftOperatorManual,
     required this.bucketLiftOperatorManualComments,
-    List<ImageEvidence>? bucketLiftOperatorManualImages,
+    required this.bucketLiftOperatorManualImages,
+    required this.bucketLiftOperatorManualPath,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();

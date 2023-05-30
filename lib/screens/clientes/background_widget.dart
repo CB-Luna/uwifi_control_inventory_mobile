@@ -9,10 +9,12 @@ export 'background_model.dart';
 class BackgroundWidget extends StatefulWidget {
   const BackgroundWidget({
     Key? key,
-    this.height,
+    this.height, 
+    required this.typeForm,
   }) : super(key: key);
 
   final int? height;
+  final bool typeForm;
 
   @override
   _BackgroundWidgetState createState() => _BackgroundWidgetState();
@@ -70,7 +72,8 @@ class _BackgroundWidgetState extends State<BackgroundWidget> {
                   period: getJsonField(
                     hoursItem,
                     r'''$.period''',
-                  ).toString(),
+                  ).toString(), 
+                  typeForm: widget.typeForm,
                 );
               }),
             );

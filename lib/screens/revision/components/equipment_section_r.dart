@@ -7,12 +7,12 @@ import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_anim
 import 'package:taller_alex_app_asesor/screens/revision/components/header_shimmer.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/item_form.dart';
 
-class EquipmentSection extends StatefulWidget {
+class EquipmentSectionR extends StatefulWidget {
   
-  const EquipmentSection({super.key});
+  const EquipmentSectionR({super.key});
 
   @override
-  State<EquipmentSection> createState() => _EquipmentSectionState();
+  State<EquipmentSectionR> createState() => _EquipmentSectionRState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -70,7 +70,7 @@ final animationsMap = {
     ),
   };
 
-class _EquipmentSectionState extends State<EquipmentSection> {
+class _EquipmentSectionRState extends State<EquipmentSectionR> {
   @override
   Widget build(BuildContext context) {
     final receivingFormProvider = Provider.of<ReceivingFormController>(context);

@@ -13,6 +13,7 @@ import 'package:taller_alex_app_asesor/database/object_box_database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/app_state.dart';
+import 'providers/database_providers/delivered_form_controller.dart';
 import 'providers/database_providers/receiving_form_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/catalogo_supabase_provider.dart';
@@ -67,6 +68,10 @@ void main() async {
         ),
         ChangeNotifierProvider<ReceivingFormController>(
           create: (context) => ReceivingFormController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<DeliveredFormController>(
+          create: (context) => DeliveredFormController(),
           lazy: false,
         ),
         ChangeNotifierProvider<UsuarioController>(

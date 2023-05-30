@@ -10,7 +10,7 @@ import 'package:taller_alex_app_asesor/screens/observaciones/componentes/seccion
 import 'package:taller_alex_app_asesor/screens/observaciones/componentes/seccion_tres_formulario.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/componentes/seccion_uno_formulario.dart';
 import 'package:taller_alex_app_asesor/screens/observaciones/observacion_creada_screen.dart';
-import 'package:taller_alex_app_asesor/screens/revision/revision_screen_dos.dart';
+import 'package:taller_alex_app_asesor/screens/revision/received_scheduler_screen.dart';
 
 class ObservacionScreen extends StatefulWidget {
   final String hour;
@@ -143,7 +143,7 @@ class _ObservacionScreen extends State<ObservacionScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                          RevisionScreenDos(hour: widget.hour, period: widget.period,),
+                                          ReceivedSchedulerScreen(hour: widget.hour, period: widget.period,),
                                       ),
                                     );
                                   },

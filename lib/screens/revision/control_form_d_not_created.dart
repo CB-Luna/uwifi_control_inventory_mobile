@@ -4,14 +4,14 @@ import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/control_daily_veh
 
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-class ControlFormNotCreatedScreen extends StatefulWidget {
-  const ControlFormNotCreatedScreen({Key? key}) : super(key: key);
+class ControlFormDNotCreatedScreen extends StatefulWidget {
+  const ControlFormDNotCreatedScreen({Key? key}) : super(key: key);
 
   @override
-  State<ControlFormNotCreatedScreen> createState() => _ControlFormNotCreatedScreenState();
+  State<ControlFormDNotCreatedScreen> createState() => _ControlFormDNotCreatedScreenState();
 }
 
-class _ControlFormNotCreatedScreenState extends State<ControlFormNotCreatedScreen> {
+class _ControlFormDNotCreatedScreenState extends State<ControlFormDNotCreatedScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -36,7 +36,7 @@ class _ControlFormNotCreatedScreenState extends State<ControlFormNotCreatedScree
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Receiving\nControl Form\nNot Created!',
+                        '¡Delivered\nControl Form\nNot Created!',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -49,7 +49,7 @@ class _ControlFormNotCreatedScreenState extends State<ControlFormNotCreatedScree
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(                                
-                        'Failed to save the data of receiving control form.',
+                        'Failed to save the data of delivered control form.',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',

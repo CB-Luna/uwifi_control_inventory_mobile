@@ -1,6 +1,7 @@
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
-import 'package:taller_alex_app_asesor/screens/revision/revision_screen_dos.dart';
+import 'package:taller_alex_app_asesor/screens/revision/delivered_scheduler_screen.dart';
+import 'package:taller_alex_app_asesor/screens/revision/received_scheduler_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -15,10 +16,12 @@ class HourBackgroundWidget extends StatefulWidget {
     Key? key,
     this.time,
     this.period,
+    required this.typeForm,
   }) : super(key: key);
 
   final String? time;
   final String? period;
+  final bool typeForm;
 
   @override
   _HourBackgroundWidgetState createState() => _HourBackgroundWidgetState();
@@ -296,13 +299,23 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                               ),
                               child: InkWell(
                                 onTap: () async {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                       RevisionScreenDos(hour: widget.time!, period: widget.period!,),
-                                    ),
+                                  if (widget.typeForm) {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                        ReceivedSchedulerScreen(hour: widget.time!, period: widget.period!,),
+                                      ),
                                   );
+                                  } else {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                        DeliveredSchedulerScreen(hour: widget.time!, period: widget.period!,),
+                                      ),
+                                    );
+                                  }
                                 },
                                 child: Icon(
                                   Icons.add,

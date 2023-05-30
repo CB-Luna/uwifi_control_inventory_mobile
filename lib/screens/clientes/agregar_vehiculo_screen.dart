@@ -17,7 +17,11 @@ import 'custom_functions.dart' as functions;
 import 'flutter_flow_util_local.dart';
 
 class AgregarVehiculoScreen extends StatefulWidget {
-  AgregarVehiculoScreen({Key? key}) : super(key: key);
+  final bool typeForm;
+  AgregarVehiculoScreen({
+    Key? key, 
+    required this.typeForm,
+  }) : super(key: key);
 
   @override
   _AgregarVehiculoScreenState createState() =>
@@ -68,6 +72,7 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                           child: BackgroundWidget(
                             height:
                                 functions.multiply(FFAppState().hourHeight, 34),
+                            typeForm: widget.typeForm,
                           ),
                         ),
                       ],

@@ -8,10 +8,10 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:semicircle_indicator/semicircle_indicator.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
-import 'package:taller_alex_app_asesor/database/image.dart';
+import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/receiving_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/delivered_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/expanded_text.dart';
@@ -22,12 +22,12 @@ import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart'
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_carousel.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-class MeasuresSection extends StatefulWidget {
+class MeasuresSectionD extends StatefulWidget {
   
-  const MeasuresSection({super.key});
+  const MeasuresSectionD({super.key});
 
   @override
-  State<MeasuresSection> createState() => _MeasuresSectionState();
+  State<MeasuresSectionD> createState() => _MeasuresSectionDState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -85,10 +85,10 @@ final animationsMap = {
     ),
   };
 
-class _MeasuresSectionState extends State<MeasuresSection> {
+class _MeasuresSectionDState extends State<MeasuresSectionD> {
   @override
   Widget build(BuildContext context) {
-    final receivingFormController = Provider.of<ReceivingFormController>(context);
+    final deliveredFormController = Provider.of<DeliveredFormController>(context);
     final userController = Provider.of<UsuarioController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
@@ -121,7 +121,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                   images: const [],
                 ),
                 ExpandedText(
-                  width: MediaQuery.of(context).size.width, 
+                  width: MediaQuery.of(context).size.width * 0.4, 
                   text: userController.usuarioCurrent?.vehicle.target?.idDBR ?? "12",
                 ),
                 Divider(
@@ -148,7 +148,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                   images: const [],
                 ),
                 ExpandedText(
-                  width: MediaQuery.of(context).size.width, 
+                  width: MediaQuery.of(context).size.width * 0.4, 
                   text: userController.usuarioCurrent?.vehicle.target?.make ?? "Mercedes",
                 ),
                 Divider(
@@ -175,7 +175,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                   images: const [],
                 ),
                 ExpandedText(
-                  width: MediaQuery.of(context).size.width, 
+                  width: MediaQuery.of(context).size.width * 0.4, 
                   text: userController.usuarioCurrent?.vehicle.target?.model ?? "A1",
                 ),
                 Divider(
@@ -202,7 +202,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                   images: const [],
                 ),
                 ExpandedText(
-                  width: MediaQuery.of(context).size.width, 
+                  width: MediaQuery.of(context).size.width * 0.4, 
                   text: userController.usuarioCurrent?.vehicle.target?.year ?? "2019",
                 ),
                 Divider(
@@ -229,7 +229,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                   images: const [],
                 ),
                 ExpandedText(
-                  width: MediaQuery.of(context).size.width, 
+                  width: MediaQuery.of(context).size.width * 0.4, 
                   text: userController.usuarioCurrent?.vehicle.target?.vin ?? "PRUEBAVINCARRO01",
                 ),
                 Divider(
@@ -256,35 +256,8 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                   images: const [],
                 ),
                 ExpandedText(
-                  width: MediaQuery.of(context).size.width, 
+                  width: MediaQuery.of(context).size.width * 0.4, 
                   text: userController.usuarioCurrent?.vehicle.target?.licensePlates ?? "H52-86R",
-                ),
-                Divider(
-                  height: 4,
-                  thickness: 4,
-                  indent: 20,
-                  endIndent: 20,
-                  color: FlutterFlowTheme.of(context).grayLighter,
-                ),
-
-                // Week
-                ItemForm(
-                  textItem: "Week", 
-                  applyFuction: true,
-                  onPressed: () {
-                    snackbarKey.currentState
-                        ?.showSnackBar(const SnackBar(
-                      content: Text(
-                          "This item can't be edited."),
-                    ));
-                  }, 
-                  isRight: false,
-                  readOnly: true,
-                  images: const [],
-                ),
-                ExpandedText(
-                  width: MediaQuery.of(context).size.width, 
-                  text: "21",
                 ),
                 Divider(
                   height: 4,
@@ -310,7 +283,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                   images: const [],
                 ),
                 ExpandedText(
-                  width: MediaQuery.of(context).size.width, 
+                  width: MediaQuery.of(context).size.width * 0.4, 
                   text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.registrationDue ?? DateTime.now()),
                 ),
                 Divider(
@@ -337,7 +310,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                   images: const [],
                 ),
                 ExpandedText(
-                  width: MediaQuery.of(context).size.width, 
+                  width: MediaQuery.of(context).size.width * 0.4, 
                   text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.insuranceRenewalDue?? DateTime.now()),
                 ),
                 Divider(
@@ -364,7 +337,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                   images: const [],
                 ),
                 ExpandedText(
-                  width: MediaQuery.of(context).size.width, 
+                  width: MediaQuery.of(context).size.width * 0.4, 
                   text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.oilChangeDue ?? DateTime.now()),
                 ),
                 Divider(
@@ -396,7 +369,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                       context: context,
                       builder: (BuildContext context) {
                         List<XFile> imagesTemp = [];
-                        final receivingFormProvider = Provider.of<ReceivingFormController>(context);
+                        final deliveredFormProvider = Provider.of<DeliveredFormController>(context);
                         return AlertDialog(
                           scrollable: true,
                           title: const Text("Mileage"),
@@ -410,12 +383,12 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         5, 0, 5, 20),
                                     child: TextFormField(
-                                      initialValue: receivingFormProvider.mileage,
+                                      initialValue: deliveredFormProvider.mileage,
                                       autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
                                       obscureText: false,
                                       onChanged: (value) {
-                                        receivingFormProvider.updateMileage(value);
+                                        deliveredFormProvider.updateMileage(value);
                                       },
                                       decoration: InputDecoration(
                                         prefixIcon: Icon(
@@ -481,7 +454,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         5, 0, 5, 20),
                                     child: TextFormField(
-                                      controller: receivingFormProvider.mileageComments,
+                                      controller: deliveredFormProvider.mileageComments,
                                       maxLength: 500,
                                       textCapitalization:
                                           TextCapitalization.sentences,
@@ -568,14 +541,14 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                           width: 180,
                                                           height: 100,
                                                           listaImagenes:
-                                                              receivingFormProvider.mileageImages)),
+                                                              deliveredFormProvider.mileageImages)),
                                                 ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(0, 10, 0, 0),
                                                   child: Text(
-                                                    "Total: ${receivingFormProvider.mileageImages.length}",
+                                                    "Total: ${deliveredFormProvider.mileageImages.length}",
                                                     style: FlutterFlowTheme.of(context)
                                                         .title3
                                                         .override(
@@ -608,7 +581,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                               XFile? pickedFile;
                                               List<XFile>? pickedFiles;
                                               if (option == 'camera') {
-                                                if (receivingFormProvider.mileageImages.length <
+                                                if (deliveredFormProvider.mileageImages.length <
                                                     5) {
                                                   pickedFile =
                                                       await picker.pickImage(
@@ -665,7 +638,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                               path:
                                                                   pickedFile.path,
                                                               base64: base64);
-                                                        receivingFormProvider.updateMileageImage(
+                                                        deliveredFormProvider.updateMileageImage(
                                                           updateImageEvidence);
                                                     }
                                                     return;
@@ -673,7 +646,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                 }
                                               } else {
                                                 //Se selecciona galería
-                                                if (receivingFormProvider.mileageImages.length <
+                                                if (deliveredFormProvider.mileageImages.length <
                                                     5) {
                                                   pickedFiles =
                                                       await picker.pickMultiImage(
@@ -690,7 +663,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                     ));
                                                     return;
                                                   }
-                                                  switch (receivingFormProvider.mileageImages.length) {
+                                                  switch (deliveredFormProvider.mileageImages.length) {
                                                     case 0:
                                                       for (int i = 0;
                                                           i < pickedFiles.length;
@@ -822,7 +795,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                               path:
                                                                   pickedFile.path,
                                                               base64: base64);
-                                                        receivingFormProvider.updateMileageImage(
+                                                        deliveredFormProvider.updateMileageImage(
                                                           updateImageEvidence);
                                                     }
                                                     return;
@@ -847,7 +820,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                         path:
                                                             imagesTemp[i].path,
                                                         base64: base64);
-                                                receivingFormProvider.addMileageImage(
+                                                deliveredFormProvider.addMileageImage(
                                                   newImageEvidence);
                                                 imagesTemp.clear();
                                               }
@@ -936,7 +909,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                   isRight: false,
                   readOnly: false,
                   images: const [],
-                  isRegistered: receivingFormController.isMileageRegistered,
+                  isRegistered: deliveredFormController.isMileageRegistered,
                 ),
                 Divider(
                   height: 4,
@@ -956,9 +929,9 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                       context: context,
                       builder: (BuildContext context) {
                         List<XFile> imagesTemp = [];
-                        final receivingFormProvider = Provider.of<ReceivingFormController>(context);
+                        final deliveredFormProvider = Provider.of<DeliveredFormController>(context);
                         List<String> imagesString = [];
-                        for (var element in receivingFormProvider.gasImages) {
+                        for (var element in deliveredFormProvider.gasImages) {
                           imagesString.add(element.path);
                         }
                         return AlertDialog(
@@ -971,7 +944,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                               child: Column(
                                 children: [
                                   SemicircularIndicator(
-                                    progress: receivingFormProvider.gasDieselPercent * 0.01,
+                                    progress: deliveredFormProvider.gasDieselPercent * 0.01,
                                     radius: 100,
                                     color: FlutterFlowTheme.of(context).primaryColor,
                                     backgroundColor: FlutterFlowTheme.of(context).grayLighter,
@@ -979,7 +952,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                     bottomPadding: 0,
                                     contain: true,
                                     child: Text(
-                                      "${receivingFormProvider.gasDieselPercent} %",
+                                      "${deliveredFormProvider.gasDieselPercent} %",
                                       style: TextStyle(
                                           fontSize: 32,
                                           fontWeight: FontWeight.w600,
@@ -1011,12 +984,12 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                         min: 0.0,
                                         max: 100.0,
                                         interval: 1.0,
-                                        value: receivingFormProvider.gasDieselPercent, 
+                                        value: deliveredFormProvider.gasDieselPercent, 
                                         stepSize: 1.0,
                                         activeColor: FlutterFlowTheme.of(context).secondaryColor,
                                         inactiveColor: FlutterFlowTheme.of(context).grayLighter,
                                         onChanged: ((value) {
-                                          receivingFormProvider.updateGasDieselPercent(value.truncate());
+                                          deliveredFormProvider.updateGasDieselPercent(value.truncate());
                                         })
                                       ),
                                   ),
@@ -1024,7 +997,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         5, 0, 5, 10),
                                     child: TextFormField(
-                                      controller: receivingFormProvider.gasComments,
+                                      controller: deliveredFormProvider.gasComments,
                                       maxLength: 500,
                                       textCapitalization:
                                           TextCapitalization.sentences,
@@ -1111,14 +1084,14 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                           width: 180,
                                                           height: 100,
                                                           listaImagenes:
-                                                              receivingFormProvider.gasImages)),
+                                                              deliveredFormProvider.gasImages)),
                                                 ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(0, 10, 0, 0),
                                                   child: Text(
-                                                    "Total: ${receivingFormProvider.gasImages.length}",
+                                                    "Total: ${deliveredFormProvider.gasImages.length}",
                                                     style: FlutterFlowTheme.of(context)
                                                         .title3
                                                         .override(
@@ -1151,7 +1124,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                               XFile? pickedFile;
                                               List<XFile>? pickedFiles;
                                               if (option == 'camera') {
-                                                if (receivingFormProvider.gasImages.length <
+                                                if (deliveredFormProvider.gasImages.length <
                                                     5) {
                                                   pickedFile =
                                                       await picker.pickImage(
@@ -1208,7 +1181,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                               path:
                                                                   pickedFile.path,
                                                               base64: base64);
-                                                        receivingFormProvider.updateGasImage(
+                                                        deliveredFormProvider.updateGasImage(
                                                           updateImageEvidence);
                                                     }
                                                     return;
@@ -1216,7 +1189,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                 }
                                               } else {
                                                 //Se selecciona galería
-                                                if (receivingFormProvider.gasImages.length <
+                                                if (deliveredFormProvider.gasImages.length <
                                                     5) {
                                                   pickedFiles =
                                                       await picker.pickMultiImage(
@@ -1233,7 +1206,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                     ));
                                                     return;
                                                   }
-                                                  switch (receivingFormProvider.gasImages.length) {
+                                                  switch (deliveredFormProvider.gasImages.length) {
                                                     case 0:
                                                       for (int i = 0;
                                                           i < pickedFiles.length;
@@ -1365,7 +1338,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                               path:
                                                                   pickedFile.path,
                                                               base64: base64);
-                                                        receivingFormProvider.updateGasImage(
+                                                        deliveredFormProvider.updateGasImage(
                                                           updateImageEvidence);
                                                     }
                                                     return;
@@ -1390,7 +1363,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                                                         path:
                                                             imagesTemp[i].path,
                                                         base64: base64);
-                                                receivingFormProvider.addGasImage
+                                                deliveredFormProvider.addGasImage
                                                   (newImageEvidence);
                                                 imagesTemp.clear();
                                               }
@@ -1479,7 +1452,7 @@ class _MeasuresSectionState extends State<MeasuresSection> {
                   isRight: false,
                   readOnly: false,
                   images: const [],
-                  isRegistered: receivingFormController.isGasRegistered,
+                  isRegistered: deliveredFormController.isGasRegistered,
                 ),
                 Divider(
                   height: 4,

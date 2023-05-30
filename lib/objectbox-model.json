@@ -269,7 +269,7 @@
     },
     {
       "id": "88:5449780156064882583",
-      "lastPropertyId": "30:4861213486138912837",
+      "lastPropertyId": "56:1861675323202979021",
       "name": "CarBodywork",
       "properties": [
         {
@@ -427,13 +427,143 @@
           "flags": 520,
           "indexId": "387:691673281428625991",
           "relationTarget": "ControlForm"
+        },
+        {
+          "id": "31:4829554512466907099",
+          "name": "wiperBladesFrontImages",
+          "type": 30
+        },
+        {
+          "id": "32:2640620538450702667",
+          "name": "wiperBladesFrontPath",
+          "type": 30
+        },
+        {
+          "id": "33:3175254960942753562",
+          "name": "wiperBladesBackImages",
+          "type": 30
+        },
+        {
+          "id": "34:1848782613720105659",
+          "name": "wiperBladesBackPath",
+          "type": 30
+        },
+        {
+          "id": "35:230142026697351400",
+          "name": "windshieldWiperFrontImages",
+          "type": 30
+        },
+        {
+          "id": "36:3781518740690294133",
+          "name": "windshieldWiperFrontPath",
+          "type": 30
+        },
+        {
+          "id": "37:5899318396321935211",
+          "name": "windshieldWiperBackImages",
+          "type": 30
+        },
+        {
+          "id": "38:1383065563183336638",
+          "name": "windshieldWiperBackPath",
+          "type": 30
+        },
+        {
+          "id": "39:5567812270749266899",
+          "name": "generalBodyImages",
+          "type": 30
+        },
+        {
+          "id": "40:4518839586080616973",
+          "name": "generalBodyPath",
+          "type": 30
+        },
+        {
+          "id": "41:639012328149535831",
+          "name": "decalingImages",
+          "type": 30
+        },
+        {
+          "id": "42:4529273831013949210",
+          "name": "decalingPath",
+          "type": 30
+        },
+        {
+          "id": "43:2264708569284501763",
+          "name": "tiresImages",
+          "type": 30
+        },
+        {
+          "id": "44:5873322513630547808",
+          "name": "tiresPath",
+          "type": 30
+        },
+        {
+          "id": "45:8584286804834001566",
+          "name": "glassImages",
+          "type": 30
+        },
+        {
+          "id": "46:1836643984421312106",
+          "name": "glassPath",
+          "type": 30
+        },
+        {
+          "id": "47:5783661081679523899",
+          "name": "mirrorsImages",
+          "type": 30
+        },
+        {
+          "id": "48:5882390557710018829",
+          "name": "mirrorsPath",
+          "type": 30
+        },
+        {
+          "id": "49:8793430676972678404",
+          "name": "parkingImages",
+          "type": 30
+        },
+        {
+          "id": "50:7917297444496874963",
+          "name": "parkingPath",
+          "type": 30
+        },
+        {
+          "id": "51:5060467692943288044",
+          "name": "brakesImages",
+          "type": 30
+        },
+        {
+          "id": "52:4363085607101177219",
+          "name": "brakesPath",
+          "type": 30
+        },
+        {
+          "id": "53:7079275530567002358",
+          "name": "emgBrakesImages",
+          "type": 30
+        },
+        {
+          "id": "54:2190716812246369218",
+          "name": "emgBrakesPath",
+          "type": 30
+        },
+        {
+          "id": "55:930155861866315064",
+          "name": "hornImages",
+          "type": 30
+        },
+        {
+          "id": "56:1861675323202979021",
+          "name": "hornPath",
+          "type": 30
         }
       ],
       "relations": []
     },
     {
       "id": "89:1967166146969188",
-      "lastPropertyId": "14:4518607710027017519",
+      "lastPropertyId": "24:6840303418693524212",
       "name": "Equipment",
       "properties": [
         {
@@ -511,13 +641,63 @@
           "flags": 520,
           "indexId": "397:3197766616825007307",
           "relationTarget": "ControlForm"
+        },
+        {
+          "id": "15:6988705651145085351",
+          "name": "ignitionKeyImages",
+          "type": 30
+        },
+        {
+          "id": "16:6575205554542907090",
+          "name": "ignitionKeyPath",
+          "type": 30
+        },
+        {
+          "id": "17:4068856522435732254",
+          "name": "binsBoxKeyImages",
+          "type": 30
+        },
+        {
+          "id": "18:5476804890996311975",
+          "name": "binsBoxKeyPath",
+          "type": 30
+        },
+        {
+          "id": "19:6710183096245311186",
+          "name": "vehicleRegistrationCopyImages",
+          "type": 30
+        },
+        {
+          "id": "20:4229869901527984238",
+          "name": "vehicleRegistrationCopyPath",
+          "type": 30
+        },
+        {
+          "id": "21:3452000552619110309",
+          "name": "vehicleInsuranceCopyImages",
+          "type": 30
+        },
+        {
+          "id": "22:6554518725827042837",
+          "name": "vehicleInsuranceCopyPath",
+          "type": 30
+        },
+        {
+          "id": "23:519264757627627150",
+          "name": "bucketLiftOperatorManualImages",
+          "type": 30
+        },
+        {
+          "id": "24:6840303418693524212",
+          "name": "bucketLiftOperatorManualPath",
+          "type": 30
         }
       ],
       "relations": []
     },
     {
       "id": "90:8674602881210305817",
-      "lastPropertyId": "24:6795083874400837418",
+      "lastPropertyId": "40:979362943735015756",
       "name": "Extra",
       "properties": [
         {
@@ -625,13 +805,93 @@
           "id": "24:6795083874400837418",
           "name": "lanyardSafetyHarnessComments",
           "type": 9
+        },
+        {
+          "id": "25:2146841959507437713",
+          "name": "ladderImages",
+          "type": 30
+        },
+        {
+          "id": "26:281072384224430347",
+          "name": "ladderPath",
+          "type": 30
+        },
+        {
+          "id": "27:2878210425253510279",
+          "name": "stepLadderImages",
+          "type": 30
+        },
+        {
+          "id": "28:168432058566144148",
+          "name": "stepLadderPath",
+          "type": 30
+        },
+        {
+          "id": "29:5810598794218986927",
+          "name": "ladderStrapsImages",
+          "type": 30
+        },
+        {
+          "id": "30:8046950702915525289",
+          "name": "ladderStrapsPath",
+          "type": 30
+        },
+        {
+          "id": "31:7999594640745332270",
+          "name": "hydraulicFluidForBucketImages",
+          "type": 30
+        },
+        {
+          "id": "32:8933468591655519705",
+          "name": "hydraulicFluidForBucketPath",
+          "type": 30
+        },
+        {
+          "id": "33:5360630065811196202",
+          "name": "fiberReelRackImages",
+          "type": 30
+        },
+        {
+          "id": "34:3215226994201844720",
+          "name": "fiberReelRackPath",
+          "type": 30
+        },
+        {
+          "id": "35:8551725128389213204",
+          "name": "binsLockedAndSecureImages",
+          "type": 30
+        },
+        {
+          "id": "36:197277133232214325",
+          "name": "binsLockedAndSecurePath",
+          "type": 30
+        },
+        {
+          "id": "37:8775095795852910554",
+          "name": "safetyHarnessImages",
+          "type": 30
+        },
+        {
+          "id": "38:5535751631267920279",
+          "name": "safetyHarnessPath",
+          "type": 30
+        },
+        {
+          "id": "39:5244758581807751519",
+          "name": "lanyardSafetyHarnessImages",
+          "type": 30
+        },
+        {
+          "id": "40:979362943735015756",
+          "name": "lanyardSafetyHarnessPath",
+          "type": 30
         }
       ],
       "relations": []
     },
     {
       "id": "91:6931545903134634049",
-      "lastPropertyId": "18:412239462255856612",
+      "lastPropertyId": "30:4065251250855641491",
       "name": "FluidsCheck",
       "properties": [
         {
@@ -719,13 +979,73 @@
           "id": "18:412239462255856612",
           "name": "dieselExhaustFluidComments",
           "type": 9
+        },
+        {
+          "id": "19:8649771390032717284",
+          "name": "engineOilImages",
+          "type": 30
+        },
+        {
+          "id": "20:3393003422895788439",
+          "name": "engineOilPath",
+          "type": 30
+        },
+        {
+          "id": "21:1449249592065502258",
+          "name": "transmissionImages",
+          "type": 30
+        },
+        {
+          "id": "22:1412509515590104085",
+          "name": "transmissionPath",
+          "type": 30
+        },
+        {
+          "id": "23:5576218901866419291",
+          "name": "coolantImages",
+          "type": 30
+        },
+        {
+          "id": "24:9038632771859244118",
+          "name": "coolantPath",
+          "type": 30
+        },
+        {
+          "id": "25:6267982728959869300",
+          "name": "powerSteeringImages",
+          "type": 30
+        },
+        {
+          "id": "26:178665630251149211",
+          "name": "powerSteeringPath",
+          "type": 30
+        },
+        {
+          "id": "27:3367493048565810130",
+          "name": "dieselExhaustFluidImages",
+          "type": 30
+        },
+        {
+          "id": "28:1856575501559061448",
+          "name": "dieselExhaustFluidPath",
+          "type": 30
+        },
+        {
+          "id": "29:1754588778840820946",
+          "name": "windshieldWasherFluidImages",
+          "type": 30
+        },
+        {
+          "id": "30:4065251250855641491",
+          "name": "windshieldWasherFluidPath",
+          "type": 30
         }
       ],
       "relations": []
     },
     {
       "id": "92:2259630358692179159",
-      "lastPropertyId": "26:6130594748209463564",
+      "lastPropertyId": "46:6596099135715597570",
       "name": "Lights",
       "properties": [
         {
@@ -853,13 +1173,113 @@
           "id": "26:6130594748209463564",
           "name": "fourWayFlashersComments",
           "type": 9
+        },
+        {
+          "id": "27:4204025430741251055",
+          "name": "headLightsImages",
+          "type": 30
+        },
+        {
+          "id": "28:651251792208035714",
+          "name": "headLightsPath",
+          "type": 30
+        },
+        {
+          "id": "29:8192793072563171028",
+          "name": "brakeLightsImages",
+          "type": 30
+        },
+        {
+          "id": "30:1259653141818820918",
+          "name": "brakeLightsPath",
+          "type": 30
+        },
+        {
+          "id": "31:9136802427750002662",
+          "name": "reverseLightsImages",
+          "type": 30
+        },
+        {
+          "id": "32:2908253885558862601",
+          "name": "reverseLightsPath",
+          "type": 30
+        },
+        {
+          "id": "33:4576588471985349313",
+          "name": "warningLightsImages",
+          "type": 30
+        },
+        {
+          "id": "34:3045669256353133528",
+          "name": "warningLightsPath",
+          "type": 30
+        },
+        {
+          "id": "35:8461493298142593313",
+          "name": "turnSignalsImages",
+          "type": 30
+        },
+        {
+          "id": "36:2125840980794175321",
+          "name": "turnSignalsPath",
+          "type": 30
+        },
+        {
+          "id": "37:225133476847223709",
+          "name": "fourWayFlashersImages",
+          "type": 30
+        },
+        {
+          "id": "38:6659096647439528224",
+          "name": "fourWayFlashersPath",
+          "type": 30
+        },
+        {
+          "id": "39:5100233583046559901",
+          "name": "dashLightsImages",
+          "type": 30
+        },
+        {
+          "id": "40:2352608192502450817",
+          "name": "dashLightsPath",
+          "type": 30
+        },
+        {
+          "id": "41:5389585471650761972",
+          "name": "strobeLightsImages",
+          "type": 30
+        },
+        {
+          "id": "42:8954085841986616410",
+          "name": "strobeLightsPath",
+          "type": 30
+        },
+        {
+          "id": "43:3006597950858729246",
+          "name": "cabRoofLightsImages",
+          "type": 30
+        },
+        {
+          "id": "44:3129329232292099901",
+          "name": "cabRoofLightsPath",
+          "type": 30
+        },
+        {
+          "id": "45:1642398105788300096",
+          "name": "clearenceLightsImages",
+          "type": 30
+        },
+        {
+          "id": "46:6596099135715597570",
+          "name": "clearenceLightsPath",
+          "type": 30
         }
       ],
       "relations": []
     },
     {
       "id": "93:2233886934526070371",
-      "lastPropertyId": "8:1349797551475487582",
+      "lastPropertyId": "13:1377949001494033132",
       "name": "Measures",
       "properties": [
         {
@@ -907,13 +1327,33 @@
           "flags": 520,
           "indexId": "405:4985468126259660819",
           "relationTarget": "ControlForm"
+        },
+        {
+          "id": "10:5313747748351641389",
+          "name": "gasImages",
+          "type": 30
+        },
+        {
+          "id": "11:6534051827084921333",
+          "name": "gasPath",
+          "type": 30
+        },
+        {
+          "id": "12:3853679392969826869",
+          "name": "mileageImages",
+          "type": 30
+        },
+        {
+          "id": "13:1377949001494033132",
+          "name": "mileagePath",
+          "type": 30
         }
       ],
       "relations": []
     },
     {
       "id": "94:5644194863526468119",
-      "lastPropertyId": "20:9135334680922231986",
+      "lastPropertyId": "32:9000716974812315489",
       "name": "Security",
       "properties": [
         {
@@ -1001,13 +1441,73 @@
           "id": "20:9135334680922231986",
           "name": "firstAidKitSafetyVestComments",
           "type": 9
+        },
+        {
+          "id": "21:4349027243144292132",
+          "name": "rtaMagnetImages",
+          "type": 30
+        },
+        {
+          "id": "22:3985558570528896044",
+          "name": "rtaMagnetPath",
+          "type": 30
+        },
+        {
+          "id": "23:2398632740854976730",
+          "name": "triangleReflectorsImages",
+          "type": 30
+        },
+        {
+          "id": "24:5013286954297342559",
+          "name": "triangleReflectorsPath",
+          "type": 30
+        },
+        {
+          "id": "25:6703522491612748052",
+          "name": "wheelChocksImages",
+          "type": 30
+        },
+        {
+          "id": "26:7069996747207340882",
+          "name": "wheelChocksPath",
+          "type": 30
+        },
+        {
+          "id": "27:4576876205262799154",
+          "name": "fireExtinguisherImages",
+          "type": 30
+        },
+        {
+          "id": "28:4553038228940417488",
+          "name": "fireExtinguisherPath",
+          "type": 30
+        },
+        {
+          "id": "29:1118464093576636584",
+          "name": "firstAidKitSafetyVestImages",
+          "type": 30
+        },
+        {
+          "id": "30:9187357130956455260",
+          "name": "firstAidKitSafetyVestPath",
+          "type": 30
+        },
+        {
+          "id": "31:5653129467005165663",
+          "name": "backUpAlarmImages",
+          "type": 30
+        },
+        {
+          "id": "32:9000716974812315489",
+          "name": "backUpAlarmPath",
+          "type": 30
         }
       ],
       "relations": []
     },
     {
       "id": "95:6627618922528083180",
-      "lastPropertyId": "10:4502744291640685571",
+      "lastPropertyId": "16:7424535712805857294",
       "name": "BucketInspection",
       "properties": [
         {
@@ -1065,6 +1565,36 @@
           "flags": 520,
           "indexId": "409:2155515461166987875",
           "relationTarget": "ControlForm"
+        },
+        {
+          "id": "11:6540963720053674462",
+          "name": "insulatedImages",
+          "type": 30
+        },
+        {
+          "id": "12:4705986309774814830",
+          "name": "insulatedPath",
+          "type": 30
+        },
+        {
+          "id": "13:7455827792847925614",
+          "name": "holesDrilledImages",
+          "type": 30
+        },
+        {
+          "id": "14:848389278839566549",
+          "name": "holesDrilledPath",
+          "type": 30
+        },
+        {
+          "id": "15:9221919246410615414",
+          "name": "bucketLinerImages",
+          "type": 30
+        },
+        {
+          "id": "16:7424535712805857294",
+          "name": "bucketLinerPath",
+          "type": 30
         }
       ],
       "relations": []
@@ -1399,8 +1929,8 @@
       ]
     }
   ],
-  "lastEntityId": "100:5432875809935853718",
-  "lastIndexId": "431:7457722984787952526",
+  "lastEntityId": "102:3290269878544238397",
+  "lastIndexId": "434:7663217395535372588",
   "lastRelationId": "97:7907540417784017008",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
@@ -1490,7 +2020,9 @@
     5004962762570684805,
     8177890023282011956,
     5787722657754964069,
-    252808688812742776
+    252808688812742776,
+    2554695376397258853,
+    3290269878544238397
   ],
   "retiredIndexUids": [
     8990521503430950587,
@@ -1661,7 +2193,9 @@
     4800753572139945092,
     7566237706448790608,
     1215468110805298241,
-    7713453128820497698
+    7713453128820497698,
+    5311425645938031112,
+    659698341661181318
   ],
   "retiredPropertyUids": [
     7079790605743243388,
@@ -2685,7 +3219,19 @@
     7115806576092254573,
     393360818016159356,
     474264797233057089,
-    3019793955076622132
+    3019793955076622132,
+    2865081334527696691,
+    3585817854901180712,
+    6816911623945603524,
+    2622702189695134319,
+    738827331173707581,
+    3689435734016935884,
+    5352311377976667166,
+    7652617261692283483,
+    4597217521178161071,
+    190629341104866461,
+    3029208679029084049,
+    1994456040465984525
   ],
   "retiredRelationUids": [
     1226469011453769556,

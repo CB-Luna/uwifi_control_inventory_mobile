@@ -276,18 +276,30 @@ class SyncProviderSupabase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddControlForm(
       ControlForm controlForm, Bitacora bitacora) async {
+    String gasImages = "";
+    String mileageImages = "";
     try {
       if (bitacora.executeSupabase == false) {
         if (controlForm.idDBR == null) {
           //Registrar measures
+          if (controlForm.measures.target!.gasImages.isNotEmpty) {
+            for (var element in controlForm.measures.target!.gasImages.toList()) {
+              gasImages = "$element|";
+            }
+          }
+          if (controlForm.measures.target!.mileageImages.isNotEmpty) {
+            for (var element in controlForm.measures.target!.mileageImages.toList()) {
+              mileageImages = "$element|";
+            }
+          }
           final recordMeasure = await supabaseClient.from('measures').insert(
             {
               'gas': controlForm.measures.target!.gas,
               'gas_comments': controlForm.measures.target!.gasComments,
-              // 'gas_image': controlForm.measures.target?.gasImages.isEmpty == true ? null : controlForm.measures.target?.gasImages.first.base64,
+              'gas_image': controlForm.measures.target!.gasImages.isEmpty == true ? null : gasImages,
               'mileage': controlForm.measures.target!.mileage,
               'mileage_comments': controlForm.measures.target!.mileageComments,
-              // 'milage_image': controlForm.measures.target?.mileageImages.isEmpty == true ? null : controlForm.measures.target?.mileageImages.first.base64,
+              'milage_image': controlForm.measures.target?.mileageImages.isEmpty == true ? null : mileageImages,
               'date_added': controlForm.measures.target!.dateAdded.toIso8601String(),
             },
           ).select<PostgrestList>('id_measure');
