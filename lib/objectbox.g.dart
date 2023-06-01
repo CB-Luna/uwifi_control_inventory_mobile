@@ -1042,7 +1042,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(92, 2259630358692179159),
       name: 'Lights',
-      lastPropertyId: const IdUid(46, 6596099135715597570),
+      lastPropertyId: const IdUid(50, 8185845797277935491),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1128,16 +1128,6 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(19, 4999511497438034127),
             name: 'cabRoofLightsComments',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(20, 1870679960917748335),
-            name: 'clearenceLights',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(21, 472741667402047784),
-            name: 'clearenceLightsComments',
             type: 9,
             flags: 0),
         ModelProperty(
@@ -1259,14 +1249,24 @@ final _entities = <ModelEntity>[
             type: 30,
             flags: 0),
         ModelProperty(
-            id: const IdUid(45, 1642398105788300096),
-            name: 'clearenceLightsImages',
+            id: const IdUid(47, 552566993002683012),
+            name: 'clearanceLightsImages',
             type: 30,
             flags: 0),
         ModelProperty(
-            id: const IdUid(46, 6596099135715597570),
-            name: 'clearenceLightsPath',
+            id: const IdUid(48, 6853920016077470023),
+            name: 'clearanceLightsPath',
             type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(49, 7964057907774140886),
+            name: 'clearanceLights',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(50, 8185845797277935491),
+            name: 'clearanceLightsComments',
+            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -3239,7 +3239,11 @@ ModelDefinition getObjectBoxModel() {
         4597217521178161071,
         190629341104866461,
         3029208679029084049,
-        1994456040465984525
+        1994456040465984525,
+        1642398105788300096,
+        6596099135715597570,
+        1870679960917748335,
+        472741667402047784
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -4303,9 +4307,6 @@ ModelDefinition getObjectBoxModel() {
           final cabRoofLightsOffset = fbb.writeString(object.cabRoofLights);
           final cabRoofLightsCommentsOffset =
               fbb.writeString(object.cabRoofLightsComments);
-          final clearenceLightsOffset = fbb.writeString(object.clearenceLights);
-          final clearenceLightsCommentsOffset =
-              fbb.writeString(object.clearenceLightsComments);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
           final fourWayFlashersOffset = fbb.writeString(object.fourWayFlashers);
@@ -4371,15 +4372,18 @@ ModelDefinition getObjectBoxModel() {
           final cabRoofLightsPathOffset = fbb.writeList(object.cabRoofLightsPath
               .map(fbb.writeString)
               .toList(growable: false));
-          final clearenceLightsImagesOffset = fbb.writeList(object
-              .clearenceLightsImages
+          final clearanceLightsImagesOffset = fbb.writeList(object
+              .clearanceLightsImages
               .map(fbb.writeString)
               .toList(growable: false));
-          final clearenceLightsPathOffset = fbb.writeList(object
-              .clearenceLightsPath
+          final clearanceLightsPathOffset = fbb.writeList(object
+              .clearanceLightsPath
               .map(fbb.writeString)
               .toList(growable: false));
-          fbb.startTable(47);
+          final clearanceLightsOffset = fbb.writeString(object.clearanceLights);
+          final clearanceLightsCommentsOffset =
+              fbb.writeString(object.clearanceLightsComments);
+          fbb.startTable(51);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, headLightsOffset);
           fbb.addOffset(2, headLightsCommentsOffset);
@@ -4397,8 +4401,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(16, strobeLightsCommentsOffset);
           fbb.addOffset(17, cabRoofLightsOffset);
           fbb.addOffset(18, cabRoofLightsCommentsOffset);
-          fbb.addOffset(19, clearenceLightsOffset);
-          fbb.addOffset(20, clearenceLightsCommentsOffset);
           fbb.addInt64(21, object.dateAdded.millisecondsSinceEpoch);
           fbb.addOffset(22, idDBROffset);
           fbb.addInt64(23, object.controlForm.targetId);
@@ -4422,8 +4424,10 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(41, strobeLightsPathOffset);
           fbb.addOffset(42, cabRoofLightsImagesOffset);
           fbb.addOffset(43, cabRoofLightsPathOffset);
-          fbb.addOffset(44, clearenceLightsImagesOffset);
-          fbb.addOffset(45, clearenceLightsPathOffset);
+          fbb.addOffset(46, clearanceLightsImagesOffset);
+          fbb.addOffset(47, clearanceLightsPathOffset);
+          fbb.addOffset(48, clearanceLightsOffset);
+          fbb.addOffset(49, clearanceLightsCommentsOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4477,10 +4481,10 @@ ModelDefinition getObjectBoxModel() {
               cabRoofLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 40, ''),
               cabRoofLightsImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 88, []),
               cabRoofLightsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 90, []),
-              clearenceLights: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 42, ''),
-              clearenceLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 44, ''),
-              clearenceLightsImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 92, []),
-              clearenceLightsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 94, []),
+              clearanceLights: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 100, ''),
+              clearanceLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 102, ''),
+              clearanceLightsImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 96, []),
+              clearanceLightsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 98, []),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 46, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 48));
           object.controlForm.targetId =
@@ -5954,112 +5958,112 @@ class Lights_ {
   static final cabRoofLightsComments =
       QueryStringProperty<Lights>(_entities[6].properties[16]);
 
-  /// see [Lights.clearenceLights]
-  static final clearenceLights =
-      QueryStringProperty<Lights>(_entities[6].properties[17]);
-
-  /// see [Lights.clearenceLightsComments]
-  static final clearenceLightsComments =
-      QueryStringProperty<Lights>(_entities[6].properties[18]);
-
   /// see [Lights.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<Lights>(_entities[6].properties[19]);
+      QueryIntegerProperty<Lights>(_entities[6].properties[17]);
 
   /// see [Lights.idDBR]
-  static final idDBR = QueryStringProperty<Lights>(_entities[6].properties[20]);
+  static final idDBR = QueryStringProperty<Lights>(_entities[6].properties[18]);
 
   /// see [Lights.controlForm]
   static final controlForm =
-      QueryRelationToOne<Lights, ControlForm>(_entities[6].properties[21]);
+      QueryRelationToOne<Lights, ControlForm>(_entities[6].properties[19]);
 
   /// see [Lights.fourWayFlashers]
   static final fourWayFlashers =
-      QueryStringProperty<Lights>(_entities[6].properties[22]);
+      QueryStringProperty<Lights>(_entities[6].properties[20]);
 
   /// see [Lights.fourWayFlashersComments]
   static final fourWayFlashersComments =
-      QueryStringProperty<Lights>(_entities[6].properties[23]);
+      QueryStringProperty<Lights>(_entities[6].properties[21]);
 
   /// see [Lights.headLightsImages]
   static final headLightsImages =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[24]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[22]);
 
   /// see [Lights.headLightsPath]
   static final headLightsPath =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[25]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[23]);
 
   /// see [Lights.brakeLightsImages]
   static final brakeLightsImages =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[26]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[24]);
 
   /// see [Lights.brakeLightsPath]
   static final brakeLightsPath =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[27]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[25]);
 
   /// see [Lights.reverseLightsImages]
   static final reverseLightsImages =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[28]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[26]);
 
   /// see [Lights.reverseLightsPath]
   static final reverseLightsPath =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[29]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[27]);
 
   /// see [Lights.warningLightsImages]
   static final warningLightsImages =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[30]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[28]);
 
   /// see [Lights.warningLightsPath]
   static final warningLightsPath =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[31]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[29]);
 
   /// see [Lights.turnSignalsImages]
   static final turnSignalsImages =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[32]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[30]);
 
   /// see [Lights.turnSignalsPath]
   static final turnSignalsPath =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[33]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[31]);
 
   /// see [Lights.fourWayFlashersImages]
   static final fourWayFlashersImages =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[34]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[32]);
 
   /// see [Lights.fourWayFlashersPath]
   static final fourWayFlashersPath =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[35]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[33]);
 
   /// see [Lights.dashLightsImages]
   static final dashLightsImages =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[36]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[34]);
 
   /// see [Lights.dashLightsPath]
   static final dashLightsPath =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[37]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[35]);
 
   /// see [Lights.strobeLightsImages]
   static final strobeLightsImages =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[38]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[36]);
 
   /// see [Lights.strobeLightsPath]
   static final strobeLightsPath =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[39]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[37]);
 
   /// see [Lights.cabRoofLightsImages]
   static final cabRoofLightsImages =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[40]);
+      QueryStringVectorProperty<Lights>(_entities[6].properties[38]);
 
   /// see [Lights.cabRoofLightsPath]
   static final cabRoofLightsPath =
+      QueryStringVectorProperty<Lights>(_entities[6].properties[39]);
+
+  /// see [Lights.clearanceLightsImages]
+  static final clearanceLightsImages =
+      QueryStringVectorProperty<Lights>(_entities[6].properties[40]);
+
+  /// see [Lights.clearanceLightsPath]
+  static final clearanceLightsPath =
       QueryStringVectorProperty<Lights>(_entities[6].properties[41]);
 
-  /// see [Lights.clearenceLightsImages]
-  static final clearenceLightsImages =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[42]);
+  /// see [Lights.clearanceLights]
+  static final clearanceLights =
+      QueryStringProperty<Lights>(_entities[6].properties[42]);
 
-  /// see [Lights.clearenceLightsPath]
-  static final clearenceLightsPath =
-      QueryStringVectorProperty<Lights>(_entities[6].properties[43]);
+  /// see [Lights.clearanceLightsComments]
+  static final clearanceLightsComments =
+      QueryStringProperty<Lights>(_entities[6].properties[43]);
 }
 
 /// [Measures] entity fields to define ObjectBox queries.

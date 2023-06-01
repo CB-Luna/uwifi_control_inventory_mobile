@@ -176,10 +176,10 @@ class Lights {
   String cabRoofLightsComments;
   List<String> cabRoofLightsImages;
   List<String> cabRoofLightsPath;
-  String clearenceLights;
-  String clearenceLightsComments;
-  List<String> clearenceLightsImages;
-  List<String> clearenceLightsPath;
+  String clearanceLights;
+  String clearanceLightsComments;
+  List<String> clearanceLightsImages;
+  List<String> clearanceLightsPath;
   DateTime dateAdded;
   @Unique()
   String? idDBR;
@@ -225,10 +225,10 @@ class Lights {
     required this.cabRoofLightsComments,
     required this.cabRoofLightsImages,
     required this.cabRoofLightsPath,
-    required this.clearenceLights,
-    required this.clearenceLightsComments,
-    required this.clearenceLightsImages,
-    required this.clearenceLightsPath,
+    required this.clearanceLights,
+    required this.clearanceLightsComments,
+    required this.clearanceLightsImages,
+    required this.clearanceLightsPath,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();

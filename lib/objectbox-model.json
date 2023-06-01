@@ -1045,7 +1045,7 @@
     },
     {
       "id": "92:2259630358692179159",
-      "lastPropertyId": "46:6596099135715597570",
+      "lastPropertyId": "50:8185845797277935491",
       "name": "Lights",
       "properties": [
         {
@@ -1132,16 +1132,6 @@
         {
           "id": "19:4999511497438034127",
           "name": "cabRoofLightsComments",
-          "type": 9
-        },
-        {
-          "id": "20:1870679960917748335",
-          "name": "clearenceLights",
-          "type": 9
-        },
-        {
-          "id": "21:472741667402047784",
-          "name": "clearenceLightsComments",
           "type": 9
         },
         {
@@ -1265,14 +1255,24 @@
           "type": 30
         },
         {
-          "id": "45:1642398105788300096",
-          "name": "clearenceLightsImages",
+          "id": "47:552566993002683012",
+          "name": "clearanceLightsImages",
           "type": 30
         },
         {
-          "id": "46:6596099135715597570",
-          "name": "clearenceLightsPath",
+          "id": "48:6853920016077470023",
+          "name": "clearanceLightsPath",
           "type": 30
+        },
+        {
+          "id": "49:7964057907774140886",
+          "name": "clearanceLights",
+          "type": 9
+        },
+        {
+          "id": "50:8185845797277935491",
+          "name": "clearanceLightsComments",
+          "type": 9
         }
       ],
       "relations": []
@@ -3231,7 +3231,11 @@
     4597217521178161071,
     190629341104866461,
     3029208679029084049,
-    1994456040465984525
+    1994456040465984525,
+    1642398105788300096,
+    6596099135715597570,
+    1870679960917748335,
+    472741667402047784
   ],
   "retiredRelationUids": [
     1226469011453769556,

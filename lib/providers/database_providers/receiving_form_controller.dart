@@ -28,7 +28,7 @@ class ReceivingFormController extends ChangeNotifier {
   String dashLights = "Good";
   String strobeLights = "Good";
   String cabRoofLights = "Good";
-  String clearenceLights = "Good";
+  String clearanceLights = "Good";
 
   String wiperBladesFront = "Good";
   String wiperBladesBack = "Good";
@@ -99,7 +99,7 @@ class ReceivingFormController extends ChangeNotifier {
   List<ImageEvidence> dashLightsImages = [];
   List<ImageEvidence> strobeLightsImages = [];
   List<ImageEvidence> cabRoofLightsImages = [];
-  List<ImageEvidence> clearenceLightsImages = [];
+  List<ImageEvidence> clearanceLightsImages = [];
 
   List<ImageEvidence> wiperBladesFrontImages = [];
   List<ImageEvidence> wiperBladesBackImages = [];
@@ -161,7 +161,7 @@ class ReceivingFormController extends ChangeNotifier {
   TextEditingController dashLightsComments = TextEditingController();
   TextEditingController strobeLightsComments = TextEditingController();
   TextEditingController cabRoofLightsComments = TextEditingController();
-  TextEditingController clearenceLightsComments = TextEditingController();
+  TextEditingController clearanceLightsComments = TextEditingController();
 
   TextEditingController wiperBladesFrontComments = TextEditingController();
   TextEditingController wiperBladesBackComments = TextEditingController();
@@ -364,17 +364,17 @@ class ReceivingFormController extends ChangeNotifier {
     cabRoofLights = report;
     notifyListeners();
   }
-  void updateClearenceLights(String report) {
+  void updateClearanceLights(String report) {
     if (report == "Good") {
-      if (clearenceLights == "Bad") {
+      if (clearanceLights == "Bad") {
         badStateLights -= 1;
       }
     } else {
-      if (clearenceLights == "Good") {
+      if (clearanceLights == "Good") {
         badStateLights += 1;
       }
     }
-    clearenceLights = report;
+    clearanceLights = report;
     notifyListeners();
   }
 
@@ -1023,13 +1023,13 @@ class ReceivingFormController extends ChangeNotifier {
     cabRoofLightsImages.add(image);
     notifyListeners();
   }
-  void addClearenceLightsImage(ImageEvidence image) {
-    clearenceLightsImages.add(image);
+  void addClearanceLightsImage(ImageEvidence image) {
+    clearanceLightsImages.add(image);
     notifyListeners();
   }
-  void updateClearenceLightsImage(ImageEvidence image) {
-    clearenceLightsImages.removeLast();
-    clearenceLightsImages.add(image);
+  void updateClearanceLightsImage(ImageEvidence image) {
+    clearanceLightsImages.removeLast();
+    clearanceLightsImages.add(image);
     notifyListeners();
   }
 
@@ -1427,7 +1427,7 @@ class ReceivingFormController extends ChangeNotifier {
     dashLights = "Good";
     strobeLights = "Good";
     cabRoofLights = "Good";
-    clearenceLights = "Good";
+    clearanceLights = "Good";
 
     wiperBladesFront = "Good";
     wiperBladesBack = "Good";
@@ -1496,7 +1496,7 @@ class ReceivingFormController extends ChangeNotifier {
     dashLightsImages.clear();
     strobeLightsImages.clear();
     cabRoofLightsImages.clear();
-    clearenceLightsImages.clear();
+    clearanceLightsImages.clear();
 
     wiperBladesFrontImages.clear();
     wiperBladesBackImages.clear();
@@ -1558,7 +1558,7 @@ class ReceivingFormController extends ChangeNotifier {
     dashLightsComments.clear();
     strobeLightsComments.clear();
     cabRoofLightsComments.clear();
-    clearenceLightsComments.clear();
+    clearanceLightsComments.clear();
 
     wiperBladesFrontComments.clear();
     wiperBladesBackComments.clear();
@@ -1686,10 +1686,10 @@ class ReceivingFormController extends ChangeNotifier {
         cabRoofLightsComments: cabRoofLightsComments.text, 
         cabRoofLightsImages: getListImages(cabRoofLightsImages), 
         cabRoofLightsPath: getListPath(cabRoofLightsImages),
-        clearenceLights: clearenceLights, 
-        clearenceLightsComments: clearenceLightsComments.text, 
-        clearenceLightsImages: getListImages(clearenceLightsImages), 
-        clearenceLightsPath: getListPath(clearenceLightsImages), 
+        clearanceLights: clearanceLights, 
+        clearanceLightsComments: clearanceLightsComments.text, 
+        clearanceLightsImages: getListImages(clearanceLightsImages), 
+        clearanceLightsPath: getListPath(clearanceLightsImages), 
       );
 
       final carBodywork = CarBodywork(

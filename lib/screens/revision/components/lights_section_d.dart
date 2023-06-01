@@ -358,17 +358,17 @@ class _LightsSectionDState extends State<LightsSectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.clearenceLightsImages,
+                  images: deliveredFormProvider.clearanceLightsImages,
                   addImage: (image) {
-                    deliveredFormProvider.addClearenceLightsImage(image);
+                    deliveredFormProvider.addClearanceLightsImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateClearenceLightsImage(image);
+                    deliveredFormProvider.updateClearanceLightsImage(image);
                   },
-                  comments: deliveredFormProvider.clearenceLightsComments,
-                  report: deliveredFormProvider.clearenceLights,
+                  comments: deliveredFormProvider.clearanceLightsComments,
+                  report: deliveredFormProvider.clearanceLights,
                   updateReport: (report) {
-                    deliveredFormProvider.updateClearenceLights(report);
+                    deliveredFormProvider.updateClearanceLights(report);
                   },
                 ),
                 Divider(
