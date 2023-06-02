@@ -1,5 +1,6 @@
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/revision/delivered_scheduler_screen.dart';
 import 'package:taller_alex_app_asesor/screens/revision/received_scheduler_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
@@ -12,16 +13,21 @@ import 'hour_background_model.dart';
 export 'hour_background_model.dart';
 
 class HourBackgroundWidget extends StatefulWidget {
-  const HourBackgroundWidget({
+   HourBackgroundWidget({
     Key? key,
     this.time,
     this.period,
     required this.typeForm,
+    required this.firstHour,
+    required this.hourSection,
+
   }) : super(key: key);
 
   final String? time;
   final String? period;
   final bool typeForm;
+  final bool firstHour;
+  final DateTime hourSection;
 
   @override
   _HourBackgroundWidgetState createState() => _HourBackgroundWidgetState();
@@ -32,6 +38,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
   Color caughtColor = Colors.white;
   String licensePlates = "";
   String image = "";
+  DateTime? registeredHour;
 
   @override
   void setState(VoidCallback callback) {
@@ -55,9 +62,17 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
   @override
   Widget build(BuildContext context) {
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
+    final usuarioProvider = Provider.of<UsuarioController>(context);
+    if (usuarioProvider.usuarioCurrent?.vehicle.target != null && widget.firstHour && controlFormProvider.boolCurrentHour) {
+      caughtColor = FlutterFlowTheme.of(context).alternate;
+      licensePlates = usuarioProvider.usuarioCurrent!.vehicle.target!.licensePlates;
+      image = usuarioProvider.usuarioCurrent!.vehicle.target!.path;
+      controlFormProvider.changeIsSelectedHourValue(true);
+      registeredHour = controlFormProvider.registeredHour;
+    }
     return DragTarget(
       onAccept: (Vehicle data) async{
-        if (controlFormProvider.accept) {
+        if (controlFormProvider.isSelectedHour) {
           await showDialog(
             context: context,
             builder: (alertDialogContext) {
@@ -77,10 +92,15 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
           );
         } 
         else{
+          if (widget.firstHour) {
+            controlFormProvider.acceptCurrentHour();
+          }
+          controlFormProvider.changeIsSelectedHourValue(true);
           setState(() {
             caughtColor = FlutterFlowTheme.of(context).alternate;
             licensePlates = data.licensePlates;
             image = data.path;
+            registeredHour = widget.hourSection;
           });
         }
       },
@@ -191,17 +211,42 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                   width: 200,
                                   ),
                               ),
-                              Text(
-                                "License Plates: $licensePlates",
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      color: FlutterFlowTheme.of(context)
-                                          .white,
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.bold,
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Hour: ${DateFormat("hh:mm:ss").format(registeredHour ?? DateTime.now())}",
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              color: FlutterFlowTheme.of(context)
+                                                  .white,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
                                     ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "License Plates: $licensePlates",
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              color: FlutterFlowTheme.of(context)
+                                                  .white,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -245,11 +290,15 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                         actions: [
                                           TextButton(
                                             onPressed: () async {
-                                              controlFormProvider.cleanData();
+                                              if (widget.firstHour) {
+                                                controlFormProvider.rejectCurrentHour();
+                                              }
+                                              controlFormProvider.changeIsSelectedHourValue(false);
                                               setState(() {
                                                 caughtColor = Colors.white;
                                                 licensePlates = "";
                                                 image = "";
+                                                registeredHour = null;
                                               });
                                               Navigator.pop(context);
                                             },
@@ -304,7 +353,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                        ReceivedSchedulerScreen(hour: widget.time!, period: widget.period!,),
+                                        ReceivedSchedulerScreen(hour: widget.time!, period: widget.period!, registeredHour: registeredHour ?? DateTime.now(),),
                                       ),
                                   );
                                   } else {
@@ -312,7 +361,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                        DeliveredSchedulerScreen(hour: widget.time!, period: widget.period!,),
+                                        DeliveredSchedulerScreen(hour: widget.time!, period: widget.period!, registeredHour: registeredHour ?? DateTime.now(),),
                                       ),
                                     );
                                   }

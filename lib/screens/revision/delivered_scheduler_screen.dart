@@ -9,7 +9,6 @@ import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/delivered_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/vehiculo_controller.dart';
-import 'package:taller_alex_app_asesor/screens/clientes/agregar_vehiculo_screen.dart';
 import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/menu_form_button.dart';
 import 'package:taller_alex_app_asesor/screens/revision/control_form_d_creted.dart';
@@ -18,10 +17,12 @@ import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 class DeliveredSchedulerScreen extends StatefulWidget {
   final String hour;
   final String period;
+  final DateTime registeredHour;
   const DeliveredSchedulerScreen({
     super.key, 
     required this.hour, 
     required this.period, 
+    required this.registeredHour,
     });
 
   @override
@@ -120,14 +121,8 @@ class _DeliveredSchedulerScreenState extends State<DeliveredSchedulerScreen> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: InkWell(
-                        onTap: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  AgregarVehiculoScreen(typeForm: false,),
-                            ),
-                          );
+                        onTap: () {
+                          Navigator.pop(context);
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
@@ -313,9 +308,9 @@ class _DeliveredSchedulerScreenState extends State<DeliveredSchedulerScreen> {
                             ),
                             Text(
                               DateFormat(
-                               'MMM-dd-yyyy').
+                               'hh:mm:ss').
                                 format(
-                                  getCurrentTimestamp),
+                                  widget.registeredHour),
                               style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily:
                                     FlutterFlowTheme.of(context).bodyText1Family,

@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-dynamic getHours() {
+dynamic getHours(int actualHour) {
   // return a JSON array of strings, each string being an hour of the day
   var hours = {
     'hours': [
@@ -29,7 +29,18 @@ dynamic getHours() {
       {'hour': '23:00', 'period': 'p.m.'},
     ]
   };
-  return hours;
+    var filteredHours = {
+      'hours': [
+      ]
+    };
+
+  for (var hour in hours['hours']!) {
+    if(int.parse(hour['hour']!.split(":").first) >= actualHour)
+    {
+      filteredHours['hours']!.add(hour);
+    }
+  }
+  return filteredHours;
 }
 
 dynamic getEvents() {

@@ -1,3 +1,5 @@
+import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
+
 import 'hour_background_widget.dart';
 import 'custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
@@ -45,24 +47,45 @@ class _BackgroundWidgetState extends State<BackgroundWidget> {
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
-
+    final controlFormProvider = Provider.of<ControlFormProvider>(context);
     return Container(
       width: MediaQuery.of(context).size.width * 1.0,
       height: widget.height?.toDouble(),
-      decoration: BoxDecoration(),
+      decoration: const BoxDecoration(),
       child: Align(
-        alignment: AlignmentDirectional(0.0, 0.0),
+        alignment: const AlignmentDirectional(0.0, 0.0),
         child: Builder(
           builder: (context) {
-            final hours = getJsonField(
-              functions.getHours(),
-              r'''$.hours[*]''',
-            ).toList();
+            dynamic hours;
+            if (controlFormProvider.hours != null) {
+              hours = controlFormProvider.hours;
+            } else {
+              final registeredHour = DateTime.now();
+              hours = getJsonField(
+                functions.getHours(registeredHour.hour),
+                r'''$.hours[*]''',
+              ).toList();
+              controlFormProvider.fillHoursData(hours);
+              controlFormProvider.changeRegisteredHour(registeredHour);
+            }
             return Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: List.generate(hours.length, (hoursIndex) {
                 final hoursItem = hours[hoursIndex];
+                List<String> timeParts = getJsonField(
+                    hoursItem,
+                    r'''$.hour''',
+                  ).toString().split(':');
+                int hour = int.parse(timeParts[0]);
+                int minute = int.parse(timeParts[1]);
+
+                DateTime hourSection = DateTime(
+                  DateTime.now().year, 
+                  DateTime.now().month, 
+                  DateTime.now().day, 
+                  hour, 
+                  minute);
                 return HourBackgroundWidget(
                   key: Key('Keyy5q_${hoursIndex}_of_${hours.length}'),
                   time: getJsonField(
@@ -74,6 +97,8 @@ class _BackgroundWidgetState extends State<BackgroundWidget> {
                     r'''$.period''',
                   ).toString(), 
                   typeForm: widget.typeForm,
+                  firstHour: hoursIndex == 0 ? true : false,
+                  hourSection: hourSection,
                 );
               }),
             );
