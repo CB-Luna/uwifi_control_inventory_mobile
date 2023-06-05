@@ -104,7 +104,7 @@ class _BottomSheetCerrarSesionState
                             Icon(
                               Icons.exit_to_app_outlined,
                               size: 80,
-                              color: FlutterFlowTheme.of(context).primaryColor,
+                              color: FlutterFlowTheme.of(context).secondaryColor,
                             ),
                           ],
                         ),
@@ -148,7 +148,7 @@ class _BottomSheetCerrarSesionState
                               options: FFButtonOptions(
                                 width: 150,
                                 height: 50,
-                                color: FlutterFlowTheme.of(context).primaryColor,
+                                color: FlutterFlowTheme.of(context).secondaryColor,
                                 textStyle:
                                   FlutterFlowTheme.of(context).subtitle2.override(
                                     fontFamily: 'Poppins',

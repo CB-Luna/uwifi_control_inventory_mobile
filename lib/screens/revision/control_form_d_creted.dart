@@ -64,7 +64,7 @@ class _ControlFormDCreatedScreenState extends State<ControlFormDCreatedScreen> {
                       child: SizedBox(
                         child: Icon(
                           Icons.check_circle_outline,
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).secondaryColor,
                           size: 250,
                           )
                       ),
@@ -86,7 +86,7 @@ class _ControlFormDCreatedScreenState extends State<ControlFormDCreatedScreen> {
                         options: FFButtonOptions(
                           width: 200,
                           height: 45,
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).secondaryColor,
                           textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                                 fontFamily: 'Poppins',
                                 color: Colors.white,

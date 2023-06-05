@@ -7,7 +7,6 @@ import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 class ControlForm {
   int id;
   bool typeForm;
-  bool today;
   DateTime dateAdded;
   @Unique()
   String? idDBR;
@@ -27,7 +26,6 @@ class ControlForm {
   ControlForm({
     this.id = 0,
     required this.typeForm,
-    this.today = true,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();

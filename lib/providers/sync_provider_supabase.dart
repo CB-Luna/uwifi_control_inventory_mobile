@@ -346,6 +346,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             for (var element in controlForm.measures.target!.gasImages.toList()) {
               gasImages = "$element|";
             }
+            print(gasImages.split("|").length);
           }
           if (controlForm.measures.target!.mileageImages.isNotEmpty) {
             for (var element in controlForm.measures.target!.mileageImages.toList()) {

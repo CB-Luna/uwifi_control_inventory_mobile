@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/screens/sync/sincronizacion_informacion_pocketbase_screen.dart';
 
-import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class BottomSheetSincronizarWidget extends StatefulWidget {
@@ -23,7 +23,7 @@ class _BottomSheetSincronizarWidgetState
       width: MediaQuery.of(context).size.width,
       height: 350,
       decoration: BoxDecoration(
-        color: AppTheme.of(context).secondaryBackground,
+        color: FlutterFlowTheme.of(context).secondaryBackground,
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(0),
           bottomRight: Radius.circular(0),
@@ -49,7 +49,7 @@ class _BottomSheetSincronizarWidgetState
                         thickness: 3,
                         indent: 150,
                         endIndent: 150,
-                        color: AppTheme.of(context).primaryBackground,
+                        color: FlutterFlowTheme.of(context).primaryBackground,
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
@@ -62,10 +62,10 @@ class _BottomSheetSincronizarWidgetState
                               child: Text(
                                 'Are you sure you want to sync?',
                                 textAlign: TextAlign.center,
-                                style: AppTheme.of(context).title2.override(
+                                style: FlutterFlowTheme.of(context).title2.override(
                                       fontFamily:
-                                          AppTheme.of(context).title2Family,
-                                      color: AppTheme.of(context).primaryText,
+                                          FlutterFlowTheme.of(context).title2Family,
+                                      color: FlutterFlowTheme.of(context).primaryText,
                                       fontSize: 19,
                                     ),
                               ),
@@ -83,10 +83,10 @@ class _BottomSheetSincronizarWidgetState
                               child: Text(
                                 'All the input data in the control forms are going to saved in the cloud (Intenet Conection is required).',
                                 textAlign: TextAlign.center,
-                                style: AppTheme.of(context).bodyText2.override(
+                                style: FlutterFlowTheme.of(context).bodyText2.override(
                                       fontFamily:
-                                          AppTheme.of(context).bodyText2Family,
-                                      color: AppTheme.of(context).secondaryText,
+                                          FlutterFlowTheme.of(context).bodyText2Family,
+                                      color: FlutterFlowTheme.of(context).secondaryText,
                                       fontWeight: FontWeight.w500,
                                     ),
                               ),
@@ -126,11 +126,11 @@ class _BottomSheetSincronizarWidgetState
                                 width: 150,
                                 height: 50,
                                 color: const Color(0xFF8C8C8C),
-                                textStyle: AppTheme.of(context)
+                                textStyle: FlutterFlowTheme.of(context)
                                     .subtitle2
                                     .override(
                                       fontFamily:
-                                          AppTheme.of(context).subtitle2Family,
+                                          FlutterFlowTheme.of(context).subtitle2Family,
                                       color: Colors.white,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -157,9 +157,9 @@ class _BottomSheetSincronizarWidgetState
                                 options: FFButtonOptions(
                                   width: 150,
                                   height: 50,
-                                  color: AppTheme.of(context).secondaryText,
+                                  color: FlutterFlowTheme.of(context).secondaryColor,
                                   textStyle:
-                                    AppTheme.of(context).subtitle2.override(
+                                    FlutterFlowTheme.of(context).subtitle2.override(
                                       fontFamily: 'Poppins',
                                       color: Colors.white,
                                       fontSize: 16,

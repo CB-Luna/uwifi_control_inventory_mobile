@@ -252,12 +252,7 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(410, 8460461020124898604),
-            relationTarget: 'BucketInspection'),
-        ModelProperty(
-            id: const IdUid(16, 8508696798102400446),
-            name: 'today',
-            type: 1,
-            flags: 0)
+            relationTarget: 'BucketInspection')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -3243,7 +3238,8 @@ ModelDefinition getObjectBoxModel() {
         1642398105788300096,
         6596099135715597570,
         1870679960917748335,
-        472741667402047784
+        472741667402047784,
+        8508696798102400446
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3454,7 +3450,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(12, object.extra.targetId);
           fbb.addInt64(13, object.equipment.targetId);
           fbb.addInt64(14, object.bucketInspection.targetId);
-          fbb.addBool(15, object.today);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3466,8 +3461,6 @@ ModelDefinition getObjectBoxModel() {
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               typeForm:
                   const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false),
-              today: const fb.BoolReader()
-                  .vTableGet(buffer, rootOffset, 34, false),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true)
@@ -5299,10 +5292,6 @@ class ControlForm_ {
   static final bucketInspection =
       QueryRelationToOne<ControlForm, BucketInspection>(
           _entities[1].properties[13]);
-
-  /// see [ControlForm.today]
-  static final today =
-      QueryBooleanProperty<ControlForm>(_entities[1].properties[14]);
 }
 
 /// [CarBodywork] entity fields to define ObjectBox queries.

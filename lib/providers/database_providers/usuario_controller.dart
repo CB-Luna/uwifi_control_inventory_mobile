@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:intl/intl.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/main.dart';
@@ -14,6 +14,14 @@ class UsuarioController extends ChangeNotifier {
 
   ControlForm? controlFormReceived;
   ControlForm? controlFormDelivered;
+
+  List<ControlForm> firstFormReceived = [];
+  List<ControlForm> secondFormReceived = [];
+  List<ControlForm> thirdFormReceived = [];
+
+  List<ControlForm> firstFormDelivered = [];
+  List<ControlForm> secondFormDelivered = [];
+  List<ControlForm> thirdFormDelivered = [];
   
   var uuid = Uuid();
 
@@ -323,12 +331,16 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
   }
   
 
-  ControlForm? getControlFormReceivedToday() {
+  ControlForm? getControlFormReceivedToday(DateTime today) {
     ControlForm? controlFormToday;
     final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual != null) {
         for (var controlForm in dataBase.controlFormBox.getAll().toList()) {
-          if (controlForm.today && (controlForm.typeForm == true)) {
+          if ((DateFormat('dd-MM-yyyy')
+              .format(controlForm.dateAdded).toString() == 
+              DateFormat('dd-MM-yyyy')
+              .format(today).toString()) 
+              && (controlForm.typeForm == true)) {
             if (controlForm.employee.target?.idDBR == usuarioActual.idDBR) {
               controlFormToday = controlForm;
             } else {
@@ -340,12 +352,16 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     return controlFormToday;
   }
 
-  ControlForm? getControlFormDeliveredToday() {
+  ControlForm? getControlFormDeliveredToday(DateTime today) {
     ControlForm? controlFormToday;
     final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual != null) {
         for (var controlForm in dataBase.controlFormBox.getAll().toList()) {
-          if (controlForm.today && (controlForm.typeForm == false)) {
+          if ((DateFormat('dd-MM-yyyy')
+              .format(controlForm.dateAdded).toString() == 
+              DateFormat('dd-MM-yyyy')
+              .format(today).toString())
+               && (controlForm.typeForm == false)) {
             if (controlForm.employee.target?.idDBR == usuarioActual.idDBR) {
               controlFormToday = controlForm;
             }
@@ -355,21 +371,41 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     return controlFormToday;
   }
 
-  List<String> obtenerTecnicosMecanicosInternos() {
-    List<Users> tecnicosMecanicosInternos = [];
-    List<String> opcionesTecnicosMecanicos = [];
-    return opcionesTecnicosMecanicos;
-  }
 
-  void recoverTodayControlForms() {
+  void recoverPreviousControlForms(DateTime today) {
+
+    firstFormReceived.clear();
+    secondFormReceived.clear();
+    thirdFormReceived.clear();
+
+    firstFormDelivered.clear();
+    secondFormDelivered.clear();
+    thirdFormDelivered.clear();
+
     if (usuarioCurrent != null) {
       for (var element in usuarioCurrent!.controlForms) {
-        if (element.today == true) {
+        if (element.dateAdded.month == (today.month)) {
           if (element.typeForm) {
-            controlFormReceived = element;
+            firstFormReceived.add(element);
           }
           if (!element.typeForm) {
-            controlFormDelivered = element;
+            firstFormDelivered.add(element);
+          }
+        }
+        if (element.dateAdded.month == (today.month - 1)) {
+          if (element.typeForm) {
+            secondFormReceived.add(element);
+          }
+          if (!element.typeForm) {
+            secondFormDelivered.add(element);
+          }
+        }
+        if (element.dateAdded.month == (today.month - 2)) {
+          if (element.typeForm) {
+            thirdFormReceived.add(element);
+          }
+          if (!element.typeForm) {
+            thirdFormDelivered.add(element);
           }
         }
       }
