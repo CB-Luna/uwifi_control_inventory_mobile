@@ -114,7 +114,7 @@ class SideMenu extends StatelessWidget {
                                         shape: BoxShape.circle,
                                       ),
                                       child: Container(
-                                        color: FlutterFlowTheme.of(context).primaryColor,
+                                        color: FlutterFlowTheme.of(context).secondaryColor,
                                         child: Center(
                                           child: Text(
                                             "${currentUser.name.substring(0, 1)} ${currentUser.lastName.substring(0, 1)}",
@@ -172,7 +172,7 @@ class SideMenu extends StatelessWidget {
                     ),
 
                     CustomMenuItem(
-                      label: 'Reports',
+                      label: 'Main',
                       iconData: Icons.home,
                       onTap: () async {
                         await Navigator.push(

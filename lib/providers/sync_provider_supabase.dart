@@ -344,13 +344,12 @@ class SyncProviderSupabase extends ChangeNotifier {
           //Registrar measures
           if (controlForm.measures.target!.gasImages.isNotEmpty) {
             for (var element in controlForm.measures.target!.gasImages.toList()) {
-              gasImages = "$element|";
+              gasImages = "$gasImages$element|";
             }
-            print(gasImages.split("|").length);
           }
           if (controlForm.measures.target!.mileageImages.isNotEmpty) {
             for (var element in controlForm.measures.target!.mileageImages.toList()) {
-              mileageImages = "$element|";
+              mileageImages = "$mileageImages$element|";
             }
           }
           final recordMeasure = await supabaseClient.from('measures').insert(
@@ -367,52 +366,52 @@ class SyncProviderSupabase extends ChangeNotifier {
           //Registrar lights
           if (controlForm.lights.target!.headLightsImages.isNotEmpty) {
             for (var element in controlForm.lights.target!.headLightsImages.toList()) {
-              headlightsImages = "$element|";
+              headlightsImages = "$headlightsImages$element|";
             }
           }
           if (controlForm.lights.target!.brakeLightsImages.isNotEmpty) {
             for (var element in controlForm.lights.target!.brakeLightsImages.toList()) {
-              brakeLightsImages = "$element|";
+              brakeLightsImages = "$brakeLightsImages$element|";
             }
           }
           if (controlForm.lights.target!.reverseLightsImages.isNotEmpty) {
             for (var element in controlForm.lights.target!.reverseLightsImages.toList()) {
-              reverseLightsImages = "$element|";
+              reverseLightsImages = "$reverseLightsImages$element|";
             }
           }
           if (controlForm.lights.target!.warningLightsImages.isNotEmpty) {
             for (var element in controlForm.lights.target!.warningLightsImages.toList()) {
-              warningLightsImages = "$element|";
+              warningLightsImages = "$warningLightsImages$element|";
             }
           }
           if (controlForm.lights.target!.turnSignalsImages.isNotEmpty) {
             for (var element in controlForm.lights.target!.turnSignalsImages.toList()) {
-              turnSignalsImages = "$element|";
+              turnSignalsImages = "$turnSignalsImages$element|";
             }
           }
           if (controlForm.lights.target!.fourWayFlashersImages.isNotEmpty) {
             for (var element in controlForm.lights.target!.fourWayFlashersImages.toList()) {
-              fourWayFlashersImages = "$element|";
+              fourWayFlashersImages = "$fourWayFlashersImages$element|";
             }
           }
           if (controlForm.lights.target!.dashLightsImages.isNotEmpty) {
             for (var element in controlForm.lights.target!.dashLightsImages.toList()) {
-              dashLightsImages = "$element|";
+              dashLightsImages = "$dashLightsImages$element|";
             }
           }
           if (controlForm.lights.target!.strobeLightsImages.isNotEmpty) {
             for (var element in controlForm.lights.target!.strobeLightsImages.toList()) {
-              strobeLightsImages = "$element|";
+              strobeLightsImages = "$strobeLightsImages$element|";
             }
           }
           if (controlForm.lights.target!.cabRoofLightsImages.isNotEmpty) {
             for (var element in controlForm.lights.target!.cabRoofLightsImages.toList()) {
-              cabRoofLightsImages = "$element|";
+              cabRoofLightsImages = "$cabRoofLightsImages$element|";
             }
           }
           if (controlForm.lights.target!.clearanceLightsImages.isNotEmpty) {
             for (var element in controlForm.lights.target!.clearanceLightsImages.toList()) {
-              clearanceLightsImages = "$element|";
+              clearanceLightsImages = "$clearanceLightsImages$element|";
             }
           }
           final recordLights = await supabaseClient.from('lights').insert(
@@ -453,67 +452,67 @@ class SyncProviderSupabase extends ChangeNotifier {
           //Registrar car bodywork
           if (controlForm.carBodywork.target!.wiperBladesFrontImages.isNotEmpty) {
             for (var element in controlForm.carBodywork.target!.wiperBladesFrontImages.toList()) {
-              wiperBladesFrontImages = "$element|";
+              wiperBladesFrontImages = "$wiperBladesFrontImages$element|";
             }
           }
           if (controlForm.carBodywork.target!.wiperBladesBackImages.isNotEmpty) {
             for (var element in controlForm.carBodywork.target!.wiperBladesBackImages.toList()) {
-              wiperBladesBackImages = "$element|";
+              wiperBladesBackImages = "$wiperBladesBackImages$element|";
             }
           }
           if (controlForm.carBodywork.target!.windshieldWiperFrontImages.isNotEmpty) {
             for (var element in controlForm.carBodywork.target!.windshieldWiperFrontImages.toList()) {
-              windshieldWiperFrontImages = "$element|";
+              windshieldWiperFrontImages = "$windshieldWiperFrontImages$element|";
             }
           }
           if (controlForm.carBodywork.target!.windshieldWiperBackImages.isNotEmpty) {
             for (var element in controlForm.carBodywork.target!.windshieldWiperBackImages.toList()) {
-              windshieldWiperBackImages = "$element|";
+              windshieldWiperBackImages = "$windshieldWiperBackImages$element|";
             }
           }
           if (controlForm.carBodywork.target!.generalBodyImages.isNotEmpty) {
             for (var element in controlForm.carBodywork.target!.generalBodyImages.toList()) {
-              generalBodyImages = "$element|";
+              generalBodyImages = "$generalBodyImages$element|";
             }
           }
           if (controlForm.carBodywork.target!.decalingImages.isNotEmpty) {
             for (var element in controlForm.carBodywork.target!.decalingImages.toList()) {
-              decalingImages = "$element|";
+              decalingImages = "$decalingImages$element|";
             }
           }
           if (controlForm.carBodywork.target!.tiresImages.isNotEmpty) {
             for (var element in controlForm.carBodywork.target!.tiresImages.toList()) {
-              tiresImages = "$element|";
+              tiresImages = "$tiresImages$element|";
             }
           }
           if (controlForm.carBodywork.target!.glassImages.isNotEmpty) {
             for (var element in controlForm.carBodywork.target!.glassImages.toList()) {
-              glassImages = "$element|";
+              glassImages = "$glassImages$element|";
             }
           }
           if (controlForm.carBodywork.target!.mirrorsImages.isNotEmpty) {
             for (var element in controlForm.carBodywork.target!.mirrorsImages.toList()) {
-              mirrorsImages = "$element|";
+              mirrorsImages = "$mirrorsImages$element|";
             }
           }
           if (controlForm.carBodywork.target!.parkingImages.isNotEmpty) {
             for (var element in controlForm.carBodywork.target!.parkingImages.toList()) {
-              parkingImages = "$element|";
+              parkingImages = "$parkingImages$element|";
             }
           }
           if (controlForm.carBodywork.target!.brakesImages.isNotEmpty) {
             for (var element in controlForm.carBodywork.target!.brakesImages.toList()) {
-              brakesImages = "$element|";
+              brakesImages = "$brakesImages$element|";
             }
           }
           if (controlForm.carBodywork.target!.emgBrakesImages.isNotEmpty) {
             for (var element in controlForm.carBodywork.target!.emgBrakesImages.toList()) {
-              emgBrakesImages = "$element|";
+              emgBrakesImages = "$emgBrakesImages$element|";
             }
           }
           if (controlForm.carBodywork.target!.hornImages.isNotEmpty) {
             for (var element in controlForm.carBodywork.target!.hornImages.toList()) {
-              hornImages = "$element|";
+              hornImages = "$hornImages$element|";
             }
           }
           final recordCarBodywork = await supabaseClient.from('car_bodywork').insert(
@@ -563,32 +562,32 @@ class SyncProviderSupabase extends ChangeNotifier {
           //Registrar fluids check
           if (controlForm.fluidsCheck.target!.engineOilImages.isNotEmpty) {
             for (var element in controlForm.fluidsCheck.target!.engineOilImages.toList()) {
-              engineOilImages = "$element|";
+              engineOilImages = "$engineOilImages$element|";
             }
           }
           if (controlForm.fluidsCheck.target!.transmissionImages.isNotEmpty) {
             for (var element in controlForm.fluidsCheck.target!.transmissionImages.toList()) {
-              transmissionImages = "$element|";
+              transmissionImages = "$transmissionImages$element|";
             }
           }
           if (controlForm.fluidsCheck.target!.coolantImages.isNotEmpty) {
             for (var element in controlForm.fluidsCheck.target!.coolantImages.toList()) {
-              coolantImages = "$element|";
+              coolantImages = "$coolantImages$element|";
             }
           }
           if (controlForm.fluidsCheck.target!.powerSteeringImages.isNotEmpty) {
             for (var element in controlForm.fluidsCheck.target!.powerSteeringImages.toList()) {
-              powerSteeringImages = "$element|";
+              powerSteeringImages = "$powerSteeringImages$element|";
             }
           }
           if (controlForm.fluidsCheck.target!.dieselExhaustFluidImages.isNotEmpty) {
             for (var element in controlForm.fluidsCheck.target!.dieselExhaustFluidImages.toList()) {
-              dieselExhaustFluidImages = "$element|";
+              dieselExhaustFluidImages = "$dieselExhaustFluidImages$element|";
             }
           }
           if (controlForm.fluidsCheck.target!.windshieldWasherFluidImages.isNotEmpty) {
             for (var element in controlForm.fluidsCheck.target!.windshieldWasherFluidImages.toList()) {
-              windshieldWasherFluidImages = "$element|";
+              windshieldWasherFluidImages = "$windshieldWasherFluidImages$element|";
             }
           }
           final recordFluidsCheck = await supabaseClient.from('fluids_check').insert(
@@ -617,17 +616,17 @@ class SyncProviderSupabase extends ChangeNotifier {
           //Registrar bucket inspection
           if (controlForm.bucketInspection.target!.insulatedImages.isNotEmpty) {
             for (var element in controlForm.bucketInspection.target!.insulatedImages.toList()) {
-              insulatedImages = "$element|";
+              insulatedImages = "$insulatedImages$element|";
             }
           }
           if (controlForm.bucketInspection.target!.holesDrilledImages.isNotEmpty) {
             for (var element in controlForm.bucketInspection.target!.holesDrilledImages.toList()) {
-              holesDrilledImages = "$element|";
+              holesDrilledImages = "$holesDrilledImages$element|";
             }
           }
           if (controlForm.bucketInspection.target!.bucketLinerImages.isNotEmpty) {
             for (var element in controlForm.bucketInspection.target!.bucketLinerImages.toList()) {
-              bucketLinerImages = "$element|";
+              bucketLinerImages = "$bucketLinerImages$element|";
             }
           }
           final recordBucketInspection = await supabaseClient.from('bucket_inspection').insert(
@@ -647,32 +646,32 @@ class SyncProviderSupabase extends ChangeNotifier {
           //Registrar security
           if (controlForm.security.target!.rtaMagnetImages.isNotEmpty) {
             for (var element in controlForm.security.target!.rtaMagnetImages.toList()) {
-              rtaMagnetImages = "$element|";
+              rtaMagnetImages = "$rtaMagnetImages$element|";
             }
           }
           if (controlForm.security.target!.triangleReflectorsImages.isNotEmpty) {
             for (var element in controlForm.security.target!.triangleReflectorsImages.toList()) {
-              triangleReflectorsImages = "$element|";
+              triangleReflectorsImages = "$triangleReflectorsImages$element|";
             }
           }
           if (controlForm.security.target!.wheelChocksImages.isNotEmpty) {
             for (var element in controlForm.security.target!.wheelChocksImages.toList()) {
-              wheelChocksImages = "$element|";
+              wheelChocksImages = "$wheelChocksImages$element|";
             }
           }
           if (controlForm.security.target!.fireExtinguisherImages.isNotEmpty) {
             for (var element in controlForm.security.target!.fireExtinguisherImages.toList()) {
-              fireExtinguisherImages = "$element|";
+              fireExtinguisherImages = "$fireExtinguisherImages$element|";
             }
           }
           if (controlForm.security.target!.firstAidKitSafetyVestImages.isNotEmpty) {
             for (var element in controlForm.security.target!.firstAidKitSafetyVestImages.toList()) {
-              firstAidKitSafetyVestImages = "$element|";
+              firstAidKitSafetyVestImages = "$firstAidKitSafetyVestImages$element|";
             }
           }
           if (controlForm.security.target!.backUpAlarmImages.isNotEmpty) {
             for (var element in controlForm.security.target!.backUpAlarmImages.toList()) {
-              backUpAlarmImages = "$element|";
+              backUpAlarmImages = "$backUpAlarmImages$element|";
             }
           }
           final recordSecurity = await supabaseClient.from('security').insert(
@@ -701,42 +700,42 @@ class SyncProviderSupabase extends ChangeNotifier {
           //Registrar extra
           if (controlForm.extra.target!.ladderImages.isNotEmpty) {
             for (var element in controlForm.extra.target!.ladderImages.toList()) {
-              ladderImages = "$element|";
+              ladderImages = "$ladderImages$element|";
             }
           }
           if (controlForm.extra.target!.stepLadderImages.isNotEmpty) {
             for (var element in controlForm.extra.target!.stepLadderImages.toList()) {
-              stepLadderImages = "$element|";
+              stepLadderImages = "$stepLadderImages$element|";
             }
           }
           if (controlForm.extra.target!.ladderStrapsImages.isNotEmpty) {
             for (var element in controlForm.extra.target!.ladderStrapsImages.toList()) {
-              ladderStrapsImages = "$element|";
+              ladderStrapsImages = "$ladderStrapsImages$element|";
             }
           }
           if (controlForm.extra.target!.hydraulicFluidForBucketImages.isNotEmpty) {
             for (var element in controlForm.extra.target!.hydraulicFluidForBucketImages.toList()) {
-              hydraulicFluidForBucketImages = "$element|";
+              hydraulicFluidForBucketImages = "$hydraulicFluidForBucketImages$element|";
             }
           }
           if (controlForm.extra.target!.fiberReelRackImages.isNotEmpty) {
             for (var element in controlForm.extra.target!.fiberReelRackImages.toList()) {
-              fiberReelRackImages = "$element|";
+              fiberReelRackImages = "$fiberReelRackImages$element|";
             }
           }
           if (controlForm.extra.target!.binsLockedAndSecureImages.isNotEmpty) {
             for (var element in controlForm.extra.target!.binsLockedAndSecureImages.toList()) {
-              binsLockedAndSecureImages = "$element|";
+              binsLockedAndSecureImages = "$binsLockedAndSecureImages$element|";
             }
           }
           if (controlForm.extra.target!.safetyHarnessImages.isNotEmpty) {
             for (var element in controlForm.extra.target!.safetyHarnessImages.toList()) {
-              safetyHarnessImages = "$element|";
+              safetyHarnessImages = "$safetyHarnessImages$element|";
             }
           }
           if (controlForm.extra.target!.lanyardSafetyHarnessImages.isNotEmpty) {
             for (var element in controlForm.extra.target!.lanyardSafetyHarnessImages.toList()) {
-              lanyardSafetyHarnessImages = "$element|";
+              lanyardSafetyHarnessImages = "$lanyardSafetyHarnessImages$element|";
             }
           }
           final recordExtra = await supabaseClient.from('extra').insert(
@@ -771,27 +770,27 @@ class SyncProviderSupabase extends ChangeNotifier {
           //Registrar equipment
           if (controlForm.equipment.target!.ignitionKeyImages.isNotEmpty) {
             for (var element in controlForm.equipment.target!.ignitionKeyImages.toList()) {
-              ignitionKeyImages = "$element|";
+              ignitionKeyImages = "$ignitionKeyImages$element|";
             }
           }
           if (controlForm.equipment.target!.binsBoxKeyImages.isNotEmpty) {
             for (var element in controlForm.equipment.target!.binsBoxKeyImages.toList()) {
-              binsBoxKeyImages = "$element|";
+              binsBoxKeyImages = "$binsBoxKeyImages$element|";
             }
           }
           if (controlForm.equipment.target!.vehicleInsuranceCopyImages.isNotEmpty) {
             for (var element in controlForm.equipment.target!.vehicleInsuranceCopyImages.toList()) {
-              vehicleInsuranceCopyImages = "$element|";
+              vehicleInsuranceCopyImages = "$vehicleInsuranceCopyImages$element|";
             }
           }
-          if (controlForm.equipment.target!.vehicleInsuranceCopyImages.isNotEmpty) {
-            for (var element in controlForm.equipment.target!.vehicleInsuranceCopyImages.toList()) {
-              vehicleInsuranceCopyImages = "$element|";
+          if (controlForm.equipment.target!.vehicleRegistrationCopyImages.isNotEmpty) {
+            for (var element in controlForm.equipment.target!.vehicleRegistrationCopyImages.toList()) {
+              vehicleRegistrationCopyImages = "$vehicleRegistrationCopyImages$element|";
             }
           }
           if (controlForm.equipment.target!.bucketLiftOperatorManualImages.isNotEmpty) {
             for (var element in controlForm.equipment.target!.bucketLiftOperatorManualImages.toList()) {
-              bucketLiftOperatorManualImages = "$element|";
+              bucketLiftOperatorManualImages = "$bucketLiftOperatorManualImages$element|";
             }
           }
           final recordEquipment = await supabaseClient.from('equipment').insert(

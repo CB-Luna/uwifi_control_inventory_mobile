@@ -1,3 +1,4 @@
+import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/helpers/process_encryption.dart';
 import 'package:taller_alex_app_asesor/providers/user_provider.dart';
@@ -9,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
-import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 class CambiarPasswordScreen extends StatefulWidget {
@@ -60,7 +60,7 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: AppTheme.of(context).primaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: SingleChildScrollView(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
@@ -70,7 +70,7 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 1,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEEEEEE),
+                    color: FlutterFlowTheme.of(context).white,
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image: Image.asset(
@@ -124,7 +124,7 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                     width: 80,
                                     height: 40,
                                     decoration: BoxDecoration(
-                                      color: AppTheme.of(context).secondaryText,
+                                      color: FlutterFlowTheme.of(context).secondaryColor,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: InkWell(
@@ -136,20 +136,20 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          const Icon(
+                                          Icon(
                                             Icons.arrow_back_ios_rounded,
-                                            color: Colors.white,
+                                            color: FlutterFlowTheme.of(context).white,
                                             size: 16,
                                           ),
                                           Text(
-                                            'Atrás',
-                                            style: AppTheme.of(context)
+                                            'Back',
+                                            style: FlutterFlowTheme.of(context)
                                                 .bodyText1
                                                 .override(
                                                   fontFamily:
-                                                      AppTheme.of(context)
+                                                      FlutterFlowTheme.of(context)
                                                           .bodyText1Family,
-                                                  color: Colors.white,
+                                                  color: FlutterFlowTheme.of(context).white,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w300,
                                                 ),
@@ -170,14 +170,14 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               25, 0, 0, 0),
                                       child: AutoSizeText(
-                                        "Perfil de ${maybeHandleOverflow('${widget.usuario.name} ${widget.usuario.lastName}', 25, '...')}",
+                                        "Password of ${maybeHandleOverflow('${widget.usuario.name} ${widget.usuario.lastName}', 25, '...')}",
                                         maxLines: 2,
-                                        style: AppTheme.of(context)
+                                        style: FlutterFlowTheme.of(context)
                                             .bodyText1
                                             .override(
-                                              fontFamily: AppTheme.of(context)
+                                              fontFamily: FlutterFlowTheme.of(context)
                                                   .bodyText1Family,
-                                              color: AppTheme.of(context)
+                                              color: FlutterFlowTheme.of(context)
                                                   .primaryText,
                                               fontSize: 15,
                                             ),
@@ -195,12 +195,12 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 35, 0, 50),
                       child: Text(
-                        'Cambiar Contraseña',
-                        style: AppTheme.of(context).bodyText1.override(
-                              fontFamily: AppTheme.of(context).bodyText1Family,
+                        'Update Password',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
                               fontSize: 20,
                               useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                  AppTheme.of(context).bodyText1Family),
+                                  FlutterFlowTheme.of(context).bodyText1Family),
                             ),
                       ),
                     ),
@@ -214,31 +214,31 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                         textCapitalization: TextCapitalization.words,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: InputDecoration(
-                          labelText: "Correo electrónico",
-                          labelStyle: AppTheme.of(context).bodyText1.override(
+                          labelText: "Email",
+                          labelStyle: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
-                                color: const Color(0xFF221573),
+                                color: FlutterFlowTheme.of(context).alternate,
                                 fontSize: 15,
                                 fontWeight: FontWeight.normal,
                               ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xFF221573),
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).alternate,
                               width: 2,
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xFF221573),
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).alternate,
                               width: 2,
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: FlutterFlowTheme.of(context).white,
                         ),
-                        style: AppTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyText1,
                       ),
                     ),
                     Form(
@@ -261,44 +261,44 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                     ),
                                 obscureText: !contrasenaActualVisibility,
                                 decoration: InputDecoration(
-                                  labelText: 'Contraseña Actual',
-                                  labelStyle: AppTheme.of(context)
+                                  labelText: 'Actual Password',
+                                  labelStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: AppTheme.of(context)
+                                        fontFamily: FlutterFlowTheme.of(context)
                                             .bodyText1Family,
                                         color:
-                                            AppTheme.of(context).secondaryText,
+                                            FlutterFlowTheme.of(context).secondaryText,
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(AppTheme.of(context)
+                                            .containsKey(FlutterFlowTheme.of(context)
                                                 .bodyText1Family),
                                       ),
-                                  hintText: 'Contraseña actual...',
-                                  hintStyle: AppTheme.of(context)
+                                  hintText: 'Actual password...',
+                                  hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: AppTheme.of(context)
+                                        fontFamily: FlutterFlowTheme.of(context)
                                             .bodyText1Family,
                                         color:
-                                            AppTheme.of(context).secondaryText,
+                                            FlutterFlowTheme.of(context).secondaryText,
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(AppTheme.of(context)
+                                            .containsKey(FlutterFlowTheme.of(context)
                                                 .bodyText1Family),
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: AppTheme.of(context).primaryText,
+                                      color: FlutterFlowTheme.of(context).primaryText,
                                       width: 1.5,
                                     ),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: AppTheme.of(context).primaryText,
+                                      color: FlutterFlowTheme.of(context).primaryText,
                                       width: 1.5,
                                     ),
                                     borderRadius: BorderRadius.circular(12),
@@ -318,7 +318,7 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: FlutterFlowTheme.of(context).white,
                                   suffixIcon: InkWell(
                                     onTap: () => setState(
                                       () => contrasenaActualVisibility =
@@ -334,20 +334,20 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                     ),
                                   ),
                                 ),
-                                style: AppTheme.of(context).bodyText1.override(
+                                style: FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily:
-                                          AppTheme.of(context).bodyText1Family,
-                                      color: AppTheme.of(context).primaryText,
+                                          FlutterFlowTheme.of(context).bodyText1Family,
+                                      color: FlutterFlowTheme.of(context).primaryText,
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
                                       useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(AppTheme.of(context)
+                                          .containsKey(FlutterFlowTheme.of(context)
                                               .bodyText1Family),
                                     ),
                                 validator: (value) {
                                   if (value != null) {
                                     if (value == "") {
-                                      return "Ingrese la contraseña actual, por favor.";
+                                      return "Input your actual password.";
                                     }
                                   }
                                   return null;
@@ -367,44 +367,44 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                     ),
                                 obscureText: !contrasenaNuevaVisibility,
                                 decoration: InputDecoration(
-                                  labelText: 'Contraseña Nueva',
-                                  labelStyle: AppTheme.of(context)
+                                  labelText: 'New Password',
+                                  labelStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: AppTheme.of(context)
+                                        fontFamily: FlutterFlowTheme.of(context)
                                             .bodyText1Family,
                                         color:
-                                            AppTheme.of(context).secondaryText,
+                                            FlutterFlowTheme.of(context).secondaryText,
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(AppTheme.of(context)
+                                            .containsKey(FlutterFlowTheme.of(context)
                                                 .bodyText1Family),
                                       ),
-                                  hintText: 'Contraseña Nueva...',
-                                  hintStyle: AppTheme.of(context)
+                                  hintText: 'New password...',
+                                  hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: AppTheme.of(context)
+                                        fontFamily: FlutterFlowTheme.of(context)
                                             .bodyText1Family,
                                         color:
-                                            AppTheme.of(context).secondaryText,
+                                            FlutterFlowTheme.of(context).secondaryText,
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(AppTheme.of(context)
+                                            .containsKey(FlutterFlowTheme.of(context)
                                                 .bodyText1Family),
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: AppTheme.of(context).primaryText,
+                                      color: FlutterFlowTheme.of(context).primaryText,
                                       width: 1.5,
                                     ),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: AppTheme.of(context).primaryText,
+                                      color: FlutterFlowTheme.of(context).primaryText,
                                       width: 1.5,
                                     ),
                                     borderRadius: BorderRadius.circular(12),
@@ -424,7 +424,7 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: FlutterFlowTheme.of(context).white,
                                   suffixIcon: InkWell(
                                     onTap: () => setState(
                                       () => contrasenaNuevaVisibility =
@@ -440,23 +440,23 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                     ),
                                   ),
                                 ),
-                                style: AppTheme.of(context).bodyText1.override(
+                                style: FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily:
-                                          AppTheme.of(context).bodyText1Family,
-                                      color: AppTheme.of(context).primaryText,
+                                          FlutterFlowTheme.of(context).bodyText1Family,
+                                      color: FlutterFlowTheme.of(context).primaryText,
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
                                       useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(AppTheme.of(context)
+                                          .containsKey(FlutterFlowTheme.of(context)
                                               .bodyText1Family),
                                     ),
                                 validator: (value) {
                                   final RegExp regex = RegExp(
                                       r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.\-_:,;]{8,50}$");
                                   if (value == null || value.isEmpty) {
-                                    return 'La contraseña es requerida';
+                                    return 'Password is required.';
                                   } else if (!regex.hasMatch(value)) {
-                                    return 'La contraseña debe tener al menos 8 caracteres, una letra \nmayúscula y dos números. Los caracteres especiales válidos \nson: !#\$%&/()=?¡¿+*.-_:,; y no se permite el uso de\nespacios, tildes o acentos.';
+                                    return "Password should be with a length of 8 characters, one \ncapital letter and two numbers. Valid special characters: !#\$%&/()=?¡¿+*.-_:,; Spaces and apostrophes-\naren't allowed.";
                                   }
                                   return null;
                                 }),
@@ -475,44 +475,44 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                     ),
                                 obscureText: !contrasenaConfirmarVisibility,
                                 decoration: InputDecoration(
-                                  labelText: 'Confirmar Contraseña',
-                                  labelStyle: AppTheme.of(context)
+                                  labelText: 'Confirm Password',
+                                  labelStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: AppTheme.of(context)
+                                        fontFamily: FlutterFlowTheme.of(context)
                                             .bodyText1Family,
                                         color:
-                                            AppTheme.of(context).secondaryText,
+                                            FlutterFlowTheme.of(context).secondaryText,
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(AppTheme.of(context)
+                                            .containsKey(FlutterFlowTheme.of(context)
                                                 .bodyText1Family),
                                       ),
-                                  hintText: 'Confirma Contraseña...',
-                                  hintStyle: AppTheme.of(context)
+                                  hintText: 'Confirm password...',
+                                  hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: AppTheme.of(context)
+                                        fontFamily: FlutterFlowTheme.of(context)
                                             .bodyText1Family,
                                         color:
-                                            AppTheme.of(context).secondaryText,
+                                            FlutterFlowTheme.of(context).secondaryText,
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(AppTheme.of(context)
+                                            .containsKey(FlutterFlowTheme.of(context)
                                                 .bodyText1Family),
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: AppTheme.of(context).primaryText,
+                                      color: FlutterFlowTheme.of(context).primaryText,
                                       width: 1.5,
                                     ),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: AppTheme.of(context).primaryText,
+                                      color: FlutterFlowTheme.of(context).primaryText,
                                       width: 1.5,
                                     ),
                                     borderRadius: BorderRadius.circular(12),
@@ -532,7 +532,7 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: FlutterFlowTheme.of(context).white,
                                   suffixIcon: InkWell(
                                     onTap: () => setState(
                                       () => contrasenaConfirmarVisibility =
@@ -548,21 +548,21 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                     ),
                                   ),
                                 ),
-                                style: AppTheme.of(context).bodyText1.override(
+                                style: FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily:
-                                          AppTheme.of(context).bodyText1Family,
-                                      color: AppTheme.of(context).primaryText,
+                                          FlutterFlowTheme.of(context).bodyText1Family,
+                                      color: FlutterFlowTheme.of(context).primaryText,
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
                                       useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(AppTheme.of(context)
+                                          .containsKey(FlutterFlowTheme.of(context)
                                               .bodyText1Family),
                                     ),
                                 validator: (value) {
                                   if (value != null) {
                                     if (value !=
                                         contrasenaNuevaController!.text) {
-                                      return "La confirmación no coincide con la contraseña nueva.";
+                                      return "The confirm password is not the same like the actual password.";
                                     }
                                   }
                                   return null;
@@ -624,7 +624,7 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                   return;
                                 }
                               },
-                              text: 'Cambiar contraseña',
+                              text: 'Update Password',
                               icon: const Icon(
                                 Icons.check_outlined,
                                 size: 15,
@@ -632,15 +632,15 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                               options: FFButtonOptions(
                                 width: 200,
                                 height: 50,
-                                color: AppTheme.of(context).secondaryText,
+                                color: FlutterFlowTheme.of(context).secondaryColor,
                                 textStyle:
-                                    AppTheme.of(context).subtitle2.override(
+                                    FlutterFlowTheme.of(context).subtitle2.override(
                                           fontFamily: 'Montserrat',
-                                          color: Colors.white,
+                                          color: FlutterFlowTheme.of(context).white,
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500,
                                           useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(AppTheme.of(context)
+                                              .containsKey(FlutterFlowTheme.of(context)
                                                   .subtitle2Family),
                                         ),
                                 elevation: 0,
