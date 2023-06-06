@@ -2,7 +2,7 @@ import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/helpers/process_encryption.dart';
 import 'package:taller_alex_app_asesor/providers/user_provider.dart';
-import 'package:taller_alex_app_asesor/screens/perfil_usuario/password_actualizado_screen.dart';
+import 'package:taller_alex_app_asesor/screens/user_profile/password_actualizado_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:easy_debounce/easy_debounce.dart';

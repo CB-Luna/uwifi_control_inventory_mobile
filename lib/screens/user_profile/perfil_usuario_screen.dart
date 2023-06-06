@@ -2,14 +2,14 @@ import 'dart:io';
 
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/main.dart';
-import 'package:taller_alex_app_asesor/screens/perfil_usuario/device_information_widget.dart';
+import 'package:taller_alex_app_asesor/screens/user_profile/device_information_widget.dart';
 import 'package:taller_alex_app_asesor/screens/screens.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
-import 'package:taller_alex_app_asesor/screens/perfil_usuario/editar_usuario_screen.dart';
+import 'package:taller_alex_app_asesor/screens/user_profile/editar_usuario_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_expanded_image_view.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';

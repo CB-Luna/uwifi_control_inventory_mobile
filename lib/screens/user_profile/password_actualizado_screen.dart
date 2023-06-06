@@ -1,19 +1,20 @@
+import 'package:taller_alex_app_asesor/screens/user_profile/perfil_usuario_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:taller_alex_app_asesor/theme/theme.dart';
 
-import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-class UsuarioActualizado extends StatefulWidget {
-  const UsuarioActualizado({Key? key}) : super(key: key);
+
+class PasswordActualizadoScreen extends StatefulWidget {
+  const PasswordActualizadoScreen({Key? key}) : super(key: key);
 
   @override
-  State<UsuarioActualizado> createState() => _UsuarioActualizadoState();
+  State<PasswordActualizadoScreen> createState() => _PasswordActualizadoScreenState();
 }
 
-class _UsuarioActualizadoState extends State<UsuarioActualizado> {
+class _PasswordActualizadoScreenState extends State<PasswordActualizadoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -38,7 +39,7 @@ class _UsuarioActualizadoState extends State<UsuarioActualizado> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Usuario\nActualizado!',
+                        '¡Contraseña\nActualizada!',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -51,7 +52,7 @@ class _UsuarioActualizadoState extends State<UsuarioActualizado> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(
-                        'Listo, el usuario se aactualizó \ncorrectamente',
+                        'Listo, la contraseña se\nactualizó con éxito.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -81,7 +82,7 @@ class _UsuarioActualizadoState extends State<UsuarioActualizado> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const ControlDailyVehicleScreen(),
+                                   const PerfilUsuarioScreen(),
                             ),
                           );
                         },

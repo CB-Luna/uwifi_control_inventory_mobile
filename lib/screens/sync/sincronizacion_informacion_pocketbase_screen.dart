@@ -10,7 +10,7 @@ import 'package:taller_alex_app_asesor/theme/theme.dart';
 
 import 'package:taller_alex_app_asesor/providers/sync_provider_supabase.dart';
 
-import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/control_daily_vehicle_screen.dart';
+import 'package:taller_alex_app_asesor/screens/control_form/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class SincronizacionInformacionSupabaseScreen extends StatefulWidget {

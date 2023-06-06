@@ -11,7 +11,7 @@ import 'package:taller_alex_app_asesor/screens/clientes/calendar_model.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/week_days_widget.dart';
 
 import 'package:flutter/material.dart';
-import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/control_daily_vehicle_screen.dart';
+import 'package:taller_alex_app_asesor/screens/control_form/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'custom_functions.dart' as functions;
 import 'flutter_flow_util_local.dart';

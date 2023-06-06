@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/screens/ordenes_trabajo/control_daily_vehicle_screen.dart';
+import 'package:lottie/lottie.dart';
 
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+
+import 'package:taller_alex_app_asesor/screens/control_form/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-class OrdenTrabajoCreadaScreen extends StatefulWidget {
-  const OrdenTrabajoCreadaScreen({Key? key}) : super(key: key);
+class UsuarioActualizado extends StatefulWidget {
+  const UsuarioActualizado({Key? key}) : super(key: key);
 
   @override
-  State<OrdenTrabajoCreadaScreen> createState() => _OrdenTrabajoCreadaScreenState();
+  State<UsuarioActualizado> createState() => _UsuarioActualizadoState();
 }
 
-class _OrdenTrabajoCreadaScreenState extends State<OrdenTrabajoCreadaScreen> {
+class _UsuarioActualizadoState extends State<UsuarioActualizado> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -36,9 +38,9 @@ class _OrdenTrabajoCreadaScreenState extends State<OrdenTrabajoCreadaScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Orden\nde Trabajo\nCreada!',
+                        '¡Usuario\nActualizado!',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               color: Colors.black,
                               fontSize: 30,
@@ -48,10 +50,10 @@ class _OrdenTrabajoCreadaScreenState extends State<OrdenTrabajoCreadaScreen> {
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                      child: Text(                                
-                        'El registro se ha guadado con éxito.',
+                      child: Text(
+                        'Listo, el usuario se aactualizó \ncorrectamente',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               color: Colors.black,
                               fontSize: 15,
@@ -61,12 +63,13 @@ class _OrdenTrabajoCreadaScreenState extends State<OrdenTrabajoCreadaScreen> {
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
-                      child: SizedBox(
-                        child: Icon(
-                          Icons.check_circle_outline,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                          size: 250,
-                          )
+                      child: Lottie.asset(
+                        'assets/lottie_animations/elemento-creado.json',
+                        width: 250,
+                        height: 180,
+                        fit: BoxFit.cover,
+                        repeat: false,
+                        animate: true,
                       ),
                     ),
                     Padding(
@@ -86,8 +89,8 @@ class _OrdenTrabajoCreadaScreenState extends State<OrdenTrabajoCreadaScreen> {
                         options: FFButtonOptions(
                           width: 200,
                           height: 45,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                          textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                          color: const Color(0xFF28BFFA),
+                          textStyle: AppTheme.of(context).subtitle2.override(
                                 fontFamily: 'Poppins',
                                 color: Colors.white,
                               ),

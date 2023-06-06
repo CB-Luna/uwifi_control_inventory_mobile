@@ -118,8 +118,8 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                   padding: const EdgeInsetsDirectional
                     .fromSTEB(0, 5, 0, 5),
                   child: GradientText(
-                    usuarioProvider.usuarioCurrent?.vehicle.target?.company.target?.company ??
-                    'CRY',
+                    usuarioProvider.usuarioCurrent?.company.target?.company ??
+                    'No Company',
                     style: FlutterFlowTheme.of(
                             context)
                         .bodyText1
