@@ -415,7 +415,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     rolesSupabaseProvider.procesoTerminado(false);
                                     rolesSupabaseProvider.procesoExitoso(false);
                                     Future<bool> booleanoSupabase =
-                                        rolesSupabaseProvider.getRolesSupabase();
+                                        rolesSupabaseProvider.getRolesSupabase(getUsuarioSupabase.idPerfilUsuario);
                                     if (await booleanoSupabase) {
                                       await userState.setTokenPocketbase(
                                           loginResponseSupabase.accessToken);
@@ -445,6 +445,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                           getUsuarioSupabase.birthdate,
                                           getUsuarioSupabase.company.companyId.toString(),
                                           getUsuarioSupabase.idVehicleFk.toString(),
+                                          rolesSupabaseProvider.recordsMonthCurrentR!.length,
+                                          rolesSupabaseProvider.recordsMonthSecondR!.length,
+                                          rolesSupabaseProvider.recordsMonthThirdR!.length,
+                                          rolesSupabaseProvider.recordsMonthCurrentD!.length,
+                                          rolesSupabaseProvider.recordsMonthSecondD!.length,
+                                          rolesSupabaseProvider.recordsMonthThirdD!.length,
                                         );
                                       } else {
                                         usuarioProvider.add(
@@ -462,6 +468,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                           getUsuarioSupabase.birthdate,
                                           getUsuarioSupabase.company.companyId.toString(),
                                           getUsuarioSupabase.idVehicleFk.toString(),
+                                          rolesSupabaseProvider.recordsMonthCurrentR!.length,
+                                          rolesSupabaseProvider.recordsMonthSecondR!.length,
+                                          rolesSupabaseProvider.recordsMonthThirdR!.length,
+                                          rolesSupabaseProvider.recordsMonthCurrentD!.length,
+                                          rolesSupabaseProvider.recordsMonthSecondD!.length,
+                                          rolesSupabaseProvider.recordsMonthThirdD!.length,
                                         );
                                         usuarioProvider.getUser(loginResponseSupabase.user.email);
                                       }

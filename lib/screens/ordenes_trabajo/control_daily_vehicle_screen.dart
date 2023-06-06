@@ -36,6 +36,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
       context.read<UsuarioController>().recoverPreviousControlForms(DateTime.now());
       controlFormReceived = context.read<UsuarioController>().getControlFormReceivedToday(DateTime.now());
       controlFormDelivered = context.read<UsuarioController>().getControlFormDeliveredToday(DateTime.now());
+      context.read<UsuarioController>().getUser(prefs.getString("userId") ?? "");
     });
   }
   @override
@@ -44,6 +45,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
     final deliveredFormProvider = Provider.of<DeliveredFormController>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     usuarioProvider.recoverPreviousControlForms(DateTime.now());
+    usuarioProvider.getUser(prefs.getString("userId") ?? "");
     controlFormReceived = usuarioProvider.getControlFormReceivedToday(DateTime.now());
     controlFormDelivered = usuarioProvider.getControlFormDeliveredToday(DateTime.now());
     return WillPopScope(
@@ -277,7 +279,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 0.0, 10.0, 0.0, 0.0),
                                         child: Text(
                                           "${dateTimeFormat('MMMM',
-                                              getCurrentTimestamp)}: ${usuarioProvider.firstFormReceived.length} / ${usuarioProvider.firstFormDelivered.length}",
+                                              getCurrentTimestamp)}: ${usuarioProvider.usuarioCurrent?.recordsMonthCurrentR} / ${usuarioProvider.usuarioCurrent?.recordsMonthCurrentD}",
                                           style: FlutterFlowTheme.of(
                                                   context)
                                               .bodyText1
@@ -305,7 +307,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 getCurrentTimestamp.year, 
                                                 getCurrentTimestamp.month - 1, 
                                                 getCurrentTimestamp.day).month))
-                                                }: ${usuarioProvider.secondFormReceived.length} / ${usuarioProvider.secondFormDelivered.length}",
+                                                }: ${usuarioProvider.usuarioCurrent?.recordsMonthSecondR} / ${usuarioProvider.usuarioCurrent?.recordsMonthSecondD}",
                                           style: FlutterFlowTheme.of(
                                                   context)
                                               .bodyText1
@@ -333,7 +335,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 getCurrentTimestamp.year, 
                                                 getCurrentTimestamp.month - 2, 
                                                 getCurrentTimestamp.day).month))
-                                                }: ${usuarioProvider.thirdFormReceived.length} / ${usuarioProvider.thirdFormDelivered.length}",
+                                                }: ${usuarioProvider.usuarioCurrent?.recordsMonthThirdR} / ${usuarioProvider.usuarioCurrent?.recordsMonthThirdD}",
                                           style: FlutterFlowTheme.of(
                                                   context)
                                               .bodyText1

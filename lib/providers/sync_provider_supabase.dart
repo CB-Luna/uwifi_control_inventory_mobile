@@ -860,6 +860,24 @@ class SyncProviderSupabase extends ChangeNotifier {
               //Se recupera el idDBR de Supabase del Control Form
               controlForm.idDBR = recordControlForm.first['id_control_form'].toString();
               dataBase.controlFormBox.put(controlForm);
+              // //Se actualiza el número de current Month Forms del usuario
+              // if (controlForm.typeForm) {
+              //   final updateUsuario = dataBase.usersBox.query(Users_.idDBR.equals(controlForm.employee.target!.idDBR)).build().findUnique();
+              //   if(updateUsuario != null) 
+              //   {
+              //     int newRecordsMonthCurrentR = updateUsuario.recordsMonthCurrentR + 1;
+              //     updateUsuario.recordsMonthCurrentR = newRecordsMonthCurrentR;
+              //     dataBase.usersBox.put(updateUsuario);
+              //   }
+              // } else {
+              //   final updateUsuario = dataBase.usersBox.query(Users_.idDBR.equals(controlForm.employee.target!.idDBR)).build().findUnique();
+              //   if(updateUsuario != null) 
+              //   {
+              //     int newRecordsMonthCurrentD = updateUsuario.recordsMonthCurrentD + 1;
+              //     updateUsuario.recordsMonthCurrentD = newRecordsMonthCurrentD;
+              //     dataBase.usersBox.put(updateUsuario);
+              //   }
+              // }
               //Se marca como ejecutada la instrucción en Bitacora
               bitacora.executeSupabase = true;
               dataBase.bitacoraBox.put(bitacora);

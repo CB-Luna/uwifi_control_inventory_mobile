@@ -76,6 +76,12 @@ class UsuarioController extends ChangeNotifier {
       DateTime birthDate,
       String idCompanyFk,
       String? idVehicleFk,
+      int formsCurrentMonthR,
+      int formsSecondMonthR,
+      int formsThirdMonthR,
+      int formsCurrentMonthD,
+      int formsSecondMonthD,
+      int formsThirdMonthD,
       ) async {
     final nuevoUsuario = Users(
         name: nombre,
@@ -89,6 +95,12 @@ class UsuarioController extends ChangeNotifier {
         address: domicilio,
         image: imagenBase64,
         birthDate: birthDate,
+        recordsMonthCurrentR: formsCurrentMonthR,
+        recordsMonthSecondR: formsSecondMonthR,
+        recordsMonthThirdR: formsThirdMonthR,
+        recordsMonthCurrentD: formsCurrentMonthD,
+        recordsMonthSecondD: formsSecondMonthD,
+        recordsMonthThirdD: formsThirdMonthD,
         );
     if (imagenBase64 != null) {
       final uInt8ListImagen = base64Decode(imagenBase64);
@@ -136,6 +148,12 @@ class UsuarioController extends ChangeNotifier {
       DateTime newBirthDate,
       String newIdCompanyFk,
       String? newIdVehicleFk,
+      int formsCurrentMonthR,
+      int formsSecondMonthR,
+      int formsThirdMonthR,
+      int formsCurrentMonthD,
+      int formsSecondMonthD,
+      int formsThirdMonthD,
       ) async {
     // Se recupera el usuario por id
     final updateUsuario = dataBase.usersBox.query(Users_.correo.equals(correo)).build().findUnique();
@@ -149,6 +167,12 @@ class UsuarioController extends ChangeNotifier {
       updateUsuario.address = newDomicilio;
       updateUsuario.password = newPassword;
       updateUsuario.birthDate = newBirthDate;
+      updateUsuario.recordsMonthCurrentR = formsCurrentMonthR;
+      updateUsuario.recordsMonthSecondR = formsSecondMonthR;
+      updateUsuario.recordsMonthThirdR = formsThirdMonthR;
+      updateUsuario.recordsMonthCurrentD = formsCurrentMonthD;
+      updateUsuario.recordsMonthSecondD = formsSecondMonthD;
+      updateUsuario.recordsMonthThirdD = formsThirdMonthD;
       //Se agregan los roles actualizados
       updateUsuario.roles.clear();
       for (var i = 0; i < newRolesIdDBR.length; i++) {

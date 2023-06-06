@@ -790,6 +790,12 @@ class Users {
   String? path;
   DateTime birthDate;
   DateTime dateAdded;
+  int recordsMonthCurrentR;
+  int recordsMonthSecondR;
+  int recordsMonthThirdR;
+  int recordsMonthCurrentD;
+  int recordsMonthSecondD;
+  int recordsMonthThirdD;
   @Unique()
   String idDBR;
   final bitacora = ToMany<Bitacora>();
@@ -814,6 +820,12 @@ class Users {
     this.path,
     required this.birthDate,
     DateTime? dateAdded,
+    required this.recordsMonthCurrentR,
+    required this.recordsMonthSecondR,
+    required this.recordsMonthThirdR,
+    required this.recordsMonthCurrentD,
+    required this.recordsMonthSecondD,
+    required this.recordsMonthThirdD,
     required this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();
 

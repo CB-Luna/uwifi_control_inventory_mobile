@@ -12,6 +12,7 @@ import 'package:taller_alex_app_asesor/modelsSupabase/get_vehicle_supabase.dart'
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import '../objectbox.g.dart';
+import '../screens/clientes/flutter_flow_util_local.dart';
 
 class RolesSupabaseProvider extends ChangeNotifier {
 
@@ -19,6 +20,12 @@ class RolesSupabaseProvider extends ChangeNotifier {
   bool procesoterminado = false;
   bool procesoexitoso = false;
   bool exitoso = true;
+  List<dynamic>? recordsMonthCurrentR;
+  List<dynamic>? recordsMonthSecondR;
+  List<dynamic>? recordsMonthThirdR;
+  List<dynamic>? recordsMonthCurrentD;
+  List<dynamic>? recordsMonthSecondD;
+  List<dynamic>? recordsMonthThirdD;
   var uuid = Uuid();
 
   void procesoCargando(bool boleano) {
@@ -36,8 +43,14 @@ class RolesSupabaseProvider extends ChangeNotifier {
     // notifyListeners();
   }
 
-  Future<bool> getRolesSupabase() async {
-    exitoso = await getRoles();
+  Future<bool> getRolesSupabase(String idUserFk) async {
+    recordsMonthCurrentR = null;
+    recordsMonthSecondR = null;
+    recordsMonthThirdR = null;
+    recordsMonthCurrentD = null;
+    recordsMonthSecondD = null;
+    recordsMonthThirdD = null;
+    exitoso = await getRoles(idUserFk);
     //Verificamos que no haya habido errores al sincronizar
     if (exitoso) {
       procesocargando = false;
@@ -55,7 +68,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
   }
 
 //Función para recuperar el catálogo de roles desde Supabase
-  Future<bool> getRoles() async {
+  Future<bool> getRoles(String idUserFk) async {
     String queryGetRoles = """
       query Query {
         roleCollection {
@@ -160,8 +173,78 @@ class RolesSupabaseProvider extends ChangeNotifier {
             return null;
         },),
       );
+      // Se recuperan los formularios del mes anterior
+      // Obtener la fecha del mes actual y previos
+      DateTime currentDate = DateTime.now();
+      DateTime currentMonth = DateTime(currentDate.year, currentDate.month);
+      DateTime firstPreviousMonth = DateTime(currentDate.year, currentDate.month - 1);
+      DateTime secondPreviousMonth = DateTime(currentDate.year, currentDate.month - 2);
 
-      if (recordsRoles.data != null && recordsStatus.data != null && recordsCompany.data != null && recordsVehicle.data != null) {
+      DateTime startOfMonthCurrent = DateTime(currentMonth.year, currentMonth.month, 1);
+      DateTime endOfMonthCurrent = DateTime(currentMonth.year, currentMonth.month + 1, 0, 23, 59, 59);
+
+      DateTime startOfMonthSecond = DateTime(firstPreviousMonth.year, firstPreviousMonth.month, 1);
+      DateTime endOfMonthSecond = DateTime(firstPreviousMonth.year, firstPreviousMonth.month + 1, 0, 23, 59, 59);
+
+      DateTime startOfMonthThird = DateTime(secondPreviousMonth.year, secondPreviousMonth.month, 1);
+      DateTime endOfMonthThird = DateTime(secondPreviousMonth.year, secondPreviousMonth.month + 1, 0, 23, 59, 59);
+
+      DateFormat format = DateFormat("yyyy-MM-dd HH:mm:ss");
+
+      String formattedStartOfMonthCurrent = format.format(startOfMonthCurrent);
+      String formattedEndOfMonthCurrent = format.format(endOfMonthCurrent);
+
+      String formattedStartOfMonthSecond = format.format(startOfMonthSecond);
+      String formattedEndOfMonthSecond = format.format(endOfMonthSecond);
+
+      String formattedStartOfMonthThird = format.format(startOfMonthThird);
+      String formattedEndOfMonthThird = format.format(endOfMonthThird);
+
+      final responseCurrentR = await supabaseClient
+      .from('control_form')
+      .select()
+      .gt('date_added', formattedStartOfMonthCurrent).lt('date_added', formattedEndOfMonthCurrent)
+      .eq('id_user_fk', idUserFk)
+      .eq('type_form', true);
+
+      final responseCurrentD = await supabaseClient
+      .from('control_form')
+      .select()
+      .gt('date_added', formattedStartOfMonthCurrent).lt('date_added', formattedEndOfMonthCurrent)
+      .eq('id_user_fk', idUserFk)
+      .eq('type_form', false);
+
+      final responseSecondR = await supabaseClient
+      .from('control_form')
+      .select()
+      .gt('date_added', formattedStartOfMonthSecond).lt('date_added', formattedEndOfMonthSecond)
+      .eq('id_user_fk', idUserFk)
+      .eq('type_form', true);
+
+      final responseSecondD = await supabaseClient
+      .from('control_form')
+      .select()
+      .gt('date_added', formattedStartOfMonthSecond).lt('date_added', formattedEndOfMonthSecond)
+      .eq('id_user_fk', idUserFk)
+      .eq('type_form', false);
+
+      final responseThirdR = await supabaseClient
+      .from('control_form')
+      .select()
+      .gt('date_added', formattedStartOfMonthThird).lt('date_added', formattedEndOfMonthThird)
+      .eq('id_user_fk', idUserFk)
+      .eq('type_form', true);
+
+      final responseThirdD = await supabaseClient
+      .from('control_form')
+      .select()
+      .gt('date_added', formattedStartOfMonthThird).lt('date_added', formattedEndOfMonthThird)
+      .eq('id_user_fk', idUserFk)
+      .eq('type_form', false);
+
+      if (recordsRoles.data != null && recordsStatus.data != null && recordsCompany.data != null && recordsVehicle.data != null &&
+      responseCurrentR != null && responseSecondR != null && responseThirdR != null &&
+      responseCurrentD != null && responseSecondD != null && responseThirdD != null) {
         //Existen datos de roles en Supabase
         print("****Roles: ${jsonEncode(recordsRoles.data.toString())}");
         print("****Status: ${jsonEncode(recordsStatus.data.toString())}");
@@ -171,6 +254,12 @@ class RolesSupabaseProvider extends ChangeNotifier {
         final responseListStatus = getStatusSupabaseFromMap(jsonEncode(recordsStatus.data).toString());
         final responseListCompany = getCompanySupabaseFromMap(jsonEncode(recordsCompany.data).toString());
         final responseListVehicle = getVehicleSupabaseFromMap(jsonEncode(recordsVehicle.data).toString());
+        recordsMonthCurrentR = responseCurrentR as List<dynamic>;
+        recordsMonthSecondR = responseSecondR as List<dynamic>;
+        recordsMonthThirdR = responseThirdR as List<dynamic>;
+        recordsMonthCurrentD = responseCurrentD as List<dynamic>;
+        recordsMonthSecondD = responseSecondD as List<dynamic>;
+        recordsMonthThirdD = responseThirdD as List<dynamic>;
         for (var element in responseListRoles.rolesCollection.edges) {
           //Se valida que el nuevo rol aún no existe en Objectbox
           final rolExistente = dataBase.roleBox.query(Role_.idDBR.equals(element.node.id)).build().findUnique();

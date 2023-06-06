@@ -82,19 +82,19 @@ class CatalogoSupabaseProvider extends ChangeNotifier {
               .build()
               .findUnique();
           if (tecnicosMecanicosExistente == null) {
-            final nuevoTecnicoMecanico = Users(
-              name: tecnicoMecanico['nombre'],
-              lastName: tecnicoMecanico['apellido_p'],
-              middleName: tecnicoMecanico['apellido_m'],
-              mobilePhone: tecnicoMecanico['celular'],
-              homePhone: tecnicoMecanico['telefono'],
-              address: tecnicoMecanico['domicilio'],
-              correo: tecnicoMecanico['email'],
-              idDBR: tecnicoMecanico['id'],
-              image: tecnicoMecanico['imagen'],
-              password: "default",
-              birthDate: DateTime.now(),
-            );
+            // final nuevoTecnicoMecanico = Users(
+            //   name: tecnicoMecanico['nombre'],
+            //   lastName: tecnicoMecanico['apellido_p'],
+            //   middleName: tecnicoMecanico['apellido_m'],
+            //   mobilePhone: tecnicoMecanico['celular'],
+            //   homePhone: tecnicoMecanico['telefono'],
+            //   address: tecnicoMecanico['domicilio'],
+            //   correo: tecnicoMecanico['email'],
+            //   idDBR: tecnicoMecanico['id'],
+            //   image: tecnicoMecanico['imagen'],
+            //   password: "default",
+            //   birthDate: DateTime.now(),
+            // );
             // //Se agregan los roles
             // for (var i = 0; i < rolesIdDBR.length; i++) {
             //   final nuevoRol = dataBase.rolesBox.query(Roles_.idDBR.equals(rolesIdDBR[i])).build().findUnique(); //Se recupera el rol del Usuario
@@ -103,13 +103,13 @@ class CatalogoSupabaseProvider extends ChangeNotifier {
             //   }
             // }
             //Se asiga el rol actual que ocupará
-            final rolActual = dataBase.roleBox.query(Role_.idDBR.equals(tecnicoMecanico['rol_fk'].toString())).build().findUnique(); //Se recupera el rol actual del Usuario
-            if (rolActual != null) {
-              nuevoTecnicoMecanico.role.target = rolActual;
-              dataBase.usersBox.put(nuevoTecnicoMecanico);
-            }
-            dataBase.usersBox.put(nuevoTecnicoMecanico);
-            listaTecnicosMecanicosAEliminar.remove(tecnicoMecanico['id'].toString());
+            // final rolActual = dataBase.roleBox.query(Role_.idDBR.equals(tecnicoMecanico['rol_fk'].toString())).build().findUnique(); //Se recupera el rol actual del Usuario
+            // if (rolActual != null) {
+            //   nuevoTecnicoMecanico.role.target = rolActual;
+            //   dataBase.usersBox.put(nuevoTecnicoMecanico);
+            // }
+            // dataBase.usersBox.put(nuevoTecnicoMecanico);
+            // listaTecnicosMecanicosAEliminar.remove(tecnicoMecanico['id'].toString());
             notifyListeners();
           } else {
             //Se actualiza el registro en Objectbox

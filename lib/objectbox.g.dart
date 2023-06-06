@@ -1802,7 +1802,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(100, 5432875809935853718),
       name: 'Users',
-      lastPropertyId: const IdUid(18, 553158857743073357),
+      lastPropertyId: const IdUid(24, 1093451416090964878),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1896,6 +1896,36 @@ final _entities = <ModelEntity>[
             id: const IdUid(18, 553158857743073357),
             name: 'dateAdded',
             type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(19, 821276840375841267),
+            name: 'recordsMonthCurrentR',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(20, 1056825300575735440),
+            name: 'recordsMonthSecondR',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(21, 902107465812556211),
+            name: 'recordsMonthThirdR',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(22, 457884912055624237),
+            name: 'recordsMonthCurrentD',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(23, 7282041121636233950),
+            name: 'recordsMonthSecondD',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(24, 1093451416090964878),
+            name: 'recordsMonthThirdD',
+            type: 6,
             flags: 0)
       ],
       relations: <ModelRelation>[
@@ -5078,7 +5108,7 @@ ModelDefinition getObjectBoxModel() {
           final pathOffset =
               object.path == null ? null : fbb.writeString(object.path!);
           final idDBROffset = fbb.writeString(object.idDBR);
-          fbb.startTable(19);
+          fbb.startTable(25);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nameOffset);
           fbb.addOffset(2, lastNameOffset);
@@ -5096,6 +5126,12 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(15, object.company.targetId);
           fbb.addInt64(16, object.vehicle.targetId);
           fbb.addInt64(17, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addInt64(18, object.recordsMonthCurrentR);
+          fbb.addInt64(19, object.recordsMonthSecondR);
+          fbb.addInt64(20, object.recordsMonthThirdR);
+          fbb.addInt64(21, object.recordsMonthCurrentD);
+          fbb.addInt64(22, object.recordsMonthSecondD);
+          fbb.addInt64(23, object.recordsMonthThirdD);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5124,6 +5160,12 @@ ModelDefinition getObjectBoxModel() {
               path: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 24),
               birthDate: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0)),
+              recordsMonthCurrentR: const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0),
+              recordsMonthSecondR: const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0),
+              recordsMonthThirdR: const fb.Int64Reader().vTableGet(buffer, rootOffset, 44, 0),
+              recordsMonthCurrentD: const fb.Int64Reader().vTableGet(buffer, rootOffset, 46, 0),
+              recordsMonthSecondD: const fb.Int64Reader().vTableGet(buffer, rootOffset, 48, 0),
+              recordsMonthThirdD: const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 30, ''));
           object.role.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
@@ -6473,6 +6515,30 @@ class Users_ {
   /// see [Users.dateAdded]
   static final dateAdded =
       QueryIntegerProperty<Users>(_entities[14].properties[16]);
+
+  /// see [Users.recordsMonthCurrentR]
+  static final recordsMonthCurrentR =
+      QueryIntegerProperty<Users>(_entities[14].properties[17]);
+
+  /// see [Users.recordsMonthSecondR]
+  static final recordsMonthSecondR =
+      QueryIntegerProperty<Users>(_entities[14].properties[18]);
+
+  /// see [Users.recordsMonthThirdR]
+  static final recordsMonthThirdR =
+      QueryIntegerProperty<Users>(_entities[14].properties[19]);
+
+  /// see [Users.recordsMonthCurrentD]
+  static final recordsMonthCurrentD =
+      QueryIntegerProperty<Users>(_entities[14].properties[20]);
+
+  /// see [Users.recordsMonthSecondD]
+  static final recordsMonthSecondD =
+      QueryIntegerProperty<Users>(_entities[14].properties[21]);
+
+  /// see [Users.recordsMonthThirdD]
+  static final recordsMonthThirdD =
+      QueryIntegerProperty<Users>(_entities[14].properties[22]);
 
   /// see [Users.bitacora]
   static final bitacora =

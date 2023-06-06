@@ -1809,7 +1809,7 @@
     },
     {
       "id": "100:5432875809935853718",
-      "lastPropertyId": "18:553158857743073357",
+      "lastPropertyId": "24:1093451416090964878",
       "name": "Users",
       "properties": [
         {
@@ -1908,6 +1908,36 @@
           "id": "18:553158857743073357",
           "name": "dateAdded",
           "type": 10
+        },
+        {
+          "id": "19:821276840375841267",
+          "name": "recordsMonthCurrentR",
+          "type": 6
+        },
+        {
+          "id": "20:1056825300575735440",
+          "name": "recordsMonthSecondR",
+          "type": 6
+        },
+        {
+          "id": "21:902107465812556211",
+          "name": "recordsMonthThirdR",
+          "type": 6
+        },
+        {
+          "id": "22:457884912055624237",
+          "name": "recordsMonthCurrentD",
+          "type": 6
+        },
+        {
+          "id": "23:7282041121636233950",
+          "name": "recordsMonthSecondD",
+          "type": 6
+        },
+        {
+          "id": "24:1093451416090964878",
+          "name": "recordsMonthThirdD",
+          "type": 6
         }
       ],
       "relations": [
