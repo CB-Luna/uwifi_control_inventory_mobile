@@ -371,12 +371,49 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                         List<XFile> imagesTemp = [];
                         final deliveredFormProvider = Provider.of<DeliveredFormController>(context);
                         return AlertDialog(
-                          scrollable: true,
-                          title: const Text("Mileage"),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                child: const Text("Mileage"),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                    Navigator.pop(context);
+                                },
+                                child: ClayContainer(
+                                  height: 30,
+                                  width: 30,
+                                  depth: 15,
+                                  spread: 1,
+                                  borderRadius: 15,
+                                  curveType: CurveType.concave,
+                                  color:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                                  surfaceColor:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                                  parentColor:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    child: Icon(
+                                      Icons.close,
+                                      color: FlutterFlowTheme.of(context).white,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                           content: SizedBox( // Need to use container to add size constraint.
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height * 0.55,
-                            child: Center(
+                            child: SingleChildScrollView(
+                              controller: ScrollController(),
                               child: Column(
                                 children: [
                                   Padding(
@@ -573,9 +610,9 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                 builder: (_) =>
                                                     const CustomBottomSheet(),
                                               );
-
+                            
                                               if (option == null) return;
-
+                            
                                               final picker = ImagePicker();
                                               // imagesTemp = [];
                                               XFile? pickedFile;
@@ -620,19 +657,19 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.camera,
-
+                            
                                                     );
                                                     if (pickedFile != null) {
                                                       libraryIO.File file =
                                                       libraryIO.File(
                                                           pickedFile.path);
-
+                            
                                                       List<int> fileInByte =
                                                           file.readAsBytesSync();
-
+                            
                                                       String base64 =
                                                           base64Encode(fileInByte);
-
+                            
                                                       var updateImageEvidence =
                                                           ImageEvidence(
                                                               path:
@@ -777,19 +814,19 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.gallery,
-
+                            
                                                     );
                                                     if (pickedFile != null) {
                                                       libraryIO.File file =
                                                       libraryIO.File(
                                                           pickedFile.path);
-
+                            
                                                       List<int> fileInByte =
                                                           file.readAsBytesSync();
-
+                            
                                                       String base64 =
                                                           base64Encode(fileInByte);
-
+                            
                                                       var updateImageEvidence =
                                                           ImageEvidence(
                                                               path:
@@ -808,13 +845,13 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                 libraryIO.File file =
                                                     libraryIO.File(
                                                         imagesTemp[i].path);
-
+                            
                                                 List<int> fileInByte =
                                                     file.readAsBytesSync();
-
+                            
                                                 String base64 =
                                                     base64Encode(fileInByte);
-
+                            
                                                 var newImageEvidence =
                                                     ImageEvidence(
                                                         path:
@@ -831,7 +868,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                               size: 15,
                                             ),
                                             options: FFButtonOptions(
-                                              width: 100,
+                                              width: MediaQuery.of(context).size.width * 0.2,
                                               height: 40,
                                               color: FlutterFlowTheme.of(context)
                                                   .white,
@@ -935,12 +972,49 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                           imagesString.add(element.path);
                         }
                         return AlertDialog(
-                          scrollable: true,
-                          title: const Text("% Gas/Diesel"),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                child: const Text("% Gas/Diesel"),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                    Navigator.pop(context);
+                                },
+                                child: ClayContainer(
+                                  height: 30,
+                                  width: 30,
+                                  depth: 15,
+                                  spread: 1,
+                                  borderRadius: 15,
+                                  curveType: CurveType.concave,
+                                  color:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                                  surfaceColor:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                                  parentColor:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    child: Icon(
+                                      Icons.close,
+                                      color: FlutterFlowTheme.of(context).white,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                           content: SizedBox( // Need to use container to add size constraint.
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height * 0.6,
-                            child: Center(
+                            child: SingleChildScrollView(
+                              controller: ScrollController(),
                               child: Column(
                                 children: [
                                   SemicircularIndicator(
@@ -1116,9 +1190,9 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                 builder: (_) =>
                                                     const CustomBottomSheet(),
                                               );
-
+                            
                                               if (option == null) return;
-
+                            
                                               final picker = ImagePicker();
                                               // imagesTemp = [];
                                               XFile? pickedFile;
@@ -1163,19 +1237,19 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.camera,
-
+                            
                                                     );
                                                     if (pickedFile != null) {
                                                       libraryIO.File file =
                                                       libraryIO.File(
                                                           pickedFile.path);
-
+                            
                                                       List<int> fileInByte =
                                                           file.readAsBytesSync();
-
+                            
                                                       String base64 =
                                                           base64Encode(fileInByte);
-
+                            
                                                       var updateImageEvidence =
                                                           ImageEvidence(
                                                               path:
@@ -1320,19 +1394,19 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.gallery,
-
+                            
                                                     );
                                                     if (pickedFile != null) {
                                                       libraryIO.File file =
                                                       libraryIO.File(
                                                           pickedFile.path);
-
+                            
                                                       List<int> fileInByte =
                                                           file.readAsBytesSync();
-
+                            
                                                       String base64 =
                                                           base64Encode(fileInByte);
-
+                            
                                                       var updateImageEvidence =
                                                           ImageEvidence(
                                                               path:
@@ -1351,13 +1425,13 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                 libraryIO.File file =
                                                     libraryIO.File(
                                                         imagesTemp[i].path);
-
+                            
                                                 List<int> fileInByte =
                                                     file.readAsBytesSync();
-
+                            
                                                 String base64 =
                                                     base64Encode(fileInByte);
-
+                            
                                                 var newImageEvidence =
                                                     ImageEvidence(
                                                         path:
@@ -1374,7 +1448,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                               size: 15,
                                             ),
                                             options: FFButtonOptions(
-                                              width: 100,
+                                              width: MediaQuery.of(context).size.width * 0.2,
                                               height: 40,
                                               color: FlutterFlowTheme.of(context)
                                                   .white,

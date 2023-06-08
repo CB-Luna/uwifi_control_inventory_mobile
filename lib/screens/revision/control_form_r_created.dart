@@ -60,7 +60,7 @@ class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
+                          const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                       child: SizedBox(
                         child: Icon(
                           Icons.check_circle_outline,
@@ -71,7 +71,7 @@ class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
+                          const EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
                           await Navigator.push(

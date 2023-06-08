@@ -33,20 +33,20 @@ class _LoginScreenState extends State<LoginScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        body: SingleChildScrollView(
-          controller: ScrollController(),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).tertiaryColor,
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: Image.asset(
-                  'assets/images/bgFleet@2x.png',
-                ).image,
-              ),
+        body: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+            color: FlutterFlowTheme.of(context).tertiaryColor,
+            image: DecorationImage(
+              fit: BoxFit.fill,
+              image: Image.asset(
+                'assets/images/bgFleet@2x.png',
+              ).image,
             ),
+          ),
+          child: SingleChildScrollView(
+            controller: ScrollController(),
             child: Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
               child: Form(
@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0, 70, 0, 70),
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 50),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -378,7 +378,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     await prefs.remove('email');
                                     await prefs.remove('password');
                                   }
-        
+                  
                                   if (!mounted) return;
                                   await Navigator.push(
                                     context,
@@ -499,7 +499,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       //   default:
                                       //     break;
                                       // }
-        
+                  
                                       // if (!procesoExistoso) {
                                       //     snackbarKey.currentState
                                       //       ?.showSnackBar(const SnackBar(

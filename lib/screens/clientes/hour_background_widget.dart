@@ -208,7 +208,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                 child: getImageContainer(
                                   image,
                                   height: 120,
-                                  width: 200,
+                                  width: 160,
                                   ),
                               ),
                               Padding(
@@ -232,17 +232,20 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "License Plates: $licensePlates",
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              color: FlutterFlowTheme.of(context)
-                                                  .white,
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                      child: SizedBox(
+                                        width: MediaQuery.of(context).size.width * 0.45,
+                                        child: Text(
+                                          "License Plates: $licensePlates",
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                color: FlutterFlowTheme.of(context)
+                                                    .white,
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
                                       ),
                                     ),
                                   ],

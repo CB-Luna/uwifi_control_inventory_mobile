@@ -139,12 +139,49 @@ class _ItemFormState extends State<ItemForm> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                scrollable: true,
-                title: Text(widget.textItem),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: Text(widget.textItem)
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                          Navigator.pop(context);
+                      },
+                      child: ClayContainer(
+                        height: 30,
+                        width: 30,
+                        depth: 15,
+                        spread: 1,
+                        borderRadius: 15,
+                        curveType: CurveType.concave,
+                        color:
+                        FlutterFlowTheme.of(context).secondaryColor,
+                        surfaceColor:
+                        FlutterFlowTheme.of(context).secondaryColor,
+                        parentColor:
+                        FlutterFlowTheme.of(context).secondaryColor,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Icon(
+                            Icons.close,
+                            color: FlutterFlowTheme.of(context).white,
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
                 content: SizedBox( // Need to use container to add size constraint.
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.5,
-                  child: Center(
+                  child: SingleChildScrollView(
+                    controller: ScrollController(),
                     child: Column(
                       children: [
                         FormField(
@@ -275,7 +312,7 @@ class _ItemFormState extends State<ItemForm> {
                                         width: MediaQuery.of(context)
                                                 .size
                                                 .width *
-                                            0.4,
+                                            0.40,
                                         height: 100,
                                         decoration: BoxDecoration(
                                           color: const Color(0xFFEEEEEE),
@@ -321,9 +358,9 @@ class _ItemFormState extends State<ItemForm> {
                                       builder: (_) =>
                                           const CustomBottomSheet(),
                                     );
-
+                  
                                     if (option == null) return;
-
+                  
                                     final picker = ImagePicker();
                                     // imagesTemp = [];
                                     XFile? pickedFile;
@@ -368,19 +405,19 @@ class _ItemFormState extends State<ItemForm> {
                                           pickedFile =
                                               await picker.pickImage(
                                             source: ImageSource.camera,
-
+                  
                                           );
                                           if (pickedFile != null) {
                                             libraryIO.File file =
                                             libraryIO.File(
                                                 pickedFile.path);
-
+                  
                                             List<int> fileInByte =
                                                 file.readAsBytesSync();
-
+                  
                                             String base64 =
                                                 base64Encode(fileInByte);
-
+                  
                                             var updateImagenEvidence =
                                                 ImageEvidence(
                                                     path:
@@ -526,19 +563,19 @@ class _ItemFormState extends State<ItemForm> {
                                           pickedFile =
                                               await picker.pickImage(
                                             source: ImageSource.gallery,
-
+                  
                                           );
                                           if (pickedFile != null) {
                                             libraryIO.File file =
                                             libraryIO.File(
                                                 pickedFile.path);
-
+                  
                                             List<int> fileInByte =
                                                 file.readAsBytesSync();
-
+                  
                                             String base64 =
                                                 base64Encode(fileInByte);
-
+                  
                                             var updateImagenEvidence =
                                                 ImageEvidence(
                                                     path:
@@ -558,13 +595,13 @@ class _ItemFormState extends State<ItemForm> {
                                       libraryIO.File file =
                                           libraryIO.File(
                                               imagesTemp[i].path);
-
+                  
                                       List<int> fileInByte =
                                           file.readAsBytesSync();
-
+                  
                                       String base64 =
                                           base64Encode(fileInByte);
-
+                  
                                       var newImagenEvidence =
                                           ImageEvidence(
                                               path:
@@ -583,7 +620,7 @@ class _ItemFormState extends State<ItemForm> {
                                     size: 15,
                                   ),
                                   options: FFButtonOptions(
-                                    width: 100,
+                                    width: MediaQuery.of(context).size.width * 0.2,
                                     height: 40,
                                     color: FlutterFlowTheme.of(context)
                                         .white,
