@@ -10,6 +10,7 @@ class ControlForm {
   DateTime dateAdded;
   @Unique()
   String? idDBR;
+  int issues;
   final employee = ToOne<Users>();
   final vehicle = ToOne<Vehicle>();
   final measures = ToOne<Measures>();
@@ -26,6 +27,7 @@ class ControlForm {
   ControlForm({
     this.id = 0,
     required this.typeForm,
+    required this.issues,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();
@@ -703,8 +705,8 @@ class Vehicle {
   String motor;
   String color;
   DateTime oilChangeDue;
-  DateTime registrationDue;
-  DateTime insuranceRenewalDue;
+  DateTime lastTransmissionFluidChange;
+  DateTime lastRadiatorFluidChange;
   DateTime dateAdded;
   @Unique()
   String? idDBR;
@@ -725,8 +727,8 @@ class Vehicle {
     required this.motor,
     required this.color,
     required this.oilChangeDue,
-    required this.registrationDue,
-    required this.insuranceRenewalDue,
+    required this.lastTransmissionFluidChange,
+    required this.lastRadiatorFluidChange,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();

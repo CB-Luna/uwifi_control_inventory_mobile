@@ -66,12 +66,12 @@ class Node {
     factory Node.fromMap(Map<String, dynamic> json) => Node(
         id: json["id_company"],
         company: json["company"],
-        dateAdded: DateTime.parse(json["date_added"]),
+        dateAdded: DateTime.parse(json["created_at"]),
     );
 
     Map<String, dynamic> toMap() => {
         "id_company": id,
         "company": company,
-        "date_added": dateAdded.toIso8601String(),
+        "created_at": dateAdded.toIso8601String(),
     };
 }

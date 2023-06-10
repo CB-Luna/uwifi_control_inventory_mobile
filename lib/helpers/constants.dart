@@ -11,9 +11,9 @@ import '../screens/widgets/flutter_flow_animations.dart';
 
 //***********< RTA VEHICLE CONTROL BD >**************/
 
-const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhZG9obnhqYWdvb3F2cWF1ZnFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM2NDg2MDIsImV4cCI6MTk5OTIyNDYwMn0.YYFVT0MzXW5J35XwhwqnZ0vqgmuZRfswODbfCHH0bfE";
-const supabaseURL = "https://aadohnxjagooqvqaufqb.supabase.co"; 
-const supabaseGraphqlURL = "https://aadohnxjagooqvqaufqb.supabase.co/graphql/v1";
+const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAiYW5vbiIsCiAgICAiaXNzIjogInN1cGFiYXNlIiwKICAgICJpYXQiOiAxNjg0ODI1MjAwLAogICAgImV4cCI6IDE4NDI2NzgwMDAKfQ.Atj9wTNbdEEVPOjstsO14DtxbY2SEpnr50elVXBgAmM";
+const supabaseUrl = "https://supa43.rtatel.com"; 
+const supabaseGraphqlUrl = "https://supa43.rtatel.com/graphql/v1";
 
 //***********< REGEX >**************/
 

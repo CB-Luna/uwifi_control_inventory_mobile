@@ -1877,6 +1877,7 @@ class DeliveredFormController extends ChangeNotifier {
 
       final controlForm = ControlForm(
         typeForm: false, //Delivered
+        issues: badStateLights + badStateFluids + badStateSecurity + badStateEquipment,
       );
       
       final vehicle = user?.vehicle.target;

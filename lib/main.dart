@@ -27,21 +27,20 @@ import 'package:taller_alex_app_asesor/internationalization/internationalization
 import 'providers/database_providers/vehiculo_controller.dart';
 
 late ObjectBoxDatabase dataBase;
-late SupabaseClient supabaseClient;
 late GraphQLClient sbGQL;
 DeepLinkBloc bloc = DeepLinkBloc();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Supabase.initialize(
-    url: supabaseURL,
-    anonKey: anonKey,
-  );
+  supabaseCRM = SupabaseClient(supabaseUrl, anonKey, schema: 'crm');
+  supabaseCtrlV = SupabaseClient(supabaseUrl, anonKey, schema: 'ctrl_v');
+
+  await Supabase.initialize(url: supabaseUrl, anonKey: anonKey);
   await initHiveForFlutter();
   final defaultHeaders = ({
     "apikey": anonKey,
   });
-  final HttpLink httpLink = HttpLink(supabaseGraphqlURL, defaultHeaders: defaultHeaders);
+  final HttpLink httpLink = HttpLink(supabaseGraphqlUrl, defaultHeaders: defaultHeaders);
   final AuthLink authLink = AuthLink(getToken: () async => 'Bearer $anonKey');
   final Link link = authLink.concat(httpLink);
   ValueNotifier<GraphQLClient> client = ValueNotifier(
@@ -54,7 +53,6 @@ void main() async {
   dataBase = await ObjectBoxDatabase.create();
   GoogleFonts.config.allowRuntimeFetching = false;
   await initGlobals();
- supabaseClient = Supabase.instance.client;
   runApp(
     MultiProvider(
       providers: [

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/helpers/sync_instruction.dart';
 import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/instruccion_no_sincronizada.dart';
 import 'package:flutter/material.dart';
@@ -160,7 +161,7 @@ class SyncProviderSupabase extends ChangeNotifier {
         if (usuario.idDBR.contains("sinIdDBR")) {
           //Registrar al usuario con una contraseña temporal
           final response = await post(
-            Uri.parse('$supabaseURL/auth/v1/signup'),
+            Uri.parse('$supabaseUrl/auth/v1/signup'),
             headers: {'Content-Type': 'application/json', 'apiKey': anonKey},
             body: json.encode(
               {
@@ -170,13 +171,13 @@ class SyncProviderSupabase extends ChangeNotifier {
             ),
           );
           if (response.statusCode == 400) {
-            final recordClienteExistente = await supabaseClient.from('users').select<PostgrestList>().eq('email', usuario.correo);
+            final recordClienteExistente = await supabase.from('users').select<PostgrestList>().eq('email', usuario.correo);
             if (recordClienteExistente.isEmpty) {
               //Aún no hay registro en la tabla perfil_usuario
-              final recordInviteCliente = await supabaseClient.auth.admin.inviteUserByEmail(usuario.correo);
+              final recordInviteCliente = await supabase.auth.admin.inviteUserByEmail(usuario.correo);
               if (recordInviteCliente.user?.id != null) {
                 final String clienteId = recordInviteCliente.user!.id;
-                final recordCliente = await supabaseClient.from('perfil_usuario').insert(
+                final recordCliente = await supabase.from('user_profile').insert(
                   {
                     'user_profile_id': clienteId,
                     'nombre': usuario.name,
@@ -219,7 +220,7 @@ class SyncProviderSupabase extends ChangeNotifier {
           } else {
             final String? clienteId = jsonDecode(response.body)['user']['id'];
             if(clienteId != null){
-              final recordCliente = await supabaseClient.from('perfil_usuario').insert(
+              final recordCliente = await supabase.from('user_profile').insert(
                 {
                   'user_profile_id': clienteId,
                   'nombre': usuario.name,
@@ -352,7 +353,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               mileageImages = "$mileageImages$element|";
             }
           }
-          final recordMeasure = await supabaseClient.from('measures').insert(
+          final recordMeasure = await supabaseCtrlV.from('measures').insert(
             {
               'gas': controlForm.measures.target!.gas,
               'gas_comments': controlForm.measures.target!.gasComments,
@@ -414,7 +415,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               clearanceLightsImages = "$clearanceLightsImages$element|";
             }
           }
-          final recordLights = await supabaseClient.from('lights').insert(
+          final recordLights = await supabaseCtrlV.from('lights').insert(
             {
               'headlights': controlForm.lights.target!.headLights,
               'headlights_comments': controlForm.lights.target!.headLightsComments,
@@ -515,7 +516,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               hornImages = "$hornImages$element|";
             }
           }
-          final recordCarBodywork = await supabaseClient.from('car_bodywork').insert(
+          final recordCarBodywork = await supabaseCtrlV.from('car_bodywork').insert(
             {
               'wiper_blades_front': controlForm.carBodywork.target!.wiperBladesFront,
               'wiper_blades_front_comments': controlForm.carBodywork.target!.wiperBladesFrontComments,
@@ -590,7 +591,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               windshieldWasherFluidImages = "$windshieldWasherFluidImages$element|";
             }
           }
-          final recordFluidsCheck = await supabaseClient.from('fluids_check').insert(
+          final recordFluidsCheck = await supabaseCtrlV.from('fluids_check').insert(
             {
               'engine_oil': controlForm.fluidsCheck.target!.engineOil,
               'engine_oil_comments': controlForm.fluidsCheck.target!.engineOilComments,
@@ -629,7 +630,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               bucketLinerImages = "$bucketLinerImages$element|";
             }
           }
-          final recordBucketInspection = await supabaseClient.from('bucket_inspection').insert(
+          final recordBucketInspection = await supabaseCtrlV.from('bucket_inspection').insert(
             {
               'insulated': controlForm.bucketInspection.target!.insulated,
               'insulated_comments': controlForm.bucketInspection.target!.insulatedComments,
@@ -674,7 +675,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               backUpAlarmImages = "$backUpAlarmImages$element|";
             }
           }
-          final recordSecurity = await supabaseClient.from('security').insert(
+          final recordSecurity = await supabaseCtrlV.from('security').insert(
             {
               'rta_magnet': controlForm.security.target!.rtaMagnet,
               'rta_magnet_comments': controlForm.security.target!.rtaMagnetComments,
@@ -738,7 +739,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               lanyardSafetyHarnessImages = "$lanyardSafetyHarnessImages$element|";
             }
           }
-          final recordExtra = await supabaseClient.from('extra').insert(
+          final recordExtra = await supabaseCtrlV.from('extra').insert(
             {
               'ladder': controlForm.extra.target!.ladder,
               'ladder_comments': controlForm.extra.target!.ladderComments,
@@ -793,7 +794,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               bucketLiftOperatorManualImages = "$bucketLiftOperatorManualImages$element|";
             }
           }
-          final recordEquipment = await supabaseClient.from('equipment').insert(
+          final recordEquipment = await supabaseCtrlV.from('equipment').insert(
             {
               'ignition_key': controlForm.equipment.target!.ignitionKey,
               'ignition_key_comments': controlForm.equipment.target!.ignitionKeyComments,
@@ -815,7 +816,7 @@ class SyncProviderSupabase extends ChangeNotifier {
           ).select<PostgrestList>('id_equipment');
           if (recordMeasure.isNotEmpty && recordLights.isNotEmpty && recordCarBodywork.isNotEmpty && recordFluidsCheck.isNotEmpty 
               && recordBucketInspection.isNotEmpty && recordSecurity.isNotEmpty && recordExtra.isNotEmpty && recordEquipment.isNotEmpty) {
-            final recordControlForm = await supabaseClient.from('control_form').insert(
+            final recordControlForm = await supabaseCtrlV.from('control_form').insert(
               {
                 'id_vehicle_fk': controlForm.vehicle.target!.idDBR,
                 'id_user_fk': controlForm.employee.target!.idDBR,
@@ -828,6 +829,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 'id_security_fk': recordSecurity.first['id_security'],
                 'id_extra_fk': recordExtra.first['id_extra'],
                 'id_equipment_fk': recordEquipment.first['id_equipment'],
+                'issues': controlForm.issues,
                 'date_added': controlForm.dateAdded.toIso8601String(),
               },
             ).select<PostgrestList>('id_control_form');

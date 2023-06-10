@@ -159,7 +159,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(86, 283646429578876451),
       name: 'ControlForm',
-      lastPropertyId: const IdUid(16, 8508696798102400446),
+      lastPropertyId: const IdUid(17, 5771699047160977949),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -252,7 +252,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(410, 8460461020124898604),
-            relationTarget: 'BucketInspection')
+            relationTarget: 'BucketInspection'),
+        ModelProperty(
+            id: const IdUid(17, 5771699047160977949),
+            name: 'issues',
+            type: 6,
+            flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -1699,7 +1704,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(99, 8193815974638102829),
       name: 'Vehicle',
-      lastPropertyId: const IdUid(18, 598775386392949340),
+      lastPropertyId: const IdUid(20, 5120493280338495896),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1754,16 +1759,6 @@ final _entities = <ModelEntity>[
             type: 10,
             flags: 0),
         ModelProperty(
-            id: const IdUid(12, 251371643102140460),
-            name: 'registrationDue',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(13, 2938032336750196780),
-            name: 'insuranceRenewalDue',
-            type: 10,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(14, 4219254653978239483),
             name: 'dateAdded',
             type: 10,
@@ -1793,7 +1788,17 @@ final _entities = <ModelEntity>[
             name: 'licensePlates',
             type: 9,
             flags: 2080,
-            indexId: const IdUid(431, 7457722984787952526))
+            indexId: const IdUid(431, 7457722984787952526)),
+        ModelProperty(
+            id: const IdUid(19, 753662785621719297),
+            name: 'lastTransmissionFluidChange',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(20, 5120493280338495896),
+            name: 'lastRadiatorFluidChange',
+            type: 10,
+            flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -3269,7 +3274,9 @@ ModelDefinition getObjectBoxModel() {
         6596099135715597570,
         1870679960917748335,
         472741667402047784,
-        8508696798102400446
+        8508696798102400446,
+        251371643102140460,
+        2938032336750196780
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3465,7 +3472,7 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (ControlForm object, fb.Builder fbb) {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(17);
+          fbb.startTable(18);
           fbb.addInt64(0, object.id);
           fbb.addBool(1, object.typeForm);
           fbb.addInt64(2, object.dateAdded.millisecondsSinceEpoch);
@@ -3480,6 +3487,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(12, object.extra.targetId);
           fbb.addInt64(13, object.equipment.targetId);
           fbb.addInt64(14, object.bucketInspection.targetId);
+          fbb.addInt64(16, object.issues);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3491,6 +3499,8 @@ ModelDefinition getObjectBoxModel() {
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               typeForm:
                   const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false),
+              issues:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true)
@@ -5011,7 +5021,7 @@ ModelDefinition getObjectBoxModel() {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
           final licensePlatesOffset = fbb.writeString(object.licensePlates);
-          fbb.startTable(19);
+          fbb.startTable(21);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, makeOffset);
           fbb.addOffset(2, modelOffset);
@@ -5022,13 +5032,15 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(8, motorOffset);
           fbb.addOffset(9, colorOffset);
           fbb.addInt64(10, object.oilChangeDue.millisecondsSinceEpoch);
-          fbb.addInt64(11, object.registrationDue.millisecondsSinceEpoch);
-          fbb.addInt64(12, object.insuranceRenewalDue.millisecondsSinceEpoch);
           fbb.addInt64(13, object.dateAdded.millisecondsSinceEpoch);
           fbb.addOffset(14, idDBROffset);
           fbb.addInt64(15, object.status.targetId);
           fbb.addInt64(16, object.company.targetId);
           fbb.addOffset(17, licensePlatesOffset);
+          fbb.addInt64(
+              18, object.lastTransmissionFluidChange.millisecondsSinceEpoch);
+          fbb.addInt64(
+              19, object.lastRadiatorFluidChange.millisecondsSinceEpoch);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5056,8 +5068,8 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 20, ''),
               color: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
               oilChangeDue: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0)),
-              registrationDue: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
-              insuranceRenewalDue: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0)),
+              lastTransmissionFluidChange: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0)),
+              lastRadiatorFluidChange: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0)),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32));
           object.status.targetId =
@@ -5334,6 +5346,10 @@ class ControlForm_ {
   static final bucketInspection =
       QueryRelationToOne<ControlForm, BucketInspection>(
           _entities[1].properties[13]);
+
+  /// see [ControlForm.issues]
+  static final issues =
+      QueryIntegerProperty<ControlForm>(_entities[1].properties[14]);
 }
 
 /// [CarBodywork] entity fields to define ObjectBox queries.
@@ -6423,33 +6439,33 @@ class Vehicle_ {
   static final oilChangeDue =
       QueryIntegerProperty<Vehicle>(_entities[13].properties[9]);
 
-  /// see [Vehicle.registrationDue]
-  static final registrationDue =
-      QueryIntegerProperty<Vehicle>(_entities[13].properties[10]);
-
-  /// see [Vehicle.insuranceRenewalDue]
-  static final insuranceRenewalDue =
-      QueryIntegerProperty<Vehicle>(_entities[13].properties[11]);
-
   /// see [Vehicle.dateAdded]
   static final dateAdded =
-      QueryIntegerProperty<Vehicle>(_entities[13].properties[12]);
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[10]);
 
   /// see [Vehicle.idDBR]
   static final idDBR =
-      QueryStringProperty<Vehicle>(_entities[13].properties[13]);
+      QueryStringProperty<Vehicle>(_entities[13].properties[11]);
 
   /// see [Vehicle.status]
   static final status =
-      QueryRelationToOne<Vehicle, Status>(_entities[13].properties[14]);
+      QueryRelationToOne<Vehicle, Status>(_entities[13].properties[12]);
 
   /// see [Vehicle.company]
   static final company =
-      QueryRelationToOne<Vehicle, Company>(_entities[13].properties[15]);
+      QueryRelationToOne<Vehicle, Company>(_entities[13].properties[13]);
 
   /// see [Vehicle.licensePlates]
   static final licensePlates =
-      QueryStringProperty<Vehicle>(_entities[13].properties[16]);
+      QueryStringProperty<Vehicle>(_entities[13].properties[14]);
+
+  /// see [Vehicle.lastTransmissionFluidChange]
+  static final lastTransmissionFluidChange =
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[15]);
+
+  /// see [Vehicle.lastRadiatorFluidChange]
+  static final lastRadiatorFluidChange =
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[16]);
 }
 
 /// [Users] entity fields to define ObjectBox queries.

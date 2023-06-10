@@ -22,7 +22,7 @@ abstract class AuthService {
   static Future<ResponseLoginSupabase?> loginSupabase(String email, String password) async {
     try {
       //Se recupera la información del usuario desde Supabase
-      final responseSupabase = await supabaseClient.auth.signInWithPassword(email: email, password: password);
+      final responseSupabase = await supabase.auth.signInWithPassword(email: email, password: password);
       if (responseSupabase.session?.expiresIn != null) {
         print("Response Supabase: ${jsonEncode(responseSupabase.session)}");
           final responseUsuarioSupabase = responseLoginSupabaseFromMap(
@@ -39,10 +39,10 @@ abstract class AuthService {
 
   static Future<GetUsuarioSupabase?> getUserByUserIDSupabase(String userId) async {
     try {
-      final user = supabaseClient.auth.currentUser;
+      final user = supabase.auth.currentUser;
       if (user == null) return null;
 
-      final res = await supabaseClient
+      final res = await supabase
           .from('users')
           .select()
           .eq('user_profile_id', userId);

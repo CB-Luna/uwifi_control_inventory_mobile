@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 
@@ -62,7 +63,7 @@ class CatalogoSupabaseProvider extends ChangeNotifier {
   Future<bool> getRoles() async {
     try {
       List<String?> listaTecnicosMecanicosAEliminar = [];
-      final recordsTecnicosMecanicos = await supabaseClient.from('users').select().eq('rol_fk', '2');
+      final recordsTecnicosMecanicos = await supabase.from('users').select().eq('rol_fk', '2');
       //Se recupera toda la colección de tecnicosMecanicos en ObjectBox
       final tecnicosMecanicosObjectBox = 
         dataBase.usersBox.query(

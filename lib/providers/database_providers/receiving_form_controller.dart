@@ -1876,6 +1876,7 @@ class ReceivingFormController extends ChangeNotifier {
 
       final controlForm = ControlForm(
         typeForm: true, //Receiving
+        issues: badStateLights + badStateFluids + badStateSecurity + badStateEquipment,
       );
       
       final vehicle = user?.vehicle.target;

@@ -50,7 +50,7 @@ class GetUsuarioSupabase {
     factory GetUsuarioSupabase.fromMap(Map<String, dynamic> json) => GetUsuarioSupabase(
         id: json["id"],
         email: json["email"],
-        dateAdded: DateTime.parse(json["date_added"]),
+        dateAdded: DateTime.parse(json["created_at"]),
         idPerfilUsuario: json["user_profile_id"],
         idSecuencial: json["sequential_id"],
         name: json["name"],
@@ -72,7 +72,7 @@ class GetUsuarioSupabase {
     Map<String, dynamic> toMap() => {
         "id": id,
         "email": email,
-        "date_added": dateAdded.toIso8601String(),
+        "created_at": dateAdded.toIso8601String(),
         "user_profile_id": idPerfilUsuario,
         "sequential_id": idSecuencial,
         "name": name,
@@ -106,12 +106,12 @@ class Company {
     String toJson() => json.encode(toMap());
 
     factory Company.fromMap(Map<String, dynamic> json) => Company(
-        companyId: json["id"],
+        companyId: json["id_company"],
         company: json["company"],
     );
 
     Map<String, dynamic> toMap() => {
-        "id": companyId,
+        "id_company": companyId,
         "company": company,
     };
 }
@@ -228,13 +228,13 @@ class Role {
     String toJson() => json.encode(toMap());
 
     factory Role.fromMap(Map<String, dynamic> json) => Role(
-        id: json["id"],
+        id: json["role_id"],
         name: json["name"],
         permissions: Permissions.fromMap(json["permissions"]),
     );
 
     Map<String, dynamic> toMap() => {
-        "id": id,
+        "role_id": id,
         "name": name,
         "permissions": permissions.toMap(),
     };

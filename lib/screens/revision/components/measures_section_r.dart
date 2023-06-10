@@ -267,9 +267,9 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                   color: FlutterFlowTheme.of(context).grayLighter,
                 ),
 
-                // Registration Due
+                // Last Transmission Fluid Change
                 ItemForm(
-                  textItem: "Registration Due", 
+                  textItem: "Last Transmission Fluid Change", 
                   applyFuction: true,
                   onPressed: () {
                     snackbarKey.currentState
@@ -284,7 +284,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width * 0.4, 
-                  text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.registrationDue ?? DateTime.now()),
+                  text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.lastTransmissionFluidChange ?? DateTime.now()),
                 ),
                 Divider(
                   height: 4,
@@ -294,9 +294,9 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                   color: FlutterFlowTheme.of(context).grayLighter,
                 ),
 
-                // Insurance Renewal Due
+                // Last Radiator Fluid Change
                 ItemForm(
-                  textItem: "Insurance Renewal Due", 
+                  textItem: "Last Radiator Fluid Change", 
                   applyFuction: true,
                   onPressed: () {
                     snackbarKey.currentState
@@ -311,7 +311,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width * 0.4, 
-                  text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.insuranceRenewalDue?? DateTime.now()),
+                  text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.lastRadiatorFluidChange?? DateTime.now()),
                 ),
                 Divider(
                   height: 4,

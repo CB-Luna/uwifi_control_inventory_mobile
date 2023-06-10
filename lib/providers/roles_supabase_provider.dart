@@ -3,12 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/modelsSupabase/get_company_supabase.dart';
 import 'package:taller_alex_app_asesor/modelsSupabase/get_roles_supabase.dart';
-import 'package:taller_alex_app_asesor/modelsSupabase/get_status_supabase.dart';
-import 'package:taller_alex_app_asesor/modelsSupabase/get_vehicle_supabase.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import '../objectbox.g.dart';
@@ -82,20 +81,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
         }
       }
       """;
-//Función para recuperar el catálogo de status desde Supabase
-    String queryGetStatus = """
-      query Query {
-        statusCollection {
-          edges {
-            node {
-              id_status
-              status
-              date_added
-            }
-          }
-        }
-      }
-      """;
+      
 //Función para recuperar el catálogo de company desde Supabase
     String queryGetCompany = """
       query Query {
@@ -104,7 +90,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
             node {
               id_company
               company
-              date_added
+              created_at
             }
           }
         }
@@ -146,15 +132,10 @@ class RolesSupabaseProvider extends ChangeNotifier {
             return null;
         },),
       );
-      //Se recupera toda la colección de status en Supabase
-      final recordsStatus = await sbGQL.query(
-        QueryOptions(
-          document: gql(queryGetStatus),
-          fetchPolicy: FetchPolicy.noCache,
-          onError: (error) {
-            return null;
-        },),
-      );
+      //Función para recuperar el catálogo de status desde Supabase
+      final recordsStatus = await supabaseCtrlV
+          .from('status')
+          .select();
       //Se recupera toda la colección de company en Supabase
       final recordsCompany = await sbGQL.query(
         QueryOptions(
@@ -165,14 +146,9 @@ class RolesSupabaseProvider extends ChangeNotifier {
         },),
       );
       //Se recupera toda la colección de vehicle en Supabase
-      final recordsVehicle = await sbGQL.query(
-        QueryOptions(
-          document: gql(queryGetVehicle),
-          fetchPolicy: FetchPolicy.noCache,
-          onError: (error) {
-            return null;
-        },),
-      );
+      final recordsVehicle = await supabaseCtrlV
+          .from('vehicle')
+          .select();
       // Se recuperan los formularios del mes anterior
       // Obtener la fecha del mes actual y previos
       DateTime currentDate = DateTime.now();
@@ -200,60 +176,58 @@ class RolesSupabaseProvider extends ChangeNotifier {
       String formattedStartOfMonthThird = format.format(startOfMonthThird);
       String formattedEndOfMonthThird = format.format(endOfMonthThird);
 
-      final responseCurrentR = await supabaseClient
+      final responseCurrentR = await supabaseCtrlV
       .from('control_form')
       .select()
       .gt('date_added', formattedStartOfMonthCurrent).lt('date_added', formattedEndOfMonthCurrent)
       .eq('id_user_fk', idUserFk)
       .eq('type_form', true);
 
-      final responseCurrentD = await supabaseClient
+      final responseCurrentD = await supabaseCtrlV
       .from('control_form')
       .select()
       .gt('date_added', formattedStartOfMonthCurrent).lt('date_added', formattedEndOfMonthCurrent)
       .eq('id_user_fk', idUserFk)
       .eq('type_form', false);
 
-      final responseSecondR = await supabaseClient
+      final responseSecondR = await supabaseCtrlV
       .from('control_form')
       .select()
       .gt('date_added', formattedStartOfMonthSecond).lt('date_added', formattedEndOfMonthSecond)
       .eq('id_user_fk', idUserFk)
       .eq('type_form', true);
 
-      final responseSecondD = await supabaseClient
+      final responseSecondD = await supabaseCtrlV
       .from('control_form')
       .select()
       .gt('date_added', formattedStartOfMonthSecond).lt('date_added', formattedEndOfMonthSecond)
       .eq('id_user_fk', idUserFk)
       .eq('type_form', false);
 
-      final responseThirdR = await supabaseClient
+      final responseThirdR = await supabaseCtrlV
       .from('control_form')
       .select()
       .gt('date_added', formattedStartOfMonthThird).lt('date_added', formattedEndOfMonthThird)
       .eq('id_user_fk', idUserFk)
       .eq('type_form', true);
 
-      final responseThirdD = await supabaseClient
+      final responseThirdD = await supabaseCtrlV
       .from('control_form')
       .select()
       .gt('date_added', formattedStartOfMonthThird).lt('date_added', formattedEndOfMonthThird)
       .eq('id_user_fk', idUserFk)
       .eq('type_form', false);
 
-      if (recordsRoles.data != null && recordsStatus.data != null && recordsCompany.data != null && recordsVehicle.data != null &&
+      if (recordsRoles.data != null && recordsStatus != null && recordsCompany.data != null && recordsVehicle != null &&
       responseCurrentR != null && responseSecondR != null && responseThirdR != null &&
       responseCurrentD != null && responseSecondD != null && responseThirdD != null) {
         //Existen datos de roles en Supabase
         print("****Roles: ${jsonEncode(recordsRoles.data.toString())}");
-        print("****Status: ${jsonEncode(recordsStatus.data.toString())}");
         print("****Company: ${jsonEncode(recordsCompany.data.toString())}");
-        print("****Vehicle: ${jsonEncode(recordsVehicle.data.toString())}");
         final responseListRoles = getRolesSupabaseFromMap(jsonEncode(recordsRoles.data).toString());
-        final responseListStatus = getStatusSupabaseFromMap(jsonEncode(recordsStatus.data).toString());
+        final responseListStatus = recordsStatus as List<dynamic>;
         final responseListCompany = getCompanySupabaseFromMap(jsonEncode(recordsCompany.data).toString());
-        final responseListVehicle = getVehicleSupabaseFromMap(jsonEncode(recordsVehicle.data).toString());
+        final responseListVehicle = recordsVehicle as List<dynamic>;
         recordsMonthCurrentR = responseCurrentR as List<dynamic>;
         recordsMonthSecondR = responseSecondR as List<dynamic>;
         recordsMonthThirdR = responseThirdR as List<dynamic>;
@@ -276,19 +250,19 @@ class RolesSupabaseProvider extends ChangeNotifier {
               dataBase.roleBox.put(rolExistente);
           }
         }
-        for (var element in responseListStatus.statusCollection.edges) {
+        for (var element in responseListStatus) {
           //Se valida que el nuevo status aún no existe en Objectbox
-          final statusExistente = dataBase.statusBox.query(Status_.idDBR.equals(element.node.id)).build().findUnique();
+          final statusExistente = dataBase.statusBox.query(Status_.idDBR.equals(element['id_status'].toString())).build().findUnique();
           if (statusExistente == null) {
             final newStatus = Status(
-            status: element.node.status,
-            idDBR: element.node.id, 
+            status: element['status'],
+            idDBR: element['id_status'].toString(), 
             );
             dataBase.statusBox.put(newStatus);
             //print('Status Nuevo agregado exitosamente');
           } else {
               //Se actualiza el registro en Objectbox
-              statusExistente.status = element.node.status;
+              statusExistente.status = element['status'];
               dataBase.statusBox.put(statusExistente);
           }
         }
@@ -308,12 +282,12 @@ class RolesSupabaseProvider extends ChangeNotifier {
               dataBase.companyBox.put(companyExistente);
           }
         }
-        for (var element in responseListVehicle.vehicleCollection.edges) {
+        for (var element in responseListVehicle) {
           //Se valida que el nuevo vehicle aún no existe en Objectbox
-          final vehicleExistente = dataBase.vehicleBox.query(Vehicle_.idDBR.equals(element.node.id)).build().findUnique();
+          final vehicleExistente = dataBase.vehicleBox.query(Vehicle_.idDBR.equals(element['id_vehicle'].toString())).build().findUnique();
           if (vehicleExistente == null) {
             final uInt8ListImagen = base64Decode(
-                element.node.image.replaceAll("data:image/png;base64,", ""));
+                element['image'].replaceAll("data:image/png;base64,", ""));
             final tempDir = await getTemporaryDirectory();
             File file = await File(
               '${tempDir.path}/${uuid.v1()}.png')
@@ -321,24 +295,24 @@ class RolesSupabaseProvider extends ChangeNotifier {
             file.writeAsBytesSync(uInt8ListImagen);
 
             final newVehicle = Vehicle(
-              make: element.node.make,
-              model: element.node.model,
-              year: element.node.year,
-              vin: element.node.vin,
-              licensePlates: element.node.licensePlates,
-              motor: element.node.motor,
-              color: element.node.color,
+              make: element['make'],
+              model: element['model'],
+              year: element['year'],
+              vin: element['vin'],
+              licensePlates: element['license_plates'],
+              motor: element['motor'],
+              color: element['color'],
               path: file.path,
-              image: element.node.image,
-              oilChangeDue: element.node.oilChangeDue,
-              registrationDue: element.node.registrationDue,
-              insuranceRenewalDue: element.node.insuranceRenewalDue,
-              dateAdded: element.node.dateAdded,
-              idDBR: element.node.id, 
+              image: element['image'],
+              oilChangeDue: DateTime.parse(element['oil_change_due']),
+              lastTransmissionFluidChange: DateTime.parse(element['last_transmission_fluid_change']),
+              lastRadiatorFluidChange: DateTime.parse(element['last_radiator_fluid_change']),
+              dateAdded: DateTime.parse(element['date_added']),
+              idDBR: element['id_vehicle'].toString(), 
             );
 
-            final newStatus = dataBase.statusBox.query(Status_.idDBR.equals(element.node.idStatusFk)).build().findUnique(); //Status recovered
-            final newCompany = dataBase.companyBox.query(Company_.idDBR.equals(element.node.idCompanyFk)).build().findUnique(); //Company recovered
+            final newStatus = dataBase.statusBox.query(Status_.idDBR.equals(element['id_status_fk'].toString())).build().findUnique(); //Status recovered
+            final newCompany = dataBase.companyBox.query(Company_.idDBR.equals(element['id_company_fk'].toString())).build().findUnique(); //Company recovered
             if (newStatus == null && newCompany == null) {
               return false;
             }
@@ -349,29 +323,29 @@ class RolesSupabaseProvider extends ChangeNotifier {
           } else {
               //Se actualiza el registro en Objectbox
               final uInt8ListImagen = base64Decode(
-                element.node.image.replaceAll("data:image/png;base64,", ""));
+                element['image'].replaceAll("data:image/png;base64,", ""));
               final tempDir = await getTemporaryDirectory();
               File file = await File(
                 '${tempDir.path}/${uuid.v1()}.png')
               .create();
               file.writeAsBytesSync(uInt8ListImagen);
 
-              vehicleExistente.make = element.node.make;
-              vehicleExistente.model = element.node.model;
-              vehicleExistente.year = element.node.year;
-              vehicleExistente.vin = element.node.vin;
-              vehicleExistente.licensePlates = element.node.licensePlates;
-              vehicleExistente.motor = element.node.motor;
-              vehicleExistente.color = element.node.color;
+              vehicleExistente.make = element['make'];
+              vehicleExistente.model = element['model'];
+              vehicleExistente.year = element['year'];
+              vehicleExistente.vin = element['vin'];
+              vehicleExistente.licensePlates = element['license_plates'];
+              vehicleExistente.motor = element['motor'];
+              vehicleExistente.color = element['color'];
               vehicleExistente.path = file.path;
-              vehicleExistente.image = element.node.image;
-              vehicleExistente.oilChangeDue = element.node.oilChangeDue;
-              vehicleExistente.registrationDue = element.node.registrationDue;
-              vehicleExistente.insuranceRenewalDue = element.node.insuranceRenewalDue;
-              vehicleExistente.dateAdded = element.node.dateAdded;
+              vehicleExistente.image = element['image'];
+              vehicleExistente.oilChangeDue = DateTime.parse(element['oil_change_due']);
+              vehicleExistente.lastTransmissionFluidChange = DateTime.parse(element['last_transmission_fluid_change']);
+              vehicleExistente.lastRadiatorFluidChange = DateTime.parse(element['last_radiator_fluid_change']);
+              vehicleExistente.dateAdded = DateTime.parse(element['date_added']);
 
-              final newStatus = dataBase.statusBox.query(Status_.idDBR.equals(element.node.idStatusFk)).build().findUnique(); //Status recovered
-              final newCompany = dataBase.companyBox.query(Company_.idDBR.equals(element.node.idCompanyFk)).build().findUnique(); //Company recovered
+              final newStatus = dataBase.statusBox.query(Status_.idDBR.equals(element['id_status_fk'].toString())).build().findUnique(); //Status recovered
+              final newCompany = dataBase.companyBox.query(Company_.idDBR.equals(element['id_company_fk'].toString())).build().findUnique(); //Company recovered
               if (newStatus == null && newCompany == null) {
                 return false;
               }

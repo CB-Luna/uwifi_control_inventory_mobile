@@ -153,7 +153,7 @@
     },
     {
       "id": "86:283646429578876451",
-      "lastPropertyId": "16:8508696798102400446",
+      "lastPropertyId": "17:5771699047160977949",
       "name": "ControlForm",
       "properties": [
         {
@@ -258,6 +258,11 @@
           "flags": 520,
           "indexId": "410:8460461020124898604",
           "relationTarget": "BucketInspection"
+        },
+        {
+          "id": "17:5771699047160977949",
+          "name": "issues",
+          "type": 6
         }
       ],
       "relations": []
@@ -1703,7 +1708,7 @@
     },
     {
       "id": "99:8193815974638102829",
-      "lastPropertyId": "18:598775386392949340",
+      "lastPropertyId": "20:5120493280338495896",
       "name": "Vehicle",
       "properties": [
         {
@@ -1760,16 +1765,6 @@
           "type": 10
         },
         {
-          "id": "12:251371643102140460",
-          "name": "registrationDue",
-          "type": 10
-        },
-        {
-          "id": "13:2938032336750196780",
-          "name": "insuranceRenewalDue",
-          "type": 10
-        },
-        {
           "id": "14:4219254653978239483",
           "name": "dateAdded",
           "type": 10
@@ -1803,6 +1798,16 @@
           "type": 9,
           "flags": 2080,
           "indexId": "431:7457722984787952526"
+        },
+        {
+          "id": "19:753662785621719297",
+          "name": "lastTransmissionFluidChange",
+          "type": 10
+        },
+        {
+          "id": "20:5120493280338495896",
+          "name": "lastRadiatorFluidChange",
+          "type": 10
         }
       ],
       "relations": []
@@ -3261,7 +3266,9 @@
     6596099135715597570,
     1870679960917748335,
     472741667402047784,
-    8508696798102400446
+    8508696798102400446,
+    251371643102140460,
+    2938032336750196780
   ],
   "retiredRelationUids": [
     1226469011453769556,
