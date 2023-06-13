@@ -623,6 +623,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                   pickedFile =
                                                       await picker.pickImage(
                                                     source: ImageSource.camera,
+                                                    imageQuality: 50,
                                                   );
                                                   if (pickedFile != null) {
                                                     imagesTemp.add(pickedFile);
@@ -657,6 +658,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.camera,
+                                                      imageQuality: 50,
                             
                                                     );
                                                     if (pickedFile != null) {
@@ -814,6 +816,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.gallery,
+                                                      imageQuality: 50,
                             
                                                     );
                                                     if (pickedFile != null) {
@@ -1203,6 +1206,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                   pickedFile =
                                                       await picker.pickImage(
                                                     source: ImageSource.camera,
+                                                    imageQuality: 50,
                                                   );
                                                   if (pickedFile != null) {
                                                     imagesTemp.add(pickedFile);
@@ -1237,6 +1241,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.camera,
+                                                      imageQuality: 50,
                             
                                                     );
                                                     if (pickedFile != null) {
@@ -1394,6 +1399,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.gallery,
+                                                      imageQuality: 50,
                             
                                                     );
                                                     if (pickedFile != null) {

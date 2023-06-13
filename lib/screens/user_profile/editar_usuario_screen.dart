@@ -39,6 +39,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   TextEditingController apellidoPController = TextEditingController();
   TextEditingController apellidoMController = TextEditingController();
   TextEditingController telefonoController = TextEditingController();
+  TextEditingController mobileController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   XFile? image;
@@ -61,6 +62,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
     apellidoPController = TextEditingController(text: widget.usuario.lastName);
     apellidoMController = TextEditingController(text: widget.usuario.middleName);
     telefonoController = TextEditingController(text: widget.usuario.homePhone);
+    mobileController = TextEditingController(text: widget.usuario.mobilePhone);
   }
 
   @override
@@ -152,7 +154,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                             size: 16,
                                           ),
                                           Text(
-                                            'Atrás',
+                                            'Back',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText1
                                                 .override(
@@ -302,7 +304,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                           newImagen = base64.toString();
                                         });
                                       },
-                                      text: 'Cambiar Foto',
+                                      text: 'Update Photo',
                                       icon: Icon(
                                         Icons.add_a_photo,
                                         color: FlutterFlowTheme.of(context).tertiaryColor,
@@ -567,7 +569,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                           }
                                         }
                                       },
-                                      text: 'Guardar cambios',
+                                      text: 'Save changes',
                                       icon: Icon(
                                         Icons.check_rounded,
                                         color: FlutterFlowTheme.of(context).tertiaryColor,
@@ -607,7 +609,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                   AutovalidateMode.onUserInteraction,
                               controller: nombreController,
                               decoration: InputDecoration(
-                                labelText: "Nombre(s)*",
+                                labelText: "Name*",
                                 labelStyle:
                                     FlutterFlowTheme.of(context).bodyText1.override(
                                           fontFamily: 'Poppins',
@@ -637,12 +639,12 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                   (value){
                                     return (capitalizadoCharacters.hasMatch(value ?? ''))
                                     ? null
-                                    : 'Para continuar, ingrese el nombre empezando por mayúscula.';
+                                    : 'Input your Last Name to continue, the last name should be capitalized.';
                                   },
                                   (value){
                                     return (nombreCharacters.hasMatch(value ?? ''))
                                     ? null
-                                    : 'Evite usar números o caracteres especiales como diéresis';
+                                    : 'Wrtiting numbers is not allowed.';
                                   }
                               ]),
                             ),
@@ -656,7 +658,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                   AutovalidateMode.onUserInteraction,
                               controller: apellidoPController,
                               decoration: InputDecoration(
-                                labelText: "Apellido Paterno*",
+                                labelText: "Last Name*",
                                 labelStyle:
                                     FlutterFlowTheme.of(context).bodyText1.override(
                                           fontFamily: 'Poppins',
@@ -686,12 +688,12 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                 (value){
                                   return (capitalizadoCharacters.hasMatch(value ?? ''))
                                   ? null
-                                  : 'Para continuar, ingrese el apellido empezando por mayúscula.';
+                                  : 'Input your Last Name to continue, the last name should be capitalized.';
                                 },
                                 (value){
                                   return (nombreCharacters.hasMatch(value ?? ''))
                                   ? null
-                                  : 'Evite usar números o caracteres especiales como diéresis';
+                                  : 'Wrtiting numbers is not allowed.';
                                 }
                               ]),
                             ),
@@ -705,7 +707,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                   AutovalidateMode.onUserInteraction,
                               controller: apellidoMController,
                               decoration: InputDecoration(
-                                labelText: "Apellido Materno",
+                                labelText: "Middle Name",
                                 labelStyle:
                                     FlutterFlowTheme.of(context).bodyText1.override(
                                           fontFamily: 'Poppins',
@@ -741,7 +743,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                   AutovalidateMode.onUserInteraction,
                               controller: telefonoController,
                               decoration: InputDecoration(
-                                labelText: "Teléfono",
+                                labelText: "Home Phone",
                                 labelStyle:
                                     FlutterFlowTheme.of(context).bodyText1.override(
                                           fontFamily: 'Poppins',
@@ -774,7 +776,56 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                               validator: (value){
                                 if(value != "" && value != null){
                                   return value.length < 10
-                                    ? 'Por favor ingrese un número telefónico válido'
+                                    ? 'Input a valid number.'
+                                    : null;
+                                }else{
+                                return null;
+                                }
+                              }
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                35, 20, 35, 0),
+                            child: TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              controller: mobileController,
+                              decoration: InputDecoration(
+                                labelText: "Mobile Phone",
+                                labelStyle:
+                                    FlutterFlowTheme.of(context).bodyText1.override(
+                                          fontFamily: 'Poppins',
+                                          color: FlutterFlowTheme.of(context).tertiaryColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).tertiaryColor,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).tertiaryColor,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                filled: true,
+                                fillColor: FlutterFlowTheme.of(context).white,
+                              ),
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(10),
+                              ],
+                              validator: (value){
+                                if(value != "" && value != null){
+                                  return value.length < 10
+                                    ? 'Input a valid number.'
                                     : null;
                                 }else{
                                 return null;
@@ -802,7 +853,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                             fontSize: 15,
                                             fontWeight: FontWeight.normal,
                                           ),
-                                  hintText: 'Seleccione un rol',
+                                  hintText: 'Select a rol',
                                   icon: Icon(
                                     Icons.keyboard_arrow_down_rounded,
                                     color: FlutterFlowTheme.of(context).tertiaryColor,
@@ -821,7 +872,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                             },
                             validator: (val) {
                               if (rolUsuario == "" || rolUsuario.isEmpty) {
-                                return 'Para continuar, seleccione un rol.';
+                                return 'Select a rol to continue.';
                               }
                               return null;
                             },
@@ -839,7 +890,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                   ),
                                 );
                               },
-                              text: 'Cambiar contraseña',
+                              text: 'Update password',
                               icon: const Icon(
                                 Icons.password_outlined,
                                 size: 15,

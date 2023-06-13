@@ -371,6 +371,7 @@ class _ItemFormState extends State<ItemForm> {
                                         pickedFile =
                                             await picker.pickImage(
                                           source: ImageSource.camera,
+                                          imageQuality: 50,
                                         );
                                         if (pickedFile != null) {
                                           imagesTemp.add(pickedFile);
@@ -405,6 +406,7 @@ class _ItemFormState extends State<ItemForm> {
                                           pickedFile =
                                               await picker.pickImage(
                                             source: ImageSource.camera,
+                                            imageQuality: 50,
                   
                                           );
                                           if (pickedFile != null) {
@@ -563,6 +565,7 @@ class _ItemFormState extends State<ItemForm> {
                                           pickedFile =
                                               await picker.pickImage(
                                             source: ImageSource.gallery,
+                                            imageQuality: 50,
                   
                                           );
                                           if (pickedFile != null) {
