@@ -6,6 +6,7 @@ import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/objectbox.g.dart';
 
 class DeliveredFormController extends ChangeNotifier {
 
@@ -1638,317 +1639,313 @@ class DeliveredFormController extends ChangeNotifier {
   
   bool addControlForm(Users? user) {
     try {
-      Measures measures = Measures(
-        gas: "$gasDieselPercent%", 
-        gasComments: gasComments.text,
-        gasImages: getListImages(gasImages), 
-        gasPath: getListPath(gasImages), 
-        mileage: int.parse(mileage), 
-        mileageComments: mileageComments.text,
-        mileageImages: getListImages(mileageImages),
-        mileagePath: getListPath(mileageImages),
-      );
+      final controlForm = dataBase.controlFormBox.query(ControlForm_.today.equals(true)).build().findUnique(); //Se recupera el control Form
+      if (controlForm != null) {
+        Measures measures = Measures(
+          gas: "$gasDieselPercent%", 
+          gasComments: gasComments.text,
+          gasImages: getListImages(gasImages), 
+          gasPath: getListPath(gasImages), 
+          mileage: int.parse(mileage), 
+          mileageComments: mileageComments.text,
+          mileageImages: getListImages(mileageImages),
+          mileagePath: getListPath(mileageImages),
+        );
 
+        final lights = Lights(
+          headLights: headLights, 
+          headLightsComments: headLightsComments.text, 
+          headLightsImages: getListImages(headLightsImages), 
+          headLightsPath: getListPath(headLightsImages), 
+          brakeLights: brakeLights, 
+          brakeLightsComments: brakeLightsComments.text, 
+          brakeLightsImages: getListImages(brakeLightsImages), 
+          brakeLightsPath: getListPath(brakeLightsImages), 
+          reverseLights: reverseLights, 
+          reverseLightsComments: reverseLightsComments.text, 
+          reverseLightsImages: getListImages(reverseLightsImages), 
+          reverseLightsPath: getListPath(reverseLightsImages), 
+          warningLights: warningLights, 
+          warningLightsComments: warningLightsComments.text, 
+          warningLightsImages: getListImages(warningLightsImages), 
+          warningLightsPath: getListPath(warningLightsImages), 
+          turnSignals: turnSignals, 
+          turnSignalsComments: turnSignalsComments.text, 
+          turnSignalsImages: getListImages(turnSignalsImages), 
+          turnSignalsPath: getListPath(turnSignalsImages), 
+          fourWayFlashers: fourWayFlashers, 
+          fourWayFlashersComments: fourWayFlashersComments.text, 
+          fourWayFlashersImages: getListImages(fourWayFlashersImages), 
+          fourWayFlashersPath: getListPath(fourWayFlashersImages), 
+          dashLights: dashLights, 
+          dashLightsComments: dashLightsComments.text, 
+          dashLightsImages: getListImages(dashLightsImages), 
+          dashLightsPath: getListPath(dashLightsImages), 
+          strobeLights: strobeLights, 
+          strobeLightsComments: strobeLightsComments.text, 
+          strobeLightsImages: getListImages(strobeLightsImages), 
+          strobeLightsPath: getListPath(strobeLightsImages), 
+          cabRoofLights: cabRoofLights, 
+          cabRoofLightsComments: cabRoofLightsComments.text, 
+          cabRoofLightsImages: getListImages(cabRoofLightsImages), 
+          cabRoofLightsPath: getListPath(cabRoofLightsImages),
+          clearanceLights: clearanceLights, 
+          clearanceLightsComments: clearanceLightsComments.text, 
+          clearanceLightsImages: getListImages(clearanceLightsImages), 
+          clearanceLightsPath: getListPath(clearanceLightsImages), 
+        );
 
-      final lights = Lights(
-        headLights: headLights, 
-        headLightsComments: headLightsComments.text, 
-        headLightsImages: getListImages(headLightsImages), 
-        headLightsPath: getListPath(headLightsImages), 
-        brakeLights: brakeLights, 
-        brakeLightsComments: brakeLightsComments.text, 
-        brakeLightsImages: getListImages(brakeLightsImages), 
-        brakeLightsPath: getListPath(brakeLightsImages), 
-        reverseLights: reverseLights, 
-        reverseLightsComments: reverseLightsComments.text, 
-        reverseLightsImages: getListImages(reverseLightsImages), 
-        reverseLightsPath: getListPath(reverseLightsImages), 
-        warningLights: warningLights, 
-        warningLightsComments: warningLightsComments.text, 
-        warningLightsImages: getListImages(warningLightsImages), 
-        warningLightsPath: getListPath(warningLightsImages), 
-        turnSignals: turnSignals, 
-        turnSignalsComments: turnSignalsComments.text, 
-        turnSignalsImages: getListImages(turnSignalsImages), 
-        turnSignalsPath: getListPath(turnSignalsImages), 
-        fourWayFlashers: fourWayFlashers, 
-        fourWayFlashersComments: fourWayFlashersComments.text, 
-        fourWayFlashersImages: getListImages(fourWayFlashersImages), 
-        fourWayFlashersPath: getListPath(fourWayFlashersImages), 
-        dashLights: dashLights, 
-        dashLightsComments: dashLightsComments.text, 
-        dashLightsImages: getListImages(dashLightsImages), 
-        dashLightsPath: getListPath(dashLightsImages), 
-        strobeLights: strobeLights, 
-        strobeLightsComments: strobeLightsComments.text, 
-        strobeLightsImages: getListImages(strobeLightsImages), 
-        strobeLightsPath: getListPath(strobeLightsImages), 
-        cabRoofLights: cabRoofLights, 
-        cabRoofLightsComments: cabRoofLightsComments.text, 
-        cabRoofLightsImages: getListImages(cabRoofLightsImages), 
-        cabRoofLightsPath: getListPath(cabRoofLightsImages),
-        clearanceLights: clearanceLights, 
-        clearanceLightsComments: clearanceLightsComments.text, 
-        clearanceLightsImages: getListImages(clearanceLightsImages), 
-        clearanceLightsPath: getListPath(clearanceLightsImages), 
-      );
+        final carBodywork = CarBodywork(
+          wiperBladesFront: wiperBladesFront, 
+          wiperBladesFrontComments: wiperBladesFrontComments.text, 
+          wiperBladesFrontImages: getListImages(wiperBladesFrontImages), 
+          wiperBladesFrontPath: getListPath(wiperBladesFrontImages), 
+          wiperBladesBack: wiperBladesBack, 
+          wiperBladesBackComments: wiperBladesBackComments.text, 
+          wiperBladesBackImages: getListImages(wiperBladesBackImages), 
+          wiperBladesBackPath: getListPath(wiperBladesBackImages), 
+          windshieldWiperFront: windshieldWiperFront, 
+          windshieldWiperFrontComments: windshieldWiperFrontComments.text, 
+          windshieldWiperFrontImages: getListImages(windshieldWiperFrontImages), 
+          windshieldWiperFrontPath: getListPath(windshieldWiperFrontImages), 
+          windshieldWiperBack: windshieldWiperBack, 
+          windshieldWiperBackComments: windshieldWiperBackComments.text, 
+          windshieldWiperBackImages: getListImages(windshieldWiperBackImages), 
+          windshieldWiperBackPath: getListPath(windshieldWiperBackImages), 
+          generalBody: generalBody, 
+          generalBodyComments: generalBodyComments.text, 
+          generalBodyImages: getListImages(generalBodyImages), 
+          generalBodyPath: getListPath(generalBodyImages), 
+          decaling: decaling, 
+          decalingComments: decalingComments.text, 
+          decalingImages: getListImages(decalingImages), 
+          decalingPath: getListPath(decalingImages), 
+          tires: tires, 
+          tiresComments: tiresComments.text, 
+          tiresImages: getListImages(tiresImages), 
+          tiresPath: getListPath(tiresImages), 
+          glass: glass, 
+          glassComments: glassComments.text, 
+          glassImages: getListImages(glassImages), 
+          glassPath: getListPath(glassImages), 
+          mirrors: mirrors, 
+          mirrorsComments: mirrorsComments.text, 
+          mirrorsImages: getListImages(mirrorsImages), 
+          mirrorsPath: getListPath(mirrorsImages), 
+          parking: parking, 
+          parkingComments: parkingComments.text, 
+          parkingImages: getListImages(parkingImages), 
+          parkingPath: getListPath(parkingImages), 
+          brakes: brakes, 
+          brakesComments: brakesComments.text, 
+          brakesImages: getListImages(brakesImages), 
+          brakesPath: getListPath(brakesImages),
+          emgBrakes: emgBrakes, 
+          emgBrakesComments: emgBrakesComments.text, 
+          emgBrakesImages: getListImages(emgBrakesImages), 
+          emgBrakesPath: getListPath(emgBrakesImages),
+          horn: horn, 
+          hornComments: hornComments.text, 
+          hornImages: getListImages(hornImages), 
+          hornPath: getListPath(hornImages),
+        );
 
-      final carBodywork = CarBodywork(
-        wiperBladesFront: wiperBladesFront, 
-        wiperBladesFrontComments: wiperBladesFrontComments.text, 
-        wiperBladesFrontImages: getListImages(wiperBladesFrontImages), 
-        wiperBladesFrontPath: getListPath(wiperBladesFrontImages), 
-        wiperBladesBack: wiperBladesBack, 
-        wiperBladesBackComments: wiperBladesBackComments.text, 
-        wiperBladesBackImages: getListImages(wiperBladesBackImages), 
-        wiperBladesBackPath: getListPath(wiperBladesBackImages), 
-        windshieldWiperFront: windshieldWiperFront, 
-        windshieldWiperFrontComments: windshieldWiperFrontComments.text, 
-        windshieldWiperFrontImages: getListImages(windshieldWiperFrontImages), 
-        windshieldWiperFrontPath: getListPath(windshieldWiperFrontImages), 
-        windshieldWiperBack: windshieldWiperBack, 
-        windshieldWiperBackComments: windshieldWiperBackComments.text, 
-        windshieldWiperBackImages: getListImages(windshieldWiperBackImages), 
-        windshieldWiperBackPath: getListPath(windshieldWiperBackImages), 
-        generalBody: generalBody, 
-        generalBodyComments: generalBodyComments.text, 
-        generalBodyImages: getListImages(generalBodyImages), 
-        generalBodyPath: getListPath(generalBodyImages), 
-        decaling: decaling, 
-        decalingComments: decalingComments.text, 
-        decalingImages: getListImages(decalingImages), 
-        decalingPath: getListPath(decalingImages), 
-        tires: tires, 
-        tiresComments: tiresComments.text, 
-        tiresImages: getListImages(tiresImages), 
-        tiresPath: getListPath(tiresImages), 
-        glass: glass, 
-        glassComments: glassComments.text, 
-        glassImages: getListImages(glassImages), 
-        glassPath: getListPath(glassImages), 
-        mirrors: mirrors, 
-        mirrorsComments: mirrorsComments.text, 
-        mirrorsImages: getListImages(mirrorsImages), 
-        mirrorsPath: getListPath(mirrorsImages), 
-        parking: parking, 
-        parkingComments: parkingComments.text, 
-        parkingImages: getListImages(parkingImages), 
-        parkingPath: getListPath(parkingImages), 
-        brakes: brakes, 
-        brakesComments: brakesComments.text, 
-        brakesImages: getListImages(brakesImages), 
-        brakesPath: getListPath(brakesImages),
-        emgBrakes: emgBrakes, 
-        emgBrakesComments: emgBrakesComments.text, 
-        emgBrakesImages: getListImages(emgBrakesImages), 
-        emgBrakesPath: getListPath(emgBrakesImages),
-        horn: horn, 
-        hornComments: hornComments.text, 
-        hornImages: getListImages(hornImages), 
-        hornPath: getListPath(hornImages),
-      );
+        final fluidsCheck = FluidsCheck(
+          engineOil: engineOil, 
+          engineOilComments: engineOilComments.text, 
+          engineOilImages: getListImages(engineOilImages), 
+          engineOilPath: getListPath(engineOilImages),
+          transmission: transmission, 
+          transmissionComments: transmissionComments.text, 
+          transmissionImages: getListImages(transmissionImages), 
+          transmissionPath: getListPath(transmissionImages),
+          coolant: coolant, 
+          coolantComments: coolantComments.text, 
+          coolantImages: getListImages(coolantImages), 
+          coolantPath: getListPath(coolantImages),
+          powerSteering: powerSteering, 
+          powerSteeringComments: powerSteeringComments.text, 
+          powerSteeringImages: getListImages(powerSteeringImages), 
+          powerSteeringPath: getListPath(parkingImages),
+          dieselExhaustFluid: dieselExhaustFluid, 
+          dieselExhaustFluidComments: dieselExhaustFluidComments.text, 
+          dieselExhaustFluidImages: getListImages(dieselExhaustFluidImages), 
+          dieselExhaustFluidPath: getListPath(dieselExhaustFluidImages),
+          windshieldWasherFluid: windshieldWasherFluid, 
+          windshieldWasherFluidComments: windshieldWasherFluidComments.text, 
+          windshieldWasherFluidImages: getListImages(windshieldWasherFluidImages), 
+          windshieldWasherFluidPath: getListPath(windshieldWasherFluidImages),
+        );
 
-      final fluidsCheck = FluidsCheck(
-        engineOil: engineOil, 
-        engineOilComments: engineOilComments.text, 
-        engineOilImages: getListImages(engineOilImages), 
-        engineOilPath: getListPath(engineOilImages),
-        transmission: transmission, 
-        transmissionComments: transmissionComments.text, 
-        transmissionImages: getListImages(transmissionImages), 
-        transmissionPath: getListPath(transmissionImages),
-        coolant: coolant, 
-        coolantComments: coolantComments.text, 
-        coolantImages: getListImages(coolantImages), 
-        coolantPath: getListPath(coolantImages),
-        powerSteering: powerSteering, 
-        powerSteeringComments: powerSteeringComments.text, 
-        powerSteeringImages: getListImages(powerSteeringImages), 
-        powerSteeringPath: getListPath(parkingImages),
-        dieselExhaustFluid: dieselExhaustFluid, 
-        dieselExhaustFluidComments: dieselExhaustFluidComments.text, 
-        dieselExhaustFluidImages: getListImages(dieselExhaustFluidImages), 
-        dieselExhaustFluidPath: getListPath(dieselExhaustFluidImages),
-        windshieldWasherFluid: windshieldWasherFluid, 
-        windshieldWasherFluidComments: windshieldWasherFluidComments.text, 
-        windshieldWasherFluidImages: getListImages(windshieldWasherFluidImages), 
-        windshieldWasherFluidPath: getListPath(windshieldWasherFluidImages),
-      );
+        final bucketInspection = BucketInspection(
+          insulated: insulated, 
+          insulatedComments: insulatedComments.text, 
+          insulatedImages: getListImages(insulatedImages), 
+          insulatedPath: getListPath(insulatedImages),
+          holesDrilled: holesDrilled, 
+          holesDrilledComments: holesDrilledComments.text, 
+          holesDrilledImages: getListImages(holesDrilledImages), 
+          holesDrilledPath: getListPath(holesDrilledImages),
+          bucketLiner: bucketLiner, 
+          bucketLinerComments: bucketLinerComments.text, 
+          bucketLinerImages: getListImages(bucketLinerImages), 
+          bucketLinerPath: getListPath(bucketLinerImages),
+        );
 
-      final bucketInspection = BucketInspection(
-        insulated: insulated, 
-        insulatedComments: insulatedComments.text, 
-        insulatedImages: getListImages(insulatedImages), 
-        insulatedPath: getListPath(insulatedImages),
-        holesDrilled: holesDrilled, 
-        holesDrilledComments: holesDrilledComments.text, 
-        holesDrilledImages: getListImages(holesDrilledImages), 
-        holesDrilledPath: getListPath(holesDrilledImages),
-        bucketLiner: bucketLiner, 
-        bucketLinerComments: bucketLinerComments.text, 
-        bucketLinerImages: getListImages(bucketLinerImages), 
-        bucketLinerPath: getListPath(bucketLinerImages),
-      );
+        final security = Security(
+          rtaMagnet: rtaMagnet, 
+          rtaMagnetComments: rtaMagnetComments.text, 
+          rtaMagnetImages: getListImages(rtaMagnetImages), 
+          rtaMagnetPath: getListPath(rtaMagnetImages),
+          triangleReflectors: triangleReflectors, 
+          triangleReflectorsComments: triangleReflectorsComments.text, 
+          triangleReflectorsImages: getListImages(triangleReflectorsImages), 
+          triangleReflectorsPath: getListPath(triangleReflectorsImages),
+          wheelChocks: wheelChocks, 
+          wheelChocksComments: wheelChocksComments.text, 
+          wheelChocksImages: getListImages(wheelChocksImages), 
+          wheelChocksPath: getListPath(wheelChocksImages),
+          fireExtinguisher: fireExtinguisher, 
+          fireExtinguisherComments: fireExtinguisherComments.text, 
+          fireExtinguisherImages: getListImages(fireExtinguisherImages), 
+          fireExtinguisherPath: getListPath(fireExtinguisherImages),
+          firstAidKitSafetyVest: firstAidKitSafetyVest, 
+          firstAidKitSafetyVestComments: firstAidKitSafetyVestComments.text, 
+          firstAidKitSafetyVestImages: getListImages(firstAidKitSafetyVestImages), 
+          firstAidKitSafetyVestPath: getListPath(firstAidKitSafetyVestImages),
+          backUpAlarm: backUpAlarm, 
+          backUpAlarmComments: backUpAlarmComments.text, 
+          backUpAlarmImages: getListImages(backUpAlarmImages), 
+          backUpAlarmPath: getListPath(backUpAlarmImages),
+        );
 
-      final security = Security(
-        rtaMagnet: rtaMagnet, 
-        rtaMagnetComments: rtaMagnetComments.text, 
-        rtaMagnetImages: getListImages(rtaMagnetImages), 
-        rtaMagnetPath: getListPath(rtaMagnetImages),
-        triangleReflectors: triangleReflectors, 
-        triangleReflectorsComments: triangleReflectorsComments.text, 
-        triangleReflectorsImages: getListImages(triangleReflectorsImages), 
-        triangleReflectorsPath: getListPath(triangleReflectorsImages),
-        wheelChocks: wheelChocks, 
-        wheelChocksComments: wheelChocksComments.text, 
-        wheelChocksImages: getListImages(wheelChocksImages), 
-        wheelChocksPath: getListPath(wheelChocksImages),
-        fireExtinguisher: fireExtinguisher, 
-        fireExtinguisherComments: fireExtinguisherComments.text, 
-        fireExtinguisherImages: getListImages(fireExtinguisherImages), 
-        fireExtinguisherPath: getListPath(fireExtinguisherImages),
-        firstAidKitSafetyVest: firstAidKitSafetyVest, 
-        firstAidKitSafetyVestComments: firstAidKitSafetyVestComments.text, 
-        firstAidKitSafetyVestImages: getListImages(firstAidKitSafetyVestImages), 
-        firstAidKitSafetyVestPath: getListPath(firstAidKitSafetyVestImages),
-        backUpAlarm: backUpAlarm, 
-        backUpAlarmComments: backUpAlarmComments.text, 
-        backUpAlarmImages: getListImages(backUpAlarmImages), 
-        backUpAlarmPath: getListPath(backUpAlarmImages),
-      );
+        final extra = Extra(
+          ladder: ladder, 
+          ladderComments: ladderComments.text, 
+          ladderImages: getListImages(ladderImages), 
+          ladderPath: getListPath(ladderImages),
+          stepLadder: stepLadder, 
+          stepLadderComments: stepLadderComments.text, 
+          stepLadderImages: getListImages(stepLadderImages), 
+          stepLadderPath: getListPath(stepLadderImages),
+          ladderStraps: ladderStraps, 
+          ladderStrapsComments: ladderStrapsComments.text, 
+          ladderStrapsImages: getListImages(ladderStrapsImages), 
+          ladderStrapsPath: getListPath(ladderStrapsImages),
+          hydraulicFluidForBucket: hydraulicFluidForBucket, 
+          hydraulicFluidForBucketComments: hydraulicFluidForBucketComments.text, 
+          hydraulicFluidForBucketImages: getListImages(hydraulicFluidForBucketImages), 
+          hydraulicFluidForBucketPath: getListPath(hydraulicFluidForBucketImages),
+          fiberReelRack: fiberReelRack, 
+          fiberReelRackComments: fiberReelRackComments.text, 
+          fiberReelRackImages: getListImages(fiberReelRackImages), 
+          fiberReelRackPath: getListPath(fiberReelRackImages),
+          binsLockedAndSecure: binsLockedAndSecure, 
+          binsLockedAndSecureComments: binsLockedAndSecureComments.text, 
+          binsLockedAndSecureImages: getListImages(binsLockedAndSecureImages), 
+          binsLockedAndSecurePath: getListPath(binsLockedAndSecureImages),
+          safetyHarness: safetyHarness, 
+          safetyHarnessComments: safetyHarnessComments.text, 
+          safetyHarnessImages: getListImages(safetyHarnessImages), 
+          safetyHarnessPath: getListPath(safetyHarnessImages),
+          lanyardSafetyHarness: lanyardSafetyHarness, 
+          lanyardSafetyHarnessComments: lanyardSafetyHarnessComments.text, 
+          lanyardSafetyHarnessImages: getListImages(lanyardSafetyHarnessImages), 
+          lanyardSafetyHarnessPath: getListPath(lanyardSafetyHarnessImages),
+        );
 
-      final extra = Extra(
-        ladder: ladder, 
-        ladderComments: ladderComments.text, 
-        ladderImages: getListImages(ladderImages), 
-        ladderPath: getListPath(ladderImages),
-        stepLadder: stepLadder, 
-        stepLadderComments: stepLadderComments.text, 
-        stepLadderImages: getListImages(stepLadderImages), 
-        stepLadderPath: getListPath(stepLadderImages),
-        ladderStraps: ladderStraps, 
-        ladderStrapsComments: ladderStrapsComments.text, 
-        ladderStrapsImages: getListImages(ladderStrapsImages), 
-        ladderStrapsPath: getListPath(ladderStrapsImages),
-        hydraulicFluidForBucket: hydraulicFluidForBucket, 
-        hydraulicFluidForBucketComments: hydraulicFluidForBucketComments.text, 
-        hydraulicFluidForBucketImages: getListImages(hydraulicFluidForBucketImages), 
-        hydraulicFluidForBucketPath: getListPath(hydraulicFluidForBucketImages),
-        fiberReelRack: fiberReelRack, 
-        fiberReelRackComments: fiberReelRackComments.text, 
-        fiberReelRackImages: getListImages(fiberReelRackImages), 
-        fiberReelRackPath: getListPath(fiberReelRackImages),
-        binsLockedAndSecure: binsLockedAndSecure, 
-        binsLockedAndSecureComments: binsLockedAndSecureComments.text, 
-        binsLockedAndSecureImages: getListImages(binsLockedAndSecureImages), 
-        binsLockedAndSecurePath: getListPath(binsLockedAndSecureImages),
-        safetyHarness: safetyHarness, 
-        safetyHarnessComments: safetyHarnessComments.text, 
-        safetyHarnessImages: getListImages(safetyHarnessImages), 
-        safetyHarnessPath: getListPath(safetyHarnessImages),
-        lanyardSafetyHarness: lanyardSafetyHarness, 
-        lanyardSafetyHarnessComments: lanyardSafetyHarnessComments.text, 
-        lanyardSafetyHarnessImages: getListImages(lanyardSafetyHarnessImages), 
-        lanyardSafetyHarnessPath: getListPath(lanyardSafetyHarnessImages),
-      );
-
-      final equipment = Equipment(
-        ignitionKey: ignitionKey, 
-        ignitionKeyComments: ignitionKeyComments.text, 
-        ignitionKeyImages: getListImages(ignitionKeyImages), 
-        ignitionKeyPath: getListPath(ignitionKeyImages),
-        binsBoxKey: binsBoxKey, 
-        binsBoxKeyComments: binsBoxKeyComments.text, 
-        binsBoxKeyImages: getListImages(binsBoxKeyImages), 
-        binsBoxKeyPath: getListPath(binsBoxKeyImages),
-        vehicleRegistrationCopy: vehicleRegistrationCopy, 
-        vehicleRegistrationCopyComments: vehicleRegistrationCopyComments.text, 
-        vehicleRegistrationCopyImages: getListImages(vehicleRegistrationCopyImages), 
-        vehicleRegistrationCopyPath: getListPath(vehicleRegistrationCopyImages),
-        vehicleInsuranceCopy: vehicleInsuranceCopy, 
-        vehicleInsuranceCopyComments: vehicleInsuranceCopyComments.text, 
-        vehicleInsuranceCopyImages: getListImages(vehicleInsuranceCopyImages), 
-        vehicleInsuranceCopyPath: getListPath(vehicleInsuranceCopyImages),
-        bucketLiftOperatorManual: bucketLiftOperatorManual, 
-        bucketLiftOperatorManualComments: bucketLiftOperatorManualComments.text, 
-        bucketLiftOperatorManualImages: getListImages(bucketLiftOperatorManualImages), 
-        bucketLiftOperatorManualPath: getListPath(bucketLiftOperatorManualImages),
-      );
-
-      final controlForm = ControlForm(
-        typeForm: false, //Delivered
-        issues: badStateLights + badStateFluids + badStateSecurity + badStateEquipment,
-      );
-      
-      final vehicle = user?.vehicle.target;
-
-      if (user != null && vehicle != null) {
-        //Measures
-        measures.controlForm.target = controlForm;
-        dataBase.measuresFormBox.put(measures);
-
-        //Lights
-        lights.controlForm.target = controlForm;
-        dataBase.lightsFormBox.put(lights);
-
-        //Car Bodywork
-        carBodywork.controlForm.target = controlForm;
-        dataBase.carBodyworkFormBox.put(carBodywork);
+        final equipment = Equipment(
+          ignitionKey: ignitionKey, 
+          ignitionKeyComments: ignitionKeyComments.text, 
+          ignitionKeyImages: getListImages(ignitionKeyImages), 
+          ignitionKeyPath: getListPath(ignitionKeyImages),
+          binsBoxKey: binsBoxKey, 
+          binsBoxKeyComments: binsBoxKeyComments.text, 
+          binsBoxKeyImages: getListImages(binsBoxKeyImages), 
+          binsBoxKeyPath: getListPath(binsBoxKeyImages),
+          vehicleRegistrationCopy: vehicleRegistrationCopy, 
+          vehicleRegistrationCopyComments: vehicleRegistrationCopyComments.text, 
+          vehicleRegistrationCopyImages: getListImages(vehicleRegistrationCopyImages), 
+          vehicleRegistrationCopyPath: getListPath(vehicleRegistrationCopyImages),
+          vehicleInsuranceCopy: vehicleInsuranceCopy, 
+          vehicleInsuranceCopyComments: vehicleInsuranceCopyComments.text, 
+          vehicleInsuranceCopyImages: getListImages(vehicleInsuranceCopyImages), 
+          vehicleInsuranceCopyPath: getListPath(vehicleInsuranceCopyImages),
+          bucketLiftOperatorManual: bucketLiftOperatorManual, 
+          bucketLiftOperatorManualComments: bucketLiftOperatorManualComments.text, 
+          bucketLiftOperatorManualImages: getListImages(bucketLiftOperatorManualImages), 
+          bucketLiftOperatorManualPath: getListPath(bucketLiftOperatorManualImages),
+        );
         
-        //Fluids Check
-        fluidsCheck.controlForm.target = controlForm;
-        dataBase.fluidsCheckFormBox.put(fluidsCheck);
 
-        //Bucket Inspection
-        bucketInspection.controlForm.target = controlForm;
-        dataBase.bucketInspectionFormBox.put(bucketInspection);
+        if (user != null) {
+          //Measures
+          measures.controlForm.target = controlForm;
+          dataBase.measuresFormBox.put(measures);
 
-        //Security
-        security.controlForm.target = controlForm;
-        dataBase.securityFormBox.put(security);
+          //Lights
+          lights.controlForm.target = controlForm;
+          dataBase.lightsFormBox.put(lights);
 
-        //Extra
-        extra.controlForm.target = controlForm;
-        dataBase.extraFormBox.put(extra);
+          //Car Bodywork
+          carBodywork.controlForm.target = controlForm;
+          dataBase.carBodyworkFormBox.put(carBodywork);
+          
+          //Fluids Check
+          fluidsCheck.controlForm.target = controlForm;
+          dataBase.fluidsCheckFormBox.put(fluidsCheck);
 
-        //Equipment
-        equipment.controlForm.target = controlForm;
-        dataBase.equipmentFormBox.put(equipment);
-        
-        //Control Form
+          //Bucket Inspection
+          bucketInspection.controlForm.target = controlForm;
+          dataBase.bucketInspectionFormBox.put(bucketInspection);
 
-        controlForm.measures.target = measures;
-        controlForm.lights.target = lights;
-        controlForm.carBodywork.target = carBodywork;
-        controlForm.fluidsCheck.target = fluidsCheck;
-        controlForm.bucketInspection.target = bucketInspection;
-        controlForm.security.target = security;
-        controlForm.extra.target = extra;
-        controlForm.equipment.target = equipment;
+          //Security
+          security.controlForm.target = controlForm;
+          dataBase.securityFormBox.put(security);
 
-        controlForm.vehicle.target = vehicle;
-        controlForm.employee.target = user;
+          //Extra
+          extra.controlForm.target = controlForm;
+          dataBase.extraFormBox.put(extra);
 
-        final idControlForm = dataBase.controlFormBox.put(controlForm);
+          //Equipment
+          equipment.controlForm.target = controlForm;
+          dataBase.equipmentFormBox.put(equipment);
+          
+          //Control Form
 
-        //Employee
-        user.controlForms.add(controlForm);
-        dataBase.usersBox.put(user);
+          controlForm.measuresD.target = measures;
+          controlForm.lightsD.target = lights;
+          controlForm.carBodyworkD.target = carBodywork;
+          controlForm.fluidsCheckD.target = fluidsCheck;
+          controlForm.bucketInspectionD.target = bucketInspection;
+          controlForm.securityD.target = security;
+          controlForm.extraD.target = extra;
+          controlForm.equipmentD.target = equipment;
 
-        final nuevaInstruccion = Bitacora(
-          instruccion: 'syncAddControlForm',
-          usuarioPropietario: prefs.getString("userId")!,
-          idControlForm: idControlForm,
-        ); //Se crea la nueva instruccion a realizar en bitacora
+          controlForm.issuesD = badStateLights + badStateFluids + badStateSecurity + badStateEquipment;
+          controlForm.dateAddedD = DateTime.now();
 
-        nuevaInstruccion.controlForm.target = controlForm; //Se asigna la orden de trabajo a la nueva instrucción
-        controlForm.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a la orden de trabajo
-        dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+          //Se actualiza el Control Form
+          dataBase.controlFormBox.put(controlForm);
 
-        notifyListeners();
-        return true;
-      } 
-      else {
+          final nuevaInstruccion = Bitacora(
+            instruccion: 'syncAddControlFormD',
+            usuarioPropietario: prefs.getString("userId")!,
+            idControlForm: controlForm.id,
+          ); //Se crea la nueva instruccion a realizar en bitacora
+
+          nuevaInstruccion.controlForm.target = controlForm; //Se asigna la orden de trabajo a la nueva instrucción
+          controlForm.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a la orden de trabajo
+          dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+
+          notifyListeners();
+          return true;
+        } 
+        else {
+          notifyListeners();
+          return false;
+        }
+      } else {
         notifyListeners();
         return false;
       }

@@ -361,10 +361,9 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     if (usuarioActual != null) {
         for (var controlForm in dataBase.controlFormBox.getAll().toList()) {
           if ((DateFormat('dd-MM-yyyy')
-              .format(controlForm.dateAdded).toString() == 
+              .format(controlForm.dateAddedR).toString() == 
               DateFormat('dd-MM-yyyy')
-              .format(today).toString()) 
-              && (controlForm.typeForm == true)) {
+              .format(today).toString())) {
             if (controlForm.employee.target?.idDBR == usuarioActual.idDBR) {
               controlFormToday = controlForm;
             } else {
@@ -381,13 +380,14 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual != null) {
         for (var controlForm in dataBase.controlFormBox.getAll().toList()) {
-          if ((DateFormat('dd-MM-yyyy')
-              .format(controlForm.dateAdded).toString() == 
-              DateFormat('dd-MM-yyyy')
-              .format(today).toString())
-               && (controlForm.typeForm == false)) {
-            if (controlForm.employee.target?.idDBR == usuarioActual.idDBR) {
-              controlFormToday = controlForm;
+          if (controlForm.dateAddedD != null) {
+            if ((DateFormat('dd-MM-yyyy')
+                .format(controlForm.dateAddedD!).toString() == 
+                DateFormat('dd-MM-yyyy')
+                .format(today).toString())) {
+              if (controlForm.employee.target?.idDBR == usuarioActual.idDBR) {
+                controlFormToday = controlForm;
+              }
             }
           }
         }
@@ -408,28 +408,28 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
 
     if (usuarioCurrent != null) {
       for (var element in usuarioCurrent!.controlForms) {
-        if (element.dateAdded.month == (today.month)) {
-          if (element.typeForm) {
+        if (element.dateAddedR.month == (today.month)) {
             firstFormReceived.add(element);
-          }
-          if (!element.typeForm) {
-            firstFormDelivered.add(element);
+          if (element.dateAddedD != null) {
+            if (element.dateAddedD!.month == (today.month)) {
+              firstFormDelivered.add(element);
+            }
           }
         }
-        if (element.dateAdded.month == (today.month - 1)) {
-          if (element.typeForm) {
+        if (element.dateAddedR.month == (today.month - 1)) {
             secondFormReceived.add(element);
-          }
-          if (!element.typeForm) {
-            secondFormDelivered.add(element);
+          if (element.dateAddedD != null) {
+            if (element.dateAddedD!.month == (today.month - 1)) {
+              secondFormDelivered.add(element);
+            }
           }
         }
-        if (element.dateAdded.month == (today.month - 2)) {
-          if (element.typeForm) {
+        if (element.dateAddedR.month == (today.month - 2)) {
             thirdFormReceived.add(element);
-          }
-          if (!element.typeForm) {
-            thirdFormDelivered.add(element);
+          if (element.dateAddedD != null) {
+            if (element.dateAddedD!.month == (today.month - 2)) {
+              thirdFormDelivered.add(element);
+            }
           }
         }
       }

@@ -1875,8 +1875,8 @@ class ReceivingFormController extends ChangeNotifier {
       );
 
       final controlForm = ControlForm(
-        typeForm: true, //Receiving
-        issues: badStateLights + badStateFluids + badStateSecurity + badStateEquipment,
+        issuesR: badStateLights + badStateFluids + badStateSecurity + badStateEquipment,
+        today: true,
       );
       
       final vehicle = user?.vehicle.target;
@@ -1916,14 +1916,14 @@ class ReceivingFormController extends ChangeNotifier {
         
         //Control Form
 
-        controlForm.measures.target = measures;
-        controlForm.lights.target = lights;
-        controlForm.carBodywork.target = carBodywork;
-        controlForm.fluidsCheck.target = fluidsCheck;
-        controlForm.bucketInspection.target = bucketInspection;
-        controlForm.security.target = security;
-        controlForm.extra.target = extra;
-        controlForm.equipment.target = equipment;
+        controlForm.measuresR.target = measures;
+        controlForm.lightsR.target = lights;
+        controlForm.carBodyworkR.target = carBodywork;
+        controlForm.fluidsCheckR.target = fluidsCheck;
+        controlForm.bucketInspectionR.target = bucketInspection;
+        controlForm.securityR.target = security;
+        controlForm.extraR.target = extra;
+        controlForm.equipmentR.target = equipment;
 
         controlForm.vehicle.target = vehicle;
         controlForm.employee.target = user;
@@ -1935,7 +1935,7 @@ class ReceivingFormController extends ChangeNotifier {
         dataBase.usersBox.put(user);
 
         final nuevaInstruccion = Bitacora(
-          instruccion: 'syncAddControlForm',
+          instruccion: 'syncAddControlFormR',
           usuarioPropietario: prefs.getString("userId")!,
           idControlForm: idControlForm,
         ); //Se crea la nueva instruccion a realizar en bitacora

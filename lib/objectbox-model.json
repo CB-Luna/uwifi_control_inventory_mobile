@@ -153,7 +153,7 @@
     },
     {
       "id": "86:283646429578876451",
-      "lastPropertyId": "17:5771699047160977949",
+      "lastPropertyId": "38:7955731353673957890",
       "name": "ControlForm",
       "properties": [
         {
@@ -161,16 +161,6 @@
           "name": "id",
           "type": 6,
           "flags": 1
-        },
-        {
-          "id": "2:6352478481099351606",
-          "name": "typeForm",
-          "type": 1
-        },
-        {
-          "id": "3:7473147047598627394",
-          "name": "dateAdded",
-          "type": 10
         },
         {
           "id": "4:8105920711952487409",
@@ -196,73 +186,157 @@
           "relationTarget": "Vehicle"
         },
         {
-          "id": "7:9150909545264128235",
-          "name": "measuresId",
+          "id": "18:4939078722358756667",
+          "name": "dateAddedR",
+          "type": 10
+        },
+        {
+          "id": "19:7721689959183185022",
+          "name": "dateAddedD",
+          "type": 10
+        },
+        {
+          "id": "20:5017922096706535505",
+          "name": "issuesR",
+          "type": 6
+        },
+        {
+          "id": "21:4217610095448771704",
+          "name": "issuesD",
+          "type": 6
+        },
+        {
+          "id": "22:3080798193881943248",
+          "name": "measuresRId",
           "type": 11,
           "flags": 520,
-          "indexId": "388:4626339537674908557",
+          "indexId": "435:122992020478916022",
           "relationTarget": "Measures"
         },
         {
-          "id": "8:6788677312820454396",
-          "name": "lightsId",
+          "id": "23:7176987853653918766",
+          "name": "lightsRId",
           "type": 11,
           "flags": 520,
-          "indexId": "389:1080738433399291753",
+          "indexId": "436:1873973174052103437",
           "relationTarget": "Lights"
         },
         {
-          "id": "9:7902367091547443915",
-          "name": "carBodyworkId",
+          "id": "24:1383480465253217739",
+          "name": "carBodyworkRId",
           "type": 11,
           "flags": 520,
-          "indexId": "390:6964699696323522363",
+          "indexId": "437:8805291357515159169",
           "relationTarget": "CarBodywork"
         },
         {
-          "id": "10:6156332927596122814",
-          "name": "fluidsCheckId",
+          "id": "25:8468558113948439846",
+          "name": "fluidsCheckRId",
           "type": 11,
           "flags": 520,
-          "indexId": "391:496185777107324813",
+          "indexId": "438:3184683556371449944",
           "relationTarget": "FluidsCheck"
         },
         {
-          "id": "12:6319806637083549128",
-          "name": "securityId",
+          "id": "26:7816600607549354181",
+          "name": "bucketInspectionRId",
           "type": 11,
           "flags": 520,
-          "indexId": "393:2707715113785547372",
-          "relationTarget": "Security"
-        },
-        {
-          "id": "13:7442866940337625838",
-          "name": "extraId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "394:6907220557239226145",
-          "relationTarget": "Extra"
-        },
-        {
-          "id": "14:2227071491150425204",
-          "name": "equipmentId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "395:3683821233501424578",
-          "relationTarget": "Equipment"
-        },
-        {
-          "id": "15:5065703079577799848",
-          "name": "bucketInspectionId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "410:8460461020124898604",
+          "indexId": "439:236811738838167750",
           "relationTarget": "BucketInspection"
         },
         {
-          "id": "17:5771699047160977949",
-          "name": "issues",
-          "type": 6
+          "id": "27:4973135530074138941",
+          "name": "securityRId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "440:4835492171320096392",
+          "relationTarget": "Security"
+        },
+        {
+          "id": "28:6643909120436266416",
+          "name": "extraRId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "441:8080326262320799826",
+          "relationTarget": "Extra"
+        },
+        {
+          "id": "29:1245445534545642663",
+          "name": "equipmentRId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "442:8867874908424643644",
+          "relationTarget": "Equipment"
+        },
+        {
+          "id": "30:6899752367049103072",
+          "name": "measuresDId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "443:8751976194561309460",
+          "relationTarget": "Measures"
+        },
+        {
+          "id": "31:4101803535176847165",
+          "name": "lightsDId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "444:2177789714560177811",
+          "relationTarget": "Lights"
+        },
+        {
+          "id": "32:3012195276920336775",
+          "name": "carBodyworkDId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "445:657476217401674636",
+          "relationTarget": "CarBodywork"
+        },
+        {
+          "id": "33:8535621974771493220",
+          "name": "fluidsCheckDId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "446:3825693090286000930",
+          "relationTarget": "FluidsCheck"
+        },
+        {
+          "id": "34:5731946712531999849",
+          "name": "bucketInspectionDId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "447:551739223749718276",
+          "relationTarget": "BucketInspection"
+        },
+        {
+          "id": "35:2593314656940468401",
+          "name": "securityDId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "448:8996772627557330004",
+          "relationTarget": "Security"
+        },
+        {
+          "id": "36:9217248123693218315",
+          "name": "extraDId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "449:5804864913316168266",
+          "relationTarget": "Extra"
+        },
+        {
+          "id": "37:5265186408950234883",
+          "name": "equipmentDId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "450:5865551881169805159",
+          "relationTarget": "Equipment"
+        },
+        {
+          "id": "38:7955731353673957890",
+          "name": "today",
+          "type": 1
         }
       ],
       "relations": []
@@ -1960,7 +2034,7 @@
     }
   ],
   "lastEntityId": "102:3290269878544238397",
-  "lastIndexId": "434:7663217395535372588",
+  "lastIndexId": "450:5865551881169805159",
   "lastRelationId": "97:7907540417784017008",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
@@ -2225,7 +2299,15 @@
     1215468110805298241,
     7713453128820497698,
     5311425645938031112,
-    659698341661181318
+    659698341661181318,
+    4626339537674908557,
+    1080738433399291753,
+    6964699696323522363,
+    496185777107324813,
+    2707715113785547372,
+    6907220557239226145,
+    3683821233501424578,
+    8460461020124898604
   ],
   "retiredPropertyUids": [
     7079790605743243388,
@@ -3268,7 +3350,18 @@
     472741667402047784,
     8508696798102400446,
     251371643102140460,
-    2938032336750196780
+    2938032336750196780,
+    6352478481099351606,
+    7473147047598627394,
+    9150909545264128235,
+    6788677312820454396,
+    7902367091547443915,
+    6156332927596122814,
+    6319806637083549128,
+    7442866940337625838,
+    2227071491150425204,
+    5065703079577799848,
+    5771699047160977949
   ],
   "retiredRelationUids": [
     1226469011453769556,

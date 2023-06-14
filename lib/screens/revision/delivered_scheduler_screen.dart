@@ -382,19 +382,39 @@ class _DeliveredSchedulerScreenState extends State<DeliveredSchedulerScreen> {
                         isTaped: vehiculoController.isTapedDelivered == 2,
                       ),
                     ),
-                    MenuFormButton(
-                      icon: Icons.health_and_safety, 
-                      onPressed: () {
-                        vehiculoController.setTapedOptionDelivered(3);
-                      },
-                      isTaped: vehiculoController.isTapedDelivered == 3,
+                    badge.Badge(
+                      badgeContent: Text(
+                        "${deliveredFromProvider.badStateSecurity}",
+                          style: TextStyle(
+                              color: FlutterFlowTheme.of(context).white)),
+                      showBadge: deliveredFromProvider.badStateSecurity != 0,
+                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                      position: badge.BadgePosition.topEnd(),
+                      elevation: 4,
+                      child: MenuFormButton(
+                        icon: Icons.health_and_safety, 
+                        onPressed: () {
+                          vehiculoController.setTapedOptionDelivered(3);
+                        },
+                        isTaped: vehiculoController.isTapedDelivered == 3,
+                      ),
                     ),
-                    MenuFormButton(
+                    badge.Badge(
+                      badgeContent: Text(
+                        "${deliveredFromProvider.badStateEquipment}",
+                          style: TextStyle(
+                              color: FlutterFlowTheme.of(context).white)),
+                      showBadge: deliveredFromProvider.badStateEquipment != 0,
+                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                      position: badge.BadgePosition.topEnd(),
+                      elevation: 4,
+                      child: MenuFormButton(
                       icon: Icons.build, 
-                      onPressed: () {
-                        vehiculoController.setTapedOptionDelivered(4);
-                      },
-                      isTaped: vehiculoController.isTapedDelivered == 4,
+                        onPressed: () {
+                          vehiculoController.setTapedOptionDelivered(4);
+                        },
+                        isTaped: vehiculoController.isTapedDelivered == 4,
+                      ),
                     ),
                   ],
                 ),

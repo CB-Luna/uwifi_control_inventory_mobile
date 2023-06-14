@@ -6,34 +6,46 @@ import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 @Entity()
 class ControlForm {
   int id;
-  bool typeForm;
-  DateTime dateAdded;
+  DateTime dateAddedR;
+  DateTime? dateAddedD;
   @Unique()
   String? idDBR;
-  int issues;
+  int issuesR;
+  int? issuesD;
+  bool today;
   final employee = ToOne<Users>();
   final vehicle = ToOne<Vehicle>();
-  final measures = ToOne<Measures>();
-  final lights = ToOne<Lights>();
-  final carBodywork = ToOne<CarBodywork>();
-  final fluidsCheck = ToOne<FluidsCheck>();
-  final bucketInspection = ToOne<BucketInspection>();
-  final security = ToOne<Security>();
-  final extra = ToOne<Extra>();
-  final equipment = ToOne<Equipment>();
+  final measuresR = ToOne<Measures>();
+  final lightsR = ToOne<Lights>();
+  final carBodyworkR = ToOne<CarBodywork>();
+  final fluidsCheckR = ToOne<FluidsCheck>();
+  final bucketInspectionR = ToOne<BucketInspection>();
+  final securityR = ToOne<Security>();
+  final extraR = ToOne<Extra>();
+  final equipmentR = ToOne<Equipment>();
+  final measuresD = ToOne<Measures>();
+  final lightsD = ToOne<Lights>();
+  final carBodyworkD = ToOne<CarBodywork>();
+  final fluidsCheckD = ToOne<FluidsCheck>();
+  final bucketInspectionD = ToOne<BucketInspection>();
+  final securityD = ToOne<Security>();
+  final extraD = ToOne<Extra>();
+  final equipmentD = ToOne<Equipment>();
   @Backlink()
   final bitacora = ToMany<Bitacora>();
 
   ControlForm({
     this.id = 0,
-    required this.typeForm,
-    required this.issues,
-    DateTime? dateAdded,
+    required this.issuesR,
+    this.issuesD,
+    DateTime? dateAddedR,
+    this.dateAddedD,
     this.idDBR,
-  }) : dateAdded = dateAdded ?? DateTime.now();
+    this.today = false,
+  }) : dateAddedR = dateAddedR ?? DateTime.now();
 
   String get dateAddedFormat =>
-      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAddedR);
 }
 
 @Entity()

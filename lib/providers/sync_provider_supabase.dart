@@ -39,11 +39,11 @@ class SyncProviderSupabase extends ChangeNotifier {
     // Se recuperan instrucciones fallidas anteriores
     for (var i = 0; i < instruccionesBitacora.length; i++) {
       switch (instruccionesBitacora[i].instruccion) {
-        case "syncAddControlForm":
+        case "syncAddControlFormR":
           final controlFormToSync = getFirstControlForm(
               dataBase.controlFormBox.getAll(), instruccionesBitacora[i].id);
           if (controlFormToSync != null) {
-            final responseSyncAddControlForm = await syncAddControlForm(
+            final responseSyncAddControlForm = await syncAddControlFormR(
                 controlFormToSync, instruccionesBitacora[i]);
             if (responseSyncAddControlForm.exitoso) {
               banderasExistoSync.add(responseSyncAddControlForm.exitoso);
@@ -62,7 +62,35 @@ class SyncProviderSupabase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
                 instruccion:
-                    "Problemas en sincronizar al Servidor Local un cliente no recuperado.",
+                    "Problems sync to Local Server, Control Form not recovered.",
+                fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncAddControlFormD":
+          final controlFormToSync = getFirstControlForm(
+              dataBase.controlFormBox.getAll(), instruccionesBitacora[i].id);
+          if (controlFormToSync != null) {
+            final responseSyncAddControlForm = await syncAddControlFormD(
+                controlFormToSync, instruccionesBitacora[i]);
+            if (responseSyncAddControlForm.exitoso) {
+              banderasExistoSync.add(responseSyncAddControlForm.exitoso);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(responseSyncAddControlForm.exitoso);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  instruccion: responseSyncAddControlForm.descripcion,
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion:
+                    "Problems sync to Local Server, Control Form not recovered.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
@@ -275,7 +303,7 @@ class SyncProviderSupabase extends ChangeNotifier {
     }
   }
 
-  Future<SyncInstruction> syncAddControlForm(
+  Future<SyncInstruction> syncAddControlFormR(
       ControlForm controlForm, Bitacora bitacora) async {
     String gasImages = "";
     String mileageImages = "";
@@ -343,475 +371,475 @@ class SyncProviderSupabase extends ChangeNotifier {
       if (bitacora.executeSupabase == false) {
         if (controlForm.idDBR == null) {
           //Registrar measures
-          if (controlForm.measures.target!.gasImages.isNotEmpty) {
-            for (var element in controlForm.measures.target!.gasImages.toList()) {
+          if (controlForm.measuresR.target!.gasImages.isNotEmpty) {
+            for (var element in controlForm.measuresR.target!.gasImages.toList()) {
               gasImages = "$gasImages$element|";
             }
           }
-          if (controlForm.measures.target!.mileageImages.isNotEmpty) {
-            for (var element in controlForm.measures.target!.mileageImages.toList()) {
+          if (controlForm.measuresR.target!.mileageImages.isNotEmpty) {
+            for (var element in controlForm.measuresR.target!.mileageImages.toList()) {
               mileageImages = "$mileageImages$element|";
             }
           }
           final recordMeasure = await supabaseCtrlV.from('measures').insert(
             {
-              'gas': controlForm.measures.target!.gas,
-              'gas_comments': controlForm.measures.target!.gasComments,
-              'gas_image': controlForm.measures.target!.gasImages.isEmpty == true ? null : gasImages,
-              'mileage': controlForm.measures.target!.mileage,
-              'mileage_comments': controlForm.measures.target!.mileageComments,
-              'milage_image': controlForm.measures.target?.mileageImages.isEmpty == true ? null : mileageImages,
-              'date_added': controlForm.measures.target!.dateAdded.toIso8601String(),
+              'gas': controlForm.measuresR.target!.gas,
+              'gas_comments': controlForm.measuresR.target!.gasComments,
+              'gas_image': controlForm.measuresR.target!.gasImages.isEmpty == true ? null : gasImages,
+              'mileage': controlForm.measuresR.target!.mileage,
+              'mileage_comments': controlForm.measuresR.target!.mileageComments,
+              'milage_image': controlForm.measuresR.target?.mileageImages.isEmpty == true ? null : mileageImages,
+              'date_added': controlForm.measuresR.target!.dateAdded.toIso8601String(),
             },
           ).select<PostgrestList>('id_measure');
           //Registrar lights
-          if (controlForm.lights.target!.headLightsImages.isNotEmpty) {
-            for (var element in controlForm.lights.target!.headLightsImages.toList()) {
+          if (controlForm.lightsR.target!.headLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsR.target!.headLightsImages.toList()) {
               headlightsImages = "$headlightsImages$element|";
             }
           }
-          if (controlForm.lights.target!.brakeLightsImages.isNotEmpty) {
-            for (var element in controlForm.lights.target!.brakeLightsImages.toList()) {
+          if (controlForm.lightsR.target!.brakeLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsR.target!.brakeLightsImages.toList()) {
               brakeLightsImages = "$brakeLightsImages$element|";
             }
           }
-          if (controlForm.lights.target!.reverseLightsImages.isNotEmpty) {
-            for (var element in controlForm.lights.target!.reverseLightsImages.toList()) {
+          if (controlForm.lightsR.target!.reverseLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsR.target!.reverseLightsImages.toList()) {
               reverseLightsImages = "$reverseLightsImages$element|";
             }
           }
-          if (controlForm.lights.target!.warningLightsImages.isNotEmpty) {
-            for (var element in controlForm.lights.target!.warningLightsImages.toList()) {
+          if (controlForm.lightsR.target!.warningLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsR.target!.warningLightsImages.toList()) {
               warningLightsImages = "$warningLightsImages$element|";
             }
           }
-          if (controlForm.lights.target!.turnSignalsImages.isNotEmpty) {
-            for (var element in controlForm.lights.target!.turnSignalsImages.toList()) {
+          if (controlForm.lightsR.target!.turnSignalsImages.isNotEmpty) {
+            for (var element in controlForm.lightsR.target!.turnSignalsImages.toList()) {
               turnSignalsImages = "$turnSignalsImages$element|";
             }
           }
-          if (controlForm.lights.target!.fourWayFlashersImages.isNotEmpty) {
-            for (var element in controlForm.lights.target!.fourWayFlashersImages.toList()) {
+          if (controlForm.lightsR.target!.fourWayFlashersImages.isNotEmpty) {
+            for (var element in controlForm.lightsR.target!.fourWayFlashersImages.toList()) {
               fourWayFlashersImages = "$fourWayFlashersImages$element|";
             }
           }
-          if (controlForm.lights.target!.dashLightsImages.isNotEmpty) {
-            for (var element in controlForm.lights.target!.dashLightsImages.toList()) {
+          if (controlForm.lightsR.target!.dashLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsR.target!.dashLightsImages.toList()) {
               dashLightsImages = "$dashLightsImages$element|";
             }
           }
-          if (controlForm.lights.target!.strobeLightsImages.isNotEmpty) {
-            for (var element in controlForm.lights.target!.strobeLightsImages.toList()) {
+          if (controlForm.lightsR.target!.strobeLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsR.target!.strobeLightsImages.toList()) {
               strobeLightsImages = "$strobeLightsImages$element|";
             }
           }
-          if (controlForm.lights.target!.cabRoofLightsImages.isNotEmpty) {
-            for (var element in controlForm.lights.target!.cabRoofLightsImages.toList()) {
+          if (controlForm.lightsR.target!.cabRoofLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsR.target!.cabRoofLightsImages.toList()) {
               cabRoofLightsImages = "$cabRoofLightsImages$element|";
             }
           }
-          if (controlForm.lights.target!.clearanceLightsImages.isNotEmpty) {
-            for (var element in controlForm.lights.target!.clearanceLightsImages.toList()) {
+          if (controlForm.lightsR.target!.clearanceLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsR.target!.clearanceLightsImages.toList()) {
               clearanceLightsImages = "$clearanceLightsImages$element|";
             }
           }
           final recordLights = await supabaseCtrlV.from('lights').insert(
             {
-              'headlights': controlForm.lights.target!.headLights,
-              'headlights_comments': controlForm.lights.target!.headLightsComments,
-              'headlights_image': controlForm.lights.target!.headLightsImages.isEmpty == true ? null : headlightsImages,
-              'brake_lights': controlForm.lights.target!.brakeLights,
-              'brake_lights_comments': controlForm.lights.target!.brakeLightsComments,
-              'brake_lights_image': controlForm.lights.target?.brakeLightsImages.isEmpty == true ? null : brakeLightsImages,
-              'reverse_lights': controlForm.lights.target!.reverseLights,
-              'reverse_lights_comments': controlForm.lights.target!.reverseLightsComments,
-              'reverse_lights_image': controlForm.lights.target?.reverseLightsImages.isEmpty == true ? null : reverseLightsImages,
-              'warning_lights': controlForm.lights.target!.warningLights,
-              'warning_lights_comments': controlForm.lights.target!.warningLightsComments,
-              'warning_lights_image': controlForm.lights.target?.warningLightsImages.isEmpty == true ? null : warningLightsImages,
-              'turn_signals': controlForm.lights.target!.turnSignals,
-              'turn_signals_comments': controlForm.lights.target!.turnSignalsComments,
-              'turn_signals_image': controlForm.lights.target?.turnSignalsImages.isEmpty == true ? null : turnSignalsImages,
-              '_4_way_flashers': controlForm.lights.target!.fourWayFlashers,
-              '_4_way_flashers_comments': controlForm.lights.target!.fourWayFlashersComments,
-              '_4_way_flashers_image': controlForm.lights.target?.fourWayFlashersImages.isEmpty == true ? null : fourWayFlashersImages,
-              'dash_lights': controlForm.lights.target!.dashLights,
-              'dash_lights_comments': controlForm.lights.target!.dashLightsComments,
-              'dash_lights_image': controlForm.lights.target?.dashLightsImages.isEmpty == true ? null : dashLightsImages,
-              'strobe_lights': controlForm.lights.target!.strobeLights,
-              'strobe_lights_comments': controlForm.lights.target!.strobeLightsComments,
-              'strobe_lights_image': controlForm.lights.target?.strobeLightsImages.isEmpty == true ? null : strobeLightsImages,
-              'cab_roof_lights': controlForm.lights.target!.cabRoofLights,
-              'cab_roof_lights_comments': controlForm.lights.target!.cabRoofLightsComments,
-              'cab_roof_lights_image': controlForm.lights.target?.cabRoofLightsImages.isEmpty == true ? null : cabRoofLightsImages,
-              'clearance_lights': controlForm.lights.target!.clearanceLights,
-              'clearance_lights_comments': controlForm.lights.target!.clearanceLightsComments,
-              'clearance_lights_image': controlForm.lights.target?.clearanceLightsImages.isEmpty == true ? null : clearanceLightsImages,
-              'date_added': controlForm.lights.target!.dateAdded.toIso8601String(),
+              'headlights': controlForm.lightsR.target!.headLights,
+              'headlights_comments': controlForm.lightsR.target!.headLightsComments,
+              'headlights_image': controlForm.lightsR.target!.headLightsImages.isEmpty == true ? null : headlightsImages,
+              'brake_lights': controlForm.lightsR.target!.brakeLights,
+              'brake_lights_comments': controlForm.lightsR.target!.brakeLightsComments,
+              'brake_lights_image': controlForm.lightsR.target?.brakeLightsImages.isEmpty == true ? null : brakeLightsImages,
+              'reverse_lights': controlForm.lightsR.target!.reverseLights,
+              'reverse_lights_comments': controlForm.lightsR.target!.reverseLightsComments,
+              'reverse_lights_image': controlForm.lightsR.target?.reverseLightsImages.isEmpty == true ? null : reverseLightsImages,
+              'warning_lights': controlForm.lightsR.target!.warningLights,
+              'warning_lights_comments': controlForm.lightsR.target!.warningLightsComments,
+              'warning_lights_image': controlForm.lightsR.target?.warningLightsImages.isEmpty == true ? null : warningLightsImages,
+              'turn_signals': controlForm.lightsR.target!.turnSignals,
+              'turn_signals_comments': controlForm.lightsR.target!.turnSignalsComments,
+              'turn_signals_image': controlForm.lightsR.target?.turnSignalsImages.isEmpty == true ? null : turnSignalsImages,
+              '_4_way_flashers': controlForm.lightsR.target!.fourWayFlashers,
+              '_4_way_flashers_comments': controlForm.lightsR.target!.fourWayFlashersComments,
+              '_4_way_flashers_image': controlForm.lightsR.target?.fourWayFlashersImages.isEmpty == true ? null : fourWayFlashersImages,
+              'dash_lights': controlForm.lightsR.target!.dashLights,
+              'dash_lights_comments': controlForm.lightsR.target!.dashLightsComments,
+              'dash_lights_image': controlForm.lightsR.target?.dashLightsImages.isEmpty == true ? null : dashLightsImages,
+              'strobe_lights': controlForm.lightsR.target!.strobeLights,
+              'strobe_lights_comments': controlForm.lightsR.target!.strobeLightsComments,
+              'strobe_lights_image': controlForm.lightsR.target?.strobeLightsImages.isEmpty == true ? null : strobeLightsImages,
+              'cab_roof_lights': controlForm.lightsR.target!.cabRoofLights,
+              'cab_roof_lights_comments': controlForm.lightsR.target!.cabRoofLightsComments,
+              'cab_roof_lights_image': controlForm.lightsR.target?.cabRoofLightsImages.isEmpty == true ? null : cabRoofLightsImages,
+              'clearance_lights': controlForm.lightsR.target!.clearanceLights,
+              'clearance_lights_comments': controlForm.lightsR.target!.clearanceLightsComments,
+              'clearance_lights_image': controlForm.lightsR.target?.clearanceLightsImages.isEmpty == true ? null : clearanceLightsImages,
+              'date_added': controlForm.lightsR.target!.dateAdded.toIso8601String(),
             },
           ).select<PostgrestList>('id_lights');
           //Registrar car bodywork
-          if (controlForm.carBodywork.target!.wiperBladesFrontImages.isNotEmpty) {
-            for (var element in controlForm.carBodywork.target!.wiperBladesFrontImages.toList()) {
+          if (controlForm.carBodyworkR.target!.wiperBladesFrontImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkR.target!.wiperBladesFrontImages.toList()) {
               wiperBladesFrontImages = "$wiperBladesFrontImages$element|";
             }
           }
-          if (controlForm.carBodywork.target!.wiperBladesBackImages.isNotEmpty) {
-            for (var element in controlForm.carBodywork.target!.wiperBladesBackImages.toList()) {
+          if (controlForm.carBodyworkR.target!.wiperBladesBackImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkR.target!.wiperBladesBackImages.toList()) {
               wiperBladesBackImages = "$wiperBladesBackImages$element|";
             }
           }
-          if (controlForm.carBodywork.target!.windshieldWiperFrontImages.isNotEmpty) {
-            for (var element in controlForm.carBodywork.target!.windshieldWiperFrontImages.toList()) {
+          if (controlForm.carBodyworkR.target!.windshieldWiperFrontImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkR.target!.windshieldWiperFrontImages.toList()) {
               windshieldWiperFrontImages = "$windshieldWiperFrontImages$element|";
             }
           }
-          if (controlForm.carBodywork.target!.windshieldWiperBackImages.isNotEmpty) {
-            for (var element in controlForm.carBodywork.target!.windshieldWiperBackImages.toList()) {
+          if (controlForm.carBodyworkR.target!.windshieldWiperBackImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkR.target!.windshieldWiperBackImages.toList()) {
               windshieldWiperBackImages = "$windshieldWiperBackImages$element|";
             }
           }
-          if (controlForm.carBodywork.target!.generalBodyImages.isNotEmpty) {
-            for (var element in controlForm.carBodywork.target!.generalBodyImages.toList()) {
+          if (controlForm.carBodyworkR.target!.generalBodyImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkR.target!.generalBodyImages.toList()) {
               generalBodyImages = "$generalBodyImages$element|";
             }
           }
-          if (controlForm.carBodywork.target!.decalingImages.isNotEmpty) {
-            for (var element in controlForm.carBodywork.target!.decalingImages.toList()) {
+          if (controlForm.carBodyworkR.target!.decalingImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkR.target!.decalingImages.toList()) {
               decalingImages = "$decalingImages$element|";
             }
           }
-          if (controlForm.carBodywork.target!.tiresImages.isNotEmpty) {
-            for (var element in controlForm.carBodywork.target!.tiresImages.toList()) {
+          if (controlForm.carBodyworkR.target!.tiresImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkR.target!.tiresImages.toList()) {
               tiresImages = "$tiresImages$element|";
             }
           }
-          if (controlForm.carBodywork.target!.glassImages.isNotEmpty) {
-            for (var element in controlForm.carBodywork.target!.glassImages.toList()) {
+          if (controlForm.carBodyworkR.target!.glassImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkR.target!.glassImages.toList()) {
               glassImages = "$glassImages$element|";
             }
           }
-          if (controlForm.carBodywork.target!.mirrorsImages.isNotEmpty) {
-            for (var element in controlForm.carBodywork.target!.mirrorsImages.toList()) {
+          if (controlForm.carBodyworkR.target!.mirrorsImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkR.target!.mirrorsImages.toList()) {
               mirrorsImages = "$mirrorsImages$element|";
             }
           }
-          if (controlForm.carBodywork.target!.parkingImages.isNotEmpty) {
-            for (var element in controlForm.carBodywork.target!.parkingImages.toList()) {
+          if (controlForm.carBodyworkR.target!.parkingImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkR.target!.parkingImages.toList()) {
               parkingImages = "$parkingImages$element|";
             }
           }
-          if (controlForm.carBodywork.target!.brakesImages.isNotEmpty) {
-            for (var element in controlForm.carBodywork.target!.brakesImages.toList()) {
+          if (controlForm.carBodyworkR.target!.brakesImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkR.target!.brakesImages.toList()) {
               brakesImages = "$brakesImages$element|";
             }
           }
-          if (controlForm.carBodywork.target!.emgBrakesImages.isNotEmpty) {
-            for (var element in controlForm.carBodywork.target!.emgBrakesImages.toList()) {
+          if (controlForm.carBodyworkR.target!.emgBrakesImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkR.target!.emgBrakesImages.toList()) {
               emgBrakesImages = "$emgBrakesImages$element|";
             }
           }
-          if (controlForm.carBodywork.target!.hornImages.isNotEmpty) {
-            for (var element in controlForm.carBodywork.target!.hornImages.toList()) {
+          if (controlForm.carBodyworkR.target!.hornImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkR.target!.hornImages.toList()) {
               hornImages = "$hornImages$element|";
             }
           }
           final recordCarBodywork = await supabaseCtrlV.from('car_bodywork').insert(
             {
-              'wiper_blades_front': controlForm.carBodywork.target!.wiperBladesFront,
-              'wiper_blades_front_comments': controlForm.carBodywork.target!.wiperBladesFrontComments,
-              'wiper_blades_front_image': controlForm.carBodywork.target!.wiperBladesFrontImages.isEmpty == true ? null : wiperBladesFrontImages,
-              'wiper_blades_back': controlForm.carBodywork.target!.wiperBladesBack,
-              'wiper_blades_back_comments': controlForm.carBodywork.target!.wiperBladesBackComments,
-              'wiper_blades_back_image': controlForm.carBodywork.target?.wiperBladesBackImages.isEmpty == true ? null : wiperBladesBackImages,
-              'windshield_wiper_front': controlForm.carBodywork.target!.windshieldWiperFront,
-              'windshield_wiper_front_comments': controlForm.carBodywork.target!.windshieldWiperFrontComments,
-              'windshield_wiper_front_image': controlForm.carBodywork.target?.windshieldWiperFrontImages.isEmpty == true ? null : windshieldWiperFrontImages,
-              'windshield_wiper_back': controlForm.carBodywork.target!.windshieldWiperBack,
-              'windshield_wiper_back_comments': controlForm.carBodywork.target!.windshieldWiperBackComments,
-              'windshield_wiper_back_image': controlForm.carBodywork.target?.windshieldWiperBackImages.isEmpty == true ? null : windshieldWiperBackImages,
-              'general_body': controlForm.carBodywork.target!.generalBody,
-              'general_body_comments': controlForm.carBodywork.target!.generalBodyComments,
-              'general_body_image': controlForm.carBodywork.target?.generalBodyImages.isEmpty == true ? null : generalBodyImages,
-              'decaling': controlForm.carBodywork.target!.decaling,
-              'decaling_comments': controlForm.carBodywork.target!.decalingComments,
-              'decaling_image': controlForm.carBodywork.target?.decalingImages.isEmpty == true ? null : decalingImages,
-              'tires': controlForm.carBodywork.target!.tires,
-              'tires_comments': controlForm.carBodywork.target!.tiresComments,
-              'tires_image': controlForm.carBodywork.target?.tiresImages.isEmpty == true ? null : tiresImages,
-              'glass': controlForm.carBodywork.target!.glass,
-              'glass_comments': controlForm.carBodywork.target!.glassComments,
-              'glass_image': controlForm.carBodywork.target?.glassImages.isEmpty == true ? null : glassImages,
-              'mirrors': controlForm.carBodywork.target!.mirrors,
-              'mirrors_comments': controlForm.carBodywork.target!.mirrorsComments,
-              'mirrors_image': controlForm.carBodywork.target?.mirrorsImages.isEmpty == true ? null : mirrorsImages,
-              'parking': controlForm.carBodywork.target!.parking,
-              'parking_comments': controlForm.carBodywork.target!.parkingComments,
-              'parking_image': controlForm.carBodywork.target?.parkingImages.isEmpty == true ? null : parkingImages,
-              'brakes': controlForm.carBodywork.target!.brakes,
-              'brakes_comments': controlForm.carBodywork.target!.brakesComments,
-              'brakes_image': controlForm.carBodywork.target?.brakesImages.isEmpty == true ? null : brakesImages,
-              'emg_brakes': controlForm.carBodywork.target!.emgBrakes,
-              'emg_brakes_comments': controlForm.carBodywork.target!.emgBrakesComments,
-              'emg_brakes_image': controlForm.carBodywork.target?.emgBrakesImages.isEmpty == true ? null : emgBrakesImages,
-              'horn': controlForm.carBodywork.target!.horn,
-              'horn_comments': controlForm.carBodywork.target!.hornComments,
-              'horn_image': controlForm.carBodywork.target?.hornImages.isEmpty == true ? null : hornImages,
-              'date_added': controlForm.carBodywork.target!.dateAdded.toIso8601String(),
+              'wiper_blades_front': controlForm.carBodyworkR.target!.wiperBladesFront,
+              'wiper_blades_front_comments': controlForm.carBodyworkR.target!.wiperBladesFrontComments,
+              'wiper_blades_front_image': controlForm.carBodyworkR.target!.wiperBladesFrontImages.isEmpty == true ? null : wiperBladesFrontImages,
+              'wiper_blades_back': controlForm.carBodyworkR.target!.wiperBladesBack,
+              'wiper_blades_back_comments': controlForm.carBodyworkR.target!.wiperBladesBackComments,
+              'wiper_blades_back_image': controlForm.carBodyworkR.target?.wiperBladesBackImages.isEmpty == true ? null : wiperBladesBackImages,
+              'windshield_wiper_front': controlForm.carBodyworkR.target!.windshieldWiperFront,
+              'windshield_wiper_front_comments': controlForm.carBodyworkR.target!.windshieldWiperFrontComments,
+              'windshield_wiper_front_image': controlForm.carBodyworkR.target?.windshieldWiperFrontImages.isEmpty == true ? null : windshieldWiperFrontImages,
+              'windshield_wiper_back': controlForm.carBodyworkR.target!.windshieldWiperBack,
+              'windshield_wiper_back_comments': controlForm.carBodyworkR.target!.windshieldWiperBackComments,
+              'windshield_wiper_back_image': controlForm.carBodyworkR.target?.windshieldWiperBackImages.isEmpty == true ? null : windshieldWiperBackImages,
+              'general_body': controlForm.carBodyworkR.target!.generalBody,
+              'general_body_comments': controlForm.carBodyworkR.target!.generalBodyComments,
+              'general_body_image': controlForm.carBodyworkR.target?.generalBodyImages.isEmpty == true ? null : generalBodyImages,
+              'decaling': controlForm.carBodyworkR.target!.decaling,
+              'decaling_comments': controlForm.carBodyworkR.target!.decalingComments,
+              'decaling_image': controlForm.carBodyworkR.target?.decalingImages.isEmpty == true ? null : decalingImages,
+              'tires': controlForm.carBodyworkR.target!.tires,
+              'tires_comments': controlForm.carBodyworkR.target!.tiresComments,
+              'tires_image': controlForm.carBodyworkR.target?.tiresImages.isEmpty == true ? null : tiresImages,
+              'glass': controlForm.carBodyworkR.target!.glass,
+              'glass_comments': controlForm.carBodyworkR.target!.glassComments,
+              'glass_image': controlForm.carBodyworkR.target?.glassImages.isEmpty == true ? null : glassImages,
+              'mirrors': controlForm.carBodyworkR.target!.mirrors,
+              'mirrors_comments': controlForm.carBodyworkR.target!.mirrorsComments,
+              'mirrors_image': controlForm.carBodyworkR.target?.mirrorsImages.isEmpty == true ? null : mirrorsImages,
+              'parking': controlForm.carBodyworkR.target!.parking,
+              'parking_comments': controlForm.carBodyworkR.target!.parkingComments,
+              'parking_image': controlForm.carBodyworkR.target?.parkingImages.isEmpty == true ? null : parkingImages,
+              'brakes': controlForm.carBodyworkR.target!.brakes,
+              'brakes_comments': controlForm.carBodyworkR.target!.brakesComments,
+              'brakes_image': controlForm.carBodyworkR.target?.brakesImages.isEmpty == true ? null : brakesImages,
+              'emg_brakes': controlForm.carBodyworkR.target!.emgBrakes,
+              'emg_brakes_comments': controlForm.carBodyworkR.target!.emgBrakesComments,
+              'emg_brakes_image': controlForm.carBodyworkR.target?.emgBrakesImages.isEmpty == true ? null : emgBrakesImages,
+              'horn': controlForm.carBodyworkR.target!.horn,
+              'horn_comments': controlForm.carBodyworkR.target!.hornComments,
+              'horn_image': controlForm.carBodyworkR.target?.hornImages.isEmpty == true ? null : hornImages,
+              'date_added': controlForm.carBodyworkR.target!.dateAdded.toIso8601String(),
             },
           ).select<PostgrestList>('id_car_bodywork');
           //Registrar fluids check
-          if (controlForm.fluidsCheck.target!.engineOilImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheck.target!.engineOilImages.toList()) {
+          if (controlForm.fluidsCheckR.target!.engineOilImages.isNotEmpty) {
+            for (var element in controlForm.fluidsCheckR.target!.engineOilImages.toList()) {
               engineOilImages = "$engineOilImages$element|";
             }
           }
-          if (controlForm.fluidsCheck.target!.transmissionImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheck.target!.transmissionImages.toList()) {
+          if (controlForm.fluidsCheckR.target!.transmissionImages.isNotEmpty) {
+            for (var element in controlForm.fluidsCheckR.target!.transmissionImages.toList()) {
               transmissionImages = "$transmissionImages$element|";
             }
           }
-          if (controlForm.fluidsCheck.target!.coolantImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheck.target!.coolantImages.toList()) {
+          if (controlForm.fluidsCheckR.target!.coolantImages.isNotEmpty) {
+            for (var element in controlForm.fluidsCheckR.target!.coolantImages.toList()) {
               coolantImages = "$coolantImages$element|";
             }
           }
-          if (controlForm.fluidsCheck.target!.powerSteeringImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheck.target!.powerSteeringImages.toList()) {
+          if (controlForm.fluidsCheckR.target!.powerSteeringImages.isNotEmpty) {
+            for (var element in controlForm.fluidsCheckR.target!.powerSteeringImages.toList()) {
               powerSteeringImages = "$powerSteeringImages$element|";
             }
           }
-          if (controlForm.fluidsCheck.target!.dieselExhaustFluidImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheck.target!.dieselExhaustFluidImages.toList()) {
+          if (controlForm.fluidsCheckR.target!.dieselExhaustFluidImages.isNotEmpty) {
+            for (var element in controlForm.fluidsCheckR.target!.dieselExhaustFluidImages.toList()) {
               dieselExhaustFluidImages = "$dieselExhaustFluidImages$element|";
             }
           }
-          if (controlForm.fluidsCheck.target!.windshieldWasherFluidImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheck.target!.windshieldWasherFluidImages.toList()) {
+          if (controlForm.fluidsCheckR.target!.windshieldWasherFluidImages.isNotEmpty) {
+            for (var element in controlForm.fluidsCheckR.target!.windshieldWasherFluidImages.toList()) {
               windshieldWasherFluidImages = "$windshieldWasherFluidImages$element|";
             }
           }
           final recordFluidsCheck = await supabaseCtrlV.from('fluids_check').insert(
             {
-              'engine_oil': controlForm.fluidsCheck.target!.engineOil,
-              'engine_oil_comments': controlForm.fluidsCheck.target!.engineOilComments,
-              'engine_oil_image': controlForm.fluidsCheck.target!.engineOilImages.isEmpty == true ? null : engineOilImages,
-              'transmission': controlForm.fluidsCheck.target!.transmission,
-              'transmission_comments': controlForm.fluidsCheck.target!.transmissionComments,
-              'transmission_image': controlForm.fluidsCheck.target?.transmissionImages.isEmpty == true ? null : transmissionImages,
-              'coolant': controlForm.fluidsCheck.target!.coolant,
-              'coolant_comments': controlForm.fluidsCheck.target!.coolantComments,
-              'coolant_image': controlForm.fluidsCheck.target?.coolantImages.isEmpty == true ? null : coolantImages,
-              'power_steering': controlForm.fluidsCheck.target!.powerSteering,
-              'power_steering_comments': controlForm.fluidsCheck.target!.powerSteeringComments,
-              'power_steering_image': controlForm.fluidsCheck.target?.powerSteeringImages.isEmpty == true ? null : powerSteeringImages,
-              'diesel_exhaust_fluid': controlForm.fluidsCheck.target!.dieselExhaustFluid,
-              'diesel_exhaust_fluid_comments': controlForm.fluidsCheck.target!.dieselExhaustFluidComments,
-              'diesel_exhaust_fluid_image': controlForm.fluidsCheck.target?.dieselExhaustFluidImages.isEmpty == true ? null : dieselExhaustFluidImages,
-              'windshield_washer_fluid': controlForm.fluidsCheck.target!.windshieldWasherFluid,
-              'windshield_washer_fluid_comments': controlForm.fluidsCheck.target!.windshieldWasherFluidComments,
-              'windshield_washer_fluid_image': controlForm.fluidsCheck.target?.windshieldWasherFluidImages.isEmpty == true ? null : windshieldWasherFluidImages,
-              'date_added': controlForm.fluidsCheck.target!.dateAdded.toIso8601String(),
+              'engine_oil': controlForm.fluidsCheckR.target!.engineOil,
+              'engine_oil_comments': controlForm.fluidsCheckR.target!.engineOilComments,
+              'engine_oil_image': controlForm.fluidsCheckR.target!.engineOilImages.isEmpty == true ? null : engineOilImages,
+              'transmission': controlForm.fluidsCheckR.target!.transmission,
+              'transmission_comments': controlForm.fluidsCheckR.target!.transmissionComments,
+              'transmission_image': controlForm.fluidsCheckR.target?.transmissionImages.isEmpty == true ? null : transmissionImages,
+              'coolant': controlForm.fluidsCheckR.target!.coolant,
+              'coolant_comments': controlForm.fluidsCheckR.target!.coolantComments,
+              'coolant_image': controlForm.fluidsCheckR.target?.coolantImages.isEmpty == true ? null : coolantImages,
+              'power_steering': controlForm.fluidsCheckR.target!.powerSteering,
+              'power_steering_comments': controlForm.fluidsCheckR.target!.powerSteeringComments,
+              'power_steering_image': controlForm.fluidsCheckR.target?.powerSteeringImages.isEmpty == true ? null : powerSteeringImages,
+              'diesel_exhaust_fluid': controlForm.fluidsCheckR.target!.dieselExhaustFluid,
+              'diesel_exhaust_fluid_comments': controlForm.fluidsCheckR.target!.dieselExhaustFluidComments,
+              'diesel_exhaust_fluid_image': controlForm.fluidsCheckR.target?.dieselExhaustFluidImages.isEmpty == true ? null : dieselExhaustFluidImages,
+              'windshield_washer_fluid': controlForm.fluidsCheckR.target!.windshieldWasherFluid,
+              'windshield_washer_fluid_comments': controlForm.fluidsCheckR.target!.windshieldWasherFluidComments,
+              'windshield_washer_fluid_image': controlForm.fluidsCheckR.target?.windshieldWasherFluidImages.isEmpty == true ? null : windshieldWasherFluidImages,
+              'date_added': controlForm.fluidsCheckR.target!.dateAdded.toIso8601String(),
             },
           ).select<PostgrestList>('id_fluids_check');
           //Registrar bucket inspection
-          if (controlForm.bucketInspection.target!.insulatedImages.isNotEmpty) {
-            for (var element in controlForm.bucketInspection.target!.insulatedImages.toList()) {
+          if (controlForm.bucketInspectionR.target!.insulatedImages.isNotEmpty) {
+            for (var element in controlForm.bucketInspectionR.target!.insulatedImages.toList()) {
               insulatedImages = "$insulatedImages$element|";
             }
           }
-          if (controlForm.bucketInspection.target!.holesDrilledImages.isNotEmpty) {
-            for (var element in controlForm.bucketInspection.target!.holesDrilledImages.toList()) {
+          if (controlForm.bucketInspectionR.target!.holesDrilledImages.isNotEmpty) {
+            for (var element in controlForm.bucketInspectionR.target!.holesDrilledImages.toList()) {
               holesDrilledImages = "$holesDrilledImages$element|";
             }
           }
-          if (controlForm.bucketInspection.target!.bucketLinerImages.isNotEmpty) {
-            for (var element in controlForm.bucketInspection.target!.bucketLinerImages.toList()) {
+          if (controlForm.bucketInspectionR.target!.bucketLinerImages.isNotEmpty) {
+            for (var element in controlForm.bucketInspectionR.target!.bucketLinerImages.toList()) {
               bucketLinerImages = "$bucketLinerImages$element|";
             }
           }
           final recordBucketInspection = await supabaseCtrlV.from('bucket_inspection').insert(
             {
-              'insulated': controlForm.bucketInspection.target!.insulated,
-              'insulated_comments': controlForm.bucketInspection.target!.insulatedComments,
-              'insulated_image': controlForm.bucketInspection.target!.insulatedImages.isEmpty == true ? null : insulatedImages,
-              'holes_drilled': controlForm.bucketInspection.target!.holesDrilled,
-              'holes_drilled_comments': controlForm.bucketInspection.target!.holesDrilledComments,
-              'holes_drilled_image': controlForm.bucketInspection.target?.holesDrilledImages.isEmpty == true ? null : holesDrilledImages,
-              'bucket_liner': controlForm.bucketInspection.target!.bucketLiner,
-              'bucket_liner_comments': controlForm.bucketInspection.target!.bucketLinerComments,
-              'bucket_liner_image': controlForm.bucketInspection.target?.bucketLinerImages.isEmpty == true ? null : bucketLinerImages,
-              'date_added': controlForm.bucketInspection.target!.dateAdded.toIso8601String(),
+              'insulated': controlForm.bucketInspectionR.target!.insulated,
+              'insulated_comments': controlForm.bucketInspectionR.target!.insulatedComments,
+              'insulated_image': controlForm.bucketInspectionR.target!.insulatedImages.isEmpty == true ? null : insulatedImages,
+              'holes_drilled': controlForm.bucketInspectionR.target!.holesDrilled,
+              'holes_drilled_comments': controlForm.bucketInspectionR.target!.holesDrilledComments,
+              'holes_drilled_image': controlForm.bucketInspectionR.target?.holesDrilledImages.isEmpty == true ? null : holesDrilledImages,
+              'bucket_liner': controlForm.bucketInspectionR.target!.bucketLiner,
+              'bucket_liner_comments': controlForm.bucketInspectionR.target!.bucketLinerComments,
+              'bucket_liner_image': controlForm.bucketInspectionR.target?.bucketLinerImages.isEmpty == true ? null : bucketLinerImages,
+              'date_added': controlForm.bucketInspectionR.target!.dateAdded.toIso8601String(),
             },
           ).select<PostgrestList>('id_bucket_inspection');
           //Registrar security
-          if (controlForm.security.target!.rtaMagnetImages.isNotEmpty) {
-            for (var element in controlForm.security.target!.rtaMagnetImages.toList()) {
+          if (controlForm.securityR.target!.rtaMagnetImages.isNotEmpty) {
+            for (var element in controlForm.securityR.target!.rtaMagnetImages.toList()) {
               rtaMagnetImages = "$rtaMagnetImages$element|";
             }
           }
-          if (controlForm.security.target!.triangleReflectorsImages.isNotEmpty) {
-            for (var element in controlForm.security.target!.triangleReflectorsImages.toList()) {
+          if (controlForm.securityR.target!.triangleReflectorsImages.isNotEmpty) {
+            for (var element in controlForm.securityR.target!.triangleReflectorsImages.toList()) {
               triangleReflectorsImages = "$triangleReflectorsImages$element|";
             }
           }
-          if (controlForm.security.target!.wheelChocksImages.isNotEmpty) {
-            for (var element in controlForm.security.target!.wheelChocksImages.toList()) {
+          if (controlForm.securityR.target!.wheelChocksImages.isNotEmpty) {
+            for (var element in controlForm.securityR.target!.wheelChocksImages.toList()) {
               wheelChocksImages = "$wheelChocksImages$element|";
             }
           }
-          if (controlForm.security.target!.fireExtinguisherImages.isNotEmpty) {
-            for (var element in controlForm.security.target!.fireExtinguisherImages.toList()) {
+          if (controlForm.securityR.target!.fireExtinguisherImages.isNotEmpty) {
+            for (var element in controlForm.securityR.target!.fireExtinguisherImages.toList()) {
               fireExtinguisherImages = "$fireExtinguisherImages$element|";
             }
           }
-          if (controlForm.security.target!.firstAidKitSafetyVestImages.isNotEmpty) {
-            for (var element in controlForm.security.target!.firstAidKitSafetyVestImages.toList()) {
+          if (controlForm.securityR.target!.firstAidKitSafetyVestImages.isNotEmpty) {
+            for (var element in controlForm.securityR.target!.firstAidKitSafetyVestImages.toList()) {
               firstAidKitSafetyVestImages = "$firstAidKitSafetyVestImages$element|";
             }
           }
-          if (controlForm.security.target!.backUpAlarmImages.isNotEmpty) {
-            for (var element in controlForm.security.target!.backUpAlarmImages.toList()) {
+          if (controlForm.securityR.target!.backUpAlarmImages.isNotEmpty) {
+            for (var element in controlForm.securityR.target!.backUpAlarmImages.toList()) {
               backUpAlarmImages = "$backUpAlarmImages$element|";
             }
           }
           final recordSecurity = await supabaseCtrlV.from('security').insert(
             {
-              'rta_magnet': controlForm.security.target!.rtaMagnet,
-              'rta_magnet_comments': controlForm.security.target!.rtaMagnetComments,
-              'rta_magnet_image': controlForm.security.target!.rtaMagnetImages.isEmpty == true ? null : rtaMagnetImages,
-              'triangle_reflectors': controlForm.security.target!.triangleReflectors,
-              'triangle_reflectors_comments': controlForm.security.target!.triangleReflectorsComments,
-              'triangle_reflectors_image': controlForm.security.target?.triangleReflectorsImages.isEmpty == true ? null : triangleReflectorsImages,
-              'wheel_chocks': controlForm.security.target!.wheelChocks,
-              'wheel_chocks_comments': controlForm.security.target!.wheelChocksComments,
-              'wheel_chocks_image': controlForm.security.target?.wheelChocksImages.isEmpty == true ? null : wheelChocksImages,
-              'fire_extinguisher': controlForm.security.target!.fireExtinguisher,
-              'fire_extinguisher_comments': controlForm.security.target!.fireExtinguisherComments,
-              'fire_extinguisher_image': controlForm.security.target?.fireExtinguisherImages.isEmpty == true ? null : fireExtinguisherImages,
-              'first_aid_kit_safety_vest': controlForm.security.target!.firstAidKitSafetyVest,
-              'first_aid_kit_safety_vest_comments': controlForm.security.target!.firstAidKitSafetyVestComments,
-              'first_aid_kit_safety_vest_image': controlForm.security.target?.firstAidKitSafetyVestImages.isEmpty == true ? null : firstAidKitSafetyVestImages,
-              'back_up_alarm': controlForm.security.target!.backUpAlarm,
-              'back_up_alarm_comments': controlForm.security.target!.backUpAlarmComments,
-              'back_up_alarm_image': controlForm.security.target?.backUpAlarmImages.isEmpty == true ? null : backUpAlarmImages,
-              'date_added': controlForm.security.target!.dateAdded.toIso8601String(),
+              'rta_magnet': controlForm.securityR.target!.rtaMagnet,
+              'rta_magnet_comments': controlForm.securityR.target!.rtaMagnetComments,
+              'rta_magnet_image': controlForm.securityR.target!.rtaMagnetImages.isEmpty == true ? null : rtaMagnetImages,
+              'triangle_reflectors': controlForm.securityR.target!.triangleReflectors,
+              'triangle_reflectors_comments': controlForm.securityR.target!.triangleReflectorsComments,
+              'triangle_reflectors_image': controlForm.securityR.target?.triangleReflectorsImages.isEmpty == true ? null : triangleReflectorsImages,
+              'wheel_chocks': controlForm.securityR.target!.wheelChocks,
+              'wheel_chocks_comments': controlForm.securityR.target!.wheelChocksComments,
+              'wheel_chocks_image': controlForm.securityR.target?.wheelChocksImages.isEmpty == true ? null : wheelChocksImages,
+              'fire_extinguisher': controlForm.securityR.target!.fireExtinguisher,
+              'fire_extinguisher_comments': controlForm.securityR.target!.fireExtinguisherComments,
+              'fire_extinguisher_image': controlForm.securityR.target?.fireExtinguisherImages.isEmpty == true ? null : fireExtinguisherImages,
+              'first_aid_kit_safety_vest': controlForm.securityR.target!.firstAidKitSafetyVest,
+              'first_aid_kit_safety_vest_comments': controlForm.securityR.target!.firstAidKitSafetyVestComments,
+              'first_aid_kit_safety_vest_image': controlForm.securityR.target?.firstAidKitSafetyVestImages.isEmpty == true ? null : firstAidKitSafetyVestImages,
+              'back_up_alarm': controlForm.securityR.target!.backUpAlarm,
+              'back_up_alarm_comments': controlForm.securityR.target!.backUpAlarmComments,
+              'back_up_alarm_image': controlForm.securityR.target?.backUpAlarmImages.isEmpty == true ? null : backUpAlarmImages,
+              'date_added': controlForm.securityR.target!.dateAdded.toIso8601String(),
             },
           ).select<PostgrestList>('id_security');
           //Registrar extra
-          if (controlForm.extra.target!.ladderImages.isNotEmpty) {
-            for (var element in controlForm.extra.target!.ladderImages.toList()) {
+          if (controlForm.extraR.target!.ladderImages.isNotEmpty) {
+            for (var element in controlForm.extraR.target!.ladderImages.toList()) {
               ladderImages = "$ladderImages$element|";
             }
           }
-          if (controlForm.extra.target!.stepLadderImages.isNotEmpty) {
-            for (var element in controlForm.extra.target!.stepLadderImages.toList()) {
+          if (controlForm.extraR.target!.stepLadderImages.isNotEmpty) {
+            for (var element in controlForm.extraR.target!.stepLadderImages.toList()) {
               stepLadderImages = "$stepLadderImages$element|";
             }
           }
-          if (controlForm.extra.target!.ladderStrapsImages.isNotEmpty) {
-            for (var element in controlForm.extra.target!.ladderStrapsImages.toList()) {
+          if (controlForm.extraR.target!.ladderStrapsImages.isNotEmpty) {
+            for (var element in controlForm.extraR.target!.ladderStrapsImages.toList()) {
               ladderStrapsImages = "$ladderStrapsImages$element|";
             }
           }
-          if (controlForm.extra.target!.hydraulicFluidForBucketImages.isNotEmpty) {
-            for (var element in controlForm.extra.target!.hydraulicFluidForBucketImages.toList()) {
+          if (controlForm.extraR.target!.hydraulicFluidForBucketImages.isNotEmpty) {
+            for (var element in controlForm.extraR.target!.hydraulicFluidForBucketImages.toList()) {
               hydraulicFluidForBucketImages = "$hydraulicFluidForBucketImages$element|";
             }
           }
-          if (controlForm.extra.target!.fiberReelRackImages.isNotEmpty) {
-            for (var element in controlForm.extra.target!.fiberReelRackImages.toList()) {
+          if (controlForm.extraR.target!.fiberReelRackImages.isNotEmpty) {
+            for (var element in controlForm.extraR.target!.fiberReelRackImages.toList()) {
               fiberReelRackImages = "$fiberReelRackImages$element|";
             }
           }
-          if (controlForm.extra.target!.binsLockedAndSecureImages.isNotEmpty) {
-            for (var element in controlForm.extra.target!.binsLockedAndSecureImages.toList()) {
+          if (controlForm.extraR.target!.binsLockedAndSecureImages.isNotEmpty) {
+            for (var element in controlForm.extraR.target!.binsLockedAndSecureImages.toList()) {
               binsLockedAndSecureImages = "$binsLockedAndSecureImages$element|";
             }
           }
-          if (controlForm.extra.target!.safetyHarnessImages.isNotEmpty) {
-            for (var element in controlForm.extra.target!.safetyHarnessImages.toList()) {
+          if (controlForm.extraR.target!.safetyHarnessImages.isNotEmpty) {
+            for (var element in controlForm.extraR.target!.safetyHarnessImages.toList()) {
               safetyHarnessImages = "$safetyHarnessImages$element|";
             }
           }
-          if (controlForm.extra.target!.lanyardSafetyHarnessImages.isNotEmpty) {
-            for (var element in controlForm.extra.target!.lanyardSafetyHarnessImages.toList()) {
+          if (controlForm.extraR.target!.lanyardSafetyHarnessImages.isNotEmpty) {
+            for (var element in controlForm.extraR.target!.lanyardSafetyHarnessImages.toList()) {
               lanyardSafetyHarnessImages = "$lanyardSafetyHarnessImages$element|";
             }
           }
           final recordExtra = await supabaseCtrlV.from('extra').insert(
             {
-              'ladder': controlForm.extra.target!.ladder,
-              'ladder_comments': controlForm.extra.target!.ladderComments,
-              'ladder_image': controlForm.extra.target!.ladderImages.isEmpty == true ? null : ladderImages,
-              'step_ladder': controlForm.extra.target!.stepLadder,
-              'step_ladder_comments': controlForm.extra.target!.stepLadderComments,
-              'step_ladder_image': controlForm.extra.target?.stepLadderImages.isEmpty == true ? null : stepLadderImages,
-              'ladder_straps': controlForm.extra.target!.ladderStraps,
-              'ladder_straps_comments': controlForm.extra.target!.ladderStrapsComments,
-              'ladder_straps_image': controlForm.extra.target?.ladderStrapsImages.isEmpty == true ? null : ladderStrapsImages,
-              'hydraulic_fluid_for_bucket': controlForm.extra.target!.hydraulicFluidForBucket,
-              'hydraulic_fluid_for_bucket_comments': controlForm.extra.target!.hydraulicFluidForBucketComments,
-              'hydraulic_fluid_for_bucket_image': controlForm.extra.target?.hydraulicFluidForBucketImages.isEmpty == true ? null : hydraulicFluidForBucketImages,
-              'fiber_reel_rack': controlForm.extra.target!.fiberReelRack,
-              'fiber_reel_rack_comments': controlForm.extra.target!.fiberReelRackComments,
-              'fiber_reel_rack_image': controlForm.extra.target?.fiberReelRackImages.isEmpty == true ? null : fiberReelRackImages,
-              'bins_locked_and_secure': controlForm.extra.target!.binsLockedAndSecure,
-              'bins_locked_and_secure_comments': controlForm.extra.target!.binsLockedAndSecureComments,
-              'bins_locked_and_secure_image': controlForm.extra.target?.binsLockedAndSecureImages.isEmpty == true ? null : binsLockedAndSecureImages,
-              'safety_harness': controlForm.extra.target!.safetyHarness,
-              'safety_harness_comments': controlForm.extra.target!.safetyHarnessComments,
-              'safety_harness_image': controlForm.extra.target?.safetyHarnessImages.isEmpty == true ? null : safetyHarnessImages,
-              'lanyard_safety_harness': controlForm.extra.target!.lanyardSafetyHarness,
-              'lanyard_safety_harness_comments': controlForm.extra.target!.lanyardSafetyHarnessComments,
-              'lanyard_safety_harness_image': controlForm.extra.target?.lanyardSafetyHarnessImages.isEmpty == true ? null : lanyardSafetyHarnessImages,
-              'date_added': controlForm.extra.target!.dateAdded.toIso8601String(),
+              'ladder': controlForm.extraR.target!.ladder,
+              'ladder_comments': controlForm.extraR.target!.ladderComments,
+              'ladder_image': controlForm.extraR.target!.ladderImages.isEmpty == true ? null : ladderImages,
+              'step_ladder': controlForm.extraR.target!.stepLadder,
+              'step_ladder_comments': controlForm.extraR.target!.stepLadderComments,
+              'step_ladder_image': controlForm.extraR.target?.stepLadderImages.isEmpty == true ? null : stepLadderImages,
+              'ladder_straps': controlForm.extraR.target!.ladderStraps,
+              'ladder_straps_comments': controlForm.extraR.target!.ladderStrapsComments,
+              'ladder_straps_image': controlForm.extraR.target?.ladderStrapsImages.isEmpty == true ? null : ladderStrapsImages,
+              'hydraulic_fluid_for_bucket': controlForm.extraR.target!.hydraulicFluidForBucket,
+              'hydraulic_fluid_for_bucket_comments': controlForm.extraR.target!.hydraulicFluidForBucketComments,
+              'hydraulic_fluid_for_bucket_image': controlForm.extraR.target?.hydraulicFluidForBucketImages.isEmpty == true ? null : hydraulicFluidForBucketImages,
+              'fiber_reel_rack': controlForm.extraR.target!.fiberReelRack,
+              'fiber_reel_rack_comments': controlForm.extraR.target!.fiberReelRackComments,
+              'fiber_reel_rack_image': controlForm.extraR.target?.fiberReelRackImages.isEmpty == true ? null : fiberReelRackImages,
+              'bins_locked_and_secure': controlForm.extraR.target!.binsLockedAndSecure,
+              'bins_locked_and_secure_comments': controlForm.extraR.target!.binsLockedAndSecureComments,
+              'bins_locked_and_secure_image': controlForm.extraR.target?.binsLockedAndSecureImages.isEmpty == true ? null : binsLockedAndSecureImages,
+              'safety_harness': controlForm.extraR.target!.safetyHarness,
+              'safety_harness_comments': controlForm.extraR.target!.safetyHarnessComments,
+              'safety_harness_image': controlForm.extraR.target?.safetyHarnessImages.isEmpty == true ? null : safetyHarnessImages,
+              'lanyard_safety_harness': controlForm.extraR.target!.lanyardSafetyHarness,
+              'lanyard_safety_harness_comments': controlForm.extraR.target!.lanyardSafetyHarnessComments,
+              'lanyard_safety_harness_image': controlForm.extraR.target?.lanyardSafetyHarnessImages.isEmpty == true ? null : lanyardSafetyHarnessImages,
+              'date_added': controlForm.extraR.target!.dateAdded.toIso8601String(),
             },
           ).select<PostgrestList>('id_extra');
           //Registrar equipment
-          if (controlForm.equipment.target!.ignitionKeyImages.isNotEmpty) {
-            for (var element in controlForm.equipment.target!.ignitionKeyImages.toList()) {
+          if (controlForm.equipmentR.target!.ignitionKeyImages.isNotEmpty) {
+            for (var element in controlForm.equipmentR.target!.ignitionKeyImages.toList()) {
               ignitionKeyImages = "$ignitionKeyImages$element|";
             }
           }
-          if (controlForm.equipment.target!.binsBoxKeyImages.isNotEmpty) {
-            for (var element in controlForm.equipment.target!.binsBoxKeyImages.toList()) {
+          if (controlForm.equipmentR.target!.binsBoxKeyImages.isNotEmpty) {
+            for (var element in controlForm.equipmentR.target!.binsBoxKeyImages.toList()) {
               binsBoxKeyImages = "$binsBoxKeyImages$element|";
             }
           }
-          if (controlForm.equipment.target!.vehicleInsuranceCopyImages.isNotEmpty) {
-            for (var element in controlForm.equipment.target!.vehicleInsuranceCopyImages.toList()) {
+          if (controlForm.equipmentR.target!.vehicleInsuranceCopyImages.isNotEmpty) {
+            for (var element in controlForm.equipmentR.target!.vehicleInsuranceCopyImages.toList()) {
               vehicleInsuranceCopyImages = "$vehicleInsuranceCopyImages$element|";
             }
           }
-          if (controlForm.equipment.target!.vehicleRegistrationCopyImages.isNotEmpty) {
-            for (var element in controlForm.equipment.target!.vehicleRegistrationCopyImages.toList()) {
+          if (controlForm.equipmentR.target!.vehicleRegistrationCopyImages.isNotEmpty) {
+            for (var element in controlForm.equipmentR.target!.vehicleRegistrationCopyImages.toList()) {
               vehicleRegistrationCopyImages = "$vehicleRegistrationCopyImages$element|";
             }
           }
-          if (controlForm.equipment.target!.bucketLiftOperatorManualImages.isNotEmpty) {
-            for (var element in controlForm.equipment.target!.bucketLiftOperatorManualImages.toList()) {
+          if (controlForm.equipmentR.target!.bucketLiftOperatorManualImages.isNotEmpty) {
+            for (var element in controlForm.equipmentR.target!.bucketLiftOperatorManualImages.toList()) {
               bucketLiftOperatorManualImages = "$bucketLiftOperatorManualImages$element|";
             }
           }
           final recordEquipment = await supabaseCtrlV.from('equipment').insert(
             {
-              'ignition_key': controlForm.equipment.target!.ignitionKey,
-              'ignition_key_comments': controlForm.equipment.target!.ignitionKeyComments,
-              'ignition_key_image': controlForm.equipment.target?.ignitionKeyImages.isEmpty == true ? null : ignitionKeyImages,
-              'bins_box_key': controlForm.equipment.target!.binsBoxKey,
-              'bins_box_key_comments': controlForm.equipment.target!.binsBoxKeyComments,
-              'bins_box_key_image': controlForm.equipment.target?.binsBoxKeyImages.isEmpty == true ? null : hydraulicFluidForBucketImages,
-              'vehicle_registration_copy': controlForm.equipment.target!.vehicleInsuranceCopy,
-              'vehicle_registration_copy_comments': controlForm.equipment.target!.vehicleInsuranceCopyComments,
-              'vehicle_registration_copy_image': controlForm.equipment.target?.vehicleInsuranceCopyImages.isEmpty == true ? null : vehicleInsuranceCopyImages,
-              'vehicle_insurance_copy': controlForm.equipment.target!.vehicleInsuranceCopy,
-              'vehicle_insurance_copy_comments': controlForm.equipment.target!.vehicleInsuranceCopyComments,
-              'vehicle_insurance_copy_image': controlForm.equipment.target?.vehicleInsuranceCopyImages.isEmpty == true ? null : vehicleInsuranceCopyImages,
-              'bucket_lift_operator_manual': controlForm.equipment.target!.bucketLiftOperatorManual,
-              'bucket_lift_operator_manual_comments': controlForm.equipment.target!.bucketLiftOperatorManualComments,
-              'bucket_lift_operator_manual_image': controlForm.equipment.target?.bucketLiftOperatorManualImages.isEmpty == true ? null : bucketLiftOperatorManualImages,
-              'date_added': controlForm.equipment.target!.dateAdded.toIso8601String(),
+              'ignition_key': controlForm.equipmentR.target!.ignitionKey,
+              'ignition_key_comments': controlForm.equipmentR.target!.ignitionKeyComments,
+              'ignition_key_image': controlForm.equipmentR.target?.ignitionKeyImages.isEmpty == true ? null : ignitionKeyImages,
+              'bins_box_key': controlForm.equipmentR.target!.binsBoxKey,
+              'bins_box_key_comments': controlForm.equipmentR.target!.binsBoxKeyComments,
+              'bins_box_key_image': controlForm.equipmentR.target?.binsBoxKeyImages.isEmpty == true ? null : hydraulicFluidForBucketImages,
+              'vehicle_registration_copy': controlForm.equipmentR.target!.vehicleInsuranceCopy,
+              'vehicle_registration_copy_comments': controlForm.equipmentR.target!.vehicleInsuranceCopyComments,
+              'vehicle_registration_copy_image': controlForm.equipmentR.target?.vehicleInsuranceCopyImages.isEmpty == true ? null : vehicleInsuranceCopyImages,
+              'vehicle_insurance_copy': controlForm.equipmentR.target!.vehicleInsuranceCopy,
+              'vehicle_insurance_copy_comments': controlForm.equipmentR.target!.vehicleInsuranceCopyComments,
+              'vehicle_insurance_copy_image': controlForm.equipmentR.target?.vehicleInsuranceCopyImages.isEmpty == true ? null : vehicleInsuranceCopyImages,
+              'bucket_lift_operator_manual': controlForm.equipmentR.target!.bucketLiftOperatorManual,
+              'bucket_lift_operator_manual_comments': controlForm.equipmentR.target!.bucketLiftOperatorManualComments,
+              'bucket_lift_operator_manual_image': controlForm.equipmentR.target?.bucketLiftOperatorManualImages.isEmpty == true ? null : bucketLiftOperatorManualImages,
+              'date_added': controlForm.equipmentR.target!.dateAdded.toIso8601String(),
             },
           ).select<PostgrestList>('id_equipment');
           if (recordMeasure.isNotEmpty && recordLights.isNotEmpty && recordCarBodywork.isNotEmpty && recordFluidsCheck.isNotEmpty 
@@ -820,45 +848,44 @@ class SyncProviderSupabase extends ChangeNotifier {
               {
                 'id_vehicle_fk': controlForm.vehicle.target!.idDBR,
                 'id_user_fk': controlForm.employee.target!.idDBR,
-                'type_form': controlForm.typeForm,
-                'id_measure_fk': recordMeasure.first['id_measure'],
-                'id_lights_fk': recordLights.first['id_lights'],
-                'id_car_bodywork_fk': recordCarBodywork.first['id_car_bodywork'],
-                'id_fluids_check_fk': recordFluidsCheck.first['id_fluids_check'],
-                'id_bucket_inspection_fk': recordBucketInspection.first['id_bucket_inspection'],
-                'id_security_fk': recordSecurity.first['id_security'],
-                'id_extra_fk': recordExtra.first['id_extra'],
-                'id_equipment_fk': recordEquipment.first['id_equipment'],
-                'issues': controlForm.issues,
-                'date_added': controlForm.dateAdded.toIso8601String(),
+                'id_measure_r_fk': recordMeasure.first['id_measure'],
+                'id_lights_r_fk': recordLights.first['id_lights'],
+                'id_car_bodywork_r_fk': recordCarBodywork.first['id_car_bodywork'],
+                'id_fluids_check_r_fk': recordFluidsCheck.first['id_fluids_check'],
+                'id_bucket_inspection_r_fk': recordBucketInspection.first['id_bucket_inspection'],
+                'id_security_r_fk': recordSecurity.first['id_security'],
+                'id_extra_r_fk': recordExtra.first['id_extra'],
+                'id_equipment_r_fk': recordEquipment.first['id_equipment'],
+                'issues_r': controlForm.issuesR,
+                'date_added_r': controlForm.dateAddedR.toIso8601String(),
               },
             ).select<PostgrestList>('id_control_form');
             //Registrar control Form
             if (recordControlForm.isNotEmpty) {
               //Se recupera el idDBR de Supabase de Measure
-              controlForm.measures.target!.idDBR = recordMeasure.first['id_measure'].toString();
-              dataBase.measuresFormBox.put(controlForm.measures.target!);
+              controlForm.measuresR.target!.idDBR = recordMeasure.first['id_measure'].toString();
+              dataBase.measuresFormBox.put(controlForm.measuresR.target!);
               //Se recupera el idDBR de Supabase de Lights
-              controlForm.lights.target!.idDBR = recordLights.first['id_lights'].toString();
-              dataBase.lightsFormBox.put(controlForm.lights.target!);
+              controlForm.lightsR.target!.idDBR = recordLights.first['id_lights'].toString();
+              dataBase.lightsFormBox.put(controlForm.lightsR.target!);
               //Se recupera el idDBR de Supabase de Car Bodywork
-              controlForm.carBodywork.target!.idDBR = recordCarBodywork.first['id_car_bodywork'].toString();
-              dataBase.carBodyworkFormBox.put(controlForm.carBodywork.target!);
+              controlForm.carBodyworkR.target!.idDBR = recordCarBodywork.first['id_car_bodywork'].toString();
+              dataBase.carBodyworkFormBox.put(controlForm.carBodyworkR.target!);
               //Se recupera el idDBR de Supabase de Fluids Check
-              controlForm.fluidsCheck.target!.idDBR = recordFluidsCheck.first['id_fluids_check'].toString();
-              dataBase.fluidsCheckFormBox.put(controlForm.fluidsCheck.target!);
+              controlForm.fluidsCheckR.target!.idDBR = recordFluidsCheck.first['id_fluids_check'].toString();
+              dataBase.fluidsCheckFormBox.put(controlForm.fluidsCheckR.target!);
               //Se recupera el idDBR de Supabase de Bucket Inspection
-              controlForm.bucketInspection.target!.idDBR = recordBucketInspection.first['id_bucket_inspection'].toString();
-              dataBase.bucketInspectionFormBox.put(controlForm.bucketInspection.target!);
+              controlForm.bucketInspectionR.target!.idDBR = recordBucketInspection.first['id_bucket_inspection'].toString();
+              dataBase.bucketInspectionFormBox.put(controlForm.bucketInspectionR.target!);
               //Se recupera el idDBR de Supabase de Security
-              controlForm.security.target!.idDBR = recordSecurity.first['id_security'].toString();
-              dataBase.securityFormBox.put(controlForm.security.target!);
+              controlForm.securityR.target!.idDBR = recordSecurity.first['id_security'].toString();
+              dataBase.securityFormBox.put(controlForm.securityR.target!);
               //Se recupera el idDBR de Supabase de Extra
-              controlForm.extra.target!.idDBR = recordExtra.first['id_extra'].toString();
-              dataBase.extraFormBox.put(controlForm.extra.target!);
+              controlForm.extraR.target!.idDBR = recordExtra.first['id_extra'].toString();
+              dataBase.extraFormBox.put(controlForm.extraR.target!);
               //Se recupera el idDBR de Supabase de Equipment
-              controlForm.equipment.target!.idDBR = recordEquipment.first['id_equipment'].toString();
-              dataBase.equipmentFormBox.put(controlForm.equipment.target!);
+              controlForm.equipmentR.target!.idDBR = recordEquipment.first['id_equipment'].toString();
+              dataBase.equipmentFormBox.put(controlForm.equipmentR.target!);
               //Se recupera el idDBR de Supabase del Control Form
               controlForm.idDBR = recordControlForm.first['id_control_form'].toString();
               dataBase.controlFormBox.put(controlForm);
@@ -889,13 +916,13 @@ class SyncProviderSupabase extends ChangeNotifier {
               return SyncInstruction(
               exitoso: false,
               descripcion:
-                  "Failed to sync all data Control Form on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
+                  "Failed to sync all data Control Form Received on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
             }
           } else {
             return SyncInstruction(
               exitoso: false,
               descripcion:
-                  "Failed to sync data measure Control Form on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
+                  "Failed to sync data measure Control Form Received on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
           }
           
         } else {
@@ -914,9 +941,647 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Failed to sync data measure Control Form on Local Server with vehicle ID ${controlForm.vehicle.target!.idDBR}:, details: '$e'");
+              "Failed to sync data measure Control Form Received on Local Server with vehicle ID ${controlForm.vehicle.target!.idDBR}:, details: '$e'");
     }
   }
 
+  Future<SyncInstruction> syncAddControlFormD(
+      ControlForm controlForm, Bitacora bitacora) async {
+    String gasImages = "";
+    String mileageImages = "";
+
+    String headlightsImages = "";
+    String brakeLightsImages = "";
+    String reverseLightsImages = "";
+    String warningLightsImages = "";
+    String turnSignalsImages = "";
+    String fourWayFlashersImages = "";
+    String dashLightsImages = "";
+    String strobeLightsImages = "";
+    String cabRoofLightsImages = "";
+    String clearanceLightsImages = "";
+
+    String wiperBladesFrontImages = "";
+    String wiperBladesBackImages = "";
+    String windshieldWiperFrontImages = "";
+    String windshieldWiperBackImages = "";
+    String generalBodyImages = "";
+    String decalingImages = "";
+    String tiresImages = "";
+    String glassImages = "";
+    String mirrorsImages = "";
+    String parkingImages = "";
+    String brakesImages = "";
+    String emgBrakesImages = "";
+    String hornImages = "";
+
+    String engineOilImages = "";
+    String transmissionImages = "";
+    String coolantImages = "";
+    String powerSteeringImages = "";
+    String dieselExhaustFluidImages = "";
+    String windshieldWasherFluidImages = "";
+
+    String insulatedImages = "";
+    String holesDrilledImages = "";
+    String bucketLinerImages = "";
+
+    String rtaMagnetImages = "";
+    String triangleReflectorsImages = "";
+    String wheelChocksImages = "";
+    String fireExtinguisherImages = "";
+    String firstAidKitSafetyVestImages = "";
+    String backUpAlarmImages = "";
+
+    String ladderImages = "";
+    String stepLadderImages = "";
+    String ladderStrapsImages = "";
+    String hydraulicFluidForBucketImages = "";
+    String fiberReelRackImages = "";
+    String binsLockedAndSecureImages = "";
+    String safetyHarnessImages = "";
+    String lanyardSafetyHarnessImages = "";
+
+    String ignitionKeyImages = "";
+    String binsBoxKeyImages = "";
+    String vehicleRegistrationCopyImages = "";
+    String vehicleInsuranceCopyImages = "";
+    String bucketLiftOperatorManualImages = "";
+    
+
+    try {
+      if (bitacora.executeSupabase == false) {
+        if (controlForm.idDBR != null) {
+          //Registrar measures
+          if (controlForm.measuresD.target!.gasImages.isNotEmpty) {
+            for (var element in controlForm.measuresD.target!.gasImages.toList()) {
+              gasImages = "$gasImages$element|";
+            }
+          }
+          if (controlForm.measuresD.target!.mileageImages.isNotEmpty) {
+            for (var element in controlForm.measuresD.target!.mileageImages.toList()) {
+              mileageImages = "$mileageImages$element|";
+            }
+          }
+          final recordMeasure = await supabaseCtrlV.from('measures').insert(
+            {
+              'gas': controlForm.measuresD.target!.gas,
+              'gas_comments': controlForm.measuresD.target!.gasComments,
+              'gas_image': controlForm.measuresD.target!.gasImages.isEmpty == true ? null : gasImages,
+              'mileage': controlForm.measuresD.target!.mileage,
+              'mileage_comments': controlForm.measuresD.target!.mileageComments,
+              'milage_image': controlForm.measuresD.target?.mileageImages.isEmpty == true ? null : mileageImages,
+              'date_added': controlForm.measuresD.target!.dateAdded.toIso8601String(),
+            },
+          ).select<PostgrestList>('id_measure');
+          //Registrar lights
+          if (controlForm.lightsD.target!.headLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsD.target!.headLightsImages.toList()) {
+              headlightsImages = "$headlightsImages$element|";
+            }
+          }
+          if (controlForm.lightsD.target!.brakeLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsD.target!.brakeLightsImages.toList()) {
+              brakeLightsImages = "$brakeLightsImages$element|";
+            }
+          }
+          if (controlForm.lightsD.target!.reverseLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsD.target!.reverseLightsImages.toList()) {
+              reverseLightsImages = "$reverseLightsImages$element|";
+            }
+          }
+          if (controlForm.lightsD.target!.warningLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsD.target!.warningLightsImages.toList()) {
+              warningLightsImages = "$warningLightsImages$element|";
+            }
+          }
+          if (controlForm.lightsD.target!.turnSignalsImages.isNotEmpty) {
+            for (var element in controlForm.lightsD.target!.turnSignalsImages.toList()) {
+              turnSignalsImages = "$turnSignalsImages$element|";
+            }
+          }
+          if (controlForm.lightsD.target!.fourWayFlashersImages.isNotEmpty) {
+            for (var element in controlForm.lightsD.target!.fourWayFlashersImages.toList()) {
+              fourWayFlashersImages = "$fourWayFlashersImages$element|";
+            }
+          }
+          if (controlForm.lightsD.target!.dashLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsD.target!.dashLightsImages.toList()) {
+              dashLightsImages = "$dashLightsImages$element|";
+            }
+          }
+          if (controlForm.lightsD.target!.strobeLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsD.target!.strobeLightsImages.toList()) {
+              strobeLightsImages = "$strobeLightsImages$element|";
+            }
+          }
+          if (controlForm.lightsD.target!.cabRoofLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsD.target!.cabRoofLightsImages.toList()) {
+              cabRoofLightsImages = "$cabRoofLightsImages$element|";
+            }
+          }
+          if (controlForm.lightsD.target!.clearanceLightsImages.isNotEmpty) {
+            for (var element in controlForm.lightsD.target!.clearanceLightsImages.toList()) {
+              clearanceLightsImages = "$clearanceLightsImages$element|";
+            }
+          }
+          final recordLights = await supabaseCtrlV.from('lights').insert(
+            {
+              'headlights': controlForm.lightsD.target!.headLights,
+              'headlights_comments': controlForm.lightsD.target!.headLightsComments,
+              'headlights_image': controlForm.lightsD.target!.headLightsImages.isEmpty == true ? null : headlightsImages,
+              'brake_lights': controlForm.lightsD.target!.brakeLights,
+              'brake_lights_comments': controlForm.lightsD.target!.brakeLightsComments,
+              'brake_lights_image': controlForm.lightsD.target?.brakeLightsImages.isEmpty == true ? null : brakeLightsImages,
+              'reverse_lights': controlForm.lightsD.target!.reverseLights,
+              'reverse_lights_comments': controlForm.lightsD.target!.reverseLightsComments,
+              'reverse_lights_image': controlForm.lightsD.target?.reverseLightsImages.isEmpty == true ? null : reverseLightsImages,
+              'warning_lights': controlForm.lightsD.target!.warningLights,
+              'warning_lights_comments': controlForm.lightsD.target!.warningLightsComments,
+              'warning_lights_image': controlForm.lightsD.target?.warningLightsImages.isEmpty == true ? null : warningLightsImages,
+              'turn_signals': controlForm.lightsD.target!.turnSignals,
+              'turn_signals_comments': controlForm.lightsD.target!.turnSignalsComments,
+              'turn_signals_image': controlForm.lightsD.target?.turnSignalsImages.isEmpty == true ? null : turnSignalsImages,
+              '_4_way_flashers': controlForm.lightsD.target!.fourWayFlashers,
+              '_4_way_flashers_comments': controlForm.lightsD.target!.fourWayFlashersComments,
+              '_4_way_flashers_image': controlForm.lightsD.target?.fourWayFlashersImages.isEmpty == true ? null : fourWayFlashersImages,
+              'dash_lights': controlForm.lightsD.target!.dashLights,
+              'dash_lights_comments': controlForm.lightsD.target!.dashLightsComments,
+              'dash_lights_image': controlForm.lightsD.target?.dashLightsImages.isEmpty == true ? null : dashLightsImages,
+              'strobe_lights': controlForm.lightsD.target!.strobeLights,
+              'strobe_lights_comments': controlForm.lightsD.target!.strobeLightsComments,
+              'strobe_lights_image': controlForm.lightsD.target?.strobeLightsImages.isEmpty == true ? null : strobeLightsImages,
+              'cab_roof_lights': controlForm.lightsD.target!.cabRoofLights,
+              'cab_roof_lights_comments': controlForm.lightsD.target!.cabRoofLightsComments,
+              'cab_roof_lights_image': controlForm.lightsD.target?.cabRoofLightsImages.isEmpty == true ? null : cabRoofLightsImages,
+              'clearance_lights': controlForm.lightsD.target!.clearanceLights,
+              'clearance_lights_comments': controlForm.lightsD.target!.clearanceLightsComments,
+              'clearance_lights_image': controlForm.lightsD.target?.clearanceLightsImages.isEmpty == true ? null : clearanceLightsImages,
+              'date_added': controlForm.lightsD.target!.dateAdded.toIso8601String(),
+            },
+          ).select<PostgrestList>('id_lights');
+          //Registrar car bodywork
+          if (controlForm.carBodyworkD.target!.wiperBladesFrontImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkD.target!.wiperBladesFrontImages.toList()) {
+              wiperBladesFrontImages = "$wiperBladesFrontImages$element|";
+            }
+          }
+          if (controlForm.carBodyworkD.target!.wiperBladesBackImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkD.target!.wiperBladesBackImages.toList()) {
+              wiperBladesBackImages = "$wiperBladesBackImages$element|";
+            }
+          }
+          if (controlForm.carBodyworkD.target!.windshieldWiperFrontImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkD.target!.windshieldWiperFrontImages.toList()) {
+              windshieldWiperFrontImages = "$windshieldWiperFrontImages$element|";
+            }
+          }
+          if (controlForm.carBodyworkD.target!.windshieldWiperBackImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkD.target!.windshieldWiperBackImages.toList()) {
+              windshieldWiperBackImages = "$windshieldWiperBackImages$element|";
+            }
+          }
+          if (controlForm.carBodyworkD.target!.generalBodyImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkD.target!.generalBodyImages.toList()) {
+              generalBodyImages = "$generalBodyImages$element|";
+            }
+          }
+          if (controlForm.carBodyworkD.target!.decalingImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkD.target!.decalingImages.toList()) {
+              decalingImages = "$decalingImages$element|";
+            }
+          }
+          if (controlForm.carBodyworkD.target!.tiresImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkD.target!.tiresImages.toList()) {
+              tiresImages = "$tiresImages$element|";
+            }
+          }
+          if (controlForm.carBodyworkD.target!.glassImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkD.target!.glassImages.toList()) {
+              glassImages = "$glassImages$element|";
+            }
+          }
+          if (controlForm.carBodyworkD.target!.mirrorsImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkD.target!.mirrorsImages.toList()) {
+              mirrorsImages = "$mirrorsImages$element|";
+            }
+          }
+          if (controlForm.carBodyworkD.target!.parkingImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkD.target!.parkingImages.toList()) {
+              parkingImages = "$parkingImages$element|";
+            }
+          }
+          if (controlForm.carBodyworkD.target!.brakesImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkD.target!.brakesImages.toList()) {
+              brakesImages = "$brakesImages$element|";
+            }
+          }
+          if (controlForm.carBodyworkD.target!.emgBrakesImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkD.target!.emgBrakesImages.toList()) {
+              emgBrakesImages = "$emgBrakesImages$element|";
+            }
+          }
+          if (controlForm.carBodyworkD.target!.hornImages.isNotEmpty) {
+            for (var element in controlForm.carBodyworkD.target!.hornImages.toList()) {
+              hornImages = "$hornImages$element|";
+            }
+          }
+          final recordCarBodywork = await supabaseCtrlV.from('car_bodywork').insert(
+            {
+              'wiper_blades_front': controlForm.carBodyworkD.target!.wiperBladesFront,
+              'wiper_blades_front_comments': controlForm.carBodyworkD.target!.wiperBladesFrontComments,
+              'wiper_blades_front_image': controlForm.carBodyworkD.target!.wiperBladesFrontImages.isEmpty == true ? null : wiperBladesFrontImages,
+              'wiper_blades_back': controlForm.carBodyworkD.target!.wiperBladesBack,
+              'wiper_blades_back_comments': controlForm.carBodyworkD.target!.wiperBladesBackComments,
+              'wiper_blades_back_image': controlForm.carBodyworkD.target?.wiperBladesBackImages.isEmpty == true ? null : wiperBladesBackImages,
+              'windshield_wiper_front': controlForm.carBodyworkD.target!.windshieldWiperFront,
+              'windshield_wiper_front_comments': controlForm.carBodyworkD.target!.windshieldWiperFrontComments,
+              'windshield_wiper_front_image': controlForm.carBodyworkD.target?.windshieldWiperFrontImages.isEmpty == true ? null : windshieldWiperFrontImages,
+              'windshield_wiper_back': controlForm.carBodyworkD.target!.windshieldWiperBack,
+              'windshield_wiper_back_comments': controlForm.carBodyworkD.target!.windshieldWiperBackComments,
+              'windshield_wiper_back_image': controlForm.carBodyworkD.target?.windshieldWiperBackImages.isEmpty == true ? null : windshieldWiperBackImages,
+              'general_body': controlForm.carBodyworkD.target!.generalBody,
+              'general_body_comments': controlForm.carBodyworkD.target!.generalBodyComments,
+              'general_body_image': controlForm.carBodyworkD.target?.generalBodyImages.isEmpty == true ? null : generalBodyImages,
+              'decaling': controlForm.carBodyworkD.target!.decaling,
+              'decaling_comments': controlForm.carBodyworkD.target!.decalingComments,
+              'decaling_image': controlForm.carBodyworkD.target?.decalingImages.isEmpty == true ? null : decalingImages,
+              'tires': controlForm.carBodyworkD.target!.tires,
+              'tires_comments': controlForm.carBodyworkD.target!.tiresComments,
+              'tires_image': controlForm.carBodyworkD.target?.tiresImages.isEmpty == true ? null : tiresImages,
+              'glass': controlForm.carBodyworkD.target!.glass,
+              'glass_comments': controlForm.carBodyworkD.target!.glassComments,
+              'glass_image': controlForm.carBodyworkD.target?.glassImages.isEmpty == true ? null : glassImages,
+              'mirrors': controlForm.carBodyworkD.target!.mirrors,
+              'mirrors_comments': controlForm.carBodyworkD.target!.mirrorsComments,
+              'mirrors_image': controlForm.carBodyworkD.target?.mirrorsImages.isEmpty == true ? null : mirrorsImages,
+              'parking': controlForm.carBodyworkD.target!.parking,
+              'parking_comments': controlForm.carBodyworkD.target!.parkingComments,
+              'parking_image': controlForm.carBodyworkD.target?.parkingImages.isEmpty == true ? null : parkingImages,
+              'brakes': controlForm.carBodyworkD.target!.brakes,
+              'brakes_comments': controlForm.carBodyworkD.target!.brakesComments,
+              'brakes_image': controlForm.carBodyworkD.target?.brakesImages.isEmpty == true ? null : brakesImages,
+              'emg_brakes': controlForm.carBodyworkD.target!.emgBrakes,
+              'emg_brakes_comments': controlForm.carBodyworkD.target!.emgBrakesComments,
+              'emg_brakes_image': controlForm.carBodyworkD.target?.emgBrakesImages.isEmpty == true ? null : emgBrakesImages,
+              'horn': controlForm.carBodyworkD.target!.horn,
+              'horn_comments': controlForm.carBodyworkD.target!.hornComments,
+              'horn_image': controlForm.carBodyworkD.target?.hornImages.isEmpty == true ? null : hornImages,
+              'date_added': controlForm.carBodyworkD.target!.dateAdded.toIso8601String(),
+            },
+          ).select<PostgrestList>('id_car_bodywork');
+          //Registrar fluids check
+          if (controlForm.fluidsCheckD.target!.engineOilImages.isNotEmpty) {
+            for (var element in controlForm.fluidsCheckD.target!.engineOilImages.toList()) {
+              engineOilImages = "$engineOilImages$element|";
+            }
+          }
+          if (controlForm.fluidsCheckD.target!.transmissionImages.isNotEmpty) {
+            for (var element in controlForm.fluidsCheckD.target!.transmissionImages.toList()) {
+              transmissionImages = "$transmissionImages$element|";
+            }
+          }
+          if (controlForm.fluidsCheckD.target!.coolantImages.isNotEmpty) {
+            for (var element in controlForm.fluidsCheckD.target!.coolantImages.toList()) {
+              coolantImages = "$coolantImages$element|";
+            }
+          }
+          if (controlForm.fluidsCheckD.target!.powerSteeringImages.isNotEmpty) {
+            for (var element in controlForm.fluidsCheckD.target!.powerSteeringImages.toList()) {
+              powerSteeringImages = "$powerSteeringImages$element|";
+            }
+          }
+          if (controlForm.fluidsCheckD.target!.dieselExhaustFluidImages.isNotEmpty) {
+            for (var element in controlForm.fluidsCheckD.target!.dieselExhaustFluidImages.toList()) {
+              dieselExhaustFluidImages = "$dieselExhaustFluidImages$element|";
+            }
+          }
+          if (controlForm.fluidsCheckD.target!.windshieldWasherFluidImages.isNotEmpty) {
+            for (var element in controlForm.fluidsCheckD.target!.windshieldWasherFluidImages.toList()) {
+              windshieldWasherFluidImages = "$windshieldWasherFluidImages$element|";
+            }
+          }
+          final recordFluidsCheck = await supabaseCtrlV.from('fluids_check').insert(
+            {
+              'engine_oil': controlForm.fluidsCheckD.target!.engineOil,
+              'engine_oil_comments': controlForm.fluidsCheckD.target!.engineOilComments,
+              'engine_oil_image': controlForm.fluidsCheckD.target!.engineOilImages.isEmpty == true ? null : engineOilImages,
+              'transmission': controlForm.fluidsCheckD.target!.transmission,
+              'transmission_comments': controlForm.fluidsCheckD.target!.transmissionComments,
+              'transmission_image': controlForm.fluidsCheckD.target?.transmissionImages.isEmpty == true ? null : transmissionImages,
+              'coolant': controlForm.fluidsCheckD.target!.coolant,
+              'coolant_comments': controlForm.fluidsCheckD.target!.coolantComments,
+              'coolant_image': controlForm.fluidsCheckD.target?.coolantImages.isEmpty == true ? null : coolantImages,
+              'power_steering': controlForm.fluidsCheckD.target!.powerSteering,
+              'power_steering_comments': controlForm.fluidsCheckD.target!.powerSteeringComments,
+              'power_steering_image': controlForm.fluidsCheckD.target?.powerSteeringImages.isEmpty == true ? null : powerSteeringImages,
+              'diesel_exhaust_fluid': controlForm.fluidsCheckD.target!.dieselExhaustFluid,
+              'diesel_exhaust_fluid_comments': controlForm.fluidsCheckD.target!.dieselExhaustFluidComments,
+              'diesel_exhaust_fluid_image': controlForm.fluidsCheckD.target?.dieselExhaustFluidImages.isEmpty == true ? null : dieselExhaustFluidImages,
+              'windshield_washer_fluid': controlForm.fluidsCheckD.target!.windshieldWasherFluid,
+              'windshield_washer_fluid_comments': controlForm.fluidsCheckD.target!.windshieldWasherFluidComments,
+              'windshield_washer_fluid_image': controlForm.fluidsCheckD.target?.windshieldWasherFluidImages.isEmpty == true ? null : windshieldWasherFluidImages,
+              'date_added': controlForm.fluidsCheckD.target!.dateAdded.toIso8601String(),
+            },
+          ).select<PostgrestList>('id_fluids_check');
+          //Registrar bucket inspection
+          if (controlForm.bucketInspectionD.target!.insulatedImages.isNotEmpty) {
+            for (var element in controlForm.bucketInspectionD.target!.insulatedImages.toList()) {
+              insulatedImages = "$insulatedImages$element|";
+            }
+          }
+          if (controlForm.bucketInspectionD.target!.holesDrilledImages.isNotEmpty) {
+            for (var element in controlForm.bucketInspectionD.target!.holesDrilledImages.toList()) {
+              holesDrilledImages = "$holesDrilledImages$element|";
+            }
+          }
+          if (controlForm.bucketInspectionD.target!.bucketLinerImages.isNotEmpty) {
+            for (var element in controlForm.bucketInspectionD.target!.bucketLinerImages.toList()) {
+              bucketLinerImages = "$bucketLinerImages$element|";
+            }
+          }
+          final recordBucketInspection = await supabaseCtrlV.from('bucket_inspection').insert(
+            {
+              'insulated': controlForm.bucketInspectionD.target!.insulated,
+              'insulated_comments': controlForm.bucketInspectionD.target!.insulatedComments,
+              'insulated_image': controlForm.bucketInspectionD.target!.insulatedImages.isEmpty == true ? null : insulatedImages,
+              'holes_drilled': controlForm.bucketInspectionD.target!.holesDrilled,
+              'holes_drilled_comments': controlForm.bucketInspectionD.target!.holesDrilledComments,
+              'holes_drilled_image': controlForm.bucketInspectionD.target?.holesDrilledImages.isEmpty == true ? null : holesDrilledImages,
+              'bucket_liner': controlForm.bucketInspectionD.target!.bucketLiner,
+              'bucket_liner_comments': controlForm.bucketInspectionD.target!.bucketLinerComments,
+              'bucket_liner_image': controlForm.bucketInspectionD.target?.bucketLinerImages.isEmpty == true ? null : bucketLinerImages,
+              'date_added': controlForm.bucketInspectionD.target!.dateAdded.toIso8601String(),
+            },
+          ).select<PostgrestList>('id_bucket_inspection');
+          //Registrar security
+          if (controlForm.securityD.target!.rtaMagnetImages.isNotEmpty) {
+            for (var element in controlForm.securityD.target!.rtaMagnetImages.toList()) {
+              rtaMagnetImages = "$rtaMagnetImages$element|";
+            }
+          }
+          if (controlForm.securityD.target!.triangleReflectorsImages.isNotEmpty) {
+            for (var element in controlForm.securityD.target!.triangleReflectorsImages.toList()) {
+              triangleReflectorsImages = "$triangleReflectorsImages$element|";
+            }
+          }
+          if (controlForm.securityD.target!.wheelChocksImages.isNotEmpty) {
+            for (var element in controlForm.securityD.target!.wheelChocksImages.toList()) {
+              wheelChocksImages = "$wheelChocksImages$element|";
+            }
+          }
+          if (controlForm.securityD.target!.fireExtinguisherImages.isNotEmpty) {
+            for (var element in controlForm.securityD.target!.fireExtinguisherImages.toList()) {
+              fireExtinguisherImages = "$fireExtinguisherImages$element|";
+            }
+          }
+          if (controlForm.securityD.target!.firstAidKitSafetyVestImages.isNotEmpty) {
+            for (var element in controlForm.securityD.target!.firstAidKitSafetyVestImages.toList()) {
+              firstAidKitSafetyVestImages = "$firstAidKitSafetyVestImages$element|";
+            }
+          }
+          if (controlForm.securityD.target!.backUpAlarmImages.isNotEmpty) {
+            for (var element in controlForm.securityD.target!.backUpAlarmImages.toList()) {
+              backUpAlarmImages = "$backUpAlarmImages$element|";
+            }
+          }
+          final recordSecurity = await supabaseCtrlV.from('security').insert(
+            {
+              'rta_magnet': controlForm.securityD.target!.rtaMagnet,
+              'rta_magnet_comments': controlForm.securityD.target!.rtaMagnetComments,
+              'rta_magnet_image': controlForm.securityD.target!.rtaMagnetImages.isEmpty == true ? null : rtaMagnetImages,
+              'triangle_reflectors': controlForm.securityD.target!.triangleReflectors,
+              'triangle_reflectors_comments': controlForm.securityD.target!.triangleReflectorsComments,
+              'triangle_reflectors_image': controlForm.securityD.target?.triangleReflectorsImages.isEmpty == true ? null : triangleReflectorsImages,
+              'wheel_chocks': controlForm.securityD.target!.wheelChocks,
+              'wheel_chocks_comments': controlForm.securityD.target!.wheelChocksComments,
+              'wheel_chocks_image': controlForm.securityD.target?.wheelChocksImages.isEmpty == true ? null : wheelChocksImages,
+              'fire_extinguisher': controlForm.securityD.target!.fireExtinguisher,
+              'fire_extinguisher_comments': controlForm.securityD.target!.fireExtinguisherComments,
+              'fire_extinguisher_image': controlForm.securityD.target?.fireExtinguisherImages.isEmpty == true ? null : fireExtinguisherImages,
+              'first_aid_kit_safety_vest': controlForm.securityD.target!.firstAidKitSafetyVest,
+              'first_aid_kit_safety_vest_comments': controlForm.securityD.target!.firstAidKitSafetyVestComments,
+              'first_aid_kit_safety_vest_image': controlForm.securityD.target?.firstAidKitSafetyVestImages.isEmpty == true ? null : firstAidKitSafetyVestImages,
+              'back_up_alarm': controlForm.securityD.target!.backUpAlarm,
+              'back_up_alarm_comments': controlForm.securityD.target!.backUpAlarmComments,
+              'back_up_alarm_image': controlForm.securityD.target?.backUpAlarmImages.isEmpty == true ? null : backUpAlarmImages,
+              'date_added': controlForm.securityD.target!.dateAdded.toIso8601String(),
+            },
+          ).select<PostgrestList>('id_security');
+          //Registrar extra
+          if (controlForm.extraD.target!.ladderImages.isNotEmpty) {
+            for (var element in controlForm.extraD.target!.ladderImages.toList()) {
+              ladderImages = "$ladderImages$element|";
+            }
+          }
+          if (controlForm.extraD.target!.stepLadderImages.isNotEmpty) {
+            for (var element in controlForm.extraD.target!.stepLadderImages.toList()) {
+              stepLadderImages = "$stepLadderImages$element|";
+            }
+          }
+          if (controlForm.extraD.target!.ladderStrapsImages.isNotEmpty) {
+            for (var element in controlForm.extraD.target!.ladderStrapsImages.toList()) {
+              ladderStrapsImages = "$ladderStrapsImages$element|";
+            }
+          }
+          if (controlForm.extraD.target!.hydraulicFluidForBucketImages.isNotEmpty) {
+            for (var element in controlForm.extraD.target!.hydraulicFluidForBucketImages.toList()) {
+              hydraulicFluidForBucketImages = "$hydraulicFluidForBucketImages$element|";
+            }
+          }
+          if (controlForm.extraD.target!.fiberReelRackImages.isNotEmpty) {
+            for (var element in controlForm.extraD.target!.fiberReelRackImages.toList()) {
+              fiberReelRackImages = "$fiberReelRackImages$element|";
+            }
+          }
+          if (controlForm.extraD.target!.binsLockedAndSecureImages.isNotEmpty) {
+            for (var element in controlForm.extraD.target!.binsLockedAndSecureImages.toList()) {
+              binsLockedAndSecureImages = "$binsLockedAndSecureImages$element|";
+            }
+          }
+          if (controlForm.extraD.target!.safetyHarnessImages.isNotEmpty) {
+            for (var element in controlForm.extraD.target!.safetyHarnessImages.toList()) {
+              safetyHarnessImages = "$safetyHarnessImages$element|";
+            }
+          }
+          if (controlForm.extraD.target!.lanyardSafetyHarnessImages.isNotEmpty) {
+            for (var element in controlForm.extraD.target!.lanyardSafetyHarnessImages.toList()) {
+              lanyardSafetyHarnessImages = "$lanyardSafetyHarnessImages$element|";
+            }
+          }
+          final recordExtra = await supabaseCtrlV.from('extra').insert(
+            {
+              'ladder': controlForm.extraD.target!.ladder,
+              'ladder_comments': controlForm.extraD.target!.ladderComments,
+              'ladder_image': controlForm.extraD.target!.ladderImages.isEmpty == true ? null : ladderImages,
+              'step_ladder': controlForm.extraD.target!.stepLadder,
+              'step_ladder_comments': controlForm.extraD.target!.stepLadderComments,
+              'step_ladder_image': controlForm.extraD.target?.stepLadderImages.isEmpty == true ? null : stepLadderImages,
+              'ladder_straps': controlForm.extraD.target!.ladderStraps,
+              'ladder_straps_comments': controlForm.extraD.target!.ladderStrapsComments,
+              'ladder_straps_image': controlForm.extraD.target?.ladderStrapsImages.isEmpty == true ? null : ladderStrapsImages,
+              'hydraulic_fluid_for_bucket': controlForm.extraD.target!.hydraulicFluidForBucket,
+              'hydraulic_fluid_for_bucket_comments': controlForm.extraD.target!.hydraulicFluidForBucketComments,
+              'hydraulic_fluid_for_bucket_image': controlForm.extraD.target?.hydraulicFluidForBucketImages.isEmpty == true ? null : hydraulicFluidForBucketImages,
+              'fiber_reel_rack': controlForm.extraD.target!.fiberReelRack,
+              'fiber_reel_rack_comments': controlForm.extraD.target!.fiberReelRackComments,
+              'fiber_reel_rack_image': controlForm.extraD.target?.fiberReelRackImages.isEmpty == true ? null : fiberReelRackImages,
+              'bins_locked_and_secure': controlForm.extraD.target!.binsLockedAndSecure,
+              'bins_locked_and_secure_comments': controlForm.extraD.target!.binsLockedAndSecureComments,
+              'bins_locked_and_secure_image': controlForm.extraD.target?.binsLockedAndSecureImages.isEmpty == true ? null : binsLockedAndSecureImages,
+              'safety_harness': controlForm.extraD.target!.safetyHarness,
+              'safety_harness_comments': controlForm.extraD.target!.safetyHarnessComments,
+              'safety_harness_image': controlForm.extraD.target?.safetyHarnessImages.isEmpty == true ? null : safetyHarnessImages,
+              'lanyard_safety_harness': controlForm.extraD.target!.lanyardSafetyHarness,
+              'lanyard_safety_harness_comments': controlForm.extraD.target!.lanyardSafetyHarnessComments,
+              'lanyard_safety_harness_image': controlForm.extraD.target?.lanyardSafetyHarnessImages.isEmpty == true ? null : lanyardSafetyHarnessImages,
+              'date_added': controlForm.extraD.target!.dateAdded.toIso8601String(),
+            },
+          ).select<PostgrestList>('id_extra');
+          //Registrar equipment
+          if (controlForm.equipmentD.target!.ignitionKeyImages.isNotEmpty) {
+            for (var element in controlForm.equipmentD.target!.ignitionKeyImages.toList()) {
+              ignitionKeyImages = "$ignitionKeyImages$element|";
+            }
+          }
+          if (controlForm.equipmentD.target!.binsBoxKeyImages.isNotEmpty) {
+            for (var element in controlForm.equipmentD.target!.binsBoxKeyImages.toList()) {
+              binsBoxKeyImages = "$binsBoxKeyImages$element|";
+            }
+          }
+          if (controlForm.equipmentD.target!.vehicleInsuranceCopyImages.isNotEmpty) {
+            for (var element in controlForm.equipmentD.target!.vehicleInsuranceCopyImages.toList()) {
+              vehicleInsuranceCopyImages = "$vehicleInsuranceCopyImages$element|";
+            }
+          }
+          if (controlForm.equipmentD.target!.vehicleRegistrationCopyImages.isNotEmpty) {
+            for (var element in controlForm.equipmentD.target!.vehicleRegistrationCopyImages.toList()) {
+              vehicleRegistrationCopyImages = "$vehicleRegistrationCopyImages$element|";
+            }
+          }
+          if (controlForm.equipmentD.target!.bucketLiftOperatorManualImages.isNotEmpty) {
+            for (var element in controlForm.equipmentD.target!.bucketLiftOperatorManualImages.toList()) {
+              bucketLiftOperatorManualImages = "$bucketLiftOperatorManualImages$element|";
+            }
+          }
+          final recordEquipment = await supabaseCtrlV.from('equipment').insert(
+            {
+              'ignition_key': controlForm.equipmentD.target!.ignitionKey,
+              'ignition_key_comments': controlForm.equipmentD.target!.ignitionKeyComments,
+              'ignition_key_image': controlForm.equipmentD.target?.ignitionKeyImages.isEmpty == true ? null : ignitionKeyImages,
+              'bins_box_key': controlForm.equipmentD.target!.binsBoxKey,
+              'bins_box_key_comments': controlForm.equipmentD.target!.binsBoxKeyComments,
+              'bins_box_key_image': controlForm.equipmentD.target?.binsBoxKeyImages.isEmpty == true ? null : hydraulicFluidForBucketImages,
+              'vehicle_registration_copy': controlForm.equipmentD.target!.vehicleInsuranceCopy,
+              'vehicle_registration_copy_comments': controlForm.equipmentD.target!.vehicleInsuranceCopyComments,
+              'vehicle_registration_copy_image': controlForm.equipmentD.target?.vehicleInsuranceCopyImages.isEmpty == true ? null : vehicleInsuranceCopyImages,
+              'vehicle_insurance_copy': controlForm.equipmentD.target!.vehicleInsuranceCopy,
+              'vehicle_insurance_copy_comments': controlForm.equipmentD.target!.vehicleInsuranceCopyComments,
+              'vehicle_insurance_copy_image': controlForm.equipmentD.target?.vehicleInsuranceCopyImages.isEmpty == true ? null : vehicleInsuranceCopyImages,
+              'bucket_lift_operator_manual': controlForm.equipmentD.target!.bucketLiftOperatorManual,
+              'bucket_lift_operator_manual_comments': controlForm.equipmentD.target!.bucketLiftOperatorManualComments,
+              'bucket_lift_operator_manual_image': controlForm.equipmentD.target?.bucketLiftOperatorManualImages.isEmpty == true ? null : bucketLiftOperatorManualImages,
+              'date_added': controlForm.equipmentD.target!.dateAdded.toIso8601String(),
+            },
+          ).select<PostgrestList>('id_equipment');
+          if (recordMeasure.isNotEmpty && recordLights.isNotEmpty && recordCarBodywork.isNotEmpty && recordFluidsCheck.isNotEmpty 
+              && recordBucketInspection.isNotEmpty && recordSecurity.isNotEmpty && recordExtra.isNotEmpty && recordEquipment.isNotEmpty) {
+            final recordControlForm = await supabaseCtrlV.from('control_form').update(
+              {
+                'id_measure_d_fk': recordMeasure.first['id_measure'],
+                'id_lights_d_fk': recordLights.first['id_lights'],
+                'id_car_bodywork_d_fk': recordCarBodywork.first['id_car_bodywork'],
+                'id_fluids_check_d_fk': recordFluidsCheck.first['id_fluids_check'],
+                'id_bucket_inspection_d_fk': recordBucketInspection.first['id_bucket_inspection'],
+                'id_security_d_fk': recordSecurity.first['id_security'],
+                'id_extra_d_fk': recordExtra.first['id_extra'],
+                'id_equipment_d_fk': recordEquipment.first['id_equipment'],
+                'issues_d': controlForm.issuesR,
+                'date_added_d': controlForm.dateAddedR.toIso8601String(),
+              },
+            ).eq("id_control_form", controlForm.idDBR)
+            .select<PostgrestList>('id_control_form');
+            //Registrar control Form
+            if (recordControlForm.isNotEmpty) {
+              //Se recupera el idDBR de Supabase de Measure
+              controlForm.measuresD.target!.idDBR = recordMeasure.first['id_measure'].toString();
+              dataBase.measuresFormBox.put(controlForm.measuresD.target!);
+              //Se recupera el idDBR de Supabase de Lights
+              controlForm.lightsD.target!.idDBR = recordLights.first['id_lights'].toString();
+              dataBase.lightsFormBox.put(controlForm.lightsD.target!);
+              //Se recupera el idDBR de Supabase de Car Bodywork
+              controlForm.carBodyworkD.target!.idDBR = recordCarBodywork.first['id_car_bodywork'].toString();
+              dataBase.carBodyworkFormBox.put(controlForm.carBodyworkD.target!);
+              //Se recupera el idDBR de Supabase de Fluids Check
+              controlForm.fluidsCheckD.target!.idDBR = recordFluidsCheck.first['id_fluids_check'].toString();
+              dataBase.fluidsCheckFormBox.put(controlForm.fluidsCheckD.target!);
+              //Se recupera el idDBR de Supabase de Bucket Inspection
+              controlForm.bucketInspectionD.target!.idDBR = recordBucketInspection.first['id_bucket_inspection'].toString();
+              dataBase.bucketInspectionFormBox.put(controlForm.bucketInspectionD.target!);
+              //Se recupera el idDBR de Supabase de Security
+              controlForm.securityD.target!.idDBR = recordSecurity.first['id_security'].toString();
+              dataBase.securityFormBox.put(controlForm.securityD.target!);
+              //Se recupera el idDBR de Supabase de Extra
+              controlForm.extraD.target!.idDBR = recordExtra.first['id_extra'].toString();
+              dataBase.extraFormBox.put(controlForm.extraD.target!);
+              //Se recupera el idDBR de Supabase de Equipment
+              controlForm.equipmentD.target!.idDBR = recordEquipment.first['id_equipment'].toString();
+              dataBase.equipmentFormBox.put(controlForm.equipmentD.target!);
+              //Se acuatila el Control Form
+              dataBase.controlFormBox.put(controlForm);
+              // //Se actualiza el número de current Month Forms del usuario
+              // if (controlForm.typeForm) {
+              //   final updateUsuario = dataBase.usersBox.query(Users_.idDBR.equals(controlForm.employee.target!.idDBR)).build().findUnique();
+              //   if(updateUsuario != null) 
+              //   {
+              //     int newRecordsMonthCurrentR = updateUsuario.recordsMonthCurrentR + 1;
+              //     updateUsuario.recordsMonthCurrentR = newRecordsMonthCurrentR;
+              //     dataBase.usersBox.put(updateUsuario);
+              //   }
+              // } else {
+              //   final updateUsuario = dataBase.usersBox.query(Users_.idDBR.equals(controlForm.employee.target!.idDBR)).build().findUnique();
+              //   if(updateUsuario != null) 
+              //   {
+              //     int newRecordsMonthCurrentD = updateUsuario.recordsMonthCurrentD + 1;
+              //     updateUsuario.recordsMonthCurrentD = newRecordsMonthCurrentD;
+              //     dataBase.usersBox.put(updateUsuario);
+              //   }
+              // }
+              //Se marca como ejecutada la instrucción en Bitacora
+              bitacora.executeSupabase = true;
+              dataBase.bitacoraBox.put(bitacora);
+              dataBase.bitacoraBox.remove(bitacora.id);
+              return SyncInstruction(exitoso: true, descripcion: "");
+            } else {
+              return SyncInstruction(
+              exitoso: false,
+              descripcion:
+                  "Failed to sync all data Control Form Delivered on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
+            }
+          } else {
+            return SyncInstruction(
+              exitoso: false,
+              descripcion:
+                  "Failed to sync data measure Control Form Delivered on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
+          }
+          
+        } else {
+          return SyncInstruction(
+              exitoso: false,
+              descripcion:
+                  "Failed to sync data measure Control Form Delivered on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
+        }
+      } else {
+        dataBase.bitacoraBox.remove(bitacora.id);
+        return SyncInstruction(exitoso: true, descripcion: "");
+      }
+    } catch (e) {
+      //print('ERROR - function syncAddEmprendedor(): $e');
+      return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync data measure Control Form Delivered on Local Server with vehicle ID ${controlForm.vehicle.target!.idDBR}:, details: '$e'");
+    }
+  }
 
 }

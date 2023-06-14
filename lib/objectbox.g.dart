@@ -159,7 +159,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(86, 283646429578876451),
       name: 'ControlForm',
-      lastPropertyId: const IdUid(17, 5771699047160977949),
+      lastPropertyId: const IdUid(38, 7955731353673957890),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -167,16 +167,6 @@ final _entities = <ModelEntity>[
             name: 'id',
             type: 6,
             flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 6352478481099351606),
-            name: 'typeForm',
-            type: 1,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 7473147047598627394),
-            name: 'dateAdded',
-            type: 10,
-            flags: 0),
         ModelProperty(
             id: const IdUid(4, 8105920711952487409),
             name: 'idDBR',
@@ -198,65 +188,141 @@ final _entities = <ModelEntity>[
             indexId: const IdUid(375, 5109090144384492697),
             relationTarget: 'Vehicle'),
         ModelProperty(
-            id: const IdUid(7, 9150909545264128235),
-            name: 'measuresId',
+            id: const IdUid(18, 4939078722358756667),
+            name: 'dateAddedR',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(19, 7721689959183185022),
+            name: 'dateAddedD',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(20, 5017922096706535505),
+            name: 'issuesR',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(21, 4217610095448771704),
+            name: 'issuesD',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(22, 3080798193881943248),
+            name: 'measuresRId',
             type: 11,
             flags: 520,
-            indexId: const IdUid(388, 4626339537674908557),
+            indexId: const IdUid(435, 122992020478916022),
             relationTarget: 'Measures'),
         ModelProperty(
-            id: const IdUid(8, 6788677312820454396),
-            name: 'lightsId',
+            id: const IdUid(23, 7176987853653918766),
+            name: 'lightsRId',
             type: 11,
             flags: 520,
-            indexId: const IdUid(389, 1080738433399291753),
+            indexId: const IdUid(436, 1873973174052103437),
             relationTarget: 'Lights'),
         ModelProperty(
-            id: const IdUid(9, 7902367091547443915),
-            name: 'carBodyworkId',
+            id: const IdUid(24, 1383480465253217739),
+            name: 'carBodyworkRId',
             type: 11,
             flags: 520,
-            indexId: const IdUid(390, 6964699696323522363),
+            indexId: const IdUid(437, 8805291357515159169),
             relationTarget: 'CarBodywork'),
         ModelProperty(
-            id: const IdUid(10, 6156332927596122814),
-            name: 'fluidsCheckId',
+            id: const IdUid(25, 8468558113948439846),
+            name: 'fluidsCheckRId',
             type: 11,
             flags: 520,
-            indexId: const IdUid(391, 496185777107324813),
+            indexId: const IdUid(438, 3184683556371449944),
             relationTarget: 'FluidsCheck'),
         ModelProperty(
-            id: const IdUid(12, 6319806637083549128),
-            name: 'securityId',
+            id: const IdUid(26, 7816600607549354181),
+            name: 'bucketInspectionRId',
             type: 11,
             flags: 520,
-            indexId: const IdUid(393, 2707715113785547372),
-            relationTarget: 'Security'),
-        ModelProperty(
-            id: const IdUid(13, 7442866940337625838),
-            name: 'extraId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(394, 6907220557239226145),
-            relationTarget: 'Extra'),
-        ModelProperty(
-            id: const IdUid(14, 2227071491150425204),
-            name: 'equipmentId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(395, 3683821233501424578),
-            relationTarget: 'Equipment'),
-        ModelProperty(
-            id: const IdUid(15, 5065703079577799848),
-            name: 'bucketInspectionId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(410, 8460461020124898604),
+            indexId: const IdUid(439, 236811738838167750),
             relationTarget: 'BucketInspection'),
         ModelProperty(
-            id: const IdUid(17, 5771699047160977949),
-            name: 'issues',
-            type: 6,
+            id: const IdUid(27, 4973135530074138941),
+            name: 'securityRId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(440, 4835492171320096392),
+            relationTarget: 'Security'),
+        ModelProperty(
+            id: const IdUid(28, 6643909120436266416),
+            name: 'extraRId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(441, 8080326262320799826),
+            relationTarget: 'Extra'),
+        ModelProperty(
+            id: const IdUid(29, 1245445534545642663),
+            name: 'equipmentRId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(442, 8867874908424643644),
+            relationTarget: 'Equipment'),
+        ModelProperty(
+            id: const IdUid(30, 6899752367049103072),
+            name: 'measuresDId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(443, 8751976194561309460),
+            relationTarget: 'Measures'),
+        ModelProperty(
+            id: const IdUid(31, 4101803535176847165),
+            name: 'lightsDId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(444, 2177789714560177811),
+            relationTarget: 'Lights'),
+        ModelProperty(
+            id: const IdUid(32, 3012195276920336775),
+            name: 'carBodyworkDId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(445, 657476217401674636),
+            relationTarget: 'CarBodywork'),
+        ModelProperty(
+            id: const IdUid(33, 8535621974771493220),
+            name: 'fluidsCheckDId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(446, 3825693090286000930),
+            relationTarget: 'FluidsCheck'),
+        ModelProperty(
+            id: const IdUid(34, 5731946712531999849),
+            name: 'bucketInspectionDId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(447, 551739223749718276),
+            relationTarget: 'BucketInspection'),
+        ModelProperty(
+            id: const IdUid(35, 2593314656940468401),
+            name: 'securityDId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(448, 8996772627557330004),
+            relationTarget: 'Security'),
+        ModelProperty(
+            id: const IdUid(36, 9217248123693218315),
+            name: 'extraDId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(449, 5804864913316168266),
+            relationTarget: 'Extra'),
+        ModelProperty(
+            id: const IdUid(37, 5265186408950234883),
+            name: 'equipmentDId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(450, 5865551881169805159),
+            relationTarget: 'Equipment'),
+        ModelProperty(
+            id: const IdUid(38, 7955731353673957890),
+            name: 'today',
+            type: 1,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -1970,7 +2036,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(102, 3290269878544238397),
-      lastIndexId: const IdUid(434, 7663217395535372588),
+      lastIndexId: const IdUid(450, 5865551881169805159),
       lastRelationId: const IdUid(97, 7907540417784017008),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -2233,7 +2299,15 @@ ModelDefinition getObjectBoxModel() {
         1215468110805298241,
         7713453128820497698,
         5311425645938031112,
-        659698341661181318
+        659698341661181318,
+        4626339537674908557,
+        1080738433399291753,
+        6964699696323522363,
+        496185777107324813,
+        2707715113785547372,
+        6907220557239226145,
+        3683821233501424578,
+        8460461020124898604
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -3276,7 +3350,18 @@ ModelDefinition getObjectBoxModel() {
         472741667402047784,
         8508696798102400446,
         251371643102140460,
-        2938032336750196780
+        2938032336750196780,
+        6352478481099351606,
+        7473147047598627394,
+        9150909545264128235,
+        6788677312820454396,
+        7902367091547443915,
+        6156332927596122814,
+        6319806637083549128,
+        7442866940337625838,
+        2227071491150425204,
+        5065703079577799848,
+        5771699047160977949
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3451,14 +3536,22 @@ ModelDefinition getObjectBoxModel() {
         toOneRelations: (ControlForm object) => [
               object.employee,
               object.vehicle,
-              object.measures,
-              object.lights,
-              object.carBodywork,
-              object.fluidsCheck,
-              object.security,
-              object.extra,
-              object.equipment,
-              object.bucketInspection
+              object.measuresR,
+              object.lightsR,
+              object.carBodyworkR,
+              object.fluidsCheckR,
+              object.bucketInspectionR,
+              object.securityR,
+              object.extraR,
+              object.equipmentR,
+              object.measuresD,
+              object.lightsD,
+              object.carBodyworkD,
+              object.fluidsCheckD,
+              object.bucketInspectionD,
+              object.securityD,
+              object.extraD,
+              object.equipmentD
             ],
         toManyRelations: (ControlForm object) => {
               RelInfo<Bitacora>.toOneBacklink(42, object.id,
@@ -3472,69 +3565,109 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (ControlForm object, fb.Builder fbb) {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(18);
+          fbb.startTable(39);
           fbb.addInt64(0, object.id);
-          fbb.addBool(1, object.typeForm);
-          fbb.addInt64(2, object.dateAdded.millisecondsSinceEpoch);
           fbb.addOffset(3, idDBROffset);
           fbb.addInt64(4, object.employee.targetId);
           fbb.addInt64(5, object.vehicle.targetId);
-          fbb.addInt64(6, object.measures.targetId);
-          fbb.addInt64(7, object.lights.targetId);
-          fbb.addInt64(8, object.carBodywork.targetId);
-          fbb.addInt64(9, object.fluidsCheck.targetId);
-          fbb.addInt64(11, object.security.targetId);
-          fbb.addInt64(12, object.extra.targetId);
-          fbb.addInt64(13, object.equipment.targetId);
-          fbb.addInt64(14, object.bucketInspection.targetId);
-          fbb.addInt64(16, object.issues);
+          fbb.addInt64(17, object.dateAddedR.millisecondsSinceEpoch);
+          fbb.addInt64(18, object.dateAddedD?.millisecondsSinceEpoch);
+          fbb.addInt64(19, object.issuesR);
+          fbb.addInt64(20, object.issuesD);
+          fbb.addInt64(21, object.measuresR.targetId);
+          fbb.addInt64(22, object.lightsR.targetId);
+          fbb.addInt64(23, object.carBodyworkR.targetId);
+          fbb.addInt64(24, object.fluidsCheckR.targetId);
+          fbb.addInt64(25, object.bucketInspectionR.targetId);
+          fbb.addInt64(26, object.securityR.targetId);
+          fbb.addInt64(27, object.extraR.targetId);
+          fbb.addInt64(28, object.equipmentR.targetId);
+          fbb.addInt64(29, object.measuresD.targetId);
+          fbb.addInt64(30, object.lightsD.targetId);
+          fbb.addInt64(31, object.carBodyworkD.targetId);
+          fbb.addInt64(32, object.fluidsCheckD.targetId);
+          fbb.addInt64(33, object.bucketInspectionD.targetId);
+          fbb.addInt64(34, object.securityD.targetId);
+          fbb.addInt64(35, object.extraD.targetId);
+          fbb.addInt64(36, object.equipmentD.targetId);
+          fbb.addBool(37, object.today);
           fbb.finish(fbb.endTable());
           return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
+          final dateAddedDValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 40);
           final object = ControlForm(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              typeForm:
-                  const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false),
-              issues:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0),
-              dateAdded: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
+              issuesR:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0),
+              issuesD: const fb.Int64Reader()
+                  .vTableGetNullable(buffer, rootOffset, 44),
+              dateAddedR: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0)),
+              dateAddedD: dateAddedDValue == null
+                  ? null
+                  : DateTime.fromMillisecondsSinceEpoch(dateAddedDValue),
               idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 10));
+                  .vTableGetNullable(buffer, rootOffset, 10),
+              today: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 78, false));
           object.employee.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           object.employee.attach(store);
           object.vehicle.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           object.vehicle.attach(store);
-          object.measures.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
-          object.measures.attach(store);
-          object.lights.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
-          object.lights.attach(store);
-          object.carBodywork.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
-          object.carBodywork.attach(store);
-          object.fluidsCheck.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
-          object.fluidsCheck.attach(store);
-          object.security.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
-          object.security.attach(store);
-          object.extra.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
-          object.extra.attach(store);
-          object.equipment.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
-          object.equipment.attach(store);
-          object.bucketInspection.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
-          object.bucketInspection.attach(store);
+          object.measuresR.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 46, 0);
+          object.measuresR.attach(store);
+          object.lightsR.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 48, 0);
+          object.lightsR.attach(store);
+          object.carBodyworkR.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0);
+          object.carBodyworkR.attach(store);
+          object.fluidsCheckR.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 52, 0);
+          object.fluidsCheckR.attach(store);
+          object.bucketInspectionR.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 54, 0);
+          object.bucketInspectionR.attach(store);
+          object.securityR.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 56, 0);
+          object.securityR.attach(store);
+          object.extraR.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 58, 0);
+          object.extraR.attach(store);
+          object.equipmentR.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 60, 0);
+          object.equipmentR.attach(store);
+          object.measuresD.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 62, 0);
+          object.measuresD.attach(store);
+          object.lightsD.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 64, 0);
+          object.lightsD.attach(store);
+          object.carBodyworkD.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 66, 0);
+          object.carBodyworkD.attach(store);
+          object.fluidsCheckD.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 68, 0);
+          object.fluidsCheckD.attach(store);
+          object.bucketInspectionD.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 70, 0);
+          object.bucketInspectionD.attach(store);
+          object.securityD.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 72, 0);
+          object.securityD.attach(store);
+          object.extraD.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 74, 0);
+          object.extraD.attach(store);
+          object.equipmentD.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 76, 0);
+          object.equipmentD.attach(store);
           InternalToManyAccess.setRelInfo(
               object.bitacora,
               store,
@@ -5294,62 +5427,103 @@ class ControlForm_ {
   static final id =
       QueryIntegerProperty<ControlForm>(_entities[1].properties[0]);
 
-  /// see [ControlForm.typeForm]
-  static final typeForm =
-      QueryBooleanProperty<ControlForm>(_entities[1].properties[1]);
-
-  /// see [ControlForm.dateAdded]
-  static final dateAdded =
-      QueryIntegerProperty<ControlForm>(_entities[1].properties[2]);
-
   /// see [ControlForm.idDBR]
   static final idDBR =
-      QueryStringProperty<ControlForm>(_entities[1].properties[3]);
+      QueryStringProperty<ControlForm>(_entities[1].properties[1]);
 
   /// see [ControlForm.employee]
   static final employee =
-      QueryRelationToOne<ControlForm, Users>(_entities[1].properties[4]);
+      QueryRelationToOne<ControlForm, Users>(_entities[1].properties[2]);
 
   /// see [ControlForm.vehicle]
   static final vehicle =
-      QueryRelationToOne<ControlForm, Vehicle>(_entities[1].properties[5]);
+      QueryRelationToOne<ControlForm, Vehicle>(_entities[1].properties[3]);
 
-  /// see [ControlForm.measures]
-  static final measures =
-      QueryRelationToOne<ControlForm, Measures>(_entities[1].properties[6]);
+  /// see [ControlForm.dateAddedR]
+  static final dateAddedR =
+      QueryIntegerProperty<ControlForm>(_entities[1].properties[4]);
 
-  /// see [ControlForm.lights]
-  static final lights =
-      QueryRelationToOne<ControlForm, Lights>(_entities[1].properties[7]);
+  /// see [ControlForm.dateAddedD]
+  static final dateAddedD =
+      QueryIntegerProperty<ControlForm>(_entities[1].properties[5]);
 
-  /// see [ControlForm.carBodywork]
-  static final carBodywork =
-      QueryRelationToOne<ControlForm, CarBodywork>(_entities[1].properties[8]);
+  /// see [ControlForm.issuesR]
+  static final issuesR =
+      QueryIntegerProperty<ControlForm>(_entities[1].properties[6]);
 
-  /// see [ControlForm.fluidsCheck]
-  static final fluidsCheck =
-      QueryRelationToOne<ControlForm, FluidsCheck>(_entities[1].properties[9]);
+  /// see [ControlForm.issuesD]
+  static final issuesD =
+      QueryIntegerProperty<ControlForm>(_entities[1].properties[7]);
 
-  /// see [ControlForm.security]
-  static final security =
-      QueryRelationToOne<ControlForm, Security>(_entities[1].properties[10]);
+  /// see [ControlForm.measuresR]
+  static final measuresR =
+      QueryRelationToOne<ControlForm, Measures>(_entities[1].properties[8]);
 
-  /// see [ControlForm.extra]
-  static final extra =
-      QueryRelationToOne<ControlForm, Extra>(_entities[1].properties[11]);
+  /// see [ControlForm.lightsR]
+  static final lightsR =
+      QueryRelationToOne<ControlForm, Lights>(_entities[1].properties[9]);
 
-  /// see [ControlForm.equipment]
-  static final equipment =
-      QueryRelationToOne<ControlForm, Equipment>(_entities[1].properties[12]);
+  /// see [ControlForm.carBodyworkR]
+  static final carBodyworkR =
+      QueryRelationToOne<ControlForm, CarBodywork>(_entities[1].properties[10]);
 
-  /// see [ControlForm.bucketInspection]
-  static final bucketInspection =
+  /// see [ControlForm.fluidsCheckR]
+  static final fluidsCheckR =
+      QueryRelationToOne<ControlForm, FluidsCheck>(_entities[1].properties[11]);
+
+  /// see [ControlForm.bucketInspectionR]
+  static final bucketInspectionR =
       QueryRelationToOne<ControlForm, BucketInspection>(
-          _entities[1].properties[13]);
+          _entities[1].properties[12]);
 
-  /// see [ControlForm.issues]
-  static final issues =
-      QueryIntegerProperty<ControlForm>(_entities[1].properties[14]);
+  /// see [ControlForm.securityR]
+  static final securityR =
+      QueryRelationToOne<ControlForm, Security>(_entities[1].properties[13]);
+
+  /// see [ControlForm.extraR]
+  static final extraR =
+      QueryRelationToOne<ControlForm, Extra>(_entities[1].properties[14]);
+
+  /// see [ControlForm.equipmentR]
+  static final equipmentR =
+      QueryRelationToOne<ControlForm, Equipment>(_entities[1].properties[15]);
+
+  /// see [ControlForm.measuresD]
+  static final measuresD =
+      QueryRelationToOne<ControlForm, Measures>(_entities[1].properties[16]);
+
+  /// see [ControlForm.lightsD]
+  static final lightsD =
+      QueryRelationToOne<ControlForm, Lights>(_entities[1].properties[17]);
+
+  /// see [ControlForm.carBodyworkD]
+  static final carBodyworkD =
+      QueryRelationToOne<ControlForm, CarBodywork>(_entities[1].properties[18]);
+
+  /// see [ControlForm.fluidsCheckD]
+  static final fluidsCheckD =
+      QueryRelationToOne<ControlForm, FluidsCheck>(_entities[1].properties[19]);
+
+  /// see [ControlForm.bucketInspectionD]
+  static final bucketInspectionD =
+      QueryRelationToOne<ControlForm, BucketInspection>(
+          _entities[1].properties[20]);
+
+  /// see [ControlForm.securityD]
+  static final securityD =
+      QueryRelationToOne<ControlForm, Security>(_entities[1].properties[21]);
+
+  /// see [ControlForm.extraD]
+  static final extraD =
+      QueryRelationToOne<ControlForm, Extra>(_entities[1].properties[22]);
+
+  /// see [ControlForm.equipmentD]
+  static final equipmentD =
+      QueryRelationToOne<ControlForm, Equipment>(_entities[1].properties[23]);
+
+  /// see [ControlForm.today]
+  static final today =
+      QueryBooleanProperty<ControlForm>(_entities[1].properties[24]);
 }
 
 /// [CarBodywork] entity fields to define ObjectBox queries.

@@ -179,44 +179,38 @@ class RolesSupabaseProvider extends ChangeNotifier {
       final responseCurrentR = await supabaseCtrlV
       .from('control_form')
       .select()
-      .gt('date_added', formattedStartOfMonthCurrent).lt('date_added', formattedEndOfMonthCurrent)
-      .eq('id_user_fk', idUserFk)
-      .eq('type_form', true);
+      .gt('date_added_r', formattedStartOfMonthCurrent).lt('date_added_r', formattedEndOfMonthCurrent)
+      .eq('id_user_fk', idUserFk);
 
       final responseCurrentD = await supabaseCtrlV
       .from('control_form')
       .select()
-      .gt('date_added', formattedStartOfMonthCurrent).lt('date_added', formattedEndOfMonthCurrent)
-      .eq('id_user_fk', idUserFk)
-      .eq('type_form', false);
+      .gt('date_added_d', formattedStartOfMonthCurrent).lt('date_added_d', formattedEndOfMonthCurrent)
+      .eq('id_user_fk', idUserFk);
 
       final responseSecondR = await supabaseCtrlV
       .from('control_form')
       .select()
-      .gt('date_added', formattedStartOfMonthSecond).lt('date_added', formattedEndOfMonthSecond)
-      .eq('id_user_fk', idUserFk)
-      .eq('type_form', true);
+      .gt('date_added_r', formattedStartOfMonthSecond).lt('date_added_r', formattedEndOfMonthSecond)
+      .eq('id_user_fk', idUserFk);
 
       final responseSecondD = await supabaseCtrlV
       .from('control_form')
       .select()
-      .gt('date_added', formattedStartOfMonthSecond).lt('date_added', formattedEndOfMonthSecond)
-      .eq('id_user_fk', idUserFk)
-      .eq('type_form', false);
+      .gt('date_added_d', formattedStartOfMonthSecond).lt('date_added_d', formattedEndOfMonthSecond)
+      .eq('id_user_fk', idUserFk);
 
       final responseThirdR = await supabaseCtrlV
       .from('control_form')
       .select()
-      .gt('date_added', formattedStartOfMonthThird).lt('date_added', formattedEndOfMonthThird)
-      .eq('id_user_fk', idUserFk)
-      .eq('type_form', true);
+      .gt('date_added_r', formattedStartOfMonthThird).lt('date_added_r', formattedEndOfMonthThird)
+      .eq('id_user_fk', idUserFk);
 
       final responseThirdD = await supabaseCtrlV
       .from('control_form')
       .select()
-      .gt('date_added', formattedStartOfMonthThird).lt('date_added', formattedEndOfMonthThird)
-      .eq('id_user_fk', idUserFk)
-      .eq('type_form', false);
+      .gt('date_added_d', formattedStartOfMonthThird).lt('date_added_d', formattedEndOfMonthThird)
+      .eq('id_user_fk', idUserFk);
 
       if (recordsRoles.data != null && recordsStatus != null && recordsCompany.data != null && recordsVehicle != null &&
       responseCurrentR != null && responseSecondR != null && responseThirdR != null &&
