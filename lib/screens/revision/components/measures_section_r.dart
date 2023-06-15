@@ -623,6 +623,8 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                   pickedFile =
                                                       await picker.pickImage(
                                                     source: ImageSource.camera,
+                                                    maxHeight: 1080,
+                                                    maxWidth: 1080,
                                                     imageQuality: 10,
                                                   );
                                                   if (pickedFile != null) {
@@ -658,6 +660,8 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.camera,
+                                                      maxHeight: 1080,
+                                                      maxWidth: 1080,
                                                       imageQuality: 10,
                             
                                                     );
@@ -816,6 +820,8 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.gallery,
+                                                      maxHeight: 1080,
+                                                      maxWidth: 1080,
                                                       imageQuality: 10,
                             
                                                     );
@@ -1206,6 +1212,8 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                   pickedFile =
                                                       await picker.pickImage(
                                                     source: ImageSource.camera,
+                                                    maxHeight: 1080,
+                                                    maxWidth: 1080,
                                                     imageQuality: 10,
                                                   );
                                                   if (pickedFile != null) {
@@ -1241,6 +1249,8 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.camera,
+                                                      maxHeight: 1080,
+                                                      maxWidth: 1080,
                                                       imageQuality: 10,
                             
                                                     );
@@ -1399,6 +1409,8 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.gallery,
+                                                      maxHeight: 1080,
+                                                      maxWidth: 1080,
                                                       imageQuality: 10,
                             
                                                     );
