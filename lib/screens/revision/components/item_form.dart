@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io' as libraryIO;
+import 'dart:typed_data';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/database/image_evidence.dart';
@@ -373,7 +375,7 @@ class _ItemFormState extends State<ItemForm> {
                                           source: ImageSource.camera,
                                           maxHeight: 1080,
                                           maxWidth: 1080,
-                                          imageQuality: 10,
+                                          imageQuality: 80,
                                         );
                                         if (pickedFile != null) {
                                           imagesTemp.add(pickedFile);
@@ -408,29 +410,31 @@ class _ItemFormState extends State<ItemForm> {
                                           pickedFile =
                                               await picker.pickImage(
                                             source: ImageSource.camera,
-                                            maxHeight: 1080,
-                                            maxWidth: 1080,
-                                            imageQuality: 10,
+                                            imageQuality: 80,
                                           );
                                           if (pickedFile != null) {
                                             libraryIO.File file =
                                             libraryIO.File(
                                                 pickedFile.path);
                   
-                                            List<int> fileInByte =
-                                                file.readAsBytesSync();
-                  
-                                            String base64 =
-                                                base64Encode(fileInByte);
-                  
-                                            var updateImagenEvidence =
+                                            Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
+                                              file.absolute.path,
+                                              minWidth: 1920,
+                                              minHeight: 1080,
+                                              quality: 80,
+                                            );
+
+                                            if (compressImage != null) {
+                                              var updateImageEvidence =
                                                 ImageEvidence(
                                                     path:
                                                         pickedFile.path,
-                                                    base64: base64);
-                                            state.setState(() {
-                                              widget.updateImage!(updateImagenEvidence);
-                                            });
+                                                    uint8List: compressImage,
+                                                    name: pickedFile.name);
+                                                state.setState(() {
+                                                widget.updateImage!(updateImageEvidence);
+                                              });
+                                            }
                                           }
                                           return;
                                         }
@@ -568,9 +572,7 @@ class _ItemFormState extends State<ItemForm> {
                                           pickedFile =
                                               await picker.pickImage(
                                             source: ImageSource.gallery,
-                                            maxHeight: 1080,
-                                            maxWidth: 1080,
-                                            imageQuality: 10,
+                                            imageQuality: 80,
                   
                                           );
                                           if (pickedFile != null) {
@@ -578,20 +580,24 @@ class _ItemFormState extends State<ItemForm> {
                                             libraryIO.File(
                                                 pickedFile.path);
                   
-                                            List<int> fileInByte =
-                                                file.readAsBytesSync();
-                  
-                                            String base64 =
-                                                base64Encode(fileInByte);
-                  
-                                            var updateImagenEvidence =
+                                            Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
+                                              file.absolute.path,
+                                              minWidth: 1920,
+                                              minHeight: 1080,
+                                              quality: 80,
+                                            );
+
+                                            if (compressImage != null) {
+                                              var updateImageEvidence =
                                                 ImageEvidence(
                                                     path:
                                                         pickedFile.path,
-                                                    base64: base64);
-                                            state.setState(() {
-                                              widget.updateImage!(updateImagenEvidence);
-                                            });
+                                                    uint8List: compressImage,
+                                                    name: pickedFile.name);
+                                                state.setState(() {
+                                                widget.updateImage!(updateImageEvidence);
+                                              });
+                                            }
                                           }
                                           return;
                                         }
@@ -603,24 +609,30 @@ class _ItemFormState extends State<ItemForm> {
                                       libraryIO.File file =
                                           libraryIO.File(
                                               imagesTemp[i].path);
+
+                                      Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
+                                        file.absolute.path,
+                                        minWidth: 1920,
+                                        minHeight: 1080,
+                                        quality: 80,
+                                      );
                   
-                                      List<int> fileInByte =
-                                          file.readAsBytesSync();
-                  
-                                      String base64 =
-                                          base64Encode(fileInByte);
-                  
-                                      var newImagenEvidence =
+                                      if (compressImage != null) {
+                                        var newImagenEvidence =
                                           ImageEvidence(
                                               path:
                                                   imagesTemp[i].path,
-                                              base64: base64);
-                                      state.setState(() {
-                                        widget.addImage!(
-                                        newImagenEvidence);
-                                        imagesTemp.clear();
-                                      });
+                                              uint8List: compressImage,
+                                              name: imagesTemp[i].name);
+                                          state.setState(() {
+                                          widget.addImage!(
+                                          newImagenEvidence);
+                                        });
+                                      }
                                     }
+                                    setState(() {
+                                      imagesTemp.clear();
+                                    });
                                   },
                                   text: 'Add',
                                   icon: const Icon(

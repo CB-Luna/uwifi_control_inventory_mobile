@@ -282,16 +282,12 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                         if (option == 'camera') {
                                           pickedFile = await picker.pickImage(
                                             source: ImageSource.camera,
-                                            maxHeight: 1080,
-                                            maxWidth: 1080,
-                                            imageQuality: 10,
+                                            imageQuality: 80,
                                           );
                                         } else {
                                           pickedFile = await picker.pickImage(
                                             source: ImageSource.gallery,
-                                            maxHeight: 1080,
-                                            maxWidth: 1080,
-                                            imageQuality: 10,
+                                            imageQuality: 80,
                                           );
                                         }
 

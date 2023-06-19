@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io' as libraryIO;
+import 'dart:typed_data';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -623,9 +625,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                   pickedFile =
                                                       await picker.pickImage(
                                                     source: ImageSource.camera,
-                                                    maxHeight: 1080,
-                                                    maxWidth: 1080,
-                                                    imageQuality: 10,
+                                                    imageQuality: 80,
                                                   );
                                                   if (pickedFile != null) {
                                                     imagesTemp.add(pickedFile);
@@ -660,9 +660,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.camera,
-                                                      maxHeight: 1080,
-                                                      maxWidth: 1080,
-                                                      imageQuality: 10,
+                                                      imageQuality: 80,
                             
                                                     );
                                                     if (pickedFile != null) {
@@ -670,19 +668,24 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                       libraryIO.File(
                                                           pickedFile.path);
                             
-                                                      List<int> fileInByte =
-                                                          file.readAsBytesSync();
-                            
-                                                      String base64 =
-                                                          base64Encode(fileInByte);
-                            
-                                                      var updateImageEvidence =
+                                                      Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
+                                                        file.absolute.path,
+                                                        minWidth: 1920,
+                                                        minHeight: 1080,
+                                                        quality: 80,
+                                                      );
+
+                                                      if (compressImage != null) {
+                                                        var updateImageEvidence =
                                                           ImageEvidence(
                                                               path:
                                                                   pickedFile.path,
-                                                              base64: base64);
-                                                        deliveredFormProvider.updateMileageImage(
+                                                              uint8List: compressImage,
+                                                              name: pickedFile.name);
+                                                          deliveredFormProvider.updateMileageImage(
                                                           updateImageEvidence);
+                                                      }
+                                                        
                                                     }
                                                     return;
                                                   }
@@ -820,9 +823,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.gallery,
-                                                      maxHeight: 1080,
-                                                      maxWidth: 1080,
-                                                      imageQuality: 10,
+                                                      imageQuality: 80,
                             
                                                     );
                                                     if (pickedFile != null) {
@@ -830,19 +831,23 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                       libraryIO.File(
                                                           pickedFile.path);
                             
-                                                      List<int> fileInByte =
-                                                          file.readAsBytesSync();
-                            
-                                                      String base64 =
-                                                          base64Encode(fileInByte);
-                            
-                                                      var updateImageEvidence =
+                                                      Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
+                                                        file.absolute.path,
+                                                        minWidth: 1920,
+                                                        minHeight: 1080,
+                                                        quality: 80,
+                                                      );
+
+                                                      if (compressImage != null) {
+                                                        var updateImageEvidence =
                                                           ImageEvidence(
                                                               path:
                                                                   pickedFile.path,
-                                                              base64: base64);
-                                                        deliveredFormProvider.updateMileageImage(
+                                                              uint8List: compressImage,
+                                                              name: pickedFile.name);
+                                                          deliveredFormProvider.updateMileageImage(
                                                           updateImageEvidence);
+                                                      }
                                                     }
                                                     return;
                                                   }
@@ -855,21 +860,25 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                     libraryIO.File(
                                                         imagesTemp[i].path);
                             
-                                                List<int> fileInByte =
-                                                    file.readAsBytesSync();
-                            
-                                                String base64 =
-                                                    base64Encode(fileInByte);
-                            
-                                                var newImageEvidence =
-                                                    ImageEvidence(
-                                                        path:
+                                                 Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
+                                                    file.absolute.path,
+                                                    minWidth: 1920,
+                                                    minHeight: 1080,
+                                                    quality: 80,
+                                                  );
+
+                                                  if (compressImage != null) {
+                                                    var newImageEvidence =
+                                                      ImageEvidence(
+                                                          path:
                                                             imagesTemp[i].path,
-                                                        base64: base64);
-                                                deliveredFormProvider.addMileageImage(
-                                                  newImageEvidence);
-                                                imagesTemp.clear();
+                                                          uint8List: compressImage,
+                                                          name: imagesTemp[i].name);
+                                                      deliveredFormProvider.addMileageImage(
+                                                    newImageEvidence);
+                                                  }
                                               }
+                                              imagesTemp.clear();
                                             },
                                             text: 'Add',
                                             icon: const Icon(
@@ -1212,9 +1221,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                   pickedFile =
                                                       await picker.pickImage(
                                                     source: ImageSource.camera,
-                                                    maxHeight: 1080,
-                                                    maxWidth: 1080,
-                                                    imageQuality: 10,
+                                                    imageQuality: 80,
                                                   );
                                                   if (pickedFile != null) {
                                                     imagesTemp.add(pickedFile);
@@ -1249,9 +1256,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.camera,
-                                                      maxHeight: 1080,
-                                                      maxWidth: 1080,
-                                                      imageQuality: 10,
+                                                      imageQuality: 80,
                             
                                                     );
                                                     if (pickedFile != null) {
@@ -1259,19 +1264,23 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                       libraryIO.File(
                                                           pickedFile.path);
                             
-                                                      List<int> fileInByte =
-                                                          file.readAsBytesSync();
-                            
-                                                      String base64 =
-                                                          base64Encode(fileInByte);
-                            
-                                                      var updateImageEvidence =
+                                                      Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
+                                                        file.absolute.path,
+                                                        minWidth: 1920,
+                                                        minHeight: 1080,
+                                                        quality: 80,
+                                                      );
+
+                                                      if (compressImage != null) {
+                                                        var updateImageEvidence =
                                                           ImageEvidence(
                                                               path:
                                                                   pickedFile.path,
-                                                              base64: base64);
-                                                        deliveredFormProvider.updateGasImage(
+                                                              uint8List: compressImage,
+                                                              name: pickedFile.name);
+                                                          deliveredFormProvider.updateGasImage(
                                                           updateImageEvidence);
+                                                      }
                                                     }
                                                     return;
                                                   }
@@ -1409,9 +1418,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.gallery,
-                                                      maxHeight: 1080,
-                                                      maxWidth: 1080,
-                                                      imageQuality: 10,
+                                                      imageQuality: 80,
                             
                                                     );
                                                     if (pickedFile != null) {
@@ -1419,19 +1426,23 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                       libraryIO.File(
                                                           pickedFile.path);
                             
-                                                      List<int> fileInByte =
-                                                          file.readAsBytesSync();
-                            
-                                                      String base64 =
-                                                          base64Encode(fileInByte);
-                            
-                                                      var updateImageEvidence =
+                                                      Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
+                                                        file.absolute.path,
+                                                        minWidth: 1920,
+                                                        minHeight: 1080,
+                                                        quality: 80,
+                                                      );
+
+                                                      if (compressImage != null) {
+                                                        var updateImageEvidence =
                                                           ImageEvidence(
                                                               path:
                                                                   pickedFile.path,
-                                                              base64: base64);
-                                                        deliveredFormProvider.updateGasImage(
+                                                              uint8List: compressImage,
+                                                              name: pickedFile.name);
+                                                          deliveredFormProvider.updateGasImage(
                                                           updateImageEvidence);
+                                                      }
                                                     }
                                                     return;
                                                   }
@@ -1444,21 +1455,25 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                     libraryIO.File(
                                                         imagesTemp[i].path);
                             
-                                                List<int> fileInByte =
-                                                    file.readAsBytesSync();
-                            
-                                                String base64 =
-                                                    base64Encode(fileInByte);
-                            
-                                                var newImageEvidence =
+                                                Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
+                                                  file.absolute.path,
+                                                  minWidth: 1920,
+                                                  minHeight: 1080,
+                                                  quality: 80,
+                                                );
+
+                                                if (compressImage != null) {
+                                                  var newImageEvidence =
                                                     ImageEvidence(
                                                         path:
                                                             imagesTemp[i].path,
-                                                        base64: base64);
-                                                deliveredFormProvider.addGasImage
-                                                  (newImageEvidence);
-                                                imagesTemp.clear();
+                                                        uint8List: compressImage,
+                                                        name: imagesTemp[i].name);
+                                                    deliveredFormProvider.addGasImage(
+                                                    newImageEvidence);
+                                                }
                                               }
+                                              imagesTemp.clear();
                                             },
                                             text: 'Add',
                                             icon: const Icon(

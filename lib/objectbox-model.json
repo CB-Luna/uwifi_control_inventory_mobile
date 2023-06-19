@@ -343,7 +343,7 @@
     },
     {
       "id": "88:5449780156064882583",
-      "lastPropertyId": "56:1861675323202979021",
+      "lastPropertyId": "69:7980155768179685551",
       "name": "CarBodywork",
       "properties": [
         {
@@ -631,13 +631,78 @@
           "id": "56:1861675323202979021",
           "name": "hornPath",
           "type": 30
+        },
+        {
+          "id": "57:721633576761411645",
+          "name": "wiperBladesFrontNames",
+          "type": 30
+        },
+        {
+          "id": "58:864465889485949348",
+          "name": "wiperBladesBackNames",
+          "type": 30
+        },
+        {
+          "id": "59:7699437473769752965",
+          "name": "windshieldWiperFrontNames",
+          "type": 30
+        },
+        {
+          "id": "60:2993703430609252560",
+          "name": "windshieldWiperBackNames",
+          "type": 30
+        },
+        {
+          "id": "61:5101290660306326832",
+          "name": "generalBodyNames",
+          "type": 30
+        },
+        {
+          "id": "62:8580912124304768569",
+          "name": "decalingNames",
+          "type": 30
+        },
+        {
+          "id": "63:5210311964194700556",
+          "name": "tiresNames",
+          "type": 30
+        },
+        {
+          "id": "64:8638351439504744001",
+          "name": "glassNames",
+          "type": 30
+        },
+        {
+          "id": "65:7486927741048338942",
+          "name": "mirrorsNames",
+          "type": 30
+        },
+        {
+          "id": "66:4119170522138643497",
+          "name": "parkingNames",
+          "type": 30
+        },
+        {
+          "id": "67:6008268570167634140",
+          "name": "brakesNames",
+          "type": 30
+        },
+        {
+          "id": "68:3647722623988683365",
+          "name": "emgBrakesNames",
+          "type": 30
+        },
+        {
+          "id": "69:7980155768179685551",
+          "name": "hornNames",
+          "type": 30
         }
       ],
       "relations": []
     },
     {
       "id": "89:1967166146969188",
-      "lastPropertyId": "24:6840303418693524212",
+      "lastPropertyId": "29:2911447276000184982",
       "name": "Equipment",
       "properties": [
         {
@@ -765,13 +830,38 @@
           "id": "24:6840303418693524212",
           "name": "bucketLiftOperatorManualPath",
           "type": 30
+        },
+        {
+          "id": "25:3742855868234495839",
+          "name": "ignitionKeyNames",
+          "type": 30
+        },
+        {
+          "id": "26:8746518244739299343",
+          "name": "binsBoxKeyNames",
+          "type": 30
+        },
+        {
+          "id": "27:5723385204437699220",
+          "name": "vehicleRegistrationCopyNames",
+          "type": 30
+        },
+        {
+          "id": "28:6122498586817561564",
+          "name": "vehicleInsuranceCopyNames",
+          "type": 30
+        },
+        {
+          "id": "29:2911447276000184982",
+          "name": "bucketLiftOperatorManualNames",
+          "type": 30
         }
       ],
       "relations": []
     },
     {
       "id": "90:8674602881210305817",
-      "lastPropertyId": "40:979362943735015756",
+      "lastPropertyId": "48:2177470350893699199",
       "name": "Extra",
       "properties": [
         {
@@ -959,13 +1049,53 @@
           "id": "40:979362943735015756",
           "name": "lanyardSafetyHarnessPath",
           "type": 30
+        },
+        {
+          "id": "41:7137318328883184295",
+          "name": "ladderNames",
+          "type": 30
+        },
+        {
+          "id": "42:1191899986526399216",
+          "name": "stepLadderNames",
+          "type": 30
+        },
+        {
+          "id": "43:4078011197631402493",
+          "name": "ladderStrapsNames",
+          "type": 30
+        },
+        {
+          "id": "44:1190665946354321685",
+          "name": "hydraulicFluidForBucketNames",
+          "type": 30
+        },
+        {
+          "id": "45:3077453198357709103",
+          "name": "fiberReelRackNames",
+          "type": 30
+        },
+        {
+          "id": "46:3665141070950184336",
+          "name": "binsLockedAndSecureNames",
+          "type": 30
+        },
+        {
+          "id": "47:1061287763650182109",
+          "name": "safetyHarnessNames",
+          "type": 30
+        },
+        {
+          "id": "48:2177470350893699199",
+          "name": "lanyardSafetyHarnessNames",
+          "type": 30
         }
       ],
       "relations": []
     },
     {
       "id": "91:6931545903134634049",
-      "lastPropertyId": "30:4065251250855641491",
+      "lastPropertyId": "36:6002228389480769653",
       "name": "FluidsCheck",
       "properties": [
         {
@@ -1113,13 +1243,43 @@
           "id": "30:4065251250855641491",
           "name": "windshieldWasherFluidPath",
           "type": 30
+        },
+        {
+          "id": "31:8948185999924831011",
+          "name": "engineOilNames",
+          "type": 30
+        },
+        {
+          "id": "32:6900738060565296923",
+          "name": "transmissionNames",
+          "type": 30
+        },
+        {
+          "id": "33:812687314584159344",
+          "name": "coolantNames",
+          "type": 30
+        },
+        {
+          "id": "34:1887872237818956744",
+          "name": "powerSteeringNames",
+          "type": 30
+        },
+        {
+          "id": "35:5465857504719923609",
+          "name": "dieselExhaustFluidNames",
+          "type": 30
+        },
+        {
+          "id": "36:6002228389480769653",
+          "name": "windshieldWasherFluidNames",
+          "type": 30
         }
       ],
       "relations": []
     },
     {
       "id": "92:2259630358692179159",
-      "lastPropertyId": "50:8185845797277935491",
+      "lastPropertyId": "60:9053524199853750954",
       "name": "Lights",
       "properties": [
         {
@@ -1347,13 +1507,63 @@
           "id": "50:8185845797277935491",
           "name": "clearanceLightsComments",
           "type": 9
+        },
+        {
+          "id": "51:6398353176253921598",
+          "name": "headLightsNames",
+          "type": 30
+        },
+        {
+          "id": "52:4347238691562747856",
+          "name": "brakeLightsNames",
+          "type": 30
+        },
+        {
+          "id": "53:7642099312440741782",
+          "name": "reverseLightsNames",
+          "type": 30
+        },
+        {
+          "id": "54:5421930901691050710",
+          "name": "warningLightsNames",
+          "type": 30
+        },
+        {
+          "id": "55:8309634184472663939",
+          "name": "turnSignalsNames",
+          "type": 30
+        },
+        {
+          "id": "56:7957648996389078924",
+          "name": "fourWayFlashersNames",
+          "type": 30
+        },
+        {
+          "id": "57:6234890245623602698",
+          "name": "dashLightsNames",
+          "type": 30
+        },
+        {
+          "id": "58:2763924249766062054",
+          "name": "strobeLightsNames",
+          "type": 30
+        },
+        {
+          "id": "59:2598109402329184447",
+          "name": "cabRoofLightsNames",
+          "type": 30
+        },
+        {
+          "id": "60:9053524199853750954",
+          "name": "clearanceLightsNames",
+          "type": 30
         }
       ],
       "relations": []
     },
     {
       "id": "93:2233886934526070371",
-      "lastPropertyId": "13:1377949001494033132",
+      "lastPropertyId": "17:2160032523892340661",
       "name": "Measures",
       "properties": [
         {
@@ -1403,23 +1613,33 @@
           "relationTarget": "ControlForm"
         },
         {
-          "id": "10:5313747748351641389",
-          "name": "gasImages",
-          "type": 30
-        },
-        {
           "id": "11:6534051827084921333",
           "name": "gasPath",
           "type": 30
         },
         {
-          "id": "12:3853679392969826869",
+          "id": "13:1377949001494033132",
+          "name": "mileagePath",
+          "type": 30
+        },
+        {
+          "id": "14:8182480157568429029",
+          "name": "gasImages",
+          "type": 30
+        },
+        {
+          "id": "15:1526850249302200358",
           "name": "mileageImages",
           "type": 30
         },
         {
-          "id": "13:1377949001494033132",
-          "name": "mileagePath",
+          "id": "16:3207989437886791222",
+          "name": "gasNames",
+          "type": 30
+        },
+        {
+          "id": "17:2160032523892340661",
+          "name": "mileageNames",
           "type": 30
         }
       ],
@@ -1427,7 +1647,7 @@
     },
     {
       "id": "94:5644194863526468119",
-      "lastPropertyId": "32:9000716974812315489",
+      "lastPropertyId": "38:623197207306021348",
       "name": "Security",
       "properties": [
         {
@@ -1575,13 +1795,43 @@
           "id": "32:9000716974812315489",
           "name": "backUpAlarmPath",
           "type": 30
+        },
+        {
+          "id": "33:2939174103460502480",
+          "name": "rtaMagnetNames",
+          "type": 30
+        },
+        {
+          "id": "34:2997777527102330871",
+          "name": "triangleReflectorsNames",
+          "type": 30
+        },
+        {
+          "id": "35:712955286217784917",
+          "name": "wheelChocksNames",
+          "type": 30
+        },
+        {
+          "id": "36:4684762422993863717",
+          "name": "fireExtinguisherNames",
+          "type": 30
+        },
+        {
+          "id": "37:8883061154236039475",
+          "name": "firstAidKitSafetyVestNames",
+          "type": 30
+        },
+        {
+          "id": "38:623197207306021348",
+          "name": "backUpAlarmNames",
+          "type": 30
         }
       ],
       "relations": []
     },
     {
       "id": "95:6627618922528083180",
-      "lastPropertyId": "16:7424535712805857294",
+      "lastPropertyId": "19:2784115878611209341",
       "name": "BucketInspection",
       "properties": [
         {
@@ -1668,6 +1918,21 @@
         {
           "id": "16:7424535712805857294",
           "name": "bucketLinerPath",
+          "type": 30
+        },
+        {
+          "id": "17:3629474722692737121",
+          "name": "insulatedNames",
+          "type": 30
+        },
+        {
+          "id": "18:8214958607267505857",
+          "name": "holesDrilledNames",
+          "type": 30
+        },
+        {
+          "id": "19:2784115878611209341",
+          "name": "bucketLinerNames",
           "type": 30
         }
       ],
@@ -3361,7 +3626,9 @@
     7442866940337625838,
     2227071491150425204,
     5065703079577799848,
-    5771699047160977949
+    5771699047160977949,
+    5313747748351641389,
+    3853679392969826869
   ],
   "retiredRelationUids": [
     1226469011453769556,

@@ -332,7 +332,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(88, 5449780156064882583),
       name: 'CarBodywork',
-      lastPropertyId: const IdUid(56, 1861675323202979021),
+      lastPropertyId: const IdUid(69, 7980155768179685551),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -617,6 +617,71 @@ final _entities = <ModelEntity>[
             id: const IdUid(56, 1861675323202979021),
             name: 'hornPath',
             type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(57, 721633576761411645),
+            name: 'wiperBladesFrontNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(58, 864465889485949348),
+            name: 'wiperBladesBackNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(59, 7699437473769752965),
+            name: 'windshieldWiperFrontNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(60, 2993703430609252560),
+            name: 'windshieldWiperBackNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(61, 5101290660306326832),
+            name: 'generalBodyNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(62, 8580912124304768569),
+            name: 'decalingNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(63, 5210311964194700556),
+            name: 'tiresNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(64, 8638351439504744001),
+            name: 'glassNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(65, 7486927741048338942),
+            name: 'mirrorsNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(66, 4119170522138643497),
+            name: 'parkingNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(67, 6008268570167634140),
+            name: 'brakesNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(68, 3647722623988683365),
+            name: 'emgBrakesNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(69, 7980155768179685551),
+            name: 'hornNames',
+            type: 30,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -626,7 +691,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(89, 1967166146969188),
       name: 'Equipment',
-      lastPropertyId: const IdUid(24, 6840303418693524212),
+      lastPropertyId: const IdUid(29, 2911447276000184982),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -751,6 +816,31 @@ final _entities = <ModelEntity>[
             id: const IdUid(24, 6840303418693524212),
             name: 'bucketLiftOperatorManualPath',
             type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(25, 3742855868234495839),
+            name: 'ignitionKeyNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(26, 8746518244739299343),
+            name: 'binsBoxKeyNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(27, 5723385204437699220),
+            name: 'vehicleRegistrationCopyNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(28, 6122498586817561564),
+            name: 'vehicleInsuranceCopyNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(29, 2911447276000184982),
+            name: 'bucketLiftOperatorManualNames',
+            type: 30,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -760,7 +850,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(90, 8674602881210305817),
       name: 'Extra',
-      lastPropertyId: const IdUid(40, 979362943735015756),
+      lastPropertyId: const IdUid(48, 2177470350893699199),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -945,6 +1035,46 @@ final _entities = <ModelEntity>[
             id: const IdUid(40, 979362943735015756),
             name: 'lanyardSafetyHarnessPath',
             type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(41, 7137318328883184295),
+            name: 'ladderNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(42, 1191899986526399216),
+            name: 'stepLadderNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(43, 4078011197631402493),
+            name: 'ladderStrapsNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(44, 1190665946354321685),
+            name: 'hydraulicFluidForBucketNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(45, 3077453198357709103),
+            name: 'fiberReelRackNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(46, 3665141070950184336),
+            name: 'binsLockedAndSecureNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(47, 1061287763650182109),
+            name: 'safetyHarnessNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(48, 2177470350893699199),
+            name: 'lanyardSafetyHarnessNames',
+            type: 30,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -954,7 +1084,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(91, 6931545903134634049),
       name: 'FluidsCheck',
-      lastPropertyId: const IdUid(30, 4065251250855641491),
+      lastPropertyId: const IdUid(36, 6002228389480769653),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1099,6 +1229,36 @@ final _entities = <ModelEntity>[
             id: const IdUid(30, 4065251250855641491),
             name: 'windshieldWasherFluidPath',
             type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(31, 8948185999924831011),
+            name: 'engineOilNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(32, 6900738060565296923),
+            name: 'transmissionNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(33, 812687314584159344),
+            name: 'coolantNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(34, 1887872237818956744),
+            name: 'powerSteeringNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(35, 5465857504719923609),
+            name: 'dieselExhaustFluidNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(36, 6002228389480769653),
+            name: 'windshieldWasherFluidNames',
+            type: 30,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -1108,7 +1268,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(92, 2259630358692179159),
       name: 'Lights',
-      lastPropertyId: const IdUid(50, 8185845797277935491),
+      lastPropertyId: const IdUid(60, 9053524199853750954),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1333,6 +1493,56 @@ final _entities = <ModelEntity>[
             id: const IdUid(50, 8185845797277935491),
             name: 'clearanceLightsComments',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(51, 6398353176253921598),
+            name: 'headLightsNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(52, 4347238691562747856),
+            name: 'brakeLightsNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(53, 7642099312440741782),
+            name: 'reverseLightsNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(54, 5421930901691050710),
+            name: 'warningLightsNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(55, 8309634184472663939),
+            name: 'turnSignalsNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(56, 7957648996389078924),
+            name: 'fourWayFlashersNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(57, 6234890245623602698),
+            name: 'dashLightsNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(58, 2763924249766062054),
+            name: 'strobeLightsNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(59, 2598109402329184447),
+            name: 'cabRoofLightsNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(60, 9053524199853750954),
+            name: 'clearanceLightsNames',
+            type: 30,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -1342,7 +1552,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(93, 2233886934526070371),
       name: 'Measures',
-      lastPropertyId: const IdUid(13, 1377949001494033132),
+      lastPropertyId: const IdUid(17, 2160032523892340661),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1389,23 +1599,33 @@ final _entities = <ModelEntity>[
             indexId: const IdUid(405, 4985468126259660819),
             relationTarget: 'ControlForm'),
         ModelProperty(
-            id: const IdUid(10, 5313747748351641389),
-            name: 'gasImages',
-            type: 30,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(11, 6534051827084921333),
             name: 'gasPath',
             type: 30,
             flags: 0),
         ModelProperty(
-            id: const IdUid(12, 3853679392969826869),
+            id: const IdUid(13, 1377949001494033132),
+            name: 'mileagePath',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 8182480157568429029),
+            name: 'gasImages',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 1526850249302200358),
             name: 'mileageImages',
             type: 30,
             flags: 0),
         ModelProperty(
-            id: const IdUid(13, 1377949001494033132),
-            name: 'mileagePath',
+            id: const IdUid(16, 3207989437886791222),
+            name: 'gasNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(17, 2160032523892340661),
+            name: 'mileageNames',
             type: 30,
             flags: 0)
       ],
@@ -1416,7 +1636,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(94, 5644194863526468119),
       name: 'Security',
-      lastPropertyId: const IdUid(32, 9000716974812315489),
+      lastPropertyId: const IdUid(38, 623197207306021348),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1561,6 +1781,36 @@ final _entities = <ModelEntity>[
             id: const IdUid(32, 9000716974812315489),
             name: 'backUpAlarmPath',
             type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(33, 2939174103460502480),
+            name: 'rtaMagnetNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(34, 2997777527102330871),
+            name: 'triangleReflectorsNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(35, 712955286217784917),
+            name: 'wheelChocksNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(36, 4684762422993863717),
+            name: 'fireExtinguisherNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(37, 8883061154236039475),
+            name: 'firstAidKitSafetyVestNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(38, 623197207306021348),
+            name: 'backUpAlarmNames',
+            type: 30,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -1570,7 +1820,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(95, 6627618922528083180),
       name: 'BucketInspection',
-      lastPropertyId: const IdUid(16, 7424535712805857294),
+      lastPropertyId: const IdUid(19, 2784115878611209341),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1654,6 +1904,21 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(16, 7424535712805857294),
             name: 'bucketLinerPath',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(17, 3629474722692737121),
+            name: 'insulatedNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(18, 8214958607267505857),
+            name: 'holesDrilledNames',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(19, 2784115878611209341),
+            name: 'bucketLinerNames',
             type: 30,
             flags: 0)
       ],
@@ -3361,7 +3626,9 @@ ModelDefinition getObjectBoxModel() {
         7442866940337625838,
         2227071491150425204,
         5065703079577799848,
-        5771699047160977949
+        5771699047160977949,
+        5313747748351641389,
+        3853679392969826869
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3802,7 +4069,44 @@ ModelDefinition getObjectBoxModel() {
               object.hornImages.map(fbb.writeString).toList(growable: false));
           final hornPathOffset = fbb.writeList(
               object.hornPath.map(fbb.writeString).toList(growable: false));
-          fbb.startTable(57);
+          final wiperBladesFrontNamesOffset = fbb.writeList(object
+              .wiperBladesFrontNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final wiperBladesBackNamesOffset = fbb.writeList(object
+              .wiperBladesBackNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final windshieldWiperFrontNamesOffset = fbb.writeList(object
+              .windshieldWiperFrontNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final windshieldWiperBackNamesOffset = fbb.writeList(object
+              .windshieldWiperBackNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final generalBodyNamesOffset = fbb.writeList(object.generalBodyNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final decalingNamesOffset = fbb.writeList(object.decalingNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final tiresNamesOffset = fbb.writeList(
+              object.tiresNames.map(fbb.writeString).toList(growable: false));
+          final glassNamesOffset = fbb.writeList(
+              object.glassNames.map(fbb.writeString).toList(growable: false));
+          final mirrorsNamesOffset = fbb.writeList(
+              object.mirrorsNames.map(fbb.writeString).toList(growable: false));
+          final parkingNamesOffset = fbb.writeList(
+              object.parkingNames.map(fbb.writeString).toList(growable: false));
+          final brakesNamesOffset = fbb.writeList(
+              object.brakesNames.map(fbb.writeString).toList(growable: false));
+          final emgBrakesNamesOffset = fbb.writeList(object.emgBrakesNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final hornNamesOffset = fbb.writeList(
+              object.hornNames.map(fbb.writeString).toList(growable: false));
+          fbb.startTable(70);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, wiperBladesFrontOffset);
           fbb.addOffset(2, wiperBladesFrontCommentsOffset);
@@ -3859,6 +4163,19 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(53, emgBrakesPathOffset);
           fbb.addOffset(54, hornImagesOffset);
           fbb.addOffset(55, hornPathOffset);
+          fbb.addOffset(56, wiperBladesFrontNamesOffset);
+          fbb.addOffset(57, wiperBladesBackNamesOffset);
+          fbb.addOffset(58, windshieldWiperFrontNamesOffset);
+          fbb.addOffset(59, windshieldWiperBackNamesOffset);
+          fbb.addOffset(60, generalBodyNamesOffset);
+          fbb.addOffset(61, decalingNamesOffset);
+          fbb.addOffset(62, tiresNamesOffset);
+          fbb.addOffset(63, glassNamesOffset);
+          fbb.addOffset(64, mirrorsNamesOffset);
+          fbb.addOffset(65, parkingNamesOffset);
+          fbb.addOffset(66, brakesNamesOffset);
+          fbb.addOffset(67, emgBrakesNamesOffset);
+          fbb.addOffset(68, hornNamesOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3875,59 +4192,72 @@ ModelDefinition getObjectBoxModel() {
               wiperBladesFrontImages:
                   const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
                       .vTableGet(buffer, rootOffset, 64, []),
-              wiperBladesFrontPath:
+              wiperBladesFrontPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
+                  .vTableGet(buffer, rootOffset, 66, []),
+              wiperBladesFrontNames:
                   const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
-                      .vTableGet(buffer, rootOffset, 66, []),
+                      .vTableGet(buffer, rootOffset, 116, []),
               wiperBladesBack: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 10, ''),
-              wiperBladesBackComments: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 12, ''),
+              wiperBladesBackComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 12, ''),
               wiperBladesBackImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 68, []),
               wiperBladesBackPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 70, []),
+              wiperBladesBackNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 118, []),
               windshieldWiperFront: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 14, ''),
               windshieldWiperFrontComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 16, ''),
               windshieldWiperFrontImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 72, []),
               windshieldWiperFrontPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 74, []),
+              windshieldWiperFrontNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 120, []),
               windshieldWiperBack: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, ''),
               windshieldWiperBackComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
               windshieldWiperBackImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 76, []),
               windshieldWiperBackPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 78, []),
+              windshieldWiperBackNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 122, []),
               generalBody: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
               generalBodyComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 24, ''),
               generalBodyImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 80, []),
               generalBodyPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 82, []),
+              generalBodyNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 124, []),
               decaling: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, ''),
               decalingComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 28, ''),
               decalingImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 84, []),
               decalingPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 86, []),
+              decalingNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 126, []),
               tires: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 30, ''),
               tiresComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 32, ''),
               tiresImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 88, []),
               tiresPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 90, []),
+              tiresNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 128, []),
               glass: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''),
               glassComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 36, ''),
               glassImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 92, []),
               glassPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 94, []),
+              glassNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 130, []),
               mirrors: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 38, ''),
               mirrorsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 40, ''),
               mirrorsImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 96, []),
               mirrorsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 98, []),
+              mirrorsNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 132, []),
               parking: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 42, ''),
               parkingComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 44, ''),
               parkingImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 100, []),
               parkingPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 102, []),
+              parkingNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 134, []),
               brakes: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 46, ''),
               brakesComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 48, ''),
               brakesImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 104, []),
               brakesPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 106, []),
+              brakesNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 136, []),
               emgBrakes: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 50, ''),
               emgBrakesComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 52, ''),
               emgBrakesImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 108, []),
               emgBrakesPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 110, []),
+              emgBrakesNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 138, []),
               horn: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 54, ''),
               hornComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 56, ''),
               hornImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 112, []),
               hornPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 114, []),
+              hornNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 140, []),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 58, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 60));
           object.controlForm.targetId =
@@ -4009,7 +4339,25 @@ ModelDefinition getObjectBoxModel() {
               .bucketLiftOperatorManualPath
               .map(fbb.writeString)
               .toList(growable: false));
-          fbb.startTable(25);
+          final ignitionKeyNamesOffset = fbb.writeList(object.ignitionKeyNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final binsBoxKeyNamesOffset = fbb.writeList(object.binsBoxKeyNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final vehicleRegistrationCopyNamesOffset = fbb.writeList(object
+              .vehicleRegistrationCopyNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final vehicleInsuranceCopyNamesOffset = fbb.writeList(object
+              .vehicleInsuranceCopyNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final bucketLiftOperatorManualNamesOffset = fbb.writeList(object
+              .bucketLiftOperatorManualNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          fbb.startTable(30);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, ignitionKeyOffset);
           fbb.addOffset(2, ignitionKeyCommentsOffset);
@@ -4034,6 +4382,11 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(21, vehicleInsuranceCopyPathOffset);
           fbb.addOffset(22, bucketLiftOperatorManualImagesOffset);
           fbb.addOffset(23, bucketLiftOperatorManualPathOffset);
+          fbb.addOffset(24, ignitionKeyNamesOffset);
+          fbb.addOffset(25, binsBoxKeyNamesOffset);
+          fbb.addOffset(26, vehicleRegistrationCopyNamesOffset);
+          fbb.addOffset(27, vehicleInsuranceCopyNamesOffset);
+          fbb.addOffset(28, bucketLiftOperatorManualNamesOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4050,27 +4403,32 @@ ModelDefinition getObjectBoxModel() {
               ignitionKeyImages:
                   const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
                       .vTableGet(buffer, rootOffset, 32, []),
-              ignitionKeyPath:
+              ignitionKeyPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
+                  .vTableGet(buffer, rootOffset, 34, []),
+              ignitionKeyNames:
                   const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
-                      .vTableGet(buffer, rootOffset, 34, []),
+                      .vTableGet(buffer, rootOffset, 52, []),
               binsBoxKey: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 10, ''),
-              binsBoxKeyComments: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 12, ''),
+              binsBoxKeyComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 12, ''),
               binsBoxKeyImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 36, []),
               binsBoxKeyPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 38, []),
+              binsBoxKeyNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 54, []),
               vehicleRegistrationCopy: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 14, ''),
               vehicleRegistrationCopyComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 16, ''),
               vehicleRegistrationCopyImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 40, []),
               vehicleRegistrationCopyPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 42, []),
+              vehicleRegistrationCopyNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 56, []),
               vehicleInsuranceCopy: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, ''),
               vehicleInsuranceCopyComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
               vehicleInsuranceCopyImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 44, []),
               vehicleInsuranceCopyPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 46, []),
+              vehicleInsuranceCopyNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 58, []),
               bucketLiftOperatorManual: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
               bucketLiftOperatorManualComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 24, ''),
               bucketLiftOperatorManualImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 48, []),
               bucketLiftOperatorManualPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 50, []),
+              bucketLiftOperatorManualNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 60, []),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 28));
           object.controlForm.targetId =
@@ -4180,7 +4538,35 @@ ModelDefinition getObjectBoxModel() {
               .lanyardSafetyHarnessPath
               .map(fbb.writeString)
               .toList(growable: false));
-          fbb.startTable(41);
+          final ladderNamesOffset = fbb.writeList(
+              object.ladderNames.map(fbb.writeString).toList(growable: false));
+          final stepLadderNamesOffset = fbb.writeList(object.stepLadderNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final ladderStrapsNamesOffset = fbb.writeList(object.ladderStrapsNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final hydraulicFluidForBucketNamesOffset = fbb.writeList(object
+              .hydraulicFluidForBucketNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final fiberReelRackNamesOffset = fbb.writeList(object
+              .fiberReelRackNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final binsLockedAndSecureNamesOffset = fbb.writeList(object
+              .binsLockedAndSecureNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final safetyHarnessNamesOffset = fbb.writeList(object
+              .safetyHarnessNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final lanyardSafetyHarnessNamesOffset = fbb.writeList(object
+              .lanyardSafetyHarnessNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          fbb.startTable(49);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, ladderOffset);
           fbb.addOffset(2, ladderCommentsOffset);
@@ -4217,6 +4603,14 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(37, safetyHarnessPathOffset);
           fbb.addOffset(38, lanyardSafetyHarnessImagesOffset);
           fbb.addOffset(39, lanyardSafetyHarnessPathOffset);
+          fbb.addOffset(40, ladderNamesOffset);
+          fbb.addOffset(41, stepLadderNamesOffset);
+          fbb.addOffset(42, ladderStrapsNamesOffset);
+          fbb.addOffset(43, hydraulicFluidForBucketNamesOffset);
+          fbb.addOffset(44, fiberReelRackNamesOffset);
+          fbb.addOffset(45, binsLockedAndSecureNamesOffset);
+          fbb.addOffset(46, safetyHarnessNamesOffset);
+          fbb.addOffset(47, lanyardSafetyHarnessNamesOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4234,37 +4628,45 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 52, []),
               ladderPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
                   .vTableGet(buffer, rootOffset, 54, []),
+              ladderNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
+                  .vTableGet(buffer, rootOffset, 84, []),
               stepLadder: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 10, ''),
               stepLadderComments: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 12, ''),
-              stepLadderImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
-                  .vTableGet(buffer, rootOffset, 56, []),
+              stepLadderImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 56, []),
               stepLadderPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 58, []),
+              stepLadderNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 86, []),
               ladderStraps: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 44, ''),
               ladderStrapsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 46, ''),
               ladderStrapsImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 60, []),
               ladderStrapsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 62, []),
+              ladderStrapsNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 88, []),
               hydraulicFluidForBucket: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, ''),
               hydraulicFluidForBucketComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
               hydraulicFluidForBucketImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 64, []),
               hydraulicFluidForBucketPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 66, []),
+              hydraulicFluidForBucketNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 90, []),
               fiberReelRack: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
               fiberReelRackComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 24, ''),
               fiberReelRackImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 68, []),
               fiberReelRackPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 70, []),
+              fiberReelRackNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 92, []),
               binsLockedAndSecure: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, ''),
               binsLockedAndSecureComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 28, ''),
               binsLockedAndSecureImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 72, []),
               binsLockedAndSecurePath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 74, []),
+              binsLockedAndSecureNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 94, []),
               safetyHarness: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 30, ''),
               safetyHarnessComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 32, ''),
               safetyHarnessImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 76, []),
               safetyHarnessPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 78, []),
+              safetyHarnessNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 96, []),
               lanyardSafetyHarness: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 48, ''),
               lanyardSafetyHarnessComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 50, ''),
               lanyardSafetyHarnessImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 80, []),
               lanyardSafetyHarnessPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 82, []),
+              lanyardSafetyHarnessNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 98, []),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 40));
           object.controlForm.targetId =
@@ -4353,7 +4755,27 @@ ModelDefinition getObjectBoxModel() {
               .windshieldWasherFluidPath
               .map(fbb.writeString)
               .toList(growable: false));
-          fbb.startTable(31);
+          final engineOilNamesOffset = fbb.writeList(object.engineOilNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final transmissionNamesOffset = fbb.writeList(object.transmissionNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final coolantNamesOffset = fbb.writeList(
+              object.coolantNames.map(fbb.writeString).toList(growable: false));
+          final powerSteeringNamesOffset = fbb.writeList(object
+              .powerSteeringNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final dieselExhaustFluidNamesOffset = fbb.writeList(object
+              .dieselExhaustFluidNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final windshieldWasherFluidNamesOffset = fbb.writeList(object
+              .windshieldWasherFluidNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          fbb.startTable(37);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, engineOilOffset);
           fbb.addOffset(2, engineOilCommentsOffset);
@@ -4382,6 +4804,12 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(27, dieselExhaustFluidPathOffset);
           fbb.addOffset(28, windshieldWasherFluidImagesOffset);
           fbb.addOffset(29, windshieldWasherFluidPathOffset);
+          fbb.addOffset(30, engineOilNamesOffset);
+          fbb.addOffset(31, transmissionNamesOffset);
+          fbb.addOffset(32, coolantNamesOffset);
+          fbb.addOffset(33, powerSteeringNamesOffset);
+          fbb.addOffset(34, dieselExhaustFluidNamesOffset);
+          fbb.addOffset(35, windshieldWasherFluidNamesOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4398,31 +4826,37 @@ ModelDefinition getObjectBoxModel() {
               engineOilImages:
                   const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
                       .vTableGet(buffer, rootOffset, 40, []),
-              engineOilPath:
+              engineOilPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
+                  .vTableGet(buffer, rootOffset, 42, []),
+              engineOilNames:
                   const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
-                      .vTableGet(buffer, rootOffset, 42, []),
+                      .vTableGet(buffer, rootOffset, 64, []),
               transmission: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 10, ''),
-              transmissionComments: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 12, ''),
+              transmissionComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 12, ''),
               transmissionImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 44, []),
               transmissionPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 46, []),
+              transmissionNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 66, []),
               coolant: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 14, ''),
               coolantComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 16, ''),
               coolantImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 48, []),
               coolantPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 50, []),
+              coolantNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 68, []),
               powerSteering: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, ''),
               powerSteeringComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
               powerSteeringImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 52, []),
               powerSteeringPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 54, []),
+              powerSteeringNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 70, []),
               dieselExhaustFluid: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 36, ''),
               dieselExhaustFluidComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 38, ''),
               dieselExhaustFluidImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 56, []),
               dieselExhaustFluidPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 58, []),
+              dieselExhaustFluidNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 72, []),
               windshieldWasherFluid: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, ''),
               windshieldWasherFluidComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 28, ''),
               windshieldWasherFluidImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 60, []),
               windshieldWasherFluidPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 62, []),
+              windshieldWasherFluidNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 74, []),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32));
           object.controlForm.targetId =
@@ -4549,7 +4983,42 @@ ModelDefinition getObjectBoxModel() {
           final clearanceLightsOffset = fbb.writeString(object.clearanceLights);
           final clearanceLightsCommentsOffset =
               fbb.writeString(object.clearanceLightsComments);
-          fbb.startTable(51);
+          final headLightsNamesOffset = fbb.writeList(object.headLightsNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final brakeLightsNamesOffset = fbb.writeList(object.brakeLightsNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final reverseLightsNamesOffset = fbb.writeList(object
+              .reverseLightsNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final warningLightsNamesOffset = fbb.writeList(object
+              .warningLightsNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final turnSignalsNamesOffset = fbb.writeList(object.turnSignalsNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final fourWayFlashersNamesOffset = fbb.writeList(object
+              .fourWayFlashersNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final dashLightsNamesOffset = fbb.writeList(object.dashLightsNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final strobeLightsNamesOffset = fbb.writeList(object.strobeLightsNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final cabRoofLightsNamesOffset = fbb.writeList(object
+              .cabRoofLightsNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final clearanceLightsNamesOffset = fbb.writeList(object
+              .clearanceLightsNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          fbb.startTable(61);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, headLightsOffset);
           fbb.addOffset(2, headLightsCommentsOffset);
@@ -4594,6 +5063,16 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(47, clearanceLightsPathOffset);
           fbb.addOffset(48, clearanceLightsOffset);
           fbb.addOffset(49, clearanceLightsCommentsOffset);
+          fbb.addOffset(50, headLightsNamesOffset);
+          fbb.addOffset(51, brakeLightsNamesOffset);
+          fbb.addOffset(52, reverseLightsNamesOffset);
+          fbb.addOffset(53, warningLightsNamesOffset);
+          fbb.addOffset(54, turnSignalsNamesOffset);
+          fbb.addOffset(55, fourWayFlashersNamesOffset);
+          fbb.addOffset(56, dashLightsNamesOffset);
+          fbb.addOffset(57, strobeLightsNamesOffset);
+          fbb.addOffset(58, cabRoofLightsNamesOffset);
+          fbb.addOffset(59, clearanceLightsNamesOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4610,47 +5089,57 @@ ModelDefinition getObjectBoxModel() {
               headLightsImages:
                   const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
                       .vTableGet(buffer, rootOffset, 56, []),
-              headLightsPath:
+              headLightsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
+                  .vTableGet(buffer, rootOffset, 58, []),
+              headLightsNames:
                   const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
-                      .vTableGet(buffer, rootOffset, 58, []),
+                      .vTableGet(buffer, rootOffset, 104, []),
               brakeLights: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 10, ''),
-              brakeLightsComments: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 12, ''),
+              brakeLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 12, ''),
               brakeLightsImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 60, []),
               brakeLightsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 62, []),
+              brakeLightsNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 106, []),
               reverseLights: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 14, ''),
               reverseLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 16, ''),
               reverseLightsImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 64, []),
               reverseLightsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 66, []),
+              reverseLightsNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 108, []),
               warningLights: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, ''),
               warningLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
               warningLightsImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 68, []),
               warningLightsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 70, []),
+              warningLightsNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 110, []),
               turnSignals: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
               turnSignalsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 24, ''),
               turnSignalsImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 72, []),
               turnSignalsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 74, []),
+              turnSignalsNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 112, []),
               fourWayFlashers: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 52, ''),
               fourWayFlashersComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 54, ''),
               fourWayFlashersImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 76, []),
               fourWayFlashersPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 78, []),
+              fourWayFlashersNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 114, []),
               dashLights: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 30, ''),
               dashLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 32, ''),
               dashLightsImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 80, []),
               dashLightsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 82, []),
+              dashLightsNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 116, []),
               strobeLights: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''),
               strobeLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 36, ''),
               strobeLightsImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 84, []),
               strobeLightsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 86, []),
+              strobeLightsNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 118, []),
               cabRoofLights: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 38, ''),
               cabRoofLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 40, ''),
               cabRoofLightsImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 88, []),
               cabRoofLightsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 90, []),
+              cabRoofLightsNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 120, []),
               clearanceLights: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 100, ''),
               clearanceLightsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 102, ''),
               clearanceLightsImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 96, []),
               clearanceLightsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 98, []),
+              clearanceLightsNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 122, []),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 46, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 48));
           object.controlForm.targetId =
@@ -4681,16 +5170,20 @@ ModelDefinition getObjectBoxModel() {
           final mileageCommentsOffset = fbb.writeString(object.mileageComments);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          final gasImagesOffset = fbb.writeList(
-              object.gasImages.map(fbb.writeString).toList(growable: false));
           final gasPathOffset = fbb.writeList(
               object.gasPath.map(fbb.writeString).toList(growable: false));
+          final mileagePathOffset = fbb.writeList(
+              object.mileagePath.map(fbb.writeString).toList(growable: false));
+          final gasImagesOffset = fbb.writeList(
+              object.gasImages.map(fbb.writeString).toList(growable: false));
           final mileageImagesOffset = fbb.writeList(object.mileageImages
               .map(fbb.writeString)
               .toList(growable: false));
-          final mileagePathOffset = fbb.writeList(
-              object.mileagePath.map(fbb.writeString).toList(growable: false));
-          fbb.startTable(14);
+          final gasNamesOffset = fbb.writeList(
+              object.gasNames.map(fbb.writeString).toList(growable: false));
+          final mileageNamesOffset = fbb.writeList(
+              object.mileageNames.map(fbb.writeString).toList(growable: false));
+          fbb.startTable(18);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, gasOffset);
           fbb.addOffset(2, gasCommentsOffset);
@@ -4699,10 +5192,12 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(5, object.dateAdded.millisecondsSinceEpoch);
           fbb.addOffset(6, idDBROffset);
           fbb.addInt64(7, object.controlForm.targetId);
-          fbb.addOffset(9, gasImagesOffset);
           fbb.addOffset(10, gasPathOffset);
-          fbb.addOffset(11, mileageImagesOffset);
           fbb.addOffset(12, mileagePathOffset);
+          fbb.addOffset(13, gasImagesOffset);
+          fbb.addOffset(14, mileageImagesOffset);
+          fbb.addOffset(15, gasNamesOffset);
+          fbb.addOffset(16, mileageNamesOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4716,17 +5211,19 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 6, ''),
               gasComments: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 8, ''),
-              gasImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
-                  .vTableGet(buffer, rootOffset, 22, []),
+              gasImages:
+                  const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
+                      .vTableGet(buffer, rootOffset, 30, []),
+              gasNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
+                  .vTableGet(buffer, rootOffset, 34, []),
               gasPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
                   .vTableGet(buffer, rootOffset, 24, []),
               mileage:
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0),
               mileageComments: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 12, ''),
-              mileageImages:
-                  const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
-                      .vTableGet(buffer, rootOffset, 26, []),
+              mileageImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 32, []),
+              mileageNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 36, []),
               mileagePath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 28, []),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 16));
@@ -4818,7 +5315,28 @@ ModelDefinition getObjectBoxModel() {
           final backUpAlarmPathOffset = fbb.writeList(object.backUpAlarmPath
               .map(fbb.writeString)
               .toList(growable: false));
-          fbb.startTable(33);
+          final rtaMagnetNamesOffset = fbb.writeList(object.rtaMagnetNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final triangleReflectorsNamesOffset = fbb.writeList(object
+              .triangleReflectorsNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final wheelChocksNamesOffset = fbb.writeList(object.wheelChocksNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final fireExtinguisherNamesOffset = fbb.writeList(object
+              .fireExtinguisherNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final firstAidKitSafetyVestNamesOffset = fbb.writeList(object
+              .firstAidKitSafetyVestNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final backUpAlarmNamesOffset = fbb.writeList(object.backUpAlarmNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          fbb.startTable(39);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, rtaMagnetOffset);
           fbb.addOffset(2, rtaMagnetCommentsOffset);
@@ -4847,6 +5365,12 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(29, firstAidKitSafetyVestPathOffset);
           fbb.addOffset(30, backUpAlarmImagesOffset);
           fbb.addOffset(31, backUpAlarmPathOffset);
+          fbb.addOffset(32, rtaMagnetNamesOffset);
+          fbb.addOffset(33, triangleReflectorsNamesOffset);
+          fbb.addOffset(34, wheelChocksNamesOffset);
+          fbb.addOffset(35, fireExtinguisherNamesOffset);
+          fbb.addOffset(36, firstAidKitSafetyVestNamesOffset);
+          fbb.addOffset(37, backUpAlarmNamesOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4863,31 +5387,37 @@ ModelDefinition getObjectBoxModel() {
               rtaMagnetImages:
                   const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
                       .vTableGet(buffer, rootOffset, 44, []),
-              rtaMagnetPath:
+              rtaMagnetPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
+                  .vTableGet(buffer, rootOffset, 46, []),
+              rtaMagnetNames:
                   const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
-                      .vTableGet(buffer, rootOffset, 46, []),
+                      .vTableGet(buffer, rootOffset, 68, []),
               triangleReflectors: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 10, ''),
-              triangleReflectorsComments: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 12, ''),
+              triangleReflectorsComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 12, ''),
               triangleReflectorsImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 48, []),
               triangleReflectorsPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 50, []),
+              triangleReflectorsNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 70, []),
               wheelChocks: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 14, ''),
               wheelChocksComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 16, ''),
               wheelChocksImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 52, []),
               wheelChocksPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 54, []),
+              wheelChocksNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 72, []),
               fireExtinguisher: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, ''),
               fireExtinguisherComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
               fireExtinguisherImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 56, []),
               fireExtinguisherPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 58, []),
+              fireExtinguisherNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 74, []),
               firstAidKitSafetyVest: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 40, ''),
               firstAidKitSafetyVestComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 42, ''),
               firstAidKitSafetyVestImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 60, []),
               firstAidKitSafetyVestPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 62, []),
+              firstAidKitSafetyVestNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 76, []),
               backUpAlarm: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 26, ''),
               backUpAlarmComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 28, ''),
               backUpAlarmImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 64, []),
               backUpAlarmPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 66, []),
+              backUpAlarmNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 78, []),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32));
           object.controlForm.targetId =
@@ -4944,7 +5474,16 @@ ModelDefinition getObjectBoxModel() {
           final bucketLinerPathOffset = fbb.writeList(object.bucketLinerPath
               .map(fbb.writeString)
               .toList(growable: false));
-          fbb.startTable(17);
+          final insulatedNamesOffset = fbb.writeList(object.insulatedNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final holesDrilledNamesOffset = fbb.writeList(object.holesDrilledNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final bucketLinerNamesOffset = fbb.writeList(object.bucketLinerNames
+              .map(fbb.writeString)
+              .toList(growable: false));
+          fbb.startTable(20);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, insulatedOffset);
           fbb.addOffset(2, insulatedCommentsOffset);
@@ -4961,6 +5500,9 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(13, holesDrilledPathOffset);
           fbb.addOffset(14, bucketLinerImagesOffset);
           fbb.addOffset(15, bucketLinerPathOffset);
+          fbb.addOffset(16, insulatedNamesOffset);
+          fbb.addOffset(17, holesDrilledNamesOffset);
+          fbb.addOffset(18, bucketLinerNamesOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4974,21 +5516,25 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 6, ''),
               insulatedComments: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 8, ''),
-              insulatedImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
-                  .vTableGet(buffer, rootOffset, 24, []),
+              insulatedImages:
+                  const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
+                      .vTableGet(buffer, rootOffset, 24, []),
               insulatedPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
                   .vTableGet(buffer, rootOffset, 26, []),
+              insulatedNames:
+                  const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
+                      .vTableGet(buffer, rootOffset, 36, []),
               holesDrilled: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 10, ''),
-              holesDrilledComments: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 12, ''),
-              holesDrilledImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
-                  .vTableGet(buffer, rootOffset, 28, []),
+              holesDrilledComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 12, ''),
+              holesDrilledImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 28, []),
               holesDrilledPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 30, []),
+              holesDrilledNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 38, []),
               bucketLiner: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 14, ''),
               bucketLinerComments: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 16, ''),
               bucketLinerImages: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 32, []),
               bucketLinerPath: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 34, []),
+              bucketLinerNames: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 40, []),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20));
           object.controlForm.targetId =
@@ -5751,6 +6297,58 @@ class CarBodywork_ {
   /// see [CarBodywork.hornPath]
   static final hornPath =
       QueryStringVectorProperty<CarBodywork>(_entities[2].properties[55]);
+
+  /// see [CarBodywork.wiperBladesFrontNames]
+  static final wiperBladesFrontNames =
+      QueryStringVectorProperty<CarBodywork>(_entities[2].properties[56]);
+
+  /// see [CarBodywork.wiperBladesBackNames]
+  static final wiperBladesBackNames =
+      QueryStringVectorProperty<CarBodywork>(_entities[2].properties[57]);
+
+  /// see [CarBodywork.windshieldWiperFrontNames]
+  static final windshieldWiperFrontNames =
+      QueryStringVectorProperty<CarBodywork>(_entities[2].properties[58]);
+
+  /// see [CarBodywork.windshieldWiperBackNames]
+  static final windshieldWiperBackNames =
+      QueryStringVectorProperty<CarBodywork>(_entities[2].properties[59]);
+
+  /// see [CarBodywork.generalBodyNames]
+  static final generalBodyNames =
+      QueryStringVectorProperty<CarBodywork>(_entities[2].properties[60]);
+
+  /// see [CarBodywork.decalingNames]
+  static final decalingNames =
+      QueryStringVectorProperty<CarBodywork>(_entities[2].properties[61]);
+
+  /// see [CarBodywork.tiresNames]
+  static final tiresNames =
+      QueryStringVectorProperty<CarBodywork>(_entities[2].properties[62]);
+
+  /// see [CarBodywork.glassNames]
+  static final glassNames =
+      QueryStringVectorProperty<CarBodywork>(_entities[2].properties[63]);
+
+  /// see [CarBodywork.mirrorsNames]
+  static final mirrorsNames =
+      QueryStringVectorProperty<CarBodywork>(_entities[2].properties[64]);
+
+  /// see [CarBodywork.parkingNames]
+  static final parkingNames =
+      QueryStringVectorProperty<CarBodywork>(_entities[2].properties[65]);
+
+  /// see [CarBodywork.brakesNames]
+  static final brakesNames =
+      QueryStringVectorProperty<CarBodywork>(_entities[2].properties[66]);
+
+  /// see [CarBodywork.emgBrakesNames]
+  static final emgBrakesNames =
+      QueryStringVectorProperty<CarBodywork>(_entities[2].properties[67]);
+
+  /// see [CarBodywork.hornNames]
+  static final hornNames =
+      QueryStringVectorProperty<CarBodywork>(_entities[2].properties[68]);
 }
 
 /// [Equipment] entity fields to define ObjectBox queries.
@@ -5849,6 +6447,26 @@ class Equipment_ {
   /// see [Equipment.bucketLiftOperatorManualPath]
   static final bucketLiftOperatorManualPath =
       QueryStringVectorProperty<Equipment>(_entities[3].properties[23]);
+
+  /// see [Equipment.ignitionKeyNames]
+  static final ignitionKeyNames =
+      QueryStringVectorProperty<Equipment>(_entities[3].properties[24]);
+
+  /// see [Equipment.binsBoxKeyNames]
+  static final binsBoxKeyNames =
+      QueryStringVectorProperty<Equipment>(_entities[3].properties[25]);
+
+  /// see [Equipment.vehicleRegistrationCopyNames]
+  static final vehicleRegistrationCopyNames =
+      QueryStringVectorProperty<Equipment>(_entities[3].properties[26]);
+
+  /// see [Equipment.vehicleInsuranceCopyNames]
+  static final vehicleInsuranceCopyNames =
+      QueryStringVectorProperty<Equipment>(_entities[3].properties[27]);
+
+  /// see [Equipment.bucketLiftOperatorManualNames]
+  static final bucketLiftOperatorManualNames =
+      QueryStringVectorProperty<Equipment>(_entities[3].properties[28]);
 }
 
 /// [Extra] entity fields to define ObjectBox queries.
@@ -5993,6 +6611,38 @@ class Extra_ {
   /// see [Extra.lanyardSafetyHarnessPath]
   static final lanyardSafetyHarnessPath =
       QueryStringVectorProperty<Extra>(_entities[4].properties[35]);
+
+  /// see [Extra.ladderNames]
+  static final ladderNames =
+      QueryStringVectorProperty<Extra>(_entities[4].properties[36]);
+
+  /// see [Extra.stepLadderNames]
+  static final stepLadderNames =
+      QueryStringVectorProperty<Extra>(_entities[4].properties[37]);
+
+  /// see [Extra.ladderStrapsNames]
+  static final ladderStrapsNames =
+      QueryStringVectorProperty<Extra>(_entities[4].properties[38]);
+
+  /// see [Extra.hydraulicFluidForBucketNames]
+  static final hydraulicFluidForBucketNames =
+      QueryStringVectorProperty<Extra>(_entities[4].properties[39]);
+
+  /// see [Extra.fiberReelRackNames]
+  static final fiberReelRackNames =
+      QueryStringVectorProperty<Extra>(_entities[4].properties[40]);
+
+  /// see [Extra.binsLockedAndSecureNames]
+  static final binsLockedAndSecureNames =
+      QueryStringVectorProperty<Extra>(_entities[4].properties[41]);
+
+  /// see [Extra.safetyHarnessNames]
+  static final safetyHarnessNames =
+      QueryStringVectorProperty<Extra>(_entities[4].properties[42]);
+
+  /// see [Extra.lanyardSafetyHarnessNames]
+  static final lanyardSafetyHarnessNames =
+      QueryStringVectorProperty<Extra>(_entities[4].properties[43]);
 }
 
 /// [FluidsCheck] entity fields to define ObjectBox queries.
@@ -6108,6 +6758,30 @@ class FluidsCheck_ {
   /// see [FluidsCheck.windshieldWasherFluidPath]
   static final windshieldWasherFluidPath =
       QueryStringVectorProperty<FluidsCheck>(_entities[5].properties[27]);
+
+  /// see [FluidsCheck.engineOilNames]
+  static final engineOilNames =
+      QueryStringVectorProperty<FluidsCheck>(_entities[5].properties[28]);
+
+  /// see [FluidsCheck.transmissionNames]
+  static final transmissionNames =
+      QueryStringVectorProperty<FluidsCheck>(_entities[5].properties[29]);
+
+  /// see [FluidsCheck.coolantNames]
+  static final coolantNames =
+      QueryStringVectorProperty<FluidsCheck>(_entities[5].properties[30]);
+
+  /// see [FluidsCheck.powerSteeringNames]
+  static final powerSteeringNames =
+      QueryStringVectorProperty<FluidsCheck>(_entities[5].properties[31]);
+
+  /// see [FluidsCheck.dieselExhaustFluidNames]
+  static final dieselExhaustFluidNames =
+      QueryStringVectorProperty<FluidsCheck>(_entities[5].properties[32]);
+
+  /// see [FluidsCheck.windshieldWasherFluidNames]
+  static final windshieldWasherFluidNames =
+      QueryStringVectorProperty<FluidsCheck>(_entities[5].properties[33]);
 }
 
 /// [Lights] entity fields to define ObjectBox queries.
@@ -6285,6 +6959,46 @@ class Lights_ {
   /// see [Lights.clearanceLightsComments]
   static final clearanceLightsComments =
       QueryStringProperty<Lights>(_entities[6].properties[43]);
+
+  /// see [Lights.headLightsNames]
+  static final headLightsNames =
+      QueryStringVectorProperty<Lights>(_entities[6].properties[44]);
+
+  /// see [Lights.brakeLightsNames]
+  static final brakeLightsNames =
+      QueryStringVectorProperty<Lights>(_entities[6].properties[45]);
+
+  /// see [Lights.reverseLightsNames]
+  static final reverseLightsNames =
+      QueryStringVectorProperty<Lights>(_entities[6].properties[46]);
+
+  /// see [Lights.warningLightsNames]
+  static final warningLightsNames =
+      QueryStringVectorProperty<Lights>(_entities[6].properties[47]);
+
+  /// see [Lights.turnSignalsNames]
+  static final turnSignalsNames =
+      QueryStringVectorProperty<Lights>(_entities[6].properties[48]);
+
+  /// see [Lights.fourWayFlashersNames]
+  static final fourWayFlashersNames =
+      QueryStringVectorProperty<Lights>(_entities[6].properties[49]);
+
+  /// see [Lights.dashLightsNames]
+  static final dashLightsNames =
+      QueryStringVectorProperty<Lights>(_entities[6].properties[50]);
+
+  /// see [Lights.strobeLightsNames]
+  static final strobeLightsNames =
+      QueryStringVectorProperty<Lights>(_entities[6].properties[51]);
+
+  /// see [Lights.cabRoofLightsNames]
+  static final cabRoofLightsNames =
+      QueryStringVectorProperty<Lights>(_entities[6].properties[52]);
+
+  /// see [Lights.clearanceLightsNames]
+  static final clearanceLightsNames =
+      QueryStringVectorProperty<Lights>(_entities[6].properties[53]);
 }
 
 /// [Measures] entity fields to define ObjectBox queries.
@@ -6319,21 +7033,29 @@ class Measures_ {
   static final controlForm =
       QueryRelationToOne<Measures, ControlForm>(_entities[7].properties[7]);
 
-  /// see [Measures.gasImages]
-  static final gasImages =
-      QueryStringVectorProperty<Measures>(_entities[7].properties[8]);
-
   /// see [Measures.gasPath]
   static final gasPath =
-      QueryStringVectorProperty<Measures>(_entities[7].properties[9]);
-
-  /// see [Measures.mileageImages]
-  static final mileageImages =
-      QueryStringVectorProperty<Measures>(_entities[7].properties[10]);
+      QueryStringVectorProperty<Measures>(_entities[7].properties[8]);
 
   /// see [Measures.mileagePath]
   static final mileagePath =
+      QueryStringVectorProperty<Measures>(_entities[7].properties[9]);
+
+  /// see [Measures.gasImages]
+  static final gasImages =
+      QueryStringVectorProperty<Measures>(_entities[7].properties[10]);
+
+  /// see [Measures.mileageImages]
+  static final mileageImages =
       QueryStringVectorProperty<Measures>(_entities[7].properties[11]);
+
+  /// see [Measures.gasNames]
+  static final gasNames =
+      QueryStringVectorProperty<Measures>(_entities[7].properties[12]);
+
+  /// see [Measures.mileageNames]
+  static final mileageNames =
+      QueryStringVectorProperty<Measures>(_entities[7].properties[13]);
 }
 
 /// [Security] entity fields to define ObjectBox queries.
@@ -6448,6 +7170,30 @@ class Security_ {
   /// see [Security.backUpAlarmPath]
   static final backUpAlarmPath =
       QueryStringVectorProperty<Security>(_entities[8].properties[27]);
+
+  /// see [Security.rtaMagnetNames]
+  static final rtaMagnetNames =
+      QueryStringVectorProperty<Security>(_entities[8].properties[28]);
+
+  /// see [Security.triangleReflectorsNames]
+  static final triangleReflectorsNames =
+      QueryStringVectorProperty<Security>(_entities[8].properties[29]);
+
+  /// see [Security.wheelChocksNames]
+  static final wheelChocksNames =
+      QueryStringVectorProperty<Security>(_entities[8].properties[30]);
+
+  /// see [Security.fireExtinguisherNames]
+  static final fireExtinguisherNames =
+      QueryStringVectorProperty<Security>(_entities[8].properties[31]);
+
+  /// see [Security.firstAidKitSafetyVestNames]
+  static final firstAidKitSafetyVestNames =
+      QueryStringVectorProperty<Security>(_entities[8].properties[32]);
+
+  /// see [Security.backUpAlarmNames]
+  static final backUpAlarmNames =
+      QueryStringVectorProperty<Security>(_entities[8].properties[33]);
 }
 
 /// [BucketInspection] entity fields to define ObjectBox queries.
@@ -6515,6 +7261,18 @@ class BucketInspection_ {
   /// see [BucketInspection.bucketLinerPath]
   static final bucketLinerPath =
       QueryStringVectorProperty<BucketInspection>(_entities[9].properties[15]);
+
+  /// see [BucketInspection.insulatedNames]
+  static final insulatedNames =
+      QueryStringVectorProperty<BucketInspection>(_entities[9].properties[16]);
+
+  /// see [BucketInspection.holesDrilledNames]
+  static final holesDrilledNames =
+      QueryStringVectorProperty<BucketInspection>(_entities[9].properties[17]);
+
+  /// see [BucketInspection.bucketLinerNames]
+  static final bucketLinerNames =
+      QueryStringVectorProperty<BucketInspection>(_entities[9].properties[18]);
 }
 
 /// [Company] entity fields to define ObjectBox queries.

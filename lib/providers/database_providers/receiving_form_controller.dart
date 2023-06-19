@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -6,6 +8,7 @@ import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
+import 'package:uuid/uuid.dart';
 class ReceivingFormController extends ChangeNotifier {
 
   GlobalKey<FormState> receivingFormKey = GlobalKey<FormState>();
@@ -17,6 +20,7 @@ class ReceivingFormController extends ChangeNotifier {
   String mileage = ""; 
   bool isMileageRegistered = false;
   int pendingMeasures = 2;
+  Uuid uuid = Uuid();
 
   //Reports
   String headLights = "Good";
@@ -1622,10 +1626,15 @@ class ReceivingFormController extends ChangeNotifier {
   List<String> getListImages(List<ImageEvidence> imagesEvidence) {
     List<String> listImages = [];
     for (var elementImage in imagesEvidence) {
-        listImages.add(elementImage.base64);
+        listImages.add(encodeUint8Element(elementImage.uint8List));
       }
     return listImages;
   }
+
+  String encodeUint8Element(Uint8List element) {
+  String encodedElement = base64.encode(element);
+  return json.encode(encodedElement);
+}
 
   List<String> getListPath(List<ImageEvidence> imagesEvidence) {
     List<String> listPath = [];
@@ -1633,6 +1642,14 @@ class ReceivingFormController extends ChangeNotifier {
         listPath.add(elementImage.path);
       }
     return listPath;
+  }
+
+  List<String> getListNames(List<ImageEvidence> imagesEvidence) {
+    List<String> listNames = [];
+    for (var elementImage in imagesEvidence) {
+        listNames.add("${uuid.v4()}${elementImage.name}");
+      }
+    return listNames;
   }
   
   bool addControlForm(Users? user) {
@@ -1642,10 +1659,12 @@ class ReceivingFormController extends ChangeNotifier {
         gasComments: gasComments.text,
         gasImages: getListImages(gasImages), 
         gasPath: getListPath(gasImages), 
+        gasNames: getListNames(gasImages),
         mileage: int.parse(mileage), 
         mileageComments: mileageComments.text,
         mileageImages: getListImages(mileageImages),
         mileagePath: getListPath(mileageImages),
+        mileageNames: getListNames(mileageImages),
       );
 
 
@@ -1654,42 +1673,52 @@ class ReceivingFormController extends ChangeNotifier {
         headLightsComments: headLightsComments.text, 
         headLightsImages: getListImages(headLightsImages), 
         headLightsPath: getListPath(headLightsImages), 
+        headLightsNames: getListNames(headLightsImages), 
         brakeLights: brakeLights, 
         brakeLightsComments: brakeLightsComments.text, 
         brakeLightsImages: getListImages(brakeLightsImages), 
         brakeLightsPath: getListPath(brakeLightsImages), 
+        brakeLightsNames: getListNames(brakeLightsImages), 
         reverseLights: reverseLights, 
         reverseLightsComments: reverseLightsComments.text, 
         reverseLightsImages: getListImages(reverseLightsImages), 
         reverseLightsPath: getListPath(reverseLightsImages), 
+        reverseLightsNames: getListNames(reverseLightsImages), 
         warningLights: warningLights, 
         warningLightsComments: warningLightsComments.text, 
         warningLightsImages: getListImages(warningLightsImages), 
-        warningLightsPath: getListPath(warningLightsImages), 
+        warningLightsPath: getListPath(warningLightsImages),
+        warningLightsNames: getListNames(warningLightsImages), 
         turnSignals: turnSignals, 
         turnSignalsComments: turnSignalsComments.text, 
         turnSignalsImages: getListImages(turnSignalsImages), 
         turnSignalsPath: getListPath(turnSignalsImages), 
+        turnSignalsNames: getListNames(turnSignalsImages), 
         fourWayFlashers: fourWayFlashers, 
         fourWayFlashersComments: fourWayFlashersComments.text, 
         fourWayFlashersImages: getListImages(fourWayFlashersImages), 
         fourWayFlashersPath: getListPath(fourWayFlashersImages), 
+        fourWayFlashersNames: getListNames(fourWayFlashersImages), 
         dashLights: dashLights, 
         dashLightsComments: dashLightsComments.text, 
         dashLightsImages: getListImages(dashLightsImages), 
         dashLightsPath: getListPath(dashLightsImages), 
+        dashLightsNames: getListNames(dashLightsImages), 
         strobeLights: strobeLights, 
         strobeLightsComments: strobeLightsComments.text, 
         strobeLightsImages: getListImages(strobeLightsImages), 
         strobeLightsPath: getListPath(strobeLightsImages), 
+        strobeLightsNames: getListNames(strobeLightsImages), 
         cabRoofLights: cabRoofLights, 
         cabRoofLightsComments: cabRoofLightsComments.text, 
         cabRoofLightsImages: getListImages(cabRoofLightsImages), 
         cabRoofLightsPath: getListPath(cabRoofLightsImages),
+        cabRoofLightsNames: getListNames(cabRoofLightsImages),
         clearanceLights: clearanceLights, 
         clearanceLightsComments: clearanceLightsComments.text, 
         clearanceLightsImages: getListImages(clearanceLightsImages), 
-        clearanceLightsPath: getListPath(clearanceLightsImages), 
+        clearanceLightsPath: getListPath(clearanceLightsImages),
+        clearanceLightsNames: getListNames(clearanceLightsImages), 
       );
 
       final carBodywork = CarBodywork(
@@ -1697,54 +1726,67 @@ class ReceivingFormController extends ChangeNotifier {
         wiperBladesFrontComments: wiperBladesFrontComments.text, 
         wiperBladesFrontImages: getListImages(wiperBladesFrontImages), 
         wiperBladesFrontPath: getListPath(wiperBladesFrontImages), 
+        wiperBladesFrontNames: getListNames(wiperBladesFrontImages), 
         wiperBladesBack: wiperBladesBack, 
         wiperBladesBackComments: wiperBladesBackComments.text, 
         wiperBladesBackImages: getListImages(wiperBladesBackImages), 
         wiperBladesBackPath: getListPath(wiperBladesBackImages), 
+        wiperBladesBackNames: getListNames(wiperBladesBackImages), 
         windshieldWiperFront: windshieldWiperFront, 
         windshieldWiperFrontComments: windshieldWiperFrontComments.text, 
         windshieldWiperFrontImages: getListImages(windshieldWiperFrontImages), 
         windshieldWiperFrontPath: getListPath(windshieldWiperFrontImages), 
+        windshieldWiperFrontNames: getListNames(windshieldWiperFrontImages), 
         windshieldWiperBack: windshieldWiperBack, 
         windshieldWiperBackComments: windshieldWiperBackComments.text, 
         windshieldWiperBackImages: getListImages(windshieldWiperBackImages), 
         windshieldWiperBackPath: getListPath(windshieldWiperBackImages), 
+        windshieldWiperBackNames: getListNames(windshieldWiperBackImages), 
         generalBody: generalBody, 
         generalBodyComments: generalBodyComments.text, 
         generalBodyImages: getListImages(generalBodyImages), 
         generalBodyPath: getListPath(generalBodyImages), 
+        generalBodyNames: getListNames(generalBodyImages), 
         decaling: decaling, 
         decalingComments: decalingComments.text, 
         decalingImages: getListImages(decalingImages), 
-        decalingPath: getListPath(decalingImages), 
+        decalingPath: getListPath(decalingImages),
+        decalingNames: getListNames(decalingImages), 
         tires: tires, 
         tiresComments: tiresComments.text, 
         tiresImages: getListImages(tiresImages), 
-        tiresPath: getListPath(tiresImages), 
+        tiresPath: getListPath(tiresImages),
+        tiresNames: getListNames(tiresImages),
         glass: glass, 
         glassComments: glassComments.text, 
         glassImages: getListImages(glassImages), 
         glassPath: getListPath(glassImages), 
+        glassNames: getListNames(glassImages), 
         mirrors: mirrors, 
         mirrorsComments: mirrorsComments.text, 
         mirrorsImages: getListImages(mirrorsImages), 
         mirrorsPath: getListPath(mirrorsImages), 
+        mirrorsNames: getListNames(mirrorsImages), 
         parking: parking, 
         parkingComments: parkingComments.text, 
         parkingImages: getListImages(parkingImages), 
         parkingPath: getListPath(parkingImages), 
+        parkingNames: getListNames(parkingImages), 
         brakes: brakes, 
         brakesComments: brakesComments.text, 
         brakesImages: getListImages(brakesImages), 
         brakesPath: getListPath(brakesImages),
+        brakesNames: getListNames(brakesImages),
         emgBrakes: emgBrakes, 
         emgBrakesComments: emgBrakesComments.text, 
         emgBrakesImages: getListImages(emgBrakesImages), 
         emgBrakesPath: getListPath(emgBrakesImages),
+        emgBrakesNames: getListNames(emgBrakesImages),
         horn: horn, 
         hornComments: hornComments.text, 
         hornImages: getListImages(hornImages), 
         hornPath: getListPath(hornImages),
+        hornNames: getListNames(hornImages),
       );
 
       final fluidsCheck = FluidsCheck(
@@ -1752,26 +1794,32 @@ class ReceivingFormController extends ChangeNotifier {
         engineOilComments: engineOilComments.text, 
         engineOilImages: getListImages(engineOilImages), 
         engineOilPath: getListPath(engineOilImages),
+        engineOilNames: getListNames(engineOilImages),
         transmission: transmission, 
         transmissionComments: transmissionComments.text, 
         transmissionImages: getListImages(transmissionImages), 
         transmissionPath: getListPath(transmissionImages),
+        transmissionNames: getListNames(transmissionImages),
         coolant: coolant, 
         coolantComments: coolantComments.text, 
         coolantImages: getListImages(coolantImages), 
         coolantPath: getListPath(coolantImages),
+        coolantNames: getListNames(coolantImages),
         powerSteering: powerSteering, 
         powerSteeringComments: powerSteeringComments.text, 
         powerSteeringImages: getListImages(powerSteeringImages), 
-        powerSteeringPath: getListPath(parkingImages),
+        powerSteeringPath: getListPath(powerSteeringImages),
+        powerSteeringNames: getListNames(powerSteeringImages),
         dieselExhaustFluid: dieselExhaustFluid, 
         dieselExhaustFluidComments: dieselExhaustFluidComments.text, 
         dieselExhaustFluidImages: getListImages(dieselExhaustFluidImages), 
         dieselExhaustFluidPath: getListPath(dieselExhaustFluidImages),
+        dieselExhaustFluidNames: getListNames(dieselExhaustFluidImages),
         windshieldWasherFluid: windshieldWasherFluid, 
         windshieldWasherFluidComments: windshieldWasherFluidComments.text, 
         windshieldWasherFluidImages: getListImages(windshieldWasherFluidImages), 
         windshieldWasherFluidPath: getListPath(windshieldWasherFluidImages),
+        windshieldWasherFluidNames: getListNames(windshieldWasherFluidImages),
       );
 
       final bucketInspection = BucketInspection(
@@ -1779,14 +1827,17 @@ class ReceivingFormController extends ChangeNotifier {
         insulatedComments: insulatedComments.text, 
         insulatedImages: getListImages(insulatedImages), 
         insulatedPath: getListPath(insulatedImages),
+        insulatedNames: getListNames(insulatedImages),
         holesDrilled: holesDrilled, 
         holesDrilledComments: holesDrilledComments.text, 
         holesDrilledImages: getListImages(holesDrilledImages), 
         holesDrilledPath: getListPath(holesDrilledImages),
+        holesDrilledNames: getListNames(holesDrilledImages),
         bucketLiner: bucketLiner, 
         bucketLinerComments: bucketLinerComments.text, 
         bucketLinerImages: getListImages(bucketLinerImages), 
         bucketLinerPath: getListPath(bucketLinerImages),
+        bucketLinerNames: getListNames(bucketLinerImages),
       );
 
       final security = Security(
@@ -1794,26 +1845,32 @@ class ReceivingFormController extends ChangeNotifier {
         rtaMagnetComments: rtaMagnetComments.text, 
         rtaMagnetImages: getListImages(rtaMagnetImages), 
         rtaMagnetPath: getListPath(rtaMagnetImages),
+        rtaMagnetNames: getListNames(rtaMagnetImages),
         triangleReflectors: triangleReflectors, 
         triangleReflectorsComments: triangleReflectorsComments.text, 
         triangleReflectorsImages: getListImages(triangleReflectorsImages), 
         triangleReflectorsPath: getListPath(triangleReflectorsImages),
+        triangleReflectorsNames: getListNames(triangleReflectorsImages),
         wheelChocks: wheelChocks, 
         wheelChocksComments: wheelChocksComments.text, 
         wheelChocksImages: getListImages(wheelChocksImages), 
         wheelChocksPath: getListPath(wheelChocksImages),
+        wheelChocksNames: getListNames(wheelChocksImages),
         fireExtinguisher: fireExtinguisher, 
         fireExtinguisherComments: fireExtinguisherComments.text, 
         fireExtinguisherImages: getListImages(fireExtinguisherImages), 
         fireExtinguisherPath: getListPath(fireExtinguisherImages),
+        fireExtinguisherNames: getListNames(fireExtinguisherImages),
         firstAidKitSafetyVest: firstAidKitSafetyVest, 
         firstAidKitSafetyVestComments: firstAidKitSafetyVestComments.text, 
         firstAidKitSafetyVestImages: getListImages(firstAidKitSafetyVestImages), 
         firstAidKitSafetyVestPath: getListPath(firstAidKitSafetyVestImages),
+        firstAidKitSafetyVestNames: getListNames(firstAidKitSafetyVestImages),
         backUpAlarm: backUpAlarm, 
         backUpAlarmComments: backUpAlarmComments.text, 
         backUpAlarmImages: getListImages(backUpAlarmImages), 
         backUpAlarmPath: getListPath(backUpAlarmImages),
+        backUpAlarmNames: getListNames(backUpAlarmImages),
       );
 
       final extra = Extra(
@@ -1821,34 +1878,42 @@ class ReceivingFormController extends ChangeNotifier {
         ladderComments: ladderComments.text, 
         ladderImages: getListImages(ladderImages), 
         ladderPath: getListPath(ladderImages),
+        ladderNames: getListNames(ladderImages),
         stepLadder: stepLadder, 
         stepLadderComments: stepLadderComments.text, 
         stepLadderImages: getListImages(stepLadderImages), 
         stepLadderPath: getListPath(stepLadderImages),
+        stepLadderNames: getListNames(stepLadderImages),
         ladderStraps: ladderStraps, 
         ladderStrapsComments: ladderStrapsComments.text, 
         ladderStrapsImages: getListImages(ladderStrapsImages), 
         ladderStrapsPath: getListPath(ladderStrapsImages),
+        ladderStrapsNames: getListNames(ladderStrapsImages),
         hydraulicFluidForBucket: hydraulicFluidForBucket, 
         hydraulicFluidForBucketComments: hydraulicFluidForBucketComments.text, 
         hydraulicFluidForBucketImages: getListImages(hydraulicFluidForBucketImages), 
         hydraulicFluidForBucketPath: getListPath(hydraulicFluidForBucketImages),
+        hydraulicFluidForBucketNames: getListNames(hydraulicFluidForBucketImages),
         fiberReelRack: fiberReelRack, 
         fiberReelRackComments: fiberReelRackComments.text, 
         fiberReelRackImages: getListImages(fiberReelRackImages), 
         fiberReelRackPath: getListPath(fiberReelRackImages),
+        fiberReelRackNames: getListNames(fiberReelRackImages),
         binsLockedAndSecure: binsLockedAndSecure, 
         binsLockedAndSecureComments: binsLockedAndSecureComments.text, 
         binsLockedAndSecureImages: getListImages(binsLockedAndSecureImages), 
         binsLockedAndSecurePath: getListPath(binsLockedAndSecureImages),
+        binsLockedAndSecureNames: getListNames(binsLockedAndSecureImages),
         safetyHarness: safetyHarness, 
         safetyHarnessComments: safetyHarnessComments.text, 
         safetyHarnessImages: getListImages(safetyHarnessImages), 
         safetyHarnessPath: getListPath(safetyHarnessImages),
+        safetyHarnessNames: getListNames(safetyHarnessImages),
         lanyardSafetyHarness: lanyardSafetyHarness, 
         lanyardSafetyHarnessComments: lanyardSafetyHarnessComments.text, 
         lanyardSafetyHarnessImages: getListImages(lanyardSafetyHarnessImages), 
         lanyardSafetyHarnessPath: getListPath(lanyardSafetyHarnessImages),
+        lanyardSafetyHarnessNames: getListNames(lanyardSafetyHarnessImages),
       );
 
       final equipment = Equipment(
@@ -1856,22 +1921,27 @@ class ReceivingFormController extends ChangeNotifier {
         ignitionKeyComments: ignitionKeyComments.text, 
         ignitionKeyImages: getListImages(ignitionKeyImages), 
         ignitionKeyPath: getListPath(ignitionKeyImages),
+        ignitionKeyNames: getListNames(ignitionKeyImages),
         binsBoxKey: binsBoxKey, 
         binsBoxKeyComments: binsBoxKeyComments.text, 
         binsBoxKeyImages: getListImages(binsBoxKeyImages), 
         binsBoxKeyPath: getListPath(binsBoxKeyImages),
+        binsBoxKeyNames: getListNames(binsBoxKeyImages),
         vehicleRegistrationCopy: vehicleRegistrationCopy, 
         vehicleRegistrationCopyComments: vehicleRegistrationCopyComments.text, 
         vehicleRegistrationCopyImages: getListImages(vehicleRegistrationCopyImages), 
         vehicleRegistrationCopyPath: getListPath(vehicleRegistrationCopyImages),
+        vehicleRegistrationCopyNames: getListNames(vehicleRegistrationCopyImages),
         vehicleInsuranceCopy: vehicleInsuranceCopy, 
         vehicleInsuranceCopyComments: vehicleInsuranceCopyComments.text, 
         vehicleInsuranceCopyImages: getListImages(vehicleInsuranceCopyImages), 
         vehicleInsuranceCopyPath: getListPath(vehicleInsuranceCopyImages),
+        vehicleInsuranceCopyNames: getListNames(vehicleInsuranceCopyImages),
         bucketLiftOperatorManual: bucketLiftOperatorManual, 
         bucketLiftOperatorManualComments: bucketLiftOperatorManualComments.text, 
         bucketLiftOperatorManualImages: getListImages(bucketLiftOperatorManualImages), 
         bucketLiftOperatorManualPath: getListPath(bucketLiftOperatorManualImages),
+        bucketLiftOperatorManualNames: getListNames(bucketLiftOperatorManualImages),
       );
 
       final controlForm = ControlForm(

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
@@ -371,14 +372,59 @@ class SyncProviderSupabase extends ChangeNotifier {
       if (bitacora.executeSupabase == false) {
         if (controlForm.idDBR == null) {
           //Registrar measures
+          List<String> listNamesMeasures = [];
+          final listImagesMeasures = await supabase.storage.from('measures').list();
+          for (var element in listImagesMeasures) {listNamesMeasures.add(element.name);}
           if (controlForm.measuresR.target!.gasImages.isNotEmpty) {
-            for (var element in controlForm.measuresR.target!.gasImages.toList()) {
-              gasImages = "$gasImages$element|";
+            for (var i = 0; i < controlForm.measuresR.target!.gasImages.toList().length; i++) {
+              if (!listNamesMeasures.contains(controlForm.measuresR.target!.gasNames.toList()[i])) {
+              //Parsear a Uint8List
+                final storageResponse = await supabase.storage.from('measures').uploadBinary(
+                controlForm.measuresR.target!.gasNames.toList()[i],
+                Uint8List.fromList(utf8.encode(controlForm.measuresR.target!.gasImages.toList()[i])),
+                  fileOptions: const FileOptions(
+                    cacheControl: '3600',
+                    upsert: false,
+                  ),
+                );
+                if (storageResponse.isEmpty) {
+                  return SyncInstruction(
+                    exitoso: false,
+                    descripcion:
+                        "Failed to sync image on Gas-Measures in Control Form Received on Local Server named ${controlForm.measuresR.target!.gasNames.toList()[i]}");
+                }
+                final urlImage = supabase.storage.from('measures').getPublicUrl(controlForm.measuresR.target!.gasNames.toList()[i]);
+                  gasImages = "$gasImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('measures').getPublicUrl(controlForm.measuresR.target!.gasNames.toList()[i]);
+                  gasImages = "$gasImages$urlImage|";
+              }
             }
           }
           if (controlForm.measuresR.target!.mileageImages.isNotEmpty) {
-            for (var element in controlForm.measuresR.target!.mileageImages.toList()) {
-              mileageImages = "$mileageImages$element|";
+            for (var i = 0; i < controlForm.measuresR.target!.mileageImages.toList().length; i++) {
+              if (!listNamesMeasures.contains(controlForm.measuresR.target!.mileageNames.toList()[i])) {
+                //Parsear a Uint8List
+                final storageResponse = await supabase.storage.from('measures').uploadBinary(
+                controlForm.measuresR.target!.mileageNames.toList()[i],
+                Uint8List.fromList(utf8.encode(controlForm.measuresR.target!.mileageImages.toList()[i])),
+                  fileOptions: const FileOptions(
+                    cacheControl: '3600',
+                    upsert: false,
+                  ),
+                );
+                if (storageResponse.isEmpty) {
+                  return SyncInstruction(
+                    exitoso: false,
+                    descripcion:
+                        "Failed to sync image on Mileage-Measures in Control Form Received on Local Server named ${controlForm.measuresR.target!.mileageNames.toList()[i]}");
+                }
+                final urlImage = supabase.storage.from('measures').getPublicUrl(controlForm.measuresR.target!.mileageNames.toList()[i]);
+                  mileageImages = "$mileageImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('measures').getPublicUrl(controlForm.measuresR.target!.mileageNames.toList()[i]);
+                  mileageImages = "$mileageImages$urlImage|";
+              }
             }
           }
           final recordMeasure = await supabaseCtrlV.from('measures').insert(
@@ -393,54 +439,267 @@ class SyncProviderSupabase extends ChangeNotifier {
             },
           ).select<PostgrestList>('id_measure');
           //Registrar lights
+          List<String> listNamesLights = [];
+          final listImagesLights = await supabase.storage.from('lights').list();
+          for (var element in listImagesLights) {listNamesLights.add(element.name);}
           if (controlForm.lightsR.target!.headLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsR.target!.headLightsImages.toList()) {
-              headlightsImages = "$headlightsImages$element|";
+            for (var i = 0; i < controlForm.lightsR.target!.headLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsR.target!.headLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+                final storageResponse = await supabase.storage.from('lights').uploadBinary(
+                controlForm.lightsR.target!.headLightsNames.toList()[i],
+                Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.headLightsImages.toList()[i])),
+                  fileOptions: const FileOptions(
+                    cacheControl: '3600',
+                    upsert: false,
+                  ),
+                );
+                if (storageResponse.isEmpty) {
+                  return SyncInstruction(
+                    exitoso: false,
+                    descripcion:
+                        "Failed to sync image on Head-Lights in Control Form Received on Local Server named ${controlForm.lightsR.target!.headLightsNames.toList()[i]}");
+                }
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.headLightsNames.toList()[i]);
+                  headlightsImages = "$headlightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.headLightsNames.toList()[i]);
+                  headlightsImages = "$headlightsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsR.target!.brakeLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsR.target!.brakeLightsImages.toList()) {
-              brakeLightsImages = "$brakeLightsImages$element|";
+            for (var i = 0; i < controlForm.lightsR.target!.brakeLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsR.target!.brakeLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsR.target!.brakeLightsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.brakeLightsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Brake-Lights in Control Form Received on Local Server named ${controlForm.lightsR.target!.brakeLightsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.brakeLightsNames.toList()[i]);
+                brakeLightsImages = "$brakeLightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.brakeLightsNames.toList()[i]);
+                  brakeLightsImages = "$brakeLightsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsR.target!.reverseLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsR.target!.reverseLightsImages.toList()) {
-              reverseLightsImages = "$reverseLightsImages$element|";
+            for (var i = 0; i < controlForm.lightsR.target!.reverseLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsR.target!.reverseLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsR.target!.reverseLightsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.reverseLightsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Reverse-Lights in Control Form Received on Local Server named ${controlForm.lightsR.target!.reverseLightsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.reverseLightsNames.toList()[i]);
+                reverseLightsImages = "$reverseLightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.reverseLightsNames.toList()[i]);
+                reverseLightsImages = "$reverseLightsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsR.target!.warningLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsR.target!.warningLightsImages.toList()) {
-              warningLightsImages = "$warningLightsImages$element|";
+            for (var i = 0; i < controlForm.lightsR.target!.warningLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsR.target!.warningLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsR.target!.warningLightsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.warningLightsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Warning-Lights in Control Form Received on Local Server named ${controlForm.lightsR.target!.warningLightsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.warningLightsNames.toList()[i]);
+                warningLightsImages = "$warningLightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.warningLightsNames.toList()[i]);
+                warningLightsImages = "$warningLightsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsR.target!.turnSignalsImages.isNotEmpty) {
-            for (var element in controlForm.lightsR.target!.turnSignalsImages.toList()) {
-              turnSignalsImages = "$turnSignalsImages$element|";
+            for (var i = 0; i < controlForm.lightsR.target!.turnSignalsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsR.target!.turnSignalsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsR.target!.turnSignalsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.turnSignalsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on turn Signals in Control Form Received on Local Server named ${controlForm.lightsR.target!.turnSignalsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.turnSignalsNames.toList()[i]);
+                turnSignalsImages = "$turnSignalsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.turnSignalsNames.toList()[i]);
+                turnSignalsImages = "$turnSignalsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsR.target!.fourWayFlashersImages.isNotEmpty) {
-            for (var element in controlForm.lightsR.target!.fourWayFlashersImages.toList()) {
-              fourWayFlashersImages = "$fourWayFlashersImages$element|";
+            for (var i = 0; i < controlForm.lightsR.target!.fourWayFlashersImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsR.target!.fourWayFlashersNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsR.target!.fourWayFlashersNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.fourWayFlashersImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Four Way Flashers in Control Form Received on Local Server named ${controlForm.lightsR.target!.fourWayFlashersNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.fourWayFlashersNames.toList()[i]);
+                fourWayFlashersImages = "$fourWayFlashersImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.fourWayFlashersNames.toList()[i]);
+                fourWayFlashersImages = "$fourWayFlashersImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsR.target!.dashLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsR.target!.dashLightsImages.toList()) {
-              dashLightsImages = "$dashLightsImages$element|";
+            for (var i = 0; i < controlForm.lightsR.target!.dashLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsR.target!.dashLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsR.target!.dashLightsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.dashLightsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Dash-Lights in Control Form Received on Local Server named ${controlForm.lightsR.target!.dashLightsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.dashLightsNames.toList()[i]);
+                dashLightsImages = "$dashLightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.dashLightsNames.toList()[i]);
+                dashLightsImages = "$dashLightsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsR.target!.strobeLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsR.target!.strobeLightsImages.toList()) {
-              strobeLightsImages = "$strobeLightsImages$element|";
+            for (var i = 0; i < controlForm.lightsR.target!.strobeLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsR.target!.strobeLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsR.target!.strobeLightsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.strobeLightsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Strobe-Lights in Control Form Received on Local Server named ${controlForm.lightsR.target!.strobeLightsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.strobeLightsNames.toList()[i]);
+                strobeLightsImages = "$strobeLightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.strobeLightsNames.toList()[i]);
+                strobeLightsImages = "$strobeLightsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsR.target!.cabRoofLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsR.target!.cabRoofLightsImages.toList()) {
-              cabRoofLightsImages = "$cabRoofLightsImages$element|";
+            for (var i = 0; i < controlForm.lightsR.target!.cabRoofLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsR.target!.cabRoofLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsR.target!.cabRoofLightsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.cabRoofLightsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Cab Roof Lights in Control Form Received on Local Server named ${controlForm.lightsR.target!.cabRoofLightsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.cabRoofLightsNames.toList()[i]);
+                cabRoofLightsImages = "$cabRoofLightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.cabRoofLightsNames.toList()[i]);
+                cabRoofLightsImages = "$cabRoofLightsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsR.target!.clearanceLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsR.target!.clearanceLightsImages.toList()) {
-              clearanceLightsImages = "$clearanceLightsImages$element|";
+            for (var i = 0; i < controlForm.lightsR.target!.clearanceLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsR.target!.clearanceLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsR.target!.clearanceLightsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.clearanceLightsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Clearance-Lights in Control Form Received on Local Server named ${controlForm.lightsR.target!.clearanceLightsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.clearanceLightsNames.toList()[i]);
+                clearanceLightsImages = "$clearanceLightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsR.target!.clearanceLightsNames.toList()[i]);
+                clearanceLightsImages = "$clearanceLightsImages$urlImage|";
+              }
             }
           }
           final recordLights = await supabaseCtrlV.from('lights').insert(
@@ -479,69 +738,345 @@ class SyncProviderSupabase extends ChangeNotifier {
             },
           ).select<PostgrestList>('id_lights');
           //Registrar car bodywork
+          List<String> listNamesCarBodywork = [];
+          final listImagesCarBodywork = await supabase.storage.from('car-bodywork').list();
+          for (var element in listImagesCarBodywork) {listNamesCarBodywork.add(element.name);}
           if (controlForm.carBodyworkR.target!.wiperBladesFrontImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkR.target!.wiperBladesFrontImages.toList()) {
-              wiperBladesFrontImages = "$wiperBladesFrontImages$element|";
+              for (var i = 0; i < controlForm.carBodyworkR.target!.wiperBladesFrontImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.windshieldWiperFrontNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkR.target!.wiperBladesFrontNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.wiperBladesFrontImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Wiper Blades Front in Control Form Received on Local Server named ${controlForm.carBodyworkR.target!.wiperBladesFrontNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.wiperBladesFrontNames.toList()[i]);
+                wiperBladesFrontImages = "$wiperBladesFrontImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.wiperBladesFrontNames.toList()[i]);
+                wiperBladesFrontImages = "$wiperBladesFrontImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkR.target!.wiperBladesBackImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkR.target!.wiperBladesBackImages.toList()) {
-              wiperBladesBackImages = "$wiperBladesBackImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkR.target!.wiperBladesBackImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.windshieldWiperBackNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkR.target!.wiperBladesBackNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.wiperBladesBackImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Wiper Blades Back in Control Form Received on Local Server named ${controlForm.carBodyworkR.target!.wiperBladesBackNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.wiperBladesBackNames.toList()[i]);
+                wiperBladesBackImages = "$wiperBladesBackImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.wiperBladesBackNames.toList()[i]);
+                wiperBladesBackImages = "$wiperBladesBackImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkR.target!.windshieldWiperFrontImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkR.target!.windshieldWiperFrontImages.toList()) {
-              windshieldWiperFrontImages = "$windshieldWiperFrontImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkR.target!.windshieldWiperFrontImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.windshieldWiperFrontNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkR.target!.windshieldWiperFrontNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.windshieldWiperFrontImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Windshield Wiper Front in Control Form Received on Local Server named ${controlForm.carBodyworkR.target!.windshieldWiperFrontNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.windshieldWiperFrontNames.toList()[i]);
+                windshieldWiperFrontImages = "$windshieldWiperFrontImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.windshieldWiperFrontNames.toList()[i]);
+                windshieldWiperFrontImages = "$windshieldWiperFrontImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkR.target!.windshieldWiperBackImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkR.target!.windshieldWiperBackImages.toList()) {
-              windshieldWiperBackImages = "$windshieldWiperBackImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkR.target!.windshieldWiperBackImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.windshieldWiperBackNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkR.target!.windshieldWiperBackNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.windshieldWiperBackImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Windshield Wiper Back in Control Form Received on Local Server named ${controlForm.carBodyworkR.target!.windshieldWiperBackNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.windshieldWiperBackNames.toList()[i]);
+                windshieldWiperBackImages = "$windshieldWiperBackImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.windshieldWiperBackNames.toList()[i]);
+                windshieldWiperBackImages = "$windshieldWiperBackImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkR.target!.generalBodyImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkR.target!.generalBodyImages.toList()) {
-              generalBodyImages = "$generalBodyImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkR.target!.generalBodyImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.generalBodyNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkR.target!.generalBodyNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.generalBodyImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on General Body in Control Form Received on Local Server named ${controlForm.carBodyworkR.target!.generalBodyNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.generalBodyNames.toList()[i]);
+                generalBodyImages = "$generalBodyImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.generalBodyNames.toList()[i]);
+                generalBodyImages = "$generalBodyImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkR.target!.decalingImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkR.target!.decalingImages.toList()) {
-              decalingImages = "$decalingImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkR.target!.decalingImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.decalingNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkR.target!.decalingNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.decalingImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Decaling in Control Form Received on Local Server named ${controlForm.carBodyworkR.target!.decalingNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.decalingNames.toList()[i]);
+                decalingImages = "$decalingImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.decalingNames.toList()[i]);
+                decalingImages = "$decalingImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkR.target!.tiresImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkR.target!.tiresImages.toList()) {
-              tiresImages = "$tiresImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkR.target!.tiresImages.toList().length; i++) {
+              //Parsear a Uint8List
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.tiresNames.toList()[i])) {
+                final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkR.target!.tiresNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.tiresImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Tires in Control Form Received on Local Server named ${controlForm.carBodyworkR.target!.tiresNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.tiresNames.toList()[i]);
+                tiresImages = "$tiresImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.tiresNames.toList()[i]);
+                tiresImages = "$tiresImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkR.target!.glassImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkR.target!.glassImages.toList()) {
-              glassImages = "$glassImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkR.target!.glassImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.glassNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkR.target!.glassNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.glassImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Glass in Control Form Received on Local Server named ${controlForm.carBodyworkR.target!.glassNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.glassNames.toList()[i]);
+                glassImages = "$glassImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.glassNames.toList()[i]);
+                glassImages = "$glassImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkR.target!.mirrorsImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkR.target!.mirrorsImages.toList()) {
-              mirrorsImages = "$mirrorsImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkR.target!.mirrorsImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.mirrorsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkR.target!.mirrorsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.mirrorsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Mirrors in Control Form Received on Local Server named ${controlForm.carBodyworkR.target!.mirrorsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.mirrorsNames.toList()[i]);
+                mirrorsImages = "$mirrorsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.mirrorsNames.toList()[i]);
+                mirrorsImages = "$mirrorsImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkR.target!.parkingImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkR.target!.parkingImages.toList()) {
-              parkingImages = "$parkingImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkR.target!.parkingImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.parkingNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkR.target!.parkingNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.parkingImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Parking in Control Form Received on Local Server named ${controlForm.carBodyworkR.target!.parkingNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.parkingNames.toList()[i]);
+                parkingImages = "$parkingImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.parkingNames.toList()[i]);
+                parkingImages = "$parkingImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkR.target!.brakesImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkR.target!.brakesImages.toList()) {
-              brakesImages = "$brakesImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkR.target!.brakesImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.brakesNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkR.target!.brakesNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.brakesImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Brakes in Control Form Received on Local Server named ${controlForm.carBodyworkR.target!.brakesNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.brakesNames.toList()[i]);
+                brakesImages = "$brakesImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.brakesNames.toList()[i]);
+                brakesImages = "$brakesImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkR.target!.emgBrakesImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkR.target!.emgBrakesImages.toList()) {
-              emgBrakesImages = "$emgBrakesImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkR.target!.emgBrakesImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.emgBrakesNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkR.target!.emgBrakesNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.emgBrakesImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on EMG Brakes in Control Form Received on Local Server named ${controlForm.carBodyworkR.target!.emgBrakesNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.emgBrakesNames.toList()[i]);
+                emgBrakesImages = "$emgBrakesImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.emgBrakesNames.toList()[i]);
+                emgBrakesImages = "$emgBrakesImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkR.target!.hornImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkR.target!.hornImages.toList()) {
-              hornImages = "$hornImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkR.target!.hornImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.hornNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkR.target!.hornNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.hornImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Horn in Control Form Received on Local Server named ${controlForm.carBodyworkR.target!.hornNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.hornNames.toList()[i]);
+                hornImages = "$hornImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkR.target!.hornNames.toList()[i]);
+                hornImages = "$hornImages$urlImage|";
+              }
             }
           }
           final recordCarBodywork = await supabaseCtrlV.from('car_bodywork').insert(
@@ -589,34 +1124,163 @@ class SyncProviderSupabase extends ChangeNotifier {
             },
           ).select<PostgrestList>('id_car_bodywork');
           //Registrar fluids check
+          List<String> listNamesFluidsCheck = [];
+          final listImagesFluidsCheck = await supabase.storage.from('fluids-check').list();
+          for (var element in listImagesFluidsCheck) {listNamesFluidsCheck.add(element.name);}
           if (controlForm.fluidsCheckR.target!.engineOilImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheckR.target!.engineOilImages.toList()) {
-              engineOilImages = "$engineOilImages$element|";
+            for (var i = 0; i < controlForm.fluidsCheckR.target!.engineOilImages.toList().length; i++) {
+              if (!listNamesFluidsCheck.contains(controlForm.fluidsCheckR.target!.engineOilNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
+              controlForm.fluidsCheckR.target!.engineOilNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckR.target!.engineOilImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Engine Oil in Control Form Received on Local Server named ${controlForm.fluidsCheckR.target!.engineOilNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckR.target!.engineOilNames.toList()[i]);
+                engineOilImages = "$engineOilImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckR.target!.engineOilNames.toList()[i]);
+                engineOilImages = "$engineOilImages$urlImage|";
+              }
             }
           }
           if (controlForm.fluidsCheckR.target!.transmissionImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheckR.target!.transmissionImages.toList()) {
-              transmissionImages = "$transmissionImages$element|";
+            for (var i = 0; i < controlForm.fluidsCheckR.target!.transmissionImages.toList().length; i++) {
+              if (!listNamesFluidsCheck.contains(controlForm.fluidsCheckR.target!.transmissionNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
+              controlForm.fluidsCheckR.target!.transmissionNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckR.target!.transmissionImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Transmission in Control Form Received on Local Server named ${controlForm.fluidsCheckR.target!.transmissionNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckR.target!.transmissionNames.toList()[i]);
+                transmissionImages = "$transmissionImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckR.target!.transmissionNames.toList()[i]);
+                transmissionImages = "$transmissionImages$urlImage|";
+              }
             }
           }
           if (controlForm.fluidsCheckR.target!.coolantImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheckR.target!.coolantImages.toList()) {
-              coolantImages = "$coolantImages$element|";
+            for (var i = 0; i < controlForm.fluidsCheckR.target!.coolantImages.toList().length; i++) {
+              if (!listNamesFluidsCheck.contains(controlForm.fluidsCheckR.target!.coolantNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
+              controlForm.fluidsCheckR.target!.coolantNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckR.target!.coolantImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Coolant in Control Form Received on Local Server named ${controlForm.fluidsCheckR.target!.coolantNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckR.target!.coolantNames.toList()[i]);
+                coolantImages = "$coolantImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckR.target!.coolantNames.toList()[i]);
+                coolantImages = "$coolantImages$urlImage|";
+              }
             }
           }
           if (controlForm.fluidsCheckR.target!.powerSteeringImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheckR.target!.powerSteeringImages.toList()) {
-              powerSteeringImages = "$powerSteeringImages$element|";
+            for (var i = 0; i < controlForm.fluidsCheckR.target!.powerSteeringImages.toList().length; i++) {
+              if (!listNamesFluidsCheck.contains(controlForm.fluidsCheckR.target!.powerSteeringNames.toList()[i])) {
+                //Parsear a Uint8List
+                final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
+                controlForm.fluidsCheckR.target!.powerSteeringNames.toList()[i],
+                Uint8List.fromList(utf8.encode(controlForm.fluidsCheckR.target!.powerSteeringImages.toList()[i])),
+                  fileOptions: const FileOptions(
+                    cacheControl: '3600',
+                    upsert: false,
+                  ),
+                );
+                if (storageResponse.isEmpty) {
+                  return SyncInstruction(
+                    exitoso: false,
+                    descripcion:
+                        "Failed to sync image on Power Steering in Control Form Received on Local Server named ${controlForm.fluidsCheckR.target!.powerSteeringNames.toList()[i]}");
+                }
+                final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckR.target!.powerSteeringNames.toList()[i]);
+                  powerSteeringImages = "$powerSteeringImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckR.target!.powerSteeringNames.toList()[i]);
+                  powerSteeringImages = "$powerSteeringImages$urlImage|";
+              }
             }
           }
           if (controlForm.fluidsCheckR.target!.dieselExhaustFluidImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheckR.target!.dieselExhaustFluidImages.toList()) {
-              dieselExhaustFluidImages = "$dieselExhaustFluidImages$element|";
+            for (var i = 0; i < controlForm.fluidsCheckR.target!.dieselExhaustFluidImages.toList().length; i++) {
+              if (!listNamesFluidsCheck.contains(controlForm.fluidsCheckR.target!.dieselExhaustFluidNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
+              controlForm.fluidsCheckR.target!.dieselExhaustFluidNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckR.target!.dieselExhaustFluidImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Diesel Exhaust Fluid in Control Form Received on Local Server named ${controlForm.fluidsCheckR.target!.dieselExhaustFluidNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckR.target!.dieselExhaustFluidNames.toList()[i]);
+                dieselExhaustFluidImages = "$dieselExhaustFluidImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckR.target!.dieselExhaustFluidNames.toList()[i]);
+                dieselExhaustFluidImages = "$dieselExhaustFluidImages$urlImage|";
+              }
             }
           }
           if (controlForm.fluidsCheckR.target!.windshieldWasherFluidImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheckR.target!.windshieldWasherFluidImages.toList()) {
-              windshieldWasherFluidImages = "$windshieldWasherFluidImages$element|";
+            for (var i = 0; i < controlForm.fluidsCheckR.target!.windshieldWasherFluidImages.toList().length; i++) {
+              if (!listNamesFluidsCheck.contains(controlForm.fluidsCheckR.target!.windshieldWasherFluidNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
+              controlForm.fluidsCheckR.target!.windshieldWasherFluidNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckR.target!.windshieldWasherFluidImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Windshield Washer Fluid in Control Form Received on Local Server named ${controlForm.fluidsCheckR.target!.windshieldWasherFluidNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckR.target!.windshieldWasherFluidNames.toList()[i]);
+                windshieldWasherFluidImages = "$windshieldWasherFluidImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckR.target!.windshieldWasherFluidNames.toList()[i]);
+                windshieldWasherFluidImages = "$windshieldWasherFluidImages$urlImage|";
+              }
             }
           }
           final recordFluidsCheck = await supabaseCtrlV.from('fluids_check').insert(
@@ -643,19 +1307,85 @@ class SyncProviderSupabase extends ChangeNotifier {
             },
           ).select<PostgrestList>('id_fluids_check');
           //Registrar bucket inspection
+          List<String> listNamesBucketInspection = [];
+          final listImagesBucketInspection = await supabase.storage.from('bucket-inspection').list();
+          for (var element in listImagesBucketInspection) {listNamesBucketInspection.add(element.name);}
           if (controlForm.bucketInspectionR.target!.insulatedImages.isNotEmpty) {
-            for (var element in controlForm.bucketInspectionR.target!.insulatedImages.toList()) {
-              insulatedImages = "$insulatedImages$element|";
+            for (var i = 0; i < controlForm.bucketInspectionR.target!.insulatedImages.toList().length; i++) {
+              if (!listNamesBucketInspection.contains(controlForm.bucketInspectionR.target!.insulatedNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('bucket-inspection').uploadBinary(
+              controlForm.bucketInspectionR.target!.insulatedNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.bucketInspectionR.target!.insulatedImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Insulated in Control Form Received on Local Server named ${controlForm.bucketInspectionR.target!.insulatedNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('bucket-inspection').getPublicUrl(controlForm.bucketInspectionR.target!.insulatedNames.toList()[i]);
+                insulatedImages = "$insulatedImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('bucket-inspection').getPublicUrl(controlForm.bucketInspectionR.target!.insulatedNames.toList()[i]);
+                insulatedImages = "$insulatedImages$urlImage|";
+              }
             }
           }
           if (controlForm.bucketInspectionR.target!.holesDrilledImages.isNotEmpty) {
-            for (var element in controlForm.bucketInspectionR.target!.holesDrilledImages.toList()) {
-              holesDrilledImages = "$holesDrilledImages$element|";
+            for (var i = 0; i < controlForm.bucketInspectionR.target!.holesDrilledImages.toList().length; i++) {
+              if (!listNamesBucketInspection.contains(controlForm.bucketInspectionR.target!.holesDrilledNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('bucket-inspection').uploadBinary(
+              controlForm.bucketInspectionR.target!.holesDrilledNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.bucketInspectionR.target!.holesDrilledImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Holes Drilled in Control Form Received on Local Server named ${controlForm.bucketInspectionR.target!.holesDrilledNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('bucket-inspection').getPublicUrl(controlForm.bucketInspectionR.target!.holesDrilledNames.toList()[i]);
+                holesDrilledImages = "$holesDrilledImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('bucket-inspection').getPublicUrl(controlForm.bucketInspectionR.target!.holesDrilledNames.toList()[i]);
+                holesDrilledImages = "$holesDrilledImages$urlImage|";
+              }
             }
           }
           if (controlForm.bucketInspectionR.target!.bucketLinerImages.isNotEmpty) {
-            for (var element in controlForm.bucketInspectionR.target!.bucketLinerImages.toList()) {
-              bucketLinerImages = "$bucketLinerImages$element|";
+            for (var i = 0; i < controlForm.bucketInspectionR.target!.bucketLinerImages.toList().length; i++) {
+              if (!listNamesBucketInspection.contains(controlForm.bucketInspectionR.target!.bucketLinerNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('bucket-inspection').uploadBinary(
+              controlForm.bucketInspectionR.target!.bucketLinerNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.bucketInspectionR.target!.bucketLinerImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Bucket Liner in Control Form Received on Local Server named ${controlForm.bucketInspectionR.target!.bucketLinerNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('bucket-inspection').getPublicUrl(controlForm.bucketInspectionR.target!.bucketLinerNames.toList()[i]);
+                bucketLinerImages = "$bucketLinerImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('bucket-inspection').getPublicUrl(controlForm.bucketInspectionR.target!.bucketLinerNames.toList()[i]);
+                bucketLinerImages = "$bucketLinerImages$urlImage|";
+              }
             }
           }
           final recordBucketInspection = await supabaseCtrlV.from('bucket_inspection').insert(
@@ -673,34 +1403,163 @@ class SyncProviderSupabase extends ChangeNotifier {
             },
           ).select<PostgrestList>('id_bucket_inspection');
           //Registrar security
+          List<String> listNamesSecurity = [];
+          final listImagesSecurity = await supabase.storage.from('security').list();
+          for (var element in listImagesSecurity) {listNamesSecurity.add(element.name);}
           if (controlForm.securityR.target!.rtaMagnetImages.isNotEmpty) {
-            for (var element in controlForm.securityR.target!.rtaMagnetImages.toList()) {
-              rtaMagnetImages = "$rtaMagnetImages$element|";
+            for (var i = 0; i < controlForm.securityR.target!.rtaMagnetImages.toList().length; i++) {
+              if (!listNamesSecurity.contains(controlForm.securityR.target!.rtaMagnetNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('security').uploadBinary(
+              controlForm.securityR.target!.rtaMagnetNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.securityR.target!.rtaMagnetImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on RTA Mganet in Control Form Received on Local Server named ${controlForm.securityR.target!.rtaMagnetNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityR.target!.rtaMagnetNames.toList()[i]);
+                rtaMagnetImages = "$rtaMagnetImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityR.target!.rtaMagnetNames.toList()[i]);
+                rtaMagnetImages = "$rtaMagnetImages$urlImage|";
+              }
             }
           }
           if (controlForm.securityR.target!.triangleReflectorsImages.isNotEmpty) {
-            for (var element in controlForm.securityR.target!.triangleReflectorsImages.toList()) {
-              triangleReflectorsImages = "$triangleReflectorsImages$element|";
+            for (var i = 0; i < controlForm.securityR.target!.triangleReflectorsImages.toList().length; i++) {
+              if (!listNamesSecurity.contains(controlForm.securityR.target!.triangleReflectorsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('security').uploadBinary(
+              controlForm.securityR.target!.triangleReflectorsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.securityR.target!.triangleReflectorsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Triangle Reflectors in Control Form Received on Local Server named ${controlForm.securityR.target!.triangleReflectorsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityR.target!.triangleReflectorsNames.toList()[i]);
+                triangleReflectorsImages = "$triangleReflectorsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityR.target!.triangleReflectorsNames.toList()[i]);
+                triangleReflectorsImages = "$triangleReflectorsImages$urlImage|";
+              }
             }
           }
           if (controlForm.securityR.target!.wheelChocksImages.isNotEmpty) {
-            for (var element in controlForm.securityR.target!.wheelChocksImages.toList()) {
-              wheelChocksImages = "$wheelChocksImages$element|";
+            for (var i = 0; i < controlForm.securityR.target!.wheelChocksImages.toList().length; i++) {
+              if (!listNamesSecurity.contains(controlForm.securityR.target!.wheelChocksNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('security').uploadBinary(
+              controlForm.securityR.target!.wheelChocksNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.securityR.target!.wheelChocksImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Wheel Chocks in Control Form Received on Local Server named ${controlForm.securityR.target!.wheelChocksNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityR.target!.wheelChocksNames.toList()[i]);
+                wheelChocksImages = "$wheelChocksImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityR.target!.wheelChocksNames.toList()[i]);
+                wheelChocksImages = "$wheelChocksImages$urlImage|";
+              }
             }
           }
           if (controlForm.securityR.target!.fireExtinguisherImages.isNotEmpty) {
-            for (var element in controlForm.securityR.target!.fireExtinguisherImages.toList()) {
-              fireExtinguisherImages = "$fireExtinguisherImages$element|";
+            for (var i = 0; i < controlForm.securityR.target!.fireExtinguisherImages.toList().length; i++) {
+              if (!listNamesSecurity.contains(controlForm.securityR.target!.fireExtinguisherNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('security').uploadBinary(
+              controlForm.securityR.target!.fireExtinguisherNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.securityR.target!.fireExtinguisherImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Fire Extinguisher in Control Form Received on Local Server named ${controlForm.securityR.target!.fireExtinguisherNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityR.target!.fireExtinguisherNames.toList()[i]);
+                fireExtinguisherImages = "$fireExtinguisherImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityR.target!.fireExtinguisherNames.toList()[i]);
+                fireExtinguisherImages = "$fireExtinguisherImages$urlImage|";
+              }
             }
           }
           if (controlForm.securityR.target!.firstAidKitSafetyVestImages.isNotEmpty) {
-            for (var element in controlForm.securityR.target!.firstAidKitSafetyVestImages.toList()) {
-              firstAidKitSafetyVestImages = "$firstAidKitSafetyVestImages$element|";
+            for (var i = 0; i < controlForm.securityR.target!.firstAidKitSafetyVestImages.toList().length; i++) {
+              if (!listNamesSecurity.contains(controlForm.securityR.target!.firstAidKitSafetyVestNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('security').uploadBinary(
+              controlForm.securityR.target!.firstAidKitSafetyVestNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.securityR.target!.firstAidKitSafetyVestImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on First Aid Kit Safety Vest in Control Form Received on Local Server named ${controlForm.securityR.target!.firstAidKitSafetyVestNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityR.target!.firstAidKitSafetyVestNames.toList()[i]);
+                firstAidKitSafetyVestImages = "$firstAidKitSafetyVestImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityR.target!.firstAidKitSafetyVestNames.toList()[i]);
+                firstAidKitSafetyVestImages = "$firstAidKitSafetyVestImages$urlImage|";
+              }
             }
           }
           if (controlForm.securityR.target!.backUpAlarmImages.isNotEmpty) {
-            for (var element in controlForm.securityR.target!.backUpAlarmImages.toList()) {
-              backUpAlarmImages = "$backUpAlarmImages$element|";
+            for (var i = 0; i < controlForm.securityR.target!.backUpAlarmImages.toList().length; i++) {
+              if (!listNamesSecurity.contains(controlForm.securityR.target!.backUpAlarmNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('security').uploadBinary(
+              controlForm.securityR.target!.backUpAlarmNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.securityR.target!.backUpAlarmImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Backup Alarm in Control Form Received on Local Server named ${controlForm.securityR.target!.backUpAlarmNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityR.target!.backUpAlarmNames.toList()[i]);
+                backUpAlarmImages = "$backUpAlarmImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityR.target!.backUpAlarmNames.toList()[i]);
+                backUpAlarmImages = "$backUpAlarmImages$urlImage|";
+              }
             }
           }
           final recordSecurity = await supabaseCtrlV.from('security').insert(
@@ -727,44 +1586,215 @@ class SyncProviderSupabase extends ChangeNotifier {
             },
           ).select<PostgrestList>('id_security');
           //Registrar extra
+          List<String> listNamesExtra = [];
+          final listImagesExtra = await supabase.storage.from('extras').list();
+          for (var element in listImagesExtra) {listNamesExtra.add(element.name);}
           if (controlForm.extraR.target!.ladderImages.isNotEmpty) {
-            for (var element in controlForm.extraR.target!.ladderImages.toList()) {
-              ladderImages = "$ladderImages$element|";
+            for (var i = 0; i < controlForm.extraR.target!.ladderImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraR.target!.ladderNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraR.target!.ladderNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.ladderImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Ladder in Control Form Received on Local Server named ${controlForm.extraR.target!.ladderNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.ladderNames.toList()[i]);
+                ladderImages = "$ladderImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.ladderNames.toList()[i]);
+                ladderImages = "$ladderImages$urlImage|";
+              }
             }
           }
           if (controlForm.extraR.target!.stepLadderImages.isNotEmpty) {
-            for (var element in controlForm.extraR.target!.stepLadderImages.toList()) {
-              stepLadderImages = "$stepLadderImages$element|";
+            for (var i = 0; i < controlForm.extraR.target!.stepLadderImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraR.target!.stepLadderNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraR.target!.stepLadderNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.stepLadderImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Step Ladder in Control Form Received on Local Server named ${controlForm.extraR.target!.stepLadderNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.stepLadderNames.toList()[i]);
+                stepLadderImages = "$stepLadderImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.stepLadderNames.toList()[i]);
+                stepLadderImages = "$stepLadderImages$urlImage|";
+              }
             }
           }
           if (controlForm.extraR.target!.ladderStrapsImages.isNotEmpty) {
-            for (var element in controlForm.extraR.target!.ladderStrapsImages.toList()) {
-              ladderStrapsImages = "$ladderStrapsImages$element|";
+            for (var i = 0; i < controlForm.extraR.target!.ladderStrapsImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraR.target!.ladderStrapsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraR.target!.ladderStrapsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.ladderStrapsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Ladder Straps in Control Form Received on Local Server named ${controlForm.extraR.target!.ladderStrapsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.ladderStrapsNames.toList()[i]);
+                ladderStrapsImages = "$ladderStrapsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.ladderStrapsNames.toList()[i]);
+                ladderStrapsImages = "$ladderStrapsImages$urlImage|";
+              }
             }
           }
           if (controlForm.extraR.target!.hydraulicFluidForBucketImages.isNotEmpty) {
-            for (var element in controlForm.extraR.target!.hydraulicFluidForBucketImages.toList()) {
-              hydraulicFluidForBucketImages = "$hydraulicFluidForBucketImages$element|";
+            for (var i = 0; i < controlForm.extraR.target!.hydraulicFluidForBucketImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraR.target!.hydraulicFluidForBucketNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraR.target!.hydraulicFluidForBucketNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.hydraulicFluidForBucketImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Hydraulic Fluid For Bucket in Control Form Received on Local Server named ${controlForm.extraR.target!.hydraulicFluidForBucketNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.hydraulicFluidForBucketNames.toList()[i]);
+                hydraulicFluidForBucketImages = "$hydraulicFluidForBucketImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.hydraulicFluidForBucketNames.toList()[i]);
+                hydraulicFluidForBucketImages = "$hydraulicFluidForBucketImages$urlImage|";
+              }
             }
           }
           if (controlForm.extraR.target!.fiberReelRackImages.isNotEmpty) {
-            for (var element in controlForm.extraR.target!.fiberReelRackImages.toList()) {
-              fiberReelRackImages = "$fiberReelRackImages$element|";
+            for (var i = 0; i < controlForm.extraR.target!.fiberReelRackImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraR.target!.fiberReelRackNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraR.target!.fiberReelRackNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.fiberReelRackImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Fiber Reel Rack in Control Form Received on Local Server named ${controlForm.extraR.target!.fiberReelRackNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.fiberReelRackNames.toList()[i]);
+                fiberReelRackImages = "$fiberReelRackImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.fiberReelRackNames.toList()[i]);
+                fiberReelRackImages = "$fiberReelRackImages$urlImage|";
+              }
             }
           }
           if (controlForm.extraR.target!.binsLockedAndSecureImages.isNotEmpty) {
-            for (var element in controlForm.extraR.target!.binsLockedAndSecureImages.toList()) {
-              binsLockedAndSecureImages = "$binsLockedAndSecureImages$element|";
+            for (var i = 0; i < controlForm.extraR.target!.binsLockedAndSecureImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraR.target!.binsLockedAndSecureNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraR.target!.binsLockedAndSecureNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.binsLockedAndSecureImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Bins Locked And Secure in Control Form Received on Local Server named ${controlForm.extraR.target!.binsLockedAndSecureNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.binsLockedAndSecureNames.toList()[i]);
+                binsLockedAndSecureImages = "$binsLockedAndSecureImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.binsLockedAndSecureNames.toList()[i]);
+                binsLockedAndSecureImages = "$binsLockedAndSecureImages$urlImage|";
+              }
             }
           }
           if (controlForm.extraR.target!.safetyHarnessImages.isNotEmpty) {
-            for (var element in controlForm.extraR.target!.safetyHarnessImages.toList()) {
-              safetyHarnessImages = "$safetyHarnessImages$element|";
+            for (var i = 0; i < controlForm.extraR.target!.safetyHarnessImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraR.target!.safetyHarnessNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraR.target!.safetyHarnessNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.safetyHarnessImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Safety Harness in Control Form Received on Local Server named ${controlForm.extraR.target!.safetyHarnessNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.safetyHarnessNames.toList()[i]);
+                safetyHarnessImages = "$safetyHarnessImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.safetyHarnessNames.toList()[i]);
+                safetyHarnessImages = "$safetyHarnessImages$urlImage|";
+              }
             }
           }
           if (controlForm.extraR.target!.lanyardSafetyHarnessImages.isNotEmpty) {
-            for (var element in controlForm.extraR.target!.lanyardSafetyHarnessImages.toList()) {
-              lanyardSafetyHarnessImages = "$lanyardSafetyHarnessImages$element|";
+            for (var i = 0; i < controlForm.extraR.target!.lanyardSafetyHarnessImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraR.target!.lanyardSafetyHarnessNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraR.target!.lanyardSafetyHarnessNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.lanyardSafetyHarnessImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Lanyard Safety Harness in Control Form Received on Local Server named ${controlForm.extraR.target!.lanyardSafetyHarnessNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.lanyardSafetyHarnessNames.toList()[i]);
+                lanyardSafetyHarnessImages = "$lanyardSafetyHarnessImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraR.target!.lanyardSafetyHarnessNames.toList()[i]);
+                lanyardSafetyHarnessImages = "$lanyardSafetyHarnessImages$urlImage|";
+              }
             }
           }
           final recordExtra = await supabaseCtrlV.from('extra').insert(
@@ -797,29 +1827,137 @@ class SyncProviderSupabase extends ChangeNotifier {
             },
           ).select<PostgrestList>('id_extra');
           //Registrar equipment
+          List<String> listNamesEquipment = [];
+          final listImagesEquipment = await supabase.storage.from('equipment').list();
+          for (var element in listImagesEquipment) {listNamesEquipment.add(element.name);}
           if (controlForm.equipmentR.target!.ignitionKeyImages.isNotEmpty) {
-            for (var element in controlForm.equipmentR.target!.ignitionKeyImages.toList()) {
-              ignitionKeyImages = "$ignitionKeyImages$element|";
+            for (var i = 0; i < controlForm.equipmentR.target!.ignitionKeyImages.toList().length; i++) {
+              if (!listNamesEquipment.contains(controlForm.equipmentR.target!.ignitionKeyNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('equipment').uploadBinary(
+              controlForm.equipmentR.target!.ignitionKeyNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.equipmentR.target!.ignitionKeyImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Ignition Key in Control Form Received on Local Server named ${controlForm.equipmentR.target!.ignitionKeyNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentR.target!.ignitionKeyNames.toList()[i]);
+                ignitionKeyImages = "$ignitionKeyImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentR.target!.ignitionKeyNames.toList()[i]);
+                ignitionKeyImages = "$ignitionKeyImages$urlImage|";
+              }
             }
           }
           if (controlForm.equipmentR.target!.binsBoxKeyImages.isNotEmpty) {
-            for (var element in controlForm.equipmentR.target!.binsBoxKeyImages.toList()) {
-              binsBoxKeyImages = "$binsBoxKeyImages$element|";
+            for (var i = 0; i < controlForm.equipmentR.target!.binsBoxKeyImages.toList().length; i++) {
+              if (!listNamesEquipment.contains(controlForm.equipmentR.target!.binsBoxKeyNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('equipment').uploadBinary(
+              controlForm.equipmentR.target!.binsBoxKeyNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.equipmentR.target!.binsBoxKeyImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Bins Box Key in Control Form Received on Local Server named ${controlForm.equipmentR.target!.binsBoxKeyNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentR.target!.binsBoxKeyNames.toList()[i]);
+                binsBoxKeyImages = "$binsBoxKeyImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentR.target!.binsBoxKeyNames.toList()[i]);
+                binsBoxKeyImages = "$binsBoxKeyImages$urlImage|";
+              }
             }
           }
           if (controlForm.equipmentR.target!.vehicleInsuranceCopyImages.isNotEmpty) {
-            for (var element in controlForm.equipmentR.target!.vehicleInsuranceCopyImages.toList()) {
-              vehicleInsuranceCopyImages = "$vehicleInsuranceCopyImages$element|";
+            for (var i = 0; i < controlForm.equipmentR.target!.vehicleInsuranceCopyImages.toList().length; i++) {
+              if (!listNamesEquipment.contains(controlForm.equipmentR.target!.vehicleInsuranceCopyNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('equipment').uploadBinary(
+              controlForm.equipmentR.target!.vehicleInsuranceCopyNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.equipmentR.target!.vehicleInsuranceCopyImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Vehicle Insurance Copy in Control Form Received on Local Server named ${controlForm.equipmentR.target!.vehicleInsuranceCopyNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentR.target!.vehicleInsuranceCopyNames.toList()[i]);
+                vehicleInsuranceCopyImages = "$vehicleInsuranceCopyImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentR.target!.vehicleInsuranceCopyNames.toList()[i]);
+                vehicleInsuranceCopyImages = "$vehicleInsuranceCopyImages$urlImage|";
+              }
             }
           }
           if (controlForm.equipmentR.target!.vehicleRegistrationCopyImages.isNotEmpty) {
-            for (var element in controlForm.equipmentR.target!.vehicleRegistrationCopyImages.toList()) {
-              vehicleRegistrationCopyImages = "$vehicleRegistrationCopyImages$element|";
+            for (var i = 0; i < controlForm.equipmentR.target!.vehicleRegistrationCopyImages.toList().length; i++) {
+              if (!listNamesEquipment.contains(controlForm.equipmentR.target!.vehicleRegistrationCopyNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('equipment').uploadBinary(
+              controlForm.equipmentR.target!.vehicleRegistrationCopyNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.equipmentR.target!.vehicleRegistrationCopyImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Vehicle Registration Copy in Control Form Received on Local Server named ${controlForm.equipmentR.target!.vehicleRegistrationCopyNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentR.target!.vehicleRegistrationCopyNames.toList()[i]);
+                vehicleRegistrationCopyImages = "$vehicleRegistrationCopyImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentR.target!.vehicleRegistrationCopyNames.toList()[i]);
+                vehicleRegistrationCopyImages = "$vehicleRegistrationCopyImages$urlImage|";
+              }
             }
           }
           if (controlForm.equipmentR.target!.bucketLiftOperatorManualImages.isNotEmpty) {
-            for (var element in controlForm.equipmentR.target!.bucketLiftOperatorManualImages.toList()) {
-              bucketLiftOperatorManualImages = "$bucketLiftOperatorManualImages$element|";
+            for (var i = 0; i < controlForm.equipmentR.target!.bucketLiftOperatorManualImages.toList().length; i++) {
+              if (!listNamesEquipment.contains(controlForm.equipmentR.target!.bucketLiftOperatorManualNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('equipment').uploadBinary(
+              controlForm.equipmentR.target!.bucketLiftOperatorManualNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.equipmentR.target!.bucketLiftOperatorManualImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Bucket Lift Operator Manual in Control Form Received on Local Server named ${controlForm.equipmentR.target!.bucketLiftOperatorManualNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentR.target!.bucketLiftOperatorManualNames.toList()[i]);
+                bucketLiftOperatorManualImages = "$bucketLiftOperatorManualImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentR.target!.bucketLiftOperatorManualNames.toList()[i]);
+                bucketLiftOperatorManualImages = "$bucketLiftOperatorManualImages$urlImage|";
+              }
             }
           }
           final recordEquipment = await supabaseCtrlV.from('equipment').insert(
@@ -842,6 +1980,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               'date_added': controlForm.equipmentR.target!.dateAdded.toIso8601String(),
             },
           ).select<PostgrestList>('id_equipment');
+          
           if (recordMeasure.isNotEmpty && recordLights.isNotEmpty && recordCarBodywork.isNotEmpty && recordFluidsCheck.isNotEmpty 
               && recordBucketInspection.isNotEmpty && recordSecurity.isNotEmpty && recordExtra.isNotEmpty && recordEquipment.isNotEmpty) {
             final recordControlForm = await supabaseCtrlV.from('control_form').insert(
@@ -889,24 +2028,6 @@ class SyncProviderSupabase extends ChangeNotifier {
               //Se recupera el idDBR de Supabase del Control Form
               controlForm.idDBR = recordControlForm.first['id_control_form'].toString();
               dataBase.controlFormBox.put(controlForm);
-              // //Se actualiza el número de current Month Forms del usuario
-              // if (controlForm.typeForm) {
-              //   final updateUsuario = dataBase.usersBox.query(Users_.idDBR.equals(controlForm.employee.target!.idDBR)).build().findUnique();
-              //   if(updateUsuario != null) 
-              //   {
-              //     int newRecordsMonthCurrentR = updateUsuario.recordsMonthCurrentR + 1;
-              //     updateUsuario.recordsMonthCurrentR = newRecordsMonthCurrentR;
-              //     dataBase.usersBox.put(updateUsuario);
-              //   }
-              // } else {
-              //   final updateUsuario = dataBase.usersBox.query(Users_.idDBR.equals(controlForm.employee.target!.idDBR)).build().findUnique();
-              //   if(updateUsuario != null) 
-              //   {
-              //     int newRecordsMonthCurrentD = updateUsuario.recordsMonthCurrentD + 1;
-              //     updateUsuario.recordsMonthCurrentD = newRecordsMonthCurrentD;
-              //     dataBase.usersBox.put(updateUsuario);
-              //   }
-              // }
               //Se marca como ejecutada la instrucción en Bitacora
               bitacora.executeSupabase = true;
               dataBase.bitacoraBox.put(bitacora);
@@ -922,7 +2043,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             return SyncInstruction(
               exitoso: false,
               descripcion:
-                  "Failed to sync data measure Control Form Received on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
+                  "Failed to sync data Control Form Received on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
           }
           
         } else {
@@ -941,7 +2062,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Failed to sync data measure Control Form Received on Local Server with vehicle ID ${controlForm.vehicle.target!.idDBR}:, details: '$e'");
+              "Failed to sync data Control Form Received on Local Server with vehicle ID ${controlForm.vehicle.target!.idDBR}:, details: '$e'");
     }
   }
 
@@ -1013,14 +2134,59 @@ class SyncProviderSupabase extends ChangeNotifier {
       if (bitacora.executeSupabase == false) {
         if (controlForm.idDBR != null) {
           //Registrar measures
+          List<String> listNamesMeasures = [];
+          final listImagesMeasures = await supabase.storage.from('measures').list();
+          for (var element in listImagesMeasures) {listNamesMeasures.add(element.name);}
           if (controlForm.measuresD.target!.gasImages.isNotEmpty) {
-            for (var element in controlForm.measuresD.target!.gasImages.toList()) {
-              gasImages = "$gasImages$element|";
+            for (var i = 0; i < controlForm.measuresD.target!.gasImages.toList().length; i++) {
+              if (!listNamesMeasures.contains(controlForm.measuresD.target!.gasNames.toList()[i])) {
+              //Parsear a Uint8List
+                final storageResponse = await supabase.storage.from('measures').uploadBinary(
+                controlForm.measuresD.target!.gasNames.toList()[i],
+                Uint8List.fromList(utf8.encode(controlForm.measuresD.target!.gasImages.toList()[i])),
+                  fileOptions: const FileOptions(
+                    cacheControl: '3600',
+                    upsert: false,
+                  ),
+                );
+                if (storageResponse.isEmpty) {
+                  return SyncInstruction(
+                    exitoso: false,
+                    descripcion:
+                        "Failed to sync image on Gas-Measures in Control Form Delivered on Local Server named ${controlForm.measuresD.target!.gasNames.toList()[i]}");
+                }
+                final urlImage = supabase.storage.from('measures').getPublicUrl(controlForm.measuresD.target!.gasNames.toList()[i]);
+                  gasImages = "$gasImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('measures').getPublicUrl(controlForm.measuresD.target!.gasNames.toList()[i]);
+                  gasImages = "$gasImages$urlImage|";
+              }
             }
           }
           if (controlForm.measuresD.target!.mileageImages.isNotEmpty) {
-            for (var element in controlForm.measuresD.target!.mileageImages.toList()) {
-              mileageImages = "$mileageImages$element|";
+            for (var i = 0; i < controlForm.measuresD.target!.mileageImages.toList().length; i++) {
+              if (!listNamesMeasures.contains(controlForm.measuresD.target!.mileageNames.toList()[i])) {
+                //Parsear a Uint8List
+                final storageResponse = await supabase.storage.from('measures').uploadBinary(
+                controlForm.measuresD.target!.mileageNames.toList()[i],
+                Uint8List.fromList(utf8.encode(controlForm.measuresD.target!.mileageImages.toList()[i])),
+                  fileOptions: const FileOptions(
+                    cacheControl: '3600',
+                    upsert: false,
+                  ),
+                );
+                if (storageResponse.isEmpty) {
+                  return SyncInstruction(
+                    exitoso: false,
+                    descripcion:
+                        "Failed to sync image on Mileage-Measures in Control Form Delivered on Local Server named ${controlForm.measuresD.target!.mileageNames.toList()[i]}");
+                }
+                final urlImage = supabase.storage.from('measures').getPublicUrl(controlForm.measuresD.target!.mileageNames.toList()[i]);
+                  mileageImages = "$mileageImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('measures').getPublicUrl(controlForm.measuresD.target!.mileageNames.toList()[i]);
+                  mileageImages = "$mileageImages$urlImage|";
+              }
             }
           }
           final recordMeasure = await supabaseCtrlV.from('measures').insert(
@@ -1035,54 +2201,262 @@ class SyncProviderSupabase extends ChangeNotifier {
             },
           ).select<PostgrestList>('id_measure');
           //Registrar lights
+          List<String> listNamesLights = [];
+          final listImagesLights = await supabase.storage.from('lights').list();
+          for (var element in listImagesLights) {listNamesLights.add(element.name);}
           if (controlForm.lightsD.target!.headLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsD.target!.headLightsImages.toList()) {
-              headlightsImages = "$headlightsImages$element|";
+            for (var i = 0; i < controlForm.lightsD.target!.headLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsD.target!.headLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+                final storageResponse = await supabase.storage.from('lights').uploadBinary(
+                controlForm.lightsD.target!.headLightsNames.toList()[i],
+                Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.headLightsImages.toList()[i])),
+                  fileOptions: const FileOptions(
+                    cacheControl: '3600',
+                    upsert: false,
+                  ),
+                );
+                if (storageResponse.isEmpty) {
+                  return SyncInstruction(
+                    exitoso: false,
+                    descripcion:
+                        "Failed to sync image on Head-Lights in Control Form Delivered on Local Server named ${controlForm.lightsD.target!.headLightsNames.toList()[i]}");
+                }
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.headLightsNames.toList()[i]);
+                  headlightsImages = "$headlightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.headLightsNames.toList()[i]);
+                  headlightsImages = "$headlightsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsD.target!.brakeLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsD.target!.brakeLightsImages.toList()) {
-              brakeLightsImages = "$brakeLightsImages$element|";
+            for (var i = 0; i < controlForm.lightsD.target!.brakeLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsD.target!.brakeLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsD.target!.brakeLightsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.brakeLightsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Brake-Lights in Control Form Delivered on Local Server named ${controlForm.lightsD.target!.brakeLightsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.brakeLightsNames.toList()[i]);
+                brakeLightsImages = "$brakeLightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.brakeLightsNames.toList()[i]);
+                  brakeLightsImages = "$brakeLightsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsD.target!.reverseLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsD.target!.reverseLightsImages.toList()) {
-              reverseLightsImages = "$reverseLightsImages$element|";
+            for (var i = 0; i < controlForm.lightsD.target!.reverseLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsD.target!.reverseLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsD.target!.reverseLightsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.reverseLightsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Reverse-Lights in Control Form Delivered on Local Server named ${controlForm.lightsD.target!.reverseLightsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.reverseLightsNames.toList()[i]);
+                reverseLightsImages = "$reverseLightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.reverseLightsNames.toList()[i]);
+                reverseLightsImages = "$reverseLightsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsD.target!.warningLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsD.target!.warningLightsImages.toList()) {
-              warningLightsImages = "$warningLightsImages$element|";
+            for (var i = 0; i < controlForm.lightsD.target!.warningLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsD.target!.warningLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsD.target!.warningLightsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.warningLightsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Warning-Lights in Control Form Delivered on Local Server named ${controlForm.lightsD.target!.warningLightsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.warningLightsNames.toList()[i]);
+                warningLightsImages = "$warningLightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.warningLightsNames.toList()[i]);
+                warningLightsImages = "$warningLightsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsD.target!.turnSignalsImages.isNotEmpty) {
-            for (var element in controlForm.lightsD.target!.turnSignalsImages.toList()) {
-              turnSignalsImages = "$turnSignalsImages$element|";
+            for (var i = 0; i < controlForm.lightsD.target!.turnSignalsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsD.target!.turnSignalsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsD.target!.turnSignalsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.turnSignalsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on turn Signals in Control Form Delivered on Local Server named ${controlForm.lightsD.target!.turnSignalsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.turnSignalsNames.toList()[i]);
+                turnSignalsImages = "$turnSignalsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.turnSignalsNames.toList()[i]);
+                turnSignalsImages = "$turnSignalsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsD.target!.fourWayFlashersImages.isNotEmpty) {
-            for (var element in controlForm.lightsD.target!.fourWayFlashersImages.toList()) {
-              fourWayFlashersImages = "$fourWayFlashersImages$element|";
+            for (var i = 0; i < controlForm.lightsD.target!.fourWayFlashersImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsD.target!.fourWayFlashersNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsD.target!.fourWayFlashersNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.fourWayFlashersImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Four Way Flashers in Control Form Delivered on Local Server named ${controlForm.lightsD.target!.fourWayFlashersNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.fourWayFlashersNames.toList()[i]);
+                fourWayFlashersImages = "$fourWayFlashersImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.fourWayFlashersNames.toList()[i]);
+                fourWayFlashersImages = "$fourWayFlashersImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsD.target!.dashLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsD.target!.dashLightsImages.toList()) {
-              dashLightsImages = "$dashLightsImages$element|";
+            for (var i = 0; i < controlForm.lightsD.target!.dashLightsImages.toList().length; i++) {
+              //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsD.target!.dashLightsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.dashLightsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Dash-Lights in Control Form Delivered on Local Server named ${controlForm.lightsD.target!.dashLightsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.dashLightsNames.toList()[i]);
+                dashLightsImages = "$dashLightsImages$urlImage|";
             }
           }
           if (controlForm.lightsD.target!.strobeLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsD.target!.strobeLightsImages.toList()) {
-              strobeLightsImages = "$strobeLightsImages$element|";
+            for (var i = 0; i < controlForm.lightsD.target!.strobeLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsD.target!.strobeLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsD.target!.strobeLightsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.strobeLightsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Strobe-Lights in Control Form Delivered on Local Server named ${controlForm.lightsD.target!.strobeLightsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.strobeLightsNames.toList()[i]);
+                strobeLightsImages = "$strobeLightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.strobeLightsNames.toList()[i]);
+                strobeLightsImages = "$strobeLightsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsD.target!.cabRoofLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsD.target!.cabRoofLightsImages.toList()) {
-              cabRoofLightsImages = "$cabRoofLightsImages$element|";
+            for (var i = 0; i < controlForm.lightsD.target!.cabRoofLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsD.target!.cabRoofLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsD.target!.cabRoofLightsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.cabRoofLightsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Cab Roof Lights in Control Form Delivered on Local Server named ${controlForm.lightsD.target!.cabRoofLightsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.cabRoofLightsNames.toList()[i]);
+                cabRoofLightsImages = "$cabRoofLightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.cabRoofLightsNames.toList()[i]);
+                cabRoofLightsImages = "$cabRoofLightsImages$urlImage|";
+              }
             }
           }
           if (controlForm.lightsD.target!.clearanceLightsImages.isNotEmpty) {
-            for (var element in controlForm.lightsD.target!.clearanceLightsImages.toList()) {
-              clearanceLightsImages = "$clearanceLightsImages$element|";
+            for (var i = 0; i < controlForm.lightsD.target!.clearanceLightsImages.toList().length; i++) {
+              if (!listNamesLights.contains(controlForm.lightsD.target!.clearanceLightsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('lights').uploadBinary(
+              controlForm.lightsD.target!.clearanceLightsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.clearanceLightsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Clearance-Lights in Control Form Delivered on Local Server named ${controlForm.lightsD.target!.clearanceLightsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.clearanceLightsNames.toList()[i]);
+                clearanceLightsImages = "$clearanceLightsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('lights').getPublicUrl(controlForm.lightsD.target!.clearanceLightsNames.toList()[i]);
+                clearanceLightsImages = "$clearanceLightsImages$urlImage|";
+              }
             }
           }
           final recordLights = await supabaseCtrlV.from('lights').insert(
@@ -1121,69 +2495,345 @@ class SyncProviderSupabase extends ChangeNotifier {
             },
           ).select<PostgrestList>('id_lights');
           //Registrar car bodywork
+          List<String> listNamesCarBodywork = [];
+          final listImagesCarBodywork = await supabase.storage.from('car-bodywork').list();
+          for (var element in listImagesCarBodywork) {listNamesCarBodywork.add(element.name);}
           if (controlForm.carBodyworkD.target!.wiperBladesFrontImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkD.target!.wiperBladesFrontImages.toList()) {
-              wiperBladesFrontImages = "$wiperBladesFrontImages$element|";
+              for (var i = 0; i < controlForm.carBodyworkD.target!.wiperBladesFrontImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.windshieldWiperFrontNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkD.target!.wiperBladesFrontNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.wiperBladesFrontImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Wiper Blades Front in Control Form Delivered on Local Server named ${controlForm.carBodyworkD.target!.wiperBladesFrontNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.wiperBladesFrontNames.toList()[i]);
+                wiperBladesFrontImages = "$wiperBladesFrontImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.wiperBladesFrontNames.toList()[i]);
+                wiperBladesFrontImages = "$wiperBladesFrontImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkD.target!.wiperBladesBackImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkD.target!.wiperBladesBackImages.toList()) {
-              wiperBladesBackImages = "$wiperBladesBackImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkD.target!.wiperBladesBackImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.windshieldWiperBackNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkD.target!.wiperBladesBackNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.wiperBladesBackImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Wiper Blades Back in Control Form Delivered on Local Server named ${controlForm.carBodyworkD.target!.wiperBladesBackNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.wiperBladesBackNames.toList()[i]);
+                wiperBladesBackImages = "$wiperBladesBackImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.wiperBladesBackNames.toList()[i]);
+                wiperBladesBackImages = "$wiperBladesBackImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkD.target!.windshieldWiperFrontImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkD.target!.windshieldWiperFrontImages.toList()) {
-              windshieldWiperFrontImages = "$windshieldWiperFrontImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkD.target!.windshieldWiperFrontImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.windshieldWiperFrontNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkD.target!.windshieldWiperFrontNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.windshieldWiperFrontImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Windshield Wiper Front in Control Form Delivered on Local Server named ${controlForm.carBodyworkD.target!.windshieldWiperFrontNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.windshieldWiperFrontNames.toList()[i]);
+                windshieldWiperFrontImages = "$windshieldWiperFrontImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.windshieldWiperFrontNames.toList()[i]);
+                windshieldWiperFrontImages = "$windshieldWiperFrontImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkD.target!.windshieldWiperBackImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkD.target!.windshieldWiperBackImages.toList()) {
-              windshieldWiperBackImages = "$windshieldWiperBackImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkD.target!.windshieldWiperBackImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.windshieldWiperBackNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkD.target!.windshieldWiperBackNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.windshieldWiperBackImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Windshield Wiper Back in Control Form Delivered on Local Server named ${controlForm.carBodyworkD.target!.windshieldWiperBackNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.windshieldWiperBackNames.toList()[i]);
+                windshieldWiperBackImages = "$windshieldWiperBackImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.windshieldWiperBackNames.toList()[i]);
+                windshieldWiperBackImages = "$windshieldWiperBackImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkD.target!.generalBodyImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkD.target!.generalBodyImages.toList()) {
-              generalBodyImages = "$generalBodyImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkD.target!.generalBodyImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.generalBodyNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkD.target!.generalBodyNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.generalBodyImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on General Body in Control Form Delivered on Local Server named ${controlForm.carBodyworkD.target!.generalBodyNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.generalBodyNames.toList()[i]);
+                generalBodyImages = "$generalBodyImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.generalBodyNames.toList()[i]);
+                generalBodyImages = "$generalBodyImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkD.target!.decalingImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkD.target!.decalingImages.toList()) {
-              decalingImages = "$decalingImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkD.target!.decalingImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.decalingNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkD.target!.decalingNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.decalingImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Decaling in Control Form Delivered on Local Server named ${controlForm.carBodyworkD.target!.decalingNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.decalingNames.toList()[i]);
+                decalingImages = "$decalingImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.decalingNames.toList()[i]);
+                decalingImages = "$decalingImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkD.target!.tiresImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkD.target!.tiresImages.toList()) {
-              tiresImages = "$tiresImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkD.target!.tiresImages.toList().length; i++) {
+              //Parsear a Uint8List
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.tiresNames.toList()[i])) {
+                final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkD.target!.tiresNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.tiresImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Tires in Control Form Delivered on Local Server named ${controlForm.carBodyworkD.target!.tiresNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.tiresNames.toList()[i]);
+                tiresImages = "$tiresImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.tiresNames.toList()[i]);
+                tiresImages = "$tiresImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkD.target!.glassImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkD.target!.glassImages.toList()) {
-              glassImages = "$glassImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkD.target!.glassImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.glassNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkD.target!.glassNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.glassImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Glass in Control Form Delivered on Local Server named ${controlForm.carBodyworkD.target!.glassNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.glassNames.toList()[i]);
+                glassImages = "$glassImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.glassNames.toList()[i]);
+                glassImages = "$glassImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkD.target!.mirrorsImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkD.target!.mirrorsImages.toList()) {
-              mirrorsImages = "$mirrorsImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkD.target!.mirrorsImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.mirrorsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkD.target!.mirrorsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.mirrorsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Mirrors in Control Form Delivered on Local Server named ${controlForm.carBodyworkD.target!.mirrorsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.mirrorsNames.toList()[i]);
+                mirrorsImages = "$mirrorsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.mirrorsNames.toList()[i]);
+                mirrorsImages = "$mirrorsImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkD.target!.parkingImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkD.target!.parkingImages.toList()) {
-              parkingImages = "$parkingImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkD.target!.parkingImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.parkingNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkD.target!.parkingNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.parkingImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Parking in Control Form Delivered on Local Server named ${controlForm.carBodyworkD.target!.parkingNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.parkingNames.toList()[i]);
+                parkingImages = "$parkingImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.parkingNames.toList()[i]);
+                parkingImages = "$parkingImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkD.target!.brakesImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkD.target!.brakesImages.toList()) {
-              brakesImages = "$brakesImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkD.target!.brakesImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.brakesNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkD.target!.brakesNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.brakesImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Brakes in Control Form Delivered on Local Server named ${controlForm.carBodyworkD.target!.brakesNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.brakesNames.toList()[i]);
+                brakesImages = "$brakesImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.brakesNames.toList()[i]);
+                brakesImages = "$brakesImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkD.target!.emgBrakesImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkD.target!.emgBrakesImages.toList()) {
-              emgBrakesImages = "$emgBrakesImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkD.target!.emgBrakesImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.emgBrakesNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkD.target!.emgBrakesNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.emgBrakesImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on EMG Brakes in Control Form Delivered on Local Server named ${controlForm.carBodyworkD.target!.emgBrakesNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.emgBrakesNames.toList()[i]);
+                emgBrakesImages = "$emgBrakesImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.emgBrakesNames.toList()[i]);
+                emgBrakesImages = "$emgBrakesImages$urlImage|";
+              }
             }
           }
           if (controlForm.carBodyworkD.target!.hornImages.isNotEmpty) {
-            for (var element in controlForm.carBodyworkD.target!.hornImages.toList()) {
-              hornImages = "$hornImages$element|";
+            for (var i = 0; i < controlForm.carBodyworkD.target!.hornImages.toList().length; i++) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.hornNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
+              controlForm.carBodyworkD.target!.hornNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.hornImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Horn in Control Form Delivered on Local Server named ${controlForm.carBodyworkD.target!.hornNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.hornNames.toList()[i]);
+                hornImages = "$hornImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('car-bodywork').getPublicUrl(controlForm.carBodyworkD.target!.hornNames.toList()[i]);
+                hornImages = "$hornImages$urlImage|";
+              }
             }
           }
           final recordCarBodywork = await supabaseCtrlV.from('car_bodywork').insert(
@@ -1231,34 +2881,163 @@ class SyncProviderSupabase extends ChangeNotifier {
             },
           ).select<PostgrestList>('id_car_bodywork');
           //Registrar fluids check
+          List<String> listNamesFluidsCheck = [];
+          final listImagesFluidsCheck = await supabase.storage.from('fluids-check').list();
+          for (var element in listImagesFluidsCheck) {listNamesFluidsCheck.add(element.name);}
           if (controlForm.fluidsCheckD.target!.engineOilImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheckD.target!.engineOilImages.toList()) {
-              engineOilImages = "$engineOilImages$element|";
+            for (var i = 0; i < controlForm.fluidsCheckD.target!.engineOilImages.toList().length; i++) {
+              if (!listNamesFluidsCheck.contains(controlForm.fluidsCheckD.target!.engineOilNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
+              controlForm.fluidsCheckD.target!.engineOilNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckD.target!.engineOilImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Engine Oil in Control Form Delivered on Local Server named ${controlForm.fluidsCheckD.target!.engineOilNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckD.target!.engineOilNames.toList()[i]);
+                engineOilImages = "$engineOilImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckD.target!.engineOilNames.toList()[i]);
+                engineOilImages = "$engineOilImages$urlImage|";
+              }
             }
           }
           if (controlForm.fluidsCheckD.target!.transmissionImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheckD.target!.transmissionImages.toList()) {
-              transmissionImages = "$transmissionImages$element|";
+            for (var i = 0; i < controlForm.fluidsCheckD.target!.transmissionImages.toList().length; i++) {
+              if (!listNamesFluidsCheck.contains(controlForm.fluidsCheckD.target!.transmissionNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
+              controlForm.fluidsCheckD.target!.transmissionNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckD.target!.transmissionImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Transmission in Control Form Delivered on Local Server named ${controlForm.fluidsCheckD.target!.transmissionNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckD.target!.transmissionNames.toList()[i]);
+                transmissionImages = "$transmissionImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckD.target!.transmissionNames.toList()[i]);
+                transmissionImages = "$transmissionImages$urlImage|";
+              }
             }
           }
           if (controlForm.fluidsCheckD.target!.coolantImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheckD.target!.coolantImages.toList()) {
-              coolantImages = "$coolantImages$element|";
+            for (var i = 0; i < controlForm.fluidsCheckD.target!.coolantImages.toList().length; i++) {
+              if (!listNamesFluidsCheck.contains(controlForm.fluidsCheckD.target!.coolantNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
+              controlForm.fluidsCheckD.target!.coolantNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckD.target!.coolantImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Coolant in Control Form Delivered on Local Server named ${controlForm.fluidsCheckD.target!.coolantNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckD.target!.coolantNames.toList()[i]);
+                coolantImages = "$coolantImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckD.target!.coolantNames.toList()[i]);
+                coolantImages = "$coolantImages$urlImage|";
+              }
             }
           }
           if (controlForm.fluidsCheckD.target!.powerSteeringImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheckD.target!.powerSteeringImages.toList()) {
-              powerSteeringImages = "$powerSteeringImages$element|";
+            for (var i = 0; i < controlForm.fluidsCheckD.target!.powerSteeringImages.toList().length; i++) {
+              if (!listNamesFluidsCheck.contains(controlForm.fluidsCheckD.target!.powerSteeringNames.toList()[i])) {
+                //Parsear a Uint8List
+                final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
+                controlForm.fluidsCheckD.target!.powerSteeringNames.toList()[i],
+                Uint8List.fromList(utf8.encode(controlForm.fluidsCheckD.target!.powerSteeringImages.toList()[i])),
+                  fileOptions: const FileOptions(
+                    cacheControl: '3600',
+                    upsert: false,
+                  ),
+                );
+                if (storageResponse.isEmpty) {
+                  return SyncInstruction(
+                    exitoso: false,
+                    descripcion:
+                        "Failed to sync image on Power Steering in Control Form Delivered on Local Server named ${controlForm.fluidsCheckD.target!.powerSteeringNames.toList()[i]}");
+                }
+                final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckD.target!.powerSteeringNames.toList()[i]);
+                  powerSteeringImages = "$powerSteeringImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckD.target!.powerSteeringNames.toList()[i]);
+                  powerSteeringImages = "$powerSteeringImages$urlImage|";
+              }
             }
           }
           if (controlForm.fluidsCheckD.target!.dieselExhaustFluidImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheckD.target!.dieselExhaustFluidImages.toList()) {
-              dieselExhaustFluidImages = "$dieselExhaustFluidImages$element|";
+            for (var i = 0; i < controlForm.fluidsCheckD.target!.dieselExhaustFluidImages.toList().length; i++) {
+              if (!listNamesFluidsCheck.contains(controlForm.fluidsCheckD.target!.dieselExhaustFluidNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
+              controlForm.fluidsCheckD.target!.dieselExhaustFluidNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckD.target!.dieselExhaustFluidImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Diesel Exhaust Fluid in Control Form Delivered on Local Server named ${controlForm.fluidsCheckD.target!.dieselExhaustFluidNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckD.target!.dieselExhaustFluidNames.toList()[i]);
+                dieselExhaustFluidImages = "$dieselExhaustFluidImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckD.target!.dieselExhaustFluidNames.toList()[i]);
+                dieselExhaustFluidImages = "$dieselExhaustFluidImages$urlImage|";
+              }
             }
           }
           if (controlForm.fluidsCheckD.target!.windshieldWasherFluidImages.isNotEmpty) {
-            for (var element in controlForm.fluidsCheckD.target!.windshieldWasherFluidImages.toList()) {
-              windshieldWasherFluidImages = "$windshieldWasherFluidImages$element|";
+            for (var i = 0; i < controlForm.fluidsCheckD.target!.windshieldWasherFluidImages.toList().length; i++) {
+              if (!listNamesFluidsCheck.contains(controlForm.fluidsCheckD.target!.windshieldWasherFluidNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
+              controlForm.fluidsCheckD.target!.windshieldWasherFluidNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckD.target!.windshieldWasherFluidImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Windshield Washer Fluid in Control Form Delivered on Local Server named ${controlForm.fluidsCheckD.target!.windshieldWasherFluidNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckD.target!.windshieldWasherFluidNames.toList()[i]);
+                windshieldWasherFluidImages = "$windshieldWasherFluidImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('fluids-check').getPublicUrl(controlForm.fluidsCheckD.target!.windshieldWasherFluidNames.toList()[i]);
+                windshieldWasherFluidImages = "$windshieldWasherFluidImages$urlImage|";
+              }
             }
           }
           final recordFluidsCheck = await supabaseCtrlV.from('fluids_check').insert(
@@ -1285,19 +3064,85 @@ class SyncProviderSupabase extends ChangeNotifier {
             },
           ).select<PostgrestList>('id_fluids_check');
           //Registrar bucket inspection
+          List<String> listNamesBucketInspection = [];
+          final listImagesBucketInspection = await supabase.storage.from('bucket-inspection').list();
+          for (var element in listImagesBucketInspection) {listNamesBucketInspection.add(element.name);}
           if (controlForm.bucketInspectionD.target!.insulatedImages.isNotEmpty) {
-            for (var element in controlForm.bucketInspectionD.target!.insulatedImages.toList()) {
-              insulatedImages = "$insulatedImages$element|";
+            for (var i = 0; i < controlForm.bucketInspectionD.target!.insulatedImages.toList().length; i++) {
+              if (!listNamesBucketInspection.contains(controlForm.bucketInspectionD.target!.insulatedNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('bucket-inspection').uploadBinary(
+              controlForm.bucketInspectionD.target!.insulatedNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.bucketInspectionD.target!.insulatedImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Insulated in Control Form Delivered on Local Server named ${controlForm.bucketInspectionD.target!.insulatedNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('bucket-inspection').getPublicUrl(controlForm.bucketInspectionD.target!.insulatedNames.toList()[i]);
+                insulatedImages = "$insulatedImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('bucket-inspection').getPublicUrl(controlForm.bucketInspectionD.target!.insulatedNames.toList()[i]);
+                insulatedImages = "$insulatedImages$urlImage|";
+              }
             }
           }
           if (controlForm.bucketInspectionD.target!.holesDrilledImages.isNotEmpty) {
-            for (var element in controlForm.bucketInspectionD.target!.holesDrilledImages.toList()) {
-              holesDrilledImages = "$holesDrilledImages$element|";
+            for (var i = 0; i < controlForm.bucketInspectionD.target!.holesDrilledImages.toList().length; i++) {
+              if (!listNamesBucketInspection.contains(controlForm.bucketInspectionD.target!.holesDrilledNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('bucket-inspection').uploadBinary(
+              controlForm.bucketInspectionD.target!.holesDrilledNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.bucketInspectionD.target!.holesDrilledImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Holes Drilled in Control Form Delivered on Local Server named ${controlForm.bucketInspectionD.target!.holesDrilledNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('bucket-inspection').getPublicUrl(controlForm.bucketInspectionD.target!.holesDrilledNames.toList()[i]);
+                holesDrilledImages = "$holesDrilledImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('bucket-inspection').getPublicUrl(controlForm.bucketInspectionD.target!.holesDrilledNames.toList()[i]);
+                holesDrilledImages = "$holesDrilledImages$urlImage|";
+              }
             }
           }
           if (controlForm.bucketInspectionD.target!.bucketLinerImages.isNotEmpty) {
-            for (var element in controlForm.bucketInspectionD.target!.bucketLinerImages.toList()) {
-              bucketLinerImages = "$bucketLinerImages$element|";
+            for (var i = 0; i < controlForm.bucketInspectionD.target!.bucketLinerImages.toList().length; i++) {
+              if (!listNamesBucketInspection.contains(controlForm.bucketInspectionD.target!.bucketLinerNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('bucket-inspection').uploadBinary(
+              controlForm.bucketInspectionD.target!.bucketLinerNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.bucketInspectionD.target!.bucketLinerImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Bucket Liner in Control Form Delivered on Local Server named ${controlForm.bucketInspectionD.target!.bucketLinerNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('bucket-inspection').getPublicUrl(controlForm.bucketInspectionD.target!.bucketLinerNames.toList()[i]);
+                bucketLinerImages = "$bucketLinerImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('bucket-inspection').getPublicUrl(controlForm.bucketInspectionD.target!.bucketLinerNames.toList()[i]);
+                bucketLinerImages = "$bucketLinerImages$urlImage|";
+              }
             }
           }
           final recordBucketInspection = await supabaseCtrlV.from('bucket_inspection').insert(
@@ -1315,34 +3160,163 @@ class SyncProviderSupabase extends ChangeNotifier {
             },
           ).select<PostgrestList>('id_bucket_inspection');
           //Registrar security
+          List<String> listNamesSecurity = [];
+          final listImagesSecurity = await supabase.storage.from('security').list();
+          for (var element in listImagesSecurity) {listNamesSecurity.add(element.name);}
           if (controlForm.securityD.target!.rtaMagnetImages.isNotEmpty) {
-            for (var element in controlForm.securityD.target!.rtaMagnetImages.toList()) {
-              rtaMagnetImages = "$rtaMagnetImages$element|";
+            for (var i = 0; i < controlForm.securityD.target!.rtaMagnetImages.toList().length; i++) {
+              if (!listNamesSecurity.contains(controlForm.securityD.target!.rtaMagnetNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('security').uploadBinary(
+              controlForm.securityD.target!.rtaMagnetNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.securityD.target!.rtaMagnetImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on RTA Mganet in Control Form Delivered on Local Server named ${controlForm.securityD.target!.rtaMagnetNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityD.target!.rtaMagnetNames.toList()[i]);
+                rtaMagnetImages = "$rtaMagnetImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityD.target!.rtaMagnetNames.toList()[i]);
+                rtaMagnetImages = "$rtaMagnetImages$urlImage|";
+              }
             }
           }
           if (controlForm.securityD.target!.triangleReflectorsImages.isNotEmpty) {
-            for (var element in controlForm.securityD.target!.triangleReflectorsImages.toList()) {
-              triangleReflectorsImages = "$triangleReflectorsImages$element|";
+            for (var i = 0; i < controlForm.securityD.target!.triangleReflectorsImages.toList().length; i++) {
+              if (!listNamesSecurity.contains(controlForm.securityD.target!.triangleReflectorsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('security').uploadBinary(
+              controlForm.securityD.target!.triangleReflectorsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.securityD.target!.triangleReflectorsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Triangle Reflectors in Control Form Delivered on Local Server named ${controlForm.securityD.target!.triangleReflectorsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityD.target!.triangleReflectorsNames.toList()[i]);
+                triangleReflectorsImages = "$triangleReflectorsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityD.target!.triangleReflectorsNames.toList()[i]);
+                triangleReflectorsImages = "$triangleReflectorsImages$urlImage|";
+              }
             }
           }
           if (controlForm.securityD.target!.wheelChocksImages.isNotEmpty) {
-            for (var element in controlForm.securityD.target!.wheelChocksImages.toList()) {
-              wheelChocksImages = "$wheelChocksImages$element|";
+            for (var i = 0; i < controlForm.securityD.target!.wheelChocksImages.toList().length; i++) {
+              if (!listNamesSecurity.contains(controlForm.securityD.target!.wheelChocksNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('security').uploadBinary(
+              controlForm.securityD.target!.wheelChocksNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.securityD.target!.wheelChocksImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Wheel Chocks in Control Form Delivered on Local Server named ${controlForm.securityD.target!.wheelChocksNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityD.target!.wheelChocksNames.toList()[i]);
+                wheelChocksImages = "$wheelChocksImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityD.target!.wheelChocksNames.toList()[i]);
+                wheelChocksImages = "$wheelChocksImages$urlImage|";
+              }
             }
           }
           if (controlForm.securityD.target!.fireExtinguisherImages.isNotEmpty) {
-            for (var element in controlForm.securityD.target!.fireExtinguisherImages.toList()) {
-              fireExtinguisherImages = "$fireExtinguisherImages$element|";
+            for (var i = 0; i < controlForm.securityD.target!.fireExtinguisherImages.toList().length; i++) {
+              if (!listNamesSecurity.contains(controlForm.securityD.target!.fireExtinguisherNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('security').uploadBinary(
+              controlForm.securityD.target!.fireExtinguisherNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.securityD.target!.fireExtinguisherImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Fire Extinguisher in Control Form Delivered on Local Server named ${controlForm.securityD.target!.fireExtinguisherNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityD.target!.fireExtinguisherNames.toList()[i]);
+                fireExtinguisherImages = "$fireExtinguisherImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityD.target!.fireExtinguisherNames.toList()[i]);
+                fireExtinguisherImages = "$fireExtinguisherImages$urlImage|";
+              }
             }
           }
           if (controlForm.securityD.target!.firstAidKitSafetyVestImages.isNotEmpty) {
-            for (var element in controlForm.securityD.target!.firstAidKitSafetyVestImages.toList()) {
-              firstAidKitSafetyVestImages = "$firstAidKitSafetyVestImages$element|";
+            for (var i = 0; i < controlForm.securityD.target!.firstAidKitSafetyVestImages.toList().length; i++) {
+              if (!listNamesSecurity.contains(controlForm.securityD.target!.firstAidKitSafetyVestNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('security').uploadBinary(
+              controlForm.securityD.target!.firstAidKitSafetyVestNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.securityD.target!.firstAidKitSafetyVestImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on First Aid Kit Safety Vest in Control Form Delivered on Local Server named ${controlForm.securityD.target!.firstAidKitSafetyVestNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityD.target!.firstAidKitSafetyVestNames.toList()[i]);
+                firstAidKitSafetyVestImages = "$firstAidKitSafetyVestImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityD.target!.firstAidKitSafetyVestNames.toList()[i]);
+                firstAidKitSafetyVestImages = "$firstAidKitSafetyVestImages$urlImage|";
+              }
             }
           }
           if (controlForm.securityD.target!.backUpAlarmImages.isNotEmpty) {
-            for (var element in controlForm.securityD.target!.backUpAlarmImages.toList()) {
-              backUpAlarmImages = "$backUpAlarmImages$element|";
+            for (var i = 0; i < controlForm.securityD.target!.backUpAlarmImages.toList().length; i++) {
+              if (!listNamesSecurity.contains(controlForm.securityD.target!.backUpAlarmNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('security').uploadBinary(
+              controlForm.securityD.target!.backUpAlarmNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.securityD.target!.backUpAlarmImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Backup Alarm in Control Form Delivered on Local Server named ${controlForm.securityD.target!.backUpAlarmNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityD.target!.backUpAlarmNames.toList()[i]);
+                backUpAlarmImages = "$backUpAlarmImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('security').getPublicUrl(controlForm.securityD.target!.backUpAlarmNames.toList()[i]);
+                backUpAlarmImages = "$backUpAlarmImages$urlImage|";
+              }
             }
           }
           final recordSecurity = await supabaseCtrlV.from('security').insert(
@@ -1369,44 +3343,215 @@ class SyncProviderSupabase extends ChangeNotifier {
             },
           ).select<PostgrestList>('id_security');
           //Registrar extra
+          List<String> listNamesExtra = [];
+          final listImagesExtra = await supabase.storage.from('extras').list();
+          for (var element in listImagesExtra) {listNamesExtra.add(element.name);}
           if (controlForm.extraD.target!.ladderImages.isNotEmpty) {
-            for (var element in controlForm.extraD.target!.ladderImages.toList()) {
-              ladderImages = "$ladderImages$element|";
+            for (var i = 0; i < controlForm.extraD.target!.ladderImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraD.target!.ladderNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraD.target!.ladderNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.ladderImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Ladder in Control Form Delivered on Local Server named ${controlForm.extraD.target!.ladderNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.ladderNames.toList()[i]);
+                ladderImages = "$ladderImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.ladderNames.toList()[i]);
+                ladderImages = "$ladderImages$urlImage|";
+              }
             }
           }
           if (controlForm.extraD.target!.stepLadderImages.isNotEmpty) {
-            for (var element in controlForm.extraD.target!.stepLadderImages.toList()) {
-              stepLadderImages = "$stepLadderImages$element|";
+            for (var i = 0; i < controlForm.extraD.target!.stepLadderImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraD.target!.stepLadderNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraD.target!.stepLadderNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.stepLadderImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Step Ladder in Control Form Delivered on Local Server named ${controlForm.extraD.target!.stepLadderNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.stepLadderNames.toList()[i]);
+                stepLadderImages = "$stepLadderImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.stepLadderNames.toList()[i]);
+                stepLadderImages = "$stepLadderImages$urlImage|";
+              }
             }
           }
           if (controlForm.extraD.target!.ladderStrapsImages.isNotEmpty) {
-            for (var element in controlForm.extraD.target!.ladderStrapsImages.toList()) {
-              ladderStrapsImages = "$ladderStrapsImages$element|";
+            for (var i = 0; i < controlForm.extraD.target!.ladderStrapsImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraD.target!.ladderStrapsNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraD.target!.ladderStrapsNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.ladderStrapsImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Ladder Straps in Control Form Delivered on Local Server named ${controlForm.extraD.target!.ladderStrapsNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.ladderStrapsNames.toList()[i]);
+                ladderStrapsImages = "$ladderStrapsImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.ladderStrapsNames.toList()[i]);
+                ladderStrapsImages = "$ladderStrapsImages$urlImage|";
+              }
             }
           }
           if (controlForm.extraD.target!.hydraulicFluidForBucketImages.isNotEmpty) {
-            for (var element in controlForm.extraD.target!.hydraulicFluidForBucketImages.toList()) {
-              hydraulicFluidForBucketImages = "$hydraulicFluidForBucketImages$element|";
+            for (var i = 0; i < controlForm.extraD.target!.hydraulicFluidForBucketImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraD.target!.hydraulicFluidForBucketNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraD.target!.hydraulicFluidForBucketNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.hydraulicFluidForBucketImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Hydraulic Fluid For Bucket in Control Form Delivered on Local Server named ${controlForm.extraD.target!.hydraulicFluidForBucketNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.hydraulicFluidForBucketNames.toList()[i]);
+                hydraulicFluidForBucketImages = "$hydraulicFluidForBucketImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.hydraulicFluidForBucketNames.toList()[i]);
+                hydraulicFluidForBucketImages = "$hydraulicFluidForBucketImages$urlImage|";
+              }
             }
           }
           if (controlForm.extraD.target!.fiberReelRackImages.isNotEmpty) {
-            for (var element in controlForm.extraD.target!.fiberReelRackImages.toList()) {
-              fiberReelRackImages = "$fiberReelRackImages$element|";
+            for (var i = 0; i < controlForm.extraD.target!.fiberReelRackImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraD.target!.fiberReelRackNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraD.target!.fiberReelRackNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.fiberReelRackImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Fiber Reel Rack in Control Form Delivered on Local Server named ${controlForm.extraD.target!.fiberReelRackNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.fiberReelRackNames.toList()[i]);
+                fiberReelRackImages = "$fiberReelRackImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.fiberReelRackNames.toList()[i]);
+                fiberReelRackImages = "$fiberReelRackImages$urlImage|";
+              }
             }
           }
           if (controlForm.extraD.target!.binsLockedAndSecureImages.isNotEmpty) {
-            for (var element in controlForm.extraD.target!.binsLockedAndSecureImages.toList()) {
-              binsLockedAndSecureImages = "$binsLockedAndSecureImages$element|";
+            for (var i = 0; i < controlForm.extraD.target!.binsLockedAndSecureImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraD.target!.binsLockedAndSecureNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraD.target!.binsLockedAndSecureNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.binsLockedAndSecureImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Bins Locked And Secure in Control Form Delivered on Local Server named ${controlForm.extraD.target!.binsLockedAndSecureNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.binsLockedAndSecureNames.toList()[i]);
+                binsLockedAndSecureImages = "$binsLockedAndSecureImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.binsLockedAndSecureNames.toList()[i]);
+                binsLockedAndSecureImages = "$binsLockedAndSecureImages$urlImage|";
+              }
             }
           }
           if (controlForm.extraD.target!.safetyHarnessImages.isNotEmpty) {
-            for (var element in controlForm.extraD.target!.safetyHarnessImages.toList()) {
-              safetyHarnessImages = "$safetyHarnessImages$element|";
+            for (var i = 0; i < controlForm.extraD.target!.safetyHarnessImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraD.target!.safetyHarnessNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraD.target!.safetyHarnessNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.safetyHarnessImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Safety Harness in Control Form Delivered on Local Server named ${controlForm.extraD.target!.safetyHarnessNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.safetyHarnessNames.toList()[i]);
+                safetyHarnessImages = "$safetyHarnessImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.safetyHarnessNames.toList()[i]);
+                safetyHarnessImages = "$safetyHarnessImages$urlImage|";
+              }
             }
           }
           if (controlForm.extraD.target!.lanyardSafetyHarnessImages.isNotEmpty) {
-            for (var element in controlForm.extraD.target!.lanyardSafetyHarnessImages.toList()) {
-              lanyardSafetyHarnessImages = "$lanyardSafetyHarnessImages$element|";
+            for (var i = 0; i < controlForm.extraD.target!.lanyardSafetyHarnessImages.toList().length; i++) {
+              if (!listNamesExtra.contains(controlForm.extraD.target!.lanyardSafetyHarnessNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('extras').uploadBinary(
+              controlForm.extraD.target!.lanyardSafetyHarnessNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.lanyardSafetyHarnessImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Lanyard Safety Harness in Control Form Delivered on Local Server named ${controlForm.extraD.target!.lanyardSafetyHarnessNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.lanyardSafetyHarnessNames.toList()[i]);
+                lanyardSafetyHarnessImages = "$lanyardSafetyHarnessImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('extras').getPublicUrl(controlForm.extraD.target!.lanyardSafetyHarnessNames.toList()[i]);
+                lanyardSafetyHarnessImages = "$lanyardSafetyHarnessImages$urlImage|";
+              }
             }
           }
           final recordExtra = await supabaseCtrlV.from('extra').insert(
@@ -1439,29 +3584,137 @@ class SyncProviderSupabase extends ChangeNotifier {
             },
           ).select<PostgrestList>('id_extra');
           //Registrar equipment
+          List<String> listNamesEquipment = [];
+          final listImagesEquipment = await supabase.storage.from('equipment').list();
+          for (var element in listImagesEquipment) {listNamesEquipment.add(element.name);}
           if (controlForm.equipmentD.target!.ignitionKeyImages.isNotEmpty) {
-            for (var element in controlForm.equipmentD.target!.ignitionKeyImages.toList()) {
-              ignitionKeyImages = "$ignitionKeyImages$element|";
+            for (var i = 0; i < controlForm.equipmentD.target!.ignitionKeyImages.toList().length; i++) {
+              if (!listNamesEquipment.contains(controlForm.equipmentD.target!.ignitionKeyNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('equipment').uploadBinary(
+              controlForm.equipmentD.target!.ignitionKeyNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.equipmentD.target!.ignitionKeyImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Ignition Key in Control Form Delivered on Local Server named ${controlForm.equipmentD.target!.ignitionKeyNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentD.target!.ignitionKeyNames.toList()[i]);
+                ignitionKeyImages = "$ignitionKeyImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentD.target!.ignitionKeyNames.toList()[i]);
+                ignitionKeyImages = "$ignitionKeyImages$urlImage|";
+              }
             }
           }
           if (controlForm.equipmentD.target!.binsBoxKeyImages.isNotEmpty) {
-            for (var element in controlForm.equipmentD.target!.binsBoxKeyImages.toList()) {
-              binsBoxKeyImages = "$binsBoxKeyImages$element|";
+            for (var i = 0; i < controlForm.equipmentD.target!.binsBoxKeyImages.toList().length; i++) {
+              if (!listNamesEquipment.contains(controlForm.equipmentD.target!.binsBoxKeyNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('equipment').uploadBinary(
+              controlForm.equipmentD.target!.binsBoxKeyNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.equipmentD.target!.binsBoxKeyImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Bins Box Key in Control Form Delivered on Local Server named ${controlForm.equipmentD.target!.binsBoxKeyNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentD.target!.binsBoxKeyNames.toList()[i]);
+                binsBoxKeyImages = "$binsBoxKeyImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentD.target!.binsBoxKeyNames.toList()[i]);
+                binsBoxKeyImages = "$binsBoxKeyImages$urlImage|";
+              }
             }
           }
           if (controlForm.equipmentD.target!.vehicleInsuranceCopyImages.isNotEmpty) {
-            for (var element in controlForm.equipmentD.target!.vehicleInsuranceCopyImages.toList()) {
-              vehicleInsuranceCopyImages = "$vehicleInsuranceCopyImages$element|";
+            for (var i = 0; i < controlForm.equipmentD.target!.vehicleInsuranceCopyImages.toList().length; i++) {
+              if (!listNamesEquipment.contains(controlForm.equipmentD.target!.vehicleInsuranceCopyNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('equipment').uploadBinary(
+              controlForm.equipmentD.target!.vehicleInsuranceCopyNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.equipmentD.target!.vehicleInsuranceCopyImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Vehicle Insurance Copy in Control Form Delivered on Local Server named ${controlForm.equipmentD.target!.vehicleInsuranceCopyNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentD.target!.vehicleInsuranceCopyNames.toList()[i]);
+                vehicleInsuranceCopyImages = "$vehicleInsuranceCopyImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentD.target!.vehicleInsuranceCopyNames.toList()[i]);
+                vehicleInsuranceCopyImages = "$vehicleInsuranceCopyImages$urlImage|";
+              }
             }
           }
           if (controlForm.equipmentD.target!.vehicleRegistrationCopyImages.isNotEmpty) {
-            for (var element in controlForm.equipmentD.target!.vehicleRegistrationCopyImages.toList()) {
-              vehicleRegistrationCopyImages = "$vehicleRegistrationCopyImages$element|";
+            for (var i = 0; i < controlForm.equipmentD.target!.vehicleRegistrationCopyImages.toList().length; i++) {
+              if (!listNamesEquipment.contains(controlForm.equipmentD.target!.vehicleRegistrationCopyNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('equipment').uploadBinary(
+              controlForm.equipmentD.target!.vehicleRegistrationCopyNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.equipmentD.target!.vehicleRegistrationCopyImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Vehicle Registration Copy in Control Form Delivered on Local Server named ${controlForm.equipmentD.target!.vehicleRegistrationCopyNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentD.target!.vehicleRegistrationCopyNames.toList()[i]);
+                vehicleRegistrationCopyImages = "$vehicleRegistrationCopyImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentD.target!.vehicleRegistrationCopyNames.toList()[i]);
+                vehicleRegistrationCopyImages = "$vehicleRegistrationCopyImages$urlImage|";
+              }
             }
           }
           if (controlForm.equipmentD.target!.bucketLiftOperatorManualImages.isNotEmpty) {
-            for (var element in controlForm.equipmentD.target!.bucketLiftOperatorManualImages.toList()) {
-              bucketLiftOperatorManualImages = "$bucketLiftOperatorManualImages$element|";
+            for (var i = 0; i < controlForm.equipmentD.target!.bucketLiftOperatorManualImages.toList().length; i++) {
+              if (!listNamesEquipment.contains(controlForm.equipmentD.target!.bucketLiftOperatorManualNames.toList()[i])) {
+                //Parsear a Uint8List
+              final storageResponse = await supabase.storage.from('equipment').uploadBinary(
+              controlForm.equipmentD.target!.bucketLiftOperatorManualNames.toList()[i],
+              Uint8List.fromList(utf8.encode(controlForm.equipmentD.target!.bucketLiftOperatorManualImages.toList()[i])),
+                fileOptions: const FileOptions(
+                  cacheControl: '3600',
+                  upsert: false,
+                ),
+              );
+              if (storageResponse.isEmpty) {
+                return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Failed to sync image on Bucket Lift Operator Manual in Control Form Delivered on Local Server named ${controlForm.equipmentD.target!.bucketLiftOperatorManualNames.toList()[i]}");
+              }
+              final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentD.target!.bucketLiftOperatorManualNames.toList()[i]);
+                bucketLiftOperatorManualImages = "$bucketLiftOperatorManualImages$urlImage|";
+              } else {
+                final urlImage = supabase.storage.from('equipment').getPublicUrl(controlForm.equipmentD.target!.bucketLiftOperatorManualNames.toList()[i]);
+                bucketLiftOperatorManualImages = "$bucketLiftOperatorManualImages$urlImage|";
+              }
             }
           }
           final recordEquipment = await supabaseCtrlV.from('equipment').insert(
@@ -1484,6 +3737,8 @@ class SyncProviderSupabase extends ChangeNotifier {
               'date_added': controlForm.equipmentD.target!.dateAdded.toIso8601String(),
             },
           ).select<PostgrestList>('id_equipment');
+          
+
           if (recordMeasure.isNotEmpty && recordLights.isNotEmpty && recordCarBodywork.isNotEmpty && recordFluidsCheck.isNotEmpty 
               && recordBucketInspection.isNotEmpty && recordSecurity.isNotEmpty && recordExtra.isNotEmpty && recordEquipment.isNotEmpty) {
             final recordControlForm = await supabaseCtrlV.from('control_form').update(
@@ -1562,14 +3817,14 @@ class SyncProviderSupabase extends ChangeNotifier {
             return SyncInstruction(
               exitoso: false,
               descripcion:
-                  "Failed to sync data measure Control Form Delivered on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
+                  "Failed to sync data Control Form Delivered on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
           }
           
         } else {
           return SyncInstruction(
               exitoso: false,
               descripcion:
-                  "Failed to sync data measure Control Form Delivered on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
+                  "Failed to sync data Control Form Delivered on Local Server: Control Form with vehicle ID ${controlForm.vehicle.target!.idDBR}.");
         }
       } else {
         dataBase.bitacoraBox.remove(bitacora.id);
@@ -1580,7 +3835,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Failed to sync data measure Control Form Delivered on Local Server with vehicle ID ${controlForm.vehicle.target!.idDBR}:, details: '$e'");
+              "Failed to sync data Control Form Delivered on Local Server with vehicle ID ${controlForm.vehicle.target!.idDBR}:, details: '$e'");
     }
   }
 
