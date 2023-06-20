@@ -769,7 +769,7 @@ class SyncProviderSupabase extends ChangeNotifier {
           }
           if (controlForm.carBodyworkR.target!.wiperBladesBackImages.isNotEmpty) {
             for (var i = 0; i < controlForm.carBodyworkR.target!.wiperBladesBackImages.toList().length; i++) {
-              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.windshieldWiperBackNames.toList()[i])) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.wiperBladesBackNames.toList()[i])) {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.wiperBladesBackNames.toList()[i],
@@ -2526,7 +2526,7 @@ class SyncProviderSupabase extends ChangeNotifier {
           }
           if (controlForm.carBodyworkD.target!.wiperBladesBackImages.isNotEmpty) {
             for (var i = 0; i < controlForm.carBodyworkD.target!.wiperBladesBackImages.toList().length; i++) {
-              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.windshieldWiperBackNames.toList()[i])) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.wiperBladesBackNames.toList()[i])) {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.wiperBladesBackNames.toList()[i],
