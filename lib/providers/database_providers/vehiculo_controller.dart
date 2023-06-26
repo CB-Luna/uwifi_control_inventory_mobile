@@ -11,7 +11,7 @@ import 'package:taller_alex_app_asesor/screens/revision/components/measures_sect
 import 'package:taller_alex_app_asesor/screens/revision/components/security_section_d.dart';
 class VehiculoController extends ChangeNotifier {
   //OPCIONES MENU:
-  final menuTapedReceived = {
+  final menuTapedCheckOut = {
     0: const MeasuresSectionR(),// Measures 0
     1: const LightsSectionR(), // Lights 1
     2: const FluidsSectionR(), // Fluids 2
@@ -19,7 +19,7 @@ class VehiculoController extends ChangeNotifier {
     4: const EquipmentSectionR(), // Equipment 4
   };
 
-  final menuTapedDelivered = {
+  final menuTapedCheckIn = {
     0: const MeasuresSectionD(),// Measures 0
     1: const LightsSectionD(), // Lights 1
     2: const FluidsSectionD(), // Fluids 2
@@ -27,16 +27,16 @@ class VehiculoController extends ChangeNotifier {
     4: const EquipmentSectionD(), // Equipment 4
   };
 
-  int isTapedReceived = 0;
+  int isTapedCheckOut = 0;
 
-  int isTapedDelivered = 0;
+  int isTapedCheckIn = 0;
   
-  void setTapedOptionReceived(int index) {
-    isTapedReceived = index;
+  void setTapedOptionCheckOut(int index) {
+    isTapedCheckOut = index;
     notifyListeners();
   }
-  void setTapedOptionDelivered(int index) {
-    isTapedDelivered = index;
+  void setTapedOptionCheckIn(int index) {
+    isTapedCheckIn = index;
     notifyListeners();
   }
 

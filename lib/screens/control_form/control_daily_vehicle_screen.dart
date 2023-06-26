@@ -7,8 +7,8 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/delivered_form_controller.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/receiving_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/checkin_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/checkout_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/agregar_vehiculo_screen.dart';
 import 'package:taller_alex_app_asesor/util/util.dart';
@@ -25,8 +25,8 @@ class ControlDailyVehicleScreen extends StatefulWidget {
 class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  ControlForm? controlFormReceived;
-  ControlForm? controlFormDelivered;
+  ControlForm? controlFormCheckOut;
+  ControlForm? controlFormCheckIn;
 
 
   @override
@@ -34,20 +34,20 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
     super.initState();
     setState(() {
       context.read<UsuarioController>().recoverPreviousControlForms(DateTime.now());
-      controlFormReceived = context.read<UsuarioController>().getControlFormReceivedToday(DateTime.now());
-      controlFormDelivered = context.read<UsuarioController>().getControlFormDeliveredToday(DateTime.now());
+      controlFormCheckOut = context.read<UsuarioController>().getControlFormCheckOutToday(DateTime.now());
+      controlFormCheckIn = context.read<UsuarioController>().getControlFormCheckInToday(DateTime.now());
       context.read<UsuarioController>().getUser(prefs.getString("userId") ?? "");
     });
   }
   @override
   Widget build(BuildContext context) {
-    final receivedFormProvider = Provider.of<ReceivingFormController>(context);
-    final deliveredFormProvider = Provider.of<DeliveredFormController>(context);
+    final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
+    final checkInFormProvider = Provider.of<CheckInFormController>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     usuarioProvider.recoverPreviousControlForms(DateTime.now());
     usuarioProvider.getUser(prefs.getString("userId") ?? "");
-    controlFormReceived = usuarioProvider.getControlFormReceivedToday(DateTime.now());
-    controlFormDelivered = usuarioProvider.getControlFormDeliveredToday(DateTime.now());
+    controlFormCheckOut = usuarioProvider.getControlFormCheckOutToday(DateTime.now());
+    controlFormCheckIn = usuarioProvider.getControlFormCheckInToday(DateTime.now());
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -384,7 +384,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  if (controlFormReceived == null) {
+                                  if (controlFormCheckOut == null) {
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -396,7 +396,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                     snackbarKey.currentState
                                         ?.showSnackBar(const SnackBar(
                                       content: Text(
-                                          "Received Form is already has been registered."),
+                                          "Check Out Form is already has been registered."),
                                     ));
                                   }
                                 },
@@ -467,7 +467,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 ],
                                               ),
                                               Text(
-                                                'Received',
+                                                'Check Out',
                                                 style: FlutterFlowTheme.of(
                                                         context)
                                                     .bodyText1
@@ -489,15 +489,15 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                   10.0, 10.0, 10.0, 10.0),
                                           child: badge.Badge(
                                             badgeContent: Text(
-                                              "${receivedFormProvider
-                                              .pendingMeasures + receivedFormProvider
-                                              .badStateLights + receivedFormProvider
-                                              .badStateSecurity + receivedFormProvider
-                                              .badStateFluids + receivedFormProvider
+                                              "${checkOutFormProvider
+                                              .pendingMeasures + checkOutFormProvider
+                                              .badStateLights + checkOutFormProvider
+                                              .badStateSecurity + checkOutFormProvider
+                                              .badStateFluids + checkOutFormProvider
                                               .badStateEquipment}",
                                                 style: TextStyle(
                                                     color: FlutterFlowTheme.of(context).white)),
-                                            showBadge: controlFormReceived == null,
+                                            showBadge: controlFormCheckOut == null,
                                             badgeColor: FlutterFlowTheme.of(context).secondaryColor,
                                             position: badge.BadgePosition.bottomEnd(),
                                             child: ClayContainer(
@@ -508,17 +508,17 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                               borderRadius: 25,
                                               curveType: CurveType.concave,
                                               color: 
-                                              controlFormReceived != null ?
+                                              controlFormCheckOut != null ?
                                               FlutterFlowTheme.of(context).buenoColor
                                               :
                                               FlutterFlowTheme.of(context).primaryColor,
                                               surfaceColor: 
-                                              controlFormReceived != null ?
+                                              controlFormCheckOut != null ?
                                               FlutterFlowTheme.of(context).buenoColor
                                               :
                                               FlutterFlowTheme.of(context).primaryColor,
                                               parentColor: 
-                                              controlFormReceived != null ?
+                                              controlFormCheckOut != null ?
                                               FlutterFlowTheme.of(context).buenoColor
                                               :
                                               FlutterFlowTheme.of(context).primaryColor,
@@ -527,7 +527,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                   borderRadius: BorderRadius.circular(25),
                                                 ),
                                                 child: Icon(
-                                                  controlFormReceived != null ?
+                                                  controlFormCheckOut != null ?
                                                    Icons.check
                                                    :
                                                    Icons.close,
@@ -546,14 +546,14 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                               ),
                               GestureDetector(
                                 onTap: () async {
-                                  if (controlFormReceived == null) {
+                                  if (controlFormCheckOut == null) {
                                     snackbarKey.currentState
                                         ?.showSnackBar(const SnackBar(
                                       content: Text(
-                                          "Received Form hadn't registered yet."),
+                                          "Check Out Form hadn't registered yet."),
                                     ));
                                   } else {
-                                    if (controlFormDelivered == null) {
+                                    if (controlFormCheckIn == null) {
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -565,7 +565,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                         snackbarKey.currentState
                                             ?.showSnackBar(const SnackBar(
                                           content: Text(
-                                              "Delivered Form is already has been registered."),
+                                              "Check In Form is already has been registered."),
                                         ));
                                       }
                                   }
@@ -637,7 +637,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 ],
                                               ),
                                               Text(
-                                                'Delivered',
+                                                'Check In',
                                                 style: FlutterFlowTheme.of(
                                                         context)
                                                     .bodyText1
@@ -659,15 +659,15 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                   10.0, 10.0, 10.0, 10.0),
                                           child: badge.Badge(
                                             badgeContent: Text(
-                                              "${deliveredFormProvider
-                                              .pendingMeasures + deliveredFormProvider
-                                              .badStateLights + deliveredFormProvider
-                                              .badStateSecurity + deliveredFormProvider
-                                              .badStateFluids + deliveredFormProvider
+                                              "${checkInFormProvider
+                                              .pendingMeasures + checkInFormProvider
+                                              .badStateLights + checkInFormProvider
+                                              .badStateSecurity + checkInFormProvider
+                                              .badStateFluids + checkInFormProvider
                                               .badStateEquipment}",
                                                 style: TextStyle(
                                                     color: FlutterFlowTheme.of(context).white)),
-                                            showBadge: controlFormDelivered == null,
+                                            showBadge: controlFormCheckIn == null,
                                             badgeColor: FlutterFlowTheme.of(context).secondaryColor,
                                             position: badge.BadgePosition.bottomEnd(),
                                             child: ClayContainer(
@@ -678,17 +678,17 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                               borderRadius: 25,
                                               curveType: CurveType.concave,
                                               color: 
-                                              controlFormDelivered != null ?
+                                              controlFormCheckIn != null ?
                                               FlutterFlowTheme.of(context).buenoColor
                                               :
                                               FlutterFlowTheme.of(context).primaryColor,
                                               surfaceColor: 
-                                              controlFormDelivered != null ?
+                                              controlFormCheckIn != null ?
                                               FlutterFlowTheme.of(context).buenoColor
                                               :
                                               FlutterFlowTheme.of(context).primaryColor,
                                               parentColor: 
-                                              controlFormDelivered != null ?
+                                              controlFormCheckIn != null ?
                                               FlutterFlowTheme.of(context).buenoColor
                                               :
                                               FlutterFlowTheme.of(context).primaryColor,
@@ -697,7 +697,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                   borderRadius: BorderRadius.circular(25),
                                                 ),
                                                 child: Icon(
-                                                  controlFormDelivered != null ?
+                                                  controlFormCheckIn != null ?
                                                    Icons.check
                                                    :
                                                    Icons.close,

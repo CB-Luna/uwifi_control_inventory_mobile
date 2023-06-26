@@ -69,7 +69,7 @@ abstract class FlutterFlowModel {
       this
         .._updateCallback = onUpdate
         ..updateOnChange = updateOnChange;
-  // Update the containing page when this model received an update.
+  // Update the containing page when this model check ou an update.
   void updatePage(VoidCallback callback) {
     callback();
     _updateCallback();

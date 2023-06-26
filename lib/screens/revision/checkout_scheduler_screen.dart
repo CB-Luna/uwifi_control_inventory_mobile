@@ -6,7 +6,7 @@ import 'package:badges/badges.dart' as badge;
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/receiving_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/checkout_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/vehiculo_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
@@ -14,11 +14,11 @@ import 'package:taller_alex_app_asesor/screens/revision/components/menu_form_but
 import 'package:taller_alex_app_asesor/screens/revision/control_form_r_created.dart';
 import 'package:taller_alex_app_asesor/screens/revision/control_form_r_not_created.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
-class ReceivedSchedulerScreen extends StatefulWidget {
+class CheckOutSchedulerScreen extends StatefulWidget {
   final String hour;
   final String period;
   final DateTime registeredHour;
-  const ReceivedSchedulerScreen({
+  const CheckOutSchedulerScreen({
     super.key, 
     required this.hour, 
     required this.period, 
@@ -26,7 +26,7 @@ class ReceivedSchedulerScreen extends StatefulWidget {
     });
 
   @override
-  State<ReceivedSchedulerScreen> createState() => _ReceivedSchedulerScreenState();
+  State<CheckOutSchedulerScreen> createState() => _CheckOutSchedulerScreenState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -84,11 +84,11 @@ final animationsMap = {
     ),
   };
 
-class _ReceivedSchedulerScreenState extends State<ReceivedSchedulerScreen> {
+class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
   @override
   Widget build(BuildContext context) {
     final vehiculoController = Provider.of<VehiculoController>(context);
-    final receivingFromProvider = Provider.of<ReceivingFormController>(context);
+    final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
     final userProvider = Provider.of<UsuarioController>(context);
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
     return Scaffold(
@@ -170,9 +170,9 @@ class _ReceivedSchedulerScreenState extends State<ReceivedSchedulerScreen> {
                       ),
                       child: InkWell(
                         onTap: () async {
-                          if (receivingFromProvider.validateForm()) {
-                            if (receivingFromProvider.addControlForm(userProvider.usuarioCurrent)) {
-                              // receivingFromProvider.cleanInformation();
+                          if (checkOutFormProvider.validateForm()) {
+                            if (checkOutFormProvider.addControlForm(userProvider.usuarioCurrent, widget.registeredHour)) {
+                              // checkOutFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
                               await Navigator.push(
                                 context,
@@ -182,7 +182,7 @@ class _ReceivedSchedulerScreenState extends State<ReceivedSchedulerScreen> {
                                 ),
                               );
                             } else {
-                              receivingFromProvider.cleanInformation();
+                              checkOutFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
                               await Navigator.push(
                                 context,
@@ -333,87 +333,87 @@ class _ReceivedSchedulerScreenState extends State<ReceivedSchedulerScreen> {
                   children: [
                     badge.Badge(
                       badgeContent: Text(
-                        "${receivingFromProvider.pendingMeasures}",
+                        "${checkOutFormProvider.pendingMeasures}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: receivingFromProvider.pendingMeasures != 0,
+                      showBadge: checkOutFormProvider.pendingMeasures != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
                         icon: Icons.speed_outlined, 
                         onPressed: () {
-                          vehiculoController.setTapedOptionReceived(0);
+                          vehiculoController.setTapedOptionCheckOut(0);
                         },
-                        isTaped: vehiculoController.isTapedReceived == 0,
+                        isTaped: vehiculoController.isTapedCheckOut == 0,
                       ),
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${receivingFromProvider.badStateLights}",
+                        "${checkOutFormProvider.badStateLights}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: receivingFromProvider.badStateLights != 0,
+                      showBadge: checkOutFormProvider.badStateLights != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
                         icon: Icons.flare, 
                         onPressed: () {
-                          vehiculoController.setTapedOptionReceived(1);
+                          vehiculoController.setTapedOptionCheckOut(1);
                         },
-                        isTaped: vehiculoController.isTapedReceived == 1,
+                        isTaped: vehiculoController.isTapedCheckOut == 1,
                       ),
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${receivingFromProvider.badStateFluids}",
+                        "${checkOutFormProvider.badStateFluids}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: receivingFromProvider.badStateFluids != 0,
+                      showBadge: checkOutFormProvider.badStateFluids != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
                         icon: Icons.invert_colors, 
                         onPressed: () {
-                          vehiculoController.setTapedOptionReceived(2);
+                          vehiculoController.setTapedOptionCheckOut(2);
                         },
-                        isTaped: vehiculoController.isTapedReceived == 2,
+                        isTaped: vehiculoController.isTapedCheckOut == 2,
                       ),
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${receivingFromProvider.badStateSecurity}",
+                        "${checkOutFormProvider.badStateSecurity}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: receivingFromProvider.badStateSecurity != 0,
+                      showBadge: checkOutFormProvider.badStateSecurity != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
                         icon: Icons.health_and_safety, 
                         onPressed: () {
-                          vehiculoController.setTapedOptionReceived(3);
+                          vehiculoController.setTapedOptionCheckOut(3);
                         },
-                        isTaped: vehiculoController.isTapedReceived == 3,
+                        isTaped: vehiculoController.isTapedCheckOut == 3,
                       ),
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${receivingFromProvider.badStateEquipment}",
+                        "${checkOutFormProvider.badStateEquipment}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: receivingFromProvider.badStateEquipment != 0,
+                      showBadge: checkOutFormProvider.badStateEquipment != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
                       icon: Icons.build, 
                         onPressed: () {
-                          vehiculoController.setTapedOptionReceived(4);
+                          vehiculoController.setTapedOptionCheckOut(4);
                         },
-                        isTaped: vehiculoController.isTapedReceived == 4,
+                        isTaped: vehiculoController.isTapedCheckOut == 4,
                       ),
                     ),
                   ],
@@ -437,8 +437,8 @@ class _ReceivedSchedulerScreenState extends State<ReceivedSchedulerScreen> {
                       scrollDirection: Axis.vertical,
                       itemCount: 1,
                       itemBuilder: (context, index) {
-                        final section = vehiculoController.menuTapedReceived[
-                            vehiculoController.isTapedReceived];
+                        final section = vehiculoController.menuTapedCheckOut[
+                            vehiculoController.isTapedCheckOut];
                         return section;
                       });
                 },

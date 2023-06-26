@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/receiving_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/checkout_form_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/header_shimmer.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/item_form.dart';
@@ -73,7 +73,7 @@ final animationsMap = {
 class _LightsSectionRState extends State<LightsSectionR> {
   @override
   Widget build(BuildContext context) {
-    final receivingFormProvider = Provider.of<ReceivingFormController>(context);
+    final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: Row(
@@ -97,17 +97,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.headLightsImages,
+                  images: checkOutFormProvider.headLightsImages,
                   addImage: (image) {
-                    receivingFormProvider.addHeadLightsImage(image);
+                    checkOutFormProvider.addHeadLightsImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateHeadLightsImage(image);
+                    checkOutFormProvider.updateHeadLightsImage(image);
                   },
-                  comments: receivingFormProvider.headLightsComments,
-                  report: receivingFormProvider.headLights,
+                  comments: checkOutFormProvider.headLightsComments,
+                  report: checkOutFormProvider.headLights,
                   updateReport: (report) {
-                    receivingFormProvider.updateHeadLights(report);
+                    checkOutFormProvider.updateHeadLights(report);
                   },
                 ),
                 Divider(
@@ -126,17 +126,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.brakeLightsImages,
+                  images: checkOutFormProvider.brakeLightsImages,
                   addImage: (image) {
-                    receivingFormProvider.addBrakeLightsImage(image);
+                    checkOutFormProvider.addBrakeLightsImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateBrakeLightsImage(image);
+                    checkOutFormProvider.updateBrakeLightsImage(image);
                   },
-                  comments: receivingFormProvider.brakeLightsComments,
-                  report: receivingFormProvider.brakeLights,
+                  comments: checkOutFormProvider.brakeLightsComments,
+                  report: checkOutFormProvider.brakeLights,
                   updateReport: (report) {
-                    receivingFormProvider.updateBrakeLights(report);
+                    checkOutFormProvider.updateBrakeLights(report);
                   }
                 ),
                 Divider(
@@ -155,17 +155,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.reverseLightsImages,
+                  images: checkOutFormProvider.reverseLightsImages,
                   addImage: (image) {
-                    receivingFormProvider.addReverseLightsImage(image);
+                    checkOutFormProvider.addReverseLightsImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateReverseLightsImage(image);
+                    checkOutFormProvider.updateReverseLightsImage(image);
                   },
-                  comments: receivingFormProvider.reverseLightsComments,
-                  report: receivingFormProvider.reverseLights,
+                  comments: checkOutFormProvider.reverseLightsComments,
+                  report: checkOutFormProvider.reverseLights,
                   updateReport: (report) {
-                    receivingFormProvider.updateReverseLights(report);
+                    checkOutFormProvider.updateReverseLights(report);
                   }
                 ),
                 Divider(
@@ -184,17 +184,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.warningLightsImages,
+                  images: checkOutFormProvider.warningLightsImages,
                   addImage: (image) {
-                    receivingFormProvider.addWarningLightsImage(image);
+                    checkOutFormProvider.addWarningLightsImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateWarningLightsImage(image);
+                    checkOutFormProvider.updateWarningLightsImage(image);
                   },
-                  comments: receivingFormProvider.warningLightsComments,
-                  report: receivingFormProvider.warningLights,
+                  comments: checkOutFormProvider.warningLightsComments,
+                  report: checkOutFormProvider.warningLights,
                   updateReport: (report) {
-                    receivingFormProvider.updateWarningLights(report);
+                    checkOutFormProvider.updateWarningLights(report);
                   }
                 ),
                 Divider(
@@ -213,17 +213,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.turnSignalsImages,
+                  images: checkOutFormProvider.turnSignalsImages,
                   addImage: (image) {
-                    receivingFormProvider.addTurnSignalsImage(image);
+                    checkOutFormProvider.addTurnSignalsImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateTurnSignalsImage(image);
+                    checkOutFormProvider.updateTurnSignalsImage(image);
                   },
-                  comments: receivingFormProvider.turnSignalsComments,
-                  report: receivingFormProvider.turnSignals,
+                  comments: checkOutFormProvider.turnSignalsComments,
+                  report: checkOutFormProvider.turnSignals,
                   updateReport: (report) {
-                    receivingFormProvider.updateTurnSignals(report);
+                    checkOutFormProvider.updateTurnSignals(report);
                   }
                 ),
                 Divider(
@@ -242,17 +242,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.fourWayFlashersImages,
+                  images: checkOutFormProvider.fourWayFlashersImages,
                   addImage: (image) {
-                    receivingFormProvider.addFourWayFlashersImage(image);
+                    checkOutFormProvider.addFourWayFlashersImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateFourWayFlashersImage(image);
+                    checkOutFormProvider.updateFourWayFlashersImage(image);
                   },
-                  comments: receivingFormProvider.fourWayFlashersComments,
-                  report: receivingFormProvider.fourWayFlashers,
+                  comments: checkOutFormProvider.fourWayFlashersComments,
+                  report: checkOutFormProvider.fourWayFlashers,
                   updateReport: (report) {
-                    receivingFormProvider.updateFourWayFlashers(report);
+                    checkOutFormProvider.updateFourWayFlashers(report);
                   }
                 ),
                 Divider(
@@ -271,17 +271,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.dashLightsImages,
+                  images: checkOutFormProvider.dashLightsImages,
                   addImage: (image) {
-                    receivingFormProvider.addDashLightsImage(image);
+                    checkOutFormProvider.addDashLightsImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateDashLightsImage(image);
+                    checkOutFormProvider.updateDashLightsImage(image);
                   },
-                  comments: receivingFormProvider.dashLightsComments,
-                  report: receivingFormProvider.dashLights,
+                  comments: checkOutFormProvider.dashLightsComments,
+                  report: checkOutFormProvider.dashLights,
                   updateReport: (report) {
-                    receivingFormProvider.updateDashLights(report);
+                    checkOutFormProvider.updateDashLights(report);
                   }
                 ),
                 Divider(
@@ -300,17 +300,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.strobeLightsImages,
+                  images: checkOutFormProvider.strobeLightsImages,
                   addImage: (image) {
-                    receivingFormProvider.addStrobeLightsImage(image);
+                    checkOutFormProvider.addStrobeLightsImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateStrobeLightsImage(image);
+                    checkOutFormProvider.updateStrobeLightsImage(image);
                   },
-                  comments: receivingFormProvider.strobeLightsComments,
-                  report: receivingFormProvider.strobeLights,
+                  comments: checkOutFormProvider.strobeLightsComments,
+                  report: checkOutFormProvider.strobeLights,
                   updateReport: (report) {
-                    receivingFormProvider.updateStrobeLights(report);
+                    checkOutFormProvider.updateStrobeLights(report);
                   }
                 ),
                 Divider(
@@ -329,17 +329,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.cabRoofLightsImages,
+                  images: checkOutFormProvider.cabRoofLightsImages,
                   addImage: (image) {
-                    receivingFormProvider.addCabRoofLightsImage(image);
+                    checkOutFormProvider.addCabRoofLightsImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateCabRoofLightsImage(image);
+                    checkOutFormProvider.updateCabRoofLightsImage(image);
                   },
-                  comments: receivingFormProvider.cabRoofLightsComments,
-                  report: receivingFormProvider.cabRoofLights,
+                  comments: checkOutFormProvider.cabRoofLightsComments,
+                  report: checkOutFormProvider.cabRoofLights,
                   updateReport: (report) {
-                    receivingFormProvider.updateCabRoofLights(report);
+                    checkOutFormProvider.updateCabRoofLights(report);
                   },
                 ),
                 Divider(
@@ -358,17 +358,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.clearanceLightsImages,
+                  images: checkOutFormProvider.clearanceLightsImages,
                   addImage: (image) {
-                    receivingFormProvider.addClearanceLightsImage(image);
+                    checkOutFormProvider.addClearanceLightsImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateClearanceLightsImage(image);
+                    checkOutFormProvider.updateClearanceLightsImage(image);
                   },
-                  comments: receivingFormProvider.clearanceLightsComments,
-                  report: receivingFormProvider.clearanceLights,
+                  comments: checkOutFormProvider.clearanceLightsComments,
+                  report: checkOutFormProvider.clearanceLights,
                   updateReport: (report) {
-                    receivingFormProvider.updateClearanceLights(report);
+                    checkOutFormProvider.updateClearanceLights(report);
                   },
                 ),
                 Divider(
@@ -398,17 +398,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.wiperBladesFrontImages,
+                  images: checkOutFormProvider.wiperBladesFrontImages,
                   addImage: (image) {
-                    receivingFormProvider.addWiperBladesFrontImage(image);
+                    checkOutFormProvider.addWiperBladesFrontImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateWiperBladesFrontImage(image);
+                    checkOutFormProvider.updateWiperBladesFrontImage(image);
                   },
-                  comments: receivingFormProvider.wiperBladesFrontComments,
-                  report: receivingFormProvider.wiperBladesFront,
+                  comments: checkOutFormProvider.wiperBladesFrontComments,
+                  report: checkOutFormProvider.wiperBladesFront,
                   updateReport: (report) {
-                    receivingFormProvider.updateWiperBladesFront(report);
+                    checkOutFormProvider.updateWiperBladesFront(report);
                   },
                 ),
                 Divider(
@@ -427,17 +427,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.wiperBladesBackImages,
+                  images: checkOutFormProvider.wiperBladesBackImages,
                   addImage: (image) {
-                    receivingFormProvider.addWiperBladesBackImage(image);
+                    checkOutFormProvider.addWiperBladesBackImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateWiperBladesBackImage(image);
+                    checkOutFormProvider.updateWiperBladesBackImage(image);
                   },
-                  comments: receivingFormProvider.wiperBladesBackComments,
-                  report: receivingFormProvider.wiperBladesBack,
+                  comments: checkOutFormProvider.wiperBladesBackComments,
+                  report: checkOutFormProvider.wiperBladesBack,
                   updateReport: (report) {
-                    receivingFormProvider.updateWiperBladesBack(report);
+                    checkOutFormProvider.updateWiperBladesBack(report);
                   },
                 ),
                 Divider(
@@ -456,17 +456,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.windshieldWiperFrontImages,
+                  images: checkOutFormProvider.windshieldWiperFrontImages,
                   addImage: (image) {
-                    receivingFormProvider.addWindshieldWiperFrontImage(image);
+                    checkOutFormProvider.addWindshieldWiperFrontImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateWindshieldWiperFrontImage(image);
+                    checkOutFormProvider.updateWindshieldWiperFrontImage(image);
                   },
-                  comments: receivingFormProvider.windshieldWiperFrontComments,
-                  report: receivingFormProvider.windshieldWiperFront,
+                  comments: checkOutFormProvider.windshieldWiperFrontComments,
+                  report: checkOutFormProvider.windshieldWiperFront,
                   updateReport: (report) {
-                    receivingFormProvider.updateWindshieldWiperFront(report);
+                    checkOutFormProvider.updateWindshieldWiperFront(report);
                   },
                 ),
                 Divider(
@@ -485,17 +485,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.windshieldWiperBackImages,
+                  images: checkOutFormProvider.windshieldWiperBackImages,
                   addImage: (image) {
-                    receivingFormProvider.addWindshieldWiperBackImage(image);
+                    checkOutFormProvider.addWindshieldWiperBackImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateWindshieldWiperBackImage(image);
+                    checkOutFormProvider.updateWindshieldWiperBackImage(image);
                   },
-                  comments: receivingFormProvider.windshieldWiperBackComments,
-                  report: receivingFormProvider.windshieldWiperBack,
+                  comments: checkOutFormProvider.windshieldWiperBackComments,
+                  report: checkOutFormProvider.windshieldWiperBack,
                   updateReport: (report) {
-                    receivingFormProvider.updateWindshieldWiperBack(report);
+                    checkOutFormProvider.updateWindshieldWiperBack(report);
                   },
                 ),
                 Divider(
@@ -514,17 +514,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.generalBodyImages,
+                  images: checkOutFormProvider.generalBodyImages,
                   addImage: (image) {
-                    receivingFormProvider.addGeneralBodyImage(image);
+                    checkOutFormProvider.addGeneralBodyImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateGeneralBodyImage(image);
+                    checkOutFormProvider.updateGeneralBodyImage(image);
                   },
-                  comments: receivingFormProvider.generalBodyComments,
-                  report: receivingFormProvider.generalBody,
+                  comments: checkOutFormProvider.generalBodyComments,
+                  report: checkOutFormProvider.generalBody,
                   updateReport: (report) {
-                    receivingFormProvider.updateGeneralBody(report);
+                    checkOutFormProvider.updateGeneralBody(report);
                   },
                 ),
                 Divider(
@@ -543,17 +543,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.decalingImages,
+                  images: checkOutFormProvider.decalingImages,
                   addImage: (image) {
-                    receivingFormProvider.addDecalingImage(image);
+                    checkOutFormProvider.addDecalingImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateDecalingImage(image);
+                    checkOutFormProvider.updateDecalingImage(image);
                   },
-                  comments: receivingFormProvider.decalingComments,
-                  report: receivingFormProvider.decaling,
+                  comments: checkOutFormProvider.decalingComments,
+                  report: checkOutFormProvider.decaling,
                   updateReport: (report) {
-                    receivingFormProvider.updateDecaling(report);
+                    checkOutFormProvider.updateDecaling(report);
                   },
                 ),
                 Divider(
@@ -572,17 +572,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.tiresImages,
+                  images: checkOutFormProvider.tiresImages,
                   addImage: (image) {
-                    receivingFormProvider.addTiresImage(image);
+                    checkOutFormProvider.addTiresImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateTiresImage(image);
+                    checkOutFormProvider.updateTiresImage(image);
                   },
-                  comments: receivingFormProvider.tiresComments,
-                  report: receivingFormProvider.tires,
+                  comments: checkOutFormProvider.tiresComments,
+                  report: checkOutFormProvider.tires,
                   updateReport: (report) {
-                    receivingFormProvider.updateTires(report);
+                    checkOutFormProvider.updateTires(report);
                   },
                 ),
                 Divider(
@@ -601,17 +601,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.glassImages,
+                  images: checkOutFormProvider.glassImages,
                   addImage: (image) {
-                    receivingFormProvider.addGlassImage(image);
+                    checkOutFormProvider.addGlassImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateGlassImage(image);
+                    checkOutFormProvider.updateGlassImage(image);
                   },
-                  comments: receivingFormProvider.glassComments,
-                  report: receivingFormProvider.glass,
+                  comments: checkOutFormProvider.glassComments,
+                  report: checkOutFormProvider.glass,
                   updateReport: (report) {
-                    receivingFormProvider.updateGlass(report);
+                    checkOutFormProvider.updateGlass(report);
                   },
                 ),
                 Divider(
@@ -630,17 +630,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.mirrorsImages,
+                  images: checkOutFormProvider.mirrorsImages,
                   addImage: (image) {
-                    receivingFormProvider.addMirrorsImage(image);
+                    checkOutFormProvider.addMirrorsImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateMirrorsImage(image);
+                    checkOutFormProvider.updateMirrorsImage(image);
                   },
-                  comments: receivingFormProvider.mirrorsComments,
-                  report: receivingFormProvider.mirrors,
+                  comments: checkOutFormProvider.mirrorsComments,
+                  report: checkOutFormProvider.mirrors,
                   updateReport: (report) {
-                    receivingFormProvider.updateMirrors(report);
+                    checkOutFormProvider.updateMirrors(report);
                   },
                 ),
                 Divider(
@@ -659,17 +659,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.parkingImages,
+                  images: checkOutFormProvider.parkingImages,
                   addImage: (image) {
-                    receivingFormProvider.addParkingImage(image);
+                    checkOutFormProvider.addParkingImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateParkingImage(image);
+                    checkOutFormProvider.updateParkingImage(image);
                   },
-                  comments: receivingFormProvider.parkingComments,
-                  report: receivingFormProvider.parking,
+                  comments: checkOutFormProvider.parkingComments,
+                  report: checkOutFormProvider.parking,
                   updateReport: (report) {
-                    receivingFormProvider.updateParking(report);
+                    checkOutFormProvider.updateParking(report);
                   },
                 ),
                 Divider(
@@ -688,17 +688,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.brakesImages,
+                  images: checkOutFormProvider.brakesImages,
                   addImage: (image) {
-                    receivingFormProvider.addBrakesImage(image);
+                    checkOutFormProvider.addBrakesImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateBrakesImage(image);
+                    checkOutFormProvider.updateBrakesImage(image);
                   },
-                  comments: receivingFormProvider.brakesComments,
-                  report: receivingFormProvider.brakes,
+                  comments: checkOutFormProvider.brakesComments,
+                  report: checkOutFormProvider.brakes,
                   updateReport: (report) {
-                    receivingFormProvider.updateBrakes(report);
+                    checkOutFormProvider.updateBrakes(report);
                   },
                 ),
                 Divider(
@@ -717,17 +717,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.emgBrakesImages,
+                  images: checkOutFormProvider.emgBrakesImages,
                   addImage: (image) {
-                    receivingFormProvider.addEMGBrakesImage(image);
+                    checkOutFormProvider.addEMGBrakesImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateEMGBrakesImage(image);
+                    checkOutFormProvider.updateEMGBrakesImage(image);
                   },
-                  comments: receivingFormProvider.emgBrakesComments,
-                  report: receivingFormProvider.emgBrakes,
+                  comments: checkOutFormProvider.emgBrakesComments,
+                  report: checkOutFormProvider.emgBrakes,
                   updateReport: (report) {
-                    receivingFormProvider.updateEMGBrakes(report);
+                    checkOutFormProvider.updateEMGBrakes(report);
                   },
                 ),
                 Divider(
@@ -746,17 +746,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.hornImages,
+                  images: checkOutFormProvider.hornImages,
                   addImage: (image) {
-                    receivingFormProvider.addHornImage(image);
+                    checkOutFormProvider.addHornImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateHornImage(image);
+                    checkOutFormProvider.updateHornImage(image);
                   },
-                  comments: receivingFormProvider.hornComments,
-                  report: receivingFormProvider.horn,
+                  comments: checkOutFormProvider.hornComments,
+                  report: checkOutFormProvider.horn,
                   updateReport: (report) {
-                    receivingFormProvider.updateHorn(report);
+                    checkOutFormProvider.updateHorn(report);
                   },
                 ),
                 Divider(

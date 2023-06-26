@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/receiving_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/checkout_form_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/header_shimmer.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/item_form.dart';
@@ -73,7 +73,7 @@ final animationsMap = {
 class _EquipmentSectionRState extends State<EquipmentSectionR> {
   @override
   Widget build(BuildContext context) {
-    final receivingFormProvider = Provider.of<ReceivingFormController>(context);
+    final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: Row(
@@ -97,17 +97,17 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.ignitionKeyImages,
+                  images: checkOutFormProvider.ignitionKeyImages,
                   addImage: (image) {
-                    receivingFormProvider.addIgnitionKeyImage(image);
+                    checkOutFormProvider.addIgnitionKeyImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateIgnitionKeyImage(image);
+                    checkOutFormProvider.updateIgnitionKeyImage(image);
                   },
-                  comments: receivingFormProvider.ignitionKeyComments,
-                  report: receivingFormProvider.ignitionKey,
+                  comments: checkOutFormProvider.ignitionKeyComments,
+                  report: checkOutFormProvider.ignitionKey,
                   updateReport: (report) {
-                    receivingFormProvider.updateIgnitionKey(report);
+                    checkOutFormProvider.updateIgnitionKey(report);
                   },
                   reportYesNo: true,
                 ),
@@ -127,17 +127,17 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.binsBoxKeyImages,
+                  images: checkOutFormProvider.binsBoxKeyImages,
                   addImage: (image) {
-                    receivingFormProvider.addBinsBoxKeyImage(image);
+                    checkOutFormProvider.addBinsBoxKeyImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateBinsBoxKeyImage(image);
+                    checkOutFormProvider.updateBinsBoxKeyImage(image);
                   },
-                  comments: receivingFormProvider.binsBoxKeyComments,
-                  report: receivingFormProvider.binsBoxKey,
+                  comments: checkOutFormProvider.binsBoxKeyComments,
+                  report: checkOutFormProvider.binsBoxKey,
                   updateReport: (report) {
-                    receivingFormProvider.updateBinsBoxKey(report);
+                    checkOutFormProvider.updateBinsBoxKey(report);
                   },
                   reportYesNo: true,
                 ),
@@ -157,17 +157,17 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.vehicleRegistrationCopyImages,
+                  images: checkOutFormProvider.vehicleRegistrationCopyImages,
                   addImage: (image) {
-                    receivingFormProvider.addVehicleRegistrationCopyImage(image);
+                    checkOutFormProvider.addVehicleRegistrationCopyImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateVehicleRegistrationCopyImage(image);
+                    checkOutFormProvider.updateVehicleRegistrationCopyImage(image);
                   },
-                  comments: receivingFormProvider.vehicleRegistrationCopyComments,
-                  report: receivingFormProvider.vehicleRegistrationCopy,
+                  comments: checkOutFormProvider.vehicleRegistrationCopyComments,
+                  report: checkOutFormProvider.vehicleRegistrationCopy,
                   updateReport: (report) {
-                    receivingFormProvider.updateVehicleRegistrationCopy(report);
+                    checkOutFormProvider.updateVehicleRegistrationCopy(report);
                   },
                   reportYesNo: true,
                 ),
@@ -187,17 +187,17 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.vehicleInsuranceCopyImages,
+                  images: checkOutFormProvider.vehicleInsuranceCopyImages,
                   addImage: (image) {
-                    receivingFormProvider.addVehicleInsuranceCopyImage(image);
+                    checkOutFormProvider.addVehicleInsuranceCopyImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateVehicleInsuranceCopyImage(image);
+                    checkOutFormProvider.updateVehicleInsuranceCopyImage(image);
                   },
-                  comments: receivingFormProvider.vehicleInsuranceCopyComments,
-                  report: receivingFormProvider.vehicleInsuranceCopy,
+                  comments: checkOutFormProvider.vehicleInsuranceCopyComments,
+                  report: checkOutFormProvider.vehicleInsuranceCopy,
                   updateReport: (report) {
-                    receivingFormProvider.updateVehicleInsuranceCopy(report);
+                    checkOutFormProvider.updateVehicleInsuranceCopy(report);
                   },
                   reportYesNo: true,
                 ),
@@ -217,17 +217,17 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: receivingFormProvider.bucketLiftOperatorManualImages,
+                  images: checkOutFormProvider.bucketLiftOperatorManualImages,
                   addImage: (image) {
-                    receivingFormProvider.addBucketLiftOperatorManualImage(image);
+                    checkOutFormProvider.addBucketLiftOperatorManualImage(image);
                   },
                   updateImage: (image) {
-                    receivingFormProvider.updateBucketLiftOperatorManualImage(image);
+                    checkOutFormProvider.updateBucketLiftOperatorManualImage(image);
                   },
-                  comments: receivingFormProvider.bucketLiftOperatorManualComments,
-                  report: receivingFormProvider.bucketLiftOperatorManual,
+                  comments: checkOutFormProvider.bucketLiftOperatorManualComments,
+                  report: checkOutFormProvider.bucketLiftOperatorManual,
                   updateReport: (report) {
-                    receivingFormProvider.updateBucketLiftOperatorManual(report);
+                    checkOutFormProvider.updateBucketLiftOperatorManual(report);
                   },
                   reportYesNo: true,
                 ),

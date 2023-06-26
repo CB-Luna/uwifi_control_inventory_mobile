@@ -538,7 +538,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }
                               }
                             },
-                            text: 'Sign In',
+                            text: 'Log In',
                             options: FFButtonOptions(
                               width: 130,
                               height: 50,

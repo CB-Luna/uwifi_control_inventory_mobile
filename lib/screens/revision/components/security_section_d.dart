@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/delivered_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/checkin_form_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/header_shimmer.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/item_form.dart';
@@ -73,7 +73,7 @@ final animationsMap = {
 class _SecuritySectionDState extends State<SecuritySectionD> {
   @override
   Widget build(BuildContext context) {
-    final deliveredFormProvider = Provider.of<DeliveredFormController>(context);
+    final checkInFormProvider = Provider.of<CheckInFormController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: Row(
@@ -97,17 +97,17 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.rtaMagnetImages,
+                  images: checkInFormProvider.rtaMagnetImages,
                   addImage: (image) {
-                    deliveredFormProvider.addRTAMagnetImage(image);
+                    checkInFormProvider.addRTAMagnetImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateRTAMagnetImage(image);
+                    checkInFormProvider.updateRTAMagnetImage(image);
                   },
-                  comments: deliveredFormProvider.rtaMagnetComments,
-                  report: deliveredFormProvider.rtaMagnet,
+                  comments: checkInFormProvider.rtaMagnetComments,
+                  report: checkInFormProvider.rtaMagnet,
                   updateReport: (report) {
-                    deliveredFormProvider.updateRTAMagnet(report);
+                    checkInFormProvider.updateRTAMagnet(report);
                   },
                 ),
                 Divider(
@@ -126,17 +126,17 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.triangleReflectorsImages,
+                  images: checkInFormProvider.triangleReflectorsImages,
                   addImage: (image) {
-                    deliveredFormProvider.addTriangleReflectorsImage(image);
+                    checkInFormProvider.addTriangleReflectorsImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateTriangleReflectorsImage(image);
+                    checkInFormProvider.updateTriangleReflectorsImage(image);
                   },
-                  comments: deliveredFormProvider.triangleReflectorsComments,
-                  report: deliveredFormProvider.triangleReflectors,
+                  comments: checkInFormProvider.triangleReflectorsComments,
+                  report: checkInFormProvider.triangleReflectors,
                   updateReport: (report) {
-                    deliveredFormProvider.updateTriangleReflectors(report);
+                    checkInFormProvider.updateTriangleReflectors(report);
                   },
                 ),
                 Divider(
@@ -155,17 +155,17 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.wheelChocksImages,
+                  images: checkInFormProvider.wheelChocksImages,
                   addImage: (image) {
-                    deliveredFormProvider.addWheelChocksImage(image);
+                    checkInFormProvider.addWheelChocksImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateWheelChocksImage(image);
+                    checkInFormProvider.updateWheelChocksImage(image);
                   },
-                  comments: deliveredFormProvider.wheelChocksComments,
-                  report: deliveredFormProvider.wheelChocks,
+                  comments: checkInFormProvider.wheelChocksComments,
+                  report: checkInFormProvider.wheelChocks,
                   updateReport: (report) {
-                    deliveredFormProvider.updateWheelChocks(report);
+                    checkInFormProvider.updateWheelChocks(report);
                   },
                 ),
                 Divider(
@@ -184,17 +184,17 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.fireExtinguisherImages,
+                  images: checkInFormProvider.fireExtinguisherImages,
                   addImage: (image) {
-                    deliveredFormProvider.addFireExtinguisherImage(image);
+                    checkInFormProvider.addFireExtinguisherImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateFireExtinguisherImage(image);
+                    checkInFormProvider.updateFireExtinguisherImage(image);
                   },
-                  comments: deliveredFormProvider.fireExtinguisherComments,
-                  report: deliveredFormProvider.fireExtinguisher,
+                  comments: checkInFormProvider.fireExtinguisherComments,
+                  report: checkInFormProvider.fireExtinguisher,
                   updateReport: (report) {
-                    deliveredFormProvider.updateFireExtinguisher(report);
+                    checkInFormProvider.updateFireExtinguisher(report);
                   },
                 ),
                 Divider(
@@ -213,17 +213,17 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.firstAidKitSafetyVestImages,
+                  images: checkInFormProvider.firstAidKitSafetyVestImages,
                   addImage: (image) {
-                    deliveredFormProvider.addFirstAidKitSafetyVestImage(image);
+                    checkInFormProvider.addFirstAidKitSafetyVestImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateFirstAidKitSafetyVestImage(image);
+                    checkInFormProvider.updateFirstAidKitSafetyVestImage(image);
                   },
-                  comments: deliveredFormProvider.firstAidKitSafetyVestComments,
-                  report: deliveredFormProvider.firstAidKitSafetyVest,
+                  comments: checkInFormProvider.firstAidKitSafetyVestComments,
+                  report: checkInFormProvider.firstAidKitSafetyVest,
                   updateReport: (report) {
-                    deliveredFormProvider.updateFirstAidKitSafetyVest(report);
+                    checkInFormProvider.updateFirstAidKitSafetyVest(report);
                   },
                 ),
                 Divider(
@@ -242,17 +242,17 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.backUpAlarmImages,
+                  images: checkInFormProvider.backUpAlarmImages,
                   addImage: (image) {
-                    deliveredFormProvider.addBackUpAlarmImage(image);
+                    checkInFormProvider.addBackUpAlarmImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateBackUpAlarmImage(image);
+                    checkInFormProvider.updateBackUpAlarmImage(image);
                   },
-                  comments: deliveredFormProvider.backUpAlarmComments,
-                  report: deliveredFormProvider.backUpAlarm,
+                  comments: checkInFormProvider.backUpAlarmComments,
+                  report: checkInFormProvider.backUpAlarm,
                   updateReport: (report) {
-                    deliveredFormProvider.updateBackUpAlarm(report);
+                    checkInFormProvider.updateBackUpAlarm(report);
                   },
                 ),
                 Divider(
@@ -282,17 +282,17 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.ladderImages,
+                  images: checkInFormProvider.ladderImages,
                   addImage: (image) {
-                    deliveredFormProvider.addLadderImage(image);
+                    checkInFormProvider.addLadderImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateLadderImage(image);
+                    checkInFormProvider.updateLadderImage(image);
                   },
-                  comments: deliveredFormProvider.ladderComments,
-                  report: deliveredFormProvider.ladder,
+                  comments: checkInFormProvider.ladderComments,
+                  report: checkInFormProvider.ladder,
                   updateReport: (report) {
-                    deliveredFormProvider.updateLadder(report);
+                    checkInFormProvider.updateLadder(report);
                   },
                 ),
                 Divider(
@@ -311,17 +311,17 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.stepLadderImages,
+                  images: checkInFormProvider.stepLadderImages,
                   addImage: (image) {
-                    deliveredFormProvider.addStepLadderImage(image);
+                    checkInFormProvider.addStepLadderImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateStepLadderImage(image);
+                    checkInFormProvider.updateStepLadderImage(image);
                   },
-                  comments: deliveredFormProvider.stepLadderComments,
-                  report: deliveredFormProvider.stepLadder,
+                  comments: checkInFormProvider.stepLadderComments,
+                  report: checkInFormProvider.stepLadder,
                   updateReport: (report) {
-                    deliveredFormProvider.updateStepLadder(report);
+                    checkInFormProvider.updateStepLadder(report);
                   },
                 ),
                 Divider(
@@ -340,17 +340,17 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.ladderStrapsImages,
+                  images: checkInFormProvider.ladderStrapsImages,
                   addImage: (image) {
-                    deliveredFormProvider.addLadderStrapsImage(image);
+                    checkInFormProvider.addLadderStrapsImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateLadderStrapsImage(image);
+                    checkInFormProvider.updateLadderStrapsImage(image);
                   },
-                  comments: deliveredFormProvider.ladderStrapsComments,
-                  report: deliveredFormProvider.ladderStraps,
+                  comments: checkInFormProvider.ladderStrapsComments,
+                  report: checkInFormProvider.ladderStraps,
                   updateReport: (report) {
-                    deliveredFormProvider.updateLadderStraps(report);
+                    checkInFormProvider.updateLadderStraps(report);
                   },
                 ),
                 Divider(
@@ -369,17 +369,17 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.hydraulicFluidForBucketImages,
+                  images: checkInFormProvider.hydraulicFluidForBucketImages,
                   addImage: (image) {
-                    deliveredFormProvider.addHydraulicFluidForBucketImage(image);
+                    checkInFormProvider.addHydraulicFluidForBucketImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateHydraulicFluidForBucketImage(image);
+                    checkInFormProvider.updateHydraulicFluidForBucketImage(image);
                   },
-                  comments: deliveredFormProvider.hydraulicFluidForBucketComments,
-                  report: deliveredFormProvider.hydraulicFluidForBucket,
+                  comments: checkInFormProvider.hydraulicFluidForBucketComments,
+                  report: checkInFormProvider.hydraulicFluidForBucket,
                   updateReport: (report) {
-                    deliveredFormProvider.updateHydraulicFluidForBucket(report);
+                    checkInFormProvider.updateHydraulicFluidForBucket(report);
                   },
                 ),
                 Divider(
@@ -398,17 +398,17 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.fiberReelRackImages,
+                  images: checkInFormProvider.fiberReelRackImages,
                   addImage: (image) {
-                    deliveredFormProvider.addFiberReelRackImage(image);
+                    checkInFormProvider.addFiberReelRackImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateFiberReelRackImage(image);
+                    checkInFormProvider.updateFiberReelRackImage(image);
                   },
-                  comments: deliveredFormProvider.fiberReelRackComments,
-                  report: deliveredFormProvider.fiberReelRack,
+                  comments: checkInFormProvider.fiberReelRackComments,
+                  report: checkInFormProvider.fiberReelRack,
                   updateReport: (report) {
-                    deliveredFormProvider.updateFiberReelRack(report);
+                    checkInFormProvider.updateFiberReelRack(report);
                   },
                 ),
                 Divider(
@@ -427,17 +427,17 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.binsLockedAndSecureImages,
+                  images: checkInFormProvider.binsLockedAndSecureImages,
                   addImage: (image) {
-                    deliveredFormProvider.addBinsLockedAndSecureImage(image);
+                    checkInFormProvider.addBinsLockedAndSecureImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateBinsLockedAndSecureImage(image);
+                    checkInFormProvider.updateBinsLockedAndSecureImage(image);
                   },
-                  comments: deliveredFormProvider.binsLockedAndSecureComments,
-                  report: deliveredFormProvider.binsLockedAndSecure,
+                  comments: checkInFormProvider.binsLockedAndSecureComments,
+                  report: checkInFormProvider.binsLockedAndSecure,
                   updateReport: (report) {
-                    deliveredFormProvider.updateBinsLockedAndSecure(report);
+                    checkInFormProvider.updateBinsLockedAndSecure(report);
                   },
                 ),
                 Divider(
@@ -456,17 +456,17 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.safetyHarnessImages,
+                  images: checkInFormProvider.safetyHarnessImages,
                   addImage: (image) {
-                    deliveredFormProvider.addSafetyHarnessImage(image);
+                    checkInFormProvider.addSafetyHarnessImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateSafetyHarnessImage(image);
+                    checkInFormProvider.updateSafetyHarnessImage(image);
                   },
-                  comments: deliveredFormProvider.safetyHarnessComments,
-                  report: deliveredFormProvider.safetyHarness,
+                  comments: checkInFormProvider.safetyHarnessComments,
+                  report: checkInFormProvider.safetyHarness,
                   updateReport: (report) {
-                    deliveredFormProvider.updateSafetyHarness(report);
+                    checkInFormProvider.updateSafetyHarness(report);
                   },
                 ),
                 Divider(
@@ -485,17 +485,17 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   }, 
                   isRight: false,
                   readOnly: false,
-                  images: deliveredFormProvider.lanyardSafetyHarnessImages,
+                  images: checkInFormProvider.lanyardSafetyHarnessImages,
                   addImage: (image) {
-                    deliveredFormProvider.addLanyardSafetyHarnessImage(image);
+                    checkInFormProvider.addLanyardSafetyHarnessImage(image);
                   },
                   updateImage: (image) {
-                    deliveredFormProvider.updateLanyardSafetyHarnessImage(image);
+                    checkInFormProvider.updateLanyardSafetyHarnessImage(image);
                   },
-                  comments: deliveredFormProvider.lanyardSafetyHarnessComments,
-                  report: deliveredFormProvider.lanyardSafetyHarness,
+                  comments: checkInFormProvider.lanyardSafetyHarnessComments,
+                  report: checkInFormProvider.lanyardSafetyHarness,
                   updateReport: (report) {
-                    deliveredFormProvider.updateLanyardSafetyHarness(report);
+                    checkInFormProvider.updateLanyardSafetyHarness(report);
                   },
                 ),
                 Divider(

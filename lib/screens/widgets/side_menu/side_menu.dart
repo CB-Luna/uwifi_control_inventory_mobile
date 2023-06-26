@@ -5,6 +5,7 @@ import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
+import 'package:taller_alex_app_asesor/screens/services_vehicle/services_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/user_profile/perfil_usuario_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_cerrar_sesion.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_recover_catalogos.dart';
@@ -183,37 +184,6 @@ class SideMenu extends StatelessWidget {
                         );
                       },
                     ),
-
-                    if (currentUser.role.target!.role == "Cliente")
-                    CustomMenuItem(
-                      label: 'Vehicles',
-                      iconData: Icons.directions_car,
-                      onTap: () async {
-                     
-                      },
-                    ),
-
-                    if (currentUser.role.target!.role == "Asesor")
-                    CustomMenuItem(
-                      label: 'Employees',
-                      iconData: Icons.groups,
-                      onTap: () async {
-                        if (currentUser.role.target!.role == "Voluntario Estratégico") {
-                          snackbarKey.currentState
-                              ?.showSnackBar(const SnackBar(
-                            content: Text(
-                                "Permission Denied. You're not authorized to perform this action."),
-                          ));
-                        } else {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ClientesScreen(),
-                            ),
-                          );
-                        }
-                      },
-                    ),
                     
                     CustomMenuItem(
                       label: 'Sync. Data',
@@ -260,57 +230,21 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-                    if (currentUser.role.target!.role == "Asesor")
+                    
                     CustomMenuItem(
-                      label: 'Report Recover',
-                      iconData: Icons.downloading_outlined,
+                      label: 'Services Vehicle',
+                      iconData: Icons.directions_car,
                       lineHeight: 1.2,
                       onTap: () async {
+                        // await Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const ServicesVehicleScreen(),
+                        //   ),
+                        // );
                       },
                     ),
 
-                    if (currentUser.role.target!.role == "Asesor")
-                    CustomMenuItem(
-                      label: 'Sync. Catalog',
-                      iconData: Icons.fact_check_outlined,
-                      lineHeight: 1.2,
-                      onTap: () async {
-                        if (currentUser.role.target!.role == "Amigo del Cambio" ||
-                            currentUser.role.target!.role == "Emprendedor") {
-                          snackbarKey.currentState
-                              ?.showSnackBar(const SnackBar(
-                            content: Text(
-                                "Permission Denied. You're not authorized to perform this action."),
-                          ));
-                        } else {
-                          final connectivityResult =
-                              await (Connectivity().checkConnectivity());
-                          // ignore: use_build_context_synchronously
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: MediaQuery.of(context).viewInsets,
-                                child: SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.45,
-                                  child: connectivityResult ==
-                                              ConnectivityResult.none 
-                                      ? const BottomSheetRecoverCatalogosWidget(
-                                          isVisible: false,
-                                        )
-                                      : const BottomSheetRecoverCatalogosWidget(
-                                          isVisible: true,
-                                        ),
-                                ),
-                              );
-                            },
-                          );
-                        }
-                      },
-                    ),
 
 
                     CustomMenuItem(

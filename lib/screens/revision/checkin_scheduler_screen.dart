@@ -6,7 +6,7 @@ import 'package:badges/badges.dart' as badge;
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/delivered_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/checkin_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/vehiculo_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
@@ -14,11 +14,11 @@ import 'package:taller_alex_app_asesor/screens/revision/components/menu_form_but
 import 'package:taller_alex_app_asesor/screens/revision/control_form_d_creted.dart';
 import 'package:taller_alex_app_asesor/screens/revision/control_form_d_not_created.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
-class DeliveredSchedulerScreen extends StatefulWidget {
+class CheckInSchedulerScreen extends StatefulWidget {
   final String hour;
   final String period;
   final DateTime registeredHour;
-  const DeliveredSchedulerScreen({
+  const CheckInSchedulerScreen({
     super.key, 
     required this.hour, 
     required this.period, 
@@ -26,7 +26,7 @@ class DeliveredSchedulerScreen extends StatefulWidget {
     });
 
   @override
-  State<DeliveredSchedulerScreen> createState() => _DeliveredSchedulerScreenState();
+  State<CheckInSchedulerScreen> createState() => _CheckInSchedulerScreenState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -84,11 +84,11 @@ final animationsMap = {
     ),
   };
 
-class _DeliveredSchedulerScreenState extends State<DeliveredSchedulerScreen> {
+class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
   @override
   Widget build(BuildContext context) {
     final vehiculoController = Provider.of<VehiculoController>(context);
-    final deliveredFromProvider = Provider.of<DeliveredFormController>(context);
+    final cehckInFormProvider = Provider.of<CheckInFormController>(context);
     final userProvider = Provider.of<UsuarioController>(context);
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
     return Scaffold(
@@ -170,9 +170,9 @@ class _DeliveredSchedulerScreenState extends State<DeliveredSchedulerScreen> {
                       ),
                       child: InkWell(
                         onTap: () async {
-                          if (deliveredFromProvider.validateForm()) {
-                            if (deliveredFromProvider.addControlForm(userProvider.usuarioCurrent)) {
-                              // deliveredFromProvider.cleanInformation();
+                          if (cehckInFormProvider.validateForm()) {
+                            if (cehckInFormProvider.addControlForm(userProvider.usuarioCurrent, widget.registeredHour)) {
+                              // cehckInFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
                               await Navigator.push(
                                 context,
@@ -182,7 +182,7 @@ class _DeliveredSchedulerScreenState extends State<DeliveredSchedulerScreen> {
                                 ),
                               );
                             } else {
-                              deliveredFromProvider.cleanInformation();
+                              cehckInFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
                               await Navigator.push(
                                 context,
@@ -249,7 +249,7 @@ class _DeliveredSchedulerScreenState extends State<DeliveredSchedulerScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Delivered Form',
+                      'CheckIn Form',
                       textAlign: TextAlign.center,
                       style:
                           FlutterFlowTheme.of(context).bodyText1.override(
@@ -333,87 +333,87 @@ class _DeliveredSchedulerScreenState extends State<DeliveredSchedulerScreen> {
                   children: [
                     badge.Badge(
                       badgeContent: Text(
-                        "${deliveredFromProvider.pendingMeasures}",
+                        "${cehckInFormProvider.pendingMeasures}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: deliveredFromProvider.pendingMeasures != 0,
+                      showBadge: cehckInFormProvider.pendingMeasures != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
                         icon: Icons.speed_outlined, 
                         onPressed: () {
-                          vehiculoController.setTapedOptionDelivered(0);
+                          vehiculoController.setTapedOptionCheckIn(0);
                         },
-                        isTaped: vehiculoController.isTapedDelivered == 0,
+                        isTaped: vehiculoController.isTapedCheckIn == 0,
                       ),
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${deliveredFromProvider.badStateLights}",
+                        "${cehckInFormProvider.badStateLights}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: deliveredFromProvider.badStateLights != 0,
+                      showBadge: cehckInFormProvider.badStateLights != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
                         icon: Icons.flare, 
                         onPressed: () {
-                          vehiculoController.setTapedOptionDelivered(1);
+                          vehiculoController.setTapedOptionCheckIn(1);
                         },
-                        isTaped: vehiculoController.isTapedDelivered == 1,
+                        isTaped: vehiculoController.isTapedCheckIn == 1,
                       ),
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${deliveredFromProvider.badStateFluids}",
+                        "${cehckInFormProvider.badStateFluids}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: deliveredFromProvider.badStateFluids != 0,
+                      showBadge: cehckInFormProvider.badStateFluids != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
                         icon: Icons.invert_colors, 
                         onPressed: () {
-                          vehiculoController.setTapedOptionDelivered(2);
+                          vehiculoController.setTapedOptionCheckIn(2);
                         },
-                        isTaped: vehiculoController.isTapedDelivered == 2,
+                        isTaped: vehiculoController.isTapedCheckIn == 2,
                       ),
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${deliveredFromProvider.badStateSecurity}",
+                        "${cehckInFormProvider.badStateSecurity}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: deliveredFromProvider.badStateSecurity != 0,
+                      showBadge: cehckInFormProvider.badStateSecurity != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
                         icon: Icons.health_and_safety, 
                         onPressed: () {
-                          vehiculoController.setTapedOptionDelivered(3);
+                          vehiculoController.setTapedOptionCheckIn(3);
                         },
-                        isTaped: vehiculoController.isTapedDelivered == 3,
+                        isTaped: vehiculoController.isTapedCheckIn == 3,
                       ),
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${deliveredFromProvider.badStateEquipment}",
+                        "${cehckInFormProvider.badStateEquipment}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: deliveredFromProvider.badStateEquipment != 0,
+                      showBadge: cehckInFormProvider.badStateEquipment != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
                       icon: Icons.build, 
                         onPressed: () {
-                          vehiculoController.setTapedOptionDelivered(4);
+                          vehiculoController.setTapedOptionCheckIn(4);
                         },
-                        isTaped: vehiculoController.isTapedDelivered == 4,
+                        isTaped: vehiculoController.isTapedCheckIn == 4,
                       ),
                     ),
                   ],
@@ -437,8 +437,8 @@ class _DeliveredSchedulerScreenState extends State<DeliveredSchedulerScreen> {
                       scrollDirection: Axis.vertical,
                       itemCount: 1,
                       itemBuilder: (context, index) {
-                        final section = vehiculoController.menuTapedDelivered [
-                            vehiculoController.isTapedDelivered];
+                        final section = vehiculoController.menuTapedCheckIn [
+                            vehiculoController.isTapedCheckIn];
                         return section;
                       });
                 },

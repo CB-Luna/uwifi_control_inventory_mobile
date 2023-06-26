@@ -1,8 +1,8 @@
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
-import 'package:taller_alex_app_asesor/screens/revision/delivered_scheduler_screen.dart';
-import 'package:taller_alex_app_asesor/screens/revision/received_scheduler_screen.dart';
+import 'package:taller_alex_app_asesor/screens/revision/checkin_scheduler_screen.dart';
+import 'package:taller_alex_app_asesor/screens/revision/checkout_scheduler_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -356,7 +356,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                        ReceivedSchedulerScreen(hour: widget.time!, period: widget.period!, registeredHour: registeredHour ?? DateTime.now(),),
+                                        CheckOutSchedulerScreen(hour: widget.time!, period: widget.period!, registeredHour: registeredHour ?? DateTime.now(),),
                                       ),
                                   );
                                   } else {
@@ -364,7 +364,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                        DeliveredSchedulerScreen(hour: widget.time!, period: widget.period!, registeredHour: registeredHour ?? DateTime.now(),),
+                                        CheckInSchedulerScreen(hour: widget.time!, period: widget.period!, registeredHour: registeredHour ?? DateTime.now(),),
                                       ),
                                     );
                                   }

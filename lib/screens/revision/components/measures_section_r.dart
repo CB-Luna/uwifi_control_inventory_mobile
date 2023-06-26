@@ -13,7 +13,7 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/receiving_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/checkout_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/expanded_text.dart';
@@ -90,7 +90,7 @@ final animationsMap = {
 class _MeasuresSectionRState extends State<MeasuresSectionR> {
   @override
   Widget build(BuildContext context) {
-    final receivingFormController = Provider.of<ReceivingFormController>(context);
+    final checkOutController = Provider.of<CheckOutFormController>(context);
     final userController = Provider.of<UsuarioController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
@@ -371,7 +371,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                       context: context,
                       builder: (BuildContext context) {
                         List<XFile> imagesTemp = [];
-                        final receivingFormProvider = Provider.of<ReceivingFormController>(context);
+                        final checkOutProvider = Provider.of<CheckOutFormController>(context);
                         return AlertDialog(
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -422,12 +422,12 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         5, 0, 5, 20),
                                     child: TextFormField(
-                                      initialValue: receivingFormProvider.mileage,
+                                      initialValue: checkOutProvider.mileage,
                                       autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
                                       obscureText: false,
                                       onChanged: (value) {
-                                        receivingFormProvider.updateMileage(value);
+                                        checkOutProvider.updateMileage(value);
                                       },
                                       decoration: InputDecoration(
                                         prefixIcon: Icon(
@@ -493,7 +493,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         5, 0, 5, 20),
                                     child: TextFormField(
-                                      controller: receivingFormProvider.mileageComments,
+                                      controller: checkOutProvider.mileageComments,
                                       maxLength: 500,
                                       textCapitalization:
                                           TextCapitalization.sentences,
@@ -580,14 +580,14 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                           width: 180,
                                                           height: 100,
                                                           listaImagenes:
-                                                              receivingFormProvider.mileageImages)),
+                                                              checkOutProvider.mileageImages)),
                                                 ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(0, 10, 0, 0),
                                                   child: Text(
-                                                    "Total: ${receivingFormProvider.mileageImages.length}",
+                                                    "Total: ${checkOutProvider.mileageImages.length}",
                                                     style: FlutterFlowTheme.of(context)
                                                         .title3
                                                         .override(
@@ -620,7 +620,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                               XFile? pickedFile;
                                               List<XFile>? pickedFiles;
                                               if (option == 'camera') {
-                                                if (receivingFormProvider.mileageImages.length <
+                                                if (checkOutProvider.mileageImages.length <
                                                     5) {
                                                   pickedFile =
                                                       await picker.pickImage(
@@ -682,7 +682,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                                   pickedFile.path,
                                                               uint8List: compressImage,
                                                               name: pickedFile.name);
-                                                          receivingFormProvider.updateMileageImage(
+                                                          checkOutProvider.updateMileageImage(
                                                           updateImageEvidence);
                                                       }
                                                     }
@@ -691,7 +691,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                 }
                                               } else {
                                                 //Se selecciona galería
-                                                if (receivingFormProvider.mileageImages.length <
+                                                if (checkOutProvider.mileageImages.length <
                                                     5) {
                                                   pickedFiles =
                                                       await picker.pickMultiImage(
@@ -708,7 +708,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                     ));
                                                     return;
                                                   }
-                                                  switch (receivingFormProvider.mileageImages.length) {
+                                                  switch (checkOutProvider.mileageImages.length) {
                                                     case 0:
                                                       for (int i = 0;
                                                           i < pickedFiles.length;
@@ -844,7 +844,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                                   pickedFile.path,
                                                               uint8List: compressImage,
                                                               name: pickedFile.name);
-                                                          receivingFormProvider.updateMileageImage(
+                                                          checkOutProvider.updateMileageImage(
                                                           updateImageEvidence);
                                                       }
                                                     }
@@ -873,7 +873,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                               imagesTemp[i].path,
                                                           uint8List: compressImage,
                                                           name: imagesTemp[i].name);
-                                                      receivingFormProvider.addMileageImage(
+                                                      checkOutProvider.addMileageImage(
                                                       newImageEvidence);
                                                   }
                                               }
@@ -963,7 +963,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                   isRight: false,
                   readOnly: false,
                   images: const [],
-                  isRegistered: receivingFormController.isMileageRegistered,
+                  isRegistered: checkOutController.isMileageRegistered,
                 ),
                 Divider(
                   height: 4,
@@ -983,9 +983,9 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                       context: context,
                       builder: (BuildContext context) {
                         List<XFile> imagesTemp = [];
-                        final receivingFormProvider = Provider.of<ReceivingFormController>(context);
+                        final checkOutProvider = Provider.of<CheckOutFormController>(context);
                         List<String> imagesString = [];
-                        for (var element in receivingFormProvider.gasImages) {
+                        for (var element in checkOutProvider.gasImages) {
                           imagesString.add(element.path);
                         }
                         return AlertDialog(
@@ -1035,7 +1035,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                               child: Column(
                                 children: [
                                   SemicircularIndicator(
-                                    progress: receivingFormProvider.gasDieselPercent * 0.01,
+                                    progress: checkOutProvider.gasDieselPercent * 0.01,
                                     radius: 100,
                                     color: FlutterFlowTheme.of(context).primaryColor,
                                     backgroundColor: FlutterFlowTheme.of(context).grayLighter,
@@ -1043,7 +1043,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                     bottomPadding: 0,
                                     contain: true,
                                     child: Text(
-                                      "${receivingFormProvider.gasDieselPercent} %",
+                                      "${checkOutProvider.gasDieselPercent} %",
                                       style: TextStyle(
                                           fontSize: 32,
                                           fontWeight: FontWeight.w600,
@@ -1075,12 +1075,12 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                         min: 0.0,
                                         max: 100.0,
                                         interval: 1.0,
-                                        value: receivingFormProvider.gasDieselPercent, 
+                                        value: checkOutProvider.gasDieselPercent, 
                                         stepSize: 1.0,
                                         activeColor: FlutterFlowTheme.of(context).secondaryColor,
                                         inactiveColor: FlutterFlowTheme.of(context).grayLighter,
                                         onChanged: ((value) {
-                                          receivingFormProvider.updateGasDieselPercent(value.truncate());
+                                          checkOutProvider.updateGasDieselPercent(value.truncate());
                                         })
                                       ),
                                   ),
@@ -1088,7 +1088,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         5, 0, 5, 10),
                                     child: TextFormField(
-                                      controller: receivingFormProvider.gasComments,
+                                      controller: checkOutProvider.gasComments,
                                       maxLength: 500,
                                       textCapitalization:
                                           TextCapitalization.sentences,
@@ -1175,14 +1175,14 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                           width: 180,
                                                           height: 100,
                                                           listaImagenes:
-                                                              receivingFormProvider.gasImages)),
+                                                              checkOutProvider.gasImages)),
                                                 ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(0, 10, 0, 0),
                                                   child: Text(
-                                                    "Total: ${receivingFormProvider.gasImages.length}",
+                                                    "Total: ${checkOutProvider.gasImages.length}",
                                                     style: FlutterFlowTheme.of(context)
                                                         .title3
                                                         .override(
@@ -1215,7 +1215,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                               XFile? pickedFile;
                                               List<XFile>? pickedFiles;
                                               if (option == 'camera') {
-                                                if (receivingFormProvider.gasImages.length <
+                                                if (checkOutProvider.gasImages.length <
                                                     5) {
                                                   pickedFile =
                                                       await picker.pickImage(
@@ -1277,7 +1277,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                                   pickedFile.path,
                                                               uint8List: compressImage,
                                                               name: pickedFile.name);
-                                                          receivingFormProvider.updateGasImage(
+                                                          checkOutProvider.updateGasImage(
                                                           updateImageEvidence);
                                                       }
                                                     }
@@ -1286,7 +1286,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                 }
                                               } else {
                                                 //Se selecciona galería
-                                                if (receivingFormProvider.gasImages.length <
+                                                if (checkOutProvider.gasImages.length <
                                                     5) {
                                                   pickedFiles =
                                                       await picker.pickMultiImage(
@@ -1303,7 +1303,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                     ));
                                                     return;
                                                   }
-                                                  switch (receivingFormProvider.gasImages.length) {
+                                                  switch (checkOutProvider.gasImages.length) {
                                                     case 0:
                                                       for (int i = 0;
                                                           i < pickedFiles.length;
@@ -1439,7 +1439,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                                   pickedFile.path,
                                                               uint8List: compressImage,
                                                               name: pickedFile.name);
-                                                          receivingFormProvider.updateGasImage(
+                                                          checkOutProvider.updateGasImage(
                                                           updateImageEvidence);
                                                       }
                                                     }
@@ -1468,7 +1468,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                             imagesTemp[i].path,
                                                         uint8List: compressImage,
                                                         name: imagesTemp[i].name);
-                                                    receivingFormProvider.addGasImage(
+                                                    checkOutProvider.addGasImage(
                                                     updateImageEvidence);
                                                 }
                                               }
@@ -1558,7 +1558,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                   isRight: false,
                   readOnly: false,
                   images: const [],
-                  isRegistered: receivingFormController.isGasRegistered,
+                  isRegistered: checkOutController.isGasRegistered,
                 ),
                 Divider(
                   height: 4,

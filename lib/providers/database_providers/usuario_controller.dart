@@ -12,16 +12,16 @@ import 'package:uuid/uuid.dart';
 class UsuarioController extends ChangeNotifier {
   List<Users> usuarios = [];
 
-  ControlForm? controlFormReceived;
-  ControlForm? controlFormDelivered;
+  ControlForm? controlFormCheckOut;
+  ControlForm? controlForrmCheckIn;
 
-  List<ControlForm> firstFormReceived = [];
-  List<ControlForm> secondFormReceived = [];
-  List<ControlForm> thirdFormReceived = [];
+  List<ControlForm> firstFormCheckOut = [];
+  List<ControlForm> secondFormCheckOut = [];
+  List<ControlForm> thirdFormCheckOut = [];
 
-  List<ControlForm> firstFormDelivered = [];
-  List<ControlForm> secondFormDelivered = [];
-  List<ControlForm> thirdFormDelivered = [];
+  List<ControlForm> firstForrmCheckIn = [];
+  List<ControlForm> secondForrmCheckIn = [];
+  List<ControlForm> thirdForrmCheckIn = [];
   
   var uuid = Uuid();
 
@@ -355,7 +355,7 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
   }
   
 
-  ControlForm? getControlFormReceivedToday(DateTime today) {
+  ControlForm? getControlFormCheckOutToday(DateTime today) {
     ControlForm? controlFormToday;
     final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual != null) {
@@ -375,7 +375,7 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     return controlFormToday;
   }
 
-  ControlForm? getControlFormDeliveredToday(DateTime today) {
+  ControlForm? getControlFormCheckInToday(DateTime today) {
     ControlForm? controlFormToday;
     final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual != null) {
@@ -398,37 +398,37 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
 
   void recoverPreviousControlForms(DateTime today) {
 
-    firstFormReceived.clear();
-    secondFormReceived.clear();
-    thirdFormReceived.clear();
+    firstFormCheckOut.clear();
+    secondFormCheckOut.clear();
+    thirdFormCheckOut.clear();
 
-    firstFormDelivered.clear();
-    secondFormDelivered.clear();
-    thirdFormDelivered.clear();
+    firstForrmCheckIn.clear();
+    secondForrmCheckIn.clear();
+    thirdForrmCheckIn.clear();
 
     if (usuarioCurrent != null) {
       for (var element in usuarioCurrent!.controlForms) {
         if (element.dateAddedR.month == (today.month)) {
-            firstFormReceived.add(element);
+            firstFormCheckOut.add(element);
           if (element.dateAddedD != null) {
             if (element.dateAddedD!.month == (today.month)) {
-              firstFormDelivered.add(element);
+              firstForrmCheckIn.add(element);
             }
           }
         }
         if (element.dateAddedR.month == (today.month - 1)) {
-            secondFormReceived.add(element);
+            secondFormCheckOut.add(element);
           if (element.dateAddedD != null) {
             if (element.dateAddedD!.month == (today.month - 1)) {
-              secondFormDelivered.add(element);
+              secondForrmCheckIn.add(element);
             }
           }
         }
         if (element.dateAddedR.month == (today.month - 2)) {
-            thirdFormReceived.add(element);
+            thirdFormCheckOut.add(element);
           if (element.dateAddedD != null) {
             if (element.dateAddedD!.month == (today.month - 2)) {
-              thirdFormDelivered.add(element);
+              thirdForrmCheckIn.add(element);
             }
           }
         }

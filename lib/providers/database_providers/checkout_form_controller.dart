@@ -8,11 +8,10 @@ import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
-import 'package:taller_alex_app_asesor/objectbox.g.dart';
+import 'package:uuid/uuid.dart';
+class CheckOutFormController extends ChangeNotifier {
 
-class DeliveredFormController extends ChangeNotifier {
-
-  GlobalKey<FormState> deliveredFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> checkOutFormKey = GlobalKey<FormState>();
 
   //***********************<Variables>************************
   //Extras
@@ -21,6 +20,7 @@ class DeliveredFormController extends ChangeNotifier {
   String mileage = ""; 
   bool isMileageRegistered = false;
   int pendingMeasures = 2;
+  Uuid uuid = Uuid();
 
   //Reports
   String headLights = "Good";
@@ -1647,27 +1647,26 @@ class DeliveredFormController extends ChangeNotifier {
   List<String> getListNames(List<ImageEvidence> imagesEvidence) {
     List<String> listNames = [];
     for (var elementImage in imagesEvidence) {
-        listNames.add(elementImage.name);
+        listNames.add("${uuid.v4()}${elementImage.name}");
       }
     return listNames;
   }
   
-  bool addControlForm(Users? user) {
+  bool addControlForm(Users? user, DateTime dateAddedR) {
     try {
-      final controlForm = dataBase.controlFormBox.query(ControlForm_.today.equals(true)).build().findUnique(); //Se recupera el control Form
-      if (controlForm != null) {
-        Measures measures = Measures(
-          gas: "$gasDieselPercent%", 
-          gasComments: gasComments.text,
-          gasImages: getListImages(gasImages), 
-          gasPath: getListPath(gasImages), 
-          gasNames: getListNames(gasImages),
-          mileage: int.parse(mileage), 
-          mileageComments: mileageComments.text,
-          mileageImages: getListImages(mileageImages),
-          mileagePath: getListPath(mileageImages),
-          mileageNames: getListNames(mileageImages),
-        );
+      Measures measures = Measures(
+        gas: "$gasDieselPercent%", 
+        gasComments: gasComments.text,
+        gasImages: getListImages(gasImages), 
+        gasPath: getListPath(gasImages), 
+        gasNames: getListNames(gasImages),
+        mileage: int.parse(mileage), 
+        mileageComments: mileageComments.text,
+        mileageImages: getListImages(mileageImages),
+        mileagePath: getListPath(mileageImages),
+        mileageNames: getListNames(mileageImages),
+      );
+
 
       final lights = Lights(
         headLights: headLights, 
@@ -1944,76 +1943,82 @@ class DeliveredFormController extends ChangeNotifier {
         bucketLiftOperatorManualPath: getListPath(bucketLiftOperatorManualImages),
         bucketLiftOperatorManualNames: getListNames(bucketLiftOperatorManualImages),
       );
-    
 
-        if (user != null) {
-          //Measures
-          measures.controlForm.target = controlForm;
-          dataBase.measuresFormBox.put(measures);
+      final controlForm = ControlForm(
+        issuesR: badStateLights + badStateFluids + badStateSecurity + badStateEquipment,
+        today: true,
+        dateAddedR: dateAddedR,
+      );
+      
+      final vehicle = user?.vehicle.target;
 
-          //Lights
-          lights.controlForm.target = controlForm;
-          dataBase.lightsFormBox.put(lights);
+      if (user != null && vehicle != null) {
+        //Measures
+        measures.controlForm.target = controlForm;
+        dataBase.measuresFormBox.put(measures);
 
-          //Car Bodywork
-          carBodywork.controlForm.target = controlForm;
-          dataBase.carBodyworkFormBox.put(carBodywork);
-          
-          //Fluids Check
-          fluidsCheck.controlForm.target = controlForm;
-          dataBase.fluidsCheckFormBox.put(fluidsCheck);
+        //Lights
+        lights.controlForm.target = controlForm;
+        dataBase.lightsFormBox.put(lights);
 
-          //Bucket Inspection
-          bucketInspection.controlForm.target = controlForm;
-          dataBase.bucketInspectionFormBox.put(bucketInspection);
+        //Car Bodywork
+        carBodywork.controlForm.target = controlForm;
+        dataBase.carBodyworkFormBox.put(carBodywork);
+        
+        //Fluids Check
+        fluidsCheck.controlForm.target = controlForm;
+        dataBase.fluidsCheckFormBox.put(fluidsCheck);
 
-          //Security
-          security.controlForm.target = controlForm;
-          dataBase.securityFormBox.put(security);
+        //Bucket Inspection
+        bucketInspection.controlForm.target = controlForm;
+        dataBase.bucketInspectionFormBox.put(bucketInspection);
 
-          //Extra
-          extra.controlForm.target = controlForm;
-          dataBase.extraFormBox.put(extra);
+        //Security
+        security.controlForm.target = controlForm;
+        dataBase.securityFormBox.put(security);
 
-          //Equipment
-          equipment.controlForm.target = controlForm;
-          dataBase.equipmentFormBox.put(equipment);
-          
-          //Control Form
+        //Extra
+        extra.controlForm.target = controlForm;
+        dataBase.extraFormBox.put(extra);
 
-          controlForm.measuresD.target = measures;
-          controlForm.lightsD.target = lights;
-          controlForm.carBodyworkD.target = carBodywork;
-          controlForm.fluidsCheckD.target = fluidsCheck;
-          controlForm.bucketInspectionD.target = bucketInspection;
-          controlForm.securityD.target = security;
-          controlForm.extraD.target = extra;
-          controlForm.equipmentD.target = equipment;
+        //Equipment
+        equipment.controlForm.target = controlForm;
+        dataBase.equipmentFormBox.put(equipment);
+        
+        //Control Form
 
-          controlForm.issuesD = badStateLights + badStateFluids + badStateSecurity + badStateEquipment;
-          controlForm.dateAddedD = DateTime.now();
+        controlForm.measuresR.target = measures;
+        controlForm.lightsR.target = lights;
+        controlForm.carBodyworkR.target = carBodywork;
+        controlForm.fluidsCheckR.target = fluidsCheck;
+        controlForm.bucketInspectionR.target = bucketInspection;
+        controlForm.securityR.target = security;
+        controlForm.extraR.target = extra;
+        controlForm.equipmentR.target = equipment;
 
-          //Se actualiza el Control Form
-          dataBase.controlFormBox.put(controlForm);
+        controlForm.vehicle.target = vehicle;
+        controlForm.employee.target = user;
 
-          final nuevaInstruccion = Bitacora(
-            instruccion: 'syncAddControlFormD',
-            usuarioPropietario: prefs.getString("userId")!,
-            idControlForm: controlForm.id,
-          ); //Se crea la nueva instruccion a realizar en bitacora
+        final idControlForm = dataBase.controlFormBox.put(controlForm);
 
-          nuevaInstruccion.controlForm.target = controlForm; //Se asigna la orden de trabajo a la nueva instrucción
-          controlForm.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a la orden de trabajo
-          dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+        //Employee
+        user.controlForms.add(controlForm);
+        dataBase.usersBox.put(user);
 
-          notifyListeners();
-          return true;
-        } 
-        else {
-          notifyListeners();
-          return false;
-        }
-      } else {
+        final nuevaInstruccion = Bitacora(
+          instruccion: 'syncAddControlFormR',
+          usuarioPropietario: prefs.getString("userId")!,
+          idControlForm: idControlForm,
+        ); //Se crea la nueva instruccion a realizar en bitacora
+
+        nuevaInstruccion.controlForm.target = controlForm; //Se asigna la orden de trabajo a la nueva instrucción
+        controlForm.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a la orden de trabajo
+        dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+
+        notifyListeners();
+        return true;
+      } 
+      else {
         notifyListeners();
         return false;
       }
