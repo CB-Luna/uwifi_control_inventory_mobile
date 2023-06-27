@@ -249,7 +249,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'CheckIn Form',
+                      'Check In Form',
                       textAlign: TextAlign.center,
                       style:
                           FlutterFlowTheme.of(context).bodyText1.override(
