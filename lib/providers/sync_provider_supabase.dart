@@ -3751,8 +3751,8 @@ class SyncProviderSupabase extends ChangeNotifier {
                 'id_security_d_fk': recordSecurity.first['id_security'],
                 'id_extra_d_fk': recordExtra.first['id_extra'],
                 'id_equipment_d_fk': recordEquipment.first['id_equipment'],
-                'issues_d': controlForm.issuesR,
-                'date_added_d': controlForm.dateAddedR.toIso8601String(),
+                'issues_d': controlForm.issuesD,
+                'date_added_d': controlForm.dateAddedD!.toIso8601String(),
               },
             ).eq("id_control_form", controlForm.idDBR)
             .select<PostgrestList>('id_control_form');

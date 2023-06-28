@@ -3,7 +3,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/checkin_form_controller.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/checkout_form_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/header_shimmer.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/item_form.dart';
@@ -242,6 +241,106 @@ class _EquipmentSectionDState extends State<EquipmentSectionD> {
 
             ]),
           ),
+          
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: Column(
+              children: [
+                // HEADER
+                HeaderShimmer(
+                  width: MediaQuery.of(context).size.width, 
+                  text: "Bucket Inspection",
+                ),
+                // Insulated
+                ItemForm(
+                  textItem: "Insulated",
+                  onPressed: () {
+
+                  }, 
+                  isRight: false,
+                  readOnly: false,
+                  images: checkInFormProvider.insulatedImages,
+                  addImage: (image) {
+                    checkInFormProvider.addInsulatedImage(image);
+                  },
+                  updateImage: (image) {
+                    checkInFormProvider.updateInsulatedImage(image);
+                  },
+                  comments: checkInFormProvider.insulatedComments,
+                  report: checkInFormProvider.insulated,
+                  updateReport: (report) {
+                    checkInFormProvider.updateInsulated(report);
+                  },
+                ),
+                Divider(
+                  height: 4,
+                  thickness: 4,
+                  indent: 20,
+                  endIndent: 20,
+                  color: FlutterFlowTheme.of(context).grayLighter,
+                ),
+
+                // Holes Drilled
+                ItemForm(
+                  textItem: "Holes Drilled",
+                  onPressed: () {
+
+                  }, 
+                  isRight: false,
+                  readOnly: false,
+                  images: checkInFormProvider.holesDrilledImages,
+                  addImage: (image) {
+                    checkInFormProvider.addHolesDrilledImage(image);
+                  },
+                  updateImage: (image) {
+                    checkInFormProvider.updateHolesDrilledImage(image);
+                  },
+                  comments: checkInFormProvider.holesDrilledComments,
+                  report: checkInFormProvider.holesDrilled,
+                  updateReport: (report) {
+                    checkInFormProvider.updateHolesDrilled(report);
+                  },
+                ),
+                Divider(
+                  height: 4,
+                  thickness: 4,
+                  indent: 20,
+                  endIndent: 20,
+                  color: FlutterFlowTheme.of(context).grayLighter,
+                ),
+
+                // Bucket liner
+                ItemForm(
+                  textItem: "Bucker Liner",
+                  onPressed: () {
+
+                  }, 
+                  isRight: false,
+                  readOnly: false,
+                  images: checkInFormProvider.bucketLinerImages,
+                  addImage: (image) {
+                    checkInFormProvider.addBucketLinerImage(image);
+                  },
+                  updateImage: (image) {
+                    checkInFormProvider.updateBucketLinerImage(image);
+                  },
+                  comments: checkInFormProvider.bucketLinerComments,
+                  report: checkInFormProvider.bucketLiner,
+                  updateReport: (report) {
+                    checkInFormProvider.updateBucketLiner(report);
+                  },
+                ),
+                Divider(
+                  height: 4,
+                  thickness: 4,
+                  indent: 20,
+                  endIndent: 20,
+                  color: FlutterFlowTheme.of(context).grayLighter,
+                ),
+
+            ]),
+          ),
+
         ],
       ),
     );

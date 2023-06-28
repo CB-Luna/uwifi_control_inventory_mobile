@@ -241,6 +241,107 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
 
             ]),
           ),
+          
+
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: Column(
+              children: [
+                // HEADER
+                HeaderShimmer(
+                  width: MediaQuery.of(context).size.width, 
+                  text: "Bucket Inspection",
+                ),
+                // Insulated
+                ItemForm(
+                  textItem: "Insulated",
+                  onPressed: () {
+
+                  }, 
+                  isRight: false,
+                  readOnly: false,
+                  images: checkOutFormProvider.insulatedImages,
+                  addImage: (image) {
+                    checkOutFormProvider.addInsulatedImage(image);
+                  },
+                  updateImage: (image) {
+                    checkOutFormProvider.updateInsulatedImage(image);
+                  },
+                  comments: checkOutFormProvider.insulatedComments,
+                  report: checkOutFormProvider.insulated,
+                  updateReport: (report) {
+                    checkOutFormProvider.updateInsulated(report);
+                  },
+                ),
+                Divider(
+                  height: 4,
+                  thickness: 4,
+                  indent: 20,
+                  endIndent: 20,
+                  color: FlutterFlowTheme.of(context).grayLighter,
+                ),
+
+                // Holes Drilled
+                ItemForm(
+                  textItem: "Holes Drilled",
+                  onPressed: () {
+
+                  }, 
+                  isRight: false,
+                  readOnly: false,
+                  images: checkOutFormProvider.holesDrilledImages,
+                  addImage: (image) {
+                    checkOutFormProvider.addHolesDrilledImage(image);
+                  },
+                  updateImage: (image) {
+                    checkOutFormProvider.updateHolesDrilledImage(image);
+                  },
+                  comments: checkOutFormProvider.holesDrilledComments,
+                  report: checkOutFormProvider.holesDrilled,
+                  updateReport: (report) {
+                    checkOutFormProvider.updateHolesDrilled(report);
+                  },
+                ),
+                Divider(
+                  height: 4,
+                  thickness: 4,
+                  indent: 20,
+                  endIndent: 20,
+                  color: FlutterFlowTheme.of(context).grayLighter,
+                ),
+
+                // Bucket liner
+                ItemForm(
+                  textItem: "Bucker Liner",
+                  onPressed: () {
+
+                  }, 
+                  isRight: false,
+                  readOnly: false,
+                  images: checkOutFormProvider.bucketLinerImages,
+                  addImage: (image) {
+                    checkOutFormProvider.addBucketLinerImage(image);
+                  },
+                  updateImage: (image) {
+                    checkOutFormProvider.updateBucketLinerImage(image);
+                  },
+                  comments: checkOutFormProvider.bucketLinerComments,
+                  report: checkOutFormProvider.bucketLiner,
+                  updateReport: (report) {
+                    checkOutFormProvider.updateBucketLiner(report);
+                  },
+                ),
+                Divider(
+                  height: 4,
+                  thickness: 4,
+                  indent: 20,
+                  endIndent: 20,
+                  color: FlutterFlowTheme.of(context).grayLighter,
+                ),
+
+            ]),
+          ),
+
         ],
       ),
     );

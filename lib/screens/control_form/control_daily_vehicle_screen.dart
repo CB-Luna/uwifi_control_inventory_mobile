@@ -11,7 +11,7 @@ import 'package:taller_alex_app_asesor/providers/database_providers/checkin_form
 import 'package:taller_alex_app_asesor/providers/database_providers/checkout_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/agregar_vehiculo_screen.dart';
-import 'package:taller_alex_app_asesor/util/util.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:badges/badges.dart' as badge;
 import 'package:taller_alex_app_asesor/screens/widgets/side_menu/side_menu.dart';
 
@@ -150,7 +150,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
+                      width: MediaQuery.of(context).size.width * 0.95,
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
@@ -174,213 +174,8 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            height: 140.0,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 8.0,
-                                  color: FlutterFlowTheme.of(context).secondaryColor,
-                                  offset: const Offset(6.0, 6.0),
-                                )
-                              ],
-                              gradient: LinearGradient(
-                                begin: Alignment.topRight,
-                                end: Alignment.bottomLeft,
-                                colors: [
-                                  FlutterFlowTheme.of(context).secondaryColor,
-                                  FlutterFlowTheme.of(context).secondaryColor.withOpacity(0.8),
-                                ],
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(0.0),
-                                bottomRight: Radius.circular(0.0),
-                                topLeft: Radius.circular(30.0),
-                                topRight: Radius.circular(30.0),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            5.0, 5.0, 5.0, 5.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          mainAxisSize:
-                                              MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0,
-                                                          0.0,
-                                                          10.0,
-                                                          0.0),
-                                              child: Container(
-                                                width: 20.0,
-                                                height: 20.0,
-                                                decoration:
-                                                    BoxDecoration(
-                                                  color: FlutterFlowTheme
-                                                          .of(context)
-                                                      .secondaryBackground,
-                                                  shape:
-                                                      BoxShape.circle,
-                                                ),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .center,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.inventory_outlined,
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryColor,
-                                                      size: 15.0,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            Text(
-                                              'Control Forms Check Up',
-                                              textAlign:
-                                                  TextAlign.center,
-                                              style: FlutterFlowTheme
-                                                      .of(context)
-                                                  .bodyText1
-                                                  .override(
-                                                    fontFamily: 'Inter',
-                                                    color: FlutterFlowTheme
-                                                            .of(context)
-                                                        .primaryBackground,
-                                                    fontSize: 20.0,
-                                                    fontWeight:
-                                                        FontWeight.bold,
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(
-                                                  0.0, 10.0, 0.0, 0.0),
-                                          child: Text(
-                                            "${dateTimeFormat('MMMM',
-                                                getCurrentTimestamp)}: ${usuarioProvider.usuarioCurrent?.recordsMonthCurrentR} / ${usuarioProvider.usuarioCurrent?.recordsMonthCurrentD}",
-                                            style: FlutterFlowTheme.of(
-                                                    context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: FlutterFlowTheme
-                                                          .of(context)
-                                                      .primaryBackground,
-                                                  fontSize: 18.0,
-                                                  fontWeight:
-                                                      FontWeight.bold,
-                                                ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(
-                                                  0.0, 10.0, 0.0, 0.0),
-                                          child: Text(
-                                            "${DateFormat(
-                                              'MMMM').
-                                              format(DateTime(
-                                                getCurrentTimestamp.year, 
-                                                DateTime(
-                                                  getCurrentTimestamp.year, 
-                                                  getCurrentTimestamp.month - 1, 
-                                                  getCurrentTimestamp.day).month))
-                                                  }: ${usuarioProvider.usuarioCurrent?.recordsMonthSecondR} / ${usuarioProvider.usuarioCurrent?.recordsMonthSecondD}",
-                                            style: FlutterFlowTheme.of(
-                                                    context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: FlutterFlowTheme
-                                                          .of(context)
-                                                      .primaryBackground,
-                                                  fontSize: 18.0,
-                                                  fontWeight:
-                                                      FontWeight.bold,
-                                                ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(
-                                                  0.0, 10.0, 0.0, 0.0),
-                                          child: Text(
-                                            "${DateFormat(
-                                              'MMMM').
-                                              format(DateTime(
-                                                getCurrentTimestamp.year, 
-                                                DateTime(
-                                                  getCurrentTimestamp.year, 
-                                                  getCurrentTimestamp.month - 2, 
-                                                  getCurrentTimestamp.day).month))
-                                                  }: ${usuarioProvider.usuarioCurrent?.recordsMonthThirdR} / ${usuarioProvider.usuarioCurrent?.recordsMonthThirdD}",
-                                            style: FlutterFlowTheme.of(
-                                                    context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: FlutterFlowTheme
-                                                          .of(context)
-                                                      .primaryBackground,
-                                                  fontSize: 18.0,
-                                                  fontWeight:
-                                                      FontWeight.bold,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 5.0, 0.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons
-                                            .keyboard_arrow_right_outlined,
-                                        color:
-                                            FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                        size: 24.0,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               GestureDetector(
                                 onTap: () async {
@@ -402,16 +197,16 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                 },
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 15, 0, 0),
+                                      0, 20, 0, 15),
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    width: MediaQuery.of(context).size.width * 0.45,
                                     height: 80.0,
                                     decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
-                                          blurRadius: 8.0,
+                                          blurRadius: 4.0,
                                           color: FlutterFlowTheme.of(context).alternate,
-                                          offset: const Offset(6.0, 6.0),
+                                          offset: const Offset(2.0, 2.0),
                                         )
                                       ],
                                       gradient: LinearGradient(
@@ -572,16 +367,16 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                 },
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 15, 0, 0),
+                                      0, 20, 0, 15),
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    width: MediaQuery.of(context).size.width * 0.45,
                                     height: 80.0,
                                     decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
-                                          blurRadius: 8.0,
+                                          blurRadius: 4.0,
                                           color: FlutterFlowTheme.of(context).alternate,
-                                          offset: const Offset(6.0, 6.0),
+                                          offset: const Offset(2.0, 2.0),
                                         )
                                       ],
                                       gradient: LinearGradient(
@@ -716,17 +511,18 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                               ),
                             ],
                           ),
+
                           Padding(
                             padding: 
-                              const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
+                              const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
                             child: Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
+                              width: MediaQuery.of(context).size.width * 0.95,
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
-                                    blurRadius: 8.0,
+                                    blurRadius: 4.0,
                                     color: FlutterFlowTheme.of(context).secondaryColor,
-                                    offset: const Offset(6.0, 6.0),
+                                    offset: const Offset(3.0, 3.0),
                                   )
                                 ],
                                 gradient: LinearGradient(
@@ -738,8 +534,8 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                   ],
                                 ),
                                 borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(30.0),
-                                  bottomRight: Radius.circular(30.0),
+                                  bottomLeft: Radius.circular(0.0),
+                                  bottomRight: Radius.circular(0.0),
                                   topLeft: Radius.circular(30.0),
                                   topRight: Radius.circular(30.0),
                                 ),
@@ -753,405 +549,383 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                             12.0, 15.0, 12.0, 5.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0,
-                                                      0.0,
-                                                      5.0,
-                                                      0.0),
-                                          child: Container(
-                                            width: 20.0,
-                                            height: 20.0,
-                                            decoration:
-                                                BoxDecoration(
-                                              color: FlutterFlowTheme
-                                                      .of(context)
-                                                  .white,
-                                              shape:
-                                                  BoxShape.circle,
-                                            ),
-                                            child: Column(
-                                              mainAxisSize:
-                                                  MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .center,
-                                              children: [
-                                                Icon(
-                                                  Icons.label_important_outline,
-                                                  color: FlutterFlowTheme
-                                                          .of(context)
-                                                      .secondaryColor,
-                                                  size: 15.0,
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width * 0.6,
+                                          child: Row(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            5.0,
+                                                            0.0),
+                                                child: Container(
+                                                  width: 20.0,
+                                                  height: 20.0,
+                                                  decoration:
+                                                      BoxDecoration(
+                                                    color: FlutterFlowTheme
+                                                            .of(context)
+                                                        .white,
+                                                    shape:
+                                                        BoxShape.circle,
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.label_important_outline,
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryColor,
+                                                        size: 15.0,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0,
-                                                      0.0,
-                                                      5.0,
-                                                      0.0),
-                                          child: Text(
-                                            'Make:',
-                                            textAlign:
-                                                TextAlign.center,
-                                            style: FlutterFlowTheme
-                                                    .of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: FlutterFlowTheme
-                                                          .of(context)
-                                                      .white,
-                                                  fontSize: 15.0,
-                                                  fontWeight:
-                                                      FontWeight.w500,
-                                                ),
-                                          ),
-                                        ),
-                                        Text(
-                                          usuarioProvider.usuarioCurrent?.vehicle.target?.make ??
-                                          '---',
-                                          textAlign:
-                                              TextAlign.center,
-                                          style: FlutterFlowTheme
-                                                  .of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                color: FlutterFlowTheme
-                                                        .of(context)
-                                                    .white,
-                                                fontSize: 15.0,
-                                                fontWeight:
-                                                    FontWeight.bold,
                                               ),
-                                        ),
-                                        const Spacer(),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0,
-                                                      0.0,
-                                                      5.0,
-                                                      0.0),
-                                          child: Container(
-                                            width: 20.0,
-                                            height: 20.0,
-                                            decoration:
-                                                BoxDecoration(
-                                              color: FlutterFlowTheme
-                                                      .of(context)
-                                                  .white,
-                                              shape:
-                                                  BoxShape.circle,
-                                            ),
-                                            child: Column(
-                                              mainAxisSize:
-                                                  MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .center,
-                                              children: [
-                                                Icon(
-                                                  Icons.calendar_month_outlined,
-                                                  color: FlutterFlowTheme
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            5.0,
+                                                            0.0),
+                                                child: Text(
+                                                  'Make:',
+                                                  textAlign:
+                                                      TextAlign.center,
+                                                  style: FlutterFlowTheme
                                                           .of(context)
-                                                      .secondaryColor,
-                                                  size: 15.0,
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .white,
+                                                        fontSize: 15.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
                                                 ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0,
-                                                      0.0,
-                                                      5.0,
-                                                      0.0),
-                                          child: Text(
-                                            'Year:',
-                                            textAlign:
-                                                TextAlign.center,
-                                            style: FlutterFlowTheme
-                                                    .of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: FlutterFlowTheme
-                                                          .of(context)
-                                                      .white,
-                                                  fontSize: 15.0,
-                                                  fontWeight:
-                                                      FontWeight.w500,
-                                                ),
-                                          ),
-                                        ),
-                                        Text(
-                                          usuarioProvider.usuarioCurrent?.vehicle.target?.year ??
-                                          '---',
-                                          textAlign:
-                                              TextAlign.center,
-                                          style: FlutterFlowTheme
-                                                  .of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                color: FlutterFlowTheme
-                                                        .of(context)
-                                                    .white,
-                                                fontSize: 15.0,
-                                                fontWeight:
-                                                    FontWeight.bold,
                                               ),
+                                              Text(
+                                                maybeHandleOverflow(
+                                                  usuarioProvider
+                                                  .usuarioCurrent?.vehicle.target?.make ?? '---', 
+                                                  15, "..."),
+                                                textAlign:
+                                                    TextAlign.center,
+                                                style: FlutterFlowTheme
+                                                        .of(context)
+                                                    .bodyText1
+                                                    .override(
+                                                      fontFamily: 'Inter',
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .white,
+                                                      fontSize: 15.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width * 0.25,
+                                          child: Row( 
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            5.0,
+                                                            0.0),
+                                                child: Container(
+                                                  width: 20.0,
+                                                  height: 20.0,
+                                                  decoration:
+                                                      BoxDecoration(
+                                                    color: FlutterFlowTheme
+                                                            .of(context)
+                                                        .white,
+                                                    shape:
+                                                        BoxShape.circle,
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.calendar_month_outlined,
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryColor,
+                                                        size: 15.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            5.0,
+                                                            0.0),
+                                                child: Text(
+                                                  'Year:',
+                                                  textAlign:
+                                                      TextAlign.center,
+                                                  style: FlutterFlowTheme
+                                                          .of(context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .white,
+                                                        fontSize: 15.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                ),
+                                              ),
+                                              Text(
+                                                usuarioProvider.usuarioCurrent?.vehicle.target?.year ??
+                                                '---',
+                                                textAlign:
+                                                    TextAlign.center,
+                                                style: FlutterFlowTheme
+                                                        .of(context)
+                                                    .bodyText1
+                                                    .override(
+                                                      fontFamily: 'Inter',
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .white,
+                                                      fontSize: 15.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                              ),
+                                            ],),
+                                        )
                                       ],
                                     ),
                                   ),
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            12.0, 15.0, 12.0, 15.0),
+                                            12.0, 10.0, 12.0, 5.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0,
-                                                      0.0,
-                                                      5.0,
-                                                      0.0),
-                                          child: Container(
-                                            width: 20.0,
-                                            height: 20.0,
-                                            decoration:
-                                                BoxDecoration(
-                                              color: FlutterFlowTheme
-                                                      .of(context)
-                                                  .white,
-                                              shape:
-                                                  BoxShape.circle,
-                                            ),
-                                            child: Column(
-                                              mainAxisSize:
-                                                  MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .center,
-                                              children: [
-                                                Icon(
-                                                  Icons.local_shipping_outlined,
-                                                  color: FlutterFlowTheme
-                                                          .of(context)
-                                                      .secondaryColor,
-                                                  size: 15.0,
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width * 0.6,
+                                          child: Row(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            5.0,
+                                                            0.0),
+                                                child: Container(
+                                                  width: 20.0,
+                                                  height: 20.0,
+                                                  decoration:
+                                                      BoxDecoration(
+                                                    color: FlutterFlowTheme
+                                                            .of(context)
+                                                        .white,
+                                                    shape:
+                                                        BoxShape.circle,
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.local_shipping_outlined,
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryColor,
+                                                        size: 15.0,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0,
-                                                      0.0,
-                                                      5.0,
-                                                      0.0),
-                                          child: Text(
-                                            'Model:',
-                                            textAlign:
-                                                TextAlign.center,
-                                            style: FlutterFlowTheme
-                                                    .of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: FlutterFlowTheme
-                                                          .of(context)
-                                                      .white,
-                                                  fontSize: 15.0,
-                                                  fontWeight:
-                                                      FontWeight.w500,
-                                                ),
-                                          ),
-                                        ),
-                                        Text(
-                                          usuarioProvider.usuarioCurrent?.vehicle.target?.model ??
-                                          '---',
-                                          textAlign:
-                                              TextAlign.center,
-                                          style: FlutterFlowTheme
-                                                  .of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                color: FlutterFlowTheme
-                                                        .of(context)
-                                                    .white,
-                                                fontSize: 15.0,
-                                                fontWeight:
-                                                    FontWeight.bold,
                                               ),
-                                        ),
-                                        const Spacer(),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0,
-                                                      0.0,
-                                                      5.0,
-                                                      0.0),
-                                          child: Container(
-                                            width: 20.0,
-                                            height: 20.0,
-                                            decoration:
-                                                BoxDecoration(
-                                              color: FlutterFlowTheme
-                                                      .of(context)
-                                                  .white,
-                                              shape:
-                                                  BoxShape.circle,
-                                            ),
-                                            child: Column(
-                                              mainAxisSize:
-                                                  MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .center,
-                                              children: [
-                                                Icon(
-                                                  Icons.key_outlined,
-                                                  color: FlutterFlowTheme
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            5.0,
+                                                            0.0),
+                                                child: Text(
+                                                  'Model:',
+                                                  textAlign:
+                                                      TextAlign.center,
+                                                  style: FlutterFlowTheme
                                                           .of(context)
-                                                      .secondaryColor,
-                                                  size: 15.0,
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .white,
+                                                        fontSize: 15.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
                                                 ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0,
-                                                      0.0,
-                                                      5.0,
-                                                      0.0),
-                                          child: Text(
-                                            'ID:',
-                                            textAlign:
-                                                TextAlign.center,
-                                            style: FlutterFlowTheme
-                                                    .of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: FlutterFlowTheme
-                                                          .of(context)
-                                                      .white,
-                                                  fontSize: 15.0,
-                                                  fontWeight:
-                                                      FontWeight.w500,
-                                                ),
-                                          ),
-                                        ),
-                                        Text(
-                                          usuarioProvider.usuarioCurrent?.vehicle.target?.id.toString() ??
-                                          '---',
-                                          textAlign:
-                                              TextAlign.center,
-                                          style: FlutterFlowTheme
-                                                  .of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                color: FlutterFlowTheme
-                                                        .of(context)
-                                                    .white,
-                                                fontSize: 15.0,
-                                                fontWeight:
-                                                    FontWeight.bold,
                                               ),
+                                              Text(
+                                                maybeHandleOverflow(
+                                                  usuarioProvider
+                                                  .usuarioCurrent?.vehicle.target?.model ?? '---', 
+                                                  15, "..."),
+                                                textAlign:
+                                                    TextAlign.center,
+                                                style: FlutterFlowTheme
+                                                        .of(context)
+                                                    .bodyText1
+                                                    .override(
+                                                      fontFamily: 'Inter',
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .white,
+                                                      fontSize: 15.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 300,
-                            child: Stack(
-                              children: [
-                                Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Container(
-                                    width: 280,
-                                    height: 280,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                    ),
-                                    child: 
-                                    usuarioProvider.usuarioCurrent?.vehicle.target?.path != null ?
-                                    Image.file(
-                                      File(usuarioProvider.usuarioCurrent!.vehicle.target!.path),
-                                      fit: BoxFit.contain,
-                                    )
-                                    :
-                                    Image.asset(
-                                      'assets/images/vehicle-placeholder.png',
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width * 0.9,
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 8.0,
-                                          color: FlutterFlowTheme.of(context).secondaryColor,
-                                          offset: const Offset(6.0, 6.0),
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width * 0.25,
+                                          child: Row(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            5.0,
+                                                            0.0),
+                                                child: Container(
+                                                  width: 20.0,
+                                                  height: 20.0,
+                                                  decoration:
+                                                      BoxDecoration(
+                                                    color: FlutterFlowTheme
+                                                            .of(context)
+                                                        .white,
+                                                    shape:
+                                                        BoxShape.circle,
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.key_outlined,
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryColor,
+                                                        size: 15.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            5.0,
+                                                            0.0),
+                                                child: Text(
+                                                  'ID:',
+                                                  textAlign:
+                                                      TextAlign.center,
+                                                  style: FlutterFlowTheme
+                                                          .of(context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .white,
+                                                        fontSize: 15.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                ),
+                                              ),
+                                              Text(
+                                                usuarioProvider.usuarioCurrent?.vehicle.target?.id.toString() ??
+                                                '---',
+                                                textAlign:
+                                                    TextAlign.center,
+                                                style: FlutterFlowTheme
+                                                        .of(context)
+                                                    .bodyText1
+                                                    .override(
+                                                      fontFamily: 'Inter',
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .white,
+                                                      fontSize: 15.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
                                         )
                                       ],
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topRight,
-                                        end: Alignment.bottomLeft,
-                                        colors: [
-                                          FlutterFlowTheme.of(context).secondaryColor,
-                                          FlutterFlowTheme.of(context).secondaryColor.withOpacity(0.8),
-                                        ],
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        bottomLeft: Radius.circular(30.0),
-                                        bottomRight: Radius.circular(30.0),
-                                        topLeft: Radius.circular(0.0),
-                                        topRight: Radius.circular(0.0),
-                                      ),
                                     ),
-                                    child: Row(
+                                  ),
+                                  
+                                   Padding(
+                                     padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 10.0, 12.0, 15.0),
+                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Padding(
@@ -1163,8 +937,8 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                       5.0,
                                                       0.0),
                                           child: Container(
-                                            width: 30.0,
-                                            height: 30.0,
+                                            width: 20.0,
+                                            height: 20.0,
                                             decoration:
                                                 BoxDecoration(
                                               color: FlutterFlowTheme
@@ -1185,7 +959,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                   color: FlutterFlowTheme
                                                           .of(context)
                                                       .secondaryColor,
-                                                  size: 25.0,
+                                                  size: 15.0,
                                                 ),
                                               ],
                                             ),
@@ -1211,7 +985,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                   color: FlutterFlowTheme
                                                           .of(context)
                                                       .white,
-                                                  fontSize: 18.0,
+                                                  fontSize: 15.0,
                                                   fontWeight:
                                                       FontWeight.w500,
                                                 ),
@@ -1230,16 +1004,260 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                             color: FlutterFlowTheme
                                                     .of(context)
                                                 .white,
-                                            fontSize: 18.0,
+                                            fontSize: 15.0,
                                             fontWeight:
                                                 FontWeight.bold,
                                           ),
                                         ),
                                       ],
+                                                                     ),
+                                   ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
+                            child: Container(
+                              width: 250,
+                              height: 250,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                    bottomLeft: Radius.circular(40.0),
+                                    bottomRight: Radius.circular(40.0),
+                                    topLeft: Radius.circular(40.0),
+                                    topRight: Radius.circular(40.0),
+                                  ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 4.0,
+                                    color: FlutterFlowTheme.of(context).grayLighter,
+                                    offset: const Offset(3.0, 3.0),
+                                  )
+                                ],
+                              ),
+                              child: 
+                              usuarioProvider.usuarioCurrent?.vehicle.target?.path != null ?
+                              Image.file(
+                                File(usuarioProvider.usuarioCurrent!.vehicle.target!.path),
+                                fit: BoxFit.contain,
+                              )
+                              :
+                              Image.asset(
+                                'assets/images/vehicle-placeholder.png',
+                              ),
+                            ),
+                          ),
+
+                          Padding(
+                            padding: 
+                              const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.95,
+                              height: 140.0,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 4.0,
+                                    color: FlutterFlowTheme.of(context).secondaryColor,
+                                    offset: const Offset(3.0, 3.0),
+                                  )
+                                ],
+                                gradient: LinearGradient(
+                                  begin: Alignment.topRight,
+                                  end: Alignment.bottomLeft,
+                                  colors: [
+                                    FlutterFlowTheme.of(context).secondaryColor,
+                                    FlutterFlowTheme.of(context).secondaryColor.withOpacity(0.8),
+                                  ],
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(30.0),
+                                  bottomRight: Radius.circular(30.0),
+                                  topLeft: Radius.circular(0.0),
+                                  topRight: Radius.circular(0.0),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              5.0, 5.0, 5.0, 5.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            mainAxisSize:
+                                                MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0,
+                                                            0.0,
+                                                            10.0,
+                                                            0.0),
+                                                child: Container(
+                                                  width: 20.0,
+                                                  height: 20.0,
+                                                  decoration:
+                                                      BoxDecoration(
+                                                    color: FlutterFlowTheme
+                                                            .of(context)
+                                                        .secondaryBackground,
+                                                    shape:
+                                                        BoxShape.circle,
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.inventory_outlined,
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryColor,
+                                                        size: 15.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                'Check Up History',
+                                                textAlign:
+                                                    TextAlign.center,
+                                                style: FlutterFlowTheme
+                                                        .of(context)
+                                                    .bodyText1
+                                                    .override(
+                                                      fontFamily: 'Inter',
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .primaryBackground,
+                                                      fontSize: 20.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(
+                                                    0.0, 10.0, 0.0, 0.0),
+                                            child: Text(
+                                              "${dateTimeFormat('MMMM',
+                                                  getCurrentTimestamp)}: ${usuarioProvider.usuarioCurrent?.recordsMonthCurrentR} / ${usuarioProvider.usuarioCurrent?.recordsMonthCurrentD}",
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText1
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    color: FlutterFlowTheme
+                                                            .of(context)
+                                                        .primaryBackground,
+                                                    fontSize: 18.0,
+                                                    fontWeight:
+                                                        FontWeight.bold,
+                                                  ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(
+                                                    0.0, 10.0, 0.0, 0.0),
+                                            child: Text(
+                                              "${DateFormat(
+                                                'MMMM').
+                                                format(DateTime(
+                                                  getCurrentTimestamp.year, 
+                                                  DateTime(
+                                                    getCurrentTimestamp.year, 
+                                                    getCurrentTimestamp.month - 1, 
+                                                    getCurrentTimestamp.day).month))
+                                                    }: ${usuarioProvider.usuarioCurrent?.recordsMonthSecondR} / ${usuarioProvider.usuarioCurrent?.recordsMonthSecondD}",
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText1
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    color: FlutterFlowTheme
+                                                            .of(context)
+                                                        .primaryBackground,
+                                                    fontSize: 18.0,
+                                                    fontWeight:
+                                                        FontWeight.bold,
+                                                  ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(
+                                                    0.0, 10.0, 0.0, 0.0),
+                                            child: Text(
+                                              "${DateFormat(
+                                                'MMMM').
+                                                format(DateTime(
+                                                  getCurrentTimestamp.year, 
+                                                  DateTime(
+                                                    getCurrentTimestamp.year, 
+                                                    getCurrentTimestamp.month - 2, 
+                                                    getCurrentTimestamp.day).month))
+                                                    }: ${usuarioProvider.usuarioCurrent?.recordsMonthThirdR} / ${usuarioProvider.usuarioCurrent?.recordsMonthThirdD}",
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText1
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    color: FlutterFlowTheme
+                                                            .of(context)
+                                                        .primaryBackground,
+                                                    fontSize: 18.0,
+                                                    fontWeight:
+                                                        FontWeight.bold,
+                                                  ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 5.0, 0.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons
+                                              .keyboard_arrow_right_outlined,
+                                          color:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryBackground,
+                                          size: 24.0,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],

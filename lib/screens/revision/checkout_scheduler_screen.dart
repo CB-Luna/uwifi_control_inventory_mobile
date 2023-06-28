@@ -249,7 +249,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Receiving Form',
+                      'Check Out Form',
                       textAlign: TextAlign.center,
                       style:
                           FlutterFlowTheme.of(context).bodyText1.override(
@@ -375,7 +375,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
-                        icon: Icons.invert_colors, 
+                        icon: Icons.health_and_safety, 
                         onPressed: () {
                           vehiculoController.setTapedOptionCheckOut(2);
                         },
@@ -392,7 +392,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
-                        icon: Icons.health_and_safety, 
+                        icon: Icons.build, 
                         onPressed: () {
                           vehiculoController.setTapedOptionCheckOut(3);
                         },
@@ -409,7 +409,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
-                      icon: Icons.build, 
+                      icon: Icons.local_shipping, 
                         onPressed: () {
                           vehiculoController.setTapedOptionCheckOut(4);
                         },

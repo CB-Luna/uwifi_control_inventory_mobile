@@ -16,6 +16,7 @@ class CheckInFormController extends ChangeNotifier {
 
   //***********************<Variables>************************
   //Extras
+  String gasDieselString = "Empty";
   int gasDieselPercent = 0; 
   bool isGasRegistered = false;
   String mileage = ""; 
@@ -219,6 +220,24 @@ class CheckInFormController extends ChangeNotifier {
 
   //Extras
   void updateGasDieselPercent(int value) {
+    switch (value) {
+      case 0:
+        gasDieselString = "Empty";
+        break;
+      case 25:
+        gasDieselString = "1/4";
+        break;
+      case 50:
+        gasDieselString = "1/2";
+        break;
+      case 75:
+        gasDieselString = "3/4";
+        break;
+      case 100:
+        gasDieselString = "Full";
+        break;
+      default:
+    }
     gasDieselPercent = value;
     if (isGasRegistered == false) {
       if (pendingMeasures == 2 || pendingMeasures == 1) {
@@ -1657,7 +1676,7 @@ class CheckInFormController extends ChangeNotifier {
       final controlForm = dataBase.controlFormBox.query(ControlForm_.today.equals(true)).build().findUnique(); //Se recupera el control Form
       if (controlForm != null) {
         Measures measures = Measures(
-          gas: "$gasDieselPercent%", 
+          gas: gasDieselString, 
           gasComments: gasComments.text,
           gasImages: getListImages(gasImages), 
           gasPath: getListPath(gasImages), 

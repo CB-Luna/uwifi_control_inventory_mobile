@@ -375,7 +375,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
-                        icon: Icons.invert_colors, 
+                        icon: Icons.health_and_safety, 
                         onPressed: () {
                           vehiculoController.setTapedOptionCheckIn(2);
                         },
@@ -392,7 +392,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
-                        icon: Icons.health_and_safety, 
+                        icon: Icons.build, 
                         onPressed: () {
                           vehiculoController.setTapedOptionCheckIn(3);
                         },
@@ -409,7 +409,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
                       child: MenuFormButton(
-                      icon: Icons.build, 
+                      icon: Icons.local_shipping, 
                         onPressed: () {
                           vehiculoController.setTapedOptionCheckIn(4);
                         },

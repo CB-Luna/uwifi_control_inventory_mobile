@@ -36,7 +36,7 @@ class _ControlFormRNotCreatedScreenState extends State<ControlFormRNotCreatedScr
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Receiving\nControl Form\nNot Created!',
+                        '¡Check Out\nControl Form\nNot Created!',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -49,7 +49,7 @@ class _ControlFormRNotCreatedScreenState extends State<ControlFormRNotCreatedScr
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(                                
-                        'Failed to save the data of receiving control form.',
+                        'Failed to save the data of check out form.',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',

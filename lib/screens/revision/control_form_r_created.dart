@@ -36,7 +36,7 @@ class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Receiving\nControl Form\nCreated!',
+                        '¡Check Out\nControl Form\nCreated!',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',

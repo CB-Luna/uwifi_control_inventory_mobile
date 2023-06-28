@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:semicircle_indicator/semicircle_indicator.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -14,9 +13,7 @@ import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/checkin_form_controller.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/expanded_text.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/header_shimmer.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/item_form.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_imagenes_completas.dart';
@@ -91,267 +88,13 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
   @override
   Widget build(BuildContext context) {
     final checkInFormController = Provider.of<CheckInFormController>(context);
-    final userController = Provider.of<UsuarioController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.4,
-            child: Column(
-              children: [
-                // HEADER
-                HeaderShimmer(
-                  width: MediaQuery.of(context).size.width, 
-                  text: "General information",
-                ),
-                // ID VEHICLE
-                ItemForm(
-                  textItem: "ID Vehicle", 
-                  applyFuction: true,
-                  onPressed: () {
-                    snackbarKey.currentState
-                        ?.showSnackBar(const SnackBar(
-                      content: Text(
-                          "This item can't be edited."),
-                    ));
-                  }, 
-                  isRight: false,
-                  readOnly: true,
-                  images: const [],
-                ),
-                ExpandedText(
-                  width: MediaQuery.of(context).size.width * 0.4, 
-                  text: userController.usuarioCurrent?.vehicle.target?.idDBR ?? "12",
-                ),
-                Divider(
-                  height: 4,
-                  thickness: 4,
-                  indent: 20,
-                  endIndent: 20,
-                  color: FlutterFlowTheme.of(context).grayLighter,
-                ),
-
-                // MAKE
-                ItemForm(
-                  textItem: "Make", 
-                  applyFuction: true,
-                  onPressed: () {
-                    snackbarKey.currentState
-                        ?.showSnackBar(const SnackBar(
-                      content: Text(
-                          "This item can't be edited."),
-                    ));
-                  }, 
-                  isRight: false,
-                  readOnly: true,
-                  images: const [],
-                ),
-                ExpandedText(
-                  width: MediaQuery.of(context).size.width * 0.4, 
-                  text: userController.usuarioCurrent?.vehicle.target?.make ?? "Mercedes",
-                ),
-                Divider(
-                  height: 4,
-                  thickness: 4,
-                  indent: 20,
-                  endIndent: 20,
-                  color: FlutterFlowTheme.of(context).grayLighter,
-                ),
-
-                // MODEL
-                ItemForm(
-                  textItem: "Model", 
-                  applyFuction: true,
-                  onPressed: () {
-                    snackbarKey.currentState
-                        ?.showSnackBar(const SnackBar(
-                      content: Text(
-                          "This item can't be edited."),
-                    ));
-                  }, 
-                  isRight: false,
-                  readOnly: true,
-                  images: const [],
-                ),
-                ExpandedText(
-                  width: MediaQuery.of(context).size.width * 0.4, 
-                  text: userController.usuarioCurrent?.vehicle.target?.model ?? "A1",
-                ),
-                Divider(
-                  height: 4,
-                  thickness: 4,
-                  indent: 20,
-                  endIndent: 20,
-                  color: FlutterFlowTheme.of(context).grayLighter,
-                ),
-
-                // YEAR
-                ItemForm(
-                  textItem: "Year", 
-                  applyFuction: true,
-                  onPressed: () {
-                    snackbarKey.currentState
-                        ?.showSnackBar(const SnackBar(
-                      content: Text(
-                          "This item can't be edited."),
-                    ));
-                  }, 
-                  isRight: false,
-                  readOnly: true,
-                  images: const [],
-                ),
-                ExpandedText(
-                  width: MediaQuery.of(context).size.width * 0.4, 
-                  text: userController.usuarioCurrent?.vehicle.target?.year ?? "2019",
-                ),
-                Divider(
-                  height: 4,
-                  thickness: 4,
-                  indent: 20,
-                  endIndent: 20,
-                  color: FlutterFlowTheme.of(context).grayLighter,
-                ),
-
-                // VIN
-                ItemForm(
-                  textItem: "VIN", 
-                  applyFuction: true,
-                  onPressed: () {
-                    snackbarKey.currentState
-                        ?.showSnackBar(const SnackBar(
-                      content: Text(
-                          "This item can't be edited."),
-                    ));
-                  }, 
-                  isRight: false,
-                  readOnly: true,
-                  images: const [],
-                ),
-                ExpandedText(
-                  width: MediaQuery.of(context).size.width * 0.4, 
-                  text: userController.usuarioCurrent?.vehicle.target?.vin ?? "PRUEBAVINCARRO01",
-                ),
-                Divider(
-                  height: 4,
-                  thickness: 4,
-                  indent: 20,
-                  endIndent: 20,
-                  color: FlutterFlowTheme.of(context).grayLighter,
-                ),
-
-                // Plate Number
-                ItemForm(
-                  textItem: "Plate Number", 
-                  applyFuction: true,
-                  onPressed: () {
-                    snackbarKey.currentState
-                        ?.showSnackBar(const SnackBar(
-                      content: Text(
-                          "This item can't be edited."),
-                    ));
-                  }, 
-                  isRight: false,
-                  readOnly: true,
-                  images: const [],
-                ),
-                ExpandedText(
-                  width: MediaQuery.of(context).size.width * 0.4, 
-                  text: userController.usuarioCurrent?.vehicle.target?.licensePlates ?? "H52-86R",
-                ),
-                Divider(
-                  height: 4,
-                  thickness: 4,
-                  indent: 20,
-                  endIndent: 20,
-                  color: FlutterFlowTheme.of(context).grayLighter,
-                ),
-
-                // Last Transmission Fluid Change
-                ItemForm(
-                  textItem: "Last Transmission Fluid Change", 
-                  applyFuction: true,
-                  onPressed: () {
-                    snackbarKey.currentState
-                        ?.showSnackBar(const SnackBar(
-                      content: Text(
-                          "This item can't be edited."),
-                    ));
-                  }, 
-                  isRight: false,
-                  readOnly: true,
-                  images: const [],
-                ),
-                ExpandedText(
-                  width: MediaQuery.of(context).size.width * 0.4, 
-                  text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.lastTransmissionFluidChange ?? DateTime.now()),
-                ),
-                Divider(
-                  height: 4,
-                  thickness: 4,
-                  indent: 20,
-                  endIndent: 20,
-                  color: FlutterFlowTheme.of(context).grayLighter,
-                ),
-
-                // Last Radiator Fluid Change
-                ItemForm(
-                  textItem: "Last Radiator Fluid Change", 
-                  applyFuction: true,
-                  onPressed: () {
-                    snackbarKey.currentState
-                        ?.showSnackBar(const SnackBar(
-                      content: Text(
-                          "This item can't be edited."),
-                    ));
-                  }, 
-                  isRight: false,
-                  readOnly: true,
-                  images: const [],
-                ),
-                ExpandedText(
-                  width: MediaQuery.of(context).size.width * 0.4, 
-                  text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.lastRadiatorFluidChange?? DateTime.now()),
-                ),
-                Divider(
-                  height: 4,
-                  thickness: 4,
-                  indent: 20,
-                  endIndent: 20,
-                  color: FlutterFlowTheme.of(context).grayLighter,
-                ),
-
-                // Oil Change Due
-                ItemForm(
-                  textItem: "Oil Change Due", 
-                  applyFuction: true,
-                  onPressed: () {
-                    snackbarKey.currentState
-                        ?.showSnackBar(const SnackBar(
-                      content: Text(
-                          "This item can't be edited."),
-                    ));
-                  }, 
-                  isRight: false,
-                  readOnly: true,
-                  images: const [],
-                ),
-                ExpandedText(
-                  width: MediaQuery.of(context).size.width * 0.4, 
-                  text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.oilChangeDue ?? DateTime.now()),
-                ),
-                Divider(
-                  height: 4,
-                  thickness: 4,
-                  indent: 20,
-                  endIndent: 20,
-                  color: FlutterFlowTheme.of(context).grayLighter,
-                ),
-            ]),
-          ),
-
+          
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.4,
             child: Column(
@@ -1044,7 +787,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                     bottomPadding: 0,
                                     contain: true,
                                     child: Text(
-                                      "${checkInFormProvider.gasDieselPercent} %",
+                                      checkInFormProvider.gasDieselString,
                                       style: TextStyle(
                                           fontSize: 32,
                                           fontWeight: FontWeight.w600,
@@ -1073,11 +816,12 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: SfSlider(
+                                        showDividers: true,
                                         min: 0.0,
                                         max: 100.0,
-                                        interval: 1.0,
+                                        interval: 25.0,
                                         value: checkInFormProvider.gasDieselPercent, 
-                                        stepSize: 1.0,
+                                        stepSize: 25.0,
                                         activeColor: FlutterFlowTheme.of(context).secondaryColor,
                                         inactiveColor: FlutterFlowTheme.of(context).grayLighter,
                                         onChanged: ((value) {
@@ -1570,6 +1314,192 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                 ),
             ]),
           ),
+
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: Column(
+              children: [
+                // HEADER
+                HeaderShimmer(
+                  width: MediaQuery.of(context).size.width, 
+                  text: "Fluids Check",
+                ),
+                // Engine Oil
+                ItemForm(
+                  textItem: "Engine Oil",
+                  onPressed: () {
+
+                  }, 
+                  isRight: false,
+                  readOnly: false,
+                  images: checkInFormController.engineOilImages,
+                  addImage: (image) {
+                    checkInFormController.addEngineOilImage(image);
+                  },
+                  updateImage: (image) {
+                    checkInFormController.updateEngineOilImage(image);
+                  },
+                  comments: checkInFormController.engineOilComments,
+                  report: checkInFormController.engineOil,
+                  updateReport: (report) {
+                    checkInFormController.updateEngineOil(report);
+                  },
+                ),
+                Divider(
+                  height: 4,
+                  thickness: 4,
+                  indent: 20,
+                  endIndent: 20,
+                  color: FlutterFlowTheme.of(context).grayLighter,
+                ),
+
+                // Transmission
+                ItemForm(
+                  textItem: "Transmission",
+                  onPressed: () {
+
+                  }, 
+                  isRight: false,
+                  readOnly: false,
+                  images: checkInFormController.transmissionImages,
+                  addImage: (image) {
+                    checkInFormController.addTransmissionImage(image);
+                  },
+                  updateImage: (image) {
+                    checkInFormController.updateTransmissionImage(image);
+                  },
+                  comments: checkInFormController.transmissionComments,
+                  report: checkInFormController.transmission,
+                  updateReport: (report) {
+                    checkInFormController.updateTransmission(report);
+                  },
+                ),
+                Divider(
+                  height: 4,
+                  thickness: 4,
+                  indent: 20,
+                  endIndent: 20,
+                  color: FlutterFlowTheme.of(context).grayLighter,
+                ),
+
+                // Coolant
+                ItemForm(
+                  textItem: "Coolant",
+                  onPressed: () {
+
+                  }, 
+                  isRight: false,
+                  readOnly: false,
+                  images: checkInFormController.coolantImages,
+                  addImage: (image) {
+                    checkInFormController.addCoolantImage(image);
+                  },
+                  updateImage: (image) {
+                    checkInFormController.updateCoolantImage(image);
+                  },
+                  comments: checkInFormController.coolantComments,
+                  report: checkInFormController.coolant,
+                  updateReport: (report) {
+                    checkInFormController.updateCoolant(report);
+                  },
+                ),
+                Divider(
+                  height: 4,
+                  thickness: 4,
+                  indent: 20,
+                  endIndent: 20,
+                  color: FlutterFlowTheme.of(context).grayLighter,
+                ),
+
+                // Power Steering
+                ItemForm(
+                  textItem: "Power Steering",
+                  onPressed: () {
+
+                  }, 
+                  isRight: false,
+                  readOnly: false,
+                  images: checkInFormController.powerSteeringImages,
+                  addImage: (image) {
+                    checkInFormController.addPowerSteeringImage(image);
+                  },
+                  updateImage: (image) {
+                    checkInFormController.updatePowerSteeringImage(image);
+                  },
+                  comments: checkInFormController.powerSteeringComments,
+                  report: checkInFormController.powerSteering,
+                  updateReport: (report) {
+                    checkInFormController.updatePowerSteering(report);
+                  },
+                ),
+                Divider(
+                  height: 4,
+                  thickness: 4,
+                  indent: 20,
+                  endIndent: 20,
+                  color: FlutterFlowTheme.of(context).grayLighter,
+                ),
+
+                // Diesel Exhaust Fluid
+                ItemForm(
+                  textItem: "Diesel Exhaust Fluid",
+                  onPressed: () {
+
+                  }, 
+                  isRight: false,
+                  readOnly: false,
+                  images: checkInFormController.dieselExhaustFluidImages,
+                  addImage: (image) {
+                    checkInFormController.addDieselExhaustFluidImage(image);
+                  },
+                  updateImage: (image) {
+                    checkInFormController.updateDieselExhaustFluidImage(image);
+                  },
+                  comments: checkInFormController.dieselExhaustFluidComments,
+                  report: checkInFormController.dieselExhaustFluid,
+                  updateReport: (report) {
+                    checkInFormController.updateDieselExhaustFluid(report);
+                  },
+                ),
+                Divider(
+                  height: 4,
+                  thickness: 4,
+                  indent: 20,
+                  endIndent: 20,
+                  color: FlutterFlowTheme.of(context).grayLighter,
+                ),
+
+                // Windshield Washer Fluid
+                ItemForm(
+                  textItem: "Windshield Washer Fluid",
+                  onPressed: () {
+
+                  }, 
+                  isRight: false,
+                  readOnly: false,
+                  images: checkInFormController.windshieldWasherFluidImages,
+                  addImage: (image) {
+                    checkInFormController.addWindshieldWasherFluidImage(image);
+                  },
+                  updateImage: (image) {
+                    checkInFormController.updateWindshieldWasherFluidImage(image);
+                  },
+                  comments: checkInFormController.windshieldWasherFluidComments,
+                  report: checkInFormController.windshieldWasherFluid,
+                  updateReport: (report) {
+                    checkInFormController.updateWindshieldWasherFluid(report);
+                  },
+                ),
+                Divider(
+                  height: 4,
+                  thickness: 4,
+                  indent: 20,
+                  endIndent: 20,
+                  color: FlutterFlowTheme.of(context).grayLighter,
+                ),
+            ]),
+          ),
+          
         ],
       ),
     );
