@@ -1,3 +1,5 @@
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/user_provider.dart';
 import 'package:taller_alex_app_asesor/screens/screens.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_button.dart';
@@ -28,6 +30,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final usuarioProvider = Provider.of<UsuarioController>(context);
     final UserState userState = Provider.of<UserState>(context);
 
     return WillPopScope(
@@ -246,8 +249,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               if (!formKey.currentState!.validate()) {
                                 return;
                               }
-
-
+                              usuarioProvider.clearInformation();
+                              prefs.setBool(
+                                  "boolLogin", false);
                               await userState.logout();
                             },
                             text: 'Cambiar contraseña',

@@ -5,17 +5,13 @@ import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
-import 'package:taller_alex_app_asesor/screens/services_vehicle/services_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/user_profile/perfil_usuario_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_cerrar_sesion.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_recover_catalogos.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_sincronizar_widget.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:taller_alex_app_asesor/providers/providers.dart';
-import 'package:taller_alex_app_asesor/screens/clientes/clientes_screen.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/side_menu/custom_menu_item.dart';
 
@@ -25,7 +21,6 @@ class SideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    final UserState userState = Provider.of<UserState>(context);
 
     if (usuarioProvider.usuarioCurrent == null) {
       return WillPopScope(
@@ -155,16 +150,19 @@ class SideMenu extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 0, 0),
-                              child: Text(
-                                maybeHandleOverflow("${usuarioProvider.usuarioCurrent!.name} ${usuarioProvider.usuarioCurrent!.lastName}", 16, "..."),
-                                maxLines: 2,
-                                style: FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily:
-                                          FlutterFlowTheme.of(context).bodyText1Family,
-                                      color: FlutterFlowTheme.of(context).alternate,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold
-                                    ),
+                              child: SizedBox(
+                                width: 130,
+                                child: Text(
+                                  maybeHandleOverflow("${usuarioProvider.usuarioCurrent!.name} ${usuarioProvider.usuarioCurrent!.lastName}", 22, "..."),
+                                  maxLines: 2,
+                                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                                        fontFamily:
+                                            FlutterFlowTheme.of(context).bodyText1Family,
+                                        color: FlutterFlowTheme.of(context).alternate,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                ),
                               ),
                             ),
                           ],

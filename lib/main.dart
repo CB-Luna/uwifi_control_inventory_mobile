@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -124,6 +127,47 @@ class _MyAppState extends State<MyApp> {
   final ThemeMode _themeMode = ThemeMode.system;
 
   void setLocale(Locale value) => setState(() => _locale = value);
+  UsuarioController usuarioController = UsuarioController();
+    @override
+    void initState() {
+      super.initState();
+
+      _startTimeout();
+    }
+
+  Future<void> _startTimeout() async {
+
+    Timer.periodic(Duration(seconds: 10), (timer) async {
+      if (await isInternetConnection()) {
+        print("Se puede hacer la sincronización");
+        final bitacora = dataBase.bitacoraBox.getAll().toList();
+        if (bitacora.isNotEmpty) {
+          //Agregar condición cuando se está sincronizando
+          print("Se hace la sincronización ");
+          usuarioController.updateSyncFlag(true);
+        } else {
+          usuarioController.updateSyncFlag(false);
+        }
+      }
+    });
+  }
+
+
+  Future<bool> isInternetConnection() async {
+    bool? boolLogin = prefs.getBool("boolLogin");
+    if (boolLogin == null || boolLogin == false) {
+      return false;
+    }
+    else {
+      final connectivityResult =
+        await (Connectivity().checkConnectivity());
+      if(connectivityResult == ConnectivityResult.none) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

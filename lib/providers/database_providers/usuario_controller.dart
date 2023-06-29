@@ -22,6 +22,8 @@ class UsuarioController extends ChangeNotifier {
   List<ControlForm> firstForrmCheckIn = [];
   List<ControlForm> secondForrmCheckIn = [];
   List<ControlForm> thirdForrmCheckIn = [];
+
+  bool syncFlag = false;
   
   var uuid = Uuid();
 
@@ -58,9 +60,16 @@ class UsuarioController extends ChangeNotifier {
     return usuarioKey.currentState!.validate() ? true : false;
   }
 
-  void clearInformation() {
+  void updateSyncFlag(bool value) {
+    syncFlag = value;
     notifyListeners();
   }
+
+  void clearInformation() {
+    syncFlag = false;
+    notifyListeners();
+  }
+
   Future<void> add(
       String nombre,
       String apellidoP,

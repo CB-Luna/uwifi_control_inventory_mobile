@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/screens/control_form/control_daily_vehicle_screen.dart';
-import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
+import 'package:taller_alex_app_asesor/screens/select_vehicle/select_vehicle_screen.dart';
 
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-class ControlFormDCreatedScreen extends StatefulWidget {
-  const ControlFormDCreatedScreen({Key? key}) : super(key: key);
+class SelectVehicleFailedScreen extends StatefulWidget {
+  const SelectVehicleFailedScreen({Key? key}) : super(key: key);
 
   @override
-  State<ControlFormDCreatedScreen> createState() => _ControlFormDCreatedScreenState();
+  State<SelectVehicleFailedScreen> createState() => _SelectVehicleFailedScreenState();
 }
 
-class _ControlFormDCreatedScreenState extends State<ControlFormDCreatedScreen> {
+class _SelectVehicleFailedScreenState extends State<SelectVehicleFailedScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -37,7 +36,7 @@ class _ControlFormDCreatedScreenState extends State<ControlFormDCreatedScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Check In\nForm\nCreated!',
+                        '¡Failed in\nSelect\nVehicle!',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -50,7 +49,7 @@ class _ControlFormDCreatedScreenState extends State<ControlFormDCreatedScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(                                
-                        'The form has been saved successfully.',
+                        'A problem occurs while it selected the vehicle.',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -64,8 +63,8 @@ class _ControlFormDCreatedScreenState extends State<ControlFormDCreatedScreen> {
                           const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                       child: SizedBox(
                         child: Icon(
-                          Icons.check_circle_outline,
-                          color: FlutterFlowTheme.of(context).secondaryColor,
+                          Icons.cancel_outlined,
+                          color: FlutterFlowTheme.of(context).tertiaryColor,
                           size: 250,
                           )
                       ),
@@ -79,7 +78,7 @@ class _ControlFormDCreatedScreenState extends State<ControlFormDCreatedScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const ControlDailyVehicleScreen(),
+                                  const SelectVehicleScreen(),
                             ),
                           );
                         },
@@ -87,7 +86,7 @@ class _ControlFormDCreatedScreenState extends State<ControlFormDCreatedScreen> {
                         options: FFButtonOptions(
                           width: 200,
                           height: 45,
-                          color: FlutterFlowTheme.of(context).secondaryColor,
+                          color: FlutterFlowTheme.of(context).primaryColor,
                           textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                                 fontFamily: 'Poppins',
                                 color: Colors.white,

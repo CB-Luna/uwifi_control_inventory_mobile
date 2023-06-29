@@ -9,6 +9,8 @@ import 'package:taller_alex_app_asesor/providers/database_providers/usuario_cont
 import 'package:taller_alex_app_asesor/providers/providers.dart';
 import 'package:taller_alex_app_asesor/providers/roles_supabase_provider.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/control_daily_vehicle_screen.dart';
+import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
+import 'package:taller_alex_app_asesor/screens/select_vehicle/select_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/toggle_icon.dart';
 import 'package:taller_alex_app_asesor/services/auth_service.dart';
 
@@ -361,6 +363,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (usuarioActual != null) {
                                   //print('Usuario ya existente');
                                   //Se guarda el ID DEL USUARIO (correo electrónico)
+                                  prefs.setBool(
+                                  "boolLogin", true);
                                   prefs.setString(
                                       "userId", userState.emailController.text);
                                   //Se guarda el Password encriptado
@@ -477,6 +481,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         );
                                         usuarioProvider.getUser(loginResponseSupabase.user.email);
                                       }
+                                      prefs.setBool(
+                                        "boolLogin", true);
                                       if (userState.recuerdame == true) {
                                         await userState.setEmail();
                                         await userState.setPassword();
@@ -487,34 +493,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                         await prefs.remove('email');
                                         await prefs.remove('password');
                                       }
-                                      // //Se descargan los proyectos por cada tipo de Usuario
-                                      // bool procesoExistoso = false;
-                                      // switch (usuarioProvider.usuarioCurrent!.role.target!.role) {
-                                      //   case "Asesor":
-                                      //     break;
-                                      //   case "Técnico-Mecánico":
-                                      //     break;
-                                      //   case "Cliente":
-                                      //     break;
-                                      //   default:
-                                      //     break;
-                                      // }
-                  
-                                      // if (!procesoExistoso) {
-                                      //     snackbarKey.currentState
-                                      //       ?.showSnackBar(const SnackBar(
-                                      //     content: Text(
-                                      //         "'Attempting Inspection Reports Data Recovery for Current User from Server' Failed."),
-                                      //   ));
-                                      // }
+                                      // //Se valida que el Usuario tenga un vehículo Asignado
                                       if (!mounted) return;
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ControlDailyVehicleScreen(),
-                                        ),
-                                      );
+                                      if (usuarioProvider.usuarioCurrent?.vehicle.target != null) {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ControlDailyVehicleScreen(),
+                                          ),
+                                        );
+                                      } else {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SelectVehicleScreen(),
+                                          ),
+                                        );
+                                      }
                                     } else {
                                       snackbarKey.currentState
                                           ?.showSnackBar(const SnackBar(

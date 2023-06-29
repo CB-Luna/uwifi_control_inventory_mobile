@@ -897,7 +897,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 ),
                                               ),
                                               Text(
-                                                usuarioProvider.usuarioCurrent?.vehicle.target?.id.toString() ??
+                                                usuarioProvider.usuarioCurrent?.vehicle.target?.idDBR ??
                                                 '---',
                                                 textAlign:
                                                     TextAlign.center,

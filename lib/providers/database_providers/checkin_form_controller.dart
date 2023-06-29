@@ -1435,6 +1435,7 @@ class CheckInFormController extends ChangeNotifier {
   void cleanInformation()
   {
     //Extras
+    gasDieselString = "Empty";
     gasDieselPercent = 0;
     isGasRegistered = false;
     mileage = "";
