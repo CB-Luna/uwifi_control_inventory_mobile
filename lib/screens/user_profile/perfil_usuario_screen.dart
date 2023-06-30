@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
 import 'package:taller_alex_app_asesor/screens/user_profile/device_information_widget.dart';
-import 'package:taller_alex_app_asesor/screens/screens.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -113,7 +113,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const ControlDailyVehicleScreen(),
+                                              const MainScreenSelector(),
                                         ),
                                       );
                                     },

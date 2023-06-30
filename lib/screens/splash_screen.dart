@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:taller_alex_app_asesor/providers/providers.dart';
+import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
 import 'package:taller_alex_app_asesor/screens/screens.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -76,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     if (snapshot.data![0] == '') {
                       return const LoginScreen();
                     } else {
-                      return const ControlDailyVehicleScreen();
+                      return const MainScreenSelector();
                     }
                   },
                 );

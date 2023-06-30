@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/providers.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
@@ -19,7 +18,6 @@ class _BottomSheetCerrarSesionState
     extends State<BottomSheetCerrarSesion> {
   @override
   Widget build(BuildContext context) {
-    final usuarioProvider = Provider.of<UsuarioController>(context);
     final UserState userState = Provider.of<UserState>(context);
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -145,7 +143,7 @@ class _BottomSheetCerrarSesionState
                             ),
                             FFButtonWidget(
                               onPressed: () async {
-                                usuarioProvider.clearInformation();
+                                // usuarioProvider.clearInformation();
                                 prefs.setBool(
                                   "boolLogin", false);
                                 await userState.logout();

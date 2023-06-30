@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/screens/control_form/control_daily_vehicle_screen.dart';
+import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
 
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
@@ -78,7 +78,7 @@ class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const ControlDailyVehicleScreen(),
+                                  const MainScreenSelector(),
                             ),
                           );
                         },

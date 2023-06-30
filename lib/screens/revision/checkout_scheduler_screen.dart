@@ -9,7 +9,6 @@ import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/checkout_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/vehiculo_controller.dart';
-import 'package:taller_alex_app_asesor/screens/control_form/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/menu_form_button.dart';
@@ -129,7 +128,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const ControlDailyVehicleScreen(),
+                                  const MainScreenSelector(),
                             ),
                           );
                         },

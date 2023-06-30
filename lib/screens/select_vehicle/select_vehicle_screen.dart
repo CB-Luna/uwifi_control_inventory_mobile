@@ -9,7 +9,7 @@ import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/vehiculo_controller.dart';
 import 'package:taller_alex_app_asesor/providers/user_provider.dart';
-import 'package:taller_alex_app_asesor/screens/control_form/control_daily_vehicle_screen.dart';
+import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
 import 'package:taller_alex_app_asesor/screens/select_vehicle/components/select_vehicle_failed.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
@@ -97,7 +97,7 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
                         ),
                         child: InkWell(
                           onTap: () async {
-                            usuarioProvider.clearInformation();
+                            // usuarioProvider.clearInformation();
                             vehiculoController.cleanComponents();
                             prefs.setBool(
                                   "boolLogin", false);
@@ -156,7 +156,7 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const ControlDailyVehicleScreen(),
+                                          const MainScreenSelector(),
                                     ),
                                   );
                               } else {

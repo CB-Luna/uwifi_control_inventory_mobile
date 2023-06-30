@@ -1,9 +1,7 @@
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/user_provider.dart';
 import 'package:taller_alex_app_asesor/screens/screens.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_button.dart';
-import 'package:taller_alex_app_asesor/services/auth_service.dart';
 import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +28,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final usuarioProvider = Provider.of<UsuarioController>(context);
     final UserState userState = Provider.of<UserState>(context);
 
     return WillPopScope(
@@ -249,7 +246,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               if (!formKey.currentState!.validate()) {
                                 return;
                               }
-                              usuarioProvider.clearInformation();
+                              // usuarioProvider.clearInformation();
                               prefs.setBool(
                                   "boolLogin", false);
                               await userState.logout();

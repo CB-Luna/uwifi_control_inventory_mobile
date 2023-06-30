@@ -78,7 +78,6 @@ void main() async {
         ChangeNotifierProvider<UsuarioController>(
           create: (context) =>
               UsuarioController(email: prefs.getString("userId")),
-          lazy: false,
         ),
         ChangeNotifierProvider<SyncProviderSupabase>(
           create: (context) => SyncProviderSupabase(),
@@ -128,6 +127,7 @@ class _MyAppState extends State<MyApp> {
 
   void setLocale(Locale value) => setState(() => _locale = value);
   UsuarioController usuarioController = UsuarioController();
+  SyncProviderSupabase syncSupabaseController = SyncProviderSupabase();
     @override
     void initState() {
       super.initState();
@@ -137,16 +137,24 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _startTimeout() async {
 
-    Timer.periodic(Duration(seconds: 10), (timer) async {
+    Timer.periodic(Duration(seconds: 1), (timer) async {
       if (await isInternetConnection()) {
         print("Se puede hacer la sincronización");
         final bitacora = dataBase.bitacoraBox.getAll().toList();
         if (bitacora.isNotEmpty) {
-          //Agregar condición cuando se está sincronizando
-          print("Se hace la sincronización ");
-          usuarioController.updateSyncFlag(true);
+          // //Agregar condición cuando se está sincronizando
+          // if (!syncSupabaseController.procesoterminado) {
+          //   print("Se hace la sincronización ");
+          //   // usuarioController.setStream(true);
+          // } else {
+          //   // usuarioController.setStream(false);
+          // }
+          
+          prefs.setBool("boolSyncData", true);
         } else {
-          usuarioController.updateSyncFlag(false);
+         
+          // usuarioController.setStream(false);
+          prefs.setBool("boolSyncData", false);
         }
       }
     });

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -23,7 +24,6 @@ class UsuarioController extends ChangeNotifier {
   List<ControlForm> secondForrmCheckIn = [];
   List<ControlForm> thirdForrmCheckIn = [];
 
-  bool syncFlag = false;
   
   var uuid = Uuid();
 
@@ -41,6 +41,14 @@ class UsuarioController extends ChangeNotifier {
 
   String? currentUser;
   int? currentUserId;
+
+  // StreamController<bool> syncFlag = StreamController<bool>.broadcast();
+  // Stream<bool> get syncFlagStream => syncFlag.stream;
+
+  // void setStream(bool value) {
+  //   syncFlag.add(value);
+  // }
+
 
   UsuarioController({String? email}) {
     //print("El email es: $email");
@@ -60,15 +68,11 @@ class UsuarioController extends ChangeNotifier {
     return usuarioKey.currentState!.validate() ? true : false;
   }
 
-  void updateSyncFlag(bool value) {
-    syncFlag = value;
-    notifyListeners();
-  }
 
-  void clearInformation() {
-    syncFlag = false;
-    notifyListeners();
-  }
+  // void clearInformation() {
+  //   // setStream(false);
+  //   notifyListeners();
+  // }
 
   Future<void> add(
       String nombre,

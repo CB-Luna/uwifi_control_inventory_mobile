@@ -15,7 +15,7 @@ import 'package:taller_alex_app_asesor/screens/revision/components/lights_sectio
 import 'package:taller_alex_app_asesor/screens/revision/components/measures_section_d.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/security_section_d.dart';
 class VehiculoController extends ChangeNotifier {
-
+  
   Vehicle? vehicleSelected;
 
   //OPCIONES MENU:

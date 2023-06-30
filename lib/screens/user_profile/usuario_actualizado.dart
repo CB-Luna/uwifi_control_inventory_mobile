@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
 
 import 'package:taller_alex_app_asesor/theme/theme.dart';
 
-import 'package:taller_alex_app_asesor/screens/control_form/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class UsuarioActualizado extends StatefulWidget {
@@ -81,7 +81,7 @@ class _UsuarioActualizadoState extends State<UsuarioActualizado> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const ControlDailyVehicleScreen(),
+                                  const MainScreenSelector(),
                             ),
                           );
                         },
