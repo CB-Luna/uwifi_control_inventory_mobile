@@ -830,6 +830,8 @@ class Vehicle {
   String? idDBR;
   @Backlink()
   final bitacora = ToMany<Bitacora>();
+  @Backlink()
+  final vehicleServices = ToMany<VehicleServices>();
   final status = ToOne<Status>();
   final company = ToOne<Company>();
 
@@ -856,6 +858,55 @@ class Vehicle {
 }
 
 @Entity()
+class Service {
+  int id;
+  String service;
+  String description;
+  DateTime dateAdded;
+  @Unique()
+  String? idDBR;
+  @Backlink()
+  final bitacora = ToMany<Bitacora>();
+
+  Service({
+    this.id = 0,
+    required this.service,
+    required this.description,
+    DateTime? dateAdded,
+    this.idDBR,
+  }) : dateAdded = dateAdded ?? DateTime.now();
+
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
+}
+
+@Entity()
+class VehicleServices {
+  int id;
+  bool completed;
+  DateTime serviceDate;
+  DateTime dateAdded;
+  @Unique()
+  String? idDBR;
+  @Backlink()
+  final bitacora = ToMany<Bitacora>();
+  final vehicle = ToOne<Vehicle>();
+  final service = ToOne<Service>();
+
+  VehicleServices({
+    this.id = 0,
+    required this.completed,
+    required this.serviceDate,
+    DateTime? dateAdded,
+    this.idDBR,
+  }) : dateAdded = dateAdded ?? DateTime.now();
+
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
+}
+
+
+@Entity()
 class Bitacora {
   int id;
   String usuarioPropietario;
@@ -877,6 +928,8 @@ class Bitacora {
   final status = ToOne<Status>();
   final company = ToOne<Company>();
   final user = ToOne<Users>();
+  final service = ToOne<Service>();
+  final vehicleService = ToOne<VehicleServices>();
   @Backlink()
   final users = ToMany<Users>();
 

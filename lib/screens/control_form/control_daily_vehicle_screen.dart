@@ -1236,26 +1236,6 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 5.0, 0.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons
-                                              .keyboard_arrow_right_outlined,
-                                          color:
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryBackground,
-                                          size: 24.0,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),

@@ -149,6 +149,10 @@ class RolesSupabaseProvider extends ChangeNotifier {
       final recordsVehicle = await supabaseCtrlV
           .from('vehicle')
           .select();
+      //Se recupera toda la colección de services en Supabase
+      final recordsServices = await supabaseCtrlV
+          .from('services')
+          .select();
       // Se recuperan los formularios del mes anterior
       // Obtener la fecha del mes actual y previos
       DateTime currentDate = DateTime.now();
@@ -212,7 +216,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
       .gt('date_added_d', formattedStartOfMonthThird).lt('date_added_d', formattedEndOfMonthThird)
       .eq('id_user_fk', idUserFk);
 
-      if (recordsRoles.data != null && recordsStatus != null && recordsCompany.data != null && recordsVehicle != null &&
+      if (recordsRoles.data != null && recordsStatus != null && recordsCompany.data != null && recordsVehicle != null && recordsServices != null &&
       responseCurrentR != null && responseSecondR != null && responseThirdR != null &&
       responseCurrentD != null && responseSecondD != null && responseThirdD != null) {
         //Existen datos de roles en Supabase
@@ -222,6 +226,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
         final responseListStatus = recordsStatus as List<dynamic>;
         final responseListCompany = getCompanySupabaseFromMap(jsonEncode(recordsCompany.data).toString());
         final responseListVehicle = recordsVehicle as List<dynamic>;
+        final responseListServices = recordsServices as List<dynamic>;
         recordsMonthCurrentR = responseCurrentR as List<dynamic>;
         recordsMonthSecondR = responseSecondR as List<dynamic>;
         recordsMonthThirdR = responseThirdR as List<dynamic>;
@@ -276,6 +281,23 @@ class RolesSupabaseProvider extends ChangeNotifier {
               dataBase.companyBox.put(companyExistente);
           }
         }
+        for (var element in responseListServices) {
+          //Se valida que el nuevo Service aún no existe en Objectbox
+          final serviceExistente = dataBase.serviceBox.query(Service_.idDBR.equals(element['id_service'].toString())).build().findUnique();
+          if (serviceExistente == null) {
+            final newService = Service(
+            service: element['service'],
+            description: element['description'],
+            idDBR: element['id_service'].toString(), 
+            );
+            dataBase.serviceBox.put(newService);
+            //print('service Nuevo agregado exitosamente');
+          } else {
+              //Se actualiza el registro en Objectbox
+              serviceExistente.service = element['service'];
+              dataBase.serviceBox.put(serviceExistente);
+          }
+        }
         for (var element in responseListVehicle) {
           //Se valida que el nuevo vehicle aún no existe en Objectbox
           final vehicleExistente = dataBase.vehicleBox.query(Vehicle_.idDBR.equals(element['id_vehicle'].toString())).build().findUnique();
@@ -310,6 +332,42 @@ class RolesSupabaseProvider extends ChangeNotifier {
             if (newStatus == null && newCompany == null) {
               return false;
             }
+
+            //Se recuperan los servicios del vehiculo de Supabase
+            final recordsVehicleServices = await supabaseCtrlV
+                .from('vehicle_services')
+                .select()
+                .eq('id_vehicle_fk', element['id_vehicle']);
+            if (recordsVehicleServices != null) {
+              final responseListVehicleServices = recordsVehicleServices as List<dynamic>;
+              for (var vehicleServices in responseListVehicleServices) {
+                //Se valida que el nuevo vehicle services aún no existe en Objectbox
+                final vehicleServicesExistente = dataBase.vehicleServicesBox.query(VehicleServices_.idDBR.equals(vehicleServices['id_vehicle_services'].toString())).build().findUnique();
+                if (vehicleServicesExistente == null) {
+                  final newVehicleServices = VehicleServices(
+                    completed: vehicleServices['completed'],
+                    serviceDate: DateTime.parse(vehicleServices['service_date']),
+                    dateAdded: DateTime.parse(vehicleServices['created_at']),
+                    idDBR: vehicleServices['id_vehicle_services'].toString(), 
+                  );
+                  //Se recupera el servicio al que esta relacionado
+                  final serviceExistenteTarjet = dataBase.serviceBox.query(Service_.idDBR.equals(vehicleServices['id_service_fk'].toString())).build().findUnique();
+                  if (serviceExistenteTarjet != null) {
+                    newVehicleServices.service.target = serviceExistenteTarjet;
+                    newVehicleServices.vehicle.target = newVehicle;
+                    newVehicle.vehicleServices.add(newVehicleServices);
+                    dataBase.vehicleServicesBox.put(newVehicleServices);
+                  }
+                  //print('Rol Nuevo agregado exitosamente');
+                } else {
+                    //Se actualiza el registro en Objectbox
+                    vehicleServicesExistente.completed = vehicleServices['completed'];
+                    vehicleServicesExistente.serviceDate = DateTime.parse(vehicleServices['service_date']);
+                    dataBase.vehicleServicesBox.put(vehicleServicesExistente);
+                }
+              }
+            }
+
 
             newVehicle.status.target = newStatus;
             newVehicle.company.target = newCompany;

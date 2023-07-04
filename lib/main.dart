@@ -122,7 +122,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale = const Locale('es');
+  Locale _locale = const Locale('en');
   final ThemeMode _themeMode = ThemeMode.system;
 
   void setLocale(Locale value) => setState(() => _locale = value);
@@ -139,7 +139,6 @@ class _MyAppState extends State<MyApp> {
 
     Timer.periodic(Duration(seconds: 1), (timer) async {
       if (await isInternetConnection()) {
-        print("Se puede hacer la sincronización");
         final bitacora = dataBase.bitacoraBox.getAll().toList();
         if (bitacora.isNotEmpty) {
           // //Agregar condición cuando se está sincronizando

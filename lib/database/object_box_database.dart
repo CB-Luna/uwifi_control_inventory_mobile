@@ -18,6 +18,8 @@ class ObjectBoxDatabase {
   late final Box<Equipment> equipmentFormBox;
   late final Box<Status> statusBox;
   late final Box<Company> companyBox;
+  late final Box<Service> serviceBox;
+  late final Box<VehicleServices> vehicleServicesBox;
   late final Box<Bitacora> bitacoraBox;
   late final Box<Role> roleBox;
 
@@ -35,6 +37,8 @@ class ObjectBoxDatabase {
     extraFormBox = Box<Extra>(store);
     equipmentFormBox = Box<Equipment>(store);
     statusBox = Box<Status>(store);
+    serviceBox = Box<Service>(store);
+    vehicleServicesBox = Box<VehicleServices>(store);
     companyBox = Box<Company>(store);
     bitacoraBox = Box<Bitacora>(store);
     roleBox = Box<Role>(store);

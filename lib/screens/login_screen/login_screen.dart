@@ -75,11 +75,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: Text(
-                        'Control System Vehicle',
+                        'Fleet Management Tool',
                         style: FlutterFlowTheme.of(context).title1.override(
                               fontFamily: 'Outfit',
                               color: FlutterFlowTheme.of(context).alternate,
-                              fontSize: 36,
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold
                             ),
                       ),
                     ),
@@ -433,7 +434,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                       if (usuarioProvider
                                           .validateUsuario(userId)) {
                                         //print('Usuario ya existente');
-                                        usuarioProvider.getUser(userId);
                                         usuarioProvider.update(
                                           userState.emailController.text,
                                           getUsuarioSupabase.name,
@@ -455,6 +455,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           rolesSupabaseProvider.recordsMonthSecondD!.length,
                                           rolesSupabaseProvider.recordsMonthThirdD!.length,
                                         );
+                                        usuarioProvider.getUser(userId);
                                       } else {
                                         usuarioProvider.add(
                                           getUsuarioSupabase.name,

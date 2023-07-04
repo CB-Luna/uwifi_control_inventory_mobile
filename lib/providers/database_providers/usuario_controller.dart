@@ -204,6 +204,8 @@ class UsuarioController extends ChangeNotifier {
       }
       if (vehicleActual != null) {
         updateUsuario.vehicle.target = vehicleActual;
+      } else {
+        updateUsuario.vehicle.target = null;
       }
       if (newImagenBase64 != null) {
           //print("Se actualiza imagen USUARIO");
@@ -366,6 +368,17 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     }
     return opcionesVehiculos;
   }
+
+  Vehicle getVehicleAsigned() {
+    Vehicle? vehicleAssigned;
+    final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
+    if (usuarioActual != null) {
+        if (usuarioActual.vehicle.target != null) {
+          vehicleAssigned = usuarioActual.vehicle.target!;
+        } 
+    }
+    return vehicleAssigned!;
+  }
   
 
   ControlForm? getControlFormCheckOutToday(DateTime today) {
@@ -377,7 +390,7 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
               .format(controlForm.dateAddedR).toString() == 
               DateFormat('dd-MM-yyyy')
               .format(today).toString())) {
-            if (controlForm.employee.target?.idDBR == usuarioActual.idDBR) {
+            if (controlForm.employee.target?.idDBR == usuarioActual.idDBR && controlForm.vehicle.target?.idDBR == usuarioActual.vehicle.target?.idDBR) {
               controlFormToday = controlForm;
             } else {
               print("No es igual");
@@ -398,7 +411,7 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
                 .format(controlForm.dateAddedD!).toString() == 
                 DateFormat('dd-MM-yyyy')
                 .format(today).toString())) {
-              if (controlForm.employee.target?.idDBR == usuarioActual.idDBR) {
+              if (controlForm.employee.target?.idDBR == usuarioActual.idDBR && controlForm.vehicle.target?.idDBR == usuarioActual.vehicle.target?.idDBR) {
                 controlFormToday = controlForm;
               }
             }

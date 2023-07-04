@@ -35,7 +35,7 @@ class HourBackgroundWidget extends StatefulWidget {
 
 class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
   late HourBackgroundModel _model;
-  Color caughtColor = Colors.white;
+  Gradient caughtColor = whiteRadial;
   String licensePlates = "";
   String image = "";
   DateTime? registeredHour;
@@ -64,7 +64,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     if (usuarioProvider.usuarioCurrent?.vehicle.target != null && widget.firstHour && controlFormProvider.boolCurrentHour) {
-      caughtColor = FlutterFlowTheme.of(context).alternate;
+      caughtColor = blueRadial;
       licensePlates = usuarioProvider.usuarioCurrent!.vehicle.target!.licensePlates;
       image = usuarioProvider.usuarioCurrent!.vehicle.target!.path;
       controlFormProvider.changeIsSelectedHourValue(true);
@@ -97,7 +97,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
           }
           controlFormProvider.changeIsSelectedHourValue(true);
           setState(() {
-            caughtColor = FlutterFlowTheme.of(context).alternate;
+            caughtColor = blueRadial;
             licensePlates = data.licensePlates;
             image = data.path;
             registeredHour = widget.hourSection;
@@ -110,7 +110,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
             width: MediaQuery.of(context).size.width * 1.0,
             height: 200,
             decoration: BoxDecoration(
-              color: caughtColor,
+              gradient: caughtColor,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -298,7 +298,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                               }
                                               controlFormProvider.changeIsSelectedHourValue(false);
                                               setState(() {
-                                                caughtColor = Colors.white;
+                                                caughtColor = whiteRadial;
                                                 licensePlates = "";
                                                 image = "";
                                                 registeredHour = null;

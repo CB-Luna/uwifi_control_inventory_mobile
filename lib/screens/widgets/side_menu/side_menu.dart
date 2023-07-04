@@ -6,6 +6,7 @@ import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
+import 'package:taller_alex_app_asesor/screens/services_vehicle/services_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/user_profile/perfil_usuario_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_cerrar_sesion.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_sincronizar_widget.dart';
@@ -231,16 +232,16 @@ class SideMenu extends StatelessWidget {
 
                     
                     CustomMenuItem(
-                      label: 'Services Vehicle',
+                      label: 'Service',
                       iconData: Icons.directions_car,
                       lineHeight: 1.2,
                       onTap: () async {
-                        // await Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const ServicesVehicleScreen(),
-                        //   ),
-                        // );
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ServicesVehicleScreen(vehicle: currentUser.vehicle.target!,),
+                          ),
+                        );
                       },
                     ),
 

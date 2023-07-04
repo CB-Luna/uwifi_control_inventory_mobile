@@ -14,9 +14,18 @@ import 'package:taller_alex_app_asesor/screens/revision/components/equipment_sec
 import 'package:taller_alex_app_asesor/screens/revision/components/lights_section_d.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/measures_section_d.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/security_section_d.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 class VehiculoController extends ChangeNotifier {
   
   Vehicle? vehicleSelected;
+
+  DateTime? completedDate;
+  TextEditingController serviceCompleted = TextEditingController(text: "No");
+  TextEditingController completedDateController = TextEditingController(text: "");
+
+   bool validateForm(GlobalKey<FormState> vehicleKey) {
+    return vehicleKey.currentState!.validate() ? true : false;
+  }
 
   //OPCIONES MENU:
   final menuTapedCheckOut = {
@@ -104,6 +113,47 @@ class VehiculoController extends ChangeNotifier {
       return false;
     }
   }
+
+  void cleanServiceVehicleComponentes() {
+    completedDate = null;
+    serviceCompleted.text = "No";
+    completedDateController.text = "";
+    notifyListeners();
+  }
+
+  void updateCompletedDate(DateTime date) {
+    completedDate = date;
+    completedDateController.text = dateTimeFormat("MMMM d, y", date);
+    notifyListeners();
+  }
+
+  void updateServiceCompleted(String answerCompleted) {
+    serviceCompleted.text = answerCompleted;
+    notifyListeners();
+  }
+
+  bool updateServiceVehicle(VehicleServices vehicleServices) {
+    try {
+      vehicleServices.completed = true;
+      //Se actualiza el vehicle Services
+      dataBase.vehicleServicesBox.put(vehicleServices);
+
+      final nuevaInstruccion = Bitacora(
+        instruccion: 'syncUpdateVehicleServices',
+        usuarioPropietario: prefs.getString("userId")!,
+        idControlForm: 0,
+      ); //Se crea la nueva instruccion a realizar en bitacora
+
+      nuevaInstruccion.vehicleService.target = vehicleServices; //Se asigna el vehicleServices a la nueva instrucción
+      vehicleServices.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a la orden de trabajo
+      dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+      return true;
+    } catch (e) {
+      return false;
+    }
+
+  }
+
 
   void cleanComponents() {
     isTapedCheckOut = 0;

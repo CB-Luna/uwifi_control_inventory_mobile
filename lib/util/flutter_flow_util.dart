@@ -25,7 +25,7 @@ String dateTimeFormat(String format, DateTime dateTime) {
   if (format == 'relative') {
     return timeago.format(dateTime);
   }
-  return DateFormat(format, "es").format(dateTime);
+  return DateFormat(format, "en").format(dateTime);
 }
 
 Future launchURL(String url) async {

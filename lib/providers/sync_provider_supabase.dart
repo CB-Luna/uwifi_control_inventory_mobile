@@ -96,6 +96,34 @@ class SyncProviderSupabase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
+          case "syncUpdateVehicleServices":
+          final vehicleServices = getFirstVehicleServices(
+              dataBase.vehicleServicesBox.getAll(), instruccionesBitacora[i].id);
+          if (vehicleServices != null) {
+            final responseSyncUpdateVehicleServices = await syncUpdateVehicleServices(
+                vehicleServices, instruccionesBitacora[i]);
+            if (responseSyncUpdateVehicleServices.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  instruccion: responseSyncUpdateVehicleServices.descripcion,
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion:
+                    "Problems sync to Local Server, Control Form not recovered.",
+                fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
         default:
           continue;
       }
@@ -175,6 +203,21 @@ class SyncProviderSupabase extends ChangeNotifier {
         for (var j = 0; j < controlForm[i].bitacora.length; j++) {
           if (controlForm[i].bitacora[j].id == idInstruccionesBitacora) {
             return controlForm[i];
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  VehicleServices? getFirstVehicleServices(
+      List<VehicleServices> vehicleServices, int idInstruccionesBitacora) {
+    for (var i = 0; i < vehicleServices.length; i++) {
+      if (vehicleServices[i].bitacora.isEmpty) {
+      } else {
+        for (var j = 0; j < vehicleServices[i].bitacora.length; j++) {
+          if (vehicleServices[i].bitacora[j].id == idInstruccionesBitacora) {
+            return vehicleServices[i];
           }
         }
       }
@@ -3839,4 +3882,40 @@ class SyncProviderSupabase extends ChangeNotifier {
     }
   }
 
+  Future<SyncInstruction> syncUpdateVehicleServices(
+      VehicleServices vehicleServices, Bitacora bitacora) async {
+    try {
+      if (bitacora.executeSupabase == false) {
+        //Update Vehicle Services
+        final recordVehicleServices = await supabaseCtrlV.from('vehicle_services').update(
+          {
+            'completed': vehicleServices.completed,
+          },
+        )
+        .eq('id_vehicle_services', int.parse(vehicleServices.idDBR!))
+        .select<PostgrestList>("id_vehicle_services");
+        if (recordVehicleServices.isNotEmpty) {
+          //Se marca como ejecutada la instrucción en Bitacora
+          bitacora.executeSupabase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          dataBase.bitacoraBox.remove(bitacora.id);
+          return SyncInstruction(exitoso: true, descripcion: "");
+        } else {
+          return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync data Update Vehicle Service Status on Local Server: Vehicle Service '${vehicleServices.service.target!.service}' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}'.");
+        }
+      } else {
+        dataBase.bitacoraBox.remove(bitacora.id);
+        return SyncInstruction(exitoso: true, descripcion: "");
+      }
+    } catch (e) {
+      //print('ERROR - function syncAddEmprendedor(): $e');
+      return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync data Update Vehicle Service Status on Local Server: Vehicle Service '${vehicleServices.service.target!.service}' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}', details: '$e'");
+    }
+  }
 }

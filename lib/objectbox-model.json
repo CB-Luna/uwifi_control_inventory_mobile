@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "27:1774905738150923512",
-      "lastPropertyId": "55:2937029939842389045",
+      "lastPropertyId": "57:7769754459961668524",
       "name": "Bitacora",
       "properties": [
         {
@@ -147,6 +147,22 @@
           "flags": 520,
           "indexId": "426:8388412147556799022",
           "relationTarget": "Users"
+        },
+        {
+          "id": "56:7220221899660725791",
+          "name": "serviceId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "451:6635979231225978650",
+          "relationTarget": "Service"
+        },
+        {
+          "id": "57:7769754459961668524",
+          "name": "vehicleServiceId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "452:2432638833963189135",
+          "relationTarget": "VehicleServices"
         }
       ],
       "relations": []
@@ -2296,10 +2312,98 @@
           "targetId": "97:4052095333394296256"
         }
       ]
+    },
+    {
+      "id": "103:6506912454200410370",
+      "lastPropertyId": "5:876441944441595286",
+      "name": "Service",
+      "properties": [
+        {
+          "id": "1:7711125536966213228",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5735173036126986929",
+          "name": "service",
+          "type": 9
+        },
+        {
+          "id": "3:4948177709004164371",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:1851729669128907311",
+          "name": "dateAdded",
+          "type": 10
+        },
+        {
+          "id": "5:876441944441595286",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "453:2696589783959266857"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "104:7552456267933993914",
+      "lastPropertyId": "7:7912496190957608505",
+      "name": "VehicleServices",
+      "properties": [
+        {
+          "id": "1:4884090815800841879",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5040655732706547230",
+          "name": "completed",
+          "type": 1
+        },
+        {
+          "id": "3:2381111809232512802",
+          "name": "serviceDate",
+          "type": 10
+        },
+        {
+          "id": "4:3871423033336002983",
+          "name": "dateAdded",
+          "type": 10
+        },
+        {
+          "id": "5:4445422548433351296",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "454:6081270978273527418"
+        },
+        {
+          "id": "6:1001262051718150676",
+          "name": "vehicleId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "455:7650187170719748019",
+          "relationTarget": "Vehicle"
+        },
+        {
+          "id": "7:7912496190957608505",
+          "name": "serviceId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "456:4454022439719093874",
+          "relationTarget": "Service"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "102:3290269878544238397",
-  "lastIndexId": "450:5865551881169805159",
+  "lastEntityId": "104:7552456267933993914",
+  "lastIndexId": "456:4454022439719093874",
   "lastRelationId": "97:7907540417784017008",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

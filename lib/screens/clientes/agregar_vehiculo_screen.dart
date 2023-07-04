@@ -33,14 +33,14 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
   late CalendarModel _model;
-  List<Vehicle> vehicleAvailables = [];
+  Vehicle? vehicleAssigned;
   double left = 0.0;
   double top = 0.0;
 
     @override
   void initState() {
     super.initState();
-    vehicleAvailables = context.read<UsuarioController>().getVehiclesAvailables();
+    vehicleAssigned = context.read<UsuarioController>().getVehicleAsigned();
     _model = createModel(context, () => CalendarModel());
   }
 
@@ -48,7 +48,7 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
   Widget build(BuildContext context) {
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    vehicleAvailables = usuarioProvider.getVehiclesAvailables();
+    vehicleAssigned = usuarioProvider.getVehicleAsigned();
     return WillPopScope(
       onWillPop: () async => false,
       child: GestureDetector(
@@ -244,80 +244,95 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: CarouselSlider(
-                    options: CarouselOptions(height: 200),
-                    items: vehicleAvailables.map((data) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return Draggable(
-                            data: data,
-                            onDraggableCanceled: (velocity, offset) {
-                            },
-                            feedback: Container(
-                              height: 100,
-                              width: 180,
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 10,
-                                    color: FlutterFlowTheme.of(context).alternate.withOpacity(0.8),
-                                    offset: const Offset(6, 6),
-                                  )
-                                ],
-                                color: FlutterFlowTheme.of(context).alternate.withOpacity(0.8),
-                                borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                            child: Container(
-                              height: 200,
-                              width: 290,
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 10,
-                                    color: FlutterFlowTheme.of(context).alternate.withOpacity(0.8),
-                                    offset: const Offset(6, 6),
-                                  )
-                                ],
-                                color: FlutterFlowTheme.of(context).alternate.withOpacity(0.8),
-                                borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(50),
-                                  bottomRight: Radius.circular(50),
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                ),
-                              ),
-                              child: Center(
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: getImageContainer(
-                                        data.path,
-                                        height: 120,
-                                        width: 200,
-                                        ),
-                                    ),
-                                    Text(
-                                      "License Plates: ${data.licensePlates}", 
-                                      style: TextStyle(
-                                        color: FlutterFlowTheme.of(context).white,
-                                        fontSize: 15.0),
-                                    ),
-                                  ],
-                                ),
+                  child: Draggable(
+                    feedbackOffset: Offset(100,3),
+                  data: vehicleAssigned,
+                  onDraggableCanceled: (velocity, offset) {
+                  },
+                  feedback: Container(
+                    height: 100,
+                    width: 180,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 4,
+                          color: FlutterFlowTheme.of(context).alternate,
+                          offset: const Offset(3, 3),
+                        )
+                      ],
+                      gradient: blueRadial,
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: getImageContainer(
+                              vehicleAssigned!.path,
+                              height: 80,
+                              width: 80,
                               ),
                           ),
-                          );
-                        },
-                      );
-                    }).toList(),
+                        ],
+                      ),
+                    ),
                   ),
+                    child: Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        Container(
+                          height: 200,
+                          color: FlutterFlowTheme.of(context).grayDark.withOpacity(0.5),
+                        ),
+                        Container(
+                        height: 200,
+                        width: 290,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 4,
+                              color: FlutterFlowTheme.of(context).alternate,
+                              offset: const Offset(3, 3),
+                            )
+                          ],
+                          gradient: blueRadial,
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: getImageContainer(
+                                  vehicleAssigned!.path,
+                                  height: 120,
+                                  width: 200,
+                                  ),
+                              ),
+                              Text(
+                                "License Plates: ${vehicleAssigned!.licensePlates}", 
+                                style: TextStyle(
+                                  color: FlutterFlowTheme.of(context).white,
+                                  fontSize: 15.0),
+                              ),
+                            ],
+                          ),
+                        ),
+                ),
+                      ],
+                    ),
+              ),
                 )
               ],
             ),

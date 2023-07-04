@@ -209,7 +209,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           0, 10, 0, 0),
                                       child: Text(
-                                        'Faild sync.\nDeploy the details\nto more information.',
+                                        'Failed sync.\nDeploy the details\nto more information.',
                                         textAlign: TextAlign.center,
                                         maxLines: 4,
                                         style: AppTheme.of(context).bodyText1.override(
@@ -378,6 +378,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                       child: FFButtonWidget(
                                         onPressed: () async {
                                           syncProviderSupabase.instruccionesFallidas.clear();
+                                          prefs.setBool("boolSyncData", false);
                                           await Navigator.push(
                                             context,
                                             MaterialPageRoute(
@@ -385,6 +386,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                   const MainScreenSelector(),
                                             ),
                                           );
+                                          syncProviderSupabase.procesoTerminado(false);
                                         },
                                         text: 'Close',
                                         options: FFButtonOptions(

@@ -22,7 +22,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(27, 1774905738150923512),
       name: 'Bitacora',
-      lastPropertyId: const IdUid(55, 2937029939842389045),
+      lastPropertyId: const IdUid(57, 7769754459961668524),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -150,7 +150,21 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(426, 8388412147556799022),
-            relationTarget: 'Users')
+            relationTarget: 'Users'),
+        ModelProperty(
+            id: const IdUid(56, 7220221899660725791),
+            name: 'serviceId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(451, 6635979231225978650),
+            relationTarget: 'Service'),
+        ModelProperty(
+            id: const IdUid(57, 7769754459961668524),
+            name: 'vehicleServiceId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(452, 2432638833963189135),
+            relationTarget: 'VehicleServices')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -2133,7 +2147,9 @@ final _entities = <ModelEntity>[
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: ''),
+        ModelBacklink(
+            name: 'vehicleServices', srcEntity: 'VehicleServices', srcField: '')
       ]),
   ModelEntity(
       id: const IdUid(100, 5432875809935853718),
@@ -2277,6 +2293,94 @@ final _entities = <ModelEntity>[
       backlinks: <ModelBacklink>[
         ModelBacklink(
             name: 'controlForms', srcEntity: 'ControlForm', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(103, 6506912454200410370),
+      name: 'Service',
+      lastPropertyId: const IdUid(5, 876441944441595286),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 7711125536966213228),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 5735173036126986929),
+            name: 'service',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 4948177709004164371),
+            name: 'description',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 1851729669128907311),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 876441944441595286),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(453, 2696589783959266857))
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(104, 7552456267933993914),
+      name: 'VehicleServices',
+      lastPropertyId: const IdUid(7, 7912496190957608505),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 4884090815800841879),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 5040655732706547230),
+            name: 'completed',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 2381111809232512802),
+            name: 'serviceDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 3871423033336002983),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 4445422548433351296),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(454, 6081270978273527418)),
+        ModelProperty(
+            id: const IdUid(6, 1001262051718150676),
+            name: 'vehicleId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(455, 7650187170719748019),
+            relationTarget: 'Vehicle'),
+        ModelProperty(
+            id: const IdUid(7, 7912496190957608505),
+            name: 'serviceId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(456, 4454022439719093874),
+            relationTarget: 'Service')
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
       ])
 ];
 
@@ -2300,8 +2404,8 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(102, 3290269878544238397),
-      lastIndexId: const IdUid(450, 5865551881169805159),
+      lastEntityId: const IdUid(104, 7552456267933993914),
+      lastIndexId: const IdUid(456, 4454022439719093874),
       lastRelationId: const IdUid(97, 7907540417784017008),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -3694,7 +3798,9 @@ ModelDefinition getObjectBoxModel() {
               object.status,
               object.company,
               object.vehicle,
-              object.user
+              object.user,
+              object.service,
+              object.vehicleService
             ],
         toManyRelations: (Bitacora object) =>
             {RelInfo<Users>.toManyBacklink(95, object.id): object.users},
@@ -3709,7 +3815,7 @@ ModelDefinition getObjectBoxModel() {
           final instruccionOffset = fbb.writeString(object.instruccion);
           final usuarioPropietarioOffset =
               fbb.writeString(object.usuarioPropietario);
-          fbb.startTable(56);
+          fbb.startTable(58);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(12, instruccionAdicionalOffset);
@@ -3730,6 +3836,8 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(52, object.company.targetId);
           fbb.addInt64(53, object.vehicle.targetId);
           fbb.addInt64(54, object.user.targetId);
+          fbb.addInt64(55, object.service.targetId);
+          fbb.addInt64(56, object.vehicleService.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3791,6 +3899,12 @@ ModelDefinition getObjectBoxModel() {
           object.user.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 112, 0);
           object.user.attach(store);
+          object.service.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 114, 0);
+          object.service.attach(store);
+          object.vehicleService.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 116, 0);
+          object.vehicleService.attach(store);
           InternalToManyAccess.setRelInfo(
               object.users,
               store,
@@ -5682,7 +5796,10 @@ ModelDefinition getObjectBoxModel() {
         toManyRelations: (Vehicle object) => {
               RelInfo<Bitacora>.toOneBacklink(
                       54, object.id, (Bitacora srcObject) => srcObject.vehicle):
-                  object.bitacora
+                  object.bitacora,
+              RelInfo<VehicleServices>.toOneBacklink(6, object.id,
+                      (VehicleServices srcObject) => srcObject.vehicle):
+                  object.vehicleServices
             },
         getId: (Vehicle object) => object.id,
         setId: (Vehicle object, int id) {
@@ -5762,6 +5879,12 @@ ModelDefinition getObjectBoxModel() {
               store,
               RelInfo<Bitacora>.toOneBacklink(
                   54, object.id, (Bitacora srcObject) => srcObject.vehicle),
+              store.box<Vehicle>());
+          InternalToManyAccess.setRelInfo(
+              object.vehicleServices,
+              store,
+              RelInfo<VehicleServices>.toOneBacklink(6, object.id,
+                  (VehicleServices srcObject) => srcObject.vehicle),
               store.box<Vehicle>());
           return object;
         }),
@@ -5878,6 +6001,109 @@ ModelDefinition getObjectBoxModel() {
                   5, object.id, (ControlForm srcObject) => srcObject.employee),
               store.box<Users>());
           return object;
+        }),
+    Service: EntityDefinition<Service>(
+        model: _entities[15],
+        toOneRelations: (Service object) => [],
+        toManyRelations: (Service object) => {
+              RelInfo<Bitacora>.toOneBacklink(
+                      56, object.id, (Bitacora srcObject) => srcObject.service):
+                  object.bitacora
+            },
+        getId: (Service object) => object.id,
+        setId: (Service object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Service object, fb.Builder fbb) {
+          final serviceOffset = fbb.writeString(object.service);
+          final descriptionOffset = fbb.writeString(object.description);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, serviceOffset);
+          fbb.addOffset(2, descriptionOffset);
+          fbb.addInt64(3, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addOffset(4, idDBROffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Service(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              service: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              description: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12));
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  56, object.id, (Bitacora srcObject) => srcObject.service),
+              store.box<Service>());
+          return object;
+        }),
+    VehicleServices: EntityDefinition<VehicleServices>(
+        model: _entities[16],
+        toOneRelations: (VehicleServices object) =>
+            [object.vehicle, object.service],
+        toManyRelations: (VehicleServices object) => {
+              RelInfo<Bitacora>.toOneBacklink(57, object.id,
+                      (Bitacora srcObject) => srcObject.vehicleService):
+                  object.bitacora
+            },
+        getId: (VehicleServices object) => object.id,
+        setId: (VehicleServices object, int id) {
+          object.id = id;
+        },
+        objectToFB: (VehicleServices object, fb.Builder fbb) {
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addBool(1, object.completed);
+          fbb.addInt64(2, object.serviceDate.millisecondsSinceEpoch);
+          fbb.addInt64(3, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addOffset(4, idDBROffset);
+          fbb.addInt64(5, object.vehicle.targetId);
+          fbb.addInt64(6, object.service.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = VehicleServices(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              completed:
+                  const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false),
+              serviceDate: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12));
+          object.vehicle.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          object.vehicle.attach(store);
+          object.service.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          object.service.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(57, object.id,
+                  (Bitacora srcObject) => srcObject.vehicleService),
+              store.box<VehicleServices>());
+          return object;
         })
   };
 
@@ -5965,6 +6191,14 @@ class Bitacora_ {
   /// see [Bitacora.user]
   static final user =
       QueryRelationToOne<Bitacora, Users>(_entities[0].properties[19]);
+
+  /// see [Bitacora.service]
+  static final service =
+      QueryRelationToOne<Bitacora, Service>(_entities[0].properties[20]);
+
+  /// see [Bitacora.vehicleService]
+  static final vehicleService = QueryRelationToOne<Bitacora, VehicleServices>(
+      _entities[0].properties[21]);
 }
 
 /// [ControlForm] entity fields to define ObjectBox queries.
@@ -7495,4 +7729,57 @@ class Users_ {
   /// see [Users.roles]
   static final roles =
       QueryRelationToMany<Users, Role>(_entities[14].relations[1]);
+}
+
+/// [Service] entity fields to define ObjectBox queries.
+class Service_ {
+  /// see [Service.id]
+  static final id = QueryIntegerProperty<Service>(_entities[15].properties[0]);
+
+  /// see [Service.service]
+  static final service =
+      QueryStringProperty<Service>(_entities[15].properties[1]);
+
+  /// see [Service.description]
+  static final description =
+      QueryStringProperty<Service>(_entities[15].properties[2]);
+
+  /// see [Service.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<Service>(_entities[15].properties[3]);
+
+  /// see [Service.idDBR]
+  static final idDBR =
+      QueryStringProperty<Service>(_entities[15].properties[4]);
+}
+
+/// [VehicleServices] entity fields to define ObjectBox queries.
+class VehicleServices_ {
+  /// see [VehicleServices.id]
+  static final id =
+      QueryIntegerProperty<VehicleServices>(_entities[16].properties[0]);
+
+  /// see [VehicleServices.completed]
+  static final completed =
+      QueryBooleanProperty<VehicleServices>(_entities[16].properties[1]);
+
+  /// see [VehicleServices.serviceDate]
+  static final serviceDate =
+      QueryIntegerProperty<VehicleServices>(_entities[16].properties[2]);
+
+  /// see [VehicleServices.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<VehicleServices>(_entities[16].properties[3]);
+
+  /// see [VehicleServices.idDBR]
+  static final idDBR =
+      QueryStringProperty<VehicleServices>(_entities[16].properties[4]);
+
+  /// see [VehicleServices.vehicle]
+  static final vehicle =
+      QueryRelationToOne<VehicleServices, Vehicle>(_entities[16].properties[5]);
+
+  /// see [VehicleServices.service]
+  static final service =
+      QueryRelationToOne<VehicleServices, Service>(_entities[16].properties[6]);
 }

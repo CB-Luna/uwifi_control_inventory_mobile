@@ -752,7 +752,8 @@ class _ItemFormState extends State<ItemForm> {
                 borderRadius: BorderRadius.circular(25),
               ),
               child: Icon(
-                widget.report == "Good" || widget.report == "Yes" || widget.readOnly || widget.isRegistered ? Icons.check : Icons.close,
+                widget.readOnly ? Icons.info_outlined  :
+                widget.report == "Good" || widget.report == "Yes" || widget.isRegistered ? Icons.check : Icons.close,
                 color: FlutterFlowTheme.of(context).white,
                 size: 20,
               ),
