@@ -22,7 +22,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(27, 1774905738150923512),
       name: 'Bitacora',
-      lastPropertyId: const IdUid(57, 7769754459961668524),
+      lastPropertyId: const IdUid(58, 6864433048827413011),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -164,7 +164,14 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(452, 2432638833963189135),
-            relationTarget: 'VehicleServices')
+            relationTarget: 'VehicleServices'),
+        ModelProperty(
+            id: const IdUid(58, 6864433048827413011),
+            name: 'ruleId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(457, 2883972706903277445),
+            relationTarget: 'Rule')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -2049,7 +2056,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(99, 8193815974638102829),
       name: 'Vehicle',
-      lastPropertyId: const IdUid(20, 5120493280338495896),
+      lastPropertyId: const IdUid(27, 8143417845914793514),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2143,6 +2150,47 @@ final _entities = <ModelEntity>[
             id: const IdUid(20, 5120493280338495896),
             name: 'lastRadiatorFluidChange',
             type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(21, 757115653678008229),
+            name: 'nextOilChange',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(22, 1740545826112459780),
+            name: 'nextTransmissionFluidChange',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(23, 731615765620021459),
+            name: 'nextRadiatorFluidChange',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(24, 8352018641470727015),
+            name: 'ruleOilChangeId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(460, 1848952131797483781),
+            relationTarget: 'Rule'),
+        ModelProperty(
+            id: const IdUid(25, 228343166392005061),
+            name: 'ruleTransmissionFluidChangeId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(461, 8280925250993398609),
+            relationTarget: 'Rule'),
+        ModelProperty(
+            id: const IdUid(26, 2951023088220282595),
+            name: 'ruleRadiatorFluidChangeId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(462, 7080116891369577106),
+            relationTarget: 'Rule'),
+        ModelProperty(
+            id: const IdUid(27, 8143417845914793514),
+            name: 'mileage',
+            type: 6,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -2381,6 +2429,49 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
         ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(105, 5673404938280062340),
+      name: 'Rule',
+      lastPropertyId: const IdUid(9, 2917639864279038227),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 7707060264455187470),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(3, 2159862586228346310),
+            name: 'value',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 2119373709216005899),
+            name: 'registered',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 2738945767052565490),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 4654155028501052373),
+            name: 'vehicleId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(459, 6448042828244613407),
+            relationTarget: 'Vehicle'),
+        ModelProperty(
+            id: const IdUid(9, 2917639864279038227),
+            name: 'lastMileageService',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
       ])
 ];
 
@@ -2404,8 +2495,8 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(104, 7552456267933993914),
-      lastIndexId: const IdUid(456, 4454022439719093874),
+      lastEntityId: const IdUid(105, 5673404938280062340),
+      lastIndexId: const IdUid(462, 7080116891369577106),
       lastRelationId: const IdUid(97, 7907540417784017008),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -2676,7 +2767,8 @@ ModelDefinition getObjectBoxModel() {
         2707715113785547372,
         6907220557239226145,
         3683821233501424578,
-        8460461020124898604
+        8460461020124898604,
+        511123064934859743
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -3732,7 +3824,10 @@ ModelDefinition getObjectBoxModel() {
         5065703079577799848,
         5771699047160977949,
         5313747748351641389,
-        3853679392969826869
+        3853679392969826869,
+        2565461764493267736,
+        8823076716079772889,
+        3425954261967379427
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3800,7 +3895,8 @@ ModelDefinition getObjectBoxModel() {
               object.vehicle,
               object.user,
               object.service,
-              object.vehicleService
+              object.vehicleService,
+              object.rule
             ],
         toManyRelations: (Bitacora object) =>
             {RelInfo<Users>.toManyBacklink(95, object.id): object.users},
@@ -3815,7 +3911,7 @@ ModelDefinition getObjectBoxModel() {
           final instruccionOffset = fbb.writeString(object.instruccion);
           final usuarioPropietarioOffset =
               fbb.writeString(object.usuarioPropietario);
-          fbb.startTable(58);
+          fbb.startTable(59);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(12, instruccionAdicionalOffset);
@@ -3838,6 +3934,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(54, object.user.targetId);
           fbb.addInt64(55, object.service.targetId);
           fbb.addInt64(56, object.vehicleService.targetId);
+          fbb.addInt64(57, object.rule.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3905,6 +4002,9 @@ ModelDefinition getObjectBoxModel() {
           object.vehicleService.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 116, 0);
           object.vehicleService.attach(store);
+          object.rule.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 118, 0);
+          object.rule.attach(store);
           InternalToManyAccess.setRelInfo(
               object.users,
               store,
@@ -5792,7 +5892,13 @@ ModelDefinition getObjectBoxModel() {
         }),
     Vehicle: EntityDefinition<Vehicle>(
         model: _entities[13],
-        toOneRelations: (Vehicle object) => [object.status, object.company],
+        toOneRelations: (Vehicle object) => [
+              object.status,
+              object.company,
+              object.ruleOilChange,
+              object.ruleTransmissionFluidChange,
+              object.ruleRadiatorFluidChange
+            ],
         toManyRelations: (Vehicle object) => {
               RelInfo<Bitacora>.toOneBacklink(
                       54, object.id, (Bitacora srcObject) => srcObject.vehicle):
@@ -5817,7 +5923,7 @@ ModelDefinition getObjectBoxModel() {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
           final licensePlatesOffset = fbb.writeString(object.licensePlates);
-          fbb.startTable(21);
+          fbb.startTable(28);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, makeOffset);
           fbb.addOffset(2, modelOffset);
@@ -5837,13 +5943,27 @@ ModelDefinition getObjectBoxModel() {
               18, object.lastTransmissionFluidChange.millisecondsSinceEpoch);
           fbb.addInt64(
               19, object.lastRadiatorFluidChange.millisecondsSinceEpoch);
+          fbb.addInt64(20, object.nextOilChange?.millisecondsSinceEpoch);
+          fbb.addInt64(
+              21, object.nextTransmissionFluidChange?.millisecondsSinceEpoch);
+          fbb.addInt64(
+              22, object.nextRadiatorFluidChange?.millisecondsSinceEpoch);
+          fbb.addInt64(23, object.ruleOilChange.targetId);
+          fbb.addInt64(24, object.ruleTransmissionFluidChange.targetId);
+          fbb.addInt64(25, object.ruleRadiatorFluidChange.targetId);
+          fbb.addInt64(26, object.mileage);
           fbb.finish(fbb.endTable());
           return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
+          final nextOilChangeValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 44);
+          final nextTransmissionFluidChangeValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 46);
+          final nextRadiatorFluidChangeValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 48);
           final object = Vehicle(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               make: const fb.StringReader(asciiOptimization: true)
@@ -5863,9 +5983,13 @@ ModelDefinition getObjectBoxModel() {
               motor: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 20, ''),
               color: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
+              mileage: const fb.Int64Reader().vTableGet(buffer, rootOffset, 56, 0),
               oilChangeDue: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0)),
               lastTransmissionFluidChange: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0)),
               lastRadiatorFluidChange: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0)),
+              nextOilChange: nextOilChangeValue == null ? null : DateTime.fromMillisecondsSinceEpoch(nextOilChangeValue),
+              nextTransmissionFluidChange: nextTransmissionFluidChangeValue == null ? null : DateTime.fromMillisecondsSinceEpoch(nextTransmissionFluidChangeValue),
+              nextRadiatorFluidChange: nextRadiatorFluidChangeValue == null ? null : DateTime.fromMillisecondsSinceEpoch(nextRadiatorFluidChangeValue),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32));
           object.status.targetId =
@@ -5874,6 +5998,15 @@ ModelDefinition getObjectBoxModel() {
           object.company.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0);
           object.company.attach(store);
+          object.ruleOilChange.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0);
+          object.ruleOilChange.attach(store);
+          object.ruleTransmissionFluidChange.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 52, 0);
+          object.ruleTransmissionFluidChange.attach(store);
+          object.ruleRadiatorFluidChange.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 54, 0);
+          object.ruleRadiatorFluidChange.attach(store);
           InternalToManyAccess.setRelInfo(
               object.bitacora,
               store,
@@ -6104,6 +6237,56 @@ ModelDefinition getObjectBoxModel() {
                   (Bitacora srcObject) => srcObject.vehicleService),
               store.box<VehicleServices>());
           return object;
+        }),
+    Rule: EntityDefinition<Rule>(
+        model: _entities[17],
+        toOneRelations: (Rule object) => [object.vehicle],
+        toManyRelations: (Rule object) => {
+              RelInfo<Bitacora>.toOneBacklink(
+                      58, object.id, (Bitacora srcObject) => srcObject.rule):
+                  object.bitacora
+            },
+        getId: (Rule object) => object.id,
+        setId: (Rule object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Rule object, fb.Builder fbb) {
+          final valueOffset = fbb.writeString(object.value);
+          final registeredOffset = fbb.writeString(object.registered);
+          fbb.startTable(10);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(2, valueOffset);
+          fbb.addOffset(3, registeredOffset);
+          fbb.addInt64(5, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addInt64(7, object.vehicle.targetId);
+          fbb.addInt64(8, object.lastMileageService);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Rule(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              value: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              registered: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              lastMileageService:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0)));
+          object.vehicle.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          object.vehicle.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  58, object.id, (Bitacora srcObject) => srcObject.rule),
+              store.box<Rule>());
+          return object;
         })
   };
 
@@ -6199,6 +6382,10 @@ class Bitacora_ {
   /// see [Bitacora.vehicleService]
   static final vehicleService = QueryRelationToOne<Bitacora, VehicleServices>(
       _entities[0].properties[21]);
+
+  /// see [Bitacora.rule]
+  static final rule =
+      QueryRelationToOne<Bitacora, Rule>(_entities[0].properties[22]);
 }
 
 /// [ControlForm] entity fields to define ObjectBox queries.
@@ -7632,6 +7819,34 @@ class Vehicle_ {
   /// see [Vehicle.lastRadiatorFluidChange]
   static final lastRadiatorFluidChange =
       QueryIntegerProperty<Vehicle>(_entities[13].properties[16]);
+
+  /// see [Vehicle.nextOilChange]
+  static final nextOilChange =
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[17]);
+
+  /// see [Vehicle.nextTransmissionFluidChange]
+  static final nextTransmissionFluidChange =
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[18]);
+
+  /// see [Vehicle.nextRadiatorFluidChange]
+  static final nextRadiatorFluidChange =
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[19]);
+
+  /// see [Vehicle.ruleOilChange]
+  static final ruleOilChange =
+      QueryRelationToOne<Vehicle, Rule>(_entities[13].properties[20]);
+
+  /// see [Vehicle.ruleTransmissionFluidChange]
+  static final ruleTransmissionFluidChange =
+      QueryRelationToOne<Vehicle, Rule>(_entities[13].properties[21]);
+
+  /// see [Vehicle.ruleRadiatorFluidChange]
+  static final ruleRadiatorFluidChange =
+      QueryRelationToOne<Vehicle, Rule>(_entities[13].properties[22]);
+
+  /// see [Vehicle.mileage]
+  static final mileage =
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[23]);
 }
 
 /// [Users] entity fields to define ObjectBox queries.
@@ -7782,4 +7997,29 @@ class VehicleServices_ {
   /// see [VehicleServices.service]
   static final service =
       QueryRelationToOne<VehicleServices, Service>(_entities[16].properties[6]);
+}
+
+/// [Rule] entity fields to define ObjectBox queries.
+class Rule_ {
+  /// see [Rule.id]
+  static final id = QueryIntegerProperty<Rule>(_entities[17].properties[0]);
+
+  /// see [Rule.value]
+  static final value = QueryStringProperty<Rule>(_entities[17].properties[1]);
+
+  /// see [Rule.registered]
+  static final registered =
+      QueryStringProperty<Rule>(_entities[17].properties[2]);
+
+  /// see [Rule.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<Rule>(_entities[17].properties[3]);
+
+  /// see [Rule.vehicle]
+  static final vehicle =
+      QueryRelationToOne<Rule, Vehicle>(_entities[17].properties[4]);
+
+  /// see [Rule.lastMileageService]
+  static final lastMileageService =
+      QueryIntegerProperty<Rule>(_entities[17].properties[5]);
 }

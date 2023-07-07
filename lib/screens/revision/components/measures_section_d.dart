@@ -13,6 +13,7 @@ import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/checkin_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/header_shimmer.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/item_form.dart';
@@ -29,6 +30,7 @@ class MeasuresSectionD extends StatefulWidget {
   State<MeasuresSectionD> createState() => _MeasuresSectionDState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
+final keyForm = GlobalKey<FormState>();
 final animationsMap = {
     'moveLoadAnimationLR': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -88,6 +90,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
   @override
   Widget build(BuildContext context) {
     final checkInFormController = Provider.of<CheckInFormController>(context);
+    final userController = Provider.of<UsuarioController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: Row(
@@ -125,7 +128,28 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                    Navigator.pop(context);
+                                  final mileageInt = int.parse(checkInFormProvider.mileage != "" ? checkInFormProvider.mileage : "0");
+                                  if (mileageInt != 0) {
+                                    if (mileageInt < userController.usuarioCurrent!.vehicle.target!.mileage) {
+                                      checkInFormProvider.updateMileage("");
+                                      checkInFormProvider.flagOilChange = false;
+                                      checkInFormProvider.flagTransmissionFluidChange = false;
+                                      checkInFormProvider.flagRadiatorFluidChange = false;
+                                    }
+                                    if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService) {
+                                      checkInFormProvider.updateMileage("");
+                                      checkInFormProvider.flagOilChange = false;
+                                    } 
+                                    if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.lastMileageService) {
+                                      checkInFormProvider.updateMileage("");
+                                      checkInFormProvider.flagTransmissionFluidChange = false;
+                                    } 
+                                    if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService) {
+                                      checkInFormProvider.updateMileage("");
+                                      checkInFormProvider.flagRadiatorFluidChange = false;
+                                    } 
+                                  }
+                                  Navigator.pop(context);
                                 },
                                 child: ClayContainer(
                                   height: 30,
@@ -154,549 +178,582 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                               )
                             ],
                           ),
-                          content: SizedBox( // Need to use container to add size constraint.
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 0.55,
-                            child: SingleChildScrollView(
-                              controller: ScrollController(),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 5, 20),
-                                    child: TextFormField(
-                                      initialValue: checkInFormProvider.mileage,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      obscureText: false,
-                                      onChanged: (value) {
-                                        checkInFormProvider.updateMileage(value);
-                                      },
-                                      decoration: InputDecoration(
-                                        prefixIcon: Icon(
-                                          Icons.speed_outlined,
-                                          color: FlutterFlowTheme.of(context).alternate,
-                                        ),
-                                        labelText: 'Mileage*',
-                                        labelStyle: FlutterFlowTheme.of(context)
-                                            .title3
-                                            .override(
-                                              fontFamily: 'Montserrat',
-                                              color: FlutterFlowTheme.of(context).grayDark,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                        hintText: 'Input the mileage...',
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color:
-                                                FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
-                                            width: 2,
-                                          ),
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color:
-                                                FlutterFlowTheme.of(context).alternate,
-                                            width: 2,
-                                          ),
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context).alternate,
-                                            width: 2,
-                                          ),
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context).alternate,
-                                            width: 2,
-                                          ),
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
-                                        contentPadding:
-                                            const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                                        suffixText: 'Mi',
-                                      ),
-                                      style: FlutterFlowTheme.of(context).bodyText1,
-                                      textAlign: TextAlign.start,
-                                      keyboardType: const TextInputType.numberWithOptions(decimal: false),
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                            return 'The Mileage is required.';
-                                          } 
-                                          return null;
-                                      },
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 5, 20),
-                                    child: TextFormField(
-                                      controller: checkInFormProvider.mileageComments,
-                                      maxLength: 500,
-                                      textCapitalization:
-                                          TextCapitalization.sentences,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        labelText: 'Comments',
-                                        labelStyle:
-                                            FlutterFlowTheme.of(context).title3.override(
-                                                  fontFamily: 'Montserrat',
-                                                  color: FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                        hintText: 'Input your comments...',
-                                        hintStyle:
-                                            FlutterFlowTheme.of(context).title3.override(
-                                                  fontFamily: 'Poppins',
-                                                  color: FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color:
-                                                FlutterFlowTheme.of(context).primaryText,
-                                            width: 1.5,
-                                          ),
-                                          borderRadius: BorderRadius.circular(12),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color:
-                                                FlutterFlowTheme.of(context).primaryText,
-                                            width: 1.5,
-                                          ),
-                                          borderRadius: BorderRadius.circular(12),
-                                        ),
-                                        filled: true,
-                                        fillColor: FlutterFlowTheme.of(context).white,
-                                      ),
-                                      style: FlutterFlowTheme.of(context).title3.override(
-                                            fontFamily: 'Poppins',
-                                            color:
-                                                FlutterFlowTheme.of(context).primaryText,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                      maxLines: 3,
-                                    ),
-                                  ),
-                                  FormField(builder: (state) {
-                                    return Padding(
+                          content: Form(
+                            key: keyForm,
+                            child: SizedBox( // Need to use container to add size constraint.
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.55,
+                              child: SingleChildScrollView(
+                                controller: ScrollController(),
+                                child: Column(
+                                  children: [
+                                    Padding(
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           5, 0, 5, 20),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 10, 10, 0),
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.4,
-                                                  height: 100,
-                                                  decoration: BoxDecoration(
-                                                    color: const Color(0xFFEEEEEE),
-                                                    borderRadius:
-                                                        BorderRadius.circular(5),
-                                                  ),
-                                                  child: SizedBox(
-                                                      width: 180,
-                                                      height: 100,
-                                                      child: FlutterFlowCarousel(
-                                                          width: 180,
-                                                          height: 100,
-                                                          listaImagenes:
-                                                              checkInFormProvider.mileageImages)),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(0, 10, 0, 0),
-                                                  child: Text(
-                                                    "Total: ${checkInFormProvider.mileageImages.length}",
-                                                    style: FlutterFlowTheme.of(context)
-                                                        .title3
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          color:
-                                                              FlutterFlowTheme.of(context)
-                                                                  .secondaryText,
-                                                          fontSize: 12.5,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                      child: TextFormField(
+                                        initialValue: checkInFormProvider.mileage,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        obscureText: false,
+                                        onChanged: (value) {
+                                          checkInFormProvider.updateMileage(value);
+                                        },
+                                        decoration: InputDecoration(
+                                          prefixIcon: Icon(
+                                            Icons.speed_outlined,
+                                            color: FlutterFlowTheme.of(context).alternate,
                                           ),
-                                          FFButtonWidget(
-                                            onPressed: () async {
-                                              String? option =
-                                                  await showModalBottomSheet(
-                                                context: context,
-                                                builder: (_) =>
-                                                    const CustomBottomSheet(),
-                                              );
-                            
-                                              if (option == null) return;
-                            
-                                              final picker = ImagePicker();
-                                              // imagesTemp = [];
-                                              XFile? pickedFile;
-                                              List<XFile>? pickedFiles;
-                                              if (option == 'camera') {
-                                                if (checkInFormProvider.mileageImages.length <
-                                                    5) {
-                                                  pickedFile =
-                                                      await picker.pickImage(
-                                                    source: ImageSource.camera,
-                                                    imageQuality: 80,
-                                                  );
-                                                  if (pickedFile != null) {
-                                                    imagesTemp.add(pickedFile);
-                                                  }
-                                                } else {
-                                                  bool? booleano =
-                                                      // ignore: use_build_context_synchronously
-                                                      await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Padding(
-                                                        padding:
-                                                            MediaQuery.of(context)
-                                                                .viewInsets,
-                                                        child: SizedBox(
-                                                          height:
-                                                              MediaQuery.of(context)
-                                                                      .size
-                                                                      .height *
-                                                                  0.45,
-                                                          child:
-                                                              const BottomSheetImagenesCompletas(),
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-                                                  if (booleano != null &&
-                                                      booleano == true) {
+                                          labelText: 'Mileage*',
+                                          labelStyle: FlutterFlowTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Montserrat',
+                                                color: FlutterFlowTheme.of(context).grayDark,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                          hintText: 'Input the mileage...',
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                                              width: 2,
+                                            ),
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context).alternate,
+                                              width: 2,
+                                            ),
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: FlutterFlowTheme.of(context).alternate,
+                                              width: 2,
+                                            ),
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          focusedErrorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: FlutterFlowTheme.of(context).alternate,
+                                              width: 2,
+                                            ),
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          contentPadding:
+                                              const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                                          suffixText: 'Mi',
+                                        ),
+                                        style: FlutterFlowTheme.of(context).bodyText1,
+                                        textAlign: TextAlign.start,
+                                        keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                              return 'The Mileage is required.';
+                                            } 
+                                          if (int.parse(value) < userController.usuarioCurrent!.vehicle.target!.mileage) {
+                                            return "The value can't be lower than '${userController.usuarioCurrent!.vehicle.target!.mileage}' Mi.";
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          5, 0, 5, 20),
+                                      child: TextFormField(
+                                        controller: checkInFormProvider.mileageComments,
+                                        maxLength: 500,
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          labelText: 'Comments',
+                                          labelStyle:
+                                              FlutterFlowTheme.of(context).title3.override(
+                                                    fontFamily: 'Montserrat',
+                                                    color: FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.normal,
+                                                  ),
+                                          hintText: 'Input your comments...',
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context).title3.override(
+                                                    fontFamily: 'Poppins',
+                                                    color: FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.normal,
+                                                  ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context).primaryText,
+                                              width: 1.5,
+                                            ),
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context).primaryText,
+                                              width: 1.5,
+                                            ),
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
+                                          filled: true,
+                                          fillColor: FlutterFlowTheme.of(context).white,
+                                        ),
+                                        style: FlutterFlowTheme.of(context).title3.override(
+                                              fontFamily: 'Poppins',
+                                              color:
+                                                  FlutterFlowTheme.of(context).primaryText,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                        maxLines: 3,
+                                      ),
+                                    ),
+                                    FormField(builder: (state) {
+                                      return Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            5, 0, 5, 20),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(0, 10, 10, 0),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    width: MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.4,
+                                                    height: 100,
+                                                    decoration: BoxDecoration(
+                                                      color: const Color(0xFFEEEEEE),
+                                                      borderRadius:
+                                                          BorderRadius.circular(5),
+                                                    ),
+                                                    child: SizedBox(
+                                                        width: 180,
+                                                        height: 100,
+                                                        child: FlutterFlowCarousel(
+                                                            width: 180,
+                                                            height: 100,
+                                                            listaImagenes:
+                                                                checkInFormProvider.mileageImages)),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(0, 10, 0, 0),
+                                                    child: Text(
+                                                      "Total: ${checkInFormProvider.mileageImages.length}",
+                                                      style: FlutterFlowTheme.of(context)
+                                                          .title3
+                                                          .override(
+                                                            fontFamily: 'Poppins',
+                                                            color:
+                                                                FlutterFlowTheme.of(context)
+                                                                    .secondaryText,
+                                                            fontSize: 12.5,
+                                                            fontWeight:
+                                                                FontWeight.normal,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            FFButtonWidget(
+                                              onPressed: () async {
+                                                String? option =
+                                                    await showModalBottomSheet(
+                                                  context: context,
+                                                  builder: (_) =>
+                                                      const CustomBottomSheet(),
+                                                );
+                              
+                                                if (option == null) return;
+                              
+                                                final picker = ImagePicker();
+                                                // imagesTemp = [];
+                                                XFile? pickedFile;
+                                                List<XFile>? pickedFiles;
+                                                if (option == 'camera') {
+                                                  if (checkInFormProvider.mileageImages.length <
+                                                      5) {
                                                     pickedFile =
                                                         await picker.pickImage(
                                                       source: ImageSource.camera,
                                                       imageQuality: 80,
-                            
                                                     );
                                                     if (pickedFile != null) {
-                                                      libraryIO.File file =
-                                                      libraryIO.File(
-                                                          pickedFile.path);
-                            
-                                                      Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
-                                                        file.absolute.path,
-                                                        minWidth: 1920,
-                                                        minHeight: 1080,
-                                                        quality: 80,
-                                                      );
-
-                                                      if (compressImage != null) {
-                                                        var updateImageEvidence =
-                                                          ImageEvidence(
-                                                              path:
-                                                                  pickedFile.path,
-                                                              uint8List: compressImage,
-                                                              name: pickedFile.name);
-                                                          checkInFormProvider.updateMileageImage(
-                                                          updateImageEvidence);
-                                                      }
-                                                        
+                                                      imagesTemp.add(pickedFile);
                                                     }
-                                                    return;
-                                                  }
-                                                }
-                                              } else {
-                                                //Se selecciona galería
-                                                if (checkInFormProvider.mileageImages.length <
-                                                    5) {
-                                                  pickedFiles =
-                                                      await picker.pickMultiImage(
-                                                  );
-                                                  if (pickedFiles == null) {
-                                                    return;
-                                                  }
-                                                  if (pickedFiles.length > 5) {
-                                                    snackbarKey.currentState
-                                                        ?.showSnackBar(
-                                                            const SnackBar(
-                                                      content: Text(
-                                                          "Not allowed to upload more than 5 images."),
-                                                    ));
-                                                    return;
-                                                  }
-                                                  switch (checkInFormProvider.mileageImages.length) {
-                                                    case 0:
-                                                      for (int i = 0;
-                                                          i < pickedFiles.length;
-                                                          i++) {
-                                                        imagesTemp
-                                                            .add(pickedFiles[i]);
-                                                      }
-                                                      break;
-                                                    case 1:
-                                                      if (pickedFiles.length <= 4) {
-                                                        for (int i = 0;
-                                                            i < pickedFiles.length;
-                                                            i++) {
-                                                          imagesTemp
-                                                              .add(pickedFiles[i]);
+                                                  } else {
+                                                    bool? booleano =
+                                                        // ignore: use_build_context_synchronously
+                                                        await showModalBottomSheet(
+                                                      isScrollControlled: true,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Padding(
+                                                          padding:
+                                                              MediaQuery.of(context)
+                                                                  .viewInsets,
+                                                          child: SizedBox(
+                                                            height:
+                                                                MediaQuery.of(context)
+                                                                        .size
+                                                                        .height *
+                                                                    0.45,
+                                                            child:
+                                                                const BottomSheetImagenesCompletas(),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                    if (booleano != null &&
+                                                        booleano == true) {
+                                                      pickedFile =
+                                                          await picker.pickImage(
+                                                        source: ImageSource.camera,
+                                                        imageQuality: 80,
+                              
+                                                      );
+                                                      if (pickedFile != null) {
+                                                        libraryIO.File file =
+                                                        libraryIO.File(
+                                                            pickedFile.path);
+                              
+                                                        Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
+                                                          file.absolute.path,
+                                                          minWidth: 1920,
+                                                          minHeight: 1080,
+                                                          quality: 80,
+                                                        );
+                          
+                                                        if (compressImage != null) {
+                                                          var updateImageEvidence =
+                                                            ImageEvidence(
+                                                                path:
+                                                                    pickedFile.path,
+                                                                uint8List: compressImage,
+                                                                name: pickedFile.name);
+                                                            checkInFormProvider.updateMileageImage(
+                                                            updateImageEvidence);
                                                         }
-                                                      } else {
-                                                        snackbarKey.currentState
-                                                            ?.showSnackBar(
-                                                                const SnackBar(
-                                                          content: Text(
-                                                              "Not allowed to upload more than 5 images."),
-                                                        ));
-                                                        return;
+                                                          
                                                       }
-                                                      break;
-                                                    case 2:
-                                                      if (pickedFiles.length <= 3) {
-                                                        for (int i = 0;
-                                                            i < pickedFiles.length;
-                                                            i++) {
-                                                          imagesTemp
-                                                              .add(pickedFiles[i]);
-                                                        }
-                                                      } else {
-                                                        snackbarKey.currentState
-                                                            ?.showSnackBar(
-                                                                const SnackBar(
-                                                          content: Text(
-                                                              "Not allowed to upload more than 5 images."),
-                                                        ));
-                                                        return;
-                                                      }
-                                                      break;
-                                                    case 3:
-                                                      if (pickedFiles.length <= 4) {
-                                                        for (int i = 0;
-                                                            i < pickedFiles.length;
-                                                            i++) {
-                                                          imagesTemp
-                                                              .add(pickedFiles[i]);
-                                                        }
-                                                      } else {
-                                                        snackbarKey.currentState
-                                                            ?.showSnackBar(
-                                                                const SnackBar(
-                                                          content: Text(
-                                                              "Not allowed to upload more than 5 images."),
-                                                        ));
-                                                        return;
-                                                      }
-                                                      break;
-                                                    case 4:
-                                                      if (pickedFiles.length <= 1) {
-                                                        for (int i = 0;
-                                                            i < pickedFiles.length;
-                                                            i++) {
-                                                          imagesTemp
-                                                              .add(pickedFiles[i]);
-                                                        }
-                                                      } else {
-                                                        snackbarKey.currentState
-                                                            ?.showSnackBar(
-                                                                const SnackBar(
-                                                          content: Text(
-                                                              "Not allowed to upload more than 5 images."),
-                                                        ));
-                                                        return;
-                                                      }
-                                                      break;
-                                                    default:
-                                                      break;
+                                                      return;
+                                                    }
                                                   }
                                                 } else {
-                                                  bool? booleano =
-                                                      // ignore: use_build_context_synchronously
-                                                      await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Padding(
-                                                        padding:
-                                                            MediaQuery.of(context)
-                                                                .viewInsets,
-                                                        child: SizedBox(
-                                                          height:
-                                                              MediaQuery.of(context)
-                                                                      .size
-                                                                      .height *
-                                                                  0.45,
-                                                          child:
-                                                              const BottomSheetImagenesCompletas(),
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-                                                  if (booleano != null &&
-                                                      booleano == true) {
-                                                    pickedFile =
-                                                        await picker.pickImage(
-                                                      source: ImageSource.gallery,
-                                                      imageQuality: 80,
-                            
+                                                  //Se selecciona galería
+                                                  if (checkInFormProvider.mileageImages.length <
+                                                      5) {
+                                                    pickedFiles =
+                                                        await picker.pickMultiImage(
                                                     );
-                                                    if (pickedFile != null) {
-                                                      libraryIO.File file =
-                                                      libraryIO.File(
-                                                          pickedFile.path);
-                            
-                                                      Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
-                                                        file.absolute.path,
-                                                        minWidth: 1920,
-                                                        minHeight: 1080,
-                                                        quality: 80,
-                                                      );
-
-                                                      if (compressImage != null) {
-                                                        var updateImageEvidence =
-                                                          ImageEvidence(
-                                                              path:
-                                                                  pickedFile.path,
-                                                              uint8List: compressImage,
-                                                              name: pickedFile.name);
-                                                          checkInFormProvider.updateMileageImage(
-                                                          updateImageEvidence);
-                                                      }
+                                                    if (pickedFiles == null) {
+                                                      return;
                                                     }
-                                                    return;
+                                                    if (pickedFiles.length > 5) {
+                                                      snackbarKey.currentState
+                                                          ?.showSnackBar(
+                                                              const SnackBar(
+                                                        content: Text(
+                                                            "Not allowed to upload more than 5 images."),
+                                                      ));
+                                                      return;
+                                                    }
+                                                    switch (checkInFormProvider.mileageImages.length) {
+                                                      case 0:
+                                                        for (int i = 0;
+                                                            i < pickedFiles.length;
+                                                            i++) {
+                                                          imagesTemp
+                                                              .add(pickedFiles[i]);
+                                                        }
+                                                        break;
+                                                      case 1:
+                                                        if (pickedFiles.length <= 4) {
+                                                          for (int i = 0;
+                                                              i < pickedFiles.length;
+                                                              i++) {
+                                                            imagesTemp
+                                                                .add(pickedFiles[i]);
+                                                          }
+                                                        } else {
+                                                          snackbarKey.currentState
+                                                              ?.showSnackBar(
+                                                                  const SnackBar(
+                                                            content: Text(
+                                                                "Not allowed to upload more than 5 images."),
+                                                          ));
+                                                          return;
+                                                        }
+                                                        break;
+                                                      case 2:
+                                                        if (pickedFiles.length <= 3) {
+                                                          for (int i = 0;
+                                                              i < pickedFiles.length;
+                                                              i++) {
+                                                            imagesTemp
+                                                                .add(pickedFiles[i]);
+                                                          }
+                                                        } else {
+                                                          snackbarKey.currentState
+                                                              ?.showSnackBar(
+                                                                  const SnackBar(
+                                                            content: Text(
+                                                                "Not allowed to upload more than 5 images."),
+                                                          ));
+                                                          return;
+                                                        }
+                                                        break;
+                                                      case 3:
+                                                        if (pickedFiles.length <= 4) {
+                                                          for (int i = 0;
+                                                              i < pickedFiles.length;
+                                                              i++) {
+                                                            imagesTemp
+                                                                .add(pickedFiles[i]);
+                                                          }
+                                                        } else {
+                                                          snackbarKey.currentState
+                                                              ?.showSnackBar(
+                                                                  const SnackBar(
+                                                            content: Text(
+                                                                "Not allowed to upload more than 5 images."),
+                                                          ));
+                                                          return;
+                                                        }
+                                                        break;
+                                                      case 4:
+                                                        if (pickedFiles.length <= 1) {
+                                                          for (int i = 0;
+                                                              i < pickedFiles.length;
+                                                              i++) {
+                                                            imagesTemp
+                                                                .add(pickedFiles[i]);
+                                                          }
+                                                        } else {
+                                                          snackbarKey.currentState
+                                                              ?.showSnackBar(
+                                                                  const SnackBar(
+                                                            content: Text(
+                                                                "Not allowed to upload more than 5 images."),
+                                                          ));
+                                                          return;
+                                                        }
+                                                        break;
+                                                      default:
+                                                        break;
+                                                    }
+                                                  } else {
+                                                    bool? booleano =
+                                                        // ignore: use_build_context_synchronously
+                                                        await showModalBottomSheet(
+                                                      isScrollControlled: true,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Padding(
+                                                          padding:
+                                                              MediaQuery.of(context)
+                                                                  .viewInsets,
+                                                          child: SizedBox(
+                                                            height:
+                                                                MediaQuery.of(context)
+                                                                        .size
+                                                                        .height *
+                                                                    0.45,
+                                                            child:
+                                                                const BottomSheetImagenesCompletas(),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                    if (booleano != null &&
+                                                        booleano == true) {
+                                                      pickedFile =
+                                                          await picker.pickImage(
+                                                        source: ImageSource.gallery,
+                                                        imageQuality: 80,
+                              
+                                                      );
+                                                      if (pickedFile != null) {
+                                                        libraryIO.File file =
+                                                        libraryIO.File(
+                                                            pickedFile.path);
+                              
+                                                        Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
+                                                          file.absolute.path,
+                                                          minWidth: 1920,
+                                                          minHeight: 1080,
+                                                          quality: 80,
+                                                        );
+                          
+                                                        if (compressImage != null) {
+                                                          var updateImageEvidence =
+                                                            ImageEvidence(
+                                                                path:
+                                                                    pickedFile.path,
+                                                                uint8List: compressImage,
+                                                                name: pickedFile.name);
+                                                            checkInFormProvider.updateMileageImage(
+                                                            updateImageEvidence);
+                                                        }
+                                                      }
+                                                      return;
+                                                    }
                                                   }
                                                 }
-                                              }
-                                              for (var i = 0;
-                                                  i < imagesTemp.length;
-                                                  i++) {
-                                                libraryIO.File file =
-                                                    libraryIO.File(
-                                                        imagesTemp[i].path);
-                            
-                                                 Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
-                                                    file.absolute.path,
-                                                    minWidth: 1920,
-                                                    minHeight: 1080,
-                                                    quality: 80,
-                                                  );
-
-                                                  if (compressImage != null) {
-                                                    var newImageEvidence =
-                                                      ImageEvidence(
-                                                          path:
-                                                            imagesTemp[i].path,
-                                                          uint8List: compressImage,
-                                                          name: imagesTemp[i].name);
-                                                      checkInFormProvider.addMileageImage(
-                                                    newImageEvidence);
-                                                  }
-                                              }
-                                              imagesTemp.clear();
-                                            },
-                                            text: 'Add',
-                                            icon: const Icon(
-                                              Icons.add_a_photo,
-                                              size: 15,
-                                            ),
-                                            options: FFButtonOptions(
-                                              width: MediaQuery.of(context).size.width * 0.2,
-                                              height: 40,
-                                              color: FlutterFlowTheme.of(context)
-                                                  .white,
-                                              textStyle: FlutterFlowTheme.of(context)
-                                                  .subtitle2
-                                                  .override(
-                                                    fontFamily: FlutterFlowTheme.of(context)
-                                                        .subtitle2Family,
-                                                    color: FlutterFlowTheme.of(context).alternate,
-                                                    fontSize: 15,
-                                                  ),
-                                              borderSide: BorderSide(
-                                                color: FlutterFlowTheme.of(context).alternate,
-                                                width: 2,
+                                                for (var i = 0;
+                                                    i < imagesTemp.length;
+                                                    i++) {
+                                                  libraryIO.File file =
+                                                      libraryIO.File(
+                                                          imagesTemp[i].path);
+                              
+                                                   Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
+                                                      file.absolute.path,
+                                                      minWidth: 1920,
+                                                      minHeight: 1080,
+                                                      quality: 80,
+                                                    );
+                          
+                                                    if (compressImage != null) {
+                                                      var newImageEvidence =
+                                                        ImageEvidence(
+                                                            path:
+                                                              imagesTemp[i].path,
+                                                            uint8List: compressImage,
+                                                            name: imagesTemp[i].name);
+                                                        checkInFormProvider.addMileageImage(
+                                                      newImageEvidence);
+                                                    }
+                                                }
+                                                imagesTemp.clear();
+                                              },
+                                              text: 'Add',
+                                              icon: const Icon(
+                                                Icons.add_a_photo,
+                                                size: 15,
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
+                                              options: FFButtonOptions(
+                                                width: MediaQuery.of(context).size.width * 0.2,
+                                                height: 40,
+                                                color: FlutterFlowTheme.of(context)
+                                                    .white,
+                                                textStyle: FlutterFlowTheme.of(context)
+                                                    .subtitle2
+                                                    .override(
+                                                      fontFamily: FlutterFlowTheme.of(context)
+                                                          .subtitle2Family,
+                                                      color: FlutterFlowTheme.of(context).alternate,
+                                                      fontSize: 15,
+                                                    ),
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(context).alternate,
+                                                  width: 2,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }, validator: (val) {
-                                    if (val == []) {
-                                      return 'Images are required';
-                                    }
-                                    return null;
-                                  }),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: ClayContainer(
-                                        height: 50,
-                                        width: 200,
-                                        depth: 15,
-                                        spread: 3,
-                                        borderRadius: 25,
-                                        curveType: CurveType.concave,
-                                        color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                        surfaceColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                        parentColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(25),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              'Accept',
-                                              style: FlutterFlowTheme.of(context).subtitle1.override(
-                                                fontFamily: 'Lexend Deca',
-                                                color: FlutterFlowTheme.of(context).white,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
+                                          ],
+                                        ),
+                                      );
+                                    }, validator: (val) {
+                                      if (val == []) {
+                                        return 'Images are required';
+                                      }
+                                      return null;
+                                    }),
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          final mileageInt = int.parse(checkInFormProvider.mileage != "" ? checkInFormProvider.mileage : "0");
+                                          if (checkInFormProvider.validateKeyForm(keyForm)) {
+                                            //Se valida para ruleOilChange
+                                            if (userController.usuarioCurrent!.vehicle.target?.ruleOilChange.target?.registered == "False") {
+                                              final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.value);
+                                              if (limitMileageService - mileageInt <= 100) {
+                                                //Se activa la bandera oil a true
+                                                checkInFormProvider.flagOilChange = true;
+                                              }
+                                            }
+                                            //Se valida para ruleTransmissionFluidChange
+                                            if (userController.usuarioCurrent!.vehicle.target?.ruleTransmissionFluidChange.target?.registered == "False") {
+                                              final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.value);
+                                              if (limitMileageService - mileageInt <= 100) {
+                                                // Se actualiza la bandera transmission a true
+                                                checkInFormProvider.flagTransmissionFluidChange = true;
+                                              }
+                                            }
+                                            //Se valida para ruleRadiatorFluidChange
+                                            if (userController.usuarioCurrent!.vehicle.target?.ruleRadiatorFluidChange.target?.registered == "False") {
+                                              final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.value);
+                                              if (limitMileageService - mileageInt <= 100) {
+                                                // Se actualiza la bandera radiator a true
+                                                checkInFormProvider.flagRadiatorFluidChange = true;
+                                              }
+                                            }
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                        child: ClayContainer(
+                                          height: 50,
+                                          width: 200,
+                                          depth: 15,
+                                          spread: 3,
+                                          borderRadius: 25,
+                                          curveType: CurveType.concave,
+                                          color:
+                                          FlutterFlowTheme.of(context).alternate,
+                                          surfaceColor:
+                                          FlutterFlowTheme.of(context).alternate,
+                                          parentColor:
+                                          FlutterFlowTheme.of(context).alternate,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(25),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                'Accept',
+                                                style: FlutterFlowTheme.of(context).subtitle1.override(
+                                                  fontFamily: 'Lexend Deca',
+                                                  color: FlutterFlowTheme.of(context).white,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),

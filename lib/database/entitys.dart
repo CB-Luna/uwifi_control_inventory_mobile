@@ -822,10 +822,15 @@ class Vehicle {
   String licensePlates;
   String motor;
   String color;
+  int mileage;
   DateTime oilChangeDue;
   DateTime lastTransmissionFluidChange;
   DateTime lastRadiatorFluidChange;
+  DateTime? nextOilChange;
+  DateTime? nextTransmissionFluidChange;
+  DateTime? nextRadiatorFluidChange;
   DateTime dateAdded;
+  
   @Unique()
   String? idDBR;
   @Backlink()
@@ -834,6 +839,12 @@ class Vehicle {
   final vehicleServices = ToMany<VehicleServices>();
   final status = ToOne<Status>();
   final company = ToOne<Company>();
+
+  //Rules
+  final ruleOilChange = ToOne<Rule>();
+  final ruleTransmissionFluidChange = ToOne<Rule>();
+  final ruleRadiatorFluidChange = ToOne<Rule>();
+
 
   Vehicle({
     this.id = 0,
@@ -846,11 +857,38 @@ class Vehicle {
     required this.licensePlates,
     required this.motor,
     required this.color,
+    required this.mileage,
     required this.oilChangeDue,
     required this.lastTransmissionFluidChange,
     required this.lastRadiatorFluidChange,
+    this.nextOilChange,
+    this.nextTransmissionFluidChange,
+    this.nextRadiatorFluidChange,
     DateTime? dateAdded,
     this.idDBR,
+  }) : dateAdded = dateAdded ?? DateTime.now();
+
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
+}
+
+@Entity()
+class Rule {
+  int id;
+  String value;
+  String registered;
+  int lastMileageService;
+  DateTime dateAdded;
+  @Backlink()
+  final bitacora = ToMany<Bitacora>();
+  final vehicle = ToOne<Vehicle>();
+
+  Rule({
+    this.id = 0,
+    required this.value,
+    required this.registered,
+    required this.lastMileageService,
+    DateTime? dateAdded,
   }) : dateAdded = dateAdded ?? DateTime.now();
 
   String get dateAddedFormat =>
@@ -930,6 +968,7 @@ class Bitacora {
   final user = ToOne<Users>();
   final service = ToOne<Service>();
   final vehicleService = ToOne<VehicleServices>();
+  final rule = ToOne<Rule>();
   @Backlink()
   final users = ToMany<Users>();
 

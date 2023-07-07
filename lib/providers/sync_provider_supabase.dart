@@ -11,6 +11,7 @@ import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:http/http.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
+import 'package:taller_alex_app_asesor/util/util.dart';
 
 class SyncProviderSupabase extends ChangeNotifier {
   bool procesocargando = false;
@@ -96,7 +97,91 @@ class SyncProviderSupabase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
-          case "syncUpdateVehicleServices":
+        case "syncAddOilChangeService":
+          final vehicleServices = getFirstVehicleServices(
+              dataBase.vehicleServicesBox.getAll(), instruccionesBitacora[i].id);
+          if (vehicleServices != null) {
+            final responseSyncUpdateVehicleServices = await syncAddVehicleService(
+                vehicleServices, instruccionesBitacora[i]);
+            if (responseSyncUpdateVehicleServices.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  instruccion: responseSyncUpdateVehicleServices.descripcion,
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion:
+                    "Problems sync to Local Server, Control Form not recovered.",
+                fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncAddFluidTransmissionChangeService":
+          final vehicleServices = getFirstVehicleServices(
+              dataBase.vehicleServicesBox.getAll(), instruccionesBitacora[i].id);
+          if (vehicleServices != null) {
+            final responseSyncUpdateVehicleServices = await syncAddVehicleService(
+                vehicleServices, instruccionesBitacora[i]);
+            if (responseSyncUpdateVehicleServices.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  instruccion: responseSyncUpdateVehicleServices.descripcion,
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion:
+                    "Problems sync to Local Server, Control Form not recovered.",
+                fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncAddFluidRadiatorChangeService":
+          final vehicleServices = getFirstVehicleServices(
+              dataBase.vehicleServicesBox.getAll(), instruccionesBitacora[i].id);
+          if (vehicleServices != null) {
+            final responseSyncUpdateVehicleServices = await syncAddVehicleService(
+                vehicleServices, instruccionesBitacora[i]);
+            if (responseSyncUpdateVehicleServices.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  instruccion: responseSyncUpdateVehicleServices.descripcion,
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion:
+                    "Problems sync to Local Server, Control Form not recovered.",
+                fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncUpdateVehicleServices":
           final vehicleServices = getFirstVehicleServices(
               dataBase.vehicleServicesBox.getAll(), instruccionesBitacora[i].id);
           if (vehicleServices != null) {
@@ -2042,8 +2127,15 @@ class SyncProviderSupabase extends ChangeNotifier {
                 'date_added_r': controlForm.dateAddedR.toIso8601String(),
               },
             ).select<PostgrestList>('id_control_form');
+            //Se actualiza el Mileage del vehicle
+            final recordUpdateVehicle = await supabaseCtrlV.from('vehicle').update(
+              {
+                'mileage': controlForm.vehicle.target!.mileage
+              },
+            ).eq('id_vehicle',int.parse(controlForm.vehicle.target!.idDBR!))
+            .select<PostgrestList>('id_vehicle');
             //Registrar control Form
-            if (recordControlForm.isNotEmpty) {
+            if (recordControlForm.isNotEmpty && recordUpdateVehicle.isNotEmpty) {
               //Se recupera el idDBR de Supabase de Measure
               controlForm.measuresR.target!.idDBR = recordMeasure.first['id_measure'].toString();
               dataBase.measuresFormBox.put(controlForm.measuresR.target!);
@@ -3799,8 +3891,15 @@ class SyncProviderSupabase extends ChangeNotifier {
               },
             ).eq("id_control_form", controlForm.idDBR)
             .select<PostgrestList>('id_control_form');
+            //Se actualiza el Mileage del vehicle
+            final recordUpdateVehicle = await supabaseCtrlV.from('vehicle').update(
+              {
+                'mileage': controlForm.vehicle.target!.mileage
+              },
+            ).eq('id_vehicle',int.parse(controlForm.vehicle.target!.idDBR!))
+            .select<PostgrestList>('id_vehicle');
             //Registrar control Form
-            if (recordControlForm.isNotEmpty) {
+            if (recordControlForm.isNotEmpty && recordUpdateVehicle.isNotEmpty) {
               //Se recupera el idDBR de Supabase de Measure
               controlForm.measuresD.target!.idDBR = recordMeasure.first['id_measure'].toString();
               dataBase.measuresFormBox.put(controlForm.measuresD.target!);
@@ -3894,6 +3993,63 @@ class SyncProviderSupabase extends ChangeNotifier {
         )
         .eq('id_vehicle_services', int.parse(vehicleServices.idDBR!))
         .select<PostgrestList>("id_vehicle_services");
+        if (vehicleServices.service.target!.service == "Oil Change") {
+          final recordVehicle = await supabaseCtrlV.from('vehicle').update(
+            {
+              'oil_change_due': DateFormat('dd/MM/yyyy').format(vehicleServices.serviceDate),
+              'rule_oil_change': {
+                'Value': vehicleServices.vehicle.target!.ruleOilChange.target!.value,
+                'Registered': vehicleServices.vehicle.target!.ruleOilChange.target!.registered,
+                'Last Mileage Service': vehicleServices.vehicle.target!.mileage.toString(),
+              },
+            },
+          ).eq('id_vehicle', int.parse(vehicleServices.vehicle.target!.idDBR!))
+          .select<PostgrestList>("id_vehicle");    
+          if (recordVehicle.isEmpty) {
+            return SyncInstruction(
+            exitoso: false,
+            descripcion:
+                "Failed to sync update Rule and Date Vehicle Service Oil Change on Local Server: Vehicle Service 'Oil Change' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}'.");
+          }
+        }
+        if (vehicleServices.service.target!.service == "Transmission Fluid Change") {
+          final recordVehicle = await supabaseCtrlV.from('vehicle').update(
+            {
+              'last_transmission_fluid_change': DateFormat('dd/MM/yyyy').format(vehicleServices.serviceDate),
+              'rule_transmission_fluid_change': {
+                'Value': vehicleServices.vehicle.target!.ruleTransmissionFluidChange.target!.value,
+                'Registered': vehicleServices.vehicle.target!.ruleTransmissionFluidChange.target!.registered,
+                'Last Mileage Service': vehicleServices.vehicle.target!.mileage.toString(),
+              },
+            },
+          ).eq('id_vehicle', int.parse(vehicleServices.vehicle.target!.idDBR!))
+          .select<PostgrestList>("id_vehicle");    
+          if (recordVehicle.isEmpty) {
+            return SyncInstruction(
+            exitoso: false,
+            descripcion:
+                "Failed to sync update Rule and Date Vehicle Service Transmission Fluid Change on Local Server: Vehicle Service 'Transmission Fluid Change' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}'.");
+          }
+        }
+        if (vehicleServices.service.target!.service == "Radiator Fluid Change") {
+          final recordVehicle = await supabaseCtrlV.from('vehicle').update(
+            {
+              'last_radiator_fluid_change': DateFormat('dd/MM/yyyy').format(vehicleServices.serviceDate),
+              'rule_radiator_fluid_change': {
+                'Value': vehicleServices.vehicle.target!.ruleRadiatorFluidChange.target!.value,
+                'Registered': vehicleServices.vehicle.target!.ruleRadiatorFluidChange.target!.registered,
+                'Last Mileage Service': vehicleServices.vehicle.target!.mileage.toString(),
+              },
+            },
+          ).eq('id_vehicle', int.parse(vehicleServices.vehicle.target!.idDBR!))
+          .select<PostgrestList>("id_vehicle");    
+          if (recordVehicle.isEmpty) {
+            return SyncInstruction(
+            exitoso: false,
+            descripcion:
+                "Failed to sync update Rule and Date Vehicle Service Radiator Fluid Change on Local Server: Vehicle Service 'Radiator Fluid Change' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}'.");
+          }
+        }
         if (recordVehicleServices.isNotEmpty) {
           //Se marca como ejecutada la instrucción en Bitacora
           bitacora.executeSupabase = true;
@@ -3905,6 +4061,104 @@ class SyncProviderSupabase extends ChangeNotifier {
           exitoso: false,
           descripcion:
               "Failed to sync data Update Vehicle Service Status on Local Server: Vehicle Service '${vehicleServices.service.target!.service}' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}'.");
+        }
+      } else {
+        dataBase.bitacoraBox.remove(bitacora.id);
+        return SyncInstruction(exitoso: true, descripcion: "");
+      }
+    } catch (e) {
+      //print('ERROR - function syncAddEmprendedor(): $e');
+      return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync data Update Vehicle Service Status on Local Server: Vehicle Service '${vehicleServices.service.target!.service}' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}', details: '$e'");
+    }
+  }
+
+  Future<SyncInstruction> syncAddVehicleService(
+      VehicleServices vehicleServices, Bitacora bitacora) async {
+    try {
+      if (bitacora.executeSupabase == false) {
+        //Add Vehicle Services
+        final recordVehicleServices = await supabaseCtrlV.from('vehicle_services').insert(
+          {
+            'id_vehicle_fk': int.parse(vehicleServices.vehicle.target!.idDBR!),
+            'id_service_fk': int.parse(vehicleServices.service.target!.idDBR!),
+            'service_date': DateFormat('MM/dd/yyyy').format(vehicleServices.serviceDate),
+            'completed': vehicleServices.completed,
+            'created_at': vehicleServices.dateAdded.toIso8601String() 
+          },
+        )
+        .select<PostgrestList>("id_vehicle_services");
+        if (vehicleServices.service.target!.service == "Oil Change") {
+          final recordVehicle = await supabaseCtrlV.from('vehicle').update(
+            {
+              'rule_oil_change': {
+                'Value': vehicleServices.vehicle.target!.ruleOilChange.target!.value,
+                'Registered': vehicleServices.vehicle.target!.ruleOilChange.target!.registered,
+                'Last Mileage Service': vehicleServices.vehicle.target!.ruleOilChange.target!.lastMileageService.toString()
+                }
+            },
+          ).eq('id_vehicle', int.parse(vehicleServices.vehicle.target!.idDBR!))
+          .select<PostgrestList>("id_vehicle");    
+          if (recordVehicle.isEmpty) {
+            return SyncInstruction(
+            exitoso: false,
+            descripcion:
+                "Failed to sync update Rule Vehicle Service Oil Change on Local Server: Vehicle Service 'Oil Change' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}'.");
+          }
+        }
+        if (vehicleServices.service.target!.service == "Transmission Fluid Change") {
+          final recordVehicle = await supabaseCtrlV.from('vehicle').update(
+            {
+              'rule_transmission_fluid_change': {
+                'Value': vehicleServices.vehicle.target!.ruleTransmissionFluidChange.target!.value,
+                'Registered': vehicleServices.vehicle.target!.ruleTransmissionFluidChange.target!.registered,
+                'Last Mileage Service': vehicleServices.vehicle.target!.ruleTransmissionFluidChange.target!.lastMileageService.toString()
+              }
+            },
+          ).eq('id_vehicle', int.parse(vehicleServices.vehicle.target!.idDBR!))
+          .select<PostgrestList>("id_vehicle");    
+          if (recordVehicle.isEmpty) {
+            return SyncInstruction(
+            exitoso: false,
+            descripcion:
+                "Failed to sync update Rule Vehicle Service Transmission Fluid Change on Local Server: Vehicle Service 'Transmission Fluid Change' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}'.");
+          }
+        }
+        if (vehicleServices.service.target!.service == "Radiator Fluid Change") {
+          final recordVehicle = await supabaseCtrlV.from('vehicle').update(
+            {
+              'rule_radiator_fluid_change': {
+              'Value': vehicleServices.vehicle.target!.ruleRadiatorFluidChange.target!.value,
+              'Registered': vehicleServices.vehicle.target!.ruleRadiatorFluidChange.target!.registered,
+              'Last Mileage Service': vehicleServices.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService.toString()
+              }
+            },
+          ).eq('id_vehicle', int.parse(vehicleServices.vehicle.target!.idDBR!))
+          .select<PostgrestList>("id_vehicle");    
+          if (recordVehicle.isEmpty) {
+            return SyncInstruction(
+            exitoso: false,
+            descripcion:
+                "Failed to sync update Rule Vehicle Service Radiator Fluid Change on Local Server: Vehicle Service 'Radiator Fluid Change' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}'.");
+          }
+        }
+
+        if (recordVehicleServices.isNotEmpty) {
+          //Se actualiza el id del Service Vehicle
+          vehicleServices.idDBR = recordVehicleServices.first['id_vehicle_services'].toString();
+          dataBase.vehicleServicesBox.put(vehicleServices);
+          //Se marca como ejecutada la instrucción en Bitacora
+          bitacora.executeSupabase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          dataBase.bitacoraBox.remove(bitacora.id);
+          return SyncInstruction(exitoso: true, descripcion: "");
+        } else {
+          return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync data Add Vehicle Service Status on Local Server: Vehicle Service '${vehicleServices.service.target!.service}' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}'.");
         }
       } else {
         dataBase.bitacoraBox.remove(bitacora.id);

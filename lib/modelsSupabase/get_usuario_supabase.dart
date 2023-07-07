@@ -15,8 +15,8 @@ class GetUsuarioSupabase {
     final String? homephoneNumber;
     final String? image;
     final int idRoleFk;
-    final Role role;
-    final Company company;
+    final Roles role;
+    final Companys company;
     final Configuracion configuracion;
     final int idTema;
     final int? idVehicleFk;
@@ -62,8 +62,8 @@ class GetUsuarioSupabase {
         homephoneNumber: json["home_phone"],
         image: json["image"],
         idRoleFk: json["id_role_fk"],
-        role: Role.fromMap(json["role"]),
-        company: Company.fromMap(json["company"]),
+        role: Roles.fromMap(json["role"]),
+        company: Companys.fromMap(json["company"]),
         configuracion: Configuracion.fromMap(json["configuracion"]),
         idTema: json["id_tema"],
         idVehicleFk: json["id_vehicle_fk"],
@@ -92,20 +92,20 @@ class GetUsuarioSupabase {
     };
 }
 
-class Company {
+class Companys {
     final int companyId;
     final String company;
 
-    Company({
+    Companys({
         required this.companyId,
         required this.company,
     });
 
-    factory Company.fromJson(String str) => Company.fromMap(json.decode(str));
+    factory Companys.fromJson(String str) => Companys.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-    factory Company.fromMap(Map<String, dynamic> json) => Company(
+    factory Companys.fromMap(Map<String, dynamic> json) => Companys(
         companyId: json["id_company"],
         company: json["company"],
     );
@@ -212,22 +212,22 @@ class Logos {
     };
 }
 
-class Role {
+class Roles {
     final int id;
     final String name;
     final Permissions permissions;
 
-    Role({
+    Roles({
         required this.id,
         required this.name,
         required this.permissions,
     });
 
-    factory Role.fromJson(String str) => Role.fromMap(json.decode(str));
+    factory Roles.fromJson(String str) => Roles.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-    factory Role.fromMap(Map<String, dynamic> json) => Role(
+    factory Roles.fromMap(Map<String, dynamic> json) => Roles(
         id: json["role_id"],
         name: json["name"],
         permissions: Permissions.fromMap(json["permissions"]),

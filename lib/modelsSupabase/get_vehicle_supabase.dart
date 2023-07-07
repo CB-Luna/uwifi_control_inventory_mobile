@@ -69,6 +69,9 @@ class Node {
         required this.registrationDue,
         required this.insuranceRenewalDue,
         required this.dateAdded,
+        required this.ruleOilChange,
+        required this.ruleTransmissionFluidChange,
+        required this.ruleRadiatorFluidChange,
     });
 
     final String id;
@@ -86,6 +89,9 @@ class Node {
     final DateTime registrationDue;
     final DateTime insuranceRenewalDue;
     final DateTime dateAdded;
+    final RuleChange ruleOilChange;
+    final RuleChange ruleTransmissionFluidChange;
+    final RuleChange ruleRadiatorFluidChange;
 
     factory Node.fromMap(Map<String, dynamic> json) => Node(
         id: json["id_vehicle"],
@@ -103,6 +109,9 @@ class Node {
         registrationDue: DateTime.parse(json["registration_due"]),
         insuranceRenewalDue: DateTime.parse(json["insurance_renewal_due"]),
         dateAdded: DateTime.parse(json["date_added"]),
+        ruleOilChange: RuleChange.fromMap(json["rule_oil_change"]),
+        ruleTransmissionFluidChange: RuleChange.fromMap(json["rule_transmission_fluid_change"]),
+        ruleRadiatorFluidChange: RuleChange.fromMap(json["rule_radiator_fluid_change"]),
     );
 
     Map<String, dynamic> toMap() => {
@@ -121,5 +130,37 @@ class Node {
         "registration_due": registrationDue.toIso8601String(),
         "insurance_renewal_due": insuranceRenewalDue.toIso8601String(),
         "date_added": dateAdded.toIso8601String(),
+        "rule_oil_change": ruleOilChange.toMap(),
+        "rule_transmission_fluid_change": ruleTransmissionFluidChange.toMap(),
+        "rule_radiator_fluid_change": ruleRadiatorFluidChange.toMap(),
+    };
+  
+}
+
+class RuleChange {
+    final String value;
+    final String registered;
+    final int lastMileageService;
+
+    RuleChange({
+        required this.value,
+        required this.registered,
+        required this.lastMileageService,
+    });
+
+    factory RuleChange.fromJson(String str) => RuleChange.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory RuleChange.fromMap(Map<String, dynamic> json) => RuleChange(
+        value: json["Value"],
+        registered: json["Registered"],
+        lastMileageService: int.parse(json["Last Mileage Service"]),
+    );
+
+    Map<String, dynamic> toMap() => {
+        "Value": value,
+        "Registered": registered,
+        "Last Mileage Service": lastMileageService.toInt(),
     };
 }

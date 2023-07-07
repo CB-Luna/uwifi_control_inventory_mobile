@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "27:1774905738150923512",
-      "lastPropertyId": "57:7769754459961668524",
+      "lastPropertyId": "58:6864433048827413011",
       "name": "Bitacora",
       "properties": [
         {
@@ -163,6 +163,14 @@
           "flags": 520,
           "indexId": "452:2432638833963189135",
           "relationTarget": "VehicleServices"
+        },
+        {
+          "id": "58:6864433048827413011",
+          "name": "ruleId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "457:2883972706903277445",
+          "relationTarget": "Rule"
         }
       ],
       "relations": []
@@ -2063,7 +2071,7 @@
     },
     {
       "id": "99:8193815974638102829",
-      "lastPropertyId": "20:5120493280338495896",
+      "lastPropertyId": "27:8143417845914793514",
       "name": "Vehicle",
       "properties": [
         {
@@ -2163,6 +2171,50 @@
           "id": "20:5120493280338495896",
           "name": "lastRadiatorFluidChange",
           "type": 10
+        },
+        {
+          "id": "21:757115653678008229",
+          "name": "nextOilChange",
+          "type": 10
+        },
+        {
+          "id": "22:1740545826112459780",
+          "name": "nextTransmissionFluidChange",
+          "type": 10
+        },
+        {
+          "id": "23:731615765620021459",
+          "name": "nextRadiatorFluidChange",
+          "type": 10
+        },
+        {
+          "id": "24:8352018641470727015",
+          "name": "ruleOilChangeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "460:1848952131797483781",
+          "relationTarget": "Rule"
+        },
+        {
+          "id": "25:228343166392005061",
+          "name": "ruleTransmissionFluidChangeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "461:8280925250993398609",
+          "relationTarget": "Rule"
+        },
+        {
+          "id": "26:2951023088220282595",
+          "name": "ruleRadiatorFluidChangeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "462:7080116891369577106",
+          "relationTarget": "Rule"
+        },
+        {
+          "id": "27:8143417845914793514",
+          "name": "mileage",
+          "type": 6
         }
       ],
       "relations": []
@@ -2400,10 +2452,52 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "105:5673404938280062340",
+      "lastPropertyId": "9:2917639864279038227",
+      "name": "Rule",
+      "properties": [
+        {
+          "id": "1:7707060264455187470",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "3:2159862586228346310",
+          "name": "value",
+          "type": 9
+        },
+        {
+          "id": "4:2119373709216005899",
+          "name": "registered",
+          "type": 9
+        },
+        {
+          "id": "6:2738945767052565490",
+          "name": "dateAdded",
+          "type": 10
+        },
+        {
+          "id": "8:4654155028501052373",
+          "name": "vehicleId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "459:6448042828244613407",
+          "relationTarget": "Vehicle"
+        },
+        {
+          "id": "9:2917639864279038227",
+          "name": "lastMileageService",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "104:7552456267933993914",
-  "lastIndexId": "456:4454022439719093874",
+  "lastEntityId": "105:5673404938280062340",
+  "lastIndexId": "462:7080116891369577106",
   "lastRelationId": "97:7907540417784017008",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
@@ -2676,7 +2770,8 @@
     2707715113785547372,
     6907220557239226145,
     3683821233501424578,
-    8460461020124898604
+    8460461020124898604,
+    511123064934859743
   ],
   "retiredPropertyUids": [
     7079790605743243388,
@@ -3732,7 +3827,10 @@
     5065703079577799848,
     5771699047160977949,
     5313747748351641389,
-    3853679392969826869
+    3853679392969826869,
+    2565461764493267736,
+    8823076716079772889,
+    3425954261967379427
   ],
   "retiredRelationUids": [
     1226469011453769556,

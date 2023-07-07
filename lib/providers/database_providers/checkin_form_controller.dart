@@ -14,6 +14,11 @@ class CheckInFormController extends ChangeNotifier {
 
   GlobalKey<FormState> checkInFormKey = GlobalKey<FormState>();
 
+  //***********************<Bnaderas Services>************************
+  bool flagOilChange = false;
+  bool flagTransmissionFluidChange = false;
+  bool flagRadiatorFluidChange = false;
+
   //***********************<Variables>************************
   //Extras
   String gasDieselString = "Empty";
@@ -61,8 +66,6 @@ class CheckInFormController extends ChangeNotifier {
   String insulated = "Good";
   String holesDrilled = "Good";
   String bucketLiner = "Good";
-
-  int badStateFluids = 0;
 
   String rtaMagnet = "Good";
   String triangleReflectors = "Good";
@@ -240,7 +243,7 @@ class CheckInFormController extends ChangeNotifier {
     }
     gasDieselPercent = value;
     if (isGasRegistered == false) {
-      if (pendingMeasures == 2 || pendingMeasures == 1) {
+      if (pendingMeasures >= 1) {
         pendingMeasures -= 1;
       }
     }
@@ -252,14 +255,14 @@ class CheckInFormController extends ChangeNotifier {
     mileage = value;
     if (value == "" || value.isEmpty) {
       if (isMileageRegistered == true) {
-        if (pendingMeasures == 0 || pendingMeasures == 1) {
+        if (pendingMeasures >= 0) {
           pendingMeasures += 1;
         }
       }
       isMileageRegistered = false;
     } else {
       if (isMileageRegistered == false) {
-        if (pendingMeasures == 2 || pendingMeasures == 1) {
+        if (pendingMeasures >= 1) {
           pendingMeasures -= 1;
         }
       }
@@ -576,11 +579,11 @@ class CheckInFormController extends ChangeNotifier {
   void updateEngineOil(String report) {
     if (report == "Good") {
       if (engineOil == "Bad") {
-        badStateFluids -= 1;
+        pendingMeasures -= 1;
       }
     } else {
       if (engineOil == "Good") {
-        badStateFluids += 1;
+        pendingMeasures += 1;
       }
     }
     engineOil = report;
@@ -589,11 +592,11 @@ class CheckInFormController extends ChangeNotifier {
   void updateTransmission(String report) {
     if (report == "Good") {
       if (transmission== "Bad") {
-        badStateFluids -= 1;
+        pendingMeasures -= 1;
       }
     } else {
       if (transmission== "Good") {
-        badStateFluids += 1;
+        pendingMeasures += 1;
       }
     }
     transmission = report;
@@ -602,11 +605,11 @@ class CheckInFormController extends ChangeNotifier {
   void updateCoolant(String report) {
     if (report == "Good") {
       if (coolant == "Bad") {
-        badStateFluids -= 1;
+        pendingMeasures -= 1;
       }
     } else {
       if (coolant == "Good") {
-        badStateFluids += 1;
+        pendingMeasures += 1;
       }
     }
     coolant = report;
@@ -615,11 +618,11 @@ class CheckInFormController extends ChangeNotifier {
   void updatePowerSteering(String report) {
     if (report == "Good") {
       if (powerSteering == "Bad") {
-        badStateFluids -= 1;
+        pendingMeasures -= 1;
       }
     } else {
       if (powerSteering == "Good") {
-        badStateFluids += 1;
+        pendingMeasures += 1;
       }
     }
     powerSteering = report;
@@ -628,11 +631,11 @@ class CheckInFormController extends ChangeNotifier {
   void updateDieselExhaustFluid(String report) {
     if (report == "Good") {
       if (dieselExhaustFluid == "Bad") {
-        badStateFluids -= 1;
+        pendingMeasures -= 1;
       }
     } else {
       if (dieselExhaustFluid == "Good") {
-        badStateFluids += 1;
+        pendingMeasures += 1;
       }
     }
     dieselExhaustFluid = report;
@@ -641,11 +644,11 @@ class CheckInFormController extends ChangeNotifier {
   void updateWindshieldWasherFluid(String report) {
     if (report == "Good") {
       if (windshieldWasherFluid == "Bad") {
-        badStateFluids -= 1;
+        pendingMeasures -= 1;
       }
     } else {
       if (windshieldWasherFluid == "Good") {
-        badStateFluids += 1;
+        pendingMeasures += 1;
       }
     }
     windshieldWasherFluid = report;
@@ -655,11 +658,11 @@ class CheckInFormController extends ChangeNotifier {
   void updateInsulated(String report) {
     if (report == "Good") {
       if (insulated == "Bad") {
-        badStateFluids -= 1;
+        badStateEquipment -= 1;
       }
     } else {
       if (insulated == "Good") {
-        badStateFluids += 1;
+        badStateEquipment += 1;
       }
     }
     insulated = report;
@@ -668,11 +671,11 @@ class CheckInFormController extends ChangeNotifier {
   void updateHolesDrilled(String report) {
     if (report == "Good") {
       if (holesDrilled == "Bad") {
-        badStateFluids -= 1;
+        badStateEquipment -= 1;
       }
     } else {
       if (holesDrilled == "Good") {
-        badStateFluids += 1;
+        badStateEquipment += 1;
       }
     }
     holesDrilled = report;
@@ -681,11 +684,11 @@ class CheckInFormController extends ChangeNotifier {
   void updateBucketLiner(String report) {
     if (report == "Good") {
       if (bucketLiner == "Bad") {
-        badStateFluids -= 1;
+        badStateEquipment -= 1;
       }
     } else {
       if (bucketLiner == "Good") {
-        badStateFluids += 1;
+        badStateEquipment += 1;
       }
     }
     bucketLiner = report;
@@ -1434,6 +1437,11 @@ class CheckInFormController extends ChangeNotifier {
 
   void cleanInformation()
   {
+    //Banderas
+    flagOilChange = false;
+    flagTransmissionFluidChange = false;
+    flagRadiatorFluidChange = false;
+
     //Extras
     gasDieselString = "Empty";
     gasDieselPercent = 0;
@@ -1480,7 +1488,6 @@ class CheckInFormController extends ChangeNotifier {
     holesDrilled = "Good";
     bucketLiner = "Good";
 
-    badStateFluids = 0;
 
     rtaMagnet = "Good";
     triangleReflectors = "Good";
@@ -1641,6 +1648,10 @@ class CheckInFormController extends ChangeNotifier {
     } else {
       return false;
     }
+  }
+
+  bool validateKeyForm(GlobalKey<FormState> formKey) {
+    return formKey.currentState!.validate() ? true : false;
   }
 
   List<String> getListImages(List<ImageEvidence> imagesEvidence) {
@@ -1964,9 +1975,10 @@ class CheckInFormController extends ChangeNotifier {
         bucketLiftOperatorManualPath: getListPath(bucketLiftOperatorManualImages),
         bucketLiftOperatorManualNames: getListNames(bucketLiftOperatorManualImages),
       );
-    
 
-        if (user != null) {
+        final vehicle = user?.vehicle.target;
+
+        if (user != null && vehicle != null) {
           //Measures
           measures.controlForm.target = controlForm;
           dataBase.measuresFormBox.put(measures);
@@ -2010,8 +2022,90 @@ class CheckInFormController extends ChangeNotifier {
           controlForm.extraD.target = extra;
           controlForm.equipmentD.target = equipment;
 
-          controlForm.issuesD = badStateLights + badStateFluids + badStateSecurity + badStateEquipment;
+          controlForm.issuesD = badStateLights + pendingMeasures + badStateSecurity + badStateEquipment;
           controlForm.dateAddedD = dateAddedD;
+
+          if (flagOilChange) {
+          final vehicleService = VehicleServices(
+            completed: false, 
+            serviceDate: DateTime.now().add(const Duration(days: 2))
+          );
+          final service = dataBase.serviceBox.query(Service_.service.equals("Oil Change")).build().findUnique();
+          vehicleService.service.target = service;
+          vehicleService.vehicle.target = vehicle;
+          vehicle.ruleOilChange.target!.registered = "True";
+          dataBase.ruleBox.put(vehicle.ruleOilChange.target!);
+          vehicle.vehicleServices.add(vehicleService);
+
+          dataBase.vehicleServicesBox.put(vehicleService);
+          dataBase.vehicleBox.put(vehicle);
+
+          final nuevaInstruccion = Bitacora(
+            instruccion: 'syncAddOilChangeService',
+            usuarioPropietario: prefs.getString("userId")!,
+            idControlForm: controlForm.id,
+          ); //Se crea la nueva instruccion a realizar en bitacora
+
+          nuevaInstruccion.vehicleService.target = vehicleService; //Se asigna el vehicle service a la nueva instrucción
+          vehicleService.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción al vehicle service
+          dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+        }
+
+        if (flagTransmissionFluidChange) {
+          final vehicleService = VehicleServices(
+            completed: false, 
+            serviceDate: DateTime.now().add(const Duration(days: 2))
+          );
+          final service = dataBase.serviceBox.query(Service_.service.equals("Transmission Fluid Change")).build().findUnique();
+          vehicleService.service.target = service;
+          vehicleService.vehicle.target = vehicle;
+          vehicle.ruleTransmissionFluidChange.target!.registered = "True";
+          dataBase.ruleBox.put(vehicle.ruleTransmissionFluidChange.target!);
+          vehicle.vehicleServices.add(vehicleService);
+
+          dataBase.vehicleServicesBox.put(vehicleService);
+          dataBase.vehicleBox.put(vehicle);
+
+          final nuevaInstruccion = Bitacora(
+              instruccion: 'syncAddFluidTransmissionChangeService',
+              usuarioPropietario: prefs.getString("userId")!,
+              idControlForm: controlForm.id,
+            ); //Se crea la nueva instruccion a realizar en bitacora
+
+            nuevaInstruccion.vehicleService.target = vehicleService; //Se asigna el vehicle service a la nueva instrucción
+            vehicleService.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción al vehicle service
+            dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+          }
+
+        if (flagRadiatorFluidChange) {
+          final vehicleService = VehicleServices(
+            completed: false, 
+            serviceDate: DateTime.now().add(const Duration(days: 2))
+          );
+          final service = dataBase.serviceBox.query(Service_.service.equals("Radiator Fluid Change")).build().findUnique();
+          vehicleService.service.target = service;
+          vehicleService.vehicle.target = vehicle;
+          vehicle.ruleRadiatorFluidChange.target!.registered = "True";
+          dataBase.ruleBox.put(vehicle.ruleRadiatorFluidChange.target!);
+          vehicle.vehicleServices.add(vehicleService);
+
+          dataBase.vehicleServicesBox.put(vehicleService);
+          dataBase.vehicleBox.put(vehicle);
+
+          final nuevaInstruccion = Bitacora(
+            instruccion: 'syncAddFluidRadiatorChangeService',
+            usuarioPropietario: prefs.getString("userId")!,
+            idControlForm: controlForm.id,
+          ); //Se crea la nueva instruccion a realizar en bitacora
+
+          nuevaInstruccion.vehicleService.target = vehicleService; //Se asigna el vehicle service a la nueva instrucción
+          vehicleService.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción al vehicle service
+          dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+        }
+
+          //Se actualiza el mileage del vehicle
+          vehicle.mileage = int.parse(mileage);
+          dataBase.vehicleBox.put(vehicle);
 
           //Se actualiza el Control Form
           dataBase.controlFormBox.put(controlForm);

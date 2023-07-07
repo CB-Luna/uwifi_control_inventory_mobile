@@ -306,45 +306,45 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          InkWell(
-                            onTap: () async {
-                              // await Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => CreateAccountWidget(),
-                              //   ),
-                              // );
-                            },
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Have you an account, yet?',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Lexend Deca',
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                ),
-                                Text(
-                                  'Create Account',
-                                  style: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Outfit',
-                                        color:
-                                            FlutterFlowTheme.of(context).alternate,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          // InkWell(
+                          //   onTap: () async {
+                          //     // await Navigator.push(
+                          //     //   context,
+                          //     //   MaterialPageRoute(
+                          //     //     builder: (context) => CreateAccountWidget(),
+                          //     //   ),
+                          //     // );
+                          //   },
+                          //   child: Column(
+                          //     mainAxisSize: MainAxisSize.max,
+                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                          //     children: [
+                          //       Text(
+                          //         'Have you an account, yet?',
+                          //         style: FlutterFlowTheme.of(context)
+                          //             .bodyText1
+                          //             .override(
+                          //               fontFamily: 'Lexend Deca',
+                          //               color: Colors.white,
+                          //               fontSize: 14,
+                          //               fontWeight: FontWeight.normal,
+                          //             ),
+                          //       ),
+                          //       Text(
+                          //         'Create Account',
+                          //         style: FlutterFlowTheme.of(context)
+                          //             .subtitle2
+                          //             .override(
+                          //               fontFamily: 'Outfit',
+                          //               color:
+                          //                   FlutterFlowTheme.of(context).alternate,
+                          //             ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                           FFButtonWidget(
                             onPressed: () async {
                               if (!formKey.currentState!.validate()) {
@@ -414,13 +414,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   );
                                   if (getUsuarioSupabase != null) {
                                      //Se descargan los roles desde Supabase
-                                    rolesSupabaseProvider.exitoso = true;
+                                    rolesSupabaseProvider.message = "";
                                     rolesSupabaseProvider.procesoCargando(true);
                                     rolesSupabaseProvider.procesoTerminado(false);
                                     rolesSupabaseProvider.procesoExitoso(false);
-                                    Future<bool> booleanoSupabase =
-                                        rolesSupabaseProvider.getRolesSupabase(getUsuarioSupabase.idPerfilUsuario);
-                                    if (await booleanoSupabase) {
+                                    String messageSupabase =
+                                        await rolesSupabaseProvider.getRolesSupabase(getUsuarioSupabase);
+                                    if (messageSupabase == "Okay") {
                                       await userState.setTokenPocketbase(
                                           loginResponseSupabase.accessToken);
                                       final userId =
@@ -513,11 +513,36 @@ class _LoginScreenState extends State<LoginScreen> {
                                         );
                                       }
                                     } else {
-                                      snackbarKey.currentState
-                                          ?.showSnackBar(const SnackBar(
-                                        content: Text(
-                                            "'Attempting Rol Data Recovery from Server' Failed ."),
-                                      ));
+                                      switch (messageSupabase) {
+                                        case "Not-Data":
+                                          snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Fail to recover data from Server about: Status, Company, Services and Roles."),
+                                          ));
+                                          break;
+                                        case "Not-Vehicles":
+                                          snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "There's not vehicles availables for this User, try later."),
+                                          ));
+                                          break;
+                                        case "Not-Status-Company":
+                                          snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Fail to recover the information about Status and Company."),
+                                          ));
+                                          break;
+                                        default:
+                                          snackbarKey.currentState
+                                            ?.showSnackBar(SnackBar(
+                                          content: Text(
+                                              "Fail to recover the information from Server, details: $messageSupabase."),
+                                          ));
+                                          break;
+                                      }
                                     }
                                   } else {
                                     snackbarKey.currentState

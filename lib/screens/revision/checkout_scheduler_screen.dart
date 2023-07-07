@@ -11,6 +11,7 @@ import 'package:taller_alex_app_asesor/providers/database_providers/usuario_cont
 import 'package:taller_alex_app_asesor/providers/database_providers/vehiculo_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
+import 'package:taller_alex_app_asesor/screens/report/report_email_screen.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/menu_form_button.dart';
 import 'package:taller_alex_app_asesor/screens/revision/control_form_r_created.dart';
 import 'package:taller_alex_app_asesor/screens/revision/control_form_r_not_created.dart';
@@ -186,7 +187,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      const ControlFormRCreatedScreen(),
+                                      const ReportEmailScreen(form: true,),
                                 ),
                               );
                             } else {
@@ -375,10 +376,10 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${checkOutFormProvider.badStateFluids}",
+                        "${checkOutFormProvider.badStateSecurity}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: checkOutFormProvider.badStateFluids != 0,
+                      showBadge: checkOutFormProvider.badStateSecurity != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
@@ -392,10 +393,10 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${checkOutFormProvider.badStateSecurity}",
+                        "${checkOutFormProvider.badStateEquipment}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: checkOutFormProvider.badStateSecurity != 0,
+                      showBadge: checkOutFormProvider.badStateEquipment != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
@@ -407,22 +408,12 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                         isTaped: vehiculoController.isTapedCheckOut == 3,
                       ),
                     ),
-                    badge.Badge(
-                      badgeContent: Text(
-                        "${checkOutFormProvider.badStateEquipment}",
-                          style: TextStyle(
-                              color: FlutterFlowTheme.of(context).white)),
-                      showBadge: checkOutFormProvider.badStateEquipment != 0,
-                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
-                      position: badge.BadgePosition.topEnd(),
-                      elevation: 4,
-                      child: MenuFormButton(
-                      icon: Icons.local_shipping, 
-                        onPressed: () {
-                          vehiculoController.setTapedOptionCheckOut(4);
-                        },
-                        isTaped: vehiculoController.isTapedCheckOut == 4,
-                      ),
+                    MenuFormButton(
+                    icon: Icons.local_shipping, 
+                      onPressed: () {
+                        vehiculoController.setTapedOptionCheckOut(4);
+                      },
+                      isTaped: vehiculoController.isTapedCheckOut == 4,
                     ),
                   ],
                 ),

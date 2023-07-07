@@ -134,6 +134,20 @@ class VehiculoController extends ChangeNotifier {
 
   bool updateServiceVehicle(VehicleServices vehicleServices) {
     try {
+      if (vehicleServices.service.target!.service == "Oil Change") {
+        vehicleServices.vehicle.target!.ruleOilChange.target!.registered = "False";
+        dataBase.ruleBox.put(vehicleServices.vehicle.target!.ruleOilChange.target!);
+      }
+      if (vehicleServices.service.target!.service == "Transmission Fluid Change") {
+        vehicleServices.vehicle.target!.ruleTransmissionFluidChange.target!.registered = "False";
+        dataBase.ruleBox.put(vehicleServices.vehicle.target!.ruleTransmissionFluidChange.target!);
+      }
+      if (vehicleServices.service.target!.service == "Radiator Fluid Change") {
+        vehicleServices.vehicle.target!.ruleRadiatorFluidChange.target!.registered = "False";
+        dataBase.ruleBox.put(vehicleServices.vehicle.target!.ruleRadiatorFluidChange.target!);
+      }
+      vehicleServices.serviceDate = completedDate!;
+      dataBase.vehicleServicesBox.put(vehicleServices);
       vehicleServices.completed = true;
       //Se actualiza el vehicle Services
       dataBase.vehicleServicesBox.put(vehicleServices);

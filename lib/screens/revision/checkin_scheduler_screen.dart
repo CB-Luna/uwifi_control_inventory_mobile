@@ -11,6 +11,7 @@ import 'package:taller_alex_app_asesor/providers/database_providers/usuario_cont
 import 'package:taller_alex_app_asesor/providers/database_providers/vehiculo_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
+import 'package:taller_alex_app_asesor/screens/report/report_email_screen.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/menu_form_button.dart';
 import 'package:taller_alex_app_asesor/screens/revision/control_form_d_creted.dart';
 import 'package:taller_alex_app_asesor/screens/revision/control_form_d_not_created.dart';
@@ -186,7 +187,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      const ControlFormDCreatedScreen(),
+                                      const ReportEmailScreen(form: false,),
                                 ),
                               );
                             } else {
@@ -375,10 +376,10 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${cehckInFormProvider.badStateFluids}",
+                        "${cehckInFormProvider.badStateSecurity}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: cehckInFormProvider.badStateFluids != 0,
+                      showBadge: cehckInFormProvider.badStateSecurity != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
@@ -392,10 +393,10 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${cehckInFormProvider.badStateSecurity}",
+                        "${cehckInFormProvider.badStateEquipment}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: cehckInFormProvider.badStateSecurity != 0,
+                      showBadge: cehckInFormProvider.badStateEquipment != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
@@ -407,22 +408,12 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                         isTaped: vehiculoController.isTapedCheckIn == 3,
                       ),
                     ),
-                    badge.Badge(
-                      badgeContent: Text(
-                        "${cehckInFormProvider.badStateEquipment}",
-                          style: TextStyle(
-                              color: FlutterFlowTheme.of(context).white)),
-                      showBadge: cehckInFormProvider.badStateEquipment != 0,
-                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
-                      position: badge.BadgePosition.topEnd(),
-                      elevation: 4,
-                      child: MenuFormButton(
-                      icon: Icons.local_shipping, 
-                        onPressed: () {
-                          vehiculoController.setTapedOptionCheckIn(4);
-                        },
-                        isTaped: vehiculoController.isTapedCheckIn == 4,
-                      ),
+                    MenuFormButton(
+                    icon: Icons.local_shipping, 
+                      onPressed: () {
+                        vehiculoController.setTapedOptionCheckIn(4);
+                      },
+                      isTaped: vehiculoController.isTapedCheckIn == 4,
                     ),
                   ],
                 ),

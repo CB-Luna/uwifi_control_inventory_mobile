@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ import 'package:taller_alex_app_asesor/providers/database_providers/checkin_form
 import 'package:taller_alex_app_asesor/providers/database_providers/checkout_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/agregar_vehiculo_screen.dart';
+import 'package:taller_alex_app_asesor/screens/services_vehicle/services_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:badges/badges.dart' as badge;
 import 'package:taller_alex_app_asesor/screens/widgets/side_menu/side_menu.dart';
@@ -27,6 +29,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   ControlForm? controlFormCheckOut;
   ControlForm? controlFormCheckIn;
+  List<VehicleServices>? vehicleServicesList = [];
 
 
   @override
@@ -37,6 +40,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
       controlFormCheckOut = context.read<UsuarioController>().getControlFormCheckOutToday(DateTime.now());
       controlFormCheckIn = context.read<UsuarioController>().getControlFormCheckInToday(DateTime.now());
       context.read<UsuarioController>().getUser(prefs.getString("userId") ?? "");
+      vehicleServicesList = context.read<UsuarioController>().usuarioCurrent?.vehicle.target?.vehicleServices.where((element) => !element.completed).toList();
     });
   }
   @override
@@ -44,10 +48,10 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
     final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
     final checkInFormProvider = Provider.of<CheckInFormController>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    usuarioProvider.recoverPreviousControlForms(DateTime.now());
-    usuarioProvider.getUser(prefs.getString("userId") ?? "");
-    controlFormCheckOut = usuarioProvider.getControlFormCheckOutToday(DateTime.now());
-    controlFormCheckIn = usuarioProvider.getControlFormCheckInToday(DateTime.now());
+    // usuarioProvider.recoverPreviousControlForms(DateTime.now());
+    // usuarioProvider.getUser(prefs.getString("userId") ?? "");
+    // controlFormCheckOut = usuarioProvider.getControlFormCheckOutToday(DateTime.now());
+    // controlFormCheckIn = usuarioProvider.getControlFormCheckInToday(DateTime.now());
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -288,7 +292,6 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                               .pendingMeasures + checkOutFormProvider
                                               .badStateLights + checkOutFormProvider
                                               .badStateSecurity + checkOutFormProvider
-                                              .badStateFluids + checkOutFormProvider
                                               .badStateEquipment}",
                                                 style: TextStyle(
                                                     color: FlutterFlowTheme.of(context).white)),
@@ -458,7 +461,6 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                               .pendingMeasures + checkInFormProvider
                                               .badStateLights + checkInFormProvider
                                               .badStateSecurity + checkInFormProvider
-                                              .badStateFluids + checkInFormProvider
                                               .badStateEquipment}",
                                                 style: TextStyle(
                                                     color: FlutterFlowTheme.of(context).white)),
@@ -1020,8 +1022,8 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
                             child: Container(
-                              width: 250,
-                              height: 250,
+                              width: 230,
+                              height: 230,
                               clipBehavior: Clip.antiAlias,
                               decoration: BoxDecoration(
                                 borderRadius: const BorderRadius.only(
@@ -1049,6 +1051,132 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                 'assets/images/vehicle-placeholder.png',
                               ),
                             ),
+                          ),
+                          InkWell(
+                            onTap: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ServicesVehicleScreen(vehicle: usuarioProvider.usuarioCurrent!.vehicle.target!,),
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 10.0, 10.0, 5.0),
+                              child: badge.Badge(
+                                badgeContent: Text(
+                                  "${vehicleServicesList?.length ?? 0}",
+                                    style: TextStyle(
+                                        color: FlutterFlowTheme.of(context).white)),
+                                showBadge: true,
+                                badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                                position: badge.BadgePosition.topEnd(),
+                                child: ClayContainer(
+                                  height: 30,
+                                  width: MediaQuery.of(context).size.width * 0.5,
+                                  depth: 10,
+                                  spread: 1,
+                                  borderRadius: 25,
+                                  curveType: CurveType.concave,
+                                  color: FlutterFlowTheme.of(context).recomendadoColor,
+                                  surfaceColor: FlutterFlowTheme.of(context).recomendadoColor,
+                                  parentColor: FlutterFlowTheme.of(context).recomendadoColor,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                            Icons.warning_amber_outlined,
+                                          color:
+                                          FlutterFlowTheme.of(context).white,
+                                          size: 20,
+                                        ),
+                                        Text(
+                                          "Upcoming Services",
+                                          textAlign:
+                                              TextAlign.center,
+                                          style: FlutterFlowTheme
+                                                  .of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                color: FlutterFlowTheme
+                                                        .of(context)
+                                                    .white,
+                                                fontSize: 15.0,
+                                                fontWeight:
+                                                    FontWeight.bold,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          CarouselSlider(
+                            options: CarouselOptions(
+                              height: 50,
+                              autoPlay: true
+                            ),
+                            items: vehicleServicesList?.map((data) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return InkWell(
+                                    onTap: () {
+                                      
+                                    },
+                                    child: Container(
+                                      height: 50,
+                                      width: MediaQuery.of(context).size.width * 0.7,
+                                      decoration: BoxDecoration(
+                                        gradient: blueRadial,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 4,
+                                            color: FlutterFlowTheme.of(context).secondaryColor,
+                                            offset: const Offset(2, 2),
+                                          )
+                                        ],
+                                        color: FlutterFlowTheme.of(context).secondaryColor,
+                                        borderRadius: const BorderRadius.only(
+                                          bottomLeft: Radius.circular(50),
+                                          bottomRight: Radius.circular(50),
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20),
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Service: ${data.service.target?.service}", 
+                                              style: TextStyle(
+                                                color: FlutterFlowTheme.of(context).white,
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              "Due Date: ${DateFormat('MMMM d, y').format(data.serviceDate)}", 
+                                              style: TextStyle(
+                                                color: FlutterFlowTheme.of(context).white,
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }).toList(),
                           ),
 
                           Padding(
