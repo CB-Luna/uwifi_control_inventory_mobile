@@ -1163,7 +1163,13 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 fontWeight: FontWeight.bold),
                                             ),
                                             Text(
-                                              "Due Date: ${DateFormat('MMMM d, y').format(data.serviceDate)}", 
+                                              data.serviceDate != null ?
+                                              "Due Date: ${DateFormat('MMMM d, y').format(data.serviceDate!)}"
+                                              :
+                                              data.mileageRemaining! > 0 ? 
+                                              "Due Mileage: ${data.mileageRemaining} Mi"
+                                              :
+                                              "Over Mileage: ${data.mileageRemaining?.abs()} Mi", 
                                               style: TextStyle(
                                                 color: FlutterFlowTheme.of(context).white,
                                                 fontSize: 15.0,

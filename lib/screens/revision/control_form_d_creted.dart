@@ -20,7 +20,7 @@ class _ControlFormDCreatedScreenState extends State<ControlFormDCreatedScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: const Color(0xFFDDEEF8),
+        backgroundColor: FlutterFlowTheme.of(context).background,
         body: SafeArea(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),

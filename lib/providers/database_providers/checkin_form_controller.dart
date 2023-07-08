@@ -2028,7 +2028,7 @@ class CheckInFormController extends ChangeNotifier {
           if (flagOilChange) {
           final vehicleService = VehicleServices(
             completed: false, 
-            serviceDate: DateTime.now().add(const Duration(days: 2))
+            mileageRemaining: int.parse(vehicle.ruleOilChange.target!.value) - (int.parse(mileage) - vehicle.ruleOilChange.target!.lastMileageService),
           );
           final service = dataBase.serviceBox.query(Service_.service.equals("Oil Change")).build().findUnique();
           vehicleService.service.target = service;
@@ -2049,12 +2049,32 @@ class CheckInFormController extends ChangeNotifier {
           nuevaInstruccion.vehicleService.target = vehicleService; //Se asigna el vehicle service a la nueva instrucción
           vehicleService.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción al vehicle service
           dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
-        }
+        } else {
+          //Se actualiza el millaje del servicio
+          if (vehicle.ruleOilChange.target!.registered == "True") {
+              final service = dataBase.serviceBox.query(Service_.service.equals("Oil Change")).build().findUnique();
+              final serviceVehicle = dataBase.vehicleServicesBox.query(VehicleServices_.vehicle.equals(vehicle.id).and(VehicleServices_.service.equals(service?.id ?? 0)).and(VehicleServices_.completed.equals(false))).build().findFirst();
+              if (serviceVehicle != null) {
+                serviceVehicle.mileageRemaining = int.parse(vehicle.ruleOilChange.target!.value) - (int.parse(mileage) - vehicle.ruleOilChange.target!.lastMileageService);
+                dataBase.vehicleServicesBox.put(serviceVehicle);
+
+                final nuevaInstruccion = Bitacora(
+                  instruccion: 'syncUpdateMileageRemainingVehicleServices',
+                  usuarioPropietario: prefs.getString("userId")!,
+                  idControlForm: controlForm.id,
+                ); //Se crea la nueva instruccion a realizar en bitacora
+
+                nuevaInstruccion.vehicleService.target = serviceVehicle; //Se asigna el verhicle service a la nueva instrucción
+                serviceVehicle.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a el verhicle service
+                dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+              }
+            }
+          }
 
         if (flagTransmissionFluidChange) {
           final vehicleService = VehicleServices(
             completed: false, 
-            serviceDate: DateTime.now().add(const Duration(days: 2))
+            mileageRemaining: int.parse(vehicle.ruleTransmissionFluidChange.target!.value) - (int.parse(mileage) - vehicle.ruleTransmissionFluidChange.target!.lastMileageService),
           );
           final service = dataBase.serviceBox.query(Service_.service.equals("Transmission Fluid Change")).build().findUnique();
           vehicleService.service.target = service;
@@ -2075,12 +2095,32 @@ class CheckInFormController extends ChangeNotifier {
             nuevaInstruccion.vehicleService.target = vehicleService; //Se asigna el vehicle service a la nueva instrucción
             vehicleService.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción al vehicle service
             dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+          } else {
+          //Se actualiza el millaje del servicio
+          if (vehicle.ruleTransmissionFluidChange.target!.registered == "True") {
+              final service = dataBase.serviceBox.query(Service_.service.equals("Transmission Fluid Change")).build().findUnique();
+              final serviceVehicle = dataBase.vehicleServicesBox.query(VehicleServices_.vehicle.equals(vehicle.id).and(VehicleServices_.service.equals(service?.id ?? 0)).and(VehicleServices_.completed.equals(false))).build().findFirst();
+              if (serviceVehicle != null) {
+                serviceVehicle.mileageRemaining = int.parse(vehicle.ruleTransmissionFluidChange.target!.value) - (int.parse(mileage) - vehicle.ruleTransmissionFluidChange.target!.lastMileageService);
+                dataBase.vehicleServicesBox.put(serviceVehicle);
+
+                final nuevaInstruccion = Bitacora(
+                  instruccion: 'syncUpdateMileageRemainingVehicleServices',
+                  usuarioPropietario: prefs.getString("userId")!,
+                  idControlForm: controlForm.id,
+                ); //Se crea la nueva instruccion a realizar en bitacora
+
+                nuevaInstruccion.vehicleService.target = serviceVehicle; //Se asigna el verhicle service a la nueva instrucción
+                serviceVehicle.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a el verhicle service
+                dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+              }
+            }
           }
 
         if (flagRadiatorFluidChange) {
           final vehicleService = VehicleServices(
             completed: false, 
-            serviceDate: DateTime.now().add(const Duration(days: 2))
+            mileageRemaining: int.parse(vehicle.ruleRadiatorFluidChange.target!.value) - (int.parse(mileage) - vehicle.ruleRadiatorFluidChange.target!.lastMileageService),
           );
           final service = dataBase.serviceBox.query(Service_.service.equals("Radiator Fluid Change")).build().findUnique();
           vehicleService.service.target = service;
@@ -2101,6 +2141,26 @@ class CheckInFormController extends ChangeNotifier {
           nuevaInstruccion.vehicleService.target = vehicleService; //Se asigna el vehicle service a la nueva instrucción
           vehicleService.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción al vehicle service
           dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+        } else {
+          //Se actualiza el millaje del servicio
+          if (vehicle.ruleRadiatorFluidChange.target!.registered == "True") {
+              final service = dataBase.serviceBox.query(Service_.service.equals("Radiator Fluid Change")).build().findUnique();
+              final serviceVehicle = dataBase.vehicleServicesBox.query(VehicleServices_.vehicle.equals(vehicle.id).and(VehicleServices_.service.equals(service?.id ?? 0)).and(VehicleServices_.completed.equals(false))).build().findFirst();
+              if (serviceVehicle != null) {
+                serviceVehicle.mileageRemaining = int.parse(vehicle.ruleRadiatorFluidChange.target!.value) - (int.parse(mileage) - vehicle.ruleRadiatorFluidChange.target!.lastMileageService);
+                dataBase.vehicleServicesBox.put(serviceVehicle);
+
+                final nuevaInstruccion = Bitacora(
+                  instruccion: 'syncUpdateMileageRemainingVehicleServices',
+                  usuarioPropietario: prefs.getString("userId")!,
+                  idControlForm: controlForm.id,
+                ); //Se crea la nueva instruccion a realizar en bitacora
+
+                nuevaInstruccion.vehicleService.target = serviceVehicle; //Se asigna el verhicle service a la nueva instrucción
+                serviceVehicle.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a el verhicle service
+                dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+              }
+            }
         }
 
           //Se actualiza el mileage del vehicle

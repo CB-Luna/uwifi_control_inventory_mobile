@@ -315,7 +315,7 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                             });
                           },
                           currentTime: getCurrentTimestamp,
-                          minTime: widget.vehicleServices.serviceDate
+                          minTime: widget.vehicleServices.serviceDate ?? DateTime.now()
                         );
                       },
                       obscureText: false,

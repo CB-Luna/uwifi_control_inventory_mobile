@@ -2056,7 +2056,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(99, 8193815974638102829),
       name: 'Vehicle',
-      lastPropertyId: const IdUid(27, 8143417845914793514),
+      lastPropertyId: const IdUid(28, 8651665951337944013),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2152,21 +2152,6 @@ final _entities = <ModelEntity>[
             type: 10,
             flags: 0),
         ModelProperty(
-            id: const IdUid(21, 757115653678008229),
-            name: 'nextOilChange',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(22, 1740545826112459780),
-            name: 'nextTransmissionFluidChange',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(23, 731615765620021459),
-            name: 'nextRadiatorFluidChange',
-            type: 10,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(24, 8352018641470727015),
             name: 'ruleOilChangeId',
             type: 11,
@@ -2191,6 +2176,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(27, 8143417845914793514),
             name: 'mileage',
             type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(28, 8651665951337944013),
+            name: 'carWash',
+            type: 1,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -2382,7 +2372,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(104, 7552456267933993914),
       name: 'VehicleServices',
-      lastPropertyId: const IdUid(7, 7912496190957608505),
+      lastPropertyId: const IdUid(8, 8407820225729691134),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2424,7 +2414,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(456, 4454022439719093874),
-            relationTarget: 'Service')
+            relationTarget: 'Service'),
+        ModelProperty(
+            id: const IdUid(8, 8407820225729691134),
+            name: 'mileageRemaining',
+            type: 6,
+            flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -3827,7 +3822,10 @@ ModelDefinition getObjectBoxModel() {
         3853679392969826869,
         2565461764493267736,
         8823076716079772889,
-        3425954261967379427
+        3425954261967379427,
+        757115653678008229,
+        1740545826112459780,
+        731615765620021459
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -5923,7 +5921,7 @@ ModelDefinition getObjectBoxModel() {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
           final licensePlatesOffset = fbb.writeString(object.licensePlates);
-          fbb.startTable(28);
+          fbb.startTable(29);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, makeOffset);
           fbb.addOffset(2, modelOffset);
@@ -5933,37 +5931,33 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(6, vinOffset);
           fbb.addOffset(8, motorOffset);
           fbb.addOffset(9, colorOffset);
-          fbb.addInt64(10, object.oilChangeDue.millisecondsSinceEpoch);
+          fbb.addInt64(10, object.oilChangeDue?.millisecondsSinceEpoch);
           fbb.addInt64(13, object.dateAdded.millisecondsSinceEpoch);
           fbb.addOffset(14, idDBROffset);
           fbb.addInt64(15, object.status.targetId);
           fbb.addInt64(16, object.company.targetId);
           fbb.addOffset(17, licensePlatesOffset);
           fbb.addInt64(
-              18, object.lastTransmissionFluidChange.millisecondsSinceEpoch);
+              18, object.lastTransmissionFluidChange?.millisecondsSinceEpoch);
           fbb.addInt64(
-              19, object.lastRadiatorFluidChange.millisecondsSinceEpoch);
-          fbb.addInt64(20, object.nextOilChange?.millisecondsSinceEpoch);
-          fbb.addInt64(
-              21, object.nextTransmissionFluidChange?.millisecondsSinceEpoch);
-          fbb.addInt64(
-              22, object.nextRadiatorFluidChange?.millisecondsSinceEpoch);
+              19, object.lastRadiatorFluidChange?.millisecondsSinceEpoch);
           fbb.addInt64(23, object.ruleOilChange.targetId);
           fbb.addInt64(24, object.ruleTransmissionFluidChange.targetId);
           fbb.addInt64(25, object.ruleRadiatorFluidChange.targetId);
           fbb.addInt64(26, object.mileage);
+          fbb.addBool(27, object.carWash);
           fbb.finish(fbb.endTable());
           return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-          final nextOilChangeValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 44);
-          final nextTransmissionFluidChangeValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 46);
-          final nextRadiatorFluidChangeValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 48);
+          final oilChangeDueValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 24);
+          final lastTransmissionFluidChangeValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 40);
+          final lastRadiatorFluidChangeValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 42);
           final object = Vehicle(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               make: const fb.StringReader(asciiOptimization: true)
@@ -5984,12 +5978,10 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 20, ''),
               color: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
               mileage: const fb.Int64Reader().vTableGet(buffer, rootOffset, 56, 0),
-              oilChangeDue: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0)),
-              lastTransmissionFluidChange: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0)),
-              lastRadiatorFluidChange: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0)),
-              nextOilChange: nextOilChangeValue == null ? null : DateTime.fromMillisecondsSinceEpoch(nextOilChangeValue),
-              nextTransmissionFluidChange: nextTransmissionFluidChangeValue == null ? null : DateTime.fromMillisecondsSinceEpoch(nextTransmissionFluidChangeValue),
-              nextRadiatorFluidChange: nextRadiatorFluidChangeValue == null ? null : DateTime.fromMillisecondsSinceEpoch(nextRadiatorFluidChangeValue),
+              oilChangeDue: oilChangeDueValue == null ? null : DateTime.fromMillisecondsSinceEpoch(oilChangeDueValue),
+              lastTransmissionFluidChange: lastTransmissionFluidChangeValue == null ? null : DateTime.fromMillisecondsSinceEpoch(lastTransmissionFluidChangeValue),
+              lastRadiatorFluidChange: lastRadiatorFluidChangeValue == null ? null : DateTime.fromMillisecondsSinceEpoch(lastRadiatorFluidChangeValue),
+              carWash: const fb.BoolReader().vTableGet(buffer, rootOffset, 58, false),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32));
           object.status.targetId =
@@ -6199,29 +6191,34 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (VehicleServices object, fb.Builder fbb) {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(8);
+          fbb.startTable(9);
           fbb.addInt64(0, object.id);
           fbb.addBool(1, object.completed);
-          fbb.addInt64(2, object.serviceDate.millisecondsSinceEpoch);
+          fbb.addInt64(2, object.serviceDate?.millisecondsSinceEpoch);
           fbb.addInt64(3, object.dateAdded.millisecondsSinceEpoch);
           fbb.addOffset(4, idDBROffset);
           fbb.addInt64(5, object.vehicle.targetId);
           fbb.addInt64(6, object.service.targetId);
+          fbb.addInt64(7, object.mileageRemaining);
           fbb.finish(fbb.endTable());
           return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
+          final serviceDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
           final object = VehicleServices(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               completed:
                   const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false),
-              serviceDate: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
+              serviceDate: serviceDateValue == null
+                  ? null
+                  : DateTime.fromMillisecondsSinceEpoch(serviceDateValue),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
+              mileageRemaining: const fb.Int64Reader()
+                  .vTableGetNullable(buffer, rootOffset, 18),
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 12));
           object.vehicle.targetId =
@@ -7820,33 +7817,25 @@ class Vehicle_ {
   static final lastRadiatorFluidChange =
       QueryIntegerProperty<Vehicle>(_entities[13].properties[16]);
 
-  /// see [Vehicle.nextOilChange]
-  static final nextOilChange =
-      QueryIntegerProperty<Vehicle>(_entities[13].properties[17]);
-
-  /// see [Vehicle.nextTransmissionFluidChange]
-  static final nextTransmissionFluidChange =
-      QueryIntegerProperty<Vehicle>(_entities[13].properties[18]);
-
-  /// see [Vehicle.nextRadiatorFluidChange]
-  static final nextRadiatorFluidChange =
-      QueryIntegerProperty<Vehicle>(_entities[13].properties[19]);
-
   /// see [Vehicle.ruleOilChange]
   static final ruleOilChange =
-      QueryRelationToOne<Vehicle, Rule>(_entities[13].properties[20]);
+      QueryRelationToOne<Vehicle, Rule>(_entities[13].properties[17]);
 
   /// see [Vehicle.ruleTransmissionFluidChange]
   static final ruleTransmissionFluidChange =
-      QueryRelationToOne<Vehicle, Rule>(_entities[13].properties[21]);
+      QueryRelationToOne<Vehicle, Rule>(_entities[13].properties[18]);
 
   /// see [Vehicle.ruleRadiatorFluidChange]
   static final ruleRadiatorFluidChange =
-      QueryRelationToOne<Vehicle, Rule>(_entities[13].properties[22]);
+      QueryRelationToOne<Vehicle, Rule>(_entities[13].properties[19]);
 
   /// see [Vehicle.mileage]
   static final mileage =
-      QueryIntegerProperty<Vehicle>(_entities[13].properties[23]);
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[20]);
+
+  /// see [Vehicle.carWash]
+  static final carWash =
+      QueryBooleanProperty<Vehicle>(_entities[13].properties[21]);
 }
 
 /// [Users] entity fields to define ObjectBox queries.
@@ -7997,6 +7986,10 @@ class VehicleServices_ {
   /// see [VehicleServices.service]
   static final service =
       QueryRelationToOne<VehicleServices, Service>(_entities[16].properties[6]);
+
+  /// see [VehicleServices.mileageRemaining]
+  static final mileageRemaining =
+      QueryIntegerProperty<VehicleServices>(_entities[16].properties[7]);
 }
 
 /// [Rule] entity fields to define ObjectBox queries.

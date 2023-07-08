@@ -823,12 +823,10 @@ class Vehicle {
   String motor;
   String color;
   int mileage;
-  DateTime oilChangeDue;
-  DateTime lastTransmissionFluidChange;
-  DateTime lastRadiatorFluidChange;
-  DateTime? nextOilChange;
-  DateTime? nextTransmissionFluidChange;
-  DateTime? nextRadiatorFluidChange;
+  DateTime? oilChangeDue;
+  DateTime? lastTransmissionFluidChange;
+  DateTime? lastRadiatorFluidChange;
+  bool carWash;
   DateTime dateAdded;
   
   @Unique()
@@ -858,12 +856,10 @@ class Vehicle {
     required this.motor,
     required this.color,
     required this.mileage,
-    required this.oilChangeDue,
-    required this.lastTransmissionFluidChange,
-    required this.lastRadiatorFluidChange,
-    this.nextOilChange,
-    this.nextTransmissionFluidChange,
-    this.nextRadiatorFluidChange,
+    this.oilChangeDue,
+    this.lastTransmissionFluidChange,
+    this.lastRadiatorFluidChange,
+    required this.carWash,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();
@@ -922,8 +918,9 @@ class Service {
 class VehicleServices {
   int id;
   bool completed;
-  DateTime serviceDate;
+  DateTime? serviceDate;
   DateTime dateAdded;
+  int? mileageRemaining;
   @Unique()
   String? idDBR;
   @Backlink()
@@ -934,8 +931,9 @@ class VehicleServices {
   VehicleServices({
     this.id = 0,
     required this.completed,
-    required this.serviceDate,
+    this.serviceDate,
     DateTime? dateAdded,
+    this.mileageRemaining,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();
 
