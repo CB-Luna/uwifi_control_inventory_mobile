@@ -1,8 +1,10 @@
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/helpers/process_encryption.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/user_provider.dart';
-import 'package:taller_alex_app_asesor/screens/user_profile/password_actualizado_screen.dart';
+import 'package:taller_alex_app_asesor/screens/user_profile/password_not_updated_screen.dart';
+import 'package:taller_alex_app_asesor/screens/user_profile/password_updated_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -12,8 +14,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:provider/provider.dart';
 
-class CambiarPasswordScreen extends StatefulWidget {
-  const CambiarPasswordScreen({
+class UpdatePasswordScreen extends StatefulWidget {
+  const UpdatePasswordScreen({
     Key? key,
     required this.usuario,
   }) : super(key: key);
@@ -21,10 +23,10 @@ class CambiarPasswordScreen extends StatefulWidget {
   final Users usuario;
 
   @override
-  State<CambiarPasswordScreen> createState() => _CambiarPasswordScreenState();
+  State<UpdatePasswordScreen> createState() => _UpdatePasswordScreenState();
 }
 
-class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
+class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   TextEditingController? contrasenaActualController;
@@ -56,6 +58,7 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final userStateProvider = Provider.of<UserState>(context);
+    final usuarioProvider = Provider.of<UsuarioController>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -71,12 +74,6 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                   height: MediaQuery.of(context).size.height * 1,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).white,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: Image.asset(
-                        'assets/images/bglogin2.png',
-                      ).image,
-                    ),
                   ),
                 ),
                 Padding(
@@ -106,7 +103,7 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                         width: MediaQuery.of(context).size.width,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: const Color(0x554672FF),
+                          color: FlutterFlowTheme.of(context).grayLighter,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
@@ -329,7 +326,7 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                       contrasenaActualVisibility
                                           ? Icons.visibility_outlined
                                           : Icons.visibility_off_outlined,
-                                      color: const Color(0xFF006AFF),
+                                      color: FlutterFlowTheme.of(context).secondaryColor,
                                       size: 22,
                                     ),
                                   ),
@@ -435,7 +432,7 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                       contrasenaNuevaVisibility
                                           ? Icons.visibility_outlined
                                           : Icons.visibility_off_outlined,
-                                      color: const Color(0xFF006AFF),
+                                      color: FlutterFlowTheme.of(context).secondaryColor,
                                       size: 22,
                                     ),
                                   ),
@@ -452,11 +449,11 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                     ),
                                 validator: (value) {
                                   final RegExp regex = RegExp(
-                                      r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.\-_:,;]{8,50}$");
+                                      r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.\-_:,;]{6,50}$");
                                   if (value == null || value.isEmpty) {
                                     return 'Password is required.';
                                   } else if (!regex.hasMatch(value)) {
-                                    return "Password should be with a length of 8 characters, one \ncapital letter and two numbers. Valid special characters: !#\$%&/()=?¡¿+*.-_:,; Spaces and apostrophes-\naren't allowed.";
+                                    return "Password should be with a length of 6 characters, one \ncapital letter and two numbers. Valid special characters: !#\$%&/()=?¡¿+*.-_:,; Spaces and apostrophes-\naren't allowed.";
                                   }
                                   return null;
                                 }),
@@ -543,7 +540,7 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                       contrasenaConfirmarVisibility
                                           ? Icons.visibility_outlined
                                           : Icons.visibility_off_outlined,
-                                      color: const Color(0xFF006AFF),
+                                      color: FlutterFlowTheme.of(context).secondaryColor,
                                       size: 22,
                                     ),
                                   ),
@@ -574,48 +571,57 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                             child: FFButtonWidget(
                               onPressed: () async {
                                 if (userStateProvider.validateForm(formKey)) {
-                                  final actualPasswordEncrypted =
-                                      processEncryption(
-                                          contrasenaActualController!.text);
-                                  if (actualPasswordEncrypted == null) {
-                                    snackbarKey.currentState
-                                        ?.showSnackBar(const SnackBar(
-                                      content: Text(
-                                          "Falló al encriptar la Contraseña Actual."),
-                                    ));
-                                    return;
-                                  }
-                                  final newPasswordEncrypted =
-                                      processEncryption(
-                                          contrasenaNuevaController!.text);
-                                  if (newPasswordEncrypted == null) {
-                                    snackbarKey.currentState
-                                        ?.showSnackBar(const SnackBar(
-                                      content: Text(
-                                          "Falló al encriptar la Contraseña Nueva."),
-                                    ));
-                                    return;
-                                  }
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const PasswordActualizadoScreen(),
-                                      ),
+                                  if (usuarioProvider.validatePassword(contrasenaActualController!.text)) {
+                                    if (usuarioProvider.updatePassword(contrasenaActualController!.text, contrasenaNuevaController!.text)) {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const PasswordUpdatedScreen(),
+                                        ),
+                                      );
+                                    } else {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const PasswordNotUpdatedScreen(),
+                                        ),
+                                      );
+                                    }
+                                  } else {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          title: const Text('Incorrect Password'),
+                                          content: const Text(
+                                              "The input password isn't the actual password, verify this data."),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  alertDialogContext),
+                                              child: const Text('Okay'),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     );
+                                    return;
+                                  }
                                 } else {
                                   await showDialog(
                                     context: context,
                                     builder: (alertDialogContext) {
                                       return AlertDialog(
-                                        title: const Text('Campos incorrectos'),
+                                        title: const Text('Incorrect Fields'),
                                         content: const Text(
-                                            'Para continuar, debe llenar los campos solicitados correctamente.'),
+                                            "To continue, is required input all the fields."),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(
                                                 alertDialogContext),
-                                            child: const Text('Bien'),
+                                            child: const Text('Okay'),
                                           ),
                                         ],
                                       );

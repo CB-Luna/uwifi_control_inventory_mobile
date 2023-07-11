@@ -1,6 +1,7 @@
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/providers/user_provider.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:expandable/expandable.dart';
@@ -29,6 +30,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
     super.initState();
       setState(() {
         context.read<SyncProviderSupabase>().exitoso = true;
+        context.read<SyncProviderSupabase>().updatePassword = false;
         context.read<SyncProviderSupabase>().procesoCargando(true);
         context.read<SyncProviderSupabase>().procesoTerminado(false);
         context.read<SyncProviderSupabase>().procesoExitoso(false);
@@ -49,6 +51,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
   @override
   Widget build(BuildContext context) {
     final syncProviderSupabase = Provider.of<SyncProviderSupabase>(context);
+    final userState = Provider.of<UserState>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -171,14 +174,20 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                   child: FFButtonWidget(
                                     onPressed: () async {
                                       prefs.setBool("boolSyncData", false);
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const MainScreenSelector(),
-                                        ),
-                                      );
                                       syncProviderSupabase.procesoTerminado(false);
+                                      if (syncProviderSupabase.updatePassword) {
+                                        prefs.setBool(
+                                            "boolLogin", false);
+                                          await userState.logout();
+                                      } else {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MainScreenSelector(),
+                                          ),
+                                        );
+                                      }
                                       // usuarioController.setStream(false);
                                     },
                                     text: 'Continue',
@@ -379,14 +388,20 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                         onPressed: () async {
                                           syncProviderSupabase.instruccionesFallidas.clear();
                                           prefs.setBool("boolSyncData", false);
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const MainScreenSelector(),
-                                            ),
-                                          );
                                           syncProviderSupabase.procesoTerminado(false);
+                                          if (syncProviderSupabase.updatePassword) {
+                                            prefs.setBool(
+                                                "boolLogin", false);
+                                              await userState.logout();
+                                          } else {
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const MainScreenSelector(),
+                                              ),
+                                            );
+                                          }
                                         },
                                         text: 'Close',
                                         options: FFButtonOptions(

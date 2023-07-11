@@ -998,7 +998,7 @@ class Users {
   String password;
   String? image;
   String? path;
-  DateTime birthDate;
+  DateTime? birthDate;
   DateTime dateAdded;
   int recordsMonthCurrentR;
   int recordsMonthSecondR;
@@ -1028,7 +1028,7 @@ class Users {
     required this.password,
     this.image,
     this.path,
-    required this.birthDate,
+    this.birthDate,
     DateTime? dateAdded,
     required this.recordsMonthCurrentR,
     required this.recordsMonthSecondR,

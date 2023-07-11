@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:intl/intl.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/main.dart';
@@ -86,7 +87,7 @@ class UsuarioController extends ChangeNotifier {
       String? imagenBase64,
       List<String> rolesIdDBR,
       String idDBR,
-      DateTime birthDate,
+      DateTime? birthDate,
       String idCompanyFk,
       String? idVehicleFk,
       int formsCurrentMonthR,
@@ -158,7 +159,7 @@ class UsuarioController extends ChangeNotifier {
       String newPassword,
       String? newImagenBase64,
       List<String> newRolesIdDBR,
-      DateTime newBirthDate,
+      DateTime? newBirthDate,
       String newIdCompanyFk,
       String? newIdVehicleFk,
       int formsCurrentMonthR,
@@ -459,6 +460,41 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
           }
         }
       }
+    }
+  }
+
+  bool validatePassword(String actualPassword) {
+    final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
+    if (usuarioActual != null) {
+      if (usuarioActual.password == actualPassword) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  bool updatePassword(String actualPassword, String newPassword) {
+    final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
+    if (usuarioActual != null) {
+      usuarioActual.password = newPassword;
+      final nuevaInstruccion = Bitacora(
+        instruccion: 'syncUpdatePassword',
+        instruccionAdicional: actualPassword,
+        usuarioPropietario: prefs.getString("userId")!,
+        idControlForm: 0,
+      ); //Se crea la nueva instruccion a realizar en bitacora
+
+      nuevaInstruccion.user.target = usuarioActual; //Se asigna el usuario a la nueva instrucción
+      usuarioActual.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a el usuario
+      dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+      dataBase.usersBox.put(usuarioActual);
+
+      return true;
+    } else {
+      return false;
     }
   }
 

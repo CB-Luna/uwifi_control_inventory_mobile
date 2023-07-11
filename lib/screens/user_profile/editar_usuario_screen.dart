@@ -5,7 +5,7 @@ import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
-import 'package:taller_alex_app_asesor/screens/user_profile/cambiar_password_screen.dart';
+import 'package:taller_alex_app_asesor/screens/user_profile/update_password.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/drop_down.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
@@ -886,7 +886,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        CambiarPasswordScreen(usuario: widget.usuario,),
+                                        UpdatePasswordScreen(usuario: widget.usuario,),
                                   ),
                                 );
                               },

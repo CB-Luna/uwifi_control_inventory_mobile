@@ -1,20 +1,17 @@
-import 'package:taller_alex_app_asesor/screens/user_profile/perfil_usuario_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-
-import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
 
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-
-class PasswordActualizadoScreen extends StatefulWidget {
-  const PasswordActualizadoScreen({Key? key}) : super(key: key);
+class PasswordNotUpdatedScreen extends StatefulWidget {
+  const PasswordNotUpdatedScreen({Key? key}) : super(key: key);
 
   @override
-  State<PasswordActualizadoScreen> createState() => _PasswordActualizadoScreenState();
+  State<PasswordNotUpdatedScreen> createState() => _PasswordNotUpdatedScreenState();
 }
 
-class _PasswordActualizadoScreenState extends State<PasswordActualizadoScreen> {
+class _PasswordNotUpdatedScreenState extends State<PasswordNotUpdatedScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -23,7 +20,7 @@ class _PasswordActualizadoScreenState extends State<PasswordActualizadoScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: const Color(0xFFDDEEF8),
+        backgroundColor: FlutterFlowTheme.of(context).background,
         body: SafeArea(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
@@ -39,9 +36,9 @@ class _PasswordActualizadoScreenState extends State<PasswordActualizadoScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Contraseña\nActualizada!',
+                        '¡Password\nNot Updated!',
                         textAlign: TextAlign.center,
-                        style: AppTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               color: Colors.black,
                               fontSize: 30,
@@ -51,10 +48,10 @@ class _PasswordActualizadoScreenState extends State<PasswordActualizadoScreen> {
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                      child: Text(
-                        'Listo, la contraseña se\nactualizó con éxito.',
+                      child: Text(                                
+                        "Your password failed to try update.",
                         textAlign: TextAlign.center,
-                        style: AppTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               color: Colors.black,
                               fontSize: 15,
@@ -63,35 +60,34 @@ class _PasswordActualizadoScreenState extends State<PasswordActualizadoScreen> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
-                      child: Lottie.asset(
-                        'assets/lottie_animations/elemento-creado.json',
-                        width: 250,
-                        height: 180,
-                        fit: BoxFit.cover,
-                        repeat: false,
-                        animate: true,
+                          const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
+                      child: SizedBox(
+                        child: Icon(
+                          Icons.cancel_outlined,
+                          color: FlutterFlowTheme.of(context).tertiaryColor,
+                          size: 250,
+                          )
                       ),
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
+                          const EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                   const PerfilUsuarioScreen(),
+                                  const MainScreenSelector(),
                             ),
                           );
                         },
-                        text: 'Listo',
+                        text: 'Continue',
                         options: FFButtonOptions(
                           width: 200,
                           height: 45,
-                          color: const Color(0xFF28BFFA),
-                          textStyle: AppTheme.of(context).subtitle2.override(
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                                 fontFamily: 'Poppins',
                                 color: Colors.white,
                               ),

@@ -13,7 +13,7 @@ import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaci
 import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
 import 'package:taller_alex_app_asesor/screens/report/report_email_screen.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/menu_form_button.dart';
-import 'package:taller_alex_app_asesor/screens/revision/control_form_d_creted.dart';
+import 'package:taller_alex_app_asesor/screens/revision/control_form_d_created.dart';
 import 'package:taller_alex_app_asesor/screens/revision/control_form_d_not_created.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 class CheckInSchedulerScreen extends StatefulWidget {
@@ -90,7 +90,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
   @override
   Widget build(BuildContext context) {
     final vehiculoController = Provider.of<VehiculoController>(context);
-    final cehckInFormProvider = Provider.of<CheckInFormController>(context);
+    final checkInFormProvider = Provider.of<CheckInFormController>(context);
     final userProvider = Provider.of<UsuarioController>(context);
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
     return Scaffold(
@@ -124,7 +124,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                       ),
                       child: InkWell(
                         onTap: () async {
-                          cehckInFormProvider.cleanInformation();
+                          checkInFormProvider.cleanInformation();
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -179,19 +179,30 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                       ),
                       child: InkWell(
                         onTap: () async {
-                          if (cehckInFormProvider.validateForm()) {
-                            if (cehckInFormProvider.addControlForm(userProvider.usuarioCurrent, widget.registeredHour)) {
-                              // cehckInFormProvider.cleanInformation();
+                          if (checkInFormProvider.validateForm()) {
+                            if (checkInFormProvider.addControlForm(userProvider.usuarioCurrent, widget.registeredHour)) {
+                              // checkInFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ReportEmailScreen(form: false,),
-                                ),
-                              );
+                              if (checkInFormProvider.issues.isEmpty) {
+                                controlFormProvider.cleanData();
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ControlFormDCreatedScreen(),
+                                  ),
+                                );
+                              } else {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ReportEmailScreen(form: false,),
+                                  ),
+                                );
+                              }
                             } else {
-                              cehckInFormProvider.cleanInformation();
+                              checkInFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
                               await Navigator.push(
                                 context,
@@ -342,10 +353,10 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                   children: [
                     badge.Badge(
                       badgeContent: Text(
-                        "${cehckInFormProvider.pendingMeasures}",
+                        "${checkInFormProvider.pendingMeasures}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: cehckInFormProvider.pendingMeasures != 0,
+                      showBadge: checkInFormProvider.pendingMeasures != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
@@ -359,10 +370,10 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${cehckInFormProvider.badStateLights}",
+                        "${checkInFormProvider.badStateLights}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: cehckInFormProvider.badStateLights != 0,
+                      showBadge: checkInFormProvider.badStateLights != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
@@ -376,10 +387,10 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${cehckInFormProvider.badStateSecurity}",
+                        "${checkInFormProvider.badStateSecurity}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: cehckInFormProvider.badStateSecurity != 0,
+                      showBadge: checkInFormProvider.badStateSecurity != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,
@@ -393,10 +404,10 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                     ),
                     badge.Badge(
                       badgeContent: Text(
-                        "${cehckInFormProvider.badStateEquipment}",
+                        "${checkInFormProvider.badStateEquipment}",
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
-                      showBadge: cehckInFormProvider.badStateEquipment != 0,
+                      showBadge: checkInFormProvider.badStateEquipment != 0,
                       badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
                       elevation: 4,

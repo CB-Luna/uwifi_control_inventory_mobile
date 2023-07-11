@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/screens/revision/control_form_d_creted.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/checkin_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/checkout_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
+import 'package:taller_alex_app_asesor/screens/revision/control_form_d_created.dart';
 import 'package:taller_alex_app_asesor/screens/revision/control_form_r_created.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReportEmailScreen extends StatefulWidget {
   final bool form;
@@ -14,16 +20,34 @@ class ReportEmailScreen extends StatefulWidget {
 
 class _ReportEmailScreenState extends State<ReportEmailScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  bool contrasenaVisibility = false;
 
 
   @override
   void initState() {
     super.initState();
     setState(() {
+      if (widget.form) {
+        context.read<CheckOutFormController>().from.text = "${context.read<UsuarioController>().usuarioCurrent?.correo}";
+        context.read<CheckOutFormController>().to.text = "admincv@rtacv.com";
+        context.read<CheckOutFormController>().subject.text = "Check Out Form Issues in Vehicle: '${
+          context.read<UsuarioController>().usuarioCurrent?.vehicle.target?.licensePlates}' with Employee '${
+          context.read<UsuarioController>().usuarioCurrent?.name} ${context.read<UsuarioController>().usuarioCurrent?.lastName}'";
+        context.read<CheckOutFormController>().body.text = context.read<CheckOutFormController>().issues.join(", ");
+      } else {
+        context.read<CheckInFormController>().from.text = "${context.read<UsuarioController>().usuarioCurrent?.correo}";
+        context.read<CheckInFormController>().to.text = "admincv@rtacv.com";
+        context.read<CheckInFormController>().subject.text = "Check In Form Issues in Vehicle: '${
+          context.read<UsuarioController>().usuarioCurrent?.vehicle.target?.licensePlates}' with Employee '${
+          context.read<UsuarioController>().usuarioCurrent?.name} ${context.read<UsuarioController>().usuarioCurrent?.lastName}'";
+        context.read<CheckInFormController>().body.text = "Issues with ${context.read<CheckInFormController>().issues.join(", ")}.";
+      }
     });
   }
   @override
   Widget build(BuildContext context) {
+    final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
+    final checkInFormProvider = Provider.of<CheckInFormController>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -69,7 +93,7 @@ class _ReportEmailScreenState extends State<ReportEmailScreen> {
                       child: Row(
                         children: [
                           Container(
-                            width: 80,
+                            width: 100,
                             padding: const EdgeInsets.symmetric(horizontal: 12.0),
                             child: Text(
                               'From: ',
@@ -78,10 +102,12 @@ class _ReportEmailScreenState extends State<ReportEmailScreen> {
                           ),
                           Expanded(
                             child: TextFormField(
-                              readOnly: true,
+                              controller: widget.form ? 
+                              checkOutFormProvider.from
+                              :
+                              checkInFormProvider.from,
                               decoration: InputDecoration(
                                 filled: false,
-                                hintText: 'employeecry@gmail.com',
                                 enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
@@ -119,15 +145,103 @@ class _ReportEmailScreenState extends State<ReportEmailScreen> {
                               ),
                               style: FlutterFlowTheme.of(context).bodyText1,
                               textAlign: TextAlign.start,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Email is required.";
+                                }
+                                return null;
+                              },
                             ),
                           ),
                         ],
                       ),
                     ),
+                    // Padding(
+                    //   padding: const EdgeInsetsDirectional.fromSTEB(
+                    //           0, 20, 0, 20),
+                    //   child: Row(
+                    //     children: [
+                    //       Container(
+                    //         width: 100,
+                    //         padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    //         child: Text(
+                    //           'Password: ',
+                    //           style: FlutterFlowTheme.of(context).bodyText1,
+                    //         ),
+                    //       ),
+                    //       Expanded(
+                    //         child: TextFormField(
+                    //           maxLength: 50,
+                    //           controller: widget.form ? 
+                    //           checkOutFormProvider.password 
+                    //           :
+                    //           checkInFormProvider.password ,
+                    //           obscureText: !contrasenaVisibility,
+                    //           obscuringCharacter: '*',
+                    //           autovalidateMode:
+                    //               AutovalidateMode.onUserInteraction,
+                    //           decoration: InputDecoration(
+                    //             filled: false,
+                    //             hintText: 'Input the password...',
+                    //             enabledBorder: UnderlineInputBorder(
+                    //             borderSide: BorderSide(
+                    //               color:
+                    //                   FlutterFlowTheme.of(context).grayLight,
+                    //               width: 3,
+                    //             ),
+                    //           ),
+                    //           focusedBorder: UnderlineInputBorder(
+                    //             borderSide: BorderSide(
+                    //               color:
+                    //                   FlutterFlowTheme.of(context).alternate,
+                    //               width: 3,
+                    //             ),
+                    //           ),
+                    //           errorBorder: UnderlineInputBorder(
+                    //             borderSide: BorderSide(
+                    //               color: FlutterFlowTheme.of(context).primaryColor,
+                    //               width: 3,
+                    //             ),
+                    //           ),
+                    //           focusedErrorBorder: UnderlineInputBorder(
+                    //             borderSide: BorderSide(
+                    //               color: FlutterFlowTheme.of(context).primaryColor,
+                    //               width: 3,
+                    //             ),
+                    //           ),
+                    //           contentPadding:
+                    //               const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                    //           suffixIcon: InkWell(
+                    //               onTap: () => setState(
+                    //                 () => contrasenaVisibility =
+                    //                     !contrasenaVisibility,
+                    //               ),
+                    //               focusNode: FocusNode(skipTraversal: true),
+                    //               child: Icon(
+                    //                 contrasenaVisibility
+                    //                     ? Icons.visibility_outlined
+                    //                     : Icons.visibility_off_outlined,
+                    //                 color: FlutterFlowTheme.of(context).primaryColor,
+                    //                 size: 22,
+                    //               ),
+                    //             )
+                    //           ),
+                    //           style: FlutterFlowTheme.of(context).bodyText1,
+                    //           validator: (value) {
+                    //             if (value == null || value.isEmpty) {
+                    //               return "Password is required.";
+                    //             }
+                    //             return null;
+                    //           },
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     Row(
                       children: [
                         Container(
-                          width: 80,
+                          width: 100,
                           padding: const EdgeInsets.symmetric(horizontal: 12.0),
                           child: Text(
                             'To: ',
@@ -139,13 +253,16 @@ class _ReportEmailScreenState extends State<ReportEmailScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 20, 0, 20),
                             child: TextFormField(
-                              controller: TextEditingController(),
+                              controller: widget.form ? 
+                              checkOutFormProvider.to
+                              :
+                              checkInFormProvider.to,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               obscureText: false,
                               decoration: InputDecoration(
                                 filled: false,
-                                hintText: 'Input the addressee(s)...',
+                                hintText: 'Input the recipient...',
                                 enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
@@ -185,7 +302,7 @@ class _ReportEmailScreenState extends State<ReportEmailScreen> {
                               textAlign: TextAlign.start,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'The addressee is required.';
+                                  return 'The recipient is required.';
                                 }
                                 return null;
                               }),
@@ -196,7 +313,7 @@ class _ReportEmailScreenState extends State<ReportEmailScreen> {
                     Row(
                       children: [
                         Container(
-                          width: 80,
+                          width: 100,
                           padding: const EdgeInsets.symmetric(horizontal: 12.0),
                           child: Text(
                             'Subject: ',
@@ -208,7 +325,11 @@ class _ReportEmailScreenState extends State<ReportEmailScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 20, 0, 20),
                             child: TextFormField(
-                              controller: TextEditingController(),
+                              controller: widget.form ? 
+                              checkOutFormProvider.subject
+                              :
+                              checkInFormProvider.subject,
+                              maxLines: 2,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               obscureText: false,
@@ -266,8 +387,11 @@ class _ReportEmailScreenState extends State<ReportEmailScreen> {
                       padding: const EdgeInsetsDirectional.fromSTEB(
                               0, 20, 0, 20),
                       child: TextFormField(
+                        controller: widget.form ? 
+                          checkOutFormProvider.body
+                          :
+                          checkInFormProvider.body,
                         maxLines: 5,
-                        controller: TextEditingController(),
                         autovalidateMode:
                             AutovalidateMode.onUserInteraction,
                         obscureText: false,
@@ -323,21 +447,95 @@ class _ReportEmailScreenState extends State<ReportEmailScreen> {
                       child: FFButtonWidget(
                         onPressed: () async {
                           if (widget.form) {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                  ControlFormRCreatedScreen(),
-                              ),
-                            );
+                            if (checkOutFormProvider.from.text.isNotEmpty &
+                              // checkOutFormProvider.password.text.isNotEmpty &
+                              checkOutFormProvider.to.text.isNotEmpty &
+                              checkOutFormProvider.subject.text.isNotEmpty &
+                              checkOutFormProvider.body.text.isNotEmpty) {
+                                String? encodeQueryParameters(Map<String, String> params) {
+                                  return params.entries
+                                      .map((MapEntry<String, String> e) =>
+                                          '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                                      .join('&');
+                                }
+                                final Uri emailLaunchUri = Uri(
+                                  scheme: 'mailto',
+                                  path: checkOutFormProvider.to.text,
+                                  query: encodeQueryParameters(<String, String>{
+                                    'subject': checkOutFormProvider.subject.text,
+                                    'body': checkOutFormProvider.body.text
+                                  }),
+                                );
+                                if (await canLaunchUrl(emailLaunchUri)) {
+                                  if (await launchUrl(emailLaunchUri)) {
+                                    // ignore: use_build_context_synchronously
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                          const ControlFormRCreatedScreen(),
+                                      ),
+                                    );
+                                  } else {
+                                    snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Failed to send email, try again."),
+                                    ));
+                                  }
+                                } else {
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "Incorrect input data, please review your credentials and the recipient."),
+                                  ));
+                                }
+                            }
                           } else {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                  ControlFormDCreatedScreen(),
-                              ),
-                            );
+                            if (checkInFormProvider.from.text.isNotEmpty &
+                              // checkInFormProvider.password.text.isNotEmpty &
+                              checkInFormProvider.to.text.isNotEmpty &
+                              checkInFormProvider.subject.text.isNotEmpty &
+                              checkInFormProvider.body.text.isNotEmpty) {
+                                String? encodeQueryParameters(Map<String, String> params) {
+                                  return params.entries
+                                      .map((MapEntry<String, String> e) =>
+                                          '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                                      .join('&');
+                                }
+                                final Uri emailLaunchUri = Uri(
+                                  scheme: 'mailto',
+                                  path: checkInFormProvider.to.text,
+                                  query: encodeQueryParameters(<String, String>{
+                                    'subject': checkInFormProvider.subject.text,
+                                    'body': checkInFormProvider.body.text
+                                  }),
+                                );
+                                if (await canLaunchUrl(emailLaunchUri)) {
+                                  if (await launchUrl(emailLaunchUri)) {
+                                     // ignore: use_build_context_synchronously
+                                     await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                            const ControlFormDCreatedScreen(),
+                                        ),
+                                      );
+                                  } else {
+                                    snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Failed to send email, try again."),
+                                    ));
+                                  }
+                                } else {
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "Incorrect input data, please review your credentials and the recipient."),
+                                  ));
+                                }
+                            } 
                           }
                         },
                         text: 'Send',

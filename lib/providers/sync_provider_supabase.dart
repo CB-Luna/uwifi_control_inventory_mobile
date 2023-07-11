@@ -17,6 +17,7 @@ class SyncProviderSupabase extends ChangeNotifier {
   bool procesocargando = false;
   bool procesoterminado = false;
   bool procesoexitoso = false;
+  bool updatePassword = false;
   String tokenGlobal = "";
   List<bool> banderasExistoSync = [];
   List<InstruccionNoSincronizada> instruccionesFallidas = [];
@@ -241,8 +242,36 @@ class SyncProviderSupabase extends ChangeNotifier {
           final vehicleServices = getFirstVehicleServices(
               dataBase.vehicleServicesBox.getAll(), instruccionesBitacora[i].id);
           if (vehicleServices != null) {
-            final responseSyncUpdateVehicleServices = await syncUpdateMileageRemainingVehicleServices(
+            final responseSyncUpdatePassword = await syncUpdateMileageRemainingVehicleServices(
                 vehicleServices, instruccionesBitacora[i]);
+            if (responseSyncUpdatePassword.exitoso) {
+              banderasExistoSync.add(responseSyncUpdatePassword.exitoso);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(responseSyncUpdatePassword.exitoso);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  instruccion: responseSyncUpdatePassword.descripcion,
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion:
+                    "Problems sync to Local Server, Vehicle Service not recovered.",
+                fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncUpdatePassword":
+          final user = getFirstUsuario(
+              dataBase.usersBox.getAll(), instruccionesBitacora[i].id);
+          if (user != null) {
+            final responseSyncUpdateVehicleServices = await syncUpdatePassword(
+                user, instruccionesBitacora[i]);
             if (responseSyncUpdateVehicleServices.exitoso) {
               banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
               continue;
@@ -260,7 +289,7 @@ class SyncProviderSupabase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
                 instruccion:
-                    "Problems sync to Local Server, Vehicle Service not recovered.",
+                    "Problems sync to Local Server, Employee not recovered.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
@@ -4044,7 +4073,7 @@ class SyncProviderSupabase extends ChangeNotifier {
         //Update Vehicle Services
         final recordVehicleServices = await supabaseCtrlV.from('vehicle_services').update(
           {
-            'service_date': vehicleServices.serviceDate == null ? null : DateFormat('dd/MM/yyyy').format(vehicleServices.serviceDate!),
+            'service_date': vehicleServices.serviceDate == null ? null : DateFormat('MM/dd/yyyy').format(vehicleServices.serviceDate!),
             'completed': vehicleServices.completed,
             'mileage_remaining': vehicleServices.mileageRemaining,
           },
@@ -4054,7 +4083,7 @@ class SyncProviderSupabase extends ChangeNotifier {
         if (vehicleServices.service.target!.service == "Oil Change") {
           final recordVehicle = await supabaseCtrlV.from('vehicle').update(
             {
-              'oil_change_due': vehicleServices.serviceDate == null ? null : DateFormat('dd/MM/yyyy').format(vehicleServices.serviceDate!),
+              'oil_change_due': vehicleServices.serviceDate == null ? null : DateFormat('MM/dd/yyyy').format(vehicleServices.serviceDate!),
               'rule_oil_change': {
                 'Value': vehicleServices.vehicle.target!.ruleOilChange.target!.value,
                 'Registered': vehicleServices.vehicle.target!.ruleOilChange.target!.registered,
@@ -4073,7 +4102,7 @@ class SyncProviderSupabase extends ChangeNotifier {
         if (vehicleServices.service.target!.service == "Transmission Fluid Change") {
           final recordVehicle = await supabaseCtrlV.from('vehicle').update(
             {
-              'last_transmission_fluid_change': vehicleServices.serviceDate == null ? null : DateFormat('dd/MM/yyyy').format(vehicleServices.serviceDate!),
+              'last_transmission_fluid_change': vehicleServices.serviceDate == null ? null : DateFormat('MM/dd/yyyy').format(vehicleServices.serviceDate!),
               'rule_transmission_fluid_change': {
                 'Value': vehicleServices.vehicle.target!.ruleTransmissionFluidChange.target!.value,
                 'Registered': vehicleServices.vehicle.target!.ruleTransmissionFluidChange.target!.registered,
@@ -4092,7 +4121,7 @@ class SyncProviderSupabase extends ChangeNotifier {
         if (vehicleServices.service.target!.service == "Radiator Fluid Change") {
           final recordVehicle = await supabaseCtrlV.from('vehicle').update(
             {
-              'last_radiator_fluid_change': vehicleServices.serviceDate == null ? null : DateFormat('dd/MM/yyyy').format(vehicleServices.serviceDate!),
+              'last_radiator_fluid_change': vehicleServices.serviceDate == null ? null : DateFormat('MM/dd/yyyy').format(vehicleServices.serviceDate!),
               'rule_radiator_fluid_change': {
                 'Value': vehicleServices.vehicle.target!.ruleRadiatorFluidChange.target!.value,
                 'Registered': vehicleServices.vehicle.target!.ruleRadiatorFluidChange.target!.registered,
@@ -4280,6 +4309,40 @@ class SyncProviderSupabase extends ChangeNotifier {
           exitoso: false,
           descripcion:
               "Failed to sync data Update Mileage Remaining Vehicle Service Status on Local Server: Vehicle Service '${vehicleServices.service.target!.service}' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}', details: '$e'");
+    }
+  }
+
+  Future<SyncInstruction> syncUpdatePassword(
+    Users usuario, Bitacora bitacora) async {
+    try {
+      if (bitacora.executeSupabase == false) {
+        final res = await supabase.rpc('change_user_password', params: {
+          'current_plain_password': bitacora.instruccionAdicional,
+          'new_plain_password': usuario.password,
+        });
+        if (res != null) {
+          //Se marca como ejecutada la instrucción en Bitacora
+          bitacora.executeSupabase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          dataBase.bitacoraBox.remove(bitacora.id);
+          updatePassword = true;
+          return SyncInstruction(exitoso: true, descripcion: "");
+        } else {
+          return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync data Update Password on Local Server to User '${usuario.correo}'");
+        }
+      } else {
+        dataBase.bitacoraBox.remove(bitacora.id);
+        return SyncInstruction(exitoso: true, descripcion: "");
+      }
+    } catch (e) {
+      //print('ERROR - function syncAddEmprendedor(): $e');
+      return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync data Update Password on Local Server to User '${usuario.correo}', details: '$e'");
     }
   }
 }

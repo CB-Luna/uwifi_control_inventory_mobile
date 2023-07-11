@@ -183,13 +183,23 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                             if (checkOutFormProvider.addControlForm(userProvider.usuarioCurrent, widget.registeredHour)) {
                               // checkOutFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ReportEmailScreen(form: true,),
-                                ),
-                              );
+                              if (checkOutFormProvider.issues.isEmpty) {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ControlFormRCreatedScreen(),
+                                  ),
+                                );
+                              } else {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ReportEmailScreen(form: true,),
+                                  ),
+                                );
+                              }
                             } else {
                               checkOutFormProvider.cleanInformation();
                               controlFormProvider.cleanData();

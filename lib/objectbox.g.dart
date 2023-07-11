@@ -6059,7 +6059,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(8, passwordOffset);
           fbb.addOffset(9, imageOffset);
           fbb.addOffset(10, pathOffset);
-          fbb.addInt64(11, object.birthDate.millisecondsSinceEpoch);
+          fbb.addInt64(11, object.birthDate?.millisecondsSinceEpoch);
           fbb.addOffset(13, idDBROffset);
           fbb.addInt64(14, object.role.targetId);
           fbb.addInt64(15, object.company.targetId);
@@ -6077,7 +6077,8 @@ ModelDefinition getObjectBoxModel() {
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
+          final birthDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 26);
           final object = Users(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               name: const fb.StringReader(asciiOptimization: true)
@@ -6097,7 +6098,7 @@ ModelDefinition getObjectBoxModel() {
               password: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
               image: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 22),
               path: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 24),
-              birthDate: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
+              birthDate: birthDateValue == null ? null : DateTime.fromMillisecondsSinceEpoch(birthDateValue),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0)),
               recordsMonthCurrentR: const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0),
               recordsMonthSecondR: const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0),

@@ -14,10 +14,17 @@ class CheckInFormController extends ChangeNotifier {
 
   GlobalKey<FormState> checkInFormKey = GlobalKey<FormState>();
 
-  //***********************<Bnaderas Services>************************
+  //***********************<Banderas Services>************************
   bool flagOilChange = false;
   bool flagTransmissionFluidChange = false;
   bool flagRadiatorFluidChange = false;
+
+  List<String> issues = []; 
+  TextEditingController from = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController to = TextEditingController();
+  TextEditingController subject = TextEditingController();
+  TextEditingController body = TextEditingController();
 
   //***********************<Variables>************************
   //Extras
@@ -276,10 +283,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateHeadLights(String report) {
     if (report == "Good") {
       if (headLights == "Bad") {
+        issues.remove("HeadLights");
         badStateLights -= 1;
       }
     } else {
       if (headLights == "Good") {
+        issues.add("HeadLights");
         badStateLights += 1;
       }
     }
@@ -289,10 +298,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateBrakeLights(String report) {
     if (report == "Good") {
       if (brakeLights == "Bad") {
+        issues.remove("BrakeLights");
         badStateLights -= 1;
       }
     } else {
       if (brakeLights == "Good") {
+        issues.add("BrakeLights");
         badStateLights += 1;
       }
     }
@@ -302,10 +313,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateReverseLights(String report) {
     if (report == "Good") {
       if (reverseLights == "Bad") {
+        issues.remove("ReverseLights");
         badStateLights -= 1;
       }
     } else {
       if (reverseLights == "Good") {
+        issues.add("ReverseLights");
         badStateLights += 1;
       }
     }
@@ -315,10 +328,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateWarningLights(String report) {
     if (report == "Good") {
       if (warningLights == "Bad") {
+        issues.remove("WarningLights");
         badStateLights -= 1;
       }
     } else {
       if (warningLights == "Good") {
+        issues.add("WarningLights");
         badStateLights += 1;
       }
     }
@@ -328,10 +343,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateTurnSignals(String report) {
     if (report == "Good") {
       if (turnSignals == "Bad") {
+        issues.remove("TurnLights");
         badStateLights -= 1;
       }
     } else {
       if (turnSignals == "Good") {
+        issues.add("TurnLights");
         badStateLights += 1;
       }
     }
@@ -341,10 +358,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateFourWayFlashers(String report) {
     if (report == "Good") {
       if (fourWayFlashers == "Bad") {
+        issues.remove("FourWay Flasher");
         badStateLights -= 1;
       }
     } else {
       if (fourWayFlashers == "Good") {
+        issues.add("FourWay Flasher");
         badStateLights += 1;
       }
     }
@@ -354,10 +373,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateDashLights(String report) {
     if (report == "Good") {
       if (dashLights == "Bad") {
+        issues.remove("DashLights");
         badStateLights -= 1;
       }
     } else {
       if (dashLights == "Good") {
+        issues.add("DashLights");
         badStateLights += 1;
       }
     }
@@ -367,10 +388,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateStrobeLights(String report) {
     if (report == "Good") {
       if (strobeLights == "Bad") {
+        issues.remove("Strobe Lights");
         badStateLights -= 1;
       }
     } else {
       if (strobeLights == "Good") {
+        issues.add("Strobe Lights");
         badStateLights += 1;
       }
     }
@@ -380,10 +403,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateCabRoofLights(String report) {
     if (report == "Good") {
       if (cabRoofLights == "Bad") {
+        issues.remove("CabRoof Lights");
         badStateLights -= 1;
       }
     } else {
       if (cabRoofLights == "Good") {
+        issues.add("CabRoof Lights");
         badStateLights += 1;
       }
     }
@@ -393,10 +418,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateClearanceLights(String report) {
     if (report == "Good") {
       if (clearanceLights == "Bad") {
+        issues.remove("Clearence Lights");
         badStateLights -= 1;
       }
     } else {
       if (clearanceLights == "Good") {
+        issues.add("Clearence Lights");
         badStateLights += 1;
       }
     }
@@ -409,10 +436,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateWiperBladesFront(String report) {
     if (report == "Good") {
       if (wiperBladesFront == "Bad") {
+        issues.remove("Wiper Blades Front");
         badStateLights -= 1;
       }
     } else {
       if (wiperBladesFront == "Good") {
+        issues.add("Wiper Blades Front");
         badStateLights += 1;
       }
     }
@@ -422,10 +451,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateWiperBladesBack(String report) {
     if (report == "Good") {
       if (wiperBladesBack == "Bad") {
+        issues.remove("Wiper Blades Back");
         badStateLights -= 1;
       }
     } else {
       if (wiperBladesBack == "Good") {
+        issues.add("Wiper Blades Back");
         badStateLights += 1;
       }
     }
@@ -435,10 +466,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateWindshieldWiperFront(String report) {
     if (report == "Good") {
       if (windshieldWiperFront == "Bad") {
+        issues.remove("Windshield Wiper Front");
         badStateLights -= 1;
       }
     } else {
       if (windshieldWiperFront == "Good") {
+        issues.add("Windshield Wiper Front");
         badStateLights += 1;
       }
     }
@@ -448,10 +481,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateWindshieldWiperBack(String report) {
     if (report == "Good") {
       if (windshieldWiperBack == "Bad") {
+        issues.remove("Windshield Wiper Bad");
         badStateLights -= 1;
       }
     } else {
       if (windshieldWiperBack == "Good") {
+        issues.add("Windshield Wiper Bad");
         badStateLights += 1;
       }
     }
@@ -461,10 +496,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateGeneralBody(String report) {
     if (report == "Good") {
       if (generalBody == "Bad") {
+        issues.remove("General Body");
         badStateLights -= 1;
       }
     } else {
       if (generalBody == "Good") {
+        issues.add("General Body");
         badStateLights += 1;
       }
     }
@@ -474,10 +511,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateDecaling(String report) {
     if (report == "Good") {
       if (decaling == "Bad") {
+        issues.remove("Decaling");
         badStateLights -= 1;
       }
     } else {
       if (decaling == "Good") {
+        issues.add("Decaling");
         badStateLights += 1;
       }
     }
@@ -487,10 +526,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateTires(String report) {
     if (report == "Good") {
       if (tires == "Bad") {
+        issues.remove("Tires");
         badStateLights -= 1;
       }
     } else {
       if (tires == "Good") {
+        issues.add("Tires");
         badStateLights += 1;
       }
     }
@@ -500,10 +541,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateGlass(String report) {
     if (report == "Good") {
       if (glass == "Bad") {
+        issues.remove("Glass");
         badStateLights -= 1;
       }
     } else {
       if (glass == "Good") {
+        issues.add("Glass");
         badStateLights += 1;
       }
     }
@@ -513,10 +556,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateMirrors(String report) {
     if (report == "Good") {
       if (mirrors == "Bad") {
+        issues.remove("Mirrors");
         badStateLights -= 1;
       }
     } else {
       if (mirrors == "Good") {
+        issues.add("Mirrors");
         badStateLights += 1;
       }
     }
@@ -526,10 +571,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateParking(String report) {
     if (report == "Good") {
       if (parking == "Bad") {
+        issues.remove("Parking");
         badStateLights -= 1;
       }
     } else {
       if (parking == "Good") {
+        issues.add("Parking");
         badStateLights += 1;
       }
     }
@@ -539,10 +586,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateBrakes(String report) {
     if (report == "Good") {
       if (brakes== "Bad") {
+        issues.remove("Brakes");
         badStateLights -= 1;
       }
     } else {
       if (brakes== "Good") {
+        issues.add("Brakes");
         badStateLights += 1;
       }
     }
@@ -552,10 +601,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateEMGBrakes(String report) {
     if (report == "Good") {
       if (emgBrakes == "Bad") {
+        issues.remove("EMGBrakes");
         badStateLights -= 1;
       }
     } else {
       if (emgBrakes == "Good") {
+        issues.add("EMGBrakes");
         badStateLights += 1;
       }
     }
@@ -565,10 +616,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateHorn(String report) {
     if (report == "Good") {
       if (horn == "Bad") {
+        issues.remove("Horn");
         badStateLights -= 1;
       }
     } else {
       if (horn == "Good") {
+        issues.add("Horn");
         badStateLights += 1;
       }
     }
@@ -579,10 +632,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateEngineOil(String report) {
     if (report == "Good") {
       if (engineOil == "Bad") {
+        issues.remove("Engine Oil");
         pendingMeasures -= 1;
       }
     } else {
       if (engineOil == "Good") {
+        issues.add("Engine Oil");
         pendingMeasures += 1;
       }
     }
@@ -592,10 +647,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateTransmission(String report) {
     if (report == "Good") {
       if (transmission== "Bad") {
+        issues.remove("Transmission");
         pendingMeasures -= 1;
       }
     } else {
       if (transmission== "Good") {
+        issues.add("Transmission");
         pendingMeasures += 1;
       }
     }
@@ -605,10 +662,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateCoolant(String report) {
     if (report == "Good") {
       if (coolant == "Bad") {
+        issues.remove("Coolant");
         pendingMeasures -= 1;
       }
     } else {
       if (coolant == "Good") {
+        issues.add("Coolant");
         pendingMeasures += 1;
       }
     }
@@ -618,10 +677,12 @@ class CheckInFormController extends ChangeNotifier {
   void updatePowerSteering(String report) {
     if (report == "Good") {
       if (powerSteering == "Bad") {
+        issues.remove("Power Steering");
         pendingMeasures -= 1;
       }
     } else {
       if (powerSteering == "Good") {
+        issues.add("Power Steering");
         pendingMeasures += 1;
       }
     }
@@ -631,10 +692,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateDieselExhaustFluid(String report) {
     if (report == "Good") {
       if (dieselExhaustFluid == "Bad") {
+        issues.remove("Diesel Exhaust Fluid");
         pendingMeasures -= 1;
       }
     } else {
       if (dieselExhaustFluid == "Good") {
+        issues.add("Diesel Exhaust Fluid");
         pendingMeasures += 1;
       }
     }
@@ -644,10 +707,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateWindshieldWasherFluid(String report) {
     if (report == "Good") {
       if (windshieldWasherFluid == "Bad") {
+        issues.remove("Windshield Washer Fluid");
         pendingMeasures -= 1;
       }
     } else {
       if (windshieldWasherFluid == "Good") {
+        issues.add("Windshield Washer Fluid");
         pendingMeasures += 1;
       }
     }
@@ -658,10 +723,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateInsulated(String report) {
     if (report == "Good") {
       if (insulated == "Bad") {
+        issues.remove("Insulated");
         badStateEquipment -= 1;
       }
     } else {
       if (insulated == "Good") {
+        issues.add("Insulated");
         badStateEquipment += 1;
       }
     }
@@ -671,10 +738,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateHolesDrilled(String report) {
     if (report == "Good") {
       if (holesDrilled == "Bad") {
+        issues.remove("Holes Drilled");
         badStateEquipment -= 1;
       }
     } else {
       if (holesDrilled == "Good") {
+        issues.add("Holes Drilled");
         badStateEquipment += 1;
       }
     }
@@ -684,10 +753,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateBucketLiner(String report) {
     if (report == "Good") {
       if (bucketLiner == "Bad") {
+        issues.remove("Bucket Liner");
         badStateEquipment -= 1;
       }
     } else {
       if (bucketLiner == "Good") {
+        issues.add("Bucket Liner");
         badStateEquipment += 1;
       }
     }
@@ -698,10 +769,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateRTAMagnet(String report) {
     if (report == "Good") {
       if (rtaMagnet == "Bad") {
+        issues.remove("RTA Magnet");
         badStateSecurity -= 1;
       }
     } else {
       if (rtaMagnet == "Good") {
+        issues.add("RTA Magnet");
         badStateSecurity += 1;
       }
     }
@@ -711,10 +784,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateTriangleReflectors(String report) {
     if (report == "Good") {
       if (triangleReflectors == "Bad") {
+        issues.remove("Triangle Reflectors");
         badStateSecurity -= 1;
       }
     } else {
       if (triangleReflectors == "Good") {
+        issues.add("Triangle Reflectors");
         badStateSecurity += 1;
       }
     }
@@ -724,10 +799,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateWheelChocks(String report) {
     if (report == "Good") {
       if (wheelChocks == "Bad") {
+        issues.remove("Wheel Chocks");
         badStateSecurity -= 1;
       }
     } else {
       if (wheelChocks == "Good") {
+        issues.add("Wheel Chocks");
         badStateSecurity += 1;
       }
     }
@@ -737,10 +814,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateFireExtinguisher(String report) {
     if (report == "Good") {
       if (fireExtinguisher == "Bad") {
+        issues.remove("Fire Extinguisher");
         badStateSecurity -= 1;
       }
     } else {
       if (fireExtinguisher == "Good") {
+        issues.add("Fire Extinguisher");
         badStateSecurity += 1;
       }
     }
@@ -750,10 +829,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateFirstAidKitSafetyVest(String report) {
     if (report == "Good") {
       if (firstAidKitSafetyVest == "Bad") {
+        issues.remove("First AidKit Safety Vest");
         badStateSecurity -= 1;
       }
     } else {
       if (firstAidKitSafetyVest == "Good") {
+        issues.add("First AidKit Safety Vest");
         badStateSecurity += 1;
       }
     }
@@ -763,10 +844,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateBackUpAlarm(String report) {
     if (report == "Good") {
       if (backUpAlarm == "Bad") {
+        issues.remove("Back Up Alarm");
         badStateSecurity -= 1;
       }
     } else {
       if (backUpAlarm == "Good") {
+        issues.add("Back Up Alarm");
         badStateSecurity += 1;
       }
     }
@@ -777,10 +860,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateLadder(String report) {
     if (report == "Good") {
       if (ladder == "Bad") {
+        issues.remove("Ladder");
         badStateSecurity -= 1;
       }
     } else {
       if (ladder == "Good") {
+        issues.add("Ladder");
         badStateSecurity += 1;
       }
     }
@@ -790,10 +875,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateStepLadder(String report) {
     if (report == "Good") {
       if (stepLadder == "Bad") {
+        issues.remove("Step Ladder");
         badStateSecurity -= 1;
       }
     } else {
       if (stepLadder == "Good") {
+        issues.add("Step Ladder");
         badStateSecurity += 1;
       }
     }
@@ -803,10 +890,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateLadderStraps(String report) {
     if (report == "Good") {
       if (ladderStraps == "Bad") {
+        issues.remove("Ladder Straps");
         badStateSecurity -= 1;
       }
     } else {
       if (ladderStraps == "Good") {
+        issues.add("Ladder Straps");
         badStateSecurity += 1;
       }
     }
@@ -816,10 +905,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateHydraulicFluidForBucket(String report) {
     if (report == "Good") {
       if (hydraulicFluidForBucket == "Bad") {
+        issues.remove("Hydraulic Fluid For Bucket");
         badStateSecurity -= 1;
       }
     } else {
       if (hydraulicFluidForBucket == "Good") {
+        issues.add("Hydraulic Fluid For Bucket");
         badStateSecurity += 1;
       }
     }
@@ -829,10 +920,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateFiberReelRack(String report) {
     if (report == "Good") {
       if (fiberReelRack == "Bad") {
+        issues.remove("Fiber Reel Rack");
         badStateSecurity -= 1;
       }
     } else {
       if (fiberReelRack == "Good") {
+        issues.add("Fiber Reel Rack");
         badStateSecurity += 1;
       }
     }
@@ -842,10 +935,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateBinsLockedAndSecure(String report) {
     if (report == "Good") {
       if (binsLockedAndSecure == "Bad") {
+        issues.remove("Bins Locked And Secure");
         badStateSecurity -= 1;
       }
     } else {
       if (binsLockedAndSecure == "Good") {
+        issues.add("Bins Locked And Secure");
         badStateSecurity += 1;
       }
     }
@@ -855,10 +950,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateSafetyHarness(String report) {
     if (report == "Good") {
       if (safetyHarness == "Bad") {
+        issues.remove("Safety Harness");
         badStateSecurity -= 1;
       }
     } else {
       if (safetyHarness == "Good") {
+        issues.add("Safety Harness");
         badStateSecurity += 1;
       }
     }
@@ -868,10 +965,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateLanyardSafetyHarness(String report) {
     if (report == "Good") {
       if (lanyardSafetyHarness == "Bad") {
+        issues.remove("Lanyard Safety Harness");
         badStateSecurity -= 1;
       }
     } else {
       if (lanyardSafetyHarness == "Good") {
+        issues.add("Lanyard Safety Harness");
         badStateSecurity += 1;
       }
     }
@@ -882,10 +981,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateIgnitionKey(String report) {
     if (report == "Yes") {
       if (ignitionKey == "No") {
+        issues.remove("Ignition Key");
         badStateEquipment -= 1;
       }
     } else {
       if (ignitionKey == "Yes") {
+        issues.add("Ignition Key");
         badStateEquipment += 1;
       }
     }
@@ -895,10 +996,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateBinsBoxKey(String report) {
     if (report == "Yes") {
       if (binsBoxKey == "No") {
+        issues.remove("BinsBox Key");
         badStateEquipment -= 1;
       }
     } else {
       if (binsBoxKey == "Yes") {
+        issues.add("BinsBox Key");
         badStateEquipment += 1;
       }
     }
@@ -908,10 +1011,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateVehicleRegistrationCopy(String report) {
     if (report == "Yes") {
       if (vehicleRegistrationCopy == "No") {
+        issues.remove("Vehicle Registration Copy");
         badStateEquipment -= 1;
       }
     } else {
       if (vehicleRegistrationCopy == "Yes") {
+        issues.add("Vehicle Registration Copy");
         badStateEquipment += 1;
       }
     }
@@ -921,10 +1026,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateVehicleInsuranceCopy(String report) {
     if (report == "Yes") {
       if (vehicleInsuranceCopy == "No") {
+        issues.remove("Vehicle Insurance Copy");
         badStateEquipment -= 1;
       }
     } else {
       if (vehicleInsuranceCopy == "Yes") {
+        issues.add("Vehicle Insurance Copy");
         badStateEquipment += 1;
       }
     }
@@ -934,10 +1041,12 @@ class CheckInFormController extends ChangeNotifier {
   void updateBucketLiftOperatorManual(String report) {
     if (report == "Yes") {
       if (bucketLiftOperatorManual == "No") {
+        issues.remove("Bucket Lift Operator Manual");
         badStateEquipment -= 1;
       }
     } else {
       if (bucketLiftOperatorManual == "Yes") {
+        issues.add("Bucket Lift Operator Manual");
         badStateEquipment += 1;
       }
     }
@@ -1438,6 +1547,13 @@ class CheckInFormController extends ChangeNotifier {
   void cleanInformation()
   {
     //Banderas
+    issues.clear();
+    from.clear();
+    password.clear();
+    to.clear();
+    subject.clear();
+    body.clear();
+
     flagOilChange = false;
     flagTransmissionFluidChange = false;
     flagRadiatorFluidChange = false;
@@ -2196,5 +2312,24 @@ class CheckInFormController extends ChangeNotifier {
       return false;
     }
   }
+
+  // Future<bool> sendEmail() async {
+    // final smtpServer = gmail(from.text, password.text);
+    
+    // final message = Message()
+    //   ..from = Address(from.text, 'Tu Nombre')
+    //   ..recipients.add(to.text) // Reemplaza con la dirección de correo del destinatario
+    //   ..subject = subject.text
+    //   ..text = body.text;
+
+    // try {
+    //   final sendReport = await send(message, smtpServer);
+    //   print('Correo enviado: ${sendReport.toString()}');
+    //   return true;
+    // } catch (e) {
+    //   print('Error al enviar el correo: $e');
+    //   return false;
+    // }
+//  }
 
 }
