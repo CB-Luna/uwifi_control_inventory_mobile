@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/control_daily_vehicle_screen.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
@@ -330,15 +331,36 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                     final vehicleServices = widget.vehicle.vehicleServices.where((element) => !element.completed).toList()[index];
                                     return InkWell(
                                       onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                CompletedServicesVehicleScreen(
-                                                  vehicle: widget.vehicle, 
-                                                  vehicleServices: vehicleServices,),
-                                          ),
-                                        );
+                                        final today = DateTime.now();
+                                        if (vehicleServices.service.target?.service == "Car Wash") {
+                                          if (today.weekday == DateTime.wednesday) {
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "You have to await until tomorrow to do this service."),
+                                            ));
+                                          } else {
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CompletedServicesVehicleScreen(
+                                                      vehicle: widget.vehicle, 
+                                                      vehicleServices: vehicleServices,),
+                                              ),
+                                            );
+                                          }
+                                        } else {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CompletedServicesVehicleScreen(
+                                                    vehicle: widget.vehicle, 
+                                                    vehicleServices: vehicleServices,),
+                                            ),
+                                          );
+                                        }
                                       },
                                       child: Padding(
                                         padding: const EdgeInsetsDirectional.fromSTEB(

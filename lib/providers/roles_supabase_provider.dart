@@ -297,9 +297,9 @@ class RolesSupabaseProvider extends ChangeNotifier {
             //Se valida que el nuevo vehicle aún no existe en Objectbox
             final vehicleExistente = dataBase.vehicleBox.query(Vehicle_.idDBR.equals(element['id_vehicle'].toString())).build().findUnique();
             if (vehicleExistente == null) {
-              final image = element['image'].replaceAll("data:image/jpg;base64,", "");
-              image.replaceAll("data:image/png;base64,", "");
-              final uInt8ListImagen = base64Decode(image);
+              final uInt8ListImagen = await supabase.storage.from('assets/Vehicles').download(
+                element['image'].toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/Vehicles/", ""));
+              final base64Image = const Base64Encoder().convert(uInt8ListImagen);
               final tempDir = await getTemporaryDirectory();
               File file = await File(
                 '${tempDir.path}/${uuid.v1()}.png')
@@ -316,7 +316,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
                 color: element['color'],
                 mileage: element['mileage'],
                 path: file.path,
-                image: element['image'],
+                image: base64Image,
                 oilChangeDue: element['oil_change_due'] == null ? null : DateTime.parse(element['oil_change_due']),
                 lastTransmissionFluidChange: element['last_transmission_fluid_change'] == null ? null : DateTime.parse(element['last_transmission_fluid_change']),
                 lastRadiatorFluidChange: element['last_radiator_fluid_change'] == null ? null : DateTime.parse(element['last_radiator_fluid_change']),
@@ -394,7 +394,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
               //Se verifica que sea Jueves
                 final today = DateTime.now();
                 if (today.weekday == DateTime.thursday) {
-                  if (!newVehicle.carWash) {
+                  if (!element['car_wash']) {
                     final service = dataBase.serviceBox.query(Service_.service.equals("Car Wash")).build().findUnique();
                     final serviceVehicle = dataBase.vehicleServicesBox.query(VehicleServices_.vehicle.equals(newVehicle.id).and(VehicleServices_.service.equals(service?.id ?? 0)).and(VehicleServices_.completed.equals(false)).and(VehicleServices_.serviceDate.between(today.weekday, today.add(const Duration(days: 2)).weekday))).build().findFirst();
                     if (serviceVehicle == null) {
@@ -424,9 +424,9 @@ class RolesSupabaseProvider extends ChangeNotifier {
               dataBase.vehicleBox.put(newVehicle);
             } else {
                 //Se actualiza el registro en Objectbox
-                final image = element['image'].replaceAll("data:image/jpg;base64,", "");
-                image.replaceAll("data:image/png;base64,", "");
-                final uInt8ListImagen = base64Decode(image);
+                final uInt8ListImagen = await supabase.storage.from('assets/Vehicles').download(
+                element['image'].toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/Vehicles/", ""));
+                final base64Image = const Base64Encoder().convert(uInt8ListImagen);
                 final tempDir = await getTemporaryDirectory();
                 File file = await File(
                   '${tempDir.path}/${uuid.v1()}.png')
@@ -442,7 +442,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
                 vehicleExistente.color = element['color'];
                 vehicleExistente.mileage = element['mileage'];
                 vehicleExistente.path = file.path;
-                vehicleExistente.image = element['image'];
+                vehicleExistente.image = base64Image;
                 vehicleExistente.oilChangeDue = element['oil_change_due'] == null ? null : DateTime.parse(element['oil_change_due']);
                 vehicleExistente.lastTransmissionFluidChange = element['last_transmission_fluid_change'] == null ? null : DateTime.parse(element['last_transmission_fluid_change']);
                 vehicleExistente.lastRadiatorFluidChange = element['last_radiator_fluid_change'] == null ? null : DateTime.parse(element['last_radiator_fluid_change']);
@@ -528,7 +528,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
                 //Se verifica que sea Jueves
                 final today = DateTime.now();
                 if (today.weekday == DateTime.thursday) {
-                  if (!vehicleExistente.carWash) {
+                  if (!element['car_wash']) {
                     final service = dataBase.serviceBox.query(Service_.service.equals("Car Wash")).build().findUnique();
                     final serviceVehicle = dataBase.vehicleServicesBox.query(VehicleServices_.vehicle.equals(vehicleExistente.id).and(VehicleServices_.service.equals(service?.id ?? 0)).and(VehicleServices_.completed.equals(false)).and(VehicleServices_.serviceDate.between(today.weekday, today.add(const Duration(days: 2)).weekday))).build().findFirst();
                     if (serviceVehicle == null) {

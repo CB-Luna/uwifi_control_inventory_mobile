@@ -449,11 +449,11 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                     ),
                                 validator: (value) {
                                   final RegExp regex = RegExp(
-                                      r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.\-_:,;]{6,50}$");
+                                      r"^[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.\-_:,;]{6,50}$");
                                   if (value == null || value.isEmpty) {
                                     return 'Password is required.';
                                   } else if (!regex.hasMatch(value)) {
-                                    return "Password should be with a length of 6 characters, one \ncapital letter and two numbers. Valid special characters: !#\$%&/()=?¡¿+*.-_:,; Spaces and apostrophes-\naren't allowed.";
+                                    return "Password should be with a length of 6 characters. Valid special characters: !#\$%&/()=?¡¿+*.-_:,; Spaces and apostrophes-\naren't allowed.";
                                   }
                                   return null;
                                 }),

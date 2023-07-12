@@ -84,7 +84,7 @@ class UsuarioController extends ChangeNotifier {
       String? domicilio,
       String correo,
       String password,
-      String? imagenBase64,
+      String? imagenUrl,
       List<String> rolesIdDBR,
       String idDBR,
       DateTime? birthDate,
@@ -107,7 +107,6 @@ class UsuarioController extends ChangeNotifier {
         password: password,
         idDBR: idDBR, 
         address: domicilio,
-        image: imagenBase64,
         birthDate: birthDate,
         recordsMonthCurrentR: formsCurrentMonthR,
         recordsMonthSecondR: formsSecondMonthR,
@@ -116,11 +115,14 @@ class UsuarioController extends ChangeNotifier {
         recordsMonthSecondD: formsSecondMonthD,
         recordsMonthThirdD: formsThirdMonthD,
         );
-    if (imagenBase64 != null) {
-      final uInt8ListImagen = base64Decode(imagenBase64);
+    if (imagenUrl != null) {
+      final uInt8ListImagen = await supabase.storage.from('assets/user_profile').download(
+        imagenUrl.toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/user_profile/", ""));
+      final base64Image = const Base64Encoder().convert(uInt8ListImagen);
       final tempDir = await getTemporaryDirectory();
       File file = await File('${tempDir.path}/${uuid.v1()}.jpg').create();
       file.writeAsBytesSync(uInt8ListImagen);
+      nuevoUsuario.image = base64Image;
       nuevoUsuario.path = file.path;
     } 
     //Se crea el objeto imagenes para el Usuario
@@ -157,7 +159,7 @@ class UsuarioController extends ChangeNotifier {
       String newCelular,
       String? newDomicilio,
       String newPassword,
-      String? newImagenBase64,
+      String? newImagenUrl,
       List<String> newRolesIdDBR,
       DateTime? newBirthDate,
       String newIdCompanyFk,
@@ -208,15 +210,14 @@ class UsuarioController extends ChangeNotifier {
       } else {
         updateUsuario.vehicle.target = null;
       }
-      if (newImagenBase64 != null) {
-          //print("Se actualiza imagen USUARIO");
-          // Se actualiza imagen
-          //print("ID IMAGEN: ${newImagen.idEmiWeb}");
-          final uInt8ListImagen = base64Decode(newImagenBase64);
+      if (newImagenUrl != null) {
+          final uInt8ListImagen = await supabase.storage.from('assets/user_profile').download(
+            newImagenUrl.toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/user_profile/", ""));
+          final base64Image = const Base64Encoder().convert(uInt8ListImagen);
           final tempDir = await getTemporaryDirectory();
           File file = await File('${tempDir.path}/${uuid.v1()}.jpg').create();
           file.writeAsBytesSync(uInt8ListImagen);
-          updateUsuario.image = newImagenBase64;
+          updateUsuario.image = base64Image;
           updateUsuario.path = file.path;
       } else {
         if (updateUsuario.image != null) {
