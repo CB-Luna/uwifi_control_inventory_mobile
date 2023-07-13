@@ -1780,7 +1780,7 @@ class CheckInFormController extends ChangeNotifier {
 
   String encodeUint8Element(Uint8List element) {
   String encodedElement = base64.encode(element);
-  return json.encode(encodedElement);
+  return encodedElement;
 }
 
   List<String> getListPath(List<ImageEvidence> imagesEvidence) {

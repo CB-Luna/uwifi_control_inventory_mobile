@@ -594,7 +594,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               //Parsear a Uint8List
                 final storageResponse = await supabase.storage.from('measures').uploadBinary(
                 controlForm.measuresR.target!.gasNames.toList()[i],
-                Uint8List.fromList(utf8.encode(controlForm.measuresR.target!.gasImages.toList()[i])),
+                Uint8List.fromList(base64.decode(controlForm.measuresR.target!.gasImages.toList()[i])),
                   fileOptions: const FileOptions(
                     cacheControl: '3600',
                     upsert: false,
@@ -620,7 +620,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
                 final storageResponse = await supabase.storage.from('measures').uploadBinary(
                 controlForm.measuresR.target!.mileageNames.toList()[i],
-                Uint8List.fromList(utf8.encode(controlForm.measuresR.target!.mileageImages.toList()[i])),
+                Uint8List.fromList(base64.decode(controlForm.measuresR.target!.mileageImages.toList()[i])),
                   fileOptions: const FileOptions(
                     cacheControl: '3600',
                     upsert: false,
@@ -661,7 +661,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
                 final storageResponse = await supabase.storage.from('lights').uploadBinary(
                 controlForm.lightsR.target!.headLightsNames.toList()[i],
-                Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.headLightsImages.toList()[i])),
+                Uint8List.fromList(base64.decode(controlForm.lightsR.target!.headLightsImages.toList()[i])),
                   fileOptions: const FileOptions(
                     cacheControl: '3600',
                     upsert: false,
@@ -687,7 +687,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsR.target!.brakeLightsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.brakeLightsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsR.target!.brakeLightsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -713,7 +713,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsR.target!.reverseLightsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.reverseLightsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsR.target!.reverseLightsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -739,7 +739,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsR.target!.warningLightsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.warningLightsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsR.target!.warningLightsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -765,7 +765,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsR.target!.turnSignalsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.turnSignalsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsR.target!.turnSignalsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -791,7 +791,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsR.target!.fourWayFlashersNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.fourWayFlashersImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsR.target!.fourWayFlashersImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -817,7 +817,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsR.target!.dashLightsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.dashLightsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsR.target!.dashLightsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -843,7 +843,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsR.target!.strobeLightsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.strobeLightsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsR.target!.strobeLightsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -869,7 +869,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsR.target!.cabRoofLightsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.cabRoofLightsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsR.target!.cabRoofLightsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -895,7 +895,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsR.target!.clearanceLightsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsR.target!.clearanceLightsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsR.target!.clearanceLightsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -960,7 +960,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.wiperBladesFrontNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.wiperBladesFrontImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkR.target!.wiperBladesFrontImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -986,7 +986,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.wiperBladesBackNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.wiperBladesBackImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkR.target!.wiperBladesBackImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1012,7 +1012,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.windshieldWiperFrontNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.windshieldWiperFrontImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkR.target!.windshieldWiperFrontImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1038,7 +1038,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.windshieldWiperBackNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.windshieldWiperBackImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkR.target!.windshieldWiperBackImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1064,7 +1064,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.generalBodyNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.generalBodyImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkR.target!.generalBodyImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1090,7 +1090,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.decalingNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.decalingImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkR.target!.decalingImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1116,7 +1116,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.tiresNames.toList()[i])) {
                 final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.tiresNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.tiresImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkR.target!.tiresImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1142,7 +1142,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.glassNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.glassImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkR.target!.glassImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1168,7 +1168,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.mirrorsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.mirrorsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkR.target!.mirrorsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1194,7 +1194,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.parkingNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.parkingImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkR.target!.parkingImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1220,7 +1220,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.brakesNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.brakesImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkR.target!.brakesImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1246,7 +1246,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.emgBrakesNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.emgBrakesImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkR.target!.emgBrakesImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1272,7 +1272,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.hornNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkR.target!.hornImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkR.target!.hornImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1346,7 +1346,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
               controlForm.fluidsCheckR.target!.engineOilNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckR.target!.engineOilImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.fluidsCheckR.target!.engineOilImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1372,7 +1372,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
               controlForm.fluidsCheckR.target!.transmissionNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckR.target!.transmissionImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.fluidsCheckR.target!.transmissionImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1398,7 +1398,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
               controlForm.fluidsCheckR.target!.coolantNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckR.target!.coolantImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.fluidsCheckR.target!.coolantImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1424,7 +1424,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
                 final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
                 controlForm.fluidsCheckR.target!.powerSteeringNames.toList()[i],
-                Uint8List.fromList(utf8.encode(controlForm.fluidsCheckR.target!.powerSteeringImages.toList()[i])),
+                Uint8List.fromList(base64.decode(controlForm.fluidsCheckR.target!.powerSteeringImages.toList()[i])),
                   fileOptions: const FileOptions(
                     cacheControl: '3600',
                     upsert: false,
@@ -1450,7 +1450,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
               controlForm.fluidsCheckR.target!.dieselExhaustFluidNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckR.target!.dieselExhaustFluidImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.fluidsCheckR.target!.dieselExhaustFluidImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1476,7 +1476,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
               controlForm.fluidsCheckR.target!.windshieldWasherFluidNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckR.target!.windshieldWasherFluidImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.fluidsCheckR.target!.windshieldWasherFluidImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1529,7 +1529,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('bucket-inspection').uploadBinary(
               controlForm.bucketInspectionR.target!.insulatedNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.bucketInspectionR.target!.insulatedImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.bucketInspectionR.target!.insulatedImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1555,7 +1555,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('bucket-inspection').uploadBinary(
               controlForm.bucketInspectionR.target!.holesDrilledNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.bucketInspectionR.target!.holesDrilledImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.bucketInspectionR.target!.holesDrilledImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1581,7 +1581,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('bucket-inspection').uploadBinary(
               controlForm.bucketInspectionR.target!.bucketLinerNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.bucketInspectionR.target!.bucketLinerImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.bucketInspectionR.target!.bucketLinerImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1625,7 +1625,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('security').uploadBinary(
               controlForm.securityR.target!.rtaMagnetNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.securityR.target!.rtaMagnetImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.securityR.target!.rtaMagnetImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1651,7 +1651,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('security').uploadBinary(
               controlForm.securityR.target!.triangleReflectorsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.securityR.target!.triangleReflectorsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.securityR.target!.triangleReflectorsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1677,7 +1677,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('security').uploadBinary(
               controlForm.securityR.target!.wheelChocksNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.securityR.target!.wheelChocksImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.securityR.target!.wheelChocksImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1703,7 +1703,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('security').uploadBinary(
               controlForm.securityR.target!.fireExtinguisherNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.securityR.target!.fireExtinguisherImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.securityR.target!.fireExtinguisherImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1729,7 +1729,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('security').uploadBinary(
               controlForm.securityR.target!.firstAidKitSafetyVestNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.securityR.target!.firstAidKitSafetyVestImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.securityR.target!.firstAidKitSafetyVestImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1755,7 +1755,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('security').uploadBinary(
               controlForm.securityR.target!.backUpAlarmNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.securityR.target!.backUpAlarmImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.securityR.target!.backUpAlarmImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1808,7 +1808,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraR.target!.ladderNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.ladderImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraR.target!.ladderImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1834,7 +1834,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraR.target!.stepLadderNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.stepLadderImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraR.target!.stepLadderImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1860,7 +1860,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraR.target!.ladderStrapsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.ladderStrapsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraR.target!.ladderStrapsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1886,7 +1886,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraR.target!.hydraulicFluidForBucketNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.hydraulicFluidForBucketImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraR.target!.hydraulicFluidForBucketImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1912,7 +1912,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraR.target!.fiberReelRackNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.fiberReelRackImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraR.target!.fiberReelRackImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1938,7 +1938,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraR.target!.binsLockedAndSecureNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.binsLockedAndSecureImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraR.target!.binsLockedAndSecureImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1964,7 +1964,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraR.target!.safetyHarnessNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.safetyHarnessImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraR.target!.safetyHarnessImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -1990,7 +1990,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraR.target!.lanyardSafetyHarnessNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraR.target!.lanyardSafetyHarnessImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraR.target!.lanyardSafetyHarnessImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2049,7 +2049,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('equipment').uploadBinary(
               controlForm.equipmentR.target!.ignitionKeyNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.equipmentR.target!.ignitionKeyImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.equipmentR.target!.ignitionKeyImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2075,7 +2075,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('equipment').uploadBinary(
               controlForm.equipmentR.target!.binsBoxKeyNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.equipmentR.target!.binsBoxKeyImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.equipmentR.target!.binsBoxKeyImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2101,7 +2101,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('equipment').uploadBinary(
               controlForm.equipmentR.target!.vehicleInsuranceCopyNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.equipmentR.target!.vehicleInsuranceCopyImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.equipmentR.target!.vehicleInsuranceCopyImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2127,7 +2127,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('equipment').uploadBinary(
               controlForm.equipmentR.target!.vehicleRegistrationCopyNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.equipmentR.target!.vehicleRegistrationCopyImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.equipmentR.target!.vehicleRegistrationCopyImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2153,7 +2153,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('equipment').uploadBinary(
               controlForm.equipmentR.target!.bucketLiftOperatorManualNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.equipmentR.target!.bucketLiftOperatorManualImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.equipmentR.target!.bucketLiftOperatorManualImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2363,7 +2363,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               //Parsear a Uint8List
                 final storageResponse = await supabase.storage.from('measures').uploadBinary(
                 controlForm.measuresD.target!.gasNames.toList()[i],
-                Uint8List.fromList(utf8.encode(controlForm.measuresD.target!.gasImages.toList()[i])),
+                Uint8List.fromList(base64.decode(controlForm.measuresD.target!.gasImages.toList()[i])),
                   fileOptions: const FileOptions(
                     cacheControl: '3600',
                     upsert: false,
@@ -2389,7 +2389,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
                 final storageResponse = await supabase.storage.from('measures').uploadBinary(
                 controlForm.measuresD.target!.mileageNames.toList()[i],
-                Uint8List.fromList(utf8.encode(controlForm.measuresD.target!.mileageImages.toList()[i])),
+                Uint8List.fromList(base64.decode(controlForm.measuresD.target!.mileageImages.toList()[i])),
                   fileOptions: const FileOptions(
                     cacheControl: '3600',
                     upsert: false,
@@ -2430,7 +2430,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
                 final storageResponse = await supabase.storage.from('lights').uploadBinary(
                 controlForm.lightsD.target!.headLightsNames.toList()[i],
-                Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.headLightsImages.toList()[i])),
+                Uint8List.fromList(base64.decode(controlForm.lightsD.target!.headLightsImages.toList()[i])),
                   fileOptions: const FileOptions(
                     cacheControl: '3600',
                     upsert: false,
@@ -2456,7 +2456,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsD.target!.brakeLightsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.brakeLightsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsD.target!.brakeLightsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2482,7 +2482,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsD.target!.reverseLightsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.reverseLightsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsD.target!.reverseLightsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2508,7 +2508,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsD.target!.warningLightsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.warningLightsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsD.target!.warningLightsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2534,7 +2534,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsD.target!.turnSignalsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.turnSignalsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsD.target!.turnSignalsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2560,7 +2560,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsD.target!.fourWayFlashersNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.fourWayFlashersImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsD.target!.fourWayFlashersImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2585,7 +2585,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsD.target!.dashLightsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.dashLightsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsD.target!.dashLightsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2607,7 +2607,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsD.target!.strobeLightsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.strobeLightsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsD.target!.strobeLightsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2633,7 +2633,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsD.target!.cabRoofLightsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.cabRoofLightsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsD.target!.cabRoofLightsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2659,7 +2659,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('lights').uploadBinary(
               controlForm.lightsD.target!.clearanceLightsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.lightsD.target!.clearanceLightsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.lightsD.target!.clearanceLightsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2724,7 +2724,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.wiperBladesFrontNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.wiperBladesFrontImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkD.target!.wiperBladesFrontImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2750,7 +2750,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.wiperBladesBackNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.wiperBladesBackImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkD.target!.wiperBladesBackImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2776,7 +2776,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.windshieldWiperFrontNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.windshieldWiperFrontImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkD.target!.windshieldWiperFrontImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2802,7 +2802,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.windshieldWiperBackNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.windshieldWiperBackImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkD.target!.windshieldWiperBackImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2828,7 +2828,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.generalBodyNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.generalBodyImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkD.target!.generalBodyImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2854,7 +2854,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.decalingNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.decalingImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkD.target!.decalingImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2880,7 +2880,7 @@ class SyncProviderSupabase extends ChangeNotifier {
               if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.tiresNames.toList()[i])) {
                 final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.tiresNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.tiresImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkD.target!.tiresImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2906,7 +2906,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.glassNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.glassImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkD.target!.glassImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2932,7 +2932,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.mirrorsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.mirrorsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkD.target!.mirrorsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2958,7 +2958,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.parkingNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.parkingImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkD.target!.parkingImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -2984,7 +2984,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.brakesNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.brakesImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkD.target!.brakesImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3010,7 +3010,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.emgBrakesNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.emgBrakesImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkD.target!.emgBrakesImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3036,7 +3036,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.hornNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.carBodyworkD.target!.hornImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.carBodyworkD.target!.hornImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3110,7 +3110,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
               controlForm.fluidsCheckD.target!.engineOilNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckD.target!.engineOilImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.fluidsCheckD.target!.engineOilImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3136,7 +3136,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
               controlForm.fluidsCheckD.target!.transmissionNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckD.target!.transmissionImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.fluidsCheckD.target!.transmissionImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3162,7 +3162,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
               controlForm.fluidsCheckD.target!.coolantNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckD.target!.coolantImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.fluidsCheckD.target!.coolantImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3188,7 +3188,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
                 final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
                 controlForm.fluidsCheckD.target!.powerSteeringNames.toList()[i],
-                Uint8List.fromList(utf8.encode(controlForm.fluidsCheckD.target!.powerSteeringImages.toList()[i])),
+                Uint8List.fromList(base64.decode(controlForm.fluidsCheckD.target!.powerSteeringImages.toList()[i])),
                   fileOptions: const FileOptions(
                     cacheControl: '3600',
                     upsert: false,
@@ -3214,7 +3214,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
               controlForm.fluidsCheckD.target!.dieselExhaustFluidNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckD.target!.dieselExhaustFluidImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.fluidsCheckD.target!.dieselExhaustFluidImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3240,7 +3240,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('fluids-check').uploadBinary(
               controlForm.fluidsCheckD.target!.windshieldWasherFluidNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.fluidsCheckD.target!.windshieldWasherFluidImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.fluidsCheckD.target!.windshieldWasherFluidImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3293,7 +3293,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('bucket-inspection').uploadBinary(
               controlForm.bucketInspectionD.target!.insulatedNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.bucketInspectionD.target!.insulatedImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.bucketInspectionD.target!.insulatedImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3319,7 +3319,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('bucket-inspection').uploadBinary(
               controlForm.bucketInspectionD.target!.holesDrilledNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.bucketInspectionD.target!.holesDrilledImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.bucketInspectionD.target!.holesDrilledImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3345,7 +3345,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('bucket-inspection').uploadBinary(
               controlForm.bucketInspectionD.target!.bucketLinerNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.bucketInspectionD.target!.bucketLinerImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.bucketInspectionD.target!.bucketLinerImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3389,7 +3389,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('security').uploadBinary(
               controlForm.securityD.target!.rtaMagnetNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.securityD.target!.rtaMagnetImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.securityD.target!.rtaMagnetImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3415,7 +3415,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('security').uploadBinary(
               controlForm.securityD.target!.triangleReflectorsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.securityD.target!.triangleReflectorsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.securityD.target!.triangleReflectorsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3441,7 +3441,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('security').uploadBinary(
               controlForm.securityD.target!.wheelChocksNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.securityD.target!.wheelChocksImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.securityD.target!.wheelChocksImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3467,7 +3467,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('security').uploadBinary(
               controlForm.securityD.target!.fireExtinguisherNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.securityD.target!.fireExtinguisherImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.securityD.target!.fireExtinguisherImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3493,7 +3493,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('security').uploadBinary(
               controlForm.securityD.target!.firstAidKitSafetyVestNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.securityD.target!.firstAidKitSafetyVestImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.securityD.target!.firstAidKitSafetyVestImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3519,7 +3519,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('security').uploadBinary(
               controlForm.securityD.target!.backUpAlarmNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.securityD.target!.backUpAlarmImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.securityD.target!.backUpAlarmImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3572,7 +3572,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraD.target!.ladderNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.ladderImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraD.target!.ladderImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3598,7 +3598,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraD.target!.stepLadderNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.stepLadderImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraD.target!.stepLadderImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3624,7 +3624,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraD.target!.ladderStrapsNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.ladderStrapsImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraD.target!.ladderStrapsImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3650,7 +3650,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraD.target!.hydraulicFluidForBucketNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.hydraulicFluidForBucketImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraD.target!.hydraulicFluidForBucketImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3676,7 +3676,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraD.target!.fiberReelRackNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.fiberReelRackImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraD.target!.fiberReelRackImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3702,7 +3702,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraD.target!.binsLockedAndSecureNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.binsLockedAndSecureImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraD.target!.binsLockedAndSecureImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3728,7 +3728,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraD.target!.safetyHarnessNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.safetyHarnessImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraD.target!.safetyHarnessImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3754,7 +3754,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('extras').uploadBinary(
               controlForm.extraD.target!.lanyardSafetyHarnessNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.extraD.target!.lanyardSafetyHarnessImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.extraD.target!.lanyardSafetyHarnessImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3813,7 +3813,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('equipment').uploadBinary(
               controlForm.equipmentD.target!.ignitionKeyNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.equipmentD.target!.ignitionKeyImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.equipmentD.target!.ignitionKeyImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3839,7 +3839,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('equipment').uploadBinary(
               controlForm.equipmentD.target!.binsBoxKeyNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.equipmentD.target!.binsBoxKeyImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.equipmentD.target!.binsBoxKeyImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3865,7 +3865,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('equipment').uploadBinary(
               controlForm.equipmentD.target!.vehicleInsuranceCopyNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.equipmentD.target!.vehicleInsuranceCopyImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.equipmentD.target!.vehicleInsuranceCopyImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3891,7 +3891,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('equipment').uploadBinary(
               controlForm.equipmentD.target!.vehicleRegistrationCopyNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.equipmentD.target!.vehicleRegistrationCopyImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.equipmentD.target!.vehicleRegistrationCopyImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
@@ -3917,7 +3917,7 @@ class SyncProviderSupabase extends ChangeNotifier {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('equipment').uploadBinary(
               controlForm.equipmentD.target!.bucketLiftOperatorManualNames.toList()[i],
-              Uint8List.fromList(utf8.encode(controlForm.equipmentD.target!.bucketLiftOperatorManualImages.toList()[i])),
+              Uint8List.fromList(base64.decode(controlForm.equipmentD.target!.bucketLiftOperatorManualImages.toList()[i])),
                 fileOptions: const FileOptions(
                   cacheControl: '3600',
                   upsert: false,
