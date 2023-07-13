@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:uuid/uuid.dart';
 
 class UsuarioController extends ChangeNotifier {
   List<Users> usuarios = [];
@@ -26,7 +25,6 @@ class UsuarioController extends ChangeNotifier {
   List<ControlForm> thirdForrmCheckIn = [];
 
   
-  var uuid = Uuid();
 
   Users? usuarioCurrent;
   //Usuario
@@ -116,11 +114,11 @@ class UsuarioController extends ChangeNotifier {
         recordsMonthThirdD: formsThirdMonthD,
         );
     if (imagenUrl != null) {
-      final uInt8ListImagen = await supabase.storage.from('assets/user_profile').download(
-        imagenUrl.toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/user_profile/", ""));
+      final name = imagenUrl.toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/user_profile/", "");
+      final uInt8ListImagen = await supabase.storage.from('assets/user_profile').download(name);
       final base64Image = const Base64Encoder().convert(uInt8ListImagen);
       final tempDir = await getTemporaryDirectory();
-      File file = await File('${tempDir.path}/${uuid.v1()}.jpg').create();
+      File file = await File('${tempDir.path}/$name').create();
       file.writeAsBytesSync(uInt8ListImagen);
       nuevoUsuario.image = base64Image;
       nuevoUsuario.path = file.path;
@@ -211,11 +209,11 @@ class UsuarioController extends ChangeNotifier {
         updateUsuario.vehicle.target = null;
       }
       if (newImagenUrl != null) {
-          final uInt8ListImagen = await supabase.storage.from('assets/user_profile').download(
-            newImagenUrl.toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/user_profile/", ""));
+          final name = newImagenUrl.toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/user_profile/", "");
+          final uInt8ListImagen = await supabase.storage.from('assets/user_profile').download(name);
           final base64Image = const Base64Encoder().convert(uInt8ListImagen);
           final tempDir = await getTemporaryDirectory();
-          File file = await File('${tempDir.path}/${uuid.v1()}.jpg').create();
+          File file = await File('${tempDir.path}/$name').create();
           file.writeAsBytesSync(uInt8ListImagen);
           updateUsuario.image = base64Image;
           updateUsuario.path = file.path;

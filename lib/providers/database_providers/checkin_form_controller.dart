@@ -9,6 +9,7 @@ import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
+import 'package:uuid/uuid.dart';
 
 class CheckInFormController extends ChangeNotifier {
 
@@ -34,6 +35,7 @@ class CheckInFormController extends ChangeNotifier {
   String mileage = ""; 
   bool isMileageRegistered = false;
   int pendingMeasures = 2;
+  Uuid uuid = Uuid();
 
   //Reports
   String headLights = "Good";
@@ -1794,7 +1796,7 @@ class CheckInFormController extends ChangeNotifier {
   List<String> getListNames(List<ImageEvidence> imagesEvidence) {
     List<String> listNames = [];
     for (var elementImage in imagesEvidence) {
-        listNames.add(elementImage.name);
+        listNames.add("${uuid.v4()}${elementImage.name}");
       }
     return listNames;
   }

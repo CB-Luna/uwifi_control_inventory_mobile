@@ -12,7 +12,6 @@ import 'package:taller_alex_app_asesor/modelsSupabase/get_roles_supabase.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:taller_alex_app_asesor/modelsSupabase/get_usuario_supabase.dart';
 import 'package:taller_alex_app_asesor/modelsSupabase/get_vehicle_supabase.dart';
-import 'package:uuid/uuid.dart';
 import '../objectbox.g.dart';
 import '../screens/clientes/flutter_flow_util_local.dart';
 
@@ -28,7 +27,6 @@ class RolesSupabaseProvider extends ChangeNotifier {
   List<dynamic>? recordsMonthCurrentD;
   List<dynamic>? recordsMonthSecondD;
   List<dynamic>? recordsMonthThirdD;
-  var uuid = Uuid();
 
   void procesoCargando(bool boleano) {
     procesocargando = boleano;
@@ -297,13 +295,12 @@ class RolesSupabaseProvider extends ChangeNotifier {
             //Se valida que el nuevo vehicle aún no existe en Objectbox
             final vehicleExistente = dataBase.vehicleBox.query(Vehicle_.idDBR.equals(element['id_vehicle'].toString())).build().findUnique();
             if (vehicleExistente == null) {
-              final uInt8ListImagen = await supabase.storage.from('assets/Vehicles').download(
-                element['image'].toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/Vehicles/", ""));
+              final name = element['image'].toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/Vehicles/", "");
+              final uInt8ListImagen = await supabase.storage.from('assets/Vehicles').download(name);
               final base64Image = const Base64Encoder().convert(uInt8ListImagen);
               final tempDir = await getTemporaryDirectory();
               File file = await File(
-                '${tempDir.path}/${uuid.v1()}.png')
-              .create();
+                '${tempDir.path}/$name').create();
               file.writeAsBytesSync(uInt8ListImagen);
 
               final newVehicle = Vehicle(
@@ -424,12 +421,12 @@ class RolesSupabaseProvider extends ChangeNotifier {
               dataBase.vehicleBox.put(newVehicle);
             } else {
                 //Se actualiza el registro en Objectbox
-                final uInt8ListImagen = await supabase.storage.from('assets/Vehicles').download(
-                element['image'].toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/Vehicles/", ""));
+                final name = element['image'].toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/Vehicles/", "");
+                final uInt8ListImagen = await supabase.storage.from('assets/Vehicles').download(name);
                 final base64Image = const Base64Encoder().convert(uInt8ListImagen);
                 final tempDir = await getTemporaryDirectory();
                 File file = await File(
-                  '${tempDir.path}/${uuid.v1()}.png')
+                  '${tempDir.path}/$name')
                 .create();
                 file.writeAsBytesSync(uInt8ListImagen);
 
