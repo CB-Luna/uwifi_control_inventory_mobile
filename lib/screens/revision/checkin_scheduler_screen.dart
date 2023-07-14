@@ -5,13 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badge;
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/checkin_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/vehiculo_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
-import 'package:taller_alex_app_asesor/screens/report/report_email_screen.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/menu_form_button.dart';
 import 'package:taller_alex_app_asesor/screens/revision/control_form_d_created.dart';
 import 'package:taller_alex_app_asesor/screens/revision/control_form_d_not_created.dart';
@@ -193,11 +193,19 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                                   ),
                                 );
                               } else {
+                                if (!await checkInFormProvider.sendEmail("${userProvider.usuarioCurrent?.name} ${userProvider.usuarioCurrent?.lastName}")) {
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "The email wasn't send successfully."),
+                                  ));
+                                }
+                                // ignore: use_build_context_synchronously
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const ReportEmailScreen(form: false,),
+                                        const ControlFormDCreatedScreen(),
                                   ),
                                 );
                               }

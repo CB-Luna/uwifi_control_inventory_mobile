@@ -2315,23 +2315,32 @@ class CheckInFormController extends ChangeNotifier {
     }
   }
 
-  // Future<bool> sendEmail() async {
-    // final smtpServer = gmail(from.text, password.text);
-    
-    // final message = Message()
-    //   ..from = Address(from.text, 'Tu Nombre')
-    //   ..recipients.add(to.text) // Reemplaza con la dirección de correo del destinatario
-    //   ..subject = subject.text
-    //   ..text = body.text;
-
-    // try {
-    //   final sendReport = await send(message, smtpServer);
-    //   print('Correo enviado: ${sendReport.toString()}');
-    //   return true;
-    // } catch (e) {
-    //   print('Error al enviar el correo: $e');
-    //   return false;
-    // }
-//  }
+  Future<bool> sendEmail(String nameUserSender) async {
+    var urlAutomatizacion =
+        Uri.parse("https://supa43.rtatel.com/notifications/api");
+    final headers = ({
+      "Content-Type": "application/json",
+    });
+    var responseAutomatizacion = await post(urlAutomatizacion,
+        headers: headers,
+        body: jsonEncode({
+          "action": "rtaMail",
+          "template": "Issues_Form_Notification_RTA_CV",
+          "subject": "Issues_Form_Notification_RTA_CV",
+          "mailto": "vini.gar@gmail.com",
+          "variables": [
+            {"name": "nameUserSender", "value": nameUserSender},
+            {"name": "typeForm", "value": "Check In Form"},
+            {"name": "issuesList","value": "Issues in: ${issues.join(", ")}"}
+          ]
+        }));
+    if (responseAutomatizacion.statusCode == 200) {
+      print("Proceso exitoso");
+      return true;
+    } else {
+      print(responseAutomatizacion.body);
+      return false;
+    }
+ }
 
 }
