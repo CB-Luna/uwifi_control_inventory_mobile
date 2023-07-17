@@ -1803,7 +1803,8 @@ class CheckInFormController extends ChangeNotifier {
   
   bool addControlForm(Users? user, DateTime dateAddedD) {
     try {
-      final controlForm = dataBase.controlFormBox.query(ControlForm_.today.equals(true)).build().findUnique(); //Se recupera el control Form
+      //TODO:Ver cómo se debe recuperar el form de hoy
+      final controlForm = dataBase.controlFormBox.query(ControlForm_.today.equals(true)).build().findFirst(); //Se recupera el control Form
       if (controlForm != null) {
         Measures measures = Measures(
           gas: gasDieselString, 
