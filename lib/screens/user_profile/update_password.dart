@@ -364,6 +364,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                     ),
                                 obscureText: !contrasenaNuevaVisibility,
                                 decoration: InputDecoration(
+                                  errorMaxLines: 3,
                                   labelText: 'New Password',
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
@@ -472,6 +473,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                     ),
                                 obscureText: !contrasenaConfirmarVisibility,
                                 decoration: InputDecoration(
+                                  errorMaxLines: 3,
                                   labelText: 'Confirm Password',
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .bodyText1

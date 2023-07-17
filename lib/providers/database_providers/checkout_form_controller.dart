@@ -2328,7 +2328,7 @@ class CheckOutFormController extends ChangeNotifier {
           "action": "rtaMail",
           "template": "Issues_Form_Notification_RTA_CV",
           "subject": "Issues_Form_Notification_RTA_CV",
-          "mailto": "vini.gar@gmail.com",
+          "mailto": "control.rta@cbluna.com",
           "variables": [
             {"name": "nameUserSender", "value": nameUserSender},
             {"name": "typeForm", "value": "Check Out Form"},

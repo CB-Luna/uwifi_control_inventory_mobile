@@ -199,6 +199,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                           checkInFormProvider.updateMileage(value);
                                         },
                                         decoration: InputDecoration(
+                                          errorMaxLines: 3,
                                           prefixIcon: Icon(
                                             Icons.speed_outlined,
                                             color: FlutterFlowTheme.of(context).alternate,
