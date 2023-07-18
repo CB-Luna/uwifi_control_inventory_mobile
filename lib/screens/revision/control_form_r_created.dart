@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/checkout_form_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
 
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
@@ -16,6 +20,8 @@ class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
+    final userProvider = Provider.of<UsuarioController>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -74,6 +80,14 @@ class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
                           const EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
+                          if (!await checkOutFormProvider.sendEmail("${userProvider.usuarioCurrent?.name} ${userProvider.usuarioCurrent?.lastName}")) {
+                            snackbarKey.currentState
+                                ?.showSnackBar(const SnackBar(
+                              content: Text(
+                                  "The email wasn't send successfully."),
+                            ));
+                          }
+                          if (!mounted) return;
                           await Navigator.push(
                             context,
                             MaterialPageRoute(

@@ -11,6 +11,7 @@ import 'package:semicircle_indicator/semicircle_indicator.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/checkout_form_controller.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
@@ -128,7 +129,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  final mileageInt = int.parse(checkOutProvider.mileage != "" ? checkOutProvider.mileage : "0");
+                                  final mileageInt = int.parse(checkOutProvider.mileage != "" ? checkOutProvider.mileage.replaceAll(",", "") : "0");
                                   if (mileageInt != 0) {
                                     if (mileageInt < userController.usuarioCurrent!.vehicle.target!.mileage) {
                                       checkOutProvider.updateMileage("");
@@ -250,12 +251,13 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                         ),
                                         style: FlutterFlowTheme.of(context).bodyText1,
                                         textAlign: TextAlign.start,
+                                        inputFormatters: [numbersFormat],
                                         keyboardType: const TextInputType.numberWithOptions(decimal: false),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
                                               return 'The Mileage is required.';
                                             } 
-                                          if (int.parse(value) < userController.usuarioCurrent!.vehicle.target!.mileage) {
+                                          if (int.parse(value.replaceAll(",", "")) < userController.usuarioCurrent!.vehicle.target!.mileage) {
                                             return "The value can't be lower than '${userController.usuarioCurrent!.vehicle.target!.mileage}' Mi.";
                                           }
                                           return null;
@@ -686,7 +688,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                                       child: GestureDetector(
                                         onTap: () {
-                                          final mileageInt = int.parse(checkOutProvider.mileage != "" ? checkOutProvider.mileage : "0");
+                                          final mileageInt = int.parse(checkOutProvider.mileage != "" ? checkOutProvider.mileage.replaceAll(",", "") : "0");
                                           if (checkOutProvider.validateKeyForm(keyForm)) {
                                             //Se valida para ruleOilChange
                                             if (userController.usuarioCurrent!.vehicle.target?.ruleOilChange.target?.registered == "False") {

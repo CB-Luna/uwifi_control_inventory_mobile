@@ -1,3 +1,4 @@
+import 'package:clay_containers/clay_containers.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
@@ -285,80 +286,223 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                     itemCount: syncProviderSupabase.instruccionesFallidas.length,
                                                     itemBuilder: (context, index) {
                                                       final error = syncProviderSupabase.instruccionesFallidas[index];
-                                                      return Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(15, 10, 15, 0),
-                                                        child: Container(
-                                                          width: double.infinity,
-                                                          height: 100,
-                                                          decoration: BoxDecoration(
-                                                            color:
-                                                                const Color(0xFF1F68CB),
-                                                            boxShadow: const [
-                                                              BoxShadow(
-                                                                blurRadius: 4,
-                                                                color:
-                                                                    Color(0x32000000),
-                                                                offset: Offset(0, 2),
-                                                              )
-                                                            ],
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    8),
-                                                          ),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize.max,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                        16, 0, 16, 5),
-                                                                child: Text(
-                                                                  'Action: ${error.instruccion}',
-                                                                  maxLines: 2,
-                                                                  style: AppTheme.of(
-                                                                          context)
-                                                                      .bodyText2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Poppins',
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize: 13,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .normal,
+                                                      return InkWell(
+                                                        onTap: () async {
+                                                          await showDialog(
+                                                            barrierDismissible: false,
+                                                            context: context,
+                                                            builder: (BuildContext context) {
+                                                              return AlertDialog(
+                                                                title: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      width: MediaQuery.of(context).size.width * 0.5,
+                                                                      child: const Text("Error's Detail"),
+                                                                    ),
+                                                                    GestureDetector(
+                                                                      onTap: () {
+                                                                        Navigator.pop(context);
+                                                                      },
+                                                                      child: ClayContainer(
+                                                                        height: 30,
+                                                                        width: 30,
+                                                                        depth: 15,
+                                                                        spread: 1,
+                                                                        borderRadius: 15,
+                                                                        curveType: CurveType.concave,
+                                                                        color:
+                                                                        AppTheme.of(context).secondaryColor,
+                                                                        surfaceColor:
+                                                                        AppTheme.of(context).secondaryColor,
+                                                                        parentColor:
+                                                                        AppTheme.of(context).secondaryColor,
+                                                                        child: Container(
+                                                                          decoration: BoxDecoration(
+                                                                            borderRadius: BorderRadius.circular(25),
+                                                                          ),
+                                                                          child: Icon(
+                                                                            Icons.close,
+                                                                            color: AppTheme.of(context).gray600,
+                                                                            size: 30,
+                                                                          ),
+                                                                        ),
                                                                       ),
-                                                                  textAlign: TextAlign.center,
+                                                                    )
+                                                                  ],
                                                                 ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                        16, 0, 16, 0),
-                                                                child: Text(
-                                                                  'Date: ${dateTimeFormat('dd-MM-y hh:mm:ss', error.fecha)}',
-                                                                  maxLines: 1,
-                                                                  style: AppTheme.of(
-                                                                          context)
-                                                                      .bodyText2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Poppins',
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize: 13,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .normal,
-                                                                      ),
+                                                                content: SizedBox( // Need to use container to add size constraint.
+                                                                  width: MediaQuery.of(context).size.width,
+                                                                  height: MediaQuery.of(context).size.height * 0.45,
+                                                                  child: SingleChildScrollView(
+                                                                    controller: ScrollController(),
+                                                                    child: Column(
+                                                                      children: [
+                                                                        SizedBox(
+                                                                          width: MediaQuery.of(context).size.width,
+                                                                          child: Padding(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                5, 0, 5, 20),
+                                                                            child: Row(
+                                                                              children: [
+                                                                                Text(
+                                                                                  'Date: ',
+                                                                                  style: AppTheme.of(
+                                                                                      context)
+                                                                                  .bodyText2
+                                                                                  .override(
+                                                                                    fontFamily:
+                                                                                        'Poppins',
+                                                                                    color: AppTheme.of(context).black600,
+                                                                                    fontSize: 15,
+                                                                                    fontWeight:
+                                                                                        FontWeight
+                                                                                            .bold,
+                                                                                  ),
+                                                                                ),
+                                                                                Text(
+                                                                                  dateTimeFormat('dd-MM-y hh:mm:ss', error.fecha),
+                                                                                  style: AppTheme.of(
+                                                                                      context)
+                                                                                  .bodyText2
+                                                                                  .override(
+                                                                                    fontFamily:
+                                                                                        'Poppins',
+                                                                                    color: AppTheme.of(context).black600,
+                                                                                    fontSize: 15,
+                                                                                    fontWeight:
+                                                                                        FontWeight
+                                                                                            .normal,
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width: MediaQuery.of(context).size.width,
+                                                                          child: Padding(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                5, 0, 5, 20),
+                                                                            child: Row(
+                                                                              children: [
+                                                                                Text(
+                                                                                  'Action: ',
+                                                                                  style: AppTheme.of(
+                                                                                      context)
+                                                                                  .bodyText2
+                                                                                  .override(
+                                                                                    fontFamily:
+                                                                                        'Poppins',
+                                                                                    color: AppTheme.of(context).black600,
+                                                                                    fontSize: 15,
+                                                                                    fontWeight:
+                                                                                        FontWeight
+                                                                                            .bold,
+                                                                                  ),
+                                                                                ),
+                                                                                Text(
+                                                                                  error.instruccion,
+                                                                                  style: AppTheme.of(
+                                                                                      context)
+                                                                                  .bodyText2
+                                                                                  .override(
+                                                                                    fontFamily:
+                                                                                        'Poppins',
+                                                                                    color: AppTheme.of(context).black600,
+                                                                                    fontSize: 15,
+                                                                                    fontWeight:
+                                                                                        FontWeight
+                                                                                            .normal,
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(15, 10, 15, 0),
+                                                          child: Container(
+                                                            width: double.infinity,
+                                                            height: 100,
+                                                            decoration: BoxDecoration(
+                                                              color:
+                                                                  const Color(0xFF1F68CB),
+                                                              boxShadow: const [
+                                                                BoxShadow(
+                                                                  blurRadius: 4,
+                                                                  color:
+                                                                      Color(0x32000000),
+                                                                  offset: Offset(0, 2),
+                                                                )
+                                                              ],
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                      8),
+                                                            ),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize.max,
+                                                              children: [
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                              .fromSTEB(
+                                                                          16, 0, 16, 5),
+                                                                  child: Text(
+                                                                    'Action: ${error.instruccion}',
+                                                                    maxLines: 2,
+                                                                    style: AppTheme.of(
+                                                                            context)
+                                                                        .bodyText2
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Poppins',
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize: 13,
+                                                                          fontWeight:
+                                                                              FontWeight
+                                                                                  .normal,
+                                                                        ),
+                                                                    textAlign: TextAlign.center,
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                              .fromSTEB(
+                                                                          16, 0, 16, 0),
+                                                                  child: Text(
+                                                                    'Date: ${dateTimeFormat('dd-MM-y hh:mm:ss', error.fecha)}',
+                                                                    maxLines: 1,
+                                                                    style: AppTheme.of(
+                                                                            context)
+                                                                        .bodyText2
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Poppins',
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize: 13,
+                                                                          fontWeight:
+                                                                              FontWeight
+                                                                                  .normal,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
                                                           ),
                                                         ),
                                                       );

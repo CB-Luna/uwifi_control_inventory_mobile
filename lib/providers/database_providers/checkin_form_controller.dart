@@ -1812,7 +1812,7 @@ class CheckInFormController extends ChangeNotifier {
           gasImages: getListImages(gasImages), 
           gasPath: getListPath(gasImages), 
           gasNames: getListNames(gasImages),
-          mileage: int.parse(mileage), 
+          mileage: int.parse(mileage.replaceAll(",", "")), 
           mileageComments: mileageComments.text,
           mileageImages: getListImages(mileageImages),
           mileagePath: getListPath(mileageImages),
@@ -2147,7 +2147,7 @@ class CheckInFormController extends ChangeNotifier {
           if (flagOilChange) {
           final vehicleService = VehicleServices(
             completed: false, 
-            mileageRemaining: int.parse(vehicle.ruleOilChange.target!.value) - (int.parse(mileage) - vehicle.ruleOilChange.target!.lastMileageService),
+            mileageRemaining: int.parse(vehicle.ruleOilChange.target!.value) - (int.parse(mileage.replaceAll(",", "")) - vehicle.ruleOilChange.target!.lastMileageService),
           );
           final service = dataBase.serviceBox.query(Service_.service.equals("Oil Change")).build().findUnique();
           vehicleService.service.target = service;
@@ -2174,7 +2174,7 @@ class CheckInFormController extends ChangeNotifier {
               final service = dataBase.serviceBox.query(Service_.service.equals("Oil Change")).build().findUnique();
               final serviceVehicle = dataBase.vehicleServicesBox.query(VehicleServices_.vehicle.equals(vehicle.id).and(VehicleServices_.service.equals(service?.id ?? 0)).and(VehicleServices_.completed.equals(false))).build().findFirst();
               if (serviceVehicle != null) {
-                serviceVehicle.mileageRemaining = int.parse(vehicle.ruleOilChange.target!.value) - (int.parse(mileage) - vehicle.ruleOilChange.target!.lastMileageService);
+                serviceVehicle.mileageRemaining = int.parse(vehicle.ruleOilChange.target!.value) - (int.parse(mileage.replaceAll(",", "")) - vehicle.ruleOilChange.target!.lastMileageService);
                 dataBase.vehicleServicesBox.put(serviceVehicle);
 
                 final nuevaInstruccion = Bitacora(
@@ -2193,7 +2193,7 @@ class CheckInFormController extends ChangeNotifier {
         if (flagTransmissionFluidChange) {
           final vehicleService = VehicleServices(
             completed: false, 
-            mileageRemaining: int.parse(vehicle.ruleTransmissionFluidChange.target!.value) - (int.parse(mileage) - vehicle.ruleTransmissionFluidChange.target!.lastMileageService),
+            mileageRemaining: int.parse(vehicle.ruleTransmissionFluidChange.target!.value) - (int.parse(mileage.replaceAll(",", "")) - vehicle.ruleTransmissionFluidChange.target!.lastMileageService),
           );
           final service = dataBase.serviceBox.query(Service_.service.equals("Transmission Fluid Change")).build().findUnique();
           vehicleService.service.target = service;
@@ -2220,7 +2220,7 @@ class CheckInFormController extends ChangeNotifier {
               final service = dataBase.serviceBox.query(Service_.service.equals("Transmission Fluid Change")).build().findUnique();
               final serviceVehicle = dataBase.vehicleServicesBox.query(VehicleServices_.vehicle.equals(vehicle.id).and(VehicleServices_.service.equals(service?.id ?? 0)).and(VehicleServices_.completed.equals(false))).build().findFirst();
               if (serviceVehicle != null) {
-                serviceVehicle.mileageRemaining = int.parse(vehicle.ruleTransmissionFluidChange.target!.value) - (int.parse(mileage) - vehicle.ruleTransmissionFluidChange.target!.lastMileageService);
+                serviceVehicle.mileageRemaining = int.parse(vehicle.ruleTransmissionFluidChange.target!.value) - (int.parse(mileage.replaceAll(",", "")) - vehicle.ruleTransmissionFluidChange.target!.lastMileageService);
                 dataBase.vehicleServicesBox.put(serviceVehicle);
 
                 final nuevaInstruccion = Bitacora(
@@ -2239,7 +2239,7 @@ class CheckInFormController extends ChangeNotifier {
         if (flagRadiatorFluidChange) {
           final vehicleService = VehicleServices(
             completed: false, 
-            mileageRemaining: int.parse(vehicle.ruleRadiatorFluidChange.target!.value) - (int.parse(mileage) - vehicle.ruleRadiatorFluidChange.target!.lastMileageService),
+            mileageRemaining: int.parse(vehicle.ruleRadiatorFluidChange.target!.value) - (int.parse(mileage.replaceAll(",", "")) - vehicle.ruleRadiatorFluidChange.target!.lastMileageService),
           );
           final service = dataBase.serviceBox.query(Service_.service.equals("Radiator Fluid Change")).build().findUnique();
           vehicleService.service.target = service;
@@ -2266,7 +2266,7 @@ class CheckInFormController extends ChangeNotifier {
               final service = dataBase.serviceBox.query(Service_.service.equals("Radiator Fluid Change")).build().findUnique();
               final serviceVehicle = dataBase.vehicleServicesBox.query(VehicleServices_.vehicle.equals(vehicle.id).and(VehicleServices_.service.equals(service?.id ?? 0)).and(VehicleServices_.completed.equals(false))).build().findFirst();
               if (serviceVehicle != null) {
-                serviceVehicle.mileageRemaining = int.parse(vehicle.ruleRadiatorFluidChange.target!.value) - (int.parse(mileage) - vehicle.ruleRadiatorFluidChange.target!.lastMileageService);
+                serviceVehicle.mileageRemaining = int.parse(vehicle.ruleRadiatorFluidChange.target!.value) - (int.parse(mileage.replaceAll(",", "")) - vehicle.ruleRadiatorFluidChange.target!.lastMileageService);
                 dataBase.vehicleServicesBox.put(serviceVehicle);
 
                 final nuevaInstruccion = Bitacora(
@@ -2283,7 +2283,7 @@ class CheckInFormController extends ChangeNotifier {
         }
 
           //Se actualiza el mileage del vehicle
-          vehicle.mileage = int.parse(mileage);
+          vehicle.mileage = int.parse(mileage.replaceAll(",", ""));
           dataBase.vehicleBox.put(vehicle);
 
           //Se actualiza el Control Form

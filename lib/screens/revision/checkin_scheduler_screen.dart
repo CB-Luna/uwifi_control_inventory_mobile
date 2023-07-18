@@ -184,7 +184,6 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                               // checkInFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
                               if (checkInFormProvider.issues.isEmpty) {
-                                controlFormProvider.cleanData();
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -193,14 +192,6 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                                   ),
                                 );
                               } else {
-                                if (!await checkInFormProvider.sendEmail("${userProvider.usuarioCurrent?.name} ${userProvider.usuarioCurrent?.lastName}")) {
-                                  snackbarKey.currentState
-                                      ?.showSnackBar(const SnackBar(
-                                    content: Text(
-                                        "The email wasn't send successfully."),
-                                  ));
-                                }
-                                // ignore: use_build_context_synchronously
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(

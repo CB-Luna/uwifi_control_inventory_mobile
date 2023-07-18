@@ -192,14 +192,6 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                                   ),
                                 );
                               } else {
-                                if (!await checkOutFormProvider.sendEmail("${userProvider.usuarioCurrent?.name} ${userProvider.usuarioCurrent?.lastName}")) {
-                                  snackbarKey.currentState
-                                      ?.showSnackBar(const SnackBar(
-                                    content: Text(
-                                        "The email wasn't send successfully."),
-                                  ));
-                                }
-                                // ignore: use_build_context_synchronously
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
