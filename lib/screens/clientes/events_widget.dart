@@ -1,7 +1,5 @@
-import '/flutter_flow/flutter_flow_theme.dart';
 import 'custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'events_model.dart';
 import 'flutter_flow_util_local.dart';

@@ -1,6 +1,3 @@
-
-import 'package:taller_alex_app_asesor/database/entitys.dart';
-
 class VehiculoTemporal {
     final String marca;
     final String modelo;

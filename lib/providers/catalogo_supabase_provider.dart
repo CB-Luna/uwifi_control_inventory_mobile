@@ -1,10 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
-import 'package:taller_alex_app_asesor/database/entitys.dart';
 
 import 'package:uuid/uuid.dart';
 import '../objectbox.g.dart';

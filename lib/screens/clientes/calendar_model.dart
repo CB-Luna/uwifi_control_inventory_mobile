@@ -3,7 +3,6 @@ import 'package:taller_alex_app_asesor/screens/clientes/events_widget.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/flutter_flow_model.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/now_line_widget.dart';
 import 'package:taller_alex_app_asesor/screens/clientes/week_days_widget.dart';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class CalendarModel extends FlutterFlowModel {

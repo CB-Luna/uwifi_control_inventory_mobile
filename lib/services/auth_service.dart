@@ -1,16 +1,7 @@
 import 'dart:convert';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/main.dart';
-import 'package:taller_alex_app_asesor/modelsEmiWeb/get_token_emi_web.dart';
-import 'package:taller_alex_app_asesor/modelsPocketbase/get_imagen_usuario.dart';
-import 'package:taller_alex_app_asesor/modelsPocketbase/login_response.dart';
 import 'package:taller_alex_app_asesor/modelsSupabase/get_usuario_supabase.dart';
 import 'package:taller_alex_app_asesor/modelsSupabase/response_login_supabase.dart';
-import 'package:taller_alex_app_asesor/objectbox.g.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 // https://www.djamware.com/post/618d094c5b9095915c5621c6/flutter-tutorial-login-role-and-permissions
 // https://mundanecode.com/posts/flutter-restapi-login/
@@ -49,7 +40,7 @@ abstract class AuthService {
 
       if (res[0] != null) {
         final userProfile = res[0];
-        final userProfileString = jsonEncode(userProfile).toString();
+        // final userProfileString = jsonEncode(userProfile).toString();
         userProfile['id'] = user.id;
         userProfile['email'] = user.email!;
         //Existen datos del Usuario en Supabase

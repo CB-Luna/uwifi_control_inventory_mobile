@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 
 @Entity()
 class ControlForm {

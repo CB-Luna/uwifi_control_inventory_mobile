@@ -10,7 +10,6 @@ import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:http/http.dart';
-import 'package:taller_alex_app_asesor/objectbox.g.dart';
 import 'package:taller_alex_app_asesor/util/util.dart';
 
 class SyncProviderSupabase extends ChangeNotifier {

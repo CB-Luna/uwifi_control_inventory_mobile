@@ -46,7 +46,7 @@ class DeepLinkBloc extends Bloc {
     try {
       return await getInitialUri();
     } on PlatformException catch (e) {
-      //print("Failed to Invoke: '${e.message}'.");
+      print("Failed to Invoke: '${e.message}'.");
       return null;
     } on FormatException catch (_) {
       //print("Malformed initial Uri.");

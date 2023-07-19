@@ -1,6 +1,4 @@
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/helpers/process_encryption.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/providers/user_provider.dart';
 import 'package:taller_alex_app_asesor/screens/user_profile/password_not_updated_screen.dart';
