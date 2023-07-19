@@ -332,14 +332,14 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                                   ],
                                                                 ),
                                                                 content: SizedBox( // Need to use container to add size constraint.
-                                                                  width: MediaQuery.of(context).size.width,
+                                                                  width: MediaQuery.of(context).size.width * 0.8,
                                                                   height: MediaQuery.of(context).size.height * 0.45,
                                                                   child: SingleChildScrollView(
                                                                     controller: ScrollController(),
                                                                     child: Column(
                                                                       children: [
                                                                         SizedBox(
-                                                                          width: MediaQuery.of(context).size.width,
+                                                                          width: MediaQuery.of(context).size.width * 0.8,
                                                                           child: Padding(
                                                                             padding: const EdgeInsetsDirectional.fromSTEB(
                                                                                 5, 0, 5, 20),
@@ -369,7 +369,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                                                     fontFamily:
                                                                                         'Poppins',
                                                                                     color: AppTheme.of(context).black600,
-                                                                                    fontSize: 15,
+                                                                                    fontSize: 13,
                                                                                     fontWeight:
                                                                                         FontWeight
                                                                                             .normal,
@@ -380,14 +380,14 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                                           ),
                                                                         ),
                                                                         SizedBox(
-                                                                          width: MediaQuery.of(context).size.width,
+                                                                          width: MediaQuery.of(context).size.width * 0.8,
                                                                           child: Padding(
                                                                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                5, 0, 5, 20),
+                                                                                5, 0, 5, 5),
                                                                             child: Row(
                                                                               children: [
                                                                                 Text(
-                                                                                  'Action: ',
+                                                                                  'Actionsss: ',
                                                                                   style: AppTheme.of(
                                                                                       context)
                                                                                   .bodyText2
@@ -401,6 +401,18 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                                                             .bold,
                                                                                   ),
                                                                                 ),
+                                                                                
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width: MediaQuery.of(context).size.width * 0.8,
+                                                                          child: Padding(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                5, 0, 5, 20),
+                                                                            child: Row(
+                                                                              children: [
                                                                                 Text(
                                                                                   error.instruccion,
                                                                                   style: AppTheme.of(
@@ -410,7 +422,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                                                     fontFamily:
                                                                                         'Poppins',
                                                                                     color: AppTheme.of(context).black600,
-                                                                                    fontSize: 15,
+                                                                                    fontSize: 13,
                                                                                     fontWeight:
                                                                                         FontWeight
                                                                                             .normal,
