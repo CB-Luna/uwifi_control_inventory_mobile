@@ -554,7 +554,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         SizedBox(
-                                          width: MediaQuery.of(context).size.width * 0.6,
+                                          width: MediaQuery.of(context).size.width * 0.5,
                                           child: Row(
                                             children: [
                                               Padding(
@@ -742,7 +742,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         SizedBox(
-                                          width: MediaQuery.of(context).size.width * 0.6,
+                                          width: MediaQuery.of(context).size.width * 0.5,
                                           child: Row(
                                             children: [
                                               Padding(
@@ -1074,7 +1074,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                 position: badge.BadgePosition.topEnd(),
                                 child: ClayContainer(
                                   height: 30,
-                                  width: MediaQuery.of(context).size.width * 0.5,
+                                  width: MediaQuery.of(context).size.width * 0.6,
                                   depth: 10,
                                   spread: 1,
                                   borderRadius: 25,
@@ -1159,7 +1159,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                               "Service: ${data.service.target?.service}", 
                                               style: TextStyle(
                                                 color: FlutterFlowTheme.of(context).white,
-                                                fontSize: 15.0,
+                                                fontSize: 13.0,
                                                 fontWeight: FontWeight.bold),
                                             ),
                                             Text(
@@ -1172,7 +1172,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                               "Over Mileage: ${data.mileageRemaining?.abs()} Mi", 
                                               style: TextStyle(
                                                 color: FlutterFlowTheme.of(context).white,
-                                                fontSize: 15.0,
+                                                fontSize: 13.0,
                                                 fontWeight: FontWeight.bold),
                                             ),
                                           ],
@@ -1304,7 +1304,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                     color: FlutterFlowTheme
                                                             .of(context)
                                                         .primaryBackground,
-                                                    fontSize: 18.0,
+                                                    fontSize: 16.0,
                                                     fontWeight:
                                                         FontWeight.bold,
                                                   ),
@@ -1332,7 +1332,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                     color: FlutterFlowTheme
                                                             .of(context)
                                                         .primaryBackground,
-                                                    fontSize: 18.0,
+                                                    fontSize: 16.0,
                                                     fontWeight:
                                                         FontWeight.bold,
                                                   ),
@@ -1360,7 +1360,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                     color: FlutterFlowTheme
                                                             .of(context)
                                                         .primaryBackground,
-                                                    fontSize: 18.0,
+                                                    fontSize: 16.0,
                                                     fontWeight:
                                                         FontWeight.bold,
                                                   ),
