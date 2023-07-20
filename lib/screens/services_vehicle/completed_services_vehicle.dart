@@ -1,4 +1,4 @@
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
@@ -305,17 +305,18 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
                       onTap: () async {
-                        await DatePicker.showDatePicker(
-                          context,
-                          locale: LocaleType.en,
-                          showTitleActions: true,
-                          onConfirm: (date) {
+                        await showDatePicker(
+                          context: context,
+                          initialDate: getCurrentTimestamp,
+                          selectableDayPredicate: (date) {
                             setState(() {
                               vehiculoController.updateCompletedDate(date);
                             });
+                            return true;
                           },
-                          currentTime: getCurrentTimestamp,
-                          minTime: widget.vehicleServices.serviceDate ?? DateTime.now()
+                          currentDate: getCurrentTimestamp,
+                          firstDate: widget.vehicleServices.serviceDate ?? DateTime.now(),
+                          lastDate: widget.vehicleServices.serviceDate ?? DateTime.now(),
                         );
                       },
                       obscureText: false,

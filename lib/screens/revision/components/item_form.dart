@@ -9,7 +9,6 @@ import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_imagenes_completas.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/drop_down.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_carousel.dart';
@@ -52,7 +51,7 @@ class ItemForm extends StatefulWidget {
 }
 
 class _ItemFormState extends State<ItemForm> {
-  List<XFile> imagesTemp = [];
+  List<ImageEvidence> imagesTemp = [];
   final animationsMap = {
     'moveLoadAnimationLR': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -364,7 +363,7 @@ class _ItemFormState extends State<ItemForm> {
                                     final picker = ImagePicker();
                                     // imagesTemp = [];
                                     XFile? pickedFile;
-                                    List<XFile>? pickedFiles;
+                                    Uint8List? compressImage;
                                     if (option == 'camera') {
                                       if (widget.images.length <
                                           5) {
@@ -376,257 +375,165 @@ class _ItemFormState extends State<ItemForm> {
                                           imageQuality: 80,
                                         );
                                         if (pickedFile != null) {
-                                          imagesTemp.add(pickedFile);
-                                        }
-                                      } else {
-                                        bool? booleano =
-                                            // ignore: use_build_context_synchronously
-                                            await showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          backgroundColor:
-                                              Colors.transparent,
-                                          context: context,
-                                          builder: (context) {
-                                            return Padding(
-                                              padding:
-                                                  MediaQuery.of(context)
-                                                      .viewInsets,
-                                              child: SizedBox(
-                                                height:
-                                                    MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                        0.45,
-                                                child:
-                                                    const BottomSheetImagenesCompletas(),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                        if (booleano != null &&
-                                            booleano == true) {
-                                          pickedFile =
-                                              await picker.pickImage(
-                                            source: ImageSource.camera,
-                                            imageQuality: 80,
-                                          );
-                                          if (pickedFile != null) {
+                                          if (await pickedFile.length() >= 1000000) {
+                                            int quality = 70;
                                             libraryIO.File file =
                                             libraryIO.File(
                                                 pickedFile.path);
-                  
-                                            Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
-                                              file.absolute.path,
-                                              minWidth: 1920,
-                                              minHeight: 1080,
-                                              quality: 80,
-                                            );
-
-                                            if (compressImage != null) {
-                                              var updateImageEvidence =
+                                            do {
+                                              compressImage = await FlutterImageCompress.compressWithFile(
+                                                file.absolute.path,
+                                                minWidth: 1920,
+                                                minHeight: 1080,
+                                                quality: quality,
+                                              );
+                                              if (compressImage != null) {
+                                                if (compressImage.lengthInBytes >= 1000000) {
+                                                  quality -= 10;
+                                                } else {
+                                                  quality = 0;
+                                                }
+                                              } else {
+                                                snackbarKey.currentState
+                                                    ?.showSnackBar(
+                                                        const SnackBar(
+                                                  content: Text(
+                                                      "Failed to compress this picture."),
+                                                ));
+                                                return;
+                                              }
+                                            } while (quality > 0);
+                                            print("Tamaño nuevo: ${compressImage.lengthInBytes}");
+                                            var newImageEvidence =
                                                 ImageEvidence(
                                                     path:
-                                                        pickedFile.path,
+                                                        file.path,
                                                     uint8List: compressImage,
                                                     name: pickedFile.name);
                                                 state.setState(() {
-                                                widget.updateImage!(updateImageEvidence);
+                                                widget.addImage!(
+                                                newImageEvidence);
                                               });
-                                            }
+                                          } else {
+                                            libraryIO.File file =
+                                            libraryIO.File(
+                                                pickedFile.path);
+                                            var newImageEvidence =
+                                              ImageEvidence(
+                                                  path: file.path,
+                                                  uint8List: file.readAsBytesSync(),
+                                                  name: pickedFile.name);
+                                              state.setState(() {
+                                              widget.addImage!(
+                                              newImageEvidence);
+                                            });
                                           }
+                                        } else {
+                                          snackbarKey.currentState
+                                              ?.showSnackBar(
+                                                  const SnackBar(
+                                            content: Text(
+                                                "Failed to upload this Picture."),
+                                          ));
                                           return;
                                         }
+                                      } else {
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(
+                                                const SnackBar(
+                                          content: Text(
+                                              "Not allowed to upload more than 5 images."),
+                                        ));
+                                        return;
                                       }
                                     } else {
                                       //Se selecciona galería
                                       if (widget.images.length <
                                           5) {
-                                        pickedFiles =
-                                            await picker.pickMultiImage(
+                                        pickedFile =
+                                            await picker.pickImage(
+                                              source: ImageSource.gallery
                                         );
-                                        if (pickedFiles == null) {
-                                          return;
-                                        }
-                                        if (pickedFiles.length > 5) {
+                                        if (pickedFile != null) {
+                                          if (await pickedFile.length() >= 1000000) {
+                                            int quality = 70;
+                                            libraryIO.File file =
+                                            libraryIO.File(
+                                                pickedFile.path);
+                                            do {
+                                              compressImage = await FlutterImageCompress.compressWithFile(
+                                                file.absolute.path,
+                                                minWidth: 1920,
+                                                minHeight: 1080,
+                                                quality: quality,
+                                              );
+                                              if (compressImage != null) {
+                                                if (compressImage.lengthInBytes >= 1000000) {
+                                                  quality -= 10;
+                                                } else {
+                                                  quality = 0;
+                                                }
+                                              } else {
+                                                snackbarKey.currentState
+                                                    ?.showSnackBar(
+                                                        const SnackBar(
+                                                  content: Text(
+                                                      "Failed to compress this picture."),
+                                                ));
+                                                return;
+                                              }
+                                            } while (quality > 0);
+                                            print("Tamaño nuevo: ${compressImage.lengthInBytes}");
+                                            var newImageEvidence =
+                                                ImageEvidence(
+                                                    path:
+                                                        file.path,
+                                                    uint8List: compressImage,
+                                                    name: pickedFile.name);
+                                                state.setState(() {
+                                                widget.addImage!(
+                                                newImageEvidence);
+                                              });
+                                          } else {
+                                            libraryIO.File file =
+                                            libraryIO.File(
+                                                pickedFile.path);
+                                            var newImageEvidence =
+                                              ImageEvidence(
+                                                  path: file.path,
+                                                  uint8List: file.readAsBytesSync(),
+                                                  name: pickedFile.name);
+                                              state.setState(() {
+                                              widget.addImage!(
+                                              newImageEvidence);
+                                            });
+                                          }
+                                        } else {
                                           snackbarKey.currentState
                                               ?.showSnackBar(
                                                   const SnackBar(
                                             content: Text(
-                                                "Not allowed to upload more than 5 images."),
+                                                "Failed to upload this Image."),
                                           ));
                                           return;
                                         }
-                                        switch (widget.images.length) {
-                                          case 0:
-                                            for (int i = 0;
-                                                i < pickedFiles.length;
-                                                i++) {
-                                              imagesTemp
-                                                  .add(pickedFiles[i]);
-                                            }
-                                            break;
-                                          case 1:
-                                            if (pickedFiles.length <= 4) {
-                                              for (int i = 0;
-                                                  i < pickedFiles.length;
-                                                  i++) {
-                                                imagesTemp
-                                                    .add(pickedFiles[i]);
-                                              }
-                                            } else {
-                                              snackbarKey.currentState
-                                                  ?.showSnackBar(
-                                                      const SnackBar(
-                                                content: Text(
-                                                    "Not allowed to upload more than 5 images."),
-                                              ));
-                                              return;
-                                            }
-                                            break;
-                                          case 2:
-                                            if (pickedFiles.length <= 3) {
-                                              for (int i = 0;
-                                                  i < pickedFiles.length;
-                                                  i++) {
-                                                imagesTemp
-                                                    .add(pickedFiles[i]);
-                                              }
-                                            } else {
-                                              snackbarKey.currentState
-                                                  ?.showSnackBar(
-                                                      const SnackBar(
-                                                content: Text(
-                                                    "Not allowed to upload more than 5 images."),
-                                              ));
-                                              return;
-                                            }
-                                            break;
-                                          case 3:
-                                            if (pickedFiles.length <= 4) {
-                                              for (int i = 0;
-                                                  i < pickedFiles.length;
-                                                  i++) {
-                                                imagesTemp
-                                                    .add(pickedFiles[i]);
-                                              }
-                                            } else {
-                                              snackbarKey.currentState
-                                                  ?.showSnackBar(
-                                                      const SnackBar(
-                                                content: Text(
-                                                    "Not allowed to upload more than 5 images."),
-                                              ));
-                                              return;
-                                            }
-                                            break;
-                                          case 4:
-                                            if (pickedFiles.length <= 1) {
-                                              for (int i = 0;
-                                                  i < pickedFiles.length;
-                                                  i++) {
-                                                imagesTemp
-                                                    .add(pickedFiles[i]);
-                                              }
-                                            } else {
-                                              snackbarKey.currentState
-                                                  ?.showSnackBar(
-                                                      const SnackBar(
-                                                content: Text(
-                                                    "Not allowed to upload more than 5 images."),
-                                              ));
-                                              return;
-                                            }
-                                            break;
-                                          default:
-                                            break;
-                                        }
                                       } else {
-                                        bool? booleano =
-                                            // ignore: use_build_context_synchronously
-                                            await showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          backgroundColor:
-                                              Colors.transparent,
-                                          context: context,
-                                          builder: (context) {
-                                            return Padding(
-                                              padding:
-                                                  MediaQuery.of(context)
-                                                      .viewInsets,
-                                              child: SizedBox(
-                                                height:
-                                                    MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                        0.45,
-                                                child:
-                                                    const BottomSheetImagenesCompletas(),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                        if (booleano != null &&
-                                            booleano == true) {
-                                          pickedFile =
-                                              await picker.pickImage(
-                                            source: ImageSource.gallery,
-                                            imageQuality: 80,
-                  
-                                          );
-                                          if (pickedFile != null) {
-                                            libraryIO.File file =
-                                            libraryIO.File(
-                                                pickedFile.path);
-                  
-                                            Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
-                                              file.absolute.path,
-                                              minWidth: 1920,
-                                              minHeight: 1080,
-                                              quality: 80,
-                                            );
-
-                                            if (compressImage != null) {
-                                              var updateImageEvidence =
-                                                ImageEvidence(
-                                                    path:
-                                                        pickedFile.path,
-                                                    uint8List: compressImage,
-                                                    name: pickedFile.name);
-                                                state.setState(() {
-                                                widget.updateImage!(updateImageEvidence);
-                                              });
-                                            }
-                                          }
-                                          return;
-                                        }
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(
+                                                const SnackBar(
+                                          content: Text(
+                                              "Not allowed to upload more than 5 images."),
+                                        ));
+                                        return;
                                       }
                                     }
                                     for (var i = 0;
                                         i < imagesTemp.length;
                                         i++) {
-                                      libraryIO.File file =
-                                          libraryIO.File(
-                                              imagesTemp[i].path);
-
-                                      Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
-                                        file.absolute.path,
-                                        minWidth: 1920,
-                                        minHeight: 1080,
-                                        quality: 80,
-                                      );
-                  
-                                      if (compressImage != null) {
-                                        var newImagenEvidence =
-                                          ImageEvidence(
-                                              path:
-                                                  imagesTemp[i].path,
-                                              uint8List: compressImage,
-                                              name: imagesTemp[i].name);
                                           state.setState(() {
                                           widget.addImage!(
-                                          newImagenEvidence);
+                                          imagesTemp[i]);
                                         });
-                                      }
                                     }
                                     setState(() {
                                       imagesTemp.clear();
