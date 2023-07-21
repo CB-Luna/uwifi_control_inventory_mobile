@@ -2091,7 +2091,6 @@ class CheckOutFormController extends ChangeNotifier {
 
       final controlForm = ControlForm(
         issuesR: badStateLights + pendingMeasures + badStateSecurity + badStateEquipment,
-        today: true,
         dateAddedR: dateAddedR,
       );
       
@@ -2147,6 +2146,7 @@ class CheckOutFormController extends ChangeNotifier {
         final idControlForm = dataBase.controlFormBox.put(controlForm);
 
         //Employee
+        user.actualControlForm.target = controlForm;
         user.controlForms.add(controlForm);
         dataBase.usersBox.put(user);
 

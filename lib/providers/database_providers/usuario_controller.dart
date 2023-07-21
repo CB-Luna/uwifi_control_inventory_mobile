@@ -384,19 +384,13 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
   ControlForm? getControlFormCheckOutToday(DateTime today) {
     ControlForm? controlFormToday;
     final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
-    if (usuarioActual != null) {
-        for (var controlForm in dataBase.controlFormBox.getAll().toList()) {
-          if ((DateFormat('dd-MM-yyyy')
-              .format(controlForm.dateAddedR).toString() == 
-              DateFormat('dd-MM-yyyy')
-              .format(today).toString())) {
-            if (controlForm.employee.target?.idDBR == usuarioActual.idDBR && controlForm.vehicle.target?.idDBR == usuarioActual.vehicle.target?.idDBR) {
-              controlFormToday = controlForm;
-            } else {
-              print("No es igual");
-            }
-          }
-        }
+    if (usuarioActual?.actualControlForm.target != null) {
+      if ((DateFormat('dd-MM-yyyy')
+          .format(usuarioActual!.actualControlForm.target!.dateAddedR).toString() == 
+          DateFormat('dd-MM-yyyy')
+          .format(today).toString())) {
+        controlFormToday = usuarioActual.actualControlForm.target;
+      }
     }
     return controlFormToday;
   }
@@ -404,19 +398,13 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
   ControlForm? getControlFormCheckInToday(DateTime today) {
     ControlForm? controlFormToday;
     final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
-    if (usuarioActual != null) {
-        for (var controlForm in dataBase.controlFormBox.getAll().toList()) {
-          if (controlForm.dateAddedD != null) {
-            if ((DateFormat('dd-MM-yyyy')
-                .format(controlForm.dateAddedD!).toString() == 
-                DateFormat('dd-MM-yyyy')
-                .format(today).toString())) {
-              if (controlForm.employee.target?.idDBR == usuarioActual.idDBR && controlForm.vehicle.target?.idDBR == usuarioActual.vehicle.target?.idDBR) {
-                controlFormToday = controlForm;
-              }
-            }
-          }
-        }
+    if (usuarioActual?.actualControlForm.target?.dateAddedD != null) {
+        if ((DateFormat('dd-MM-yyyy')
+          .format(usuarioActual!.actualControlForm.target!.dateAddedD!).toString() == 
+          DateFormat('dd-MM-yyyy')
+          .format(today).toString())) {
+        controlFormToday = usuarioActual.actualControlForm.target;
+      }
     }
     return controlFormToday;
   }

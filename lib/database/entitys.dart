@@ -10,7 +10,6 @@ class ControlForm {
   String? idDBR;
   int issuesR;
   int? issuesD;
-  bool today;
   final employee = ToOne<Users>();
   final vehicle = ToOne<Vehicle>();
   final measuresR = ToOne<Measures>();
@@ -39,7 +38,6 @@ class ControlForm {
     DateTime? dateAddedR,
     this.dateAddedD,
     this.idDBR,
-    this.today = false,
   }) : dateAddedR = dateAddedR ?? DateTime.now();
 
   String get dateAddedFormat =>
@@ -1013,6 +1011,7 @@ class Users {
   final vehicle = ToOne<Vehicle>();
   @Backlink()
   final controlForms = ToMany<ControlForm>();
+  final actualControlForm = ToOne<ControlForm>();
   
   Users({
     this.id = 0,

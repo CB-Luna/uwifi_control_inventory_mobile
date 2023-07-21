@@ -356,11 +356,6 @@
           "flags": 520,
           "indexId": "450:5865551881169805159",
           "relationTarget": "Equipment"
-        },
-        {
-          "id": "38:7955731353673957890",
-          "name": "today",
-          "type": 1
         }
       ],
       "relations": []
@@ -2211,7 +2206,7 @@
     },
     {
       "id": "100:5432875809935853718",
-      "lastPropertyId": "24:1093451416090964878",
+      "lastPropertyId": "25:4419353457414857258",
       "name": "Users",
       "properties": [
         {
@@ -2340,6 +2335,14 @@
           "id": "24:1093451416090964878",
           "name": "recordsMonthThirdD",
           "type": 6
+        },
+        {
+          "id": "25:4419353457414857258",
+          "name": "actualControlFormId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "463:6620294353064759547",
+          "relationTarget": "ControlForm"
         }
       ],
       "relations": [
@@ -2492,7 +2495,7 @@
     }
   ],
   "lastEntityId": "105:5673404938280062340",
-  "lastIndexId": "462:7080116891369577106",
+  "lastIndexId": "463:6620294353064759547",
   "lastRelationId": "97:7907540417784017008",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
@@ -3828,7 +3831,8 @@
     3425954261967379427,
     757115653678008229,
     1740545826112459780,
-    731615765620021459
+    731615765620021459,
+    7955731353673957890
   ],
   "retiredRelationUids": [
     1226469011453769556,

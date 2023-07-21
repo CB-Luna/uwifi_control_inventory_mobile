@@ -418,6 +418,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     rolesSupabaseProvider.procesoCargando(true);
                                     rolesSupabaseProvider.procesoTerminado(false);
                                     rolesSupabaseProvider.procesoExitoso(false);
+                                    rolesSupabaseProvider.changeVehicleAssigned(false);
                                     String messageSupabase =
                                         await rolesSupabaseProvider.getRolesSupabase(getUsuarioSupabase);
                                     if (messageSupabase == "Okay") {

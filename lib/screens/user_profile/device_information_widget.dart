@@ -288,7 +288,7 @@ with TickerProviderStateMixin {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Model: ${snapshot.data!.model ?? ''}",
+                          "Model: ${snapshot.data?.model}",
                           style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
@@ -297,7 +297,7 @@ with TickerProviderStateMixin {
                               ),
                         ),
                         Text(
-                          "Manufacturer: ${snapshot.data!.manufacturer ?? ''}",
+                          "Manufacturer: ${snapshot.data?.manufacturer}",
                           style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
@@ -306,7 +306,7 @@ with TickerProviderStateMixin {
                               ),
                         ),
                         Text(
-                          "Brand: ${snapshot.data!.brand ?? ''}",
+                          "Brand: ${snapshot.data?.brand}",
                           style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
@@ -315,7 +315,7 @@ with TickerProviderStateMixin {
                               ),
                         ),
                         Text(
-                          "Device: ${snapshot.data!.device ?? ''}",
+                          "Device: ${snapshot.data?.device}",
                           style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),

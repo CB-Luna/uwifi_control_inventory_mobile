@@ -5,7 +5,6 @@ class CustomBottomDownloadInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return SafeArea(
       child: SizedBox(
         height: 280,

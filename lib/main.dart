@@ -54,7 +54,7 @@ void main() async {
     SystemUiMode.manual, 
     overlays: [SystemUiOverlay.top]);
   dataBase = await ObjectBoxDatabase.create();
-  GoogleFonts.config.allowRuntimeFetching = false;
+  GoogleFonts.config.allowRuntimeFetching = true;
   await initGlobals();
   runApp(
     MultiProvider(
@@ -137,17 +137,10 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _startTimeout() async {
 
-    Timer.periodic(Duration(seconds: 1), (timer) async {
+    Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (await isInternetConnection()) {
         final bitacora = dataBase.bitacoraBox.getAll().toList();
         if (bitacora.isNotEmpty) {
-          // //Agregar condición cuando se está sincronizando
-          // if (!syncSupabaseController.procesoterminado) {
-          //   print("Se hace la sincronización ");
-          //   // usuarioController.setStream(true);
-          // } else {
-          //   // usuarioController.setStream(false);
-          // }
           
           prefs.setBool("boolSyncData", true);
         } else {

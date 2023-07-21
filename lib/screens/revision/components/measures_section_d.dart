@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:semicircle_indicator/semicircle_indicator.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -52,8 +53,8 @@ final animationsMap = {
           curve: Curves.easeOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 1,
-          end: 1,
+          begin: const Offset(1, 1),
+          end: const Offset(1, 1),
         ),
       ],
     ),
@@ -78,8 +79,8 @@ final animationsMap = {
           curve: Curves.easeOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 1,
-          end: 1,
+          begin: const Offset(1, 1),
+          end: const Offset(1, 1),
         ),
       ],
     ),
@@ -255,7 +256,10 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                               return 'The Mileage is required.';
                                             } 
                                           if (int.parse(value.replaceAll(",", "")) < userController.usuarioCurrent!.vehicle.target!.mileage) {
-                                            return "The value can't be lower than '${userController.usuarioCurrent!.vehicle.target!.mileage}' Mi.";
+                                            return "The value can't be lower than '${
+                                              NumberFormat.decimalPattern().
+                                              format(userController.usuarioCurrent!
+                                              .vehicle.target!.mileage)}' Mi.";
                                           }
                                           return null;
                                         },

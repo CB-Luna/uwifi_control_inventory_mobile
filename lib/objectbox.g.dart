@@ -4,7 +4,7 @@
 // With a Dart package, run `dart run build_runner build`.
 // See also https://docs.objectbox.io/getting-started#generate-objectbox-code
 
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, depend_on_referenced_packages
 // coverage:ignore-file
 
 import 'dart:typed_data';
@@ -339,12 +339,7 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(450, 5865551881169805159),
-            relationTarget: 'Equipment'),
-        ModelProperty(
-            id: const IdUid(38, 7955731353673957890),
-            name: 'today',
-            type: 1,
-            flags: 0)
+            relationTarget: 'Equipment')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -2192,7 +2187,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(100, 5432875809935853718),
       name: 'Users',
-      lastPropertyId: const IdUid(24, 1093451416090964878),
+      lastPropertyId: const IdUid(25, 4419353457414857258),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2316,7 +2311,14 @@ final _entities = <ModelEntity>[
             id: const IdUid(24, 1093451416090964878),
             name: 'recordsMonthThirdD',
             type: 6,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(25, 4419353457414857258),
+            name: 'actualControlFormId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(463, 6620294353064759547),
+            relationTarget: 'ControlForm')
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -2491,7 +2493,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(105, 5673404938280062340),
-      lastIndexId: const IdUid(462, 7080116891369577106),
+      lastIndexId: const IdUid(463, 6620294353064759547),
       lastRelationId: const IdUid(97, 7907540417784017008),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -3825,7 +3827,8 @@ ModelDefinition getObjectBoxModel() {
         3425954261967379427,
         757115653678008229,
         1740545826112459780,
-        731615765620021459
+        731615765620021459,
+        7955731353673957890
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -4003,11 +4006,8 @@ ModelDefinition getObjectBoxModel() {
           object.rule.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 118, 0);
           object.rule.attach(store);
-          InternalToManyAccess.setRelInfo(
-              object.users,
-              store,
-              RelInfo<Users>.toManyBacklink(95, object.id),
-              store.box<Bitacora>());
+          InternalToManyAccess.setRelInfo<Bitacora>(object.users, store,
+              RelInfo<Users>.toManyBacklink(95, object.id));
           return object;
         }),
     ControlForm: EntityDefinition<ControlForm>(
@@ -4069,7 +4069,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(34, object.securityD.targetId);
           fbb.addInt64(35, object.extraD.targetId);
           fbb.addInt64(36, object.equipmentD.targetId);
-          fbb.addBool(37, object.today);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4090,9 +4089,7 @@ ModelDefinition getObjectBoxModel() {
                   ? null
                   : DateTime.fromMillisecondsSinceEpoch(dateAddedDValue),
               idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 10),
-              today: const fb.BoolReader()
-                  .vTableGet(buffer, rootOffset, 78, false));
+                  .vTableGetNullable(buffer, rootOffset, 10));
           object.employee.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           object.employee.attach(store);
@@ -4147,12 +4144,11 @@ ModelDefinition getObjectBoxModel() {
           object.equipmentD.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 76, 0);
           object.equipmentD.attach(store);
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<ControlForm>(
               object.bitacora,
               store,
-              RelInfo<Bitacora>.toOneBacklink(
-                  42, object.id, (Bitacora srcObject) => srcObject.controlForm),
-              store.box<ControlForm>());
+              RelInfo<Bitacora>.toOneBacklink(42, object.id,
+                  (Bitacora srcObject) => srcObject.controlForm));
           return object;
         }),
     CarBodywork: EntityDefinition<CarBodywork>(
@@ -4475,12 +4471,11 @@ ModelDefinition getObjectBoxModel() {
           object.controlForm.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 62, 0);
           object.controlForm.attach(store);
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<CarBodywork>(
               object.bitacora,
               store,
-              RelInfo<Bitacora>.toOneBacklink(
-                  45, object.id, (Bitacora srcObject) => srcObject.carBodywork),
-              store.box<CarBodywork>());
+              RelInfo<Bitacora>.toOneBacklink(45, object.id,
+                  (Bitacora srcObject) => srcObject.carBodywork));
           return object;
         }),
     Equipment: EntityDefinition<Equipment>(
@@ -4646,12 +4641,11 @@ ModelDefinition getObjectBoxModel() {
           object.controlForm.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
           object.controlForm.attach(store);
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<Equipment>(
               object.bitacora,
               store,
               RelInfo<Bitacora>.toOneBacklink(
-                  50, object.id, (Bitacora srcObject) => srcObject.equipment),
-              store.box<Equipment>());
+                  50, object.id, (Bitacora srcObject) => srcObject.equipment));
           return object;
         }),
     Extra: EntityDefinition<Extra>(
@@ -4884,12 +4878,11 @@ ModelDefinition getObjectBoxModel() {
           object.controlForm.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0);
           object.controlForm.attach(store);
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<Extra>(
               object.bitacora,
               store,
               RelInfo<Bitacora>.toOneBacklink(
-                  49, object.id, (Bitacora srcObject) => srcObject.extra),
-              store.box<Extra>());
+                  49, object.id, (Bitacora srcObject) => srcObject.extra));
           return object;
         }),
     FluidsCheck: EntityDefinition<FluidsCheck>(
@@ -5074,12 +5067,11 @@ ModelDefinition getObjectBoxModel() {
           object.controlForm.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
           object.controlForm.attach(store);
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<FluidsCheck>(
               object.bitacora,
               store,
-              RelInfo<Bitacora>.toOneBacklink(
-                  46, object.id, (Bitacora srcObject) => srcObject.fluidsCheck),
-              store.box<FluidsCheck>());
+              RelInfo<Bitacora>.toOneBacklink(46, object.id,
+                  (Bitacora srcObject) => srcObject.fluidsCheck));
           return object;
         }),
     Lights: EntityDefinition<Lights>(
@@ -5357,12 +5349,11 @@ ModelDefinition getObjectBoxModel() {
           object.controlForm.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0);
           object.controlForm.attach(store);
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<Lights>(
               object.bitacora,
               store,
               RelInfo<Bitacora>.toOneBacklink(
-                  44, object.id, (Bitacora srcObject) => srcObject.lights),
-              store.box<Lights>());
+                  44, object.id, (Bitacora srcObject) => srcObject.lights));
           return object;
         }),
     Measures: EntityDefinition<Measures>(
@@ -5442,12 +5433,11 @@ ModelDefinition getObjectBoxModel() {
           object.controlForm.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
           object.controlForm.attach(store);
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<Measures>(
               object.bitacora,
               store,
               RelInfo<Bitacora>.toOneBacklink(
-                  43, object.id, (Bitacora srcObject) => srcObject.measures),
-              store.box<Measures>());
+                  43, object.id, (Bitacora srcObject) => srcObject.measures));
           return object;
         }),
     Security: EntityDefinition<Security>(
@@ -5635,12 +5625,11 @@ ModelDefinition getObjectBoxModel() {
           object.controlForm.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
           object.controlForm.attach(store);
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<Security>(
               object.bitacora,
               store,
               RelInfo<Bitacora>.toOneBacklink(
-                  48, object.id, (Bitacora srcObject) => srcObject.security),
-              store.box<Security>());
+                  48, object.id, (Bitacora srcObject) => srcObject.security));
           return object;
         }),
     BucketInspection: EntityDefinition<BucketInspection>(
@@ -5752,12 +5741,11 @@ ModelDefinition getObjectBoxModel() {
           object.controlForm.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
           object.controlForm.attach(store);
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<BucketInspection>(
               object.bitacora,
               store,
               RelInfo<Bitacora>.toOneBacklink(51, object.id,
-                  (Bitacora srcObject) => srcObject.bucketInspection),
-              store.box<BucketInspection>());
+                  (Bitacora srcObject) => srcObject.bucketInspection));
           return object;
         }),
     Company: EntityDefinition<Company>(
@@ -5796,12 +5784,11 @@ ModelDefinition getObjectBoxModel() {
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 10));
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<Company>(
               object.bitacora,
               store,
               RelInfo<Bitacora>.toOneBacklink(
-                  53, object.id, (Bitacora srcObject) => srcObject.company),
-              store.box<Company>());
+                  53, object.id, (Bitacora srcObject) => srcObject.company));
           return object;
         }),
     Role: EntityDefinition<Role>(
@@ -5840,8 +5827,8 @@ ModelDefinition getObjectBoxModel() {
           object.bitacora.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           object.bitacora.attach(store);
-          InternalToManyAccess.setRelInfo(object.users, store,
-              RelInfo<Role>.toMany(94, object.id), store.box<Role>());
+          InternalToManyAccess.setRelInfo<Role>(
+              object.users, store, RelInfo<Role>.toMany(94, object.id));
           return object;
         }),
     Status: EntityDefinition<Status>(
@@ -5880,12 +5867,11 @@ ModelDefinition getObjectBoxModel() {
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 10));
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<Status>(
               object.bitacora,
               store,
               RelInfo<Bitacora>.toOneBacklink(
-                  52, object.id, (Bitacora srcObject) => srcObject.status),
-              store.box<Status>());
+                  52, object.id, (Bitacora srcObject) => srcObject.status));
           return object;
         }),
     Vehicle: EntityDefinition<Vehicle>(
@@ -5999,24 +5985,26 @@ ModelDefinition getObjectBoxModel() {
           object.ruleRadiatorFluidChange.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 54, 0);
           object.ruleRadiatorFluidChange.attach(store);
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<Vehicle>(
               object.bitacora,
               store,
               RelInfo<Bitacora>.toOneBacklink(
-                  54, object.id, (Bitacora srcObject) => srcObject.vehicle),
-              store.box<Vehicle>());
-          InternalToManyAccess.setRelInfo(
+                  54, object.id, (Bitacora srcObject) => srcObject.vehicle));
+          InternalToManyAccess.setRelInfo<Vehicle>(
               object.vehicleServices,
               store,
               RelInfo<VehicleServices>.toOneBacklink(6, object.id,
-                  (VehicleServices srcObject) => srcObject.vehicle),
-              store.box<Vehicle>());
+                  (VehicleServices srcObject) => srcObject.vehicle));
           return object;
         }),
     Users: EntityDefinition<Users>(
         model: _entities[14],
-        toOneRelations: (Users object) =>
-            [object.role, object.company, object.vehicle],
+        toOneRelations: (Users object) => [
+              object.role,
+              object.company,
+              object.vehicle,
+              object.actualControlForm
+            ],
         toManyRelations: (Users object) => {
               RelInfo<Users>.toMany(95, object.id): object.bitacora,
               RelInfo<Users>.toMany(96, object.id): object.roles,
@@ -6047,7 +6035,7 @@ ModelDefinition getObjectBoxModel() {
           final pathOffset =
               object.path == null ? null : fbb.writeString(object.path!);
           final idDBROffset = fbb.writeString(object.idDBR);
-          fbb.startTable(25);
+          fbb.startTable(26);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nameOffset);
           fbb.addOffset(2, lastNameOffset);
@@ -6071,6 +6059,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(21, object.recordsMonthCurrentD);
           fbb.addInt64(22, object.recordsMonthSecondD);
           fbb.addInt64(23, object.recordsMonthThirdD);
+          fbb.addInt64(24, object.actualControlForm.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -6116,16 +6105,18 @@ ModelDefinition getObjectBoxModel() {
           object.vehicle.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0);
           object.vehicle.attach(store);
-          InternalToManyAccess.setRelInfo(object.bitacora, store,
-              RelInfo<Users>.toMany(95, object.id), store.box<Users>());
-          InternalToManyAccess.setRelInfo(object.roles, store,
-              RelInfo<Users>.toMany(96, object.id), store.box<Users>());
-          InternalToManyAccess.setRelInfo(
+          object.actualControlForm.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 52, 0);
+          object.actualControlForm.attach(store);
+          InternalToManyAccess.setRelInfo<Users>(
+              object.bitacora, store, RelInfo<Users>.toMany(95, object.id));
+          InternalToManyAccess.setRelInfo<Users>(
+              object.roles, store, RelInfo<Users>.toMany(96, object.id));
+          InternalToManyAccess.setRelInfo<Users>(
               object.controlForms,
               store,
               RelInfo<ControlForm>.toOneBacklink(
-                  5, object.id, (ControlForm srcObject) => srcObject.employee),
-              store.box<Users>());
+                  5, object.id, (ControlForm srcObject) => srcObject.employee));
           return object;
         }),
     Service: EntityDefinition<Service>(
@@ -6168,12 +6159,11 @@ ModelDefinition getObjectBoxModel() {
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 12));
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<Service>(
               object.bitacora,
               store,
               RelInfo<Bitacora>.toOneBacklink(
-                  56, object.id, (Bitacora srcObject) => srcObject.service),
-              store.box<Service>());
+                  56, object.id, (Bitacora srcObject) => srcObject.service));
           return object;
         }),
     VehicleServices: EntityDefinition<VehicleServices>(
@@ -6228,12 +6218,11 @@ ModelDefinition getObjectBoxModel() {
           object.service.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
           object.service.attach(store);
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<VehicleServices>(
               object.bitacora,
               store,
               RelInfo<Bitacora>.toOneBacklink(57, object.id,
-                  (Bitacora srcObject) => srcObject.vehicleService),
-              store.box<VehicleServices>());
+                  (Bitacora srcObject) => srcObject.vehicleService));
           return object;
         }),
     Rule: EntityDefinition<Rule>(
@@ -6278,12 +6267,11 @@ ModelDefinition getObjectBoxModel() {
           object.vehicle.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
           object.vehicle.attach(store);
-          InternalToManyAccess.setRelInfo(
+          InternalToManyAccess.setRelInfo<Rule>(
               object.bitacora,
               store,
               RelInfo<Bitacora>.toOneBacklink(
-                  58, object.id, (Bitacora srcObject) => srcObject.rule),
-              store.box<Rule>());
+                  58, object.id, (Bitacora srcObject) => srcObject.rule));
           return object;
         })
   };
@@ -6485,10 +6473,6 @@ class ControlForm_ {
   /// see [ControlForm.equipmentD]
   static final equipmentD =
       QueryRelationToOne<ControlForm, Equipment>(_entities[1].properties[23]);
-
-  /// see [ControlForm.today]
-  static final today =
-      QueryBooleanProperty<ControlForm>(_entities[1].properties[24]);
 }
 
 /// [CarBodywork] entity fields to define ObjectBox queries.
@@ -7926,6 +7910,10 @@ class Users_ {
   /// see [Users.recordsMonthThirdD]
   static final recordsMonthThirdD =
       QueryIntegerProperty<Users>(_entities[14].properties[22]);
+
+  /// see [Users.actualControlForm]
+  static final actualControlForm =
+      QueryRelationToOne<Users, ControlForm>(_entities[14].properties[23]);
 
   /// see [Users.bitacora]
   static final bitacora =

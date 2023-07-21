@@ -52,8 +52,8 @@ final animationsMap = {
           curve: Curves.easeOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 1,
-          end: 1,
+          begin: const Offset(1, 1),
+          end: const Offset(1, 1),
         ),
       ],
     ),
@@ -78,8 +78,8 @@ final animationsMap = {
           curve: Curves.easeOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 1,
-          end: 1,
+          begin: const Offset(1, 1),
+          end: const Offset(1, 1),
         ),
       ],
     ),
@@ -355,9 +355,11 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
                       showBadge: checkOutFormProvider.pendingMeasures != 0,
-                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
-                      elevation: 4,
+                      badgeStyle: badge.BadgeStyle(
+                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                        elevation: 4,
+                      ),
                       child: MenuFormButton(
                         icon: Icons.speed_outlined, 
                         onPressed: () {
@@ -372,9 +374,11 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
                       showBadge: checkOutFormProvider.badStateLights != 0,
-                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
-                      elevation: 4,
+                      badgeStyle: badge.BadgeStyle(
+                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                        elevation: 4,
+                      ),
                       child: MenuFormButton(
                         icon: Icons.flare, 
                         onPressed: () {
@@ -389,9 +393,11 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
                       showBadge: checkOutFormProvider.badStateSecurity != 0,
-                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
-                      elevation: 4,
+                      badgeStyle: badge.BadgeStyle(
+                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                        elevation: 4,
+                      ),
                       child: MenuFormButton(
                         icon: Icons.health_and_safety, 
                         onPressed: () {
@@ -406,9 +412,11 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
                       showBadge: checkOutFormProvider.badStateEquipment != 0,
-                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
-                      elevation: 4,
+                      badgeStyle: badge.BadgeStyle(
+                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                        elevation: 4,
+                      ),
                       child: MenuFormButton(
                         icon: Icons.build, 
                         onPressed: () {

@@ -48,10 +48,6 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
     final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
     final checkInFormProvider = Provider.of<CheckInFormController>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    // usuarioProvider.recoverPreviousControlForms(DateTime.now());
-    // usuarioProvider.getUser(prefs.getString("userId") ?? "");
-    // controlFormCheckOut = usuarioProvider.getControlFormCheckOutToday(DateTime.now());
-    // controlFormCheckIn = usuarioProvider.getControlFormCheckInToday(DateTime.now());
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -92,10 +88,10 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
                                     MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Icon(
                                     Icons.menu_rounded,
-                                    color: Colors.white,
+                                    color: FlutterFlowTheme.of(context).white,
                                     size: 28,
                                   ),
                                 ],
@@ -296,8 +292,10 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 style: TextStyle(
                                                     color: FlutterFlowTheme.of(context).white)),
                                             showBadge: controlFormCheckOut == null,
-                                            badgeColor: FlutterFlowTheme.of(context).secondaryColor,
                                             position: badge.BadgePosition.bottomEnd(),
+                                            badgeStyle: badge.BadgeStyle(
+                                              badgeColor: FlutterFlowTheme.of(context).secondaryColor,
+                                            ),
                                             child: ClayContainer(
                                               height: 30,
                                               width: 30,
@@ -465,8 +463,10 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 style: TextStyle(
                                                     color: FlutterFlowTheme.of(context).white)),
                                             showBadge: controlFormCheckIn == null,
-                                            badgeColor: FlutterFlowTheme.of(context).secondaryColor,
                                             position: badge.BadgePosition.bottomEnd(),
+                                            badgeStyle: badge.BadgeStyle(
+                                              badgeColor: FlutterFlowTheme.of(context).secondaryColor,
+                                            ),
                                             child: ClayContainer(
                                               height: 30,
                                               width: 30,
@@ -1070,8 +1070,10 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                     style: TextStyle(
                                         color: FlutterFlowTheme.of(context).white)),
                                 showBadge: true,
-                                badgeColor: FlutterFlowTheme.of(context).primaryColor,
                                 position: badge.BadgePosition.topEnd(),
+                                badgeStyle: badge.BadgeStyle(
+                                  badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                                ),
                                 child: ClayContainer(
                                   height: 30,
                                   width: MediaQuery.of(context).size.width * 0.6,

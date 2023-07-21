@@ -20,6 +20,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
   bool procesocargando = false;
   bool procesoterminado = false;
   bool procesoexitoso = false;
+  bool vehicleAssigned = false;
   String message = "";
   List<dynamic>? recordsMonthCurrentR;
   List<dynamic>? recordsMonthSecondR;
@@ -40,6 +41,11 @@ class RolesSupabaseProvider extends ChangeNotifier {
 
   void procesoExitoso(bool boleano) {
     procesoexitoso = boleano;
+    // notifyListeners();
+  }
+
+  void changeVehicleAssigned(bool boleano) {
+    vehicleAssigned = boleano;
     // notifyListeners();
   }
 
@@ -67,7 +73,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
     }
   }
 
-//Función para recuperar el catálogo de roles desde Supabase
+//Función para recuperar el catálogo de roles desde Supabase utilizando la información más reciente del Usuario
   Future<String> getRoles(GetUsuarioSupabase usuario) async {
     List<dynamic>? recordsVehicle;
     String queryGetRoles = """
@@ -123,11 +129,33 @@ class RolesSupabaseProvider extends ChangeNotifier {
       );
       //Se recupera la colección de vehicle especifica en Supabase
       if (usuario.idVehicleFk != null) {
+        //Se recupera el vehicle de acuerdo a la información más reciente del Usuario
         recordsVehicle = await supabaseCtrlV
           .from('vehicle')
           .select()
           .eq('id_vehicle', usuario.idVehicleFk);
+        vehicleAssigned = true;
+        // //Se recupera el último registro en caso de cumplir las condiciones
+        // DateTime currentToday = DateTime.now();
+        // DateTime startToday = DateTime(currentToday.year, currentToday.month, currentToday.day);
+        // DateTime endToday = DateTime(currentToday.year, currentToday.month + currentToday.day, 23, 59, 59);
+        // DateFormat formatToday = DateFormat("yyyy-MM-dd HH:mm:ss");
+        // final recordLastControlForm = await supabaseCtrlV
+        //   .from('control_form')
+        //   .select()
+        //   .eq('id_vehicle_fk', usuario.idVehicleFk)
+        //   .eq('id_user_fk', usuario.idPerfilUsuario)
+        //   .eq('date_added_d', null)
+        //   .gt('date_added_r', formatToday.format(startToday)).lt('date_added_r', formatToday.format(endToday)) as List<dynamic>;
+        // if (recordLastControlForm.isNotEmpty) {
+        //   //TODO: Terminar proceso
+        //   final measuresR = await supabaseCtrlV
+        //   .from('measures')
+        //   .select()
+        //   .eq('id_measure', recordLastControlForm.first['id_measure_r_fk']);
+        // }
       } else {
+        //Se recuperan los vehicles disponibles para el Usuario
         final recordAvailable = await supabaseCtrlV
           .from('status')
           .select()

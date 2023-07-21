@@ -52,8 +52,8 @@ final animationsMap = {
           curve: Curves.easeOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 1,
-          end: 1,
+          begin: const Offset(1, 1),
+          end: const Offset(1, 1),
         ),
       ],
     ),
@@ -78,8 +78,8 @@ final animationsMap = {
           curve: Curves.easeOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 1,
-          end: 1,
+          begin: const Offset(1, 1),
+          end: const Offset(1, 1),
         ),
       ],
     ),
@@ -179,8 +179,8 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                       child: InkWell(
                         onTap: () async {
                           if (checkInFormProvider.validateForm()) {
-                            if (checkInFormProvider.addControlForm(userProvider.usuarioCurrent, widget.registeredHour)) {
-                              // checkInFormProvider.cleanInformation();
+                            if (checkInFormProvider.updateControlForm(userProvider.usuarioCurrent, widget.registeredHour)) {
+                              checkInFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
                               if (checkInFormProvider.issues.isEmpty) {
                                 await Navigator.push(
@@ -355,9 +355,11 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
                       showBadge: checkInFormProvider.pendingMeasures != 0,
-                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
-                      elevation: 4,
+                      badgeStyle: badge.BadgeStyle(
+                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                        elevation: 4,
+                      ),
                       child: MenuFormButton(
                         icon: Icons.speed_outlined, 
                         onPressed: () {
@@ -372,9 +374,11 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
                       showBadge: checkInFormProvider.badStateLights != 0,
-                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
-                      elevation: 4,
+                      badgeStyle: badge.BadgeStyle(
+                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                        elevation: 4,
+                      ),
                       child: MenuFormButton(
                         icon: Icons.flare, 
                         onPressed: () {
@@ -389,9 +393,11 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
                       showBadge: checkInFormProvider.badStateSecurity != 0,
-                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
-                      elevation: 4,
+                      badgeStyle: badge.BadgeStyle(
+                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                        elevation: 4,
+                      ),
                       child: MenuFormButton(
                         icon: Icons.health_and_safety, 
                         onPressed: () {
@@ -406,9 +412,11 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                           style: TextStyle(
                               color: FlutterFlowTheme.of(context).white)),
                       showBadge: checkInFormProvider.badStateEquipment != 0,
-                      badgeColor: FlutterFlowTheme.of(context).primaryColor,
                       position: badge.BadgePosition.topEnd(),
-                      elevation: 4,
+                      badgeStyle: badge.BadgeStyle(
+                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
+                        elevation: 4,
+                      ),
                       child: MenuFormButton(
                         icon: Icons.build, 
                         onPressed: () {
