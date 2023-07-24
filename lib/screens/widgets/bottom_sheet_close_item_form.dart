@@ -1,23 +1,19 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-class BottomSheetValidacionEliminarImagen extends StatefulWidget {
-  final String imagen;
-  const BottomSheetValidacionEliminarImagen({
-    Key? key, 
-    required this.imagen})
+class BottomSheetCloseItemForm extends StatefulWidget {
+  const BottomSheetCloseItemForm({
+    Key? key})
       : super(key: key);
 
   @override
-  State<BottomSheetValidacionEliminarImagen> createState() =>
-      _BottomSheetValidacionEliminarImagenState();
+  State<BottomSheetCloseItemForm> createState() =>
+      _BottomSheetCloseItemFormState();
 }
 
-class _BottomSheetValidacionEliminarImagenState
-    extends State<BottomSheetValidacionEliminarImagen> {
+class _BottomSheetCloseItemFormState
+    extends State<BottomSheetCloseItemForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,15 +56,29 @@ class _BottomSheetValidacionEliminarImagenState
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 4, 0, 0),
-                              child: Text(
-                                'Are you sure you want to delete this image?',
-                                textAlign: TextAlign.center,
-                                style: AppTheme.of(context).title2.override(
-                                      fontFamily:
-                                          AppTheme.of(context).title2Family,
-                                      color: AppTheme.of(context).primaryText,
-                                      fontSize: 19,
-                                    ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Are you sure you want to close?',
+                                    textAlign: TextAlign.center,
+                                    style: AppTheme.of(context).title2.override(
+                                          fontFamily:
+                                              AppTheme.of(context).title2Family,
+                                          color: AppTheme.of(context).primaryText,
+                                          fontSize: 19,
+                                        ),
+                                  ),
+                                  Text(
+                                    "The Mileage is will be saved only if you click on 'Accept'.",
+                                    textAlign: TextAlign.center,
+                                    style: AppTheme.of(context).title2.override(
+                                          fontFamily:
+                                              AppTheme.of(context).title2Family,
+                                          color: AppTheme.of(context).primaryText,
+                                          fontSize: 16,
+                                        ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -85,10 +95,11 @@ class _BottomSheetValidacionEliminarImagenState
                             width: 200,
                             height: 150,
                             margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: Image.file(
-                                File(widget.imagen),
-                                fit: BoxFit.cover,
-                              ),
+                            child: Icon(
+                              Icons.warning_amber_outlined,
+                              color: AppTheme.of(context).primaryColor,
+                              size: 150,
+                            ),
                             ),
                           ],
                         ),
@@ -128,7 +139,7 @@ class _BottomSheetValidacionEliminarImagenState
                               onPressed: () async {
                                 Navigator.pop(context, true);
                               },
-                              text: 'ACCEPT',
+                              text: 'CONTINUE',
                               options: FFButtonOptions(
                                 width: 150,
                                 height: 50,

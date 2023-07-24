@@ -30,6 +30,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
   ControlForm? controlFormCheckOut;
   ControlForm? controlFormCheckIn;
   List<VehicleServices>? vehicleServicesList = [];
+  // List<String> vehicleServicesList = ["Hola", "Adios"];
 
 
   @override
@@ -40,7 +41,8 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
       controlFormCheckOut = context.read<UsuarioController>().getControlFormCheckOutToday(DateTime.now());
       controlFormCheckIn = context.read<UsuarioController>().getControlFormCheckInToday(DateTime.now());
       context.read<UsuarioController>().getUser(prefs.getString("userId") ?? "");
-      vehicleServicesList = context.read<UsuarioController>().usuarioCurrent?.vehicle.target?.vehicleServices.where((element) => !element.completed).toList();
+      // vehicleServicesList = context.read<UsuarioController>().usuarioCurrent?.vehicle.target?.vehicleServices.where((element) => !element.completed).toList();
+      
     });
   }
   @override
@@ -1129,56 +1131,69 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                             items: vehicleServicesList?.map((data) {
                               return Builder(
                                 builder: (BuildContext context) {
-                                  return InkWell(
-                                    onTap: () {
-                                      
-                                    },
-                                    child: Container(
-                                      height: 50,
-                                      width: MediaQuery.of(context).size.width * 0.7,
-                                      decoration: BoxDecoration(
-                                        gradient: blueRadial,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 4,
-                                            color: FlutterFlowTheme.of(context).secondaryColor,
-                                            offset: const Offset(2, 2),
-                                          )
-                                        ],
-                                        color: FlutterFlowTheme.of(context).secondaryColor,
-                                        borderRadius: const BorderRadius.only(
-                                          bottomLeft: Radius.circular(50),
-                                          bottomRight: Radius.circular(50),
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20),
-                                        ),
+                                  return Container(
+                                    height: 50,
+                                    width: MediaQuery.of(context).size.width * 0.75,
+                                    decoration: BoxDecoration(
+                                      gradient: blueRadial,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 4,
+                                          color: FlutterFlowTheme.of(context).secondaryColor,
+                                          offset: const Offset(2, 2),
+                                        )
+                                      ],
+                                      color: FlutterFlowTheme.of(context).secondaryColor,
+                                      borderRadius: const BorderRadius.only(
+                                        bottomLeft: Radius.circular(50),
+                                        bottomRight: Radius.circular(50),
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
                                       ),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "Service: ${data.service.target?.service}", 
-                                              style: TextStyle(
-                                                color: FlutterFlowTheme.of(context).white,
-                                                fontSize: 13.0,
-                                                fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(
-                                              data.serviceDate != null ?
-                                              "Due Date: ${DateFormat('MMMM d, y').format(data.serviceDate!)}"
-                                              :
-                                              data.mileageRemaining! > 0 ? 
-                                              "Due Mileage: ${data.mileageRemaining} Mi"
-                                              :
-                                              "Over Mileage: ${data.mileageRemaining?.abs()} Mi", 
-                                              style: TextStyle(
-                                                color: FlutterFlowTheme.of(context).white,
-                                                fontSize: 13.0,
-                                                fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
+                                    ),
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Car Wash", 
+                                            style: TextStyle(
+                                              color: FlutterFlowTheme.of(context).white,
+                                              fontSize: 13.0,
+                                              fontWeight: FontWeight.bold),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                data.serviceDate != null ?
+                                                "Due Date: "
+                                                :
+                                                data.mileageRemaining! > 0 ? 
+                                                "Due Mileage: "
+                                                :
+                                                "Over Mileage: ", 
+                                                style: TextStyle(
+                                                  color: FlutterFlowTheme.of(context).primaryColor,
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.bold),
+                                              ),
+                                              Text(
+                                                data.serviceDate != null ?
+                                                DateFormat('MMMM d, y').format(data.serviceDate!)
+                                                :
+                                                data.mileageRemaining! > 0 ? 
+                                                "${data.mileageRemaining} Mi"
+                                                :
+                                                "${data.mileageRemaining?.abs()} Mi", 
+                                                style: TextStyle(
+                                                  color: FlutterFlowTheme.of(context).white,
+                                                  fontSize: 13.0,
+                                                  fontWeight: FontWeight.w500),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   );

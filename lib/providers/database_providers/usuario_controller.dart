@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:intl/intl.dart';
+import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
 import 'package:flutter/material.dart';
@@ -247,20 +248,24 @@ void updateRol(int id, int newIdRol) {
     notifyListeners();
   }
 
-void updateDatos(int id, String newNombre, String newApellidoP, String newApellidoM, String newTelefono) {
-
-    notifyListeners();
+bool updateData(
+    Users user, 
+    String newName, 
+    String newLastName, 
+    String? newMiddleName, 
+    String? newHomePhone,
+    String? newMobilePhone,
+    ImageEvidence? image,
+  ) {
+    if (image != null) {
+      notifyListeners();
+      return false;
+    } else {
+      notifyListeners();
+      return true;
+    }
   }
 
-void updateImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPath, String newBase64) {
-
-    notifyListeners();
-  }
-
-void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPath, String newBase64) {
-
-    notifyListeners();
-  }
   getAll() {
     usuarios = dataBase.usersBox.getAll();
     notifyListeners();

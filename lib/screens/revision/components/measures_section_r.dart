@@ -18,6 +18,7 @@ import 'package:taller_alex_app_asesor/providers/database_providers/usuario_cont
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/header_shimmer.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/item_form.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_close_item_form.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_carousel.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
@@ -91,6 +92,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
   Widget build(BuildContext context) {
     final checkOutController = Provider.of<CheckOutFormController>(context);
     final userController = Provider.of<UsuarioController>(context);
+    final mileage = checkOutController.mileage;
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: Row(
@@ -126,29 +128,57 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                 child: const Text("Mileage"),
                               ),
                               GestureDetector(
-                                onTap: () {
-                                  final mileageInt = int.parse(checkOutProvider.mileage != "" ? checkOutProvider.mileage.replaceAll(",", "") : "0");
-                                  if (mileageInt != 0) {
-                                    if (mileageInt < userController.usuarioCurrent!.vehicle.target!.mileage) {
-                                      checkOutProvider.updateMileage("");
-                                      checkOutProvider.flagOilChange = false;
-                                      checkOutProvider.flagTransmissionFluidChange = false;
-                                      checkOutProvider.flagRadiatorFluidChange = false;
+                                onTap: () async {
+                                  //Este botón no guarda la información ingresada para Mileage
+                                  bool? booleano =
+                                      await showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor:
+                                        Colors.transparent,
+                                    context: context,
+                                    builder: (context) {
+                                      return Padding(
+                                        padding:
+                                            MediaQuery.of(context)
+                                                .viewInsets,
+                                        child: SizedBox(
+                                          height:
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.45,
+                                          child:
+                                              const BottomSheetCloseItemForm(),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                  if (booleano != null &&
+                                      booleano == true){
+                                    if (mileage == checkOutProvider.mileage) {
+                                      if (mounted) Navigator.pop(context);
+                                    } else {
+                                      final mileageInt = int.parse(checkOutProvider.mileage != "" ? checkOutProvider.mileage.replaceAll(",", "") : "0");
+                                      if (mileageInt != 0) {
+                                        checkOutProvider.updateMileage(mileage);
+                                        if (mileageInt < userController.usuarioCurrent!.vehicle.target!.mileage) {
+                                          checkOutProvider.flagOilChange = false;
+                                          checkOutProvider.flagTransmissionFluidChange = false;
+                                          checkOutProvider.flagRadiatorFluidChange = false;
+                                        }
+                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService) {
+                                          checkOutProvider.flagOilChange = false;
+                                        } 
+                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.lastMileageService) {
+                                          checkOutProvider.flagTransmissionFluidChange = false;
+                                        } 
+                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService) {
+                                          checkOutProvider.flagRadiatorFluidChange = false;
+                                        } 
+                                      }
+                                      if (mounted) Navigator.pop(context);
                                     }
-                                    if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService) {
-                                      checkOutProvider.updateMileage("");
-                                      checkOutProvider.flagOilChange = false;
-                                    } 
-                                    if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.lastMileageService) {
-                                      checkOutProvider.updateMileage("");
-                                      checkOutProvider.flagTransmissionFluidChange = false;
-                                    } 
-                                    if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService) {
-                                      checkOutProvider.updateMileage("");
-                                      checkOutProvider.flagRadiatorFluidChange = false;
-                                    } 
                                   }
-                                  Navigator.pop(context);
                                 },
                                 child: ClayContainer(
                                   height: 30,
@@ -356,7 +386,10 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                             width: 180,
                                                             height: 100,
                                                             listaImagenes:
-                                                                checkOutProvider.mileageImages)),
+                                                                checkOutProvider.mileageImages,
+                                                            deleteImage: (image) {
+                                                              checkOutProvider.deleteMileageImage(image);
+                                                            },)),
                                                   ),
                                                   Padding(
                                                     padding:
@@ -584,6 +617,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                                       child: GestureDetector(
                                         onTap: () {
+                                          //Este botón sí guarda la información ingresada para Mileage
                                           final mileageInt = int.parse(checkOutProvider.mileage != "" ? checkOutProvider.mileage.replaceAll(",", "") : "0");
                                           if (checkOutProvider.validateKeyForm(keyForm)) {
                                             //Se valida para ruleOilChange
@@ -869,7 +903,10 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                           width: 180,
                                                           height: 100,
                                                           listaImagenes:
-                                                              checkOutProvider.gasImages)),
+                                                              checkOutProvider.gasImages,
+                                                          deleteImage: (image) {
+                                                              checkOutProvider.deleteGasImage(image);
+                                                            },)),
                                                 ),
                                                 Padding(
                                                   padding:
@@ -1181,8 +1218,8 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                   addImage: (image) {
                     checkOutController.addEngineOilImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutController.updateEngineOilImage(image);
+                  deleteImage: (image) {
+                    checkOutController.deleteEngineOilImage(image);
                   },
                   comments: checkOutController.engineOilComments,
                   report: checkOutController.engineOil,
@@ -1210,8 +1247,8 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                   addImage: (image) {
                     checkOutController.addTransmissionImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutController.updateTransmissionImage(image);
+                  deleteImage: (image) {
+                    checkOutController.deleteTransmissionImage(image);
                   },
                   comments: checkOutController.transmissionComments,
                   report: checkOutController.transmission,
@@ -1239,8 +1276,8 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                   addImage: (image) {
                     checkOutController.addCoolantImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutController.updateCoolantImage(image);
+                  deleteImage: (image) {
+                    checkOutController.deleteCoolantImage(image);
                   },
                   comments: checkOutController.coolantComments,
                   report: checkOutController.coolant,
@@ -1268,8 +1305,8 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                   addImage: (image) {
                     checkOutController.addPowerSteeringImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutController.updatePowerSteeringImage(image);
+                  deleteImage: (image) {
+                    checkOutController.deletePowerSteeringImage(image);
                   },
                   comments: checkOutController.powerSteeringComments,
                   report: checkOutController.powerSteering,
@@ -1297,8 +1334,8 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                   addImage: (image) {
                     checkOutController.addDieselExhaustFluidImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutController.updateDieselExhaustFluidImage(image);
+                  deleteImage: (image) {
+                    checkOutController.deleteDieselExhaustFluidImage(image);
                   },
                   comments: checkOutController.dieselExhaustFluidComments,
                   report: checkOutController.dieselExhaustFluid,
@@ -1326,8 +1363,8 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                   addImage: (image) {
                     checkOutController.addWindshieldWasherFluidImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutController.updateWindshieldWasherFluidImage(image);
+                  deleteImage: (image) {
+                    checkOutController.deleteWindshieldWasherFluidImage(image);
                   },
                   comments: checkOutController.windshieldWasherFluidComments,
                   report: checkOutController.windshieldWasherFluid,

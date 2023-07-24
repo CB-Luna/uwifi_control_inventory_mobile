@@ -101,8 +101,8 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   addImage: (image) {
                     checkInFormProvider.addRTAMagnetImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormProvider.updateRTAMagnetImage(image);
+                  deleteImage: (image) {
+                    checkInFormProvider.deleteRTAMagnetImage(image);
                   },
                   comments: checkInFormProvider.rtaMagnetComments,
                   report: checkInFormProvider.rtaMagnet,
@@ -130,8 +130,8 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   addImage: (image) {
                     checkInFormProvider.addTriangleReflectorsImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormProvider.updateTriangleReflectorsImage(image);
+                  deleteImage: (image) {
+                    checkInFormProvider.deleteTriangleReflectorsImage(image);
                   },
                   comments: checkInFormProvider.triangleReflectorsComments,
                   report: checkInFormProvider.triangleReflectors,
@@ -159,8 +159,8 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   addImage: (image) {
                     checkInFormProvider.addWheelChocksImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormProvider.updateWheelChocksImage(image);
+                  deleteImage: (image) {
+                    checkInFormProvider.deleteWheelChocksImage(image);
                   },
                   comments: checkInFormProvider.wheelChocksComments,
                   report: checkInFormProvider.wheelChocks,
@@ -188,8 +188,8 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   addImage: (image) {
                     checkInFormProvider.addFireExtinguisherImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormProvider.updateFireExtinguisherImage(image);
+                  deleteImage: (image) {
+                    checkInFormProvider.deleteFireExtinguisherImage(image);
                   },
                   comments: checkInFormProvider.fireExtinguisherComments,
                   report: checkInFormProvider.fireExtinguisher,
@@ -217,8 +217,8 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   addImage: (image) {
                     checkInFormProvider.addFirstAidKitSafetyVestImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormProvider.updateFirstAidKitSafetyVestImage(image);
+                  deleteImage: (image) {
+                    checkInFormProvider.deleteFirstAidKitSafetyVestImage(image);
                   },
                   comments: checkInFormProvider.firstAidKitSafetyVestComments,
                   report: checkInFormProvider.firstAidKitSafetyVest,
@@ -246,8 +246,8 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   addImage: (image) {
                     checkInFormProvider.addBackUpAlarmImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormProvider.updateBackUpAlarmImage(image);
+                  deleteImage: (image) {
+                    checkInFormProvider.deleteBackUpAlarmImage(image);
                   },
                   comments: checkInFormProvider.backUpAlarmComments,
                   report: checkInFormProvider.backUpAlarm,
@@ -286,8 +286,8 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   addImage: (image) {
                     checkInFormProvider.addLadderImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormProvider.updateLadderImage(image);
+                  deleteImage: (image) {
+                    checkInFormProvider.deleteLadderImage(image);
                   },
                   comments: checkInFormProvider.ladderComments,
                   report: checkInFormProvider.ladder,
@@ -315,8 +315,8 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   addImage: (image) {
                     checkInFormProvider.addStepLadderImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormProvider.updateStepLadderImage(image);
+                  deleteImage: (image) {
+                    checkInFormProvider.deleteStepLadderImage(image);
                   },
                   comments: checkInFormProvider.stepLadderComments,
                   report: checkInFormProvider.stepLadder,
@@ -344,8 +344,8 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   addImage: (image) {
                     checkInFormProvider.addLadderStrapsImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormProvider.updateLadderStrapsImage(image);
+                  deleteImage: (image) {
+                    checkInFormProvider.deleteLadderStrapsImage(image);
                   },
                   comments: checkInFormProvider.ladderStrapsComments,
                   report: checkInFormProvider.ladderStraps,
@@ -373,8 +373,8 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   addImage: (image) {
                     checkInFormProvider.addHydraulicFluidForBucketImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormProvider.updateHydraulicFluidForBucketImage(image);
+                  deleteImage: (image) {
+                    checkInFormProvider.deleteHydraulicFluidForBucketImage(image);
                   },
                   comments: checkInFormProvider.hydraulicFluidForBucketComments,
                   report: checkInFormProvider.hydraulicFluidForBucket,
@@ -402,8 +402,8 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   addImage: (image) {
                     checkInFormProvider.addFiberReelRackImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormProvider.updateFiberReelRackImage(image);
+                  deleteImage: (image) {
+                    checkInFormProvider.deleteFiberReelRackImage(image);
                   },
                   comments: checkInFormProvider.fiberReelRackComments,
                   report: checkInFormProvider.fiberReelRack,
@@ -431,8 +431,8 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   addImage: (image) {
                     checkInFormProvider.addBinsLockedAndSecureImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormProvider.updateBinsLockedAndSecureImage(image);
+                  deleteImage: (image) {
+                    checkInFormProvider.deleteBinsLockedAndSecureImage(image);
                   },
                   comments: checkInFormProvider.binsLockedAndSecureComments,
                   report: checkInFormProvider.binsLockedAndSecure,
@@ -460,8 +460,8 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   addImage: (image) {
                     checkInFormProvider.addSafetyHarnessImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormProvider.updateSafetyHarnessImage(image);
+                  deleteImage: (image) {
+                    checkInFormProvider.deleteSafetyHarnessImage(image);
                   },
                   comments: checkInFormProvider.safetyHarnessComments,
                   report: checkInFormProvider.safetyHarness,
@@ -489,8 +489,8 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   addImage: (image) {
                     checkInFormProvider.addLanyardSafetyHarnessImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormProvider.updateLanyardSafetyHarnessImage(image);
+                  deleteImage: (image) {
+                    checkInFormProvider.deleteLanyardSafetyHarnessImage(image);
                   },
                   comments: checkInFormProvider.lanyardSafetyHarnessComments,
                   report: checkInFormProvider.lanyardSafetyHarness,

@@ -124,7 +124,7 @@ class VehiculoController extends ChangeNotifier {
   void updateCompletedDate(DateTime date) {
     completedDate = date;
     completedDateController.text = dateTimeFormat("MMMM d, y", date);
-    notifyListeners();
+    // notifyListeners();
   }
 
   void updateServiceCompleted(String answerCompleted) {

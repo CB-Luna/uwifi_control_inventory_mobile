@@ -1,23 +1,19 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-class BottomSheetValidacionEliminarImagen extends StatefulWidget {
-  final String imagen;
-  const BottomSheetValidacionEliminarImagen({
-    Key? key, 
-    required this.imagen})
+class BottomSheetImageRequired extends StatefulWidget {
+  const BottomSheetImageRequired({
+    Key? key})
       : super(key: key);
 
   @override
-  State<BottomSheetValidacionEliminarImagen> createState() =>
-      _BottomSheetValidacionEliminarImagenState();
+  State<BottomSheetImageRequired> createState() =>
+      _BottomSheetImageRequiredState();
 }
 
-class _BottomSheetValidacionEliminarImagenState
-    extends State<BottomSheetValidacionEliminarImagen> {
+class _BottomSheetImageRequiredState
+    extends State<BottomSheetImageRequired> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,15 +56,19 @@ class _BottomSheetValidacionEliminarImagenState
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 4, 0, 0),
-                              child: Text(
-                                'Are you sure you want to delete this image?',
-                                textAlign: TextAlign.center,
-                                style: AppTheme.of(context).title2.override(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'You need to add images as evidence.',
+                                    textAlign: TextAlign.center,
+                                    style: AppTheme.of(context).title2.override(
                                       fontFamily:
                                           AppTheme.of(context).title2Family,
                                       color: AppTheme.of(context).primaryText,
                                       fontSize: 19,
                                     ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -85,10 +85,11 @@ class _BottomSheetValidacionEliminarImagenState
                             width: 200,
                             height: 150,
                             margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: Image.file(
-                                File(widget.imagen),
-                                fit: BoxFit.cover,
-                              ),
+                            child: Icon(
+                              Icons.warning_amber_outlined,
+                              color: AppTheme.of(context).primaryColor,
+                              size: 150,
+                            ),
                             ),
                           ],
                         ),
@@ -102,33 +103,9 @@ class _BottomSheetValidacionEliminarImagenState
                           children: [
                             FFButtonWidget(
                               onPressed: () async {
-                                Navigator.pop(context, false);
-                              },
-                              text: 'CANCEL',
-                              options: FFButtonOptions(
-                                width: 150,
-                                height: 50,
-                                color: const Color(0xFF8C8C8C),
-                                textStyle: AppTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily:
-                                          AppTheme.of(context).subtitle2Family,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                elevation: 2,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                              ),
-                            ),
-                            FFButtonWidget(
-                              onPressed: () async {
                                 Navigator.pop(context, true);
                               },
-                              text: 'ACCEPT',
+                              text: 'OKAY',
                               options: FFButtonOptions(
                                 width: 150,
                                 height: 50,

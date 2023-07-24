@@ -101,8 +101,8 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addIgnitionKeyImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateIgnitionKeyImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteIgnitionKeyImage(image);
                   },
                   comments: checkOutFormProvider.ignitionKeyComments,
                   report: checkOutFormProvider.ignitionKey,
@@ -131,8 +131,8 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addBinsBoxKeyImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateBinsBoxKeyImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteBinsBoxKeyImage(image);
                   },
                   comments: checkOutFormProvider.binsBoxKeyComments,
                   report: checkOutFormProvider.binsBoxKey,
@@ -161,8 +161,8 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addVehicleRegistrationCopyImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateVehicleRegistrationCopyImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteVehicleRegistrationCopyImage(image);
                   },
                   comments: checkOutFormProvider.vehicleRegistrationCopyComments,
                   report: checkOutFormProvider.vehicleRegistrationCopy,
@@ -191,8 +191,8 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addVehicleInsuranceCopyImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateVehicleInsuranceCopyImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteVehicleInsuranceCopyImage(image);
                   },
                   comments: checkOutFormProvider.vehicleInsuranceCopyComments,
                   report: checkOutFormProvider.vehicleInsuranceCopy,
@@ -221,8 +221,8 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addBucketLiftOperatorManualImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateBucketLiftOperatorManualImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteBucketLiftOperatorManualImage(image);
                   },
                   comments: checkOutFormProvider.bucketLiftOperatorManualComments,
                   report: checkOutFormProvider.bucketLiftOperatorManual,
@@ -264,13 +264,17 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addInsulatedImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateInsulatedImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteInsulatedImage(image);
                   },
                   comments: checkOutFormProvider.insulatedComments,
                   report: checkOutFormProvider.insulated,
                   updateReport: (report) {
                     checkOutFormProvider.updateInsulated(report);
+                  },
+                  requiredImages: true,
+                  clearReport: () {
+                    checkOutFormProvider.clearInsulated();
                   },
                 ),
                 Divider(
@@ -293,13 +297,17 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addHolesDrilledImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateHolesDrilledImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteHolesDrilledImage(image);
                   },
                   comments: checkOutFormProvider.holesDrilledComments,
                   report: checkOutFormProvider.holesDrilled,
                   updateReport: (report) {
                     checkOutFormProvider.updateHolesDrilled(report);
+                  },
+                  requiredImages: true,
+                  clearReport: () {
+                    checkOutFormProvider.clearHolesDrilled();
                   },
                 ),
                 Divider(
@@ -322,13 +330,17 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addBucketLinerImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateBucketLinerImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteBucketLinerImage(image);
                   },
                   comments: checkOutFormProvider.bucketLinerComments,
                   report: checkOutFormProvider.bucketLiner,
                   updateReport: (report) {
                     checkOutFormProvider.updateBucketLiner(report);
+                  },
+                  requiredImages: true,
+                  clearReport: () {
+                    checkOutFormProvider.clearBucketLiner();
                   },
                 ),
                 Divider(

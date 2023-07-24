@@ -1,10 +1,11 @@
-import 'dart:convert';
-import 'dart:io';
+import 'dart:io' as libraryIO;
 
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
-import 'package:taller_alex_app_asesor/main.dart';
-import 'package:taller_alex_app_asesor/objectbox.g.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/screens/user_profile/perfil_usuario_screen.dart';
 import 'package:taller_alex_app_asesor/screens/user_profile/update_password.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/drop_down.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
@@ -35,18 +36,18 @@ class EditarUsuarioScreen extends StatefulWidget {
 
 class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   String uploadedFileUrl = '';
-  TextEditingController nombreController = TextEditingController();
-  TextEditingController apellidoPController = TextEditingController();
-  TextEditingController apellidoMController = TextEditingController();
-  TextEditingController telefonoController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController middleNameController = TextEditingController();
+  TextEditingController homePhoneController = TextEditingController();
+  TextEditingController mobilePhoneController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   XFile? image;
   String rolUsuario = "";
   List<String> listRoles = [];
-  String? newImagen;
-  String? imagenTemp;
+  ImageEvidence? newImage;
+  String? imageTemp;
 
   @override
   void initState() {
@@ -56,13 +57,13 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
     for (var element in widget.usuario.roles) {
       listRoles.add(element.role);
     }
-    newImagen = "";
-    imagenTemp = widget.usuario.path;
-    nombreController = TextEditingController(text: widget.usuario.name);
-    apellidoPController = TextEditingController(text: widget.usuario.lastName);
-    apellidoMController = TextEditingController(text: widget.usuario.middleName);
-    telefonoController = TextEditingController(text: widget.usuario.homePhone);
-    mobileController = TextEditingController(text: widget.usuario.mobilePhone);
+    newImage = null;
+    imageTemp = widget.usuario.path;
+    nameController = TextEditingController(text: widget.usuario.name);
+    lastNameController = TextEditingController(text: widget.usuario.lastName);
+    middleNameController = TextEditingController(text: widget.usuario.middleName);
+    homePhoneController = TextEditingController(text: widget.usuario.homePhone);
+    mobilePhoneController = TextEditingController(text: widget.usuario.mobilePhone);
   }
 
   @override
@@ -80,9 +81,8 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 1,
+                  height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEEEEEE),
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image: Image.asset(
@@ -95,7 +95,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 230, 0, 0),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.8,
+                    height: MediaQuery.of(context).size.height,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).grayLighter,
                       borderRadius: const BorderRadius.only(
@@ -141,7 +141,13 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        Navigator.pop(context);
+                                        await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const PerfilUsuarioScreen(),
+                                        ),
+                                      );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -209,7 +215,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          imagenTemp == null
+                          imageTemp == null
                               ? Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 30, 0, 0),
@@ -249,7 +255,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                       color: const Color(0x00EEEEEE),
                                       image: DecorationImage(
                                           fit: BoxFit.cover,
-                                          image: FileImage(File(imagenTemp!))),
+                                          image: FileImage(libraryIO.File(imageTemp!))),
                                       shape: BoxShape.circle,
                                     ),
                                   ),
@@ -272,37 +278,148 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                           builder: (_) =>
                                               const CustomBottomSheet(),
                                         );
-
+                      
                                         if (option == null) return;
-
+                      
                                         final picker = ImagePicker();
-
-                                        late final XFile? pickedFile;
-
+                                        // imagesTemp = [];
+                                        XFile? pickedFile;
+                                        Uint8List? compressImage;
                                         if (option == 'camera') {
-                                          pickedFile = await picker.pickImage(
+                                          pickedFile =
+                                              await picker.pickImage(
                                             source: ImageSource.camera,
+                                            maxHeight: 1080,
+                                            maxWidth: 1080,
                                             imageQuality: 80,
                                           );
+                                          if (pickedFile != null) {
+                                            if (await pickedFile.length() >= 1000000) {
+                                              int quality = 70;
+                                              libraryIO.File file =
+                                              libraryIO.File(
+                                                  pickedFile.path);
+                                              do {
+                                                compressImage = await FlutterImageCompress.compressWithFile(
+                                                  file.absolute.path,
+                                                  minWidth: 1920,
+                                                  minHeight: 1080,
+                                                  quality: quality,
+                                                );
+                                                if (compressImage != null) {
+                                                  if (compressImage.lengthInBytes >= 1000000) {
+                                                    quality -= 10;
+                                                  } else {
+                                                    quality = 0;
+                                                  }
+                                                } else {
+                                                  snackbarKey.currentState
+                                                      ?.showSnackBar(
+                                                          const SnackBar(
+                                                    content: Text(
+                                                        "Failed to compress this picture."),
+                                                  ));
+                                                  return;
+                                                }
+                                              } while (quality > 0);
+                                              setState(() {
+                                                imageTemp = file.path;
+                                              });
+                                              newImage =
+                                              ImageEvidence(
+                                                  path:
+                                                      file.path,
+                                                  uint8List: compressImage,
+                                                  name: pickedFile.name);
+                                            } else {
+                                              libraryIO.File file =
+                                              libraryIO.File(
+                                                  pickedFile.path);
+                                              setState(() {
+                                                imageTemp = file.path;
+                                              });
+                                              newImage =
+                                              ImageEvidence(
+                                                  path: file.path,
+                                                  uint8List: file.readAsBytesSync(),
+                                                  name: pickedFile.name);
+                                            }
+                                          } else {
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(
+                                                    const SnackBar(
+                                              content: Text(
+                                                  "Failed to upload this Picture."),
+                                            ));
+                                            return;
+                                          }
                                         } else {
-                                          pickedFile = await picker.pickImage(
-                                            source: ImageSource.gallery,
-                                            imageQuality: 80,
+                                          //Se selecciona galería
+                                          pickedFile =
+                                              await picker.pickImage(
+                                                source: ImageSource.gallery
                                           );
+                                          if (pickedFile != null) {
+                                            if (await pickedFile.length() >= 1000000) {
+                                              int quality = 70;
+                                              libraryIO.File file =
+                                              libraryIO.File(
+                                                  pickedFile.path);
+                                              do {
+                                                compressImage = await FlutterImageCompress.compressWithFile(
+                                                  file.absolute.path,
+                                                  minWidth: 1920,
+                                                  minHeight: 1080,
+                                                  quality: quality,
+                                                );
+                                                if (compressImage != null) {
+                                                  if (compressImage.lengthInBytes >= 1000000) {
+                                                    quality -= 10;
+                                                  } else {
+                                                    quality = 0;
+                                                  }
+                                                } else {
+                                                  snackbarKey.currentState
+                                                      ?.showSnackBar(
+                                                          const SnackBar(
+                                                    content: Text(
+                                                        "Failed to compress this picture."),
+                                                  ));
+                                                  return;
+                                                }
+                                              } while (quality > 0);
+                                              setState(() {
+                                                imageTemp = file.path;
+                                              });
+                                              newImage =
+                                                  ImageEvidence(
+                                                      path:
+                                                          file.path,
+                                                      uint8List: compressImage,
+                                                      name: pickedFile.name);
+                                            } else {
+                                              libraryIO.File file =
+                                              libraryIO.File(
+                                                  pickedFile.path);
+                                              setState(() {
+                                                imageTemp = file.path;
+                                              });
+                                              newImage =
+                                                ImageEvidence(
+                                                    path: file.path,
+                                                    uint8List: file.readAsBytesSync(),
+                                                    name: pickedFile.name);
+                                            }
+                                          } else {
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(
+                                                    const SnackBar(
+                                              content: Text(
+                                                  "Failed to upload this Image."),
+                                            ));
+                                            return;
+                                          }
                                         }
-
-                                        if (pickedFile == null) {
-                                          return;
-                                        }
-
-                                        setState(() {
-                                          image = pickedFile;
-                                          imagenTemp = image!.path;
-                                          File file = File(image!.path);
-                                          List<int> fileInByte = file.readAsBytesSync();
-                                          String base64 = base64Encode(fileInByte);
-                                          newImagen = base64.toString();
-                                        });
                                       },
                                       text: 'Update Photo',
                                       icon: Icon(
@@ -360,57 +477,26 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                             0, 20, 0, 0),
                                     child: CustomButton(
                                       onPressed: () async {
-                                        //print("ID IMAGEN: ${widget.usuario.imagen.target?.idEmiWeb}");
-                                        if (imagenTemp != widget.usuario.path) {
-                                          //print("Sí");
-                                          if (nombreController.text !=
-                                                widget.usuario.name ||
-                                            apellidoPController.text !=
-                                                widget.usuario.lastName ||
-                                            apellidoMController.text !=
-                                                widget.usuario.middleName ||
-                                            telefonoController.text !=
-                                                widget.usuario.homePhone) {
+                                        if (nameController.text !=
+                                              widget.usuario.name ||
+                                          lastNameController.text !=
+                                              widget.usuario.lastName ||
+                                          middleNameController.text !=
+                                              widget.usuario.middleName ||
+                                          homePhoneController.text !=
+                                              widget.usuario.homePhone ||
+                                          mobilePhoneController.text !=
+                                              widget.usuario.mobilePhone ||
+                                          imageTemp != widget.usuario.path) {
                                           if (usuarioProvider.validateForm(formKey)) {
-                                            if (rolUsuario !=
-                                                    widget.usuario.role.target!.role) {
-                                              final idRol = dataBase.roleBox
-                                                  .query(Role_.role.equals(rolUsuario))
-                                                  .build()
-                                                  .findFirst()
-                                                  ?.id;
-                                              if (idRol != null) {
-                                                //print("Se va a actualizar el rol del Usuario");
-                                                usuarioProvider.updateRol(
-                                                  widget.usuario.id,
-                                                  idRol,
-                                                );
-                                              }
-                                            }
-                                            if (widget.usuario.path != null) {
-                                                //print("Se va a actualizar la imagen del Usuario");
-                                                // usuarioProvider.updateImagenUsuario(
-                                                //   1,
-                                                //   newImagen!.nombre!,
-                                                //   newImagen!.path!,
-                                                //   newImagen!.base64!,
-                                                // );
-                                              } else {
-                                                //print("Se va a agregar la imagen del Usuario");
-                                                // usuarioProvider.addImagenUsuario(
-                                                //   1,
-                                                //   newImagen!.nombre!,
-                                                //   newImagen!.path!,
-                                                //   newImagen!.base64!,
-                                                // );
-                                              }
-                                              //print("Sí se actualizan los datos del Usuario");
-                                              usuarioProvider.updateDatos(
-                                                widget.usuario.id,
-                                                nombreController.text,
-                                                apellidoPController.text,
-                                                apellidoMController.text,
-                                                telefonoController.text,
+                                              usuarioProvider.updateData(
+                                                widget.usuario,
+                                                nameController.text,
+                                                lastNameController.text,
+                                                middleNameController.text,
+                                                homePhoneController.text,
+                                                mobilePhoneController.text,
+                                                newImage,
                                               );
                                               await Navigator.push(
                                                 context,
@@ -424,14 +510,14 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                               context: context,
                                               builder: (alertDialogContext) {
                                                 return AlertDialog(
-                                                  title: const Text('Campos vacíos'),
+                                                  title: const Text('Empty Fields'),
                                                   content: const Text(
-                                                      'Para continuar, debe llenar los campos solicitados.'),
+                                                      'To continue, you have to write all required fields.'),
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () => Navigator.pop(
                                                           alertDialogContext),
-                                                      child: const Text('Bien'),
+                                                      child: const Text('Okay'),
                                                     ),
                                                   ],
                                                 );
@@ -439,135 +525,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                             );
                                             return;
                                           }
-                                        } else {
-                                          if (rolUsuario !=
-                                                  widget.usuario.role.target!.role) {
-                                            final idRol = dataBase.roleBox
-                                                .query(Role_.role.equals(rolUsuario))
-                                                .build()
-                                                .findFirst()
-                                                ?.id;
-                                            if (idRol != null) {
-                                              //print("Sólo se va a actualizar el rol del Usuario");
-                                              usuarioProvider.updateRol(
-                                                widget.usuario.id,
-                                                idRol,
-                                              );
-                                            }
-                                          }
-                                          if (imagenTemp != widget.usuario.path) {
-                                            if (widget.usuario.path != null) {
-                                              //print("Se va a actualizar la imagen del Usuario");
-                                              // usuarioProvider.updateImagenUsuario(
-                                              //   1,
-                                              //   newImagen!.nombre!,
-                                              //   newImagen!.path!,
-                                              //   newImagen!.base64!,
-                                              // );
-                                            } else {
-                                              //print("Se va a agregar la imagen del Usuario");
-                                              // usuarioProvider.addImagenUsuario(
-                                              //   1,
-                                              //   newImagen!.nombre!,
-                                              //   newImagen!.path!,
-                                              //   newImagen!.base64!,
-                                              // );
-                                            }
-                                          }
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const UsuarioActualizado(),
-                                            ),
-                                          );
-                                        }
-                                        } else {
-                                          //print("No");
-                                          if (nombreController.text !=
-                                                  widget.usuario.name ||
-                                              apellidoPController.text !=
-                                                  widget.usuario.lastName ||
-                                              apellidoMController.text !=
-                                                  widget.usuario.middleName ||
-                                              telefonoController.text !=
-                                                  widget.usuario.homePhone) {
-                                            if (usuarioProvider.validateForm(formKey)) {
-                                              if (rolUsuario !=
-                                                      widget.usuario.role.target!.role) {
-                                                final idRol = dataBase.roleBox
-                                                    .query(Role_.role.equals(rolUsuario))
-                                                    .build()
-                                                    .findFirst()
-                                                    ?.id;
-                                                if (idRol != null) {
-                                                  //print("Se va a actualizar el rol del Usuario");
-                                                  usuarioProvider.updateRol(
-                                                    widget.usuario.id,
-                                                    idRol,
-                                                  );
-                                                }
-                                              }
-                                              //print("Sí se actualizan los datos del Usuario");
-                                              usuarioProvider.updateDatos(
-                                                widget.usuario.id,
-                                                nombreController.text,
-                                                apellidoPController.text,
-                                                apellidoMController.text,
-                                                telefonoController.text,
-                                              );
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const UsuarioActualizado(),
-                                                ),
-                                              );
-                                            } else {
-                                              await showDialog(
-                                                context: context,
-                                                builder: (alertDialogContext) {
-                                                  return AlertDialog(
-                                                    title: const Text('Campos vacíos'),
-                                                    content: const Text(
-                                                        'Para continuar, debe llenar los campos solicitados.'),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: () => Navigator.pop(
-                                                            alertDialogContext),
-                                                        child: const Text('Bien'),
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                              return;
-                                            }
-                                          } else {
-                                            if (rolUsuario !=
-                                                    widget.usuario.role.target!.role) {
-                                                final idRol = dataBase.roleBox
-                                                    .query(Role_.role.equals(rolUsuario))
-                                                    .build()
-                                                    .findFirst()
-                                                    ?.id;
-                                                if (idRol != null) {
-                                                  //print("Sólo se va a actualizar el rol del Usuario");
-                                                  usuarioProvider.updateRol(
-                                                    widget.usuario.id,
-                                                    idRol,
-                                                  );
-                                                  await Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const UsuarioActualizado(),
-                                                    ),
-                                                  );
-                                                }
-                                            }
-                                          }
-                                        }
+                                        } 
                                       },
                                       text: 'Save changes',
                                       icon: Icon(
@@ -607,8 +565,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                               textCapitalization: TextCapitalization.words,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
-                              controller: nombreController,
+                              controller: nameController,
                               decoration: InputDecoration(
+                                errorMaxLines: 3,
                                 labelText: "Name*",
                                 labelStyle:
                                     FlutterFlowTheme.of(context).bodyText1.override(
@@ -656,8 +615,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                               textCapitalization: TextCapitalization.words,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
-                              controller: apellidoPController,
+                              controller: lastNameController,
                               decoration: InputDecoration(
+                                errorMaxLines: 3,
                                 labelText: "Last Name*",
                                 labelStyle:
                                     FlutterFlowTheme.of(context).bodyText1.override(
@@ -705,8 +665,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                               textCapitalization: TextCapitalization.words,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
-                              controller: apellidoMController,
+                              controller: middleNameController,
                               decoration: InputDecoration(
+                                errorMaxLines: 3,
                                 labelText: "Middle Name",
                                 labelStyle:
                                     FlutterFlowTheme.of(context).bodyText1.override(
@@ -733,6 +694,14 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                 fillColor: FlutterFlowTheme.of(context).white,
                               ),
                               style: FlutterFlowTheme.of(context).bodyText1,
+                              validator: (value) {
+                                if (value != "" && value != null) {
+                                  return (capitalizadoCharacters.hasMatch(value) && nombreCharacters.hasMatch(value))
+                                  ? null
+                                  : 'The middle name should be capitalized and digits are not allowed.';
+                                }
+                                return null;
+                              },
                             ),
                           ),
                           Padding(
@@ -741,7 +710,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                             child: TextFormField(
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
-                              controller: telefonoController,
+                              controller: homePhoneController,
                               decoration: InputDecoration(
                                 labelText: "Home Phone",
                                 labelStyle:
@@ -773,14 +742,13 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(10),
                               ],
-                              validator: (value){
+                              validator: (value) {
                                 if(value != "" && value != null){
                                   return value.length < 10
                                     ? 'Input a valid number.'
                                     : null;
-                                }else{
-                                return null;
                                 }
+                                return null;
                               }
                             ),
                           ),
@@ -790,7 +758,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                             child: TextFormField(
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
-                              controller: mobileController,
+                              controller: mobilePhoneController,
                               decoration: InputDecoration(
                                 labelText: "Mobile Phone",
                                 labelStyle:
@@ -827,9 +795,8 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                   return value.length < 10
                                     ? 'Input a valid number.'
                                     : null;
-                                }else{
-                                return null;
                                 }
+                                return null;
                               }
                             ),
                           ),
@@ -841,9 +808,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                 child: DropDown(
                                   initialOption: rolUsuario,
                                   options: listRoles,
-                                  onChanged: (val) => setState(() {
-                                    rolUsuario = val!;
-                                  }),
+                                  onChanged: (val) {},
                                   width: double.infinity,
                                   height: 50,
                                   textStyle:
@@ -853,7 +818,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                             fontSize: 15,
                                             fontWeight: FontWeight.normal,
                                           ),
-                                  hintText: 'Select a rol',
+                                  hintText: 'Rol',
                                   icon: Icon(
                                     Icons.keyboard_arrow_down_rounded,
                                     color: FlutterFlowTheme.of(context).tertiaryColor,
@@ -869,12 +834,6 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                   hidesUnderline: true,
                                 ),
                               );
-                            },
-                            validator: (val) {
-                              if (rolUsuario == "" || rolUsuario.isEmpty) {
-                                return 'Select a rol to continue.';
-                              }
-                              return null;
                             },
                           ),
                           Padding(

@@ -146,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 filled: true,
-                                fillColor: Colors.white,
+                                fillColor: FlutterFlowTheme.of(context).white,
                                 contentPadding:
                                     const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
                                 errorStyle: TextStyle(
@@ -219,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 filled: true,
-                                fillColor: Colors.white,
+                                fillColor: FlutterFlowTheme.of(context).white,
                                 errorStyle: TextStyle(
                                   color: FlutterFlowTheme.of(context).white,
                                 ),

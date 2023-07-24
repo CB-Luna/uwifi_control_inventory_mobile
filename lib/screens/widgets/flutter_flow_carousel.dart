@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:page_transition/page_transition.dart';
 import 'dart:io';
 import 'package:taller_alex_app_asesor/database/image_evidence.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_expanded_image_view.dart';
 class FlutterFlowCarousel extends StatefulWidget {
   const FlutterFlowCarousel({
@@ -12,11 +13,13 @@ class FlutterFlowCarousel extends StatefulWidget {
     required this.width,
     required this.height,
     required this.listaImagenes,
+    required this.deleteImage,
   }) : super(key: key);
 
   final double width;
   final double height;
   final List<ImageEvidence> listaImagenes;
+  final void Function(ImageEvidence value)? deleteImage;
 
   @override
   _FlutterFlowCarouselState createState() => _FlutterFlowCarouselState();
@@ -47,6 +50,37 @@ class _FlutterFlowCarouselState extends State<FlutterFlowCarousel> {
                 ),
               ),
             );
+          },
+          onLongPress: () async {
+            bool? booleano =
+              await showModalBottomSheet(
+            isScrollControlled: true,
+            backgroundColor:
+                Colors.transparent,
+            context: context,
+            builder: (context) {
+              return Padding(
+                padding:
+                    MediaQuery.of(context)
+                        .viewInsets,
+                child: SizedBox(
+                  height:
+                      MediaQuery.of(context)
+                              .size
+                              .height *
+                          0.45,
+                  child:
+                      BottomSheetValidacionEliminarImagen(imagen: i.path,),
+                ),
+              );
+            },
+          );
+          if (booleano != null &&
+              booleano == true){
+                setState(() {
+                  widget.deleteImage!(i);
+                });
+              }
           },
           child: Hero(
             tag: i.path,

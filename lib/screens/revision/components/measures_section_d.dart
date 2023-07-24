@@ -18,6 +18,7 @@ import 'package:taller_alex_app_asesor/providers/database_providers/usuario_cont
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/header_shimmer.dart';
 import 'package:taller_alex_app_asesor/screens/revision/components/item_form.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_close_item_form.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_carousel.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
@@ -91,6 +92,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
   Widget build(BuildContext context) {
     final checkInFormController = Provider.of<CheckInFormController>(context);
     final userController = Provider.of<UsuarioController>(context);
+    final mileage = checkInFormController.mileage;
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: Row(
@@ -126,29 +128,57 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                 child: const Text("Mileage"),
                               ),
                               GestureDetector(
-                                onTap: () {
-                                  final mileageInt = int.parse(checkInFormProvider.mileage != "" ? checkInFormProvider.mileage.replaceAll(",", "") : "0");
-                                  if (mileageInt != 0) {
-                                    if (mileageInt < userController.usuarioCurrent!.vehicle.target!.mileage) {
-                                      checkInFormProvider.updateMileage("");
-                                      checkInFormProvider.flagOilChange = false;
-                                      checkInFormProvider.flagTransmissionFluidChange = false;
-                                      checkInFormProvider.flagRadiatorFluidChange = false;
+                                onTap: () async {
+                                  //Este botón no guarda la información ingresada para Mileage
+                                  bool? booleano =
+                                      await showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor:
+                                        Colors.transparent,
+                                    context: context,
+                                    builder: (context) {
+                                      return Padding(
+                                        padding:
+                                            MediaQuery.of(context)
+                                                .viewInsets,
+                                        child: SizedBox(
+                                          height:
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.45,
+                                          child:
+                                              const BottomSheetCloseItemForm(),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                  if (booleano != null &&
+                                      booleano == true){
+                                    if (mileage == checkInFormProvider.mileage) {
+                                      if (mounted) Navigator.pop(context);
+                                    } else {
+                                      final mileageInt = int.parse(checkInFormProvider.mileage != "" ? checkInFormProvider.mileage.replaceAll(",", "") : "0");
+                                      if (mileageInt != 0) {
+                                        checkInFormProvider.updateMileage(mileage);
+                                        if (mileageInt < userController.usuarioCurrent!.vehicle.target!.mileage) {
+                                          checkInFormProvider.flagOilChange = false;
+                                          checkInFormProvider.flagTransmissionFluidChange = false;
+                                          checkInFormProvider.flagRadiatorFluidChange = false;
+                                        }
+                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService) {
+                                          checkInFormProvider.flagOilChange = false;
+                                        } 
+                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.lastMileageService) {
+                                          checkInFormProvider.flagTransmissionFluidChange = false;
+                                        } 
+                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService) {
+                                          checkInFormProvider.flagRadiatorFluidChange = false;
+                                        } 
+                                      }
+                                      if (mounted) Navigator.pop(context);
                                     }
-                                    if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService) {
-                                      checkInFormProvider.updateMileage("");
-                                      checkInFormProvider.flagOilChange = false;
-                                    } 
-                                    if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.lastMileageService) {
-                                      checkInFormProvider.updateMileage("");
-                                      checkInFormProvider.flagTransmissionFluidChange = false;
-                                    } 
-                                    if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService) {
-                                      checkInFormProvider.updateMileage("");
-                                      checkInFormProvider.flagRadiatorFluidChange = false;
-                                    } 
                                   }
-                                  Navigator.pop(context);
                                 },
                                 child: ClayContainer(
                                   height: 30,
@@ -356,7 +386,10 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                             width: 180,
                                                             height: 100,
                                                             listaImagenes:
-                                                                checkInFormProvider.mileageImages)),
+                                                                checkInFormProvider.mileageImages,
+                                                            deleteImage: (image) {
+                                                              checkInFormProvider.deleteMileageImage(image);
+                                                            },)),
                                                   ),
                                                   Padding(
                                                     padding:
@@ -589,6 +622,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                                       child: GestureDetector(
                                         onTap: () {
+                                          //Este botón sí guarda la información ingresada para Mileage
                                           final mileageInt = int.parse(checkInFormProvider.mileage != "" ? checkInFormProvider.mileage.replaceAll(",", ""): "0");
                                           if (checkInFormProvider.validateKeyForm(keyForm)) {
                                             //Se valida para ruleOilChange
@@ -874,7 +908,10 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                                           width: 180,
                                                           height: 100,
                                                           listaImagenes:
-                                                              checkInFormProvider.gasImages)),
+                                                              checkInFormProvider.gasImages,
+                                                          deleteImage: (image) {
+                                                              checkInFormProvider.deleteGasImage(image);
+                                                            },)),
                                                 ),
                                                 Padding(
                                                   padding:
@@ -1185,8 +1222,8 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                   addImage: (image) {
                     checkInFormController.addEngineOilImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormController.updateEngineOilImage(image);
+                  deleteImage: (image) {
+                    checkInFormController.deleteEngineOilImage(image);
                   },
                   comments: checkInFormController.engineOilComments,
                   report: checkInFormController.engineOil,
@@ -1214,8 +1251,8 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                   addImage: (image) {
                     checkInFormController.addTransmissionImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormController.updateTransmissionImage(image);
+                  deleteImage: (image) {
+                    checkInFormController.deleteTransmissionImage(image);
                   },
                   comments: checkInFormController.transmissionComments,
                   report: checkInFormController.transmission,
@@ -1243,8 +1280,8 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                   addImage: (image) {
                     checkInFormController.addCoolantImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormController.updateCoolantImage(image);
+                  deleteImage: (image) {
+                    checkInFormController.deleteCoolantImage(image);
                   },
                   comments: checkInFormController.coolantComments,
                   report: checkInFormController.coolant,
@@ -1272,8 +1309,8 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                   addImage: (image) {
                     checkInFormController.addPowerSteeringImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormController.updatePowerSteeringImage(image);
+                  deleteImage: (image) {
+                    checkInFormController.deletePowerSteeringImage(image);
                   },
                   comments: checkInFormController.powerSteeringComments,
                   report: checkInFormController.powerSteering,
@@ -1301,8 +1338,8 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                   addImage: (image) {
                     checkInFormController.addDieselExhaustFluidImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormController.updateDieselExhaustFluidImage(image);
+                  deleteImage: (image) {
+                    checkInFormController.deleteDieselExhaustFluidImage(image);
                   },
                   comments: checkInFormController.dieselExhaustFluidComments,
                   report: checkInFormController.dieselExhaustFluid,
@@ -1330,8 +1367,8 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                   addImage: (image) {
                     checkInFormController.addWindshieldWasherFluidImage(image);
                   },
-                  updateImage: (image) {
-                    checkInFormController.updateWindshieldWasherFluidImage(image);
+                  deleteImage: (image) {
+                    checkInFormController.deleteWindshieldWasherFluidImage(image);
                   },
                   comments: checkInFormController.windshieldWasherFluidComments,
                   report: checkInFormController.windshieldWasherFluid,

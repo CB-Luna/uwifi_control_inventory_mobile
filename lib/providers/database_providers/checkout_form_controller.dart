@@ -1060,18 +1060,16 @@ class CheckOutFormController extends ChangeNotifier {
     gasImages.add(image);
     notifyListeners();
   }
-  void updateGasImage(ImageEvidence image) {
-    gasImages.removeLast();
-    gasImages.add(image);
+  void deleteGasImage(ImageEvidence image) {
+    gasImages.remove(image);
     notifyListeners();
   }
   void addMileageImage(ImageEvidence image) {
     mileageImages.add(image);
     notifyListeners();
   }
-  void updateMileageImage(ImageEvidence image) {
-    mileageImages.removeLast();
-    mileageImages.add(image);
+  void deleteMileageImage(ImageEvidence image) {
+    mileageImages.remove(image);
     notifyListeners();
   }
 
@@ -1080,90 +1078,80 @@ class CheckOutFormController extends ChangeNotifier {
     headLightsImages.add(image);
     notifyListeners();
   }
-  void updateHeadLightsImage(ImageEvidence image) {
-    headLightsImages.removeLast();
-    headLightsImages.add(image);
+  void deleteHeadLightsImage(ImageEvidence image) {
+    headLightsImages.remove(image);
     notifyListeners();
   }
   void addBrakeLightsImage(ImageEvidence image) {
     brakeLightsImages.add(image);
     notifyListeners();
   }
-  void updateBrakeLightsImage(ImageEvidence image) {
-    brakeLightsImages.removeLast();
-    brakeLightsImages.add(image);
+  void deleteBrakeLightsImage(ImageEvidence image) {
+    brakeLightsImages.remove(image);
     notifyListeners();
   }
   void addReverseLightsImage(ImageEvidence image) {
     reverseLightsImages.add(image);
     notifyListeners();
   }
-  void updateReverseLightsImage(ImageEvidence image) {
-    reverseLightsImages.removeLast();
-    reverseLightsImages.add(image);
+  void deleteReverseLightsImage(ImageEvidence image) {
+    reverseLightsImages.remove(image);
     notifyListeners();
   }
   void addWarningLightsImage(ImageEvidence image) {
     warningLightsImages.add(image);
     notifyListeners();
   }
-  void updateWarningLightsImage(ImageEvidence image) {
-    warningLightsImages.removeLast();
-    warningLightsImages.add(image);
+  void deleteWarningLightsImage(ImageEvidence image) {
+    warningLightsImages.remove(image);
     notifyListeners();
   }
   void addTurnSignalsImage(ImageEvidence image) {
     turnSignalsImages.add(image);
     notifyListeners();
   }
-  void updateTurnSignalsImage(ImageEvidence image) {
-    turnSignalsImages.removeLast();
-    turnSignalsImages.add(image);
+  void deleteTurnSignalsImage(ImageEvidence image) {
+    turnSignalsImages.remove(image);
     notifyListeners();
   }
   void addFourWayFlashersImage(ImageEvidence image) {
     fourWayFlashersImages.add(image);
     notifyListeners();
   }
-  void updateFourWayFlashersImage(ImageEvidence image) {
-    fourWayFlashersImages.removeLast();
-    fourWayFlashersImages.add(image);
+  void deleteFourWayFlashersImage(ImageEvidence image) {
+    fourWayFlashersImages.remove(image);
     notifyListeners();
   }
   void addDashLightsImage(ImageEvidence image) {
     dashLightsImages.add(image);
     notifyListeners();
   }
-  void updateDashLightsImage(ImageEvidence image) {
-    dashLightsImages.removeLast();
-    dashLightsImages.add(image);
+  void deleteDashLightsImage(ImageEvidence image) {
+    dashLightsImages.remove(image);
     notifyListeners();
   }
   void addStrobeLightsImage(ImageEvidence image) {
     strobeLightsImages.add(image);
     notifyListeners();
   }
-  void updateStrobeLightsImage(ImageEvidence image) {
-    strobeLightsImages.removeLast();
-    strobeLightsImages.add(image);
+  void deleteStrobeLightsImage(ImageEvidence image) {
+    strobeLightsImages.remove(image);
     notifyListeners();
   }
   void addCabRoofLightsImage(ImageEvidence image) {
     cabRoofLightsImages.add(image);
     notifyListeners();
   }
-  void updateCabRoofLightsImage(ImageEvidence image) {
-    cabRoofLightsImages.removeLast();
-    cabRoofLightsImages.add(image);
+  void deleteCabRoofLightsImage(ImageEvidence image) {
+    cabRoofLightsImages.remove(image);
     notifyListeners();
   }
   void addClearanceLightsImage(ImageEvidence image) {
     clearanceLightsImages.add(image);
     notifyListeners();
   }
-  void updateClearanceLightsImage(ImageEvidence image) {
-    clearanceLightsImages.removeLast();
-    clearanceLightsImages.add(image);
+  void deleteClearanceLightsImage(ImageEvidence image) {
+    clearanceLightsImages.remove(image);
     notifyListeners();
   }
 
@@ -1172,117 +1160,104 @@ class CheckOutFormController extends ChangeNotifier {
     wiperBladesFrontImages.add(image);
     notifyListeners();
   }
-  void updateWiperBladesFrontImage(ImageEvidence image) {
-    wiperBladesFrontImages.removeLast();
-    wiperBladesFrontImages.add(image);
+  void deleteWiperBladesFrontImage(ImageEvidence image) {
+    wiperBladesFrontImages.remove(image);
     notifyListeners();
   }
   void addWiperBladesBackImage(ImageEvidence image) {
     wiperBladesBackImages.add(image);
     notifyListeners();
   }
-  void updateWiperBladesBackImage(ImageEvidence image) {
-    wiperBladesBackImages.removeLast();
-    wiperBladesBackImages.add(image);
+  void deleteWiperBladesBackImage(ImageEvidence image) {
+    wiperBladesBackImages.remove(image);
     notifyListeners();
   }
   void addWindshieldWiperFrontImage(ImageEvidence image) {
     windshieldWiperFrontImages.add(image);
     notifyListeners();
   }
-  void updateWindshieldWiperFrontImage(ImageEvidence image) {
-    windshieldWiperFrontImages.removeLast();
-    windshieldWiperFrontImages.add(image);
+  void deleteWindshieldWiperFrontImage(ImageEvidence image) {
+    windshieldWiperFrontImages.remove(image);
     notifyListeners();
   }
   void addWindshieldWiperBackImage(ImageEvidence image) {
     windshieldWiperBackImages.add(image);
     notifyListeners();
   }
-  void updateWindshieldWiperBackImage(ImageEvidence image) {
-    windshieldWiperBackImages.removeLast();
-    windshieldWiperBackImages.add(image);
+  void deleteWindshieldWiperBackImage(ImageEvidence image) {
+    windshieldWiperBackImages.remove(image);
     notifyListeners();
   }
   void addGeneralBodyImage(ImageEvidence image) {
     generalBodyImages.add(image);
     notifyListeners();
   }
-  void updateGeneralBodyImage(ImageEvidence image) {
-    generalBodyImages.removeLast();
-    generalBodyImages.add(image);
+  void deleteGeneralBodyImage(ImageEvidence image) {
+    generalBodyImages.remove(image);
     notifyListeners();
   }
   void addDecalingImage(ImageEvidence image) {
     decalingImages.add(image);
     notifyListeners();
   }
-  void updateDecalingImage(ImageEvidence image) {
-    decalingImages.removeLast();
-    decalingImages.add(image);
+  void deleteDecalingImage(ImageEvidence image) {
+    decalingImages.remove(image);
     notifyListeners();
   }
   void addTiresImage(ImageEvidence image) {
     tiresImages.add(image);
     notifyListeners();
   }
-  void updateTiresImage(ImageEvidence image) {
-    tiresImages.removeLast();
-    tiresImages.add(image);
+  void deleteTiresImage(ImageEvidence image) {
+    tiresImages.remove(image);
     notifyListeners();
   }
   void addGlassImage(ImageEvidence image) {
     glassImages.add(image);
     notifyListeners();
   }
-  void updateGlassImage(ImageEvidence image) {
-    glassImages.removeLast();
-    glassImages.add(image);
+  void deleteGlassImage(ImageEvidence image) {
+    glassImages.remove(image);
     notifyListeners();
   }
   void addMirrorsImage(ImageEvidence image) {
     mirrorsImages.add(image);
     notifyListeners();
   }
-  void updateMirrorsImage(ImageEvidence image) {
-    mirrorsImages.removeLast();
-    mirrorsImages.add(image);
+  void deleteMirrorsImage(ImageEvidence image) {
+    mirrorsImages.remove(image);
     notifyListeners();
   }
   void addParkingImage(ImageEvidence image) {
     parkingImages.add(image);
     notifyListeners();
   }
-  void updateParkingImage(ImageEvidence image) {
-    parkingImages.removeLast();
-    parkingImages.add(image);
+  void deleteParkingImage(ImageEvidence image) {
+    parkingImages.remove(image);
     notifyListeners();
   }
   void addBrakesImage(ImageEvidence image) {
     brakesImages.add(image);
     notifyListeners();
   }
-  void updateBrakesImage(ImageEvidence image) {
-    brakesImages.removeLast();
-    brakesImages.add(image);
+  void deleteBrakesImage(ImageEvidence image) {
+    brakesImages.remove(image);
     notifyListeners();
   }
   void addEMGBrakesImage(ImageEvidence image) {
     emgBrakesImages.add(image);
     notifyListeners();
   }
-  void updateEMGBrakesImage(ImageEvidence image) {
-    emgBrakesImages.removeLast();
-    emgBrakesImages.add(image);
+  void deleteEMGBrakesImage(ImageEvidence image) {
+    emgBrakesImages.remove(image);
     notifyListeners();
   }
   void addHornImage(ImageEvidence image) {
     hornImages.add(image);
     notifyListeners();
   }
-  void updateHornImage(ImageEvidence image) {
-    hornImages.removeLast();
-    hornImages.add(image);
+  void deleteHornImage(ImageEvidence image) {
+    hornImages.remove(image);
     notifyListeners();
   }
 
@@ -1290,54 +1265,48 @@ class CheckOutFormController extends ChangeNotifier {
     engineOilImages.add(image);
     notifyListeners();
   }
-  void updateEngineOilImage(ImageEvidence image) {
-    engineOilImages.removeLast();
-    engineOilImages.add(image);
+  void deleteEngineOilImage(ImageEvidence image) {
+    engineOilImages.remove(image);
     notifyListeners();
   }
   void addTransmissionImage(ImageEvidence image) {
     transmissionImages.add(image);
     notifyListeners();
   }
-  void updateTransmissionImage(ImageEvidence image) {
-    transmissionImages.removeLast();
-    transmissionImages.add(image);
+  void deleteTransmissionImage(ImageEvidence image) {
+    transmissionImages.remove(image);
     notifyListeners();
   }
   void addCoolantImage(ImageEvidence image) {
     coolantImages.add(image);
     notifyListeners();
   }
-  void updateCoolantImage(ImageEvidence image) {
-    coolantImages.removeLast();
-    coolantImages.add(image);
+  void deleteCoolantImage(ImageEvidence image) {
+    coolantImages.remove(image);
     notifyListeners();
   }
   void addPowerSteeringImage(ImageEvidence image) {
     powerSteeringImages.add(image);
     notifyListeners();
   }
-  void updatePowerSteeringImage(ImageEvidence image) {
-    powerSteeringImages.removeLast();
-    powerSteeringImages.add(image);
+  void deletePowerSteeringImage(ImageEvidence image) {
+    powerSteeringImages.remove(image);
     notifyListeners();
   }
   void addDieselExhaustFluidImage(ImageEvidence image) {
     dieselExhaustFluidImages.add(image);
     notifyListeners();
   }
-  void updateDieselExhaustFluidImage(ImageEvidence image) {
-    dieselExhaustFluidImages.removeLast();
-    dieselExhaustFluidImages.add(image);
+  void deleteDieselExhaustFluidImage(ImageEvidence image) {
+    dieselExhaustFluidImages.remove(image);
     notifyListeners();
   }
   void addWindshieldWasherFluidImage(ImageEvidence image) {
     windshieldWasherFluidImages.add(image);
     notifyListeners();
   }
-  void updateWindshieldWasherFluidImage(ImageEvidence image) {
-    windshieldWasherFluidImages.removeLast();
-    windshieldWasherFluidImages.add(image);
+  void deleteWindshieldWasherFluidImage(ImageEvidence image) {
+    windshieldWasherFluidImages.remove(image);
     notifyListeners();
   }
 
@@ -1345,27 +1314,24 @@ class CheckOutFormController extends ChangeNotifier {
     insulatedImages.add(image);
     notifyListeners();
   }
-  void updateInsulatedImage(ImageEvidence image) {
-    insulatedImages.removeLast();
-    insulatedImages.add(image);
+  void deleteInsulatedImage(ImageEvidence image) {
+    insulatedImages.remove(image);
     notifyListeners();
   }
   void addHolesDrilledImage(ImageEvidence image) {
     holesDrilledImages.add(image);
     notifyListeners();
   }
-  void updateHolesDrilledImage(ImageEvidence image) {
-    holesDrilledImages.removeLast();
-    holesDrilledImages.add(image);
+  void deleteHolesDrilledImage(ImageEvidence image) {
+    holesDrilledImages.remove(image);
     notifyListeners();
   }
   void addBucketLinerImage(ImageEvidence image) {
     bucketLinerImages.add(image);
     notifyListeners();
   }
-  void updateBucketLinerImage(ImageEvidence image) {
-    bucketLinerImages.removeLast();
-    bucketLinerImages.add(image);
+  void deleteBucketLinerImage(ImageEvidence image) {
+    bucketLinerImages.remove(image);
     notifyListeners();
   }
 
@@ -1373,54 +1339,48 @@ class CheckOutFormController extends ChangeNotifier {
     rtaMagnetImages.add(image);
     notifyListeners();
   }
-  void updateRTAMagnetImage(ImageEvidence image) {
-    rtaMagnetImages.removeLast();
-    rtaMagnetImages.add(image);
+  void deleteRTAMagnetImage(ImageEvidence image) {
+    rtaMagnetImages.remove(image);
     notifyListeners();
   }
   void addTriangleReflectorsImage(ImageEvidence image) {
     triangleReflectorsImages.add(image);
     notifyListeners();
   }
-  void updateTriangleReflectorsImage(ImageEvidence image) {
-    triangleReflectorsImages.removeLast();
-    triangleReflectorsImages.add(image);
+  void deleteTriangleReflectorsImage(ImageEvidence image) {
+    triangleReflectorsImages.remove(image);
     notifyListeners();
   }
   void addWheelChocksImage(ImageEvidence image) {
     wheelChocksImages.add(image);
     notifyListeners();
   }
-  void updateWheelChocksImage(ImageEvidence image) {
-    wheelChocksImages.removeLast();
-    wheelChocksImages.add(image);
+  void deleteWheelChocksImage(ImageEvidence image) {
+    wheelChocksImages.remove(image);
     notifyListeners();
   }
   void addFireExtinguisherImage(ImageEvidence image) {
     fireExtinguisherImages.add(image);
     notifyListeners();
   }
-  void updateFireExtinguisherImage(ImageEvidence image) {
-    fireExtinguisherImages.removeLast();
-    fireExtinguisherImages.add(image);
+  void deleteFireExtinguisherImage(ImageEvidence image) {
+    fireExtinguisherImages.remove(image);
     notifyListeners();
   }
   void addFirstAidKitSafetyVestImage(ImageEvidence image) {
     firstAidKitSafetyVestImages.add(image);
     notifyListeners();
   }
-  void updateFirstAidKitSafetyVestImage(ImageEvidence image) {
-    firstAidKitSafetyVestImages.removeLast();
-    firstAidKitSafetyVestImages.add(image);
+  void deleteFirstAidKitSafetyVestImage(ImageEvidence image) {
+    firstAidKitSafetyVestImages.remove(image);
     notifyListeners();
   }
   void addBackUpAlarmImage(ImageEvidence image) {
     backUpAlarmImages.add(image);
     notifyListeners();
   }
-  void updateBackUpAlarmImage(ImageEvidence image) {
-    backUpAlarmImages.removeLast();
-    backUpAlarmImages.add(image);
+  void deleteBackUpAlarmImage(ImageEvidence image) {
+    backUpAlarmImages.remove(image);
     notifyListeners();
   }
 
@@ -1428,72 +1388,64 @@ class CheckOutFormController extends ChangeNotifier {
     ladderImages.add(image);
     notifyListeners();
   }
-  void updateLadderImage(ImageEvidence image) {
-    ladderImages.removeLast();
-    ladderImages.add(image);
+  void deleteLadderImage(ImageEvidence image) {
+    ladderImages.remove(image);
     notifyListeners();
   }
   void addStepLadderImage(ImageEvidence image) {
     stepLadderImages.add(image);
     notifyListeners();
   }
-  void updateStepLadderImage(ImageEvidence image) {
-    stepLadderImages.removeLast();
-    stepLadderImages.add(image);
+  void deleteStepLadderImage(ImageEvidence image) {
+    stepLadderImages.remove(image);
     notifyListeners();
   }
   void addLadderStrapsImage(ImageEvidence image) {
     ladderStrapsImages.add(image);
     notifyListeners();
   }
-  void updateLadderStrapsImage(ImageEvidence image) {
-    ladderStrapsImages.removeLast();
-    ladderStrapsImages.add(image);
+  void deleteLadderStrapsImage(ImageEvidence image) {
+    ladderStrapsImages.remove(image);
     notifyListeners();
   }
   void addHydraulicFluidForBucketImage(ImageEvidence image) {
     hydraulicFluidForBucketImages.add(image);
     notifyListeners();
   }
-  void updateHydraulicFluidForBucketImage(ImageEvidence image) {
-    hydraulicFluidForBucketImages.removeLast();
-    hydraulicFluidForBucketImages.add(image);
+  void deleteHydraulicFluidForBucketImage(ImageEvidence image) {
+    hydraulicFluidForBucketImages.remove(image);
     notifyListeners();
   }
   void addFiberReelRackImage(ImageEvidence image) {
     fiberReelRackImages.add(image);
     notifyListeners();
   }
-  void updateFiberReelRackImage(ImageEvidence image) {
-    fiberReelRackImages.removeLast();
-    fiberReelRackImages.add(image);
+  void deleteFiberReelRackImage(ImageEvidence image) {
+    fiberReelRackImages.remove(image);
     notifyListeners();
   }
   void addBinsLockedAndSecureImage(ImageEvidence image) {
     binsLockedAndSecureImages.add(image);
     notifyListeners();
   }
-  void updateBinsLockedAndSecureImage(ImageEvidence image) {
-    binsLockedAndSecureImages.removeLast();
-    binsLockedAndSecureImages.add(image);
+  void deleteBinsLockedAndSecureImage(ImageEvidence image) {
+    binsLockedAndSecureImages.remove(image);
     notifyListeners();
   }
   void addSafetyHarnessImage(ImageEvidence image) {
     safetyHarnessImages.add(image);
     notifyListeners();
   }
-  void updateSafetyHarnessImage(ImageEvidence image) {
-    safetyHarnessImages.removeLast();
-    safetyHarnessImages.add(image);
+  void deleteSafetyHarnessImage(ImageEvidence image) {
+    safetyHarnessImages.remove(image);
     notifyListeners();
   }
   void addLanyardSafetyHarnessImage(ImageEvidence image) {
     lanyardSafetyHarnessImages.add(image);
     notifyListeners();
   }
-  void updateLanyardSafetyHarnessImage(ImageEvidence image) {
-    lanyardSafetyHarnessImages.removeLast();
-    lanyardSafetyHarnessImages.add(image);
+  void deleteLanyardSafetyHarnessImage(ImageEvidence image) {
+    lanyardSafetyHarnessImages.remove(image);
     notifyListeners();
   }
 
@@ -1501,45 +1453,108 @@ class CheckOutFormController extends ChangeNotifier {
     ignitionKeyImages.add(image);
     notifyListeners();
   }
-  void updateIgnitionKeyImage(ImageEvidence image) {
-    ignitionKeyImages.removeLast();
-    ignitionKeyImages.add(image);
+  void deleteIgnitionKeyImage(ImageEvidence image) {
+    ignitionKeyImages.remove(image);
     notifyListeners();
   }
   void addBinsBoxKeyImage(ImageEvidence image) {
     binsBoxKeyImages.add(image);
     notifyListeners();
   }
-  void updateBinsBoxKeyImage(ImageEvidence image) {
-    binsBoxKeyImages.removeLast();
-    binsBoxKeyImages.add(image);
+  void deleteBinsBoxKeyImage(ImageEvidence image) {
+    binsBoxKeyImages.remove(image);
     notifyListeners();
   }
   void addVehicleRegistrationCopyImage(ImageEvidence image) {
     vehicleRegistrationCopyImages.add(image);
     notifyListeners();
   }
-  void updateVehicleRegistrationCopyImage(ImageEvidence image) {
-    vehicleRegistrationCopyImages.removeLast();
-    vehicleRegistrationCopyImages.add(image);
+  void deleteVehicleRegistrationCopyImage(ImageEvidence image) {
+    vehicleRegistrationCopyImages.remove(image);
     notifyListeners();
   }
   void addVehicleInsuranceCopyImage(ImageEvidence image) {
     vehicleInsuranceCopyImages.add(image);
     notifyListeners();
   }
-  void updateVehicleInsuranceCopyImage(ImageEvidence image) {
-    vehicleInsuranceCopyImages.removeLast();
-    vehicleInsuranceCopyImages.add(image);
+  void deleteVehicleInsuranceCopyImage(ImageEvidence image) {
+    vehicleInsuranceCopyImages.remove(image);
     notifyListeners();
   }
   void addBucketLiftOperatorManualImage(ImageEvidence image) {
     bucketLiftOperatorManualImages.add(image);
     notifyListeners();
   }
-  void updateBucketLiftOperatorManualImage(ImageEvidence image) {
-    bucketLiftOperatorManualImages.removeLast();
-    bucketLiftOperatorManualImages.add(image);
+  void deleteBucketLiftOperatorManualImage(ImageEvidence image) {
+    bucketLiftOperatorManualImages.remove(image);
+    notifyListeners();
+  }
+
+  //Required images in bad state fields
+  void clearInsulated() {
+    insulated = "Good";
+    badStateEquipment -= 1;
+    notifyListeners();
+  }
+  void clearHolesDrilled() {
+    holesDrilled = "Good";
+    badStateEquipment -= 1;
+    notifyListeners();
+  }
+  void clearBucketLiner() {
+    bucketLiner = "Good";
+    badStateEquipment -= 1;
+    notifyListeners();
+  }
+
+  void clearWiperBladesFront() {
+    wiperBladesFront = "Good";
+    badStateLights -= 1;
+    notifyListeners();
+  }
+  void clearWiperBladesBack() {
+    wiperBladesBack = "Good";
+    badStateLights -= 1;
+    notifyListeners();
+  }
+  void clearWindshieldWiperFront() {
+    windshieldWiperFront = "Good";
+    badStateLights -= 1;
+    notifyListeners();
+  }
+  void clearWindshieldWiperBack() {
+    windshieldWiperBack = "Good";
+    badStateLights -= 1;
+    notifyListeners();
+  }
+  void clearGeneralBody() {
+    generalBody = "Good";
+    badStateLights -= 1;
+    notifyListeners();
+  }
+  void clearDecaling() {
+    decaling = "Good";
+    badStateLights -= 1;
+    notifyListeners();
+  }
+  void clearTires() {
+    tires = "Good";
+    badStateLights -= 1;
+    notifyListeners();
+  }
+  void clearGlass() {
+    glass = "Good";
+    badStateLights -= 1;
+    notifyListeners();
+  }
+  void clearMirrors() {
+    mirrors = "Good";
+    badStateLights -= 1;
+    notifyListeners();
+  }
+  void clearParking() {
+    parking = "Good";
+    badStateLights -= 1;
     notifyListeners();
   }
 

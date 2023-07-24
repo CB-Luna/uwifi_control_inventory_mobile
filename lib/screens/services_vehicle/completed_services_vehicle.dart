@@ -11,6 +11,7 @@ import 'package:taller_alex_app_asesor/screens/services_vehicle/services_vehicle
 import 'package:taller_alex_app_asesor/screens/services_vehicle/services_vehicle_updated_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/drop_down.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as picker;
 import 'package:taller_alex_app_asesor/util/util.dart';
 
 class CompletedServicesVehicleScreen extends StatefulWidget {
@@ -304,18 +305,16 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                       autovalidateMode:
                           AutovalidateMode.onUserInteraction,
                       onTap: () async {
-                        await showDatePicker(
-                          context: context,
-                          initialDate: getCurrentTimestamp,
-                          selectableDayPredicate: (date) {
+                        await picker.DatePicker.showDatePicker(
+                          context,
+                          showTitleActions: true,
+                          onConfirm: (date) {
                             setState(() {
                               vehiculoController.updateCompletedDate(date);
                             });
-                            return true;
                           },
-                          currentDate: getCurrentTimestamp,
-                          firstDate: widget.vehicleServices.serviceDate ?? DateTime.now(),
-                          lastDate: widget.vehicleServices.serviceDate ?? DateTime.now(),
+                          currentTime: getCurrentTimestamp,
+                          minTime: widget.vehicleServices.serviceDate ?? DateTime.now()
                         );
                       },
                       obscureText: false,

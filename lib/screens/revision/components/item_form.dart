@@ -1,17 +1,22 @@
 import 'dart:io' as libraryIO;
+import 'dart:io';
 import 'dart:typed_data';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:taller_alex_app_asesor/database/image_evidence.dart';
 import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_image_required.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/drop_down.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_carousel.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_expanded_image_view.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class ItemForm extends StatefulWidget {
@@ -24,12 +29,14 @@ class ItemForm extends StatefulWidget {
     required this.isRight,
     required this.images,
     this.addImage,
-    this.updateImage,
+    this.deleteImage,
     this.comments,
     this.report,
     this.updateReport,
+    this.clearReport,
     this.reportYesNo = false,
     this.isRegistered = false,
+    this.requiredImages = false,
   }) : super(key: key);
 
   final String textItem;
@@ -39,12 +46,14 @@ class ItemForm extends StatefulWidget {
   final bool isRight;
   final List<ImageEvidence> images;
   final void Function(ImageEvidence value)? addImage;
-  final void Function(ImageEvidence value)? updateImage;
+  final void Function(ImageEvidence value)? deleteImage;
   final TextEditingController? comments;
   final String? report;
   final void Function(String value)? updateReport;
+  final void Function()? clearReport;
   final bool reportYesNo;
   final bool isRegistered;
+  final bool requiredImages;
 
   @override
   State<ItemForm> createState() => _ItemFormState();
@@ -147,7 +156,22 @@ class _ItemFormState extends State<ItemForm> {
                     ),
                     GestureDetector(
                       onTap: () {
+                        if (widget.requiredImages) {
+                          if (widget.report == "Bad" || widget.report == "No") {
+                            if (widget.images.isEmpty) {
+                              setState(() {
+                                widget.clearReport!();
+                              });
+                              Navigator.pop(context);
+                            } else {
+                              Navigator.pop(context);
+                            }
+                          } else {
+                            Navigator.pop(context);
+                          }
+                        } else {
                           Navigator.pop(context);
+                        }
                       },
                       child: ClayContainer(
                         height: 30,
@@ -319,13 +343,85 @@ class _ItemFormState extends State<ItemForm> {
                                               BorderRadius.circular(5),
                                         ),
                                         child: SizedBox(
-                                            width: 180,
-                                            height: 100,
-                                            child: FlutterFlowCarousel(
-                                                width: 180,
-                                                height: 100,
-                                                listaImagenes:
-                                                    widget.images)),
+                                        width: 180,
+                                        height: 100,
+                                        child: CarouselSlider(
+                                          options: CarouselOptions(height: 400.0),
+                                          items: widget.images.map((i) {
+                                            return Builder(
+                                              builder: (BuildContext context) {
+                                                return InkWell(
+                                                  onTap: () async {
+                                                    await Navigator.push(
+                                                      context,
+                                                      PageTransition(
+                                                        type: PageTransitionType.fade,
+                                                        child: FlutterFlowExpandedImageView(
+                                                          image: Image.file(
+                                                            File(i.path),
+                                                            fit: BoxFit.contain,
+                                                          ),
+                                                          allowRotation: false,
+                                                          tag: i.path,
+                                                          useHeroAnimation: true,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  onLongPress: () async {
+                                                    bool? booleano =
+                                                      await showModalBottomSheet(
+                                                    isScrollControlled: true,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return Padding(
+                                                        padding:
+                                                            MediaQuery.of(context)
+                                                                .viewInsets,
+                                                        child: SizedBox(
+                                                          height:
+                                                              MediaQuery.of(context)
+                                                                      .size
+                                                                      .height *
+                                                                  0.45,
+                                                          child:
+                                                              BottomSheetValidacionEliminarImagen(imagen: i.path,),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                  if (booleano != null &&
+                                                      booleano == true){
+                                                        setState(() {
+                                                          widget.deleteImage!(i);
+                                                        });
+                                                      }
+                                                  },
+                                                  child: Hero(
+                                                    tag: i.path,
+                                                    transitionOnUserGestures: true,
+                                                    child: Container(
+                                                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                                      width: MediaQuery.of(context).size.width,
+                                                      height: 200,
+                                                      clipBehavior: Clip.antiAlias,
+                                                      decoration: const BoxDecoration(
+                                                        shape: BoxShape.rectangle,
+                                                      ),
+                                                      child: 
+                                                          Image.file(
+                                                        File(i.path),
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          }).toList(),
+                                        )),
                                       ),
                                       Padding(
                                         padding:
@@ -569,23 +665,50 @@ class _ItemFormState extends State<ItemForm> {
                             ),
                           );
                         }, validator: (val) {
-                          if (val == []) {
-                            return 'Images are required';
+                          if (widget.requiredImages) {
+                            if (val == []) {
+                              return 'Images are required';
+                            }
                           }
                           return null;
                         }),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                           child: GestureDetector(
-                            onTap: () {
-                              if (widget.report == "Bad" || widget.report == "No") {
-                                if (widget.images.isEmpty) {
-                                  snackbarKey.currentState
-                                      ?.showSnackBar(const SnackBar(
-                                    content: Text(
-                                        "You need to add images like a evidence."),
-                                  ));
-                                  return;
+                            onTap: () async {
+                              if (widget.requiredImages) {
+                                if (widget.report == "Bad" || widget.report == "No") {
+                                  if (widget.images.isEmpty) {
+                                    bool? booleano =
+                                      await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor:
+                                          Colors.transparent,
+                                      context: context,
+                                      builder: (context) {
+                                        return Padding(
+                                          padding:
+                                              MediaQuery.of(context)
+                                                  .viewInsets,
+                                          child: SizedBox(
+                                            height:
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.45,
+                                            child:
+                                                const BottomSheetImageRequired(),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                    if (booleano == null &&
+                                        booleano == true){
+                                      return;
+                                    }
+                                  } else {
+                                    Navigator.pop(context);
+                                  }
                                 } else {
                                   Navigator.pop(context);
                                 }

@@ -101,8 +101,8 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addHeadLightsImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateHeadLightsImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteHeadLightsImage(image);
                   },
                   comments: checkOutFormProvider.headLightsComments,
                   report: checkOutFormProvider.headLights,
@@ -130,8 +130,8 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addBrakeLightsImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateBrakeLightsImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteBrakeLightsImage(image);
                   },
                   comments: checkOutFormProvider.brakeLightsComments,
                   report: checkOutFormProvider.brakeLights,
@@ -159,8 +159,8 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addReverseLightsImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateReverseLightsImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteReverseLightsImage(image);
                   },
                   comments: checkOutFormProvider.reverseLightsComments,
                   report: checkOutFormProvider.reverseLights,
@@ -188,8 +188,8 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addWarningLightsImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateWarningLightsImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteWarningLightsImage(image);
                   },
                   comments: checkOutFormProvider.warningLightsComments,
                   report: checkOutFormProvider.warningLights,
@@ -217,8 +217,8 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addTurnSignalsImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateTurnSignalsImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteTurnSignalsImage(image);
                   },
                   comments: checkOutFormProvider.turnSignalsComments,
                   report: checkOutFormProvider.turnSignals,
@@ -246,8 +246,8 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addFourWayFlashersImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateFourWayFlashersImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteFourWayFlashersImage(image);
                   },
                   comments: checkOutFormProvider.fourWayFlashersComments,
                   report: checkOutFormProvider.fourWayFlashers,
@@ -275,8 +275,8 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addDashLightsImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateDashLightsImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteDashLightsImage(image);
                   },
                   comments: checkOutFormProvider.dashLightsComments,
                   report: checkOutFormProvider.dashLights,
@@ -304,8 +304,8 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addStrobeLightsImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateStrobeLightsImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteStrobeLightsImage(image);
                   },
                   comments: checkOutFormProvider.strobeLightsComments,
                   report: checkOutFormProvider.strobeLights,
@@ -333,8 +333,8 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addCabRoofLightsImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateCabRoofLightsImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteCabRoofLightsImage(image);
                   },
                   comments: checkOutFormProvider.cabRoofLightsComments,
                   report: checkOutFormProvider.cabRoofLights,
@@ -362,8 +362,8 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addClearanceLightsImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateClearanceLightsImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteClearanceLightsImage(image);
                   },
                   comments: checkOutFormProvider.clearanceLightsComments,
                   report: checkOutFormProvider.clearanceLights,
@@ -402,13 +402,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addWiperBladesFrontImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateWiperBladesFrontImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteWiperBladesFrontImage(image);
                   },
                   comments: checkOutFormProvider.wiperBladesFrontComments,
                   report: checkOutFormProvider.wiperBladesFront,
                   updateReport: (report) {
                     checkOutFormProvider.updateWiperBladesFront(report);
+                  },
+                  requiredImages: true,
+                  clearReport: () {
+                    checkOutFormProvider.clearWiperBladesFront();
                   },
                 ),
                 Divider(
@@ -431,13 +435,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addWiperBladesBackImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateWiperBladesBackImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteWiperBladesBackImage(image);
                   },
                   comments: checkOutFormProvider.wiperBladesBackComments,
                   report: checkOutFormProvider.wiperBladesBack,
                   updateReport: (report) {
                     checkOutFormProvider.updateWiperBladesBack(report);
+                  },
+                  requiredImages: true,
+                  clearReport: () {
+                    checkOutFormProvider.clearWiperBladesBack();
                   },
                 ),
                 Divider(
@@ -460,13 +468,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addWindshieldWiperFrontImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateWindshieldWiperFrontImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteWindshieldWiperFrontImage(image);
                   },
                   comments: checkOutFormProvider.windshieldWiperFrontComments,
                   report: checkOutFormProvider.windshieldWiperFront,
                   updateReport: (report) {
                     checkOutFormProvider.updateWindshieldWiperFront(report);
+                  },
+                  requiredImages: true,
+                  clearReport: () {
+                    checkOutFormProvider.clearWindshieldWiperFront();
                   },
                 ),
                 Divider(
@@ -489,13 +501,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addWindshieldWiperBackImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateWindshieldWiperBackImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteWindshieldWiperBackImage(image);
                   },
                   comments: checkOutFormProvider.windshieldWiperBackComments,
                   report: checkOutFormProvider.windshieldWiperBack,
                   updateReport: (report) {
                     checkOutFormProvider.updateWindshieldWiperBack(report);
+                  },
+                  requiredImages: true,
+                  clearReport: () {
+                    checkOutFormProvider.clearWindshieldWiperBack();
                   },
                 ),
                 Divider(
@@ -518,13 +534,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addGeneralBodyImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateGeneralBodyImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteGeneralBodyImage(image);
                   },
                   comments: checkOutFormProvider.generalBodyComments,
                   report: checkOutFormProvider.generalBody,
                   updateReport: (report) {
                     checkOutFormProvider.updateGeneralBody(report);
+                  },
+                  requiredImages: true,
+                  clearReport: () {
+                    checkOutFormProvider.clearGeneralBody();
                   },
                 ),
                 Divider(
@@ -547,13 +567,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addDecalingImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateDecalingImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteDecalingImage(image);
                   },
                   comments: checkOutFormProvider.decalingComments,
                   report: checkOutFormProvider.decaling,
                   updateReport: (report) {
                     checkOutFormProvider.updateDecaling(report);
+                  },
+                  requiredImages: true,
+                  clearReport: () {
+                    checkOutFormProvider.clearDecaling();
                   },
                 ),
                 Divider(
@@ -576,13 +600,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addTiresImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateTiresImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteTiresImage(image);
                   },
                   comments: checkOutFormProvider.tiresComments,
                   report: checkOutFormProvider.tires,
                   updateReport: (report) {
                     checkOutFormProvider.updateTires(report);
+                  },
+                  requiredImages: true,
+                  clearReport: () {
+                    checkOutFormProvider.clearTires();
                   },
                 ),
                 Divider(
@@ -605,13 +633,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addGlassImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateGlassImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteGlassImage(image);
                   },
                   comments: checkOutFormProvider.glassComments,
                   report: checkOutFormProvider.glass,
                   updateReport: (report) {
                     checkOutFormProvider.updateGlass(report);
+                  },
+                  requiredImages: true,
+                  clearReport: () {
+                    checkOutFormProvider.clearGlass();
                   },
                 ),
                 Divider(
@@ -634,13 +666,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addMirrorsImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateMirrorsImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteMirrorsImage(image);
                   },
                   comments: checkOutFormProvider.mirrorsComments,
                   report: checkOutFormProvider.mirrors,
                   updateReport: (report) {
                     checkOutFormProvider.updateMirrors(report);
+                  },
+                  requiredImages: true,
+                  clearReport: () {
+                    checkOutFormProvider.clearMirrors();
                   },
                 ),
                 Divider(
@@ -663,13 +699,17 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addParkingImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateParkingImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteParkingImage(image);
                   },
                   comments: checkOutFormProvider.parkingComments,
                   report: checkOutFormProvider.parking,
                   updateReport: (report) {
                     checkOutFormProvider.updateParking(report);
+                  },
+                  requiredImages: true,
+                  clearReport: () {
+                    checkOutFormProvider.clearParking();
                   },
                 ),
                 Divider(
@@ -692,8 +732,8 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addBrakesImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateBrakesImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteBrakesImage(image);
                   },
                   comments: checkOutFormProvider.brakesComments,
                   report: checkOutFormProvider.brakes,
@@ -721,8 +761,8 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addEMGBrakesImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateEMGBrakesImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteEMGBrakesImage(image);
                   },
                   comments: checkOutFormProvider.emgBrakesComments,
                   report: checkOutFormProvider.emgBrakes,
@@ -750,8 +790,8 @@ class _LightsSectionRState extends State<LightsSectionR> {
                   addImage: (image) {
                     checkOutFormProvider.addHornImage(image);
                   },
-                  updateImage: (image) {
-                    checkOutFormProvider.updateHornImage(image);
+                  deleteImage: (image) {
+                    checkOutFormProvider.deleteHornImage(image);
                   },
                   comments: checkOutFormProvider.hornComments,
                   report: checkOutFormProvider.horn,
