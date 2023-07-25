@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
-
-import 'package:taller_alex_app_asesor/theme/theme.dart';
-
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class UsuarioActualizado extends StatefulWidget {
@@ -22,7 +20,7 @@ class _UsuarioActualizadoState extends State<UsuarioActualizado> {
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: const Color(0xFFDDEEF8),
+        backgroundColor: FlutterFlowTheme.of(context).background,
         body: SafeArea(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
@@ -38,11 +36,11 @@ class _UsuarioActualizadoState extends State<UsuarioActualizado> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Usuario\nActualizado!',
+                        '¡User\nUpdated!',
                         textAlign: TextAlign.center,
-                        style: AppTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
-                              color: Colors.black,
+                              color: FlutterFlowTheme.of(context).dark400,
                               fontSize: 30,
                             ),
                       ),
@@ -51,11 +49,11 @@ class _UsuarioActualizadoState extends State<UsuarioActualizado> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(
-                        'Listo, el usuario se aactualizó \ncorrectamente',
+                        'The user was updated \nsuccessfully',
                         textAlign: TextAlign.center,
-                        style: AppTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
-                              color: Colors.black,
+                              color: FlutterFlowTheme.of(context).dark400,
                               fontSize: 15,
                             ),
                       ),
@@ -85,14 +83,14 @@ class _UsuarioActualizadoState extends State<UsuarioActualizado> {
                             ),
                           );
                         },
-                        text: 'Listo',
+                        text: 'Continue',
                         options: FFButtonOptions(
                           width: 200,
                           height: 45,
-                          color: const Color(0xFF28BFFA),
-                          textStyle: AppTheme.of(context).subtitle2.override(
+                          color: FlutterFlowTheme.of(context).secondaryColor,
+                          textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                                 fontFamily: 'Poppins',
-                                color: Colors.white,
+                                color: FlutterFlowTheme.of(context).white,
                               ),
                           borderSide: const BorderSide(
                             color: Colors.transparent,

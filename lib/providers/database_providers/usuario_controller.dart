@@ -10,9 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 
 class UsuarioController extends ChangeNotifier {
   List<Users> usuarios = [];
+  Uuid uuid = Uuid();
 
   ControlForm? controlFormCheckOut;
   ControlForm? controlForrmCheckIn;
@@ -122,6 +124,7 @@ class UsuarioController extends ChangeNotifier {
       File file = await File('${tempDir.path}/$name').create();
       file.writeAsBytesSync(uInt8ListImagen);
       nuevoUsuario.image = base64Image;
+      nuevoUsuario.name = name;
       nuevoUsuario.path = file.path;
     } 
     //Se crea el objeto imagenes para el Usuario
@@ -217,11 +220,13 @@ class UsuarioController extends ChangeNotifier {
           File file = await File('${tempDir.path}/$name').create();
           file.writeAsBytesSync(uInt8ListImagen);
           updateUsuario.image = base64Image;
+          updateUsuario.nameImage = name;
           updateUsuario.path = file.path;
       } else {
         if (updateUsuario.image != null) {
           // Se eliminan los datos de la imagen actual del usuario
           updateUsuario.image = null;
+          updateUsuario.nameImage = null;
           updateUsuario.path = null;
         }
       }
@@ -254,15 +259,91 @@ bool updateData(
     String newLastName, 
     String? newMiddleName, 
     String? newHomePhone,
-    String? newMobilePhone,
+    String newMobilePhone,
+    String newAddress,
     ImageEvidence? image,
+    String? imageTemp,
   ) {
-    if (image != null) {
-      notifyListeners();
-      return false;
-    } else {
-      notifyListeners();
+    try {
+      //Se válida que se haya cambiado la imagen
+      if (imageTemp != user.path) {
+        if (user.path == null) {
+          //Se agrega una imagen
+          user.image = base64.encode(image!.uint8List);
+          user.nameImage = "${uuid.v4()}${image.name}";
+          user.path = image.path;
+
+          final nuevaInstruccion = Bitacora(
+            instruccion: 'syncAddUserImage',
+            instruccionAdicional: "${user.nameImage}||${user.image}",
+            usuarioPropietario: prefs.getString("userId")!,
+            idControlForm: 0,
+          ); //Se crea la nueva instruccion a realizar en bitacora
+
+          nuevaInstruccion.user.target = user; //Se asigna el user a la nueva instrucción
+          user.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción al user
+          dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+          dataBase.usersBox.put(user);
+        } else {
+          // Se elimina la imagen
+          if (imageTemp == null) {
+            final nuevaInstruccion = Bitacora(
+              instruccion: 'syncDeleteUserImage',
+              instruccionAdicional: user.nameImage,
+              usuarioPropietario: prefs.getString("userId")!,
+              idControlForm: 0,
+            ); //Se crea la nueva instruccion a realizar en bitacora
+
+            nuevaInstruccion.user.target = user; //Se asigna el user a la nueva instrucción
+            user.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a el user
+            dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+            dataBase.usersBox.put(user);
+
+            user.image = null;
+            user.nameImage = null;
+            user.path = null;
+          } else {
+            //Se actualiza imagen
+            final newNameImage = "${uuid.v4()}${image?.name}";
+            final nuevaInstruccion = Bitacora(
+              instruccion: 'syncUpdateUserImage',
+              instruccionAdicional: "${user.nameImage}||$newNameImage||${base64.encode(image!.uint8List)}", //imagen a actualizar
+              usuarioPropietario: prefs.getString("userId")!,
+              idControlForm: 0,
+            ); //Se crea la nueva instruccion a realizar en bitacora
+
+            user.image = base64.encode(image.uint8List);
+            user.nameImage = newNameImage;
+            user.path = image.path;
+
+            nuevaInstruccion.user.target = user; //Se asigna la orden de trabajo a la nueva instrucción
+            user.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a la orden de trabajo
+            dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+            dataBase.usersBox.put(user);
+          }
+        }
+      }
+      user.name = newName;
+      user.lastName = newLastName;
+      user.middleName = newMiddleName;
+      user.homePhone = newHomePhone;
+      user.mobilePhone = newMobilePhone;
+      user.address = newAddress;
+
+      final nuevaInstruccion = Bitacora(
+        instruccion: 'syncUpdateUser',
+        usuarioPropietario: prefs.getString("userId")!,
+        idControlForm: 0,
+      ); //Se crea la nueva instruccion a realizar en bitacora
+
+      nuevaInstruccion.user.target = user; //Se asigna la orden de trabajo a la nueva instrucción
+      user.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a la orden de trabajo
+      dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+      dataBase.usersBox.put(user);
       return true;
+    } catch (e) {
+      print("Error in update User Data: $e");
+      return false;
     }
   }
 

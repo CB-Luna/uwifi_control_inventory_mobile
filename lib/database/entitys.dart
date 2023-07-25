@@ -993,6 +993,7 @@ class Users {
   String correo;
   String password;
   String? image;
+  String? nameImage;
   String? path;
   DateTime? birthDate;
   DateTime dateAdded;
@@ -1024,6 +1025,7 @@ class Users {
     required this.correo,
     required this.password,
     this.image,
+    this.nameImage,
     this.path,
     this.birthDate,
     DateTime? dateAdded,

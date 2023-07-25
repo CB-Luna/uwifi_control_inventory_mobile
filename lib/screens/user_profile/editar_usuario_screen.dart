@@ -41,6 +41,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   TextEditingController middleNameController = TextEditingController();
   TextEditingController homePhoneController = TextEditingController();
   TextEditingController mobilePhoneController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   XFile? image;
@@ -64,6 +65,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
     middleNameController = TextEditingController(text: widget.usuario.middleName);
     homePhoneController = TextEditingController(text: widget.usuario.homePhone);
     mobilePhoneController = TextEditingController(text: widget.usuario.mobilePhone);
+    addressController = TextEditingController(text: widget.usuario.address);
   }
 
   @override
@@ -188,7 +190,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               25, 0, 0, 0),
                                       child: AutoSizeText(
-                                        "Data of ${maybeHandleOverflow('${widget.usuario.name} ${widget.usuario.lastName}', 25, '...')}",
+                                        "Profile of ${maybeHandleOverflow('${widget.usuario.name} ${widget.usuario.lastName}', 25, '...')}",
                                         maxLines: 2,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
@@ -496,7 +498,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                                 middleNameController.text,
                                                 homePhoneController.text,
                                                 mobilePhoneController.text,
+                                                addressController.text,
                                                 newImage,
+                                                imageTemp,
                                               );
                                               await Navigator.push(
                                                 context,
@@ -708,6 +712,49 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 35, 20, 35, 0),
                             child: TextFormField(
+                              textCapitalization: TextCapitalization.words,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              controller: addressController,
+                              decoration: InputDecoration(
+                                errorMaxLines: 3,
+                                labelText: "Address",
+                                labelStyle:
+                                    FlutterFlowTheme.of(context).bodyText1.override(
+                                          fontFamily: 'Poppins',
+                                          color: FlutterFlowTheme.of(context).tertiaryColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).tertiaryColor,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).tertiaryColor,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                filled: true,
+                                fillColor: FlutterFlowTheme.of(context).white,
+                              ),
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                              validator: (value) {
+                                return (value == "" || value == null)
+                                  ? 'Address is required.'
+                                  : null;
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                35, 20, 35, 0),
+                            child: TextFormField(
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               controller: homePhoneController,
@@ -790,14 +837,21 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(10),
                               ],
-                              validator: (value){
-                                if(value != "" && value != null){
-                                  return value.length < 10
+                              validator: FormBuilderValidators.compose([
+                                (value){
+                                  return (value == "" || value == null)
+                                  ? 'Mobile Phone is required.'
+                                  : null;
+                                },
+                                (value){
+                                  if (value != null && value != "") {
+                                    return value.length < 10
                                     ? 'Input a valid number.'
                                     : null;
+                                  }
+                                  return null;
                                 }
-                                return null;
-                              }
+                              ]),
                             ),
                           ),
                           FormField(

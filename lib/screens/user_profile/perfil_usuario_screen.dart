@@ -155,7 +155,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             25, 0, 0, 0),
                                     child: AutoSizeText(
-                                      "Data of ${maybeHandleOverflow('${currentUser.name} ${currentUser.lastName}', 18, '...')}",
+                                      "Profile of ${maybeHandleOverflow('${currentUser.name} ${currentUser.lastName}', 18, '...')}",
                                       maxLines: 2,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1

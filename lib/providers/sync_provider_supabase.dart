@@ -41,6 +41,34 @@ class SyncProviderSupabase extends ChangeNotifier {
     // Se recuperan instrucciones fallidas anteriores
     for (var i = 0; i < instruccionesBitacora.length; i++) {
       switch (instruccionesBitacora[i].instruccion) {
+        case "syncAddUserImage":
+          final user = getFirstUsuario(
+              dataBase.usersBox.getAll(), instruccionesBitacora[i].id);
+          if (user != null) {
+            final responseSyncAddUserImage = await syncAddUserImage(
+                user, instruccionesBitacora[i]);
+            if (responseSyncAddUserImage.exitoso) {
+              banderasExistoSync.add(responseSyncAddUserImage.exitoso);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(responseSyncAddUserImage.exitoso);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  instruccion: responseSyncAddUserImage.descripcion,
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion:
+                    "Problems sync to Local Server, Employee not recovered.",
+                fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
         case "syncAddControlFormR":
           final controlFormToSync = getFirstControlForm(
               dataBase.controlFormBox.getAll(), instruccionesBitacora[i].id);
@@ -269,16 +297,100 @@ class SyncProviderSupabase extends ChangeNotifier {
           final user = getFirstUsuario(
               dataBase.usersBox.getAll(), instruccionesBitacora[i].id);
           if (user != null) {
-            final responseSyncUpdateVehicleServices = await syncUpdatePassword(
+            final responseSyncUpdatePassword = await syncUpdatePassword(
                 user, instruccionesBitacora[i]);
-            if (responseSyncUpdateVehicleServices.exitoso) {
-              banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
+            if (responseSyncUpdatePassword.exitoso) {
+              banderasExistoSync.add(responseSyncUpdatePassword.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
+              banderasExistoSync.add(responseSyncUpdatePassword.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
-                  instruccion: responseSyncUpdateVehicleServices.descripcion,
+                  instruccion: responseSyncUpdatePassword.descripcion,
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion:
+                    "Problems sync to Local Server, Employee not recovered.",
+                fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncUpdateUser":
+          final user = getFirstUsuario(
+              dataBase.usersBox.getAll(), instruccionesBitacora[i].id);
+          if (user != null) {
+            final responseSyncUpdateUser = await syncUpdateUser(
+                user, instruccionesBitacora[i]);
+            if (responseSyncUpdateUser.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateUser.exitoso);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(responseSyncUpdateUser.exitoso);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  instruccion: responseSyncUpdateUser.descripcion,
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion:
+                    "Problems sync to Local Server, Employee not recovered.",
+                fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncUpdateUserImage":
+          final user = getFirstUsuario(
+              dataBase.usersBox.getAll(), instruccionesBitacora[i].id);
+          if (user != null) {
+            final responseSyncUpdateUserImage = await syncUpdateUserImage(
+                user, instruccionesBitacora[i]);
+            if (responseSyncUpdateUserImage.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateUserImage.exitoso);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(responseSyncUpdateUserImage.exitoso);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  instruccion: responseSyncUpdateUserImage.descripcion,
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion:
+                    "Problems sync to Local Server, Employee not recovered.",
+                fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncDeleteUserImage":
+          final user = getFirstUsuario(
+              dataBase.usersBox.getAll(), instruccionesBitacora[i].id);
+          if (user != null) {
+            final responseSyncDeleteUserImage = await syncDeleteUserImage(
+                user, instruccionesBitacora[i]);
+            if (responseSyncDeleteUserImage.exitoso) {
+              banderasExistoSync.add(responseSyncDeleteUserImage.exitoso);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(responseSyncDeleteUserImage.exitoso);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  instruccion: responseSyncDeleteUserImage.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               instruccionesFallidas.add(instruccionNoSincronizada);
               continue;
@@ -4308,6 +4420,212 @@ class SyncProviderSupabase extends ChangeNotifier {
           exitoso: false,
           descripcion:
               "Failed to sync data Update Mileage Remaining Vehicle Service Status on Local Server: Vehicle Service '${vehicleServices.service.target!.service}' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}', details: '$e'");
+    }
+  }
+
+  Future<SyncInstruction> syncUpdateUser(
+    Users usuario, Bitacora bitacora) async {
+    try {
+      if (bitacora.executeSupabase == false) {
+        final recordUser = await supabase.from('user_profile').update(
+            {
+              'name': usuario.name,
+              'middle_name': usuario.middleName,
+              'last_name': usuario.lastName,
+              'home_phone': usuario.homePhone,
+              'mobile_phone': usuario.mobilePhone,
+              'address': usuario.address,
+            },
+          ).eq('user_profile_id', usuario.idDBR)
+        .select<PostgrestList>("user_profile_id");   
+        if (recordUser.isNotEmpty) {
+          //Se marca como ejecutada la instrucción en Bitacora
+          bitacora.executeSupabase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          dataBase.bitacoraBox.remove(bitacora.id);
+          return SyncInstruction(exitoso: true, descripcion: "");
+        } else {
+          return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync data Update Data on Local Server to User '${usuario.correo}'");
+        }
+      } else {
+        dataBase.bitacoraBox.remove(bitacora.id);
+        return SyncInstruction(exitoso: true, descripcion: "");
+      }
+    } catch (e) {
+      //print('ERROR - function syncAddEmprendedor(): $e');
+      return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync data Update Data on Local Server to User '${usuario.correo}', details: '$e'");
+    }
+  }
+
+  Future<SyncInstruction> syncAddUserImage(
+    Users usuario, Bitacora bitacora) async {
+    try {
+      if (bitacora.executeSupabase == false) {
+        //Parsear a Uint8List
+        final nameImage = bitacora.instruccionAdicional!.split("||").first;
+        final image = bitacora.instruccionAdicional!.split("||").last;
+        final storageResponse = await supabase.storage.from('assets/user_profile').uploadBinary(
+        nameImage,
+        Uint8List.fromList(base64.decode(image)),
+          fileOptions: const FileOptions(
+            cacheControl: '3600',
+            upsert: false,
+          ),
+        );
+        if (storageResponse.isEmpty) {
+          return SyncInstruction(
+            exitoso: false,
+            descripcion:
+                "Failed to sync add User Image Profile on Local Server named '$nameImage'");
+        }
+        final urlImage = supabase.storage.from('assets/user_profile').getPublicUrl(nameImage);
+
+        final recordUser = await supabase.from('user_profile').update(
+            {
+              'image': urlImage,
+            },
+          ).eq('user_profile_id', usuario.idDBR)
+        .select<PostgrestList>("user_profile_id");   
+        if (recordUser.isNotEmpty) {
+          //Se marca como ejecutada la instrucción en Bitacora
+          bitacora.executeSupabase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          dataBase.bitacoraBox.remove(bitacora.id);
+          return SyncInstruction(exitoso: true, descripcion: "");
+        } else {
+          return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync add User Image Profile on Local Server named '$nameImage'");
+        }
+      } else {
+        dataBase.bitacoraBox.remove(bitacora.id);
+        return SyncInstruction(exitoso: true, descripcion: "");
+      }
+    } catch (e) {
+      //print('ERROR - function syncAddEmprendedor(): $e');
+      return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync add User Image Profile on Local Server to User '${usuario.correo}', details: '$e'");
+    }
+  }
+
+  Future<SyncInstruction> syncDeleteUserImage(
+    Users usuario, Bitacora bitacora) async {
+    try {
+      if (bitacora.executeSupabase == false) {
+        final nameImage = bitacora.instruccionAdicional!;
+
+        final storageResponse = await supabase.storage.from('assets/user_profile').remove(
+        [nameImage],
+        );
+        if (storageResponse.isEmpty) {
+          return SyncInstruction(
+            exitoso: false,
+            descripcion:
+                "Failed to sync delete User Image Profile on Local Server named '$nameImage'");
+        }
+
+        final recordUser = await supabase.from('user_profile').update(
+            {
+              'image': null,
+            },
+          ).eq('user_profile_id', usuario.idDBR)
+        .select<PostgrestList>("user_profile_id");   
+        if (recordUser.isNotEmpty) {
+          //Se marca como ejecutada la instrucción en Bitacora
+          bitacora.executeSupabase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          dataBase.bitacoraBox.remove(bitacora.id);
+          return SyncInstruction(exitoso: true, descripcion: "");
+        } else {
+          return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync delete User Image Profile on Local Server named '$nameImage'");
+        }
+      } else {
+        dataBase.bitacoraBox.remove(bitacora.id);
+        return SyncInstruction(exitoso: true, descripcion: "");
+      }
+    } catch (e) {
+      //print('ERROR - function syncAddEmprendedor(): $e');
+      return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync delete User Image Profile on Local Server to User '${usuario.correo}', details: '$e'");
+    }
+  }
+
+  Future<SyncInstruction> syncUpdateUserImage(
+    Users usuario, Bitacora bitacora) async {
+    try {
+      if (bitacora.executeSupabase == false) {
+        //Parsear a Uint8List
+        final oldNameImage = bitacora.instruccionAdicional!.split("||")[0];
+        final newNameImage = bitacora.instruccionAdicional!.split("||")[1];
+        final newImage = bitacora.instruccionAdicional!.split("||")[2];
+        final oldImageResponse = await supabase.storage.from('assets').remove(
+        ["user_profile/$oldNameImage"],
+        );
+        if (oldImageResponse.isEmpty) {
+          return SyncInstruction(
+            exitoso: false,
+            descripcion:
+                "Failed to sync update User Image Profile on Local Server named '$oldNameImage'");
+        }
+
+        final newImageResponse = await supabase.storage.from('assets/user_profile').uploadBinary(
+        newNameImage,
+        Uint8List.fromList(base64.decode(newImage)),
+          fileOptions: const FileOptions(
+            cacheControl: '3600',
+            upsert: false,
+          ),
+        );
+        if (newImageResponse.isEmpty) {
+          return SyncInstruction(
+            exitoso: false,
+            descripcion:
+                "Failed to sync update User Image Profile on Local Server named '$oldNameImage'");
+        }
+        final newUrlImage = supabase.storage.from('assets/user_profile').getPublicUrl(newNameImage);
+
+        final recordUser = await supabase.from('user_profile').update(
+            {
+              'image': newUrlImage,
+            },
+          ).eq('user_profile_id', usuario.idDBR)
+        .select<PostgrestList>("user_profile_id");   
+        if (recordUser.isNotEmpty) {
+          //Se marca como ejecutada la instrucción en Bitacora
+          bitacora.executeSupabase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          dataBase.bitacoraBox.remove(bitacora.id);
+          return SyncInstruction(exitoso: true, descripcion: "");
+        } else {
+          return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync update User Image Profile on Local Server named '$oldNameImage'");
+        }
+      } else {
+        dataBase.bitacoraBox.remove(bitacora.id);
+        return SyncInstruction(exitoso: true, descripcion: "");
+      }
+    } catch (e) {
+      //print('ERROR - function syncAddEmprendedor(): $e');
+      return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync update User Image Profile on Local Server to User '${usuario.correo}', details: '$e'");
     }
   }
 

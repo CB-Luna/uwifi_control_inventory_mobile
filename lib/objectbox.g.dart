@@ -2187,7 +2187,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(100, 5432875809935853718),
       name: 'Users',
-      lastPropertyId: const IdUid(25, 4419353457414857258),
+      lastPropertyId: const IdUid(26, 5674540502778838495),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2318,7 +2318,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(463, 6620294353064759547),
-            relationTarget: 'ControlForm')
+            relationTarget: 'ControlForm'),
+        ModelProperty(
+            id: const IdUid(26, 5674540502778838495),
+            name: 'nameImage',
+            type: 9,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -6035,7 +6040,10 @@ ModelDefinition getObjectBoxModel() {
           final pathOffset =
               object.path == null ? null : fbb.writeString(object.path!);
           final idDBROffset = fbb.writeString(object.idDBR);
-          fbb.startTable(26);
+          final nameImageOffset = object.nameImage == null
+              ? null
+              : fbb.writeString(object.nameImage!);
+          fbb.startTable(27);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nameOffset);
           fbb.addOffset(2, lastNameOffset);
@@ -6060,6 +6068,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(22, object.recordsMonthSecondD);
           fbb.addInt64(23, object.recordsMonthThirdD);
           fbb.addInt64(24, object.actualControlForm.targetId);
+          fbb.addOffset(25, nameImageOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -6086,6 +6095,7 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 18, ''),
               password: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
               image: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 22),
+              nameImage: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 54),
               path: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 24),
               birthDate: birthDateValue == null ? null : DateTime.fromMillisecondsSinceEpoch(birthDateValue),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0)),
@@ -7914,6 +7924,10 @@ class Users_ {
   /// see [Users.actualControlForm]
   static final actualControlForm =
       QueryRelationToOne<Users, ControlForm>(_entities[14].properties[23]);
+
+  /// see [Users.nameImage]
+  static final nameImage =
+      QueryStringProperty<Users>(_entities[14].properties[24]);
 
   /// see [Users.bitacora]
   static final bitacora =
