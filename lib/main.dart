@@ -1,31 +1,31 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:fleet_management_tool_rta/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/providers/control_form_provider.dart';
-import 'package:taller_alex_app_asesor/providers/deeplink_bloc.dart';
-import 'package:taller_alex_app_asesor/providers/providers.dart';
-import 'package:taller_alex_app_asesor/database/object_box_database.dart';
+import 'package:fleet_management_tool_rta/helpers/globals.dart';
+import 'package:fleet_management_tool_rta/providers/control_form_provider.dart';
+import 'package:fleet_management_tool_rta/providers/deeplink_bloc.dart';
+import 'package:fleet_management_tool_rta/providers/providers.dart';
+import 'package:fleet_management_tool_rta/database/object_box_database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:taller_alex_app_asesor/screens/clientes/app_state.dart';
+import 'package:fleet_management_tool_rta/screens/clientes/app_state.dart';
 import 'providers/database_providers/checkin_form_controller.dart';
 import 'providers/database_providers/checkout_form_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
-import 'package:taller_alex_app_asesor/providers/catalogo_supabase_provider.dart';
-import 'package:taller_alex_app_asesor/providers/roles_supabase_provider.dart';
-import 'package:taller_alex_app_asesor/providers/sync_provider_supabase.dart';
+import 'package:fleet_management_tool_rta/providers/catalogo_supabase_provider.dart';
+import 'package:fleet_management_tool_rta/providers/roles_supabase_provider.dart';
+import 'package:fleet_management_tool_rta/providers/sync_provider_supabase.dart';
 
-import 'package:taller_alex_app_asesor/screens/screens.dart';
-import 'package:taller_alex_app_asesor/services/navigation_service.dart';
-import 'package:taller_alex_app_asesor/internationalization/internationalization.dart';
+import 'package:fleet_management_tool_rta/screens/screens.dart';
+import 'package:fleet_management_tool_rta/services/navigation_service.dart';
+import 'package:fleet_management_tool_rta/internationalization/internationalization.dart';
 
 import 'providers/database_providers/vehiculo_controller.dart';
 

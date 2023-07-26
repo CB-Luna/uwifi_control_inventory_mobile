@@ -7,17 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:taller_alex_app_asesor/database/image_evidence.dart';
-import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:fleet_management_tool_rta/database/image_evidence.dart';
+import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/screens/control_form/flutter_flow_animaciones.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_image_required.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/drop_down.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_expanded_image_view.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:fleet_management_tool_rta/helpers/globals.dart';
+import 'package:fleet_management_tool_rta/screens/control_form/flutter_flow_animaciones.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/bottom_sheet_image_required.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/custom_bottom_sheet.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/drop_down.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_expanded_image_view.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_widgets.dart';
 
 class ItemForm extends StatefulWidget {
   const ItemForm({

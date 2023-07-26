@@ -1,6 +1,6 @@
 {
-    "name": "taller_alex_app_asesor",
-    "short_name": "taller_alex_app_asesor",
+    "name": "fleet_management_tool_rta",
+    "short_name": "fleet_management_tool_rta",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

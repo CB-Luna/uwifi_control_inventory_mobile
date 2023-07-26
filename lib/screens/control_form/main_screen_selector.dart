@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/screens/control_form/control_daily_vehicle_screen.dart';
-import 'package:taller_alex_app_asesor/screens/sync/sincronizacion_informacion_pocketbase_screen.dart';
+import 'package:fleet_management_tool_rta/helpers/globals.dart';
+import 'package:fleet_management_tool_rta/screens/control_form/control_daily_vehicle_screen.dart';
+import 'package:fleet_management_tool_rta/screens/sync/sincronizacion_informacion_pocketbase_screen.dart';
 
 class MainScreenSelector extends StatefulWidget {
   const MainScreenSelector({Key? key}) : super(key: key);

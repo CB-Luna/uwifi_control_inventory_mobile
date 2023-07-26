@@ -5,17 +5,17 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
-import 'package:taller_alex_app_asesor/database/entitys.dart';
-import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/checkin_form_controller.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/checkout_form_controller.dart';
-import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
-import 'package:taller_alex_app_asesor/screens/clientes/agregar_vehiculo_screen.dart';
-import 'package:taller_alex_app_asesor/screens/services_vehicle/services_vehicle_screen.dart';
-import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
+import 'package:fleet_management_tool_rta/database/entitys.dart';
+import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
+import 'package:fleet_management_tool_rta/helpers/globals.dart';
+import 'package:fleet_management_tool_rta/providers/database_providers/checkin_form_controller.dart';
+import 'package:fleet_management_tool_rta/providers/database_providers/checkout_form_controller.dart';
+import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
+import 'package:fleet_management_tool_rta/screens/clientes/agregar_vehiculo_screen.dart';
+import 'package:fleet_management_tool_rta/screens/services_vehicle/services_vehicle_screen.dart';
+import 'package:fleet_management_tool_rta/util/flutter_flow_util.dart';
 import 'package:badges/badges.dart' as badge;
-import 'package:taller_alex_app_asesor/screens/widgets/side_menu/side_menu.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/side_menu/side_menu.dart';
 
 class ControlDailyVehicleScreen extends StatefulWidget {
   const ControlDailyVehicleScreen({Key? key}) : super(key: key);

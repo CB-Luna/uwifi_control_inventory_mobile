@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:taller_alex_app_asesor/database/entitys.dart';
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/main.dart';
-import 'package:taller_alex_app_asesor/objectbox.g.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/general_information_section_r.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/equipment_section_r.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/lights_section_r.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/measures_section_r.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/security_section_r.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/general_information_section_d.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/equipment_section_d.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/lights_section_d.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/measures_section_d.dart';
-import 'package:taller_alex_app_asesor/screens/revision/components/security_section_d.dart';
-import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
+import 'package:fleet_management_tool_rta/database/entitys.dart';
+import 'package:fleet_management_tool_rta/helpers/globals.dart';
+import 'package:fleet_management_tool_rta/main.dart';
+import 'package:fleet_management_tool_rta/objectbox.g.dart';
+import 'package:fleet_management_tool_rta/screens/revision/components/general_information_section_r.dart';
+import 'package:fleet_management_tool_rta/screens/revision/components/equipment_section_r.dart';
+import 'package:fleet_management_tool_rta/screens/revision/components/lights_section_r.dart';
+import 'package:fleet_management_tool_rta/screens/revision/components/measures_section_r.dart';
+import 'package:fleet_management_tool_rta/screens/revision/components/security_section_r.dart';
+import 'package:fleet_management_tool_rta/screens/revision/components/general_information_section_d.dart';
+import 'package:fleet_management_tool_rta/screens/revision/components/equipment_section_d.dart';
+import 'package:fleet_management_tool_rta/screens/revision/components/lights_section_d.dart';
+import 'package:fleet_management_tool_rta/screens/revision/components/measures_section_d.dart';
+import 'package:fleet_management_tool_rta/screens/revision/components/security_section_d.dart';
+import 'package:fleet_management_tool_rta/util/flutter_flow_util.dart';
 class VehiculoController extends ChangeNotifier {
   
   Vehicle? vehicleSelected;

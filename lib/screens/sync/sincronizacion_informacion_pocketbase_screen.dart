@@ -1,19 +1,19 @@
 import 'package:clay_containers/clay_containers.dart';
-import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/helpers/constants.dart';
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/main.dart';
-import 'package:taller_alex_app_asesor/providers/user_provider.dart';
-import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
-import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
+import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
+import 'package:fleet_management_tool_rta/helpers/constants.dart';
+import 'package:fleet_management_tool_rta/helpers/globals.dart';
+import 'package:fleet_management_tool_rta/main.dart';
+import 'package:fleet_management_tool_rta/providers/user_provider.dart';
+import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
+import 'package:fleet_management_tool_rta/util/flutter_flow_util.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
-import 'package:taller_alex_app_asesor/providers/sync_provider_supabase.dart';
+import 'package:fleet_management_tool_rta/providers/sync_provider_supabase.dart';
 
-import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_widgets.dart';
 
 class SincronizacionInformacionSupabaseScreen extends StatefulWidget {
 

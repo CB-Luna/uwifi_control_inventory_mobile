@@ -1,8 +1,8 @@
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/providers/user_provider.dart';
-import 'package:taller_alex_app_asesor/screens/screens.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/custom_button.dart';
-import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:fleet_management_tool_rta/helpers/globals.dart';
+import 'package:fleet_management_tool_rta/providers/user_provider.dart';
+import 'package:fleet_management_tool_rta/screens/screens.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/custom_button.dart';
+import 'package:fleet_management_tool_rta/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

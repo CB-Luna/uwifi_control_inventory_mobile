@@ -1,5 +1,5 @@
 
-import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/invoice_info.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/pdf/models/invoice_info.dart';
 
 class InversionesInvoice {
   final InvoiceInfo info;

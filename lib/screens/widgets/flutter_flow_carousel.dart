@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:page_transition/page_transition.dart';
 import 'dart:io';
-import 'package:taller_alex_app_asesor/database/image_evidence.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_expanded_image_view.dart';
+import 'package:fleet_management_tool_rta/database/image_evidence.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_expanded_image_view.dart';
 class FlutterFlowCarousel extends StatefulWidget {
   const FlutterFlowCarousel({
     Key? key,

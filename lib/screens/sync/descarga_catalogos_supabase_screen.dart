@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:taller_alex_app_asesor/providers/catalogo_supabase_provider.dart';
-import 'package:taller_alex_app_asesor/helpers/constants.dart';
-import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
-import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:fleet_management_tool_rta/providers/catalogo_supabase_provider.dart';
+import 'package:fleet_management_tool_rta/helpers/constants.dart';
+import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
+import 'package:fleet_management_tool_rta/theme/theme.dart';
 import 'package:lottie/lottie.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_widgets.dart';
 
 class DescargaCatalogosSupabaseScreen extends StatefulWidget {
   const DescargaCatalogosSupabaseScreen({

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
+import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_widgets.dart';
 
 class UsuarioActualizado extends StatefulWidget {
   const UsuarioActualizado({Key? key}) : super(key: key);

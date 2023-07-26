@@ -1,6 +1,6 @@
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
+import 'package:fleet_management_tool_rta/helpers/globals.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/screens/clientes/clientes_screen.dart';
+import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
+import 'package:fleet_management_tool_rta/screens/clientes/clientes_screen.dart';
 
-import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_widgets.dart';
 
 class ClienteCreadoScreen extends StatefulWidget {
   const ClienteCreadoScreen({Key? key}) : super(key: key);

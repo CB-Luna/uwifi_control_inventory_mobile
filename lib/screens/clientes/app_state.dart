@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:taller_alex_app_asesor/util/lat_lng.dart';
+import 'package:fleet_management_tool_rta/util/lat_lng.dart';
 
 class FFAppState extends ChangeNotifier {
   static final FFAppState _instance = FFAppState._internal();

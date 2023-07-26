@@ -1,6 +1,6 @@
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/screens/screens.dart';
-import 'package:taller_alex_app_asesor/services/navigation_service.dart';
+import 'package:fleet_management_tool_rta/helpers/globals.dart';
+import 'package:fleet_management_tool_rta/screens/screens.dart';
+import 'package:fleet_management_tool_rta/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 
 import 'package:jwt_decode/jwt_decode.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:taller_alex_app_asesor/theme/theme.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
-import 'package:taller_alex_app_asesor/screens/sync/descarga_catalogos_supabase_screen.dart';
+import 'package:fleet_management_tool_rta/theme/theme.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_widgets.dart';
+import 'package:fleet_management_tool_rta/screens/sync/descarga_catalogos_supabase_screen.dart';
 
 class BottomSheetRecoverCatalogosWidget extends StatefulWidget {
   final bool isVisible;

@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.bizpro" "\0"
-            VALUE "FileDescription", "taller_alex_app_asesor" "\0"
+            VALUE "CompanyName", "com.rta" "\0"
+            VALUE "FileDescription", "fleet_management_tool_rta" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "taller_alex_app_asesor" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2022 com.bizpro. All rights reserved." "\0"
-            VALUE "OriginalFilename", "taller_alex_app_asesor.exe" "\0"
-            VALUE "ProductName", "taller_alex_app_asesor" "\0"
+            VALUE "InternalName", "fleet_management_tool_rta" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2022 com.rta. All rights reserved." "\0"
+            VALUE "OriginalFilename", "fleet_management_tool_rta.exe" "\0"
+            VALUE "ProductName", "fleet_management_tool_rta" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

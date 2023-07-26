@@ -2,15 +2,15 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/helpers/sync_instruction.dart';
-import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/instruccion_no_sincronizada.dart';
+import 'package:fleet_management_tool_rta/helpers/globals.dart';
+import 'package:fleet_management_tool_rta/helpers/sync_instruction.dart';
+import 'package:fleet_management_tool_rta/modelsPocketbase/temporals/instruccion_no_sincronizada.dart';
 import 'package:flutter/material.dart';
-import 'package:taller_alex_app_asesor/main.dart';
-import 'package:taller_alex_app_asesor/database/entitys.dart';
-import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:fleet_management_tool_rta/main.dart';
+import 'package:fleet_management_tool_rta/database/entitys.dart';
+import 'package:fleet_management_tool_rta/helpers/constants.dart';
 import 'package:http/http.dart';
-import 'package:taller_alex_app_asesor/util/util.dart';
+import 'package:fleet_management_tool_rta/util/util.dart';
 
 class SyncProviderSupabase extends ChangeNotifier {
   bool procesocargando = false;

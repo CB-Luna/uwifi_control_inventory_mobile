@@ -1,2 +1,2 @@
-export 'package:taller_alex_app_asesor/providers/network_provider.dart';
-export 'package:taller_alex_app_asesor/providers/user_provider.dart';
+export 'package:fleet_management_tool_rta/providers/network_provider.dart';
+export 'package:fleet_management_tool_rta/providers/user_provider.dart';

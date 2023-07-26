@@ -1,6 +1,6 @@
-import 'package:taller_alex_app_asesor/database/entitys.dart';
-import 'package:taller_alex_app_asesor/objectbox.g.dart';
-// import 'package:taller_alex_app_asesor/objectbox.g.dart';
+import 'package:fleet_management_tool_rta/database/entitys.dart';
+import 'package:fleet_management_tool_rta/objectbox.g.dart';
+// import 'package:fleet_management_tool_rta/objectbox.g.dart';
 
 class ObjectBoxDatabase {
   late final Store store;

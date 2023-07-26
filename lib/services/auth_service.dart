@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/modelsSupabase/get_usuario_supabase.dart';
-import 'package:taller_alex_app_asesor/modelsSupabase/response_login_supabase.dart';
+import 'package:fleet_management_tool_rta/helpers/globals.dart';
+import 'package:fleet_management_tool_rta/modelsSupabase/get_usuario_supabase.dart';
+import 'package:fleet_management_tool_rta/modelsSupabase/response_login_supabase.dart';
 
 // https://www.djamware.com/post/618d094c5b9095915c5621c6/flutter-tutorial-login-role-and-permissions
 // https://mundanecode.com/posts/flutter-restapi-login/

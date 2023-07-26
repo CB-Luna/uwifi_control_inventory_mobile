@@ -1,4 +1,4 @@
-package com.taller_alex_app_asesor
+package com.fleet_management_tool_rta
 
 import io.flutter.embedding.android.FlutterActivity
 

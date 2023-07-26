@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:taller_alex_app_asesor/screens/widgets/pdf/api/pdf_api.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/invoice_info.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/ventas_invoice.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/pdf/utils.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/pdf/api/pdf_api.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/pdf/models/invoice_info.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/pdf/models/ventas_invoice.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/pdf/utils.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;

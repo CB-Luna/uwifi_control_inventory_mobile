@@ -1,13 +1,13 @@
-import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
-import 'package:taller_alex_app_asesor/main.dart';
+import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
+import 'package:fleet_management_tool_rta/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'package:taller_alex_app_asesor/providers/providers.dart';
-import 'package:taller_alex_app_asesor/screens/control_form/main_screen_selector.dart';
-import 'package:taller_alex_app_asesor/screens/screens.dart';
+import 'package:fleet_management_tool_rta/providers/providers.dart';
+import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
+import 'package:fleet_management_tool_rta/screens/screens.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({

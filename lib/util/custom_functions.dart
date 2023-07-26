@@ -1,5 +1,5 @@
-import 'package:taller_alex_app_asesor/theme/theme.dart';
-import 'package:taller_alex_app_asesor/util/util.dart';
+import 'package:fleet_management_tool_rta/theme/theme.dart';
+import 'package:fleet_management_tool_rta/util/util.dart';
 import 'package:flutter/material.dart';
 
 String formatTimeOfDay(TimeOfDay timeOfDay) {

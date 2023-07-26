@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:taller_alex_app_asesor/screens/clientes/flutter_flow_model.dart';
+import 'package:fleet_management_tool_rta/screens/clientes/flutter_flow_model.dart';
 
 class BackgroundModel extends FlutterFlowModel {
   /// Initialization and disposal methods.
