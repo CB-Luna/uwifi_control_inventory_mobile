@@ -626,7 +626,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 maybeHandleOverflow(
                                                   usuarioProvider
                                                   .usuarioCurrent?.vehicle.target?.make ?? '---', 
-                                                  15, "..."),
+                                                  12, "..."),
                                                 textAlign:
                                                     TextAlign.center,
                                                 style: FlutterFlowTheme
@@ -646,7 +646,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: MediaQuery.of(context).size.width * 0.25,
+                                          width: MediaQuery.of(context).size.width * 0.3,
                                           child: Row( 
                                             children: [
                                               Padding(
@@ -814,7 +814,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 maybeHandleOverflow(
                                                   usuarioProvider
                                                   .usuarioCurrent?.vehicle.target?.model ?? '---', 
-                                                  15, "..."),
+                                                  12, "..."),
                                                 textAlign:
                                                     TextAlign.center,
                                                 style: FlutterFlowTheme
@@ -834,7 +834,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: MediaQuery.of(context).size.width * 0.25,
+                                          width: MediaQuery.of(context).size.width * 0.3,
                                           child: Row(
                                             children: [
                                               Padding(

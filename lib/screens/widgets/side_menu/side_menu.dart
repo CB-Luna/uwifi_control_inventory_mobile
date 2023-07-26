@@ -154,7 +154,7 @@ class SideMenu extends StatelessWidget {
                               child: SizedBox(
                                 width: 130,
                                 child: Text(
-                                  maybeHandleOverflow("${usuarioProvider.usuarioCurrent!.name} ${usuarioProvider.usuarioCurrent!.lastName}", 22, "..."),
+                                  maybeHandleOverflow("${usuarioProvider.usuarioCurrent?.name} ${usuarioProvider.usuarioCurrent?.lastName}", 22, "..."),
                                   maxLines: 2,
                                   style: FlutterFlowTheme.of(context).bodyText1.override(
                                         fontFamily:

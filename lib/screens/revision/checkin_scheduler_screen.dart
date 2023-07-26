@@ -295,13 +295,13 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                             Text(
                               maybeHandleOverflow("${
                                 userProvider.usuarioCurrent?.name} ${
-                                userProvider.usuarioCurrent?.lastName}", 20, "..."),
+                                userProvider.usuarioCurrent?.lastName}", 24, "..."),
                               style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily:
                                     FlutterFlowTheme.of(context).bodyText1Family,
                                 color: FlutterFlowTheme.of(context).white,
                                 fontWeight: FontWeight.w500,
-                                fontSize: 19,
+                                fontSize: 15,
                               ),
                             ),
                             Text(
@@ -311,12 +311,12 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                                     FlutterFlowTheme.of(context).bodyText1Family,
                                 color: FlutterFlowTheme.of(context).white,
                                 fontWeight: FontWeight.w500,
-                                fontSize: 19,
+                                fontSize: 15,
                               ),
                             ),
                             Text(
                               DateFormat(
-                               'hh:mm:ss').
+                               'hh:mm a').
                                 format(
                                   widget.registeredHour),
                               style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -324,7 +324,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                                     FlutterFlowTheme.of(context).bodyText1Family,
                                 color: FlutterFlowTheme.of(context).white,
                                 fontWeight: FontWeight.w500,
-                                fontSize: 19,
+                                fontSize: 15,
                               ),
                             ),
                           ],
