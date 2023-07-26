@@ -963,6 +963,7 @@ class Bitacora {
   final service = ToOne<Service>();
   final vehicleService = ToOne<VehicleServices>();
   final rule = ToOne<Rule>();
+  final email = ToOne<Email>();
   @Backlink()
   final users = ToMany<Users>();
 
@@ -1010,6 +1011,7 @@ class Users {
   final roles = ToMany<Role>();
   final company = ToOne<Company>(); 
   final vehicle = ToOne<Vehicle>();
+  final emails = ToMany<Email>();
   @Backlink()
   final controlForms = ToMany<ControlForm>();
   final actualControlForm = ToOne<ControlForm>();
@@ -1042,6 +1044,26 @@ class Users {
       DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
 }
 
+@Entity()
+class Email {
+  int id;
+  String url;
+  String body;
+  DateTime dateAdded;
+  @Backlink()
+  final bitacora = ToMany<Bitacora>();
+  final user = ToOne<Users>();
+
+  Email({
+    this.id = 0,
+    required this.url,
+    required this.body,
+    DateTime? dateAdded,
+  }) : dateAdded = dateAdded ?? DateTime.now();
+
+  String get dateAddedFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAdded);
+}
 
 
 

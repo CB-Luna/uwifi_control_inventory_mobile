@@ -178,7 +178,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                         onTap: () async {
                           if (checkInFormProvider.validateForm()) {
                             if (checkInFormProvider.updateControlForm(userProvider.usuarioCurrent, widget.registeredHour)) {
-                              checkInFormProvider.cleanInformation();
+                              // checkInFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
                               await Navigator.push(
                                 context,

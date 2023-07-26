@@ -88,6 +88,7 @@ class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
                             ));
                           }
                           if (!mounted) return;
+                          checkOutFormProvider.cleanInformation();
                           await Navigator.push(
                             context,
                             MaterialPageRoute(

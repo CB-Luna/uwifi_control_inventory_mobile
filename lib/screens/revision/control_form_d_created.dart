@@ -88,7 +88,7 @@ class _ControlFormDCreatedScreenState extends State<ControlFormDCreatedScreen> {
                             ));
                           }
                           if (!mounted) return;
-
+                          checkInFormProvider.cleanInformation();
                           await Navigator.push(
                             context,
                             MaterialPageRoute(

@@ -237,6 +237,34 @@ class SyncProviderSupabase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
+        case "syncAddEmail":
+          final email = getFirstEmail(
+              dataBase.emailBox.getAll(), instruccionesBitacora[i].id);
+          if (email != null) {
+            final responseSyncAddEmail = await syncAddEmail(
+                email, instruccionesBitacora[i]);
+            if (responseSyncAddEmail.exitoso) {
+              banderasExistoSync.add(responseSyncAddEmail.exitoso);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(responseSyncAddEmail.exitoso);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  instruccion: responseSyncAddEmail.descripcion,
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion:
+                    "Problems sync to Local Server, Vehicle Service not recovered.",
+                fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
         case "syncUpdateVehicleServices":
           final vehicleServices = getFirstVehicleServices(
               dataBase.vehicleServicesBox.getAll(), instruccionesBitacora[i].id);
@@ -499,6 +527,21 @@ class SyncProviderSupabase extends ChangeNotifier {
         for (var j = 0; j < vehicleServices[i].bitacora.length; j++) {
           if (vehicleServices[i].bitacora[j].id == idInstruccionesBitacora) {
             return vehicleServices[i];
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  Email? getFirstEmail(
+      List<Email> email, int idInstruccionesBitacora) {
+    for (var i = 0; i < email.length; i++) {
+      if (email[i].bitacora.isEmpty) {
+      } else {
+        for (var j = 0; j < email[i].bitacora.length; j++) {
+          if (email[i].bitacora[j].id == idInstruccionesBitacora) {
+            return email[i];
           }
         }
       }
@@ -4660,6 +4703,43 @@ class SyncProviderSupabase extends ChangeNotifier {
           exitoso: false,
           descripcion:
               "Failed to sync data Update Password on Local Server to User '${usuario.correo}', details: '$e'");
+    }
+  }
+
+  Future<SyncInstruction> syncAddEmail(
+    Email email, Bitacora bitacora) async {
+    try {
+      if (bitacora.executeSupabase == false) {
+        var urlAutomatizacion =
+          Uri.parse(email.url);
+        final headers = ({
+          "Content-Type": "application/json",
+        });
+        var responseAutomatizacion = await post(urlAutomatizacion,
+          headers: headers,
+          body: email.body);
+        if (responseAutomatizacion.statusCode == 200) {
+         //Se marca como ejecutada la instrucción en Bitacora
+          bitacora.executeSupabase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          dataBase.bitacoraBox.remove(bitacora.id);
+          return SyncInstruction(exitoso: true, descripcion: "");
+        } else {
+          return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to send Email");
+        }
+      } else {
+        dataBase.bitacoraBox.remove(bitacora.id);
+        return SyncInstruction(exitoso: true, descripcion: "");
+      }
+    } catch (e) {
+      //print('ERROR - function syncAddEmprendedor(): $e');
+      return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Failed to sync send Email, details: '$e'");
     }
   }
 }

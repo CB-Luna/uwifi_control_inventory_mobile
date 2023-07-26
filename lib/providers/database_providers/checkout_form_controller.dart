@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
@@ -2343,49 +2344,78 @@ class CheckOutFormController extends ChangeNotifier {
   }
 
   Future<bool> sendEmail(Users user) async {
-    try {
-      var urlAutomatizacion =
-        Uri.parse("https://supa43.rtatel.com/notifications/api");
-      final headers = ({
-        "Content-Type": "application/json",
-      });
+    String url = "https://supa43.rtatel.com/notifications/api";
+    String body = jsonEncode({
+      "action": "rtaMail",
+      "template": "FleetRTAEmail",
+      "subject": "Issues_Form_Notification_RTA_CV",
+      "mailto": "control.rta@cbluna.com",
+      "variables": [
+        {"name": "company", "value": "${user.company.target?.company}"},
+        {"name": "plates", "value": "${user.vehicle.target?.licensePlates}"},
+        {"name": "typeForm", "value": "Check Out Form"},
+        {"name": "nameUserSender","value": '${user.name} ${user.lastName}'},
+        {"name": "fluidCheck","value": "Fluid Check"},
+        {"name": "fluidCheckIssues","value": issuesFluidCheck.isEmpty ? "All Okay" : issuesFluidCheck.join(", ")},
+        {"name": "lights","value": "Lights"},
+        {"name": "lightsIssues","value": issuesLights.isEmpty ? "All Okay" : issuesLights.join(", ")},
+        {"name": "carBodywork","value": "Car Bodywork"},
+        {"name": "carBodyworkIssues","value": issuesCarBodyWork.isEmpty ? "All Okay" : issuesCarBodyWork.join(", ")},
+        {"name": "security","value": "Security"},
+        {"name": "securityIssues","value": issuesSecurity.isEmpty ? "All Okay" : issuesSecurity.join(", ")},
+        {"name": "extra","value": "Extra"},
+        {"name": "extraIssues","value": issuesExtra.isEmpty ? "All Okay" : issuesExtra.join(", ")},
+        {"name": "equipment","value": "Equipment"},
+        {"name": "equipmentIssues","value": issuesEquipment.isEmpty ? "All Okay" : issuesEquipment.join(", ")},
+        {"name": "bucketInspection","value": "Bucket Inspection"},
+        {"name": "bucketInspectionIssues","value": issuesBucketInspection.isEmpty ? "All Okay" : issuesBucketInspection.join(", ")}
+      ]
+    });
+    var urlAutomatizacion =
+          Uri.parse(url);
+    final headers = ({
+      "Content-Type": "application/json",
+    });
+    //Se revisa el estatus de la Red
+    final connectivityResult =
+        await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      final newEmail = Email(
+        url: url, 
+        body: body
+      );
+      final newInstruction = Bitacora(
+          instruccion: 'syncAddEmail',
+          usuarioPropietario: prefs.getString("userId")!,
+          idControlForm: 0,
+        ); //Se crea la nueva instruccion a realizar en bitacora
+      newInstruction.email.target = newEmail; //Se asigna el email a la nueva instrucción
+      newEmail.bitacora.add(newInstruction); //Se asigna la nueva instrucción a el email
+      dataBase.bitacoraBox.put(newInstruction); //Agregamos la nueva instrucción en objectBox
+      return true;
+    } else {
       var responseAutomatizacion = await post(urlAutomatizacion,
           headers: headers,
-          body: jsonEncode({
-            "action": "rtaMail",
-            "template": "FleetRTAEmail",
-            "subject": "Issues_Form_Notification_RTA_CV",
-            "mailto": "control.rta@cbluna.com",
-            "variables": [
-              {"name": "company", "value": "${user.company.target?.company}"},
-              {"name": "plates", "value": "${user.vehicle.target?.licensePlates}"},
-              {"name": "typeForm", "value": "Check In Form"},
-              {"name": "nameUserSender","value": '${user.name} ${user.lastName}'},
-              {"name": "fluidCheck","value": "Fluid Check"},
-              {"name": "fluidCheckIssues","value": issuesFluidCheck.isEmpty ? "All Okay" : issuesFluidCheck.join(", ")},
-              {"name": "lights","value": "Lights"},
-              {"name": "lightsIssues","value": issuesLights.isEmpty ? "All Okay" : issuesLights.join(", ")},
-              {"name": "carBodywork","value": "Car Bodywork"},
-              {"name": "carBodyworkIssues","value": issuesCarBodyWork.isEmpty ? "All Okay" : issuesCarBodyWork.join(", ")},
-              {"name": "security","value": "Security"},
-              {"name": "securityIssues","value": issuesSecurity.isEmpty ? "All Okay" : issuesSecurity.join(", ")},
-              {"name": "extra","value": "Extra"},
-              {"name": "extraIssues","value": issuesExtra.isEmpty ? "All Okay" : issuesExtra.join(", ")},
-              {"name": "equipment","value": "Equipment"},
-              {"name": "equipmentIssues","value": issuesEquipment.isEmpty ? "All Okay" : issuesEquipment.join(", ")},
-              {"name": "bucketInspection","value": "Bucket Inspection"},
-              {"name": "bucketInspectionIssues","value": issuesBucketInspection.isEmpty ? "All Okay" : issuesBucketInspection.join(", ")}
-            ]
-          }));
+          body: body);
       if (responseAutomatizacion.statusCode == 200) {
         print("Proceso exitoso");
         return true;
       } else {
         print(responseAutomatizacion.body);
+        final newEmail = Email(
+          url: url, 
+          body: body
+        );
+        final newInstruction = Bitacora(
+            instruccion: 'syncAddEmail',
+            usuarioPropietario: prefs.getString("userId")!,
+            idControlForm: 0,
+          ); //Se crea la nueva instruccion a realizar en bitacora
+        newInstruction.email.target = newEmail; //Se asigna el email a la nueva instrucción
+        newEmail.bitacora.add(newInstruction); //Se asigna la nueva instrucción a el email
+        dataBase.bitacoraBox.put(newInstruction); //Agregamos la nueva instrucción en objectBox
         return false;
       }
-    } catch (e) {
-      return false;
     }
  }
 }

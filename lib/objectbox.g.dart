@@ -22,7 +22,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(27, 1774905738150923512),
       name: 'Bitacora',
-      lastPropertyId: const IdUid(58, 6864433048827413011),
+      lastPropertyId: const IdUid(59, 8324550707611292227),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -171,7 +171,14 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(457, 2883972706903277445),
-            relationTarget: 'Rule')
+            relationTarget: 'Rule'),
+        ModelProperty(
+            id: const IdUid(59, 8324550707611292227),
+            name: 'emailId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(464, 3869783548311038350),
+            relationTarget: 'Email')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -2333,7 +2340,11 @@ final _entities = <ModelEntity>[
         ModelRelation(
             id: const IdUid(96, 7279223846688382106),
             name: 'roles',
-            targetId: const IdUid(97, 4052095333394296256))
+            targetId: const IdUid(97, 4052095333394296256)),
+        ModelRelation(
+            id: const IdUid(98, 3803692598585200085),
+            name: 'emails',
+            targetId: const IdUid(106, 5179761477110208081))
       ],
       backlinks: <ModelBacklink>[
         ModelBacklink(
@@ -2474,6 +2485,44 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
         ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(106, 5179761477110208081),
+      name: 'Email',
+      lastPropertyId: const IdUid(7, 2211128980953804294),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 4318148645348320327),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(4, 3833560640438056572),
+            name: 'body',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 7266278878324612877),
+            name: 'dateAdded',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 6649254534641703330),
+            name: 'userId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(465, 6133735737218365395),
+            relationTarget: 'Users'),
+        ModelProperty(
+            id: const IdUid(7, 2211128980953804294),
+            name: 'url',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'bitacora', srcEntity: 'Bitacora', srcField: '')
       ])
 ];
 
@@ -2497,9 +2546,9 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(105, 5673404938280062340),
-      lastIndexId: const IdUid(463, 6620294353064759547),
-      lastRelationId: const IdUid(97, 7907540417784017008),
+      lastEntityId: const IdUid(106, 5179761477110208081),
+      lastIndexId: const IdUid(465, 6133735737218365395),
+      lastRelationId: const IdUid(98, 3803692598585200085),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -3833,7 +3882,9 @@ ModelDefinition getObjectBoxModel() {
         757115653678008229,
         1740545826112459780,
         731615765620021459,
-        7955731353673957890
+        7955731353673957890,
+        1123079733634614554,
+        815169670401201224
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3902,7 +3953,8 @@ ModelDefinition getObjectBoxModel() {
               object.user,
               object.service,
               object.vehicleService,
-              object.rule
+              object.rule,
+              object.email
             ],
         toManyRelations: (Bitacora object) =>
             {RelInfo<Users>.toManyBacklink(95, object.id): object.users},
@@ -3917,7 +3969,7 @@ ModelDefinition getObjectBoxModel() {
           final instruccionOffset = fbb.writeString(object.instruccion);
           final usuarioPropietarioOffset =
               fbb.writeString(object.usuarioPropietario);
-          fbb.startTable(59);
+          fbb.startTable(60);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(12, instruccionAdicionalOffset);
@@ -3941,6 +3993,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(55, object.service.targetId);
           fbb.addInt64(56, object.vehicleService.targetId);
           fbb.addInt64(57, object.rule.targetId);
+          fbb.addInt64(58, object.email.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4011,6 +4064,9 @@ ModelDefinition getObjectBoxModel() {
           object.rule.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 118, 0);
           object.rule.attach(store);
+          object.email.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 120, 0);
+          object.email.attach(store);
           InternalToManyAccess.setRelInfo<Bitacora>(object.users, store,
               RelInfo<Users>.toManyBacklink(95, object.id));
           return object;
@@ -6013,6 +6069,7 @@ ModelDefinition getObjectBoxModel() {
         toManyRelations: (Users object) => {
               RelInfo<Users>.toMany(95, object.id): object.bitacora,
               RelInfo<Users>.toMany(96, object.id): object.roles,
+              RelInfo<Users>.toMany(98, object.id): object.emails,
               RelInfo<ControlForm>.toOneBacklink(5, object.id,
                       (ControlForm srcObject) => srcObject.employee):
                   object.controlForms
@@ -6122,6 +6179,8 @@ ModelDefinition getObjectBoxModel() {
               object.bitacora, store, RelInfo<Users>.toMany(95, object.id));
           InternalToManyAccess.setRelInfo<Users>(
               object.roles, store, RelInfo<Users>.toMany(96, object.id));
+          InternalToManyAccess.setRelInfo<Users>(
+              object.emails, store, RelInfo<Users>.toMany(98, object.id));
           InternalToManyAccess.setRelInfo<Users>(
               object.controlForms,
               store,
@@ -6283,6 +6342,52 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<Bitacora>.toOneBacklink(
                   58, object.id, (Bitacora srcObject) => srcObject.rule));
           return object;
+        }),
+    Email: EntityDefinition<Email>(
+        model: _entities[18],
+        toOneRelations: (Email object) => [object.user],
+        toManyRelations: (Email object) => {
+              RelInfo<Bitacora>.toOneBacklink(
+                      59, object.id, (Bitacora srcObject) => srcObject.email):
+                  object.bitacora
+            },
+        getId: (Email object) => object.id,
+        setId: (Email object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Email object, fb.Builder fbb) {
+          final bodyOffset = fbb.writeString(object.body);
+          final urlOffset = fbb.writeString(object.url);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(3, bodyOffset);
+          fbb.addInt64(4, object.dateAdded.millisecondsSinceEpoch);
+          fbb.addInt64(5, object.user.targetId);
+          fbb.addOffset(6, urlOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Email(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              url: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, ''),
+              body: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              dateAdded: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0)));
+          object.user.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          object.user.attach(store);
+          InternalToManyAccess.setRelInfo<Email>(
+              object.bitacora,
+              store,
+              RelInfo<Bitacora>.toOneBacklink(
+                  59, object.id, (Bitacora srcObject) => srcObject.email));
+          return object;
         })
   };
 
@@ -6382,6 +6487,10 @@ class Bitacora_ {
   /// see [Bitacora.rule]
   static final rule =
       QueryRelationToOne<Bitacora, Rule>(_entities[0].properties[22]);
+
+  /// see [Bitacora.email]
+  static final email =
+      QueryRelationToOne<Bitacora, Email>(_entities[0].properties[23]);
 }
 
 /// [ControlForm] entity fields to define ObjectBox queries.
@@ -7936,6 +8045,10 @@ class Users_ {
   /// see [Users.roles]
   static final roles =
       QueryRelationToMany<Users, Role>(_entities[14].relations[1]);
+
+  /// see [Users.emails]
+  static final emails =
+      QueryRelationToMany<Users, Email>(_entities[14].relations[2]);
 }
 
 /// [Service] entity fields to define ObjectBox queries.
@@ -8018,4 +8131,24 @@ class Rule_ {
   /// see [Rule.lastMileageService]
   static final lastMileageService =
       QueryIntegerProperty<Rule>(_entities[17].properties[5]);
+}
+
+/// [Email] entity fields to define ObjectBox queries.
+class Email_ {
+  /// see [Email.id]
+  static final id = QueryIntegerProperty<Email>(_entities[18].properties[0]);
+
+  /// see [Email.body]
+  static final body = QueryStringProperty<Email>(_entities[18].properties[1]);
+
+  /// see [Email.dateAdded]
+  static final dateAdded =
+      QueryIntegerProperty<Email>(_entities[18].properties[2]);
+
+  /// see [Email.user]
+  static final user =
+      QueryRelationToOne<Email, Users>(_entities[18].properties[3]);
+
+  /// see [Email.url]
+  static final url = QueryStringProperty<Email>(_entities[18].properties[4]);
 }
