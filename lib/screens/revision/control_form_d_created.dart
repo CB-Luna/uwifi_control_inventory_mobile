@@ -80,7 +80,7 @@ class _ControlFormDCreatedScreenState extends State<ControlFormDCreatedScreen> {
                           const EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          if (!await checkInFormProvider.sendEmail("${userProvider.usuarioCurrent?.name} ${userProvider.usuarioCurrent?.lastName}")) {
+                          if (!await checkInFormProvider.sendEmail(userProvider.usuarioCurrent!)) {
                             snackbarKey.currentState
                                 ?.showSnackBar(const SnackBar(
                               content: Text(

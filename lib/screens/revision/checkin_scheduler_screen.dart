@@ -182,23 +182,13 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                             if (checkInFormProvider.updateControlForm(userProvider.usuarioCurrent, widget.registeredHour)) {
                               checkInFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
-                              if (checkInFormProvider.issues.isEmpty) {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ControlFormDCreatedScreen(),
-                                  ),
-                                );
-                              } else {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ControlFormDCreatedScreen(),
-                                  ),
-                                );
-                              }
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ControlFormDCreatedScreen(),
+                                ),
+                              );
                             } else {
                               checkInFormProvider.cleanInformation();
                               controlFormProvider.cleanData();

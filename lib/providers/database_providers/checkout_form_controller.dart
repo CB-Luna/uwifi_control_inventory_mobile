@@ -18,7 +18,13 @@ class CheckOutFormController extends ChangeNotifier {
   bool flagTransmissionFluidChange = false;
   bool flagRadiatorFluidChange = false;
 
-  List<String> issues = []; 
+  List<String> issuesFluidCheck = []; 
+  List<String> issuesLights = []; 
+  List<String> issuesCarBodyWork = []; 
+  List<String> issuesSecurity = []; 
+  List<String> issuesExtra = []; 
+  List<String> issuesEquipment = []; 
+  List<String> issuesBucketInspection = []; 
   TextEditingController from = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController to = TextEditingController();
@@ -284,12 +290,12 @@ class CheckOutFormController extends ChangeNotifier {
    void updateHeadLights(String report) {
     if (report == "Good") {
       if (headLights == "Bad") {
-        issues.remove("HeadLights");
+        issuesLights.remove("HeadLights");
         badStateLights -= 1;
       }
     } else {
       if (headLights == "Good") {
-        issues.add("HeadLights");
+        issuesLights.add("HeadLights");
         badStateLights += 1;
       }
     }
@@ -299,12 +305,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateBrakeLights(String report) {
     if (report == "Good") {
       if (brakeLights == "Bad") {
-        issues.remove("BrakeLights");
+        issuesLights.remove("BrakeLights");
         badStateLights -= 1;
       }
     } else {
       if (brakeLights == "Good") {
-        issues.add("BrakeLights");
+        issuesLights.add("BrakeLights");
         badStateLights += 1;
       }
     }
@@ -314,12 +320,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateReverseLights(String report) {
     if (report == "Good") {
       if (reverseLights == "Bad") {
-        issues.remove("ReverseLights");
+        issuesLights.remove("ReverseLights");
         badStateLights -= 1;
       }
     } else {
       if (reverseLights == "Good") {
-        issues.add("ReverseLights");
+        issuesLights.add("ReverseLights");
         badStateLights += 1;
       }
     }
@@ -329,12 +335,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateWarningLights(String report) {
     if (report == "Good") {
       if (warningLights == "Bad") {
-        issues.remove("WarningLights");
+        issuesLights.remove("WarningLights");
         badStateLights -= 1;
       }
     } else {
       if (warningLights == "Good") {
-        issues.add("WarningLights");
+        issuesLights.add("WarningLights");
         badStateLights += 1;
       }
     }
@@ -344,12 +350,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateTurnSignals(String report) {
     if (report == "Good") {
       if (turnSignals == "Bad") {
-        issues.remove("TurnLights");
+        issuesLights.remove("TurnLights");
         badStateLights -= 1;
       }
     } else {
       if (turnSignals == "Good") {
-        issues.add("TurnLights");
+        issuesLights.add("TurnLights");
         badStateLights += 1;
       }
     }
@@ -359,12 +365,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateFourWayFlashers(String report) {
     if (report == "Good") {
       if (fourWayFlashers == "Bad") {
-        issues.remove("FourWay Flasher");
+        issuesLights.remove("FourWay Flasher");
         badStateLights -= 1;
       }
     } else {
       if (fourWayFlashers == "Good") {
-        issues.add("FourWay Flasher");
+        issuesLights.add("FourWay Flasher");
         badStateLights += 1;
       }
     }
@@ -374,12 +380,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateDashLights(String report) {
     if (report == "Good") {
       if (dashLights == "Bad") {
-        issues.remove("DashLights");
+        issuesLights.remove("DashLights");
         badStateLights -= 1;
       }
     } else {
       if (dashLights == "Good") {
-        issues.add("DashLights");
+        issuesLights.add("DashLights");
         badStateLights += 1;
       }
     }
@@ -389,12 +395,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateStrobeLights(String report) {
     if (report == "Good") {
       if (strobeLights == "Bad") {
-        issues.remove("Strobe Lights");
+        issuesLights.remove("Strobe Lights");
         badStateLights -= 1;
       }
     } else {
       if (strobeLights == "Good") {
-        issues.add("Strobe Lights");
+        issuesLights.add("Strobe Lights");
         badStateLights += 1;
       }
     }
@@ -404,12 +410,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateCabRoofLights(String report) {
     if (report == "Good") {
       if (cabRoofLights == "Bad") {
-        issues.remove("CabRoof Lights");
+        issuesLights.remove("CabRoof Lights");
         badStateLights -= 1;
       }
     } else {
       if (cabRoofLights == "Good") {
-        issues.add("CabRoof Lights");
+        issuesLights.add("CabRoof Lights");
         badStateLights += 1;
       }
     }
@@ -419,12 +425,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateClearanceLights(String report) {
     if (report == "Good") {
       if (clearanceLights == "Bad") {
-        issues.remove("Clearence Lights");
+        issuesLights.remove("Clearence Lights");
         badStateLights -= 1;
       }
     } else {
       if (clearanceLights == "Good") {
-        issues.add("Clearence Lights");
+        issuesLights.add("Clearence Lights");
         badStateLights += 1;
       }
     }
@@ -437,12 +443,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateWiperBladesFront(String report) {
     if (report == "Good") {
       if (wiperBladesFront == "Bad") {
-        issues.remove("Wiper Blades Front");
+        issuesCarBodyWork.remove("Wiper Blades Front");
         badStateLights -= 1;
       }
     } else {
       if (wiperBladesFront == "Good") {
-        issues.add("Wiper Blades Front");
+        issuesCarBodyWork.add("Wiper Blades Front");
         badStateLights += 1;
       }
     }
@@ -452,12 +458,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateWiperBladesBack(String report) {
     if (report == "Good") {
       if (wiperBladesBack == "Bad") {
-        issues.remove("Wiper Blades Back");
+        issuesCarBodyWork.remove("Wiper Blades Back");
         badStateLights -= 1;
       }
     } else {
       if (wiperBladesBack == "Good") {
-        issues.add("Wiper Blades Back");
+        issuesCarBodyWork.add("Wiper Blades Back");
         badStateLights += 1;
       }
     }
@@ -467,12 +473,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateWindshieldWiperFront(String report) {
     if (report == "Good") {
       if (windshieldWiperFront == "Bad") {
-        issues.remove("Windshield Wiper Front");
+        issuesCarBodyWork.remove("Windshield Wiper Front");
         badStateLights -= 1;
       }
     } else {
       if (windshieldWiperFront == "Good") {
-        issues.add("Windshield Wiper Front");
+        issuesCarBodyWork.add("Windshield Wiper Front");
         badStateLights += 1;
       }
     }
@@ -482,12 +488,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateWindshieldWiperBack(String report) {
     if (report == "Good") {
       if (windshieldWiperBack == "Bad") {
-        issues.remove("Windshield Wiper Bad");
+        issuesCarBodyWork.remove("Windshield Wiper Bad");
         badStateLights -= 1;
       }
     } else {
       if (windshieldWiperBack == "Good") {
-        issues.add("Windshield Wiper Bad");
+        issuesCarBodyWork.add("Windshield Wiper Bad");
         badStateLights += 1;
       }
     }
@@ -497,12 +503,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateGeneralBody(String report) {
     if (report == "Good") {
       if (generalBody == "Bad") {
-        issues.remove("General Body");
+        issuesCarBodyWork.remove("General Body");
         badStateLights -= 1;
       }
     } else {
       if (generalBody == "Good") {
-        issues.add("General Body");
+        issuesCarBodyWork.add("General Body");
         badStateLights += 1;
       }
     }
@@ -512,12 +518,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateDecaling(String report) {
     if (report == "Good") {
       if (decaling == "Bad") {
-        issues.remove("Decaling");
+        issuesCarBodyWork.remove("Decaling");
         badStateLights -= 1;
       }
     } else {
       if (decaling == "Good") {
-        issues.add("Decaling");
+        issuesCarBodyWork.add("Decaling");
         badStateLights += 1;
       }
     }
@@ -527,12 +533,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateTires(String report) {
     if (report == "Good") {
       if (tires == "Bad") {
-        issues.remove("Tires");
+        issuesCarBodyWork.remove("Tires");
         badStateLights -= 1;
       }
     } else {
       if (tires == "Good") {
-        issues.add("Tires");
+        issuesCarBodyWork.add("Tires");
         badStateLights += 1;
       }
     }
@@ -542,12 +548,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateGlass(String report) {
     if (report == "Good") {
       if (glass == "Bad") {
-        issues.remove("Glass");
+        issuesCarBodyWork.remove("Glass");
         badStateLights -= 1;
       }
     } else {
       if (glass == "Good") {
-        issues.add("Glass");
+        issuesCarBodyWork.add("Glass");
         badStateLights += 1;
       }
     }
@@ -557,12 +563,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateMirrors(String report) {
     if (report == "Good") {
       if (mirrors == "Bad") {
-        issues.remove("Mirrors");
+        issuesCarBodyWork.remove("Mirrors");
         badStateLights -= 1;
       }
     } else {
       if (mirrors == "Good") {
-        issues.add("Mirrors");
+        issuesCarBodyWork.add("Mirrors");
         badStateLights += 1;
       }
     }
@@ -572,12 +578,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateParking(String report) {
     if (report == "Good") {
       if (parking == "Bad") {
-        issues.remove("Parking");
+        issuesCarBodyWork.remove("Parking");
         badStateLights -= 1;
       }
     } else {
       if (parking == "Good") {
-        issues.add("Parking");
+        issuesCarBodyWork.add("Parking");
         badStateLights += 1;
       }
     }
@@ -587,12 +593,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateBrakes(String report) {
     if (report == "Good") {
       if (brakes== "Bad") {
-        issues.remove("Brakes");
+        issuesCarBodyWork.remove("Brakes");
         badStateLights -= 1;
       }
     } else {
       if (brakes== "Good") {
-        issues.add("Brakes");
+        issuesCarBodyWork.add("Brakes");
         badStateLights += 1;
       }
     }
@@ -602,12 +608,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateEMGBrakes(String report) {
     if (report == "Good") {
       if (emgBrakes == "Bad") {
-        issues.remove("EMGBrakes");
+        issuesCarBodyWork.remove("EMGBrakes");
         badStateLights -= 1;
       }
     } else {
       if (emgBrakes == "Good") {
-        issues.add("EMGBrakes");
+        issuesCarBodyWork.add("EMGBrakes");
         badStateLights += 1;
       }
     }
@@ -617,12 +623,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateHorn(String report) {
     if (report == "Good") {
       if (horn == "Bad") {
-        issues.remove("Horn");
+        issuesCarBodyWork.remove("Horn");
         badStateLights -= 1;
       }
     } else {
       if (horn == "Good") {
-        issues.add("Horn");
+        issuesCarBodyWork.add("Horn");
         badStateLights += 1;
       }
     }
@@ -633,12 +639,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateEngineOil(String report) {
     if (report == "Good") {
       if (engineOil == "Bad") {
-        issues.remove("Engine Oil");
+        issuesCarBodyWork.remove("Engine Oil");
         pendingMeasures -= 1;
       }
     } else {
       if (engineOil == "Good") {
-        issues.add("Engine Oil");
+        issuesCarBodyWork.add("Engine Oil");
         pendingMeasures += 1;
       }
     }
@@ -648,12 +654,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateTransmission(String report) {
     if (report == "Good") {
       if (transmission== "Bad") {
-        issues.remove("Transmission");
+        issuesFluidCheck.remove("Transmission");
         pendingMeasures -= 1;
       }
     } else {
       if (transmission== "Good") {
-        issues.add("Transmission");
+        issuesFluidCheck.add("Transmission");
         pendingMeasures += 1;
       }
     }
@@ -663,12 +669,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateCoolant(String report) {
     if (report == "Good") {
       if (coolant == "Bad") {
-        issues.remove("Coolant");
+        issuesFluidCheck.remove("Coolant");
         pendingMeasures -= 1;
       }
     } else {
       if (coolant == "Good") {
-        issues.add("Coolant");
+        issuesFluidCheck.add("Coolant");
         pendingMeasures += 1;
       }
     }
@@ -678,12 +684,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updatePowerSteering(String report) {
     if (report == "Good") {
       if (powerSteering == "Bad") {
-        issues.remove("Power Steering");
+        issuesFluidCheck.remove("Power Steering");
         pendingMeasures -= 1;
       }
     } else {
       if (powerSteering == "Good") {
-        issues.add("Power Steering");
+        issuesFluidCheck.add("Power Steering");
         pendingMeasures += 1;
       }
     }
@@ -693,12 +699,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateDieselExhaustFluid(String report) {
     if (report == "Good") {
       if (dieselExhaustFluid == "Bad") {
-        issues.remove("Diesel Exhaust Fluid");
+        issuesFluidCheck.remove("Diesel Exhaust Fluid");
         pendingMeasures -= 1;
       }
     } else {
       if (dieselExhaustFluid == "Good") {
-        issues.add("Diesel Exhaust Fluid");
+        issuesFluidCheck.add("Diesel Exhaust Fluid");
         pendingMeasures += 1;
       }
     }
@@ -708,12 +714,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateWindshieldWasherFluid(String report) {
     if (report == "Good") {
       if (windshieldWasherFluid == "Bad") {
-        issues.remove("Windshield Washer Fluid");
+        issuesFluidCheck.remove("Windshield Washer Fluid");
         pendingMeasures -= 1;
       }
     } else {
       if (windshieldWasherFluid == "Good") {
-        issues.add("Windshield Washer Fluid");
+        issuesFluidCheck.add("Windshield Washer Fluid");
         pendingMeasures += 1;
       }
     }
@@ -724,12 +730,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateInsulated(String report) {
     if (report == "Good") {
       if (insulated == "Bad") {
-        issues.remove("Insulated");
+        issuesBucketInspection.remove("Insulated");
         badStateEquipment -= 1;
       }
     } else {
       if (insulated == "Good") {
-        issues.add("Insulated");
+        issuesBucketInspection.add("Insulated");
         badStateEquipment += 1;
       }
     }
@@ -739,12 +745,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateHolesDrilled(String report) {
     if (report == "Good") {
       if (holesDrilled == "Bad") {
-        issues.remove("Holes Drilled");
+        issuesBucketInspection.remove("Holes Drilled");
         badStateEquipment -= 1;
       }
     } else {
       if (holesDrilled == "Good") {
-        issues.add("Holes Drilled");
+        issuesBucketInspection.add("Holes Drilled");
         badStateEquipment += 1;
       }
     }
@@ -754,12 +760,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateBucketLiner(String report) {
     if (report == "Good") {
       if (bucketLiner == "Bad") {
-        issues.remove("Bucket Liner");
+        issuesBucketInspection.remove("Bucket Liner");
         badStateEquipment -= 1;
       }
     } else {
       if (bucketLiner == "Good") {
-        issues.add("Bucket Liner");
+        issuesBucketInspection.add("Bucket Liner");
         badStateEquipment += 1;
       }
     }
@@ -770,12 +776,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateRTAMagnet(String report) {
     if (report == "Good") {
       if (rtaMagnet == "Bad") {
-        issues.remove("RTA Magnet");
+        issuesSecurity.remove("RTA Magnet");
         badStateSecurity -= 1;
       }
     } else {
       if (rtaMagnet == "Good") {
-        issues.add("RTA Magnet");
+        issuesSecurity.add("RTA Magnet");
         badStateSecurity += 1;
       }
     }
@@ -785,12 +791,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateTriangleReflectors(String report) {
     if (report == "Good") {
       if (triangleReflectors == "Bad") {
-        issues.remove("Triangle Reflectors");
+        issuesSecurity.remove("Triangle Reflectors");
         badStateSecurity -= 1;
       }
     } else {
       if (triangleReflectors == "Good") {
-        issues.add("Triangle Reflectors");
+        issuesSecurity.add("Triangle Reflectors");
         badStateSecurity += 1;
       }
     }
@@ -800,12 +806,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateWheelChocks(String report) {
     if (report == "Good") {
       if (wheelChocks == "Bad") {
-        issues.remove("Wheel Chocks");
+        issuesSecurity.remove("Wheel Chocks");
         badStateSecurity -= 1;
       }
     } else {
       if (wheelChocks == "Good") {
-        issues.add("Wheel Chocks");
+        issuesSecurity.add("Wheel Chocks");
         badStateSecurity += 1;
       }
     }
@@ -815,12 +821,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateFireExtinguisher(String report) {
     if (report == "Good") {
       if (fireExtinguisher == "Bad") {
-        issues.remove("Fire Extinguisher");
+        issuesSecurity.remove("Fire Extinguisher");
         badStateSecurity -= 1;
       }
     } else {
       if (fireExtinguisher == "Good") {
-        issues.add("Fire Extinguisher");
+        issuesSecurity.add("Fire Extinguisher");
         badStateSecurity += 1;
       }
     }
@@ -830,12 +836,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateFirstAidKitSafetyVest(String report) {
     if (report == "Good") {
       if (firstAidKitSafetyVest == "Bad") {
-        issues.remove("First AidKit Safety Vest");
+        issuesSecurity.remove("First AidKit Safety Vest");
         badStateSecurity -= 1;
       }
     } else {
       if (firstAidKitSafetyVest == "Good") {
-        issues.add("First AidKit Safety Vest");
+        issuesSecurity.add("First AidKit Safety Vest");
         badStateSecurity += 1;
       }
     }
@@ -845,12 +851,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateBackUpAlarm(String report) {
     if (report == "Good") {
       if (backUpAlarm == "Bad") {
-        issues.remove("Back Up Alarm");
+        issuesSecurity.remove("Back Up Alarm");
         badStateSecurity -= 1;
       }
     } else {
       if (backUpAlarm == "Good") {
-        issues.add("Back Up Alarm");
+        issuesSecurity.add("Back Up Alarm");
         badStateSecurity += 1;
       }
     }
@@ -861,12 +867,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateLadder(String report) {
     if (report == "Good") {
       if (ladder == "Bad") {
-        issues.remove("Ladder");
+        issuesExtra.remove("Ladder");
         badStateSecurity -= 1;
       }
     } else {
       if (ladder == "Good") {
-        issues.add("Ladder");
+        issuesExtra.add("Ladder");
         badStateSecurity += 1;
       }
     }
@@ -876,12 +882,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateStepLadder(String report) {
     if (report == "Good") {
       if (stepLadder == "Bad") {
-        issues.remove("Step Ladder");
+        issuesExtra.remove("Step Ladder");
         badStateSecurity -= 1;
       }
     } else {
       if (stepLadder == "Good") {
-        issues.add("Step Ladder");
+        issuesExtra.add("Step Ladder");
         badStateSecurity += 1;
       }
     }
@@ -891,12 +897,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateLadderStraps(String report) {
     if (report == "Good") {
       if (ladderStraps == "Bad") {
-        issues.remove("Ladder Straps");
+        issuesExtra.remove("Ladder Straps");
         badStateSecurity -= 1;
       }
     } else {
       if (ladderStraps == "Good") {
-        issues.add("Ladder Straps");
+        issuesExtra.add("Ladder Straps");
         badStateSecurity += 1;
       }
     }
@@ -906,12 +912,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateHydraulicFluidForBucket(String report) {
     if (report == "Good") {
       if (hydraulicFluidForBucket == "Bad") {
-        issues.remove("Hydraulic Fluid For Bucket");
+        issuesExtra.remove("Hydraulic Fluid For Bucket");
         badStateSecurity -= 1;
       }
     } else {
       if (hydraulicFluidForBucket == "Good") {
-        issues.add("Hydraulic Fluid For Bucket");
+        issuesExtra.add("Hydraulic Fluid For Bucket");
         badStateSecurity += 1;
       }
     }
@@ -921,12 +927,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateFiberReelRack(String report) {
     if (report == "Good") {
       if (fiberReelRack == "Bad") {
-        issues.remove("Fiber Reel Rack");
+        issuesExtra.remove("Fiber Reel Rack");
         badStateSecurity -= 1;
       }
     } else {
       if (fiberReelRack == "Good") {
-        issues.add("Fiber Reel Rack");
+        issuesExtra.add("Fiber Reel Rack");
         badStateSecurity += 1;
       }
     }
@@ -936,12 +942,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateBinsLockedAndSecure(String report) {
     if (report == "Good") {
       if (binsLockedAndSecure == "Bad") {
-        issues.remove("Bins Locked And Secure");
+        issuesExtra.remove("Bins Locked And Secure");
         badStateSecurity -= 1;
       }
     } else {
       if (binsLockedAndSecure == "Good") {
-        issues.add("Bins Locked And Secure");
+        issuesExtra.add("Bins Locked And Secure");
         badStateSecurity += 1;
       }
     }
@@ -951,12 +957,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateSafetyHarness(String report) {
     if (report == "Good") {
       if (safetyHarness == "Bad") {
-        issues.remove("Safety Harness");
+        issuesExtra.remove("Safety Harness");
         badStateSecurity -= 1;
       }
     } else {
       if (safetyHarness == "Good") {
-        issues.add("Safety Harness");
+        issuesExtra.add("Safety Harness");
         badStateSecurity += 1;
       }
     }
@@ -966,12 +972,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateLanyardSafetyHarness(String report) {
     if (report == "Good") {
       if (lanyardSafetyHarness == "Bad") {
-        issues.remove("Lanyard Safety Harness");
+        issuesExtra.remove("Lanyard Safety Harness");
         badStateSecurity -= 1;
       }
     } else {
       if (lanyardSafetyHarness == "Good") {
-        issues.add("Lanyard Safety Harness");
+        issuesExtra.add("Lanyard Safety Harness");
         badStateSecurity += 1;
       }
     }
@@ -982,12 +988,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateIgnitionKey(String report) {
     if (report == "Yes") {
       if (ignitionKey == "No") {
-        issues.remove("Ignition Key");
+        issuesEquipment.remove("Ignition Key");
         badStateEquipment -= 1;
       }
     } else {
       if (ignitionKey == "Yes") {
-        issues.add("Ignition Key");
+        issuesEquipment.add("Ignition Key");
         badStateEquipment += 1;
       }
     }
@@ -997,12 +1003,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateBinsBoxKey(String report) {
     if (report == "Yes") {
       if (binsBoxKey == "No") {
-        issues.remove("BinsBox Key");
+        issuesEquipment.remove("BinsBox Key");
         badStateEquipment -= 1;
       }
     } else {
       if (binsBoxKey == "Yes") {
-        issues.add("BinsBox Key");
+        issuesEquipment.add("BinsBox Key");
         badStateEquipment += 1;
       }
     }
@@ -1012,12 +1018,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateVehicleRegistrationCopy(String report) {
     if (report == "Yes") {
       if (vehicleRegistrationCopy == "No") {
-        issues.remove("Vehicle Registration Copy");
+        issuesEquipment.remove("Vehicle Registration Copy");
         badStateEquipment -= 1;
       }
     } else {
       if (vehicleRegistrationCopy == "Yes") {
-        issues.add("Vehicle Registration Copy");
+        issuesEquipment.add("Vehicle Registration Copy");
         badStateEquipment += 1;
       }
     }
@@ -1027,12 +1033,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateVehicleInsuranceCopy(String report) {
     if (report == "Yes") {
       if (vehicleInsuranceCopy == "No") {
-        issues.remove("Vehicle Insurance Copy");
+        issuesEquipment.remove("Vehicle Insurance Copy");
         badStateEquipment -= 1;
       }
     } else {
       if (vehicleInsuranceCopy == "Yes") {
-        issues.add("Vehicle Insurance Copy");
+        issuesEquipment.add("Vehicle Insurance Copy");
         badStateEquipment += 1;
       }
     }
@@ -1042,12 +1048,12 @@ class CheckOutFormController extends ChangeNotifier {
   void updateBucketLiftOperatorManual(String report) {
     if (report == "Yes") {
       if (bucketLiftOperatorManual == "No") {
-        issues.remove("Bucket Lift Operator Manual");
+        issuesEquipment.remove("Bucket Lift Operator Manual");
         badStateEquipment -= 1;
       }
     } else {
       if (bucketLiftOperatorManual == "Yes") {
-        issues.add("Bucket Lift Operator Manual");
+        issuesEquipment.add("Bucket Lift Operator Manual");
         badStateEquipment += 1;
       }
     }
@@ -1561,7 +1567,13 @@ class CheckOutFormController extends ChangeNotifier {
   void cleanInformation()
   {
     //Banderas
-    issues.clear();
+    issuesFluidCheck.clear();
+    issuesLights.clear();
+    issuesCarBodyWork.clear();
+    issuesSecurity.clear();
+    issuesExtra.clear();
+    issuesEquipment.clear();
+    issuesBucketInspection.clear();
     from.clear();
     password.clear();
     to.clear();
@@ -2330,7 +2342,7 @@ class CheckOutFormController extends ChangeNotifier {
     }
   }
 
-  Future<bool> sendEmail(String nameUserSender) async {
+  Future<bool> sendEmail(Users user) async {
     var urlAutomatizacion =
         Uri.parse("https://supa43.rtatel.com/notifications/api");
     final headers = ({
@@ -2340,13 +2352,28 @@ class CheckOutFormController extends ChangeNotifier {
         headers: headers,
         body: jsonEncode({
           "action": "rtaMail",
-          "template": "Issues_Form_Notification_RTA_CV",
+          "template": "FleetRTAEmail",
           "subject": "Issues_Form_Notification_RTA_CV",
           "mailto": "control.rta@cbluna.com",
           "variables": [
-            {"name": "nameUserSender", "value": nameUserSender},
-            {"name": "typeForm", "value": "Check Out Form"},
-            {"name": "issuesList","value": "Issues in: ${issues.join(", ")}"}
+            {"name": "company", "value": "${user.company.target?.company}"},
+            {"name": "plates", "value": "${user.vehicle.target?.licensePlates}"},
+            {"name": "typeForm", "value": "Check In Form"},
+            {"name": "nameUserSender","value": '${user.name} ${user.lastName}'},
+            {"name": "fluidCheck","value": "Fluid Check"},
+            {"name": "fluidCheckIssues","value": issuesFluidCheck.isEmpty ? "All Okay" : issuesFluidCheck.join(", ")},
+            {"name": "lights","value": "Lights"},
+            {"name": "lightsIssues","value": issuesLights.isEmpty ? "All Okay" : issuesLights.join(", ")},
+            {"name": "carBodywork","value": "Car Bodywork"},
+            {"name": "carBodyworkIssues","value": issuesCarBodyWork.isEmpty ? "All Okay" : issuesCarBodyWork.join(", ")},
+            {"name": "security","value": "Security"},
+            {"name": "securityIssues","value": issuesSecurity.isEmpty ? "All Okay" : issuesSecurity.join(", ")},
+            {"name": "extra","value": "Extra"},
+            {"name": "extraIssues","value": issuesExtra.isEmpty ? "All Okay" : issuesExtra.join(", ")},
+            {"name": "equipment","value": "Equipment"},
+            {"name": "equipmentIssues","value": issuesEquipment.isEmpty ? "All Okay" : issuesEquipment.join(", ")},
+            {"name": "bucketInspection","value": "Bucket Inspection"},
+            {"name": "bucketInspectionIssues","value": issuesBucketInspection.isEmpty ? "All Okay" : issuesBucketInspection.join(", ")}
           ]
         }));
     if (responseAutomatizacion.statusCode == 200) {
