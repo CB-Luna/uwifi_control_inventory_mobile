@@ -29,7 +29,6 @@ class CheckOutSchedulerScreen extends StatefulWidget {
   @override
   State<CheckOutSchedulerScreen> createState() => _CheckOutSchedulerScreenState();
 }
-final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
     'moveLoadAnimationLR': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -93,7 +92,6 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
     final userProvider = Provider.of<UsuarioController>(context);
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
     return Scaffold(
-      key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).background,
       body: SafeArea(
         child: SingleChildScrollView(

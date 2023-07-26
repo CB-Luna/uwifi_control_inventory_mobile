@@ -2343,44 +2343,48 @@ class CheckOutFormController extends ChangeNotifier {
   }
 
   Future<bool> sendEmail(Users user) async {
-    var urlAutomatizacion =
+    try {
+      var urlAutomatizacion =
         Uri.parse("https://supa43.rtatel.com/notifications/api");
-    final headers = ({
-      "Content-Type": "application/json",
-    });
-    var responseAutomatizacion = await post(urlAutomatizacion,
-        headers: headers,
-        body: jsonEncode({
-          "action": "rtaMail",
-          "template": "FleetRTAEmail",
-          "subject": "Issues_Form_Notification_RTA_CV",
-          "mailto": "control.rta@cbluna.com",
-          "variables": [
-            {"name": "company", "value": "${user.company.target?.company}"},
-            {"name": "plates", "value": "${user.vehicle.target?.licensePlates}"},
-            {"name": "typeForm", "value": "Check In Form"},
-            {"name": "nameUserSender","value": '${user.name} ${user.lastName}'},
-            {"name": "fluidCheck","value": "Fluid Check"},
-            {"name": "fluidCheckIssues","value": issuesFluidCheck.isEmpty ? "All Okay" : issuesFluidCheck.join(", ")},
-            {"name": "lights","value": "Lights"},
-            {"name": "lightsIssues","value": issuesLights.isEmpty ? "All Okay" : issuesLights.join(", ")},
-            {"name": "carBodywork","value": "Car Bodywork"},
-            {"name": "carBodyworkIssues","value": issuesCarBodyWork.isEmpty ? "All Okay" : issuesCarBodyWork.join(", ")},
-            {"name": "security","value": "Security"},
-            {"name": "securityIssues","value": issuesSecurity.isEmpty ? "All Okay" : issuesSecurity.join(", ")},
-            {"name": "extra","value": "Extra"},
-            {"name": "extraIssues","value": issuesExtra.isEmpty ? "All Okay" : issuesExtra.join(", ")},
-            {"name": "equipment","value": "Equipment"},
-            {"name": "equipmentIssues","value": issuesEquipment.isEmpty ? "All Okay" : issuesEquipment.join(", ")},
-            {"name": "bucketInspection","value": "Bucket Inspection"},
-            {"name": "bucketInspectionIssues","value": issuesBucketInspection.isEmpty ? "All Okay" : issuesBucketInspection.join(", ")}
-          ]
-        }));
-    if (responseAutomatizacion.statusCode == 200) {
-      print("Proceso exitoso");
-      return true;
-    } else {
-      print(responseAutomatizacion.body);
+      final headers = ({
+        "Content-Type": "application/json",
+      });
+      var responseAutomatizacion = await post(urlAutomatizacion,
+          headers: headers,
+          body: jsonEncode({
+            "action": "rtaMail",
+            "template": "FleetRTAEmail",
+            "subject": "Issues_Form_Notification_RTA_CV",
+            "mailto": "control.rta@cbluna.com",
+            "variables": [
+              {"name": "company", "value": "${user.company.target?.company}"},
+              {"name": "plates", "value": "${user.vehicle.target?.licensePlates}"},
+              {"name": "typeForm", "value": "Check In Form"},
+              {"name": "nameUserSender","value": '${user.name} ${user.lastName}'},
+              {"name": "fluidCheck","value": "Fluid Check"},
+              {"name": "fluidCheckIssues","value": issuesFluidCheck.isEmpty ? "All Okay" : issuesFluidCheck.join(", ")},
+              {"name": "lights","value": "Lights"},
+              {"name": "lightsIssues","value": issuesLights.isEmpty ? "All Okay" : issuesLights.join(", ")},
+              {"name": "carBodywork","value": "Car Bodywork"},
+              {"name": "carBodyworkIssues","value": issuesCarBodyWork.isEmpty ? "All Okay" : issuesCarBodyWork.join(", ")},
+              {"name": "security","value": "Security"},
+              {"name": "securityIssues","value": issuesSecurity.isEmpty ? "All Okay" : issuesSecurity.join(", ")},
+              {"name": "extra","value": "Extra"},
+              {"name": "extraIssues","value": issuesExtra.isEmpty ? "All Okay" : issuesExtra.join(", ")},
+              {"name": "equipment","value": "Equipment"},
+              {"name": "equipmentIssues","value": issuesEquipment.isEmpty ? "All Okay" : issuesEquipment.join(", ")},
+              {"name": "bucketInspection","value": "Bucket Inspection"},
+              {"name": "bucketInspectionIssues","value": issuesBucketInspection.isEmpty ? "All Okay" : issuesBucketInspection.join(", ")}
+            ]
+          }));
+      if (responseAutomatizacion.statusCode == 200) {
+        print("Proceso exitoso");
+        return true;
+      } else {
+        print(responseAutomatizacion.body);
+        return false;
+      }
+    } catch (e) {
       return false;
     }
  }

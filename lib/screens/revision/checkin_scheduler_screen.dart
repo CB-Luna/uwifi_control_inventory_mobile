@@ -29,7 +29,6 @@ class CheckInSchedulerScreen extends StatefulWidget {
   @override
   State<CheckInSchedulerScreen> createState() => _CheckInSchedulerScreenState();
 }
-final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
     'moveLoadAnimationLR': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -93,7 +92,6 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
     final userProvider = Provider.of<UsuarioController>(context);
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
     return Scaffold(
-      key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).background,
       body: SafeArea(
         child: SingleChildScrollView(
