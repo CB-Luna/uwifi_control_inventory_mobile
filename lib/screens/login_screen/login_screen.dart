@@ -254,54 +254,54 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                      child: Container(
-                        width: 160,
-                        height: 40,
-                        decoration: const BoxDecoration(
-                          color: Color(0x00EEEEEE),
-                        ),
-                        child: GestureDetector(
-                          onTap: () async {
-                            userState.updateRecuerdame();
-                          },
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Remember Me',
-                                style:
-                                    FlutterFlowTheme.of(context).bodyText1.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.of(context).alternate,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                              ),
-                              ToggleIcon(
-                                onPressed: () async {
-                                  userState.updateRecuerdame();
-                                },
-                                value: userState.recuerdame,
-                                onIcon: Icon(
-                                  Icons.check_box,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  size: 25,
-                                ),
-                                offIcon: Icon(
-                                  Icons.check_box_outline_blank,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  size: 25,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding:
+                    //       const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                    //   child: Container(
+                    //     width: 160,
+                    //     height: 40,
+                    //     decoration: const BoxDecoration(
+                    //       color: Color(0x00EEEEEE),
+                    //     ),
+                    //     child: GestureDetector(
+                    //       onTap: () async {
+                    //         userState.updateRecuerdame();
+                    //       },
+                    //       child: Row(
+                    //         mainAxisSize: MainAxisSize.max,
+                    //         mainAxisAlignment: MainAxisAlignment.center,
+                    //         children: [
+                    //           Text(
+                    //             'Remember Me',
+                    //             style:
+                    //                 FlutterFlowTheme.of(context).bodyText1.override(
+                    //                       fontFamily: 'Poppins',
+                    //                       color: FlutterFlowTheme.of(context).alternate,
+                    //                       fontSize: 15,
+                    //                       fontWeight: FontWeight.w500,
+                    //                     ),
+                    //           ),
+                    //           ToggleIcon(
+                    //             onPressed: () async {
+                    //               userState.updateRecuerdame();
+                    //             },
+                    //             value: userState.recuerdame,
+                    //             onIcon: Icon(
+                    //               Icons.check_box,
+                    //               color: FlutterFlowTheme.of(context).alternate,
+                    //               size: 25,
+                    //             ),
+                    //             offIcon: Icon(
+                    //               Icons.check_box_outline_blank,
+                    //               color: FlutterFlowTheme.of(context).alternate,
+                    //               size: 25,
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                       child: Row(

@@ -41,7 +41,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
       controlFormCheckOut = context.read<UsuarioController>().getControlFormCheckOutToday(DateTime.now());
       controlFormCheckIn = context.read<UsuarioController>().getControlFormCheckInToday(DateTime.now());
       context.read<UsuarioController>().getUser(prefs.getString("userId") ?? "");
-      // vehicleServicesList = context.read<UsuarioController>().usuarioCurrent?.vehicle.target?.vehicleServices.where((element) => !element.completed).toList();
+      vehicleServicesList = context.read<UsuarioController>().usuarioCurrent?.vehicle.target?.vehicleServices.where((element) => !element.completed).toList();
       
     });
   }
@@ -1156,7 +1156,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            "Car Wash", 
+                                            "${data.service.target?.service}", 
                                             style: TextStyle(
                                               color: FlutterFlowTheme.of(context).white,
                                               fontSize: 13.0,

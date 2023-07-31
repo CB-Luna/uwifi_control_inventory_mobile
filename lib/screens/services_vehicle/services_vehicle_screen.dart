@@ -102,7 +102,7 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.55,
+                      height: MediaQuery.of(context).size.height * 0.57,
                       child: Column(
                         children: [
                           Row(
@@ -283,7 +283,7 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.45,
+                      height: MediaQuery.of(context).size.height * 0.43,
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
