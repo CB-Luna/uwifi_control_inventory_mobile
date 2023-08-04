@@ -837,21 +837,14 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(10),
                               ],
-                              validator: FormBuilderValidators.compose([
-                                (value){
-                                  return (value == "" || value == null)
-                                  ? 'Mobile Phone is required.'
-                                  : null;
-                                },
-                                (value){
-                                  if (value != null && value != "") {
-                                    return value.length < 10
+                              validator: (value) {
+                                if(value != "" && value != null){
+                                  return value.length < 10
                                     ? 'Input a valid number.'
                                     : null;
-                                  }
-                                  return null;
                                 }
-                              ]),
+                                return null;
+                              },
                             ),
                           ),
                           FormField(

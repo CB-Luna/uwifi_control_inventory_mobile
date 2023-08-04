@@ -9,9 +9,9 @@ class GetUsuarioSupabase {
     final String name;
     final String? middleName;
     final String lastName;
-    final DateTime birthdate;
+    final DateTime? birthdate;
     final String address;
-    final String telephoneNumber;
+    final String? telephoneNumber;
     final String? homephoneNumber;
     final String? image;
     final int idRoleFk;
@@ -30,9 +30,9 @@ class GetUsuarioSupabase {
         required this.name,
         this.middleName,
         required this.lastName,
-        required this.birthdate,
+        this.birthdate,
         required this.address,
-        required this.telephoneNumber,
+        this.telephoneNumber,
         this.homephoneNumber,
         this.image,
         required this.idRoleFk,
@@ -56,7 +56,7 @@ class GetUsuarioSupabase {
         name: json["name"],
         middleName: json["middle_name"],
         lastName: json["last_name"],
-        birthdate: DateTime.parse(json["birthdate"]),
+        birthdate: json["birthdate"] == null ? null : DateTime.parse(json["birthdate"]),
         address: json["address"],
         telephoneNumber: json["mobile_phone"],
         homephoneNumber: json["home_phone"],
@@ -78,7 +78,7 @@ class GetUsuarioSupabase {
         "name": name,
         "middle_name": middleName,
         "last_name": lastName,
-        "birthdate": "${birthdate.year.toString().padLeft(4, '0')}-${birthdate.month.toString().padLeft(2, '0')}-${birthdate.day.toString().padLeft(2, '0')}",
+        "birthdate": birthdate == null ? null : "${birthdate?.year.toString().padLeft(4, '0')}-${birthdate?.month.toString().padLeft(2, '0')}-${birthdate?.day.toString().padLeft(2, '0')}",
         "address": address,
         "mobile_phone": telephoneNumber,
         "home_phone": homephoneNumber,

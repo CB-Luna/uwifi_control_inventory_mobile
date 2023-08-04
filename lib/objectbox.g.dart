@@ -5960,8 +5960,10 @@ ModelDefinition getObjectBoxModel() {
           final makeOffset = fbb.writeString(object.make);
           final modelOffset = fbb.writeString(object.model);
           final yearOffset = fbb.writeString(object.year);
-          final imageOffset = fbb.writeString(object.image);
-          final pathOffset = fbb.writeString(object.path);
+          final imageOffset =
+              object.image == null ? null : fbb.writeString(object.image!);
+          final pathOffset =
+              object.path == null ? null : fbb.writeString(object.path!);
           final vinOffset = fbb.writeString(object.vin);
           final motorOffset = fbb.writeString(object.motor);
           final colorOffset = fbb.writeString(object.color);
@@ -6014,15 +6016,15 @@ ModelDefinition getObjectBoxModel() {
               year: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 10, ''),
               image: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 12, ''),
+                  .vTableGetNullable(buffer, rootOffset, 12),
               path: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, ''),
+                  .vTableGetNullable(buffer, rootOffset, 14),
               vin: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 16, ''),
               licensePlates: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 38, ''),
-              motor: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 20, ''),
+              motor:
+                  const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
               color: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 22, ''),
               mileage: const fb.Int64Reader().vTableGet(buffer, rootOffset, 56, 0),
               oilChangeDue: oilChangeDueValue == null ? null : DateTime.fromMillisecondsSinceEpoch(oilChangeDueValue),
@@ -6087,9 +6089,10 @@ ModelDefinition getObjectBoxModel() {
           final homePhoneOffset = object.homePhone == null
               ? null
               : fbb.writeString(object.homePhone!);
-          final mobilePhoneOffset = fbb.writeString(object.mobilePhone);
-          final addressOffset =
-              object.address == null ? null : fbb.writeString(object.address!);
+          final mobilePhoneOffset = object.mobilePhone == null
+              ? null
+              : fbb.writeString(object.mobilePhone!);
+          final addressOffset = fbb.writeString(object.address);
           final correoOffset = fbb.writeString(object.correo);
           final passwordOffset = fbb.writeString(object.password);
           final imageOffset =
@@ -6145,9 +6148,9 @@ ModelDefinition getObjectBoxModel() {
               homePhone: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 12),
               mobilePhone: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, ''),
+                  .vTableGetNullable(buffer, rootOffset, 14),
               address: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 16),
+                  .vTableGet(buffer, rootOffset, 16, ''),
               correo: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 18, ''),
               password: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),

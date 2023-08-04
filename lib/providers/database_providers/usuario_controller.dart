@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:fleet_management_tool_rta/helpers/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:fleet_management_tool_rta/database/image_evidence.dart';
 import 'package:fleet_management_tool_rta/helpers/globals.dart';
@@ -81,8 +82,8 @@ class UsuarioController extends ChangeNotifier {
       String apellidoP,
       String? apellidoM,
       String? telefono,
-      String celular,
-      String? domicilio,
+      String? celular,
+      String domicilio,
       String correo,
       String password,
       String? imagenUrl,
@@ -117,7 +118,7 @@ class UsuarioController extends ChangeNotifier {
         recordsMonthThirdD: formsThirdMonthD,
         );
     if (imagenUrl != null) {
-      final name = imagenUrl.toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/user_profile/", "");
+      final name = imagenUrl.toString().replaceAll("$supabaseUrl/storage/v1/object/public/assets/user_profile/", "");
       final uInt8ListImagen = await supabase.storage.from('assets/user_profile').download(name);
       final base64Image = const Base64Encoder().convert(uInt8ListImagen);
       final tempDir = await getTemporaryDirectory();
@@ -158,8 +159,8 @@ class UsuarioController extends ChangeNotifier {
       String newApellidoP,
       String? newApellidoM,
       String? newTelefono,
-      String newCelular,
-      String? newDomicilio,
+      String? newCelular,
+      String newDomicilio,
       String newPassword,
       String? newImagenUrl,
       List<String> newRolesIdDBR,
@@ -213,7 +214,7 @@ class UsuarioController extends ChangeNotifier {
         updateUsuario.vehicle.target = null;
       }
       if (newImagenUrl != null) {
-          final name = newImagenUrl.toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/user_profile/", "");
+          final name = newImagenUrl.toString().replaceAll("$supabaseUrl/storage/v1/object/public/assets/user_profile/", "");
           final uInt8ListImagen = await supabase.storage.from('assets/user_profile').download(name);
           final base64Image = const Base64Encoder().convert(uInt8ListImagen);
           final tempDir = await getTemporaryDirectory();
@@ -259,7 +260,7 @@ bool updateData(
     String newLastName, 
     String? newMiddleName, 
     String? newHomePhone,
-    String newMobilePhone,
+    String? newMobilePhone,
     String newAddress,
     ImageEvidence? image,
     String? imageTemp,

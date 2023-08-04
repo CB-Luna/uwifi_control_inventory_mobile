@@ -746,7 +746,7 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
                       child: 
                       vehiculoController.vehicleSelected?.path != null ?
                       Image.file(
-                        File(vehiculoController.vehicleSelected!.path),
+                        File(vehiculoController.vehicleSelected!.path!),
                         fit: BoxFit.contain,
                       )
                       :

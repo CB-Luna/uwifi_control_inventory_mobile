@@ -810,8 +810,8 @@ class Vehicle {
   String make;
   String model;
   String year;
-  String image;
-  String path;
+  String? image;
+  String? path;
   @Unique()
   String vin;
   @Unique()
@@ -845,8 +845,8 @@ class Vehicle {
     required this.make,
     required this.model,
     required this.year,
-    required this.image,
-    required this.path,
+    this.image,
+    this.path,
     required this.vin,
     required this.licensePlates,
     required this.motor,
@@ -989,8 +989,8 @@ class Users {
   String lastName;
   String? middleName;
   String? homePhone;
-  String mobilePhone;
-  String? address;
+  String? mobilePhone;
+  String address;
   String correo;
   String password;
   String? image;
@@ -1022,8 +1022,8 @@ class Users {
     required this.lastName,
     this.middleName,
     this.homePhone,
-    required this.mobilePhone,
-    this.address,
+    this.mobilePhone,
+    required this.address,
     required this.correo,
     required this.password,
     this.image,

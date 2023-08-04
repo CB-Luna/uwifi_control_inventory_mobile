@@ -298,15 +298,11 @@ class _ClientesScreenState extends State<ClientesScreen> {
                               final correo =
                                   removeDiacritics(element.correo)
                                       .toLowerCase();
-                              final celular =
-                                  removeDiacritics(element.mobilePhone)
-                                      .toLowerCase();
                               final tempBusqueda =
                                   removeDiacritics(searchController.text)
                                       .toLowerCase();
                               if (correo.contains(tempBusqueda) ||
-                                  nombreCliente.contains(tempBusqueda) ||
-                                  celular.contains(tempBusqueda)
+                                  nombreCliente.contains(tempBusqueda)
                                   ) {
                                 return false;
                               }

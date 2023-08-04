@@ -2,16 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:fleet_management_tool_rta/helpers/globals.dart';
 import 'package:fleet_management_tool_rta/main.dart';
 import 'package:fleet_management_tool_rta/database/entitys.dart';
-import 'package:fleet_management_tool_rta/modelsSupabase/get_company_supabase.dart';
-import 'package:fleet_management_tool_rta/modelsSupabase/get_roles_supabase.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:fleet_management_tool_rta/modelsSupabase/get_usuario_supabase.dart';
 import 'package:fleet_management_tool_rta/modelsSupabase/get_vehicle_supabase.dart';
+import '../helpers/constants.dart';
 import '../objectbox.g.dart';
 import '../screens/clientes/flutter_flow_util_local.dart';
 
@@ -76,57 +74,19 @@ class RolesSupabaseProvider extends ChangeNotifier {
 //Función para recuperar el catálogo de roles desde Supabase utilizando la información más reciente del Usuario
   Future<String> getRoles(GetUsuarioSupabase usuario) async {
     List<dynamic>? recordsVehicle;
-    String queryGetRoles = """
-      query Query {
-        roleCollection {
-          edges {
-            node {
-              role_id
-              name
-              created_at
-            }
-          }
-        }
-      }
-      """;
-      
-//Función para recuperar el catálogo de company desde Supabase
-    String queryGetCompany = """
-      query Query {
-        companyCollection {
-          edges {
-            node {
-              id_company
-              company
-              created_at
-            }
-          }
-        }
-      }
-      """;
     try {
       //Se recupera toda la colección de roles en Supabase
-      final recordsRoles = await sbGQL.query(
-        QueryOptions(
-          document: gql(queryGetRoles),
-          fetchPolicy: FetchPolicy.noCache,
-          onError: (error) {
-            return null;
-        },),
-      );
+      final recordsRoles = await supabase
+          .from('role')
+          .select();
       //Función para recuperar el catálogo de status desde Supabase
       final recordsStatus = await supabaseCtrlV
           .from('status')
           .select();
       //Se recupera toda la colección de company en Supabase
-      final recordsCompany = await sbGQL.query(
-        QueryOptions(
-          document: gql(queryGetCompany),
-          fetchPolicy: FetchPolicy.noCache,
-          onError: (error) {
-            return null;
-        },),
-      );
+      final recordsCompany = await supabase
+          .from('company')
+          .select();
       //Se recupera la colección de vehicle especifica en Supabase
       if (usuario.idVehicleFk != null) {
         //Se recupera el vehicle de acuerdo a la información más reciente del Usuario
@@ -135,25 +95,6 @@ class RolesSupabaseProvider extends ChangeNotifier {
           .select()
           .eq('id_vehicle', usuario.idVehicleFk);
         vehicleAssigned = true;
-        // //Se recupera el último registro en caso de cumplir las condiciones
-        // DateTime currentToday = DateTime.now();
-        // DateTime startToday = DateTime(currentToday.year, currentToday.month, currentToday.day);
-        // DateTime endToday = DateTime(currentToday.year, currentToday.month + currentToday.day, 23, 59, 59);
-        // DateFormat formatToday = DateFormat("yyyy-MM-dd HH:mm:ss");
-        // final recordLastControlForm = await supabaseCtrlV
-        //   .from('control_form')
-        //   .select()
-        //   .eq('id_vehicle_fk', usuario.idVehicleFk)
-        //   .eq('id_user_fk', usuario.idPerfilUsuario)
-        //   .eq('date_added_d', null)
-        //   .gt('date_added_r', formatToday.format(startToday)).lt('date_added_r', formatToday.format(endToday)) as List<dynamic>;
-        // if (recordLastControlForm.isNotEmpty) {
-        //   //TODO: Terminar proceso
-        //   final measuresR = await supabaseCtrlV
-        //   .from('measures')
-        //   .select()
-        //   .eq('id_measure', recordLastControlForm.first['id_measure_r_fk']);
-        // }
       } else {
         //Se recuperan los vehicles disponibles para el Usuario
         final recordAvailable = await supabaseCtrlV
@@ -237,15 +178,13 @@ class RolesSupabaseProvider extends ChangeNotifier {
       .eq('id_user_fk', usuario.idPerfilUsuario);
 
       if (recordsVehicle != null) {
-        if (recordsRoles.data != null && recordsStatus != null && recordsCompany.data != null && recordsServices != null &&
+        if (recordsRoles != null && recordsStatus != null && recordsCompany != null && recordsServices != null &&
         responseCurrentR != null && responseSecondR != null && responseThirdR != null &&
         responseCurrentD != null && responseSecondD != null && responseThirdD != null) {
           //Existen datos de roles en Supabase
-          print("****Roles: ${jsonEncode(recordsRoles.data.toString())}");
-          print("****Company: ${jsonEncode(recordsCompany.data.toString())}");
-          final responseListRoles = getRolesSupabaseFromMap(jsonEncode(recordsRoles.data).toString());
+          final responseListRoles = recordsRoles as List<dynamic>;
           final responseListStatus = recordsStatus as List<dynamic>;
-          final responseListCompany = getCompanySupabaseFromMap(jsonEncode(recordsCompany.data).toString());
+          final responseListCompany = recordsCompany as List<dynamic>;
           final responseListVehicle = recordsVehicle;
           final responseListServices = recordsServices as List<dynamic>;
           recordsMonthCurrentR = responseCurrentR as List<dynamic>;
@@ -254,19 +193,19 @@ class RolesSupabaseProvider extends ChangeNotifier {
           recordsMonthCurrentD = responseCurrentD as List<dynamic>;
           recordsMonthSecondD = responseSecondD as List<dynamic>;
           recordsMonthThirdD = responseThirdD as List<dynamic>;
-          for (var element in responseListRoles.rolesCollection.edges) {
+          for (var element in responseListRoles) {
             //Se valida que el nuevo rol aún no existe en Objectbox
-            final rolExistente = dataBase.roleBox.query(Role_.idDBR.equals(element.node.id)).build().findUnique();
+            final rolExistente = dataBase.roleBox.query(Role_.idDBR.equals(element['role_id'].toString())).build().findUnique();
             if (rolExistente == null) {
               final newRole = Role(
-              role: element.node.name,
-              idDBR: element.node.id, 
+              role: element['name'],
+              idDBR: element['role_id'].toString(), 
               );
               dataBase.roleBox.put(newRole);
               //print('Rol Nuevo agregado exitosamente');
             } else {
                 //Se actualiza el registro en Objectbox
-                rolExistente.role = element.node.name;
+                rolExistente.role = element['name'];
                 dataBase.roleBox.put(rolExistente);
             }
           }
@@ -286,19 +225,19 @@ class RolesSupabaseProvider extends ChangeNotifier {
                 dataBase.statusBox.put(statusExistente);
             }
           }
-          for (var element in responseListCompany.companyCollection.edges) {
+          for (var element in responseListCompany) {
             //Se valida que el nuevo company aún no existe en Objectbox
-            final companyExistente = dataBase.companyBox.query(Company_.idDBR.equals(element.node.id)).build().findUnique();
+            final companyExistente = dataBase.companyBox.query(Company_.idDBR.equals(element['id_company'].toString())).build().findUnique();
             if (companyExistente == null) {
               final newCompany = Company(
-              company: element.node.company,
-              idDBR: element.node.id, 
+              company: element['company'],
+              idDBR: element['id_company'].toString(), 
               );
               dataBase.companyBox.put(newCompany);
               //print('company Nuevo agregado exitosamente');
             } else {
                 //Se actualiza el registro en Objectbox
-                companyExistente.company = element.node.company;
+                companyExistente.company = element['company'];
                 dataBase.companyBox.put(companyExistente);
             }
           }
@@ -323,13 +262,18 @@ class RolesSupabaseProvider extends ChangeNotifier {
             //Se valida que el nuevo vehicle aún no existe en Objectbox
             final vehicleExistente = dataBase.vehicleBox.query(Vehicle_.idDBR.equals(element['id_vehicle'].toString())).build().findUnique();
             if (vehicleExistente == null) {
-              final name = element['image'].toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/Vehicles/", "");
-              final uInt8ListImagen = await supabase.storage.from('assets/Vehicles').download(name);
-              final base64Image = const Base64Encoder().convert(uInt8ListImagen);
-              final tempDir = await getTemporaryDirectory();
-              File file = await File(
-                '${tempDir.path}/$name').create();
-              file.writeAsBytesSync(uInt8ListImagen);
+              String? path;
+              String? base64Image;
+              if (element['image'] != null) {
+                final name = element['image'].toString().replaceAll("$supabaseUrl/storage/v1/object/public/assets/Vehicles/", "");
+                final uInt8ListImagen = await supabase.storage.from('assets/Vehicles').download(name);
+                base64Image = const Base64Encoder().convert(uInt8ListImagen);
+                final tempDir = await getTemporaryDirectory();
+                File file = await File(
+                  '${tempDir.path}/$name').create();
+                file.writeAsBytesSync(uInt8ListImagen);
+                path = file.path;
+              }
 
               final newVehicle = Vehicle(
                 make: element['make'],
@@ -340,7 +284,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
                 motor: element['motor'],
                 color: element['color'],
                 mileage: element['mileage'],
-                path: file.path,
+                path: path,
                 image: base64Image,
                 oilChangeDue: element['oil_change_due'] == null ? null : DateTime.parse(element['oil_change_due']),
                 lastTransmissionFluidChange: element['last_transmission_fluid_change'] == null ? null : DateTime.parse(element['last_transmission_fluid_change']),
@@ -449,7 +393,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
               dataBase.vehicleBox.put(newVehicle);
             } else {
                 //Se actualiza el registro en Objectbox
-                final name = element['image'].toString().replaceAll("https://supa43.rtatel.com/storage/v1/object/public/assets/Vehicles/", "");
+                final name = element['image'].toString().replaceAll("$supabaseUrl/storage/v1/object/public/assets/Vehicles/", "");
                 final uInt8ListImagen = await supabase.storage.from('assets/Vehicles').download(name);
                 final base64Image = const Base64Encoder().convert(uInt8ListImagen);
                 final tempDir = await getTemporaryDirectory();

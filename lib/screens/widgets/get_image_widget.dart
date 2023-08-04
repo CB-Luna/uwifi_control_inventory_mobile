@@ -31,7 +31,7 @@ Widget getImageContainer(String? image, {double height = 180, double width = dou
     return Image(
       height: height,
       width: width,
-      image: const AssetImage("assets/images/default_image_placeholder.jpeg"),
+      image: const AssetImage("assets/images/vehicle-placeholder.png"),
       fit: BoxFit.cover,
     );
   } else if (image.startsWith('http') || image.startsWith('https')) {

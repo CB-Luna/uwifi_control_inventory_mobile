@@ -1045,7 +1045,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                               child: 
                               usuarioProvider.usuarioCurrent?.vehicle.target?.path != null ?
                               Image.file(
-                                File(usuarioProvider.usuarioCurrent!.vehicle.target!.path),
+                                File(usuarioProvider.usuarioCurrent!.vehicle.target!.path!),
                                 fit: BoxFit.contain,
                               )
                               :

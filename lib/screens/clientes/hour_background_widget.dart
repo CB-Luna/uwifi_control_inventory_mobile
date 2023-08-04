@@ -37,7 +37,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
   late HourBackgroundModel _model;
   Gradient caughtColor = whiteRadial;
   String licensePlates = "";
-  String image = "";
+  String? image;
   DateTime? registeredHour;
 
   @override
@@ -66,7 +66,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
     if (usuarioProvider.usuarioCurrent?.vehicle.target != null && widget.firstHour && controlFormProvider.boolCurrentHour) {
       caughtColor = blueRadial;
       licensePlates = usuarioProvider.usuarioCurrent!.vehicle.target!.licensePlates;
-      image = usuarioProvider.usuarioCurrent!.vehicle.target!.path;
+      image = usuarioProvider.usuarioCurrent?.vehicle.target?.path;
       controlFormProvider.changeIsSelectedHourValue(true);
       registeredHour = controlFormProvider.registeredHour;
     }
