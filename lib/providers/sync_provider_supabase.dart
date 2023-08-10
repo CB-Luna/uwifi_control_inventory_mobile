@@ -1110,7 +1110,7 @@ class SyncProviderSupabase extends ChangeNotifier {
           for (var element in listImagesCarBodywork) {listNamesCarBodywork.add(element.name);}
           if (controlForm.carBodyworkR.target!.wiperBladesFrontImages.isNotEmpty) {
               for (var i = 0; i < controlForm.carBodyworkR.target!.wiperBladesFrontImages.toList().length; i++) {
-              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.windshieldWiperFrontNames.toList()[i])) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkR.target!.wiperBladesFrontNames.toList()[i])) {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkR.target!.wiperBladesFrontNames.toList()[i],
@@ -2874,7 +2874,7 @@ class SyncProviderSupabase extends ChangeNotifier {
           for (var element in listImagesCarBodywork) {listNamesCarBodywork.add(element.name);}
           if (controlForm.carBodyworkD.target!.wiperBladesFrontImages.isNotEmpty) {
               for (var i = 0; i < controlForm.carBodyworkD.target!.wiperBladesFrontImages.toList().length; i++) {
-              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.windshieldWiperFrontNames.toList()[i])) {
+              if (!listNamesCarBodywork.contains(controlForm.carBodyworkD.target!.wiperBladesFrontNames.toList()[i])) {
                 //Parsear a Uint8List
               final storageResponse = await supabase.storage.from('car-bodywork').uploadBinary(
               controlForm.carBodyworkD.target!.wiperBladesFrontNames.toList()[i],
