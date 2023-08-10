@@ -332,13 +332,7 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                         onTap: () async {
                                           final today = DateTime.now();
                                           if (vehicleServices.service.target?.service == "Car Wash") {
-                                            if (today.weekday == DateTime.wednesday) {
-                                              snackbarKey.currentState
-                                                  ?.showSnackBar(const SnackBar(
-                                                content: Text(
-                                                    "You have to await until tomorrow to do this service."),
-                                              ));
-                                            } else {
+                                            if (today >= vehicleServices.serviceDate!) {
                                               await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -348,6 +342,12 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                                         vehicleServices: vehicleServices,),
                                                 ),
                                               );
+                                            } else {
+                                              snackbarKey.currentState
+                                                  ?.showSnackBar(const SnackBar(
+                                                content: Text(
+                                                    "You have to await to do this service."),
+                                              ));
                                             }
                                           } else {
                                             await Navigator.push(

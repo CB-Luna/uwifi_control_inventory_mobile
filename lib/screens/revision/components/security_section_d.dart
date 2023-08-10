@@ -205,9 +205,9 @@ class _SecuritySectionDState extends State<SecuritySectionD> {
                   color: FlutterFlowTheme.of(context).grayLighter,
                 ),
 
-                // First Ait Kit Safesty Vest
+                // First Aid Kit Safesty Vest
                 ItemForm(
-                  textItem: "First Ait Kit Safesty Vest",
+                  textItem: "First Aid Kit Safesty Vest",
                   onPressed: () {
 
                   }, 

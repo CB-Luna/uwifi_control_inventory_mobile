@@ -10,7 +10,6 @@ import 'package:fleet_management_tool_rta/providers/providers.dart';
 import 'package:fleet_management_tool_rta/providers/roles_supabase_provider.dart';
 import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
 import 'package:fleet_management_tool_rta/screens/select_vehicle/select_vehicle_screen.dart';
-import 'package:fleet_management_tool_rta/screens/widgets/toggle_icon.dart';
 import 'package:fleet_management_tool_rta/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
