@@ -327,6 +327,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     loginResponseSupabase.user.id
                                   );
                                   if (getUsuarioSupabase != null) {
+                                    final userId =
+                                          loginResponseSupabase.user.email;
+                                    //Se guarda el ID DEL USUARIO (correo)
+                                    prefs.setString("userId", userId);
                                      //Se descargan los roles desde Supabase
                                     rolesSupabaseProvider.message = "";
                                     rolesSupabaseProvider.procesoCargando(true);
@@ -338,10 +342,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     if (messageSupabase == "Okay") {
                                       await userState.setTokenPocketbase(
                                           loginResponseSupabase.accessToken);
-                                      final userId =
-                                          loginResponseSupabase.user.email;
-                                      //Se guarda el ID DEL USUARIO (correo)
-                                      prefs.setString("userId", userId);
                                       //Se guarda el Password encriptado
                                       prefs.setString(
                                           "passEncrypted", userState.passwordController.text);
