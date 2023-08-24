@@ -9,19 +9,17 @@ import 'package:fleet_management_tool_rta/helpers/globals.dart';
 import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
 import 'package:fleet_management_tool_rta/providers/database_providers/vehiculo_controller.dart';
 import 'package:fleet_management_tool_rta/providers/user_provider.dart';
-import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
-import 'package:fleet_management_tool_rta/screens/select_vehicle/components/select_vehicle_failed.dart';
 import 'package:fleet_management_tool_rta/screens/widgets/get_image_widget.dart';
 import 'package:fleet_management_tool_rta/util/flutter_flow_util.dart';
 
-class SelectVehicleScreen extends StatefulWidget {
-  const SelectVehicleScreen({Key? key}) : super(key: key);
+class SelectVehicleTSMScreen extends StatefulWidget {
+  const SelectVehicleTSMScreen({Key? key}) : super(key: key);
 
   @override
-  State<SelectVehicleScreen> createState() => _SelectVehicleScreenState();
+  State<SelectVehicleTSMScreen> createState() => _SelectVehicleTSMScreenState();
 }
 
-class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
+class _SelectVehicleTSMScreenState extends State<SelectVehicleTSMScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   List<Vehicle> vehicleAvailables = [];
@@ -61,7 +59,7 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
                         children: [
                           Expanded(
                             child: Text(
-                              'Please select an Available Vehicle to continue',
+                              'Please select an Available Vehicle to continue M/TCS',
                               textAlign: TextAlign.center,
                               style:
                                 FlutterFlowTheme.of(context).bodyText1.override(
@@ -136,55 +134,55 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
                           ),
                           child: InkWell(
                             onTap: () async {
-                              if (vehiculoController.vehicleSelected == null) {
-                                snackbarKey.currentState
-                                    ?.showSnackBar(const SnackBar(
-                                  content: Text(
-                                      "You need to select an Available Vehicle to continue."),
-                                ));
-                              } else {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: const Text('Validation'),
-                                      content: Text(
-                                          "Are you sure you want to Select the Vehicle with License Plates: '${vehiculoController.vehicleSelected!.licensePlates}'."),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: const Text('Cancel'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () async {
-                                            if (await vehiculoController.vehicleAssigned(usuarioProvider.usuarioCurrent!)) {
-                                              // ignore: use_build_context_synchronously
-                                              await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const MainScreenSelector(),
-                                                  ),
-                                                );
-                                            } else {
-                                              // ignore: use_build_context_synchronously
-                                              await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const SelectVehicleFailedScreen(),
-                                                  ),
-                                                );
-                                            }
-                                          },
-                                          child: const Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              }
+                              // if (vehiculoController.vehicleSelected == null) {
+                              //   snackbarKey.currentState
+                              //       ?.showSnackBar(const SnackBar(
+                              //     content: Text(
+                              //         "You need to select an Available Vehicle to continue."),
+                              //   ));
+                              // } else {
+                              //   await showDialog(
+                              //     context: context,
+                              //     builder: (alertDialogContext) {
+                              //       return AlertDialog(
+                              //         title: const Text('Validation'),
+                              //         content: Text(
+                              //             "Are you sure you want to Select the Vehicle with License Plates: '${vehiculoController.vehicleSelected!.licensePlates}'."),
+                              //         actions: [
+                              //           TextButton(
+                              //             onPressed: () =>
+                              //                 Navigator.pop(alertDialogContext),
+                              //             child: const Text('Cancel'),
+                              //           ),
+                              //           TextButton(
+                              //             onPressed: () async {
+                              //               if (await vehiculoController.vehicleAssigned(usuarioProvider.usuarioCurrent!)) {
+                              //                 // ignore: use_build_context_synchronously
+                              //                 await Navigator.push(
+                              //                     context,
+                              //                     MaterialPageRoute(
+                              //                       builder: (context) =>
+                              //                           const MainScreenSelector(),
+                              //                     ),
+                              //                   );
+                              //               } else {
+                              //                 // ignore: use_build_context_synchronously
+                              //                 await Navigator.push(
+                              //                     context,
+                              //                     MaterialPageRoute(
+                              //                       builder: (context) =>
+                              //                           const SelectVehicleFailedScreen(),
+                              //                     ),
+                              //                   );
+                              //               }
+                              //             },
+                              //             child: const Text('Ok'),
+                              //           ),
+                              //         ],
+                              //       );
+                              //     },
+                              //   );
+                              // }
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,

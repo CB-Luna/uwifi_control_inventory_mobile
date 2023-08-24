@@ -1,3 +1,4 @@
+import 'package:fleet_management_tool_rta/screens/select_vehicle_tsm/select_vehicle_tsm_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -9,7 +10,7 @@ import 'package:fleet_management_tool_rta/providers/database_providers/usuario_c
 import 'package:fleet_management_tool_rta/providers/providers.dart';
 import 'package:fleet_management_tool_rta/providers/roles_supabase_provider.dart';
 import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
-import 'package:fleet_management_tool_rta/screens/select_vehicle/select_vehicle_screen.dart';
+import 'package:fleet_management_tool_rta/screens/select_vehicle_employee/select_vehicle_employee_screen.dart';
 import 'package:fleet_management_tool_rta/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -253,99 +254,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                     ),
-                    // Padding(
-                    //   padding:
-                    //       const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                    //   child: Container(
-                    //     width: 160,
-                    //     height: 40,
-                    //     decoration: const BoxDecoration(
-                    //       color: Color(0x00EEEEEE),
-                    //     ),
-                    //     child: GestureDetector(
-                    //       onTap: () async {
-                    //         userState.updateRecuerdame();
-                    //       },
-                    //       child: Row(
-                    //         mainAxisSize: MainAxisSize.max,
-                    //         mainAxisAlignment: MainAxisAlignment.center,
-                    //         children: [
-                    //           Text(
-                    //             'Remember Me',
-                    //             style:
-                    //                 FlutterFlowTheme.of(context).bodyText1.override(
-                    //                       fontFamily: 'Poppins',
-                    //                       color: FlutterFlowTheme.of(context).alternate,
-                    //                       fontSize: 15,
-                    //                       fontWeight: FontWeight.w500,
-                    //                     ),
-                    //           ),
-                    //           ToggleIcon(
-                    //             onPressed: () async {
-                    //               userState.updateRecuerdame();
-                    //             },
-                    //             value: userState.recuerdame,
-                    //             onIcon: Icon(
-                    //               Icons.check_box,
-                    //               color: FlutterFlowTheme.of(context).alternate,
-                    //               size: 25,
-                    //             ),
-                    //             offIcon: Icon(
-                    //               Icons.check_box_outline_blank,
-                    //               color: FlutterFlowTheme.of(context).alternate,
-                    //               size: 25,
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          // InkWell(
-                          //   onTap: () async {
-                          //     // await Navigator.push(
-                          //     //   context,
-                          //     //   MaterialPageRoute(
-                          //     //     builder: (context) => CreateAccountWidget(),
-                          //     //   ),
-                          //     // );
-                          //   },
-                          //   child: Column(
-                          //     mainAxisSize: MainAxisSize.max,
-                          //     crossAxisAlignment: CrossAxisAlignment.start,
-                          //     children: [
-                          //       Text(
-                          //         'Have you an account, yet?',
-                          //         style: FlutterFlowTheme.of(context)
-                          //             .bodyText1
-                          //             .override(
-                          //               fontFamily: 'Lexend Deca',
-                          //               color: Colors.white,
-                          //               fontSize: 14,
-                          //               fontWeight: FontWeight.normal,
-                          //             ),
-                          //       ),
-                          //       Text(
-                          //         'Create Account',
-                          //         style: FlutterFlowTheme.of(context)
-                          //             .subtitle2
-                          //             .override(
-                          //               fontFamily: 'Outfit',
-                          //               color:
-                          //                   FlutterFlowTheme.of(context).alternate,
-                          //             ),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
                           FFButtonWidget(
                             onPressed: () async {
+                              //Se valida que se haya ingresado las credenciales con validadores
                               if (!formKey.currentState!.validate()) {
                                 return;
                               }
@@ -359,8 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         userState.emailController.text,
                                         userState.passwordController.text);
                                 if (usuarioActual != null) {
-                                  //print('Usuario ya existente');
-                                  //Se guarda el ID DEL USUARIO (correo electrónico)
+                                  //Usuario ya existe localmente
                                   prefs.setBool(
                                   "boolLogin", true);
                                   prefs.setString(
@@ -390,7 +306,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   );
                                 } else {
-                                  //print('Usuario no existente localmente');
+                                  //Usuario no existe localmente
                                   snackbarKey.currentState
                                       ?.showSnackBar(const SnackBar(
                                     content: Text(
@@ -398,6 +314,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ));
                                 }
                               } else {
+                                //Proceso Online
                                 //Login a Supabase
                                 final loginResponseSupabase =
                                     await AuthService.loginSupabase(
@@ -493,22 +410,45 @@ class _LoginScreenState extends State<LoginScreen> {
                                       }
                                       // //Se valida que el Usuario tenga un vehículo Asignado
                                       if (!mounted) return;
-                                      if (usuarioProvider.usuarioCurrent?.vehicle.target != null) {
+                                      //Se valida el tipo de Usuario
+                                      //Employee
+                                      if (usuarioProvider.usuarioCurrent?.role.target?.role == "Employee") {
+                                        if (usuarioProvider.usuarioCurrent?.vehicle.target != null) {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const MainScreenSelector(),
+                                            ),
+                                          );
+                                        } else {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SelectVehicleEmployeeScreen(),
+                                            ),
+                                          );
+                                        }
+                                      } 
+                                      //Tech Supervisor / Manager
+                                      else if (usuarioProvider.usuarioCurrent?.role.target?.role == "Tech Supervisor" ||
+                                          usuarioProvider.usuarioCurrent?.role.target?.role == "Manager") {
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const MainScreenSelector(),
+                                                const SelectVehicleTSMScreen(),
                                           ),
                                         );
-                                      } else {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SelectVehicleScreen(),
-                                          ),
-                                        );
+                                      } 
+                                      //Otro tipo de Usuario
+                                      else {
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Invalid Permissions! Your user can't to access to this App."),
+                                          ));
                                       }
                                     } else {
                                       switch (messageSupabase) {
