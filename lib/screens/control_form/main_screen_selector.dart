@@ -16,7 +16,6 @@ class _MainScreenSelectorState extends State<MainScreenSelector> {
   @override
   void initState() {
     super.initState();
-    // context.read<UsuarioController>().setStream(false);
   }
   @override
   Widget build(BuildContext context) {

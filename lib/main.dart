@@ -15,7 +15,7 @@ import 'package:fleet_management_tool_rta/providers/providers.dart';
 import 'package:fleet_management_tool_rta/database/object_box_database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:fleet_management_tool_rta/screens/clientes/app_state.dart';
+import 'package:fleet_management_tool_rta/screens/employees/widget/app_state.dart';
 import 'providers/database_providers/checkin_form_controller.dart';
 import 'providers/database_providers/checkout_form_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';

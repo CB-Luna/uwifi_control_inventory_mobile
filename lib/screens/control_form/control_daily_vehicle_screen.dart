@@ -11,7 +11,7 @@ import 'package:fleet_management_tool_rta/helpers/globals.dart';
 import 'package:fleet_management_tool_rta/providers/database_providers/checkin_form_controller.dart';
 import 'package:fleet_management_tool_rta/providers/database_providers/checkout_form_controller.dart';
 import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
-import 'package:fleet_management_tool_rta/screens/clientes/agregar_vehiculo_screen.dart';
+import 'package:fleet_management_tool_rta/screens/employees/agregar_vehiculo_screen.dart';
 import 'package:fleet_management_tool_rta/screens/services_vehicle/services_vehicle_screen.dart';
 import 'package:fleet_management_tool_rta/util/flutter_flow_util.dart';
 import 'package:badges/badges.dart' as badge;

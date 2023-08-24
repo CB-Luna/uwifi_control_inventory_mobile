@@ -353,7 +353,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               final connectivityResult =
                                   await (Connectivity().checkConnectivity());
                               if (connectivityResult == ConnectivityResult.none) {
-                                //print("Proceso offline");
                                 //Proceso Offline
                                 final usuarioActual =
                                     usuarioProvider.validateUserOffline(
@@ -399,7 +398,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ));
                                 }
                               } else {
-                                // print("Proceso online");
                                 //Login a Supabase
                                 final loginResponseSupabase =
                                     await AuthService.loginSupabase(

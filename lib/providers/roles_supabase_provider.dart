@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:fleet_management_tool_rta/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:fleet_management_tool_rta/helpers/globals.dart';
 import 'package:fleet_management_tool_rta/main.dart';
 import 'package:fleet_management_tool_rta/database/entitys.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:fleet_management_tool_rta/modelsSupabase/get_usuario_supabase.dart';
-import 'package:fleet_management_tool_rta/modelsSupabase/get_vehicle_supabase.dart';
+import 'package:fleet_management_tool_rta/models/get_usuario_supabase.dart';
+import 'package:fleet_management_tool_rta/models/get_vehicle_supabase.dart';
 import '../helpers/constants.dart';
 import '../objectbox.g.dart';
-import '../screens/clientes/flutter_flow_util_local.dart';
 
 class RolesSupabaseProvider extends ChangeNotifier {
 
