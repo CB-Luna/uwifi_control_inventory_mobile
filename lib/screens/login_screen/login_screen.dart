@@ -412,7 +412,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       if (!mounted) return;
                                       //Se valida el tipo de Usuario
                                       //Employee
-                                      if (usuarioProvider.usuarioCurrent?.role.target?.role == "Employee") {
+                                      if (usuarioProvider.isEmployee) {
                                         if (usuarioProvider.usuarioCurrent?.vehicle.target != null) {
                                           await Navigator.push(
                                             context,
@@ -432,8 +432,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         }
                                       } 
                                       //Tech Supervisor / Manager
-                                      else if (usuarioProvider.usuarioCurrent?.role.target?.role == "Tech Supervisor" ||
-                                          usuarioProvider.usuarioCurrent?.role.target?.role == "Manager") {
+                                      else if (usuarioProvider.isTechSupervisor ||
+                                          usuarioProvider.isManager) {
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(

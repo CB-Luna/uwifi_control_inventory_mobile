@@ -126,7 +126,20 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                             ),
                           ),
                         ),
-
+                        Expanded(
+                          child: Text(
+                            '${usuarioProvider.usuarioCurrent?.company.target?.company}',
+                            textAlign: TextAlign.center,
+                            style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .title1Family,
+                                    color: FlutterFlowTheme.of(context).tertiaryColor,
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                          ),
+                        ),
                         Container(
                           width: 100,
                           height: 40,

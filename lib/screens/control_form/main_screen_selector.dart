@@ -29,7 +29,7 @@ class _MainScreenSelectorState extends State<MainScreenSelector> {
       case true:
         return const SincronizacionInformacionSupabaseScreen();
       default:
-        if (usuarioProvider.usuarioCurrent?.role.target?.role == "Employee") {
+        if (usuarioProvider.isEmployee) {
           return const ControlDailyVehicleScreen();
         } else {
           return const SelectVehicleTSMScreen();

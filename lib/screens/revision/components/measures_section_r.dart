@@ -163,7 +163,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                       final mileageInt = int.parse(checkOutProvider.mileage != "" ? checkOutProvider.mileage.replaceAll(",", "") : "0");
                                       if (mileageInt != 0) {
                                         checkOutProvider.updateMileage(mileage);
-                                        if (userController.usuarioCurrent?.role.target?.role == "Employee") {
+                                        if (userController.isEmployee) {
                                           if (mileageInt < userController.usuarioCurrent!.vehicle.target!.mileage) {
                                             checkOutProvider.flagOilChange = false;
                                             checkOutProvider.flagTransmissionFluidChange = false;
@@ -306,7 +306,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                           if (value == null || value.isEmpty) {
                                               return 'The Mileage is required.';
                                             } 
-                                          if (userController.usuarioCurrent?.role.target?.role == "Employee") {
+                                          if (userController.isEmployee) {
                                             if (int.parse(value.replaceAll(",", "")) < userController.usuarioCurrent!.vehicle.target!.mileage) {
                                               return "The value can't be lower than '${
                                                 NumberFormat.decimalPattern().
@@ -650,7 +650,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                           //Este botón sí guarda la información ingresada para Mileage
                                           final mileageInt = int.parse(checkOutProvider.mileage != "" ? checkOutProvider.mileage.replaceAll(",", "") : "0");
                                           if (checkOutProvider.validateKeyForm(keyForm)) {
-                                            if (userController.usuarioCurrent?.role.target?.role == "Employee") {
+                                            if (userController.isEmployee) {
                                               //Se valida para ruleOilChange
                                               if (userController.usuarioCurrent!.vehicle.target?.ruleOilChange.target?.registered == "False") {
                                                 final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.value);

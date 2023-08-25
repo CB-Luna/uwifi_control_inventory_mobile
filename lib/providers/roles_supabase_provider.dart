@@ -299,6 +299,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
                 dateAdded: DateTime.parse(element['date_added']),
                 idDBR: element['id_vehicle'].toString(), 
                 carWash: element['car_wash'],
+                weeklyCheckUp: element['weekly_check_up'],
               );
 
               //Se recuperan las reglas
@@ -431,6 +432,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
                 vehicleExistente.lastRadiatorFluidChange = element['last_radiator_fluid_change'] == null ? null : DateTime.parse(element['last_radiator_fluid_change']);
                 vehicleExistente.dateAdded = DateTime.parse(element['date_added']);
                 vehicleExistente.carWash = element['car_wash'];
+                vehicleExistente.weeklyCheckUp = element['weekly_check_up'];
 
                 //Se recuperan las reglas
                 final ruleOilChange = RuleChange.fromMap(element['rule_oil_change']);
