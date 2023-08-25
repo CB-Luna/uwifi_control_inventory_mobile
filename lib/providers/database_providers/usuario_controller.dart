@@ -45,13 +45,10 @@ class UsuarioController extends ChangeNotifier {
   String? currentUser;
   int? currentUserId;
 
-  // StreamController<bool> syncFlag = StreamController<bool>.broadcast();
-  // Stream<bool> get syncFlagStream => syncFlag.stream;
-
-  // void setStream(bool value) {
-  //   syncFlag.add(value);
-  // }
-
+  // CV
+  bool get isTechSupervisor => usuarioCurrent?.role.target?.role == 'Tech Supervisor';
+  bool get isManager => usuarioCurrent?.role.target?.role == 'Manager';
+  bool get isEmployee => usuarioCurrent?.role.target?.role == 'Employee';
 
   UsuarioController({String? email}) {
     //print("El email es: $email");

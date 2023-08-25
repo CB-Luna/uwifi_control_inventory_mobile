@@ -823,6 +823,7 @@ class Vehicle {
   DateTime? lastTransmissionFluidChange;
   DateTime? lastRadiatorFluidChange;
   bool carWash;
+  bool weeklyCheckUp;
   DateTime dateAdded;
   
   @Unique()
@@ -856,6 +857,7 @@ class Vehicle {
     this.lastTransmissionFluidChange,
     this.lastRadiatorFluidChange,
     required this.carWash,
+    required this.weeklyCheckUp,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();

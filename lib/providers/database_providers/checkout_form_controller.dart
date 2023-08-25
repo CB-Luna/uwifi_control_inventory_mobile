@@ -2128,6 +2128,7 @@ class CheckOutFormController extends ChangeNotifier {
         vehicle = user?.vehicle.target;
       } else {
         vehicle = vehicleRevision;
+        vehicle?.weeklyCheckUp = true;
       }
 
       if (user != null && vehicle != null) {
@@ -2326,15 +2327,27 @@ class CheckOutFormController extends ChangeNotifier {
         vehicle.mileage = int.parse(mileage.replaceAll(",", ""));
         dataBase.vehicleBox.put(vehicle);
 
-        final nuevaInstruccion = Bitacora(
-          instruccion: 'syncAddControlFormR',
-          usuarioPropietario: prefs.getString("userId")!,
-          idControlForm: idControlForm,
-        ); //Se crea la nueva instruccion a realizar en bitacora
+        if (user.role.target?.role == "Employee") {
+          final nuevaInstruccion = Bitacora(
+            instruccion: 'syncAddControlFormR',
+            usuarioPropietario: prefs.getString("userId")!,
+            idControlForm: idControlForm,
+          ); //Se crea la nueva instruccion a realizar en bitacora
 
-        nuevaInstruccion.controlForm.target = controlForm; //Se asigna la orden de trabajo a la nueva instrucción
-        controlForm.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a la orden de trabajo
-        dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+          nuevaInstruccion.controlForm.target = controlForm; //Se asigna la orden de trabajo a la nueva instrucción
+          controlForm.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a la orden de trabajo
+          dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+        } else {
+          final nuevaInstruccion = Bitacora(
+            instruccion: 'syncAddControlFormWeekly',
+            usuarioPropietario: prefs.getString("userId")!,
+            idControlForm: idControlForm,
+          ); //Se crea la nueva instruccion a realizar en bitacora
+
+          nuevaInstruccion.controlForm.target = controlForm; //Se asigna la orden de trabajo a la nueva instrucción
+          controlForm.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a la orden de trabajo
+          dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+        }
 
         notifyListeners();
         return true;
