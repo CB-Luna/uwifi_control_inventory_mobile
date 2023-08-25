@@ -27,6 +27,9 @@ abstract class AppTheme {
   abstract Color black600;
   abstract Color tertiary400;
   abstract Color textColor;
+  abstract Color smiPrimary;
+  abstract Color odePrimary;
+  abstract Color cryPrimary;
 
   String get title1Family => typography.title1Family;
   TextStyle get title1 => typography.title1;
@@ -92,6 +95,12 @@ class LightModeTheme extends AppTheme {
   Color tertiary400 = const Color(0xFF39D2C0);
   @override
   Color textColor = const Color(0xFF1E2429);
+  @override
+  Color smiPrimary = const Color.fromRGBO(255, 138, 0, 1);
+  @override
+  Color odePrimary = const Color(0XFFB2333A);
+  @override
+  Color cryPrimary = const Color(0XFF345694);
 }
 
 abstract class Typography {
