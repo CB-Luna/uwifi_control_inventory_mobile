@@ -1,3 +1,4 @@
+import 'package:fleet_management_tool_rta/providers/database_providers/vehiculo_controller.dart';
 import 'package:fleet_management_tool_rta/screens/employees/widget/app_state.dart';
 import 'package:fleet_management_tool_rta/screens/employees/widget/background_widget.dart';
 import 'package:fleet_management_tool_rta/screens/employees/widget/calendar_model.dart';
@@ -5,50 +6,45 @@ import 'package:fleet_management_tool_rta/screens/employees/widget/flutter_flow_
 import 'package:fleet_management_tool_rta/screens/employees/widget/week_days_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:fleet_management_tool_rta/database/entitys.dart';
 import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
 import 'package:fleet_management_tool_rta/providers/control_form_provider.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
 
 import 'package:flutter/material.dart';
 import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
 import 'package:fleet_management_tool_rta/screens/widgets/get_image_widget.dart';
 import 'package:fleet_management_tool_rta/screens/employees/widget/custom_functions.dart' as functions;
 
-class AgregarVehiculoScreen extends StatefulWidget {
+class SelectHourCheckUpScreen extends StatefulWidget {
   final bool typeForm;
-  const AgregarVehiculoScreen({
+  const SelectHourCheckUpScreen({
     Key? key, 
-    required this.typeForm,
+    required this.typeForm, 
   }) : super(key: key);
 
   @override
-  _AgregarVehiculoScreenState createState() =>
-      _AgregarVehiculoScreenState();
+  _SelectHourCheckUpScreenState createState() =>
+      _SelectHourCheckUpScreenState();
 }
 
-class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
+class _SelectHourCheckUpScreenState extends State<SelectHourCheckUpScreen> {
   XFile? image;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
   late CalendarModel _model;
-  Vehicle? vehicleAssigned;
   double left = 0.0;
   double top = 0.0;
 
     @override
   void initState() {
     super.initState();
-    vehicleAssigned = context.read<UsuarioController>().getVehicleAsigned();
     _model = createModel(context, () => CalendarModel());
   }
 
   @override
   Widget build(BuildContext context) {
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
-    final usuarioProvider = Provider.of<UsuarioController>(context);
-    vehicleAssigned = usuarioProvider.getVehicleAsigned();
+    final vehicleProvider = Provider.of<VehiculoController>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: GestureDetector(
@@ -246,7 +242,7 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                   alignment: Alignment.bottomCenter,
                   child: Draggable(
                     feedbackOffset: const Offset(100,3),
-                  data: vehicleAssigned,
+                  data: vehicleProvider.vehicleSelected,
                   onDraggableCanceled: (velocity, offset) {
                   },
                   feedback: Container(
@@ -274,7 +270,7 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: getImageContainer(
-                              vehicleAssigned!.path,
+                              vehicleProvider.vehicleSelected?.path,
                               height: 80,
                               width: 80,
                               ),
@@ -315,13 +311,13 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: getImageContainer(
-                                  vehicleAssigned!.path,
+                                  vehicleProvider.vehicleSelected?.path,
                                   height: 120,
                                   width: 200,
                                   ),
                               ),
                               Text(
-                                "License Plates: ${vehicleAssigned!.licensePlates}", 
+                                "License Plates: ${vehicleProvider.vehicleSelected?.licensePlates}", 
                                 style: TextStyle(
                                   color: FlutterFlowTheme.of(context).white,
                                   fontSize: 15.0),

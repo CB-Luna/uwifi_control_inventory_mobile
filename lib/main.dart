@@ -30,7 +30,6 @@ import 'package:fleet_management_tool_rta/internationalization/internationalizat
 import 'providers/database_providers/vehiculo_controller.dart';
 
 late ObjectBoxDatabase dataBase;
-late GraphQLClient sbGQL;
 DeepLinkBloc bloc = DeepLinkBloc();
 
 void main() async {
@@ -40,15 +39,6 @@ void main() async {
 
   await Supabase.initialize(url: supabaseUrl, anonKey: anonKey);
   await initHiveForFlutter();
-  final defaultHeaders = ({
-    "apikey": anonKey,
-  });
-  final HttpLink httpLink = HttpLink(supabaseGraphqlUrl, defaultHeaders: defaultHeaders);
-  final AuthLink authLink = AuthLink(getToken: () async => 'Bearer $anonKey');
-  final Link link = authLink.concat(httpLink);
-  ValueNotifier<GraphQLClient> client = ValueNotifier(
-    sbGQL = GraphQLClient(link: link, cache: GraphQLCache(store: HiveStore()))
-  );
   //Esconder Navigation Bar
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.manual, 

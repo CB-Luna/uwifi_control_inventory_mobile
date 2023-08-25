@@ -97,17 +97,24 @@ class RolesSupabaseProvider extends ChangeNotifier {
         vehicleAssigned = true;
       } else {
         //Se recuperan los vehicles disponibles para el Usuario
-        final recordAvailable = await supabaseCtrlV
-          .from('status')
-          .select()
-          .eq('status', 'Available')
-          .select<PostgrestList>("id_status");
-        if (recordAvailable.isNotEmpty) {
+        if (usuario.role.name == "Employee") {
+          final recordAvailable = await supabaseCtrlV
+            .from('status')
+            .select()
+            .eq('status', 'Available')
+            .select<PostgrestList>("id_status");
+          if (recordAvailable.isNotEmpty) {
+            recordsVehicle = await supabaseCtrlV
+            .from('vehicle')
+            .select()
+            .eq('id_company_fk', usuario.company.companyId)
+            .eq('id_status_fk', recordAvailable.first['id_status']);
+          }
+        } else {
           recordsVehicle = await supabaseCtrlV
           .from('vehicle')
           .select()
-          .eq('id_company_fk', usuario.company.companyId)
-          .eq('id_status_fk', recordAvailable.first['id_status']);
+          .eq('id_company_fk', usuario.company.companyId);
         }
       }
       //Se recupera toda la colección de services en Supabase
@@ -361,46 +368,53 @@ class RolesSupabaseProvider extends ChangeNotifier {
               newVehicle.status.target = newStatus;
               newVehicle.company.target = newCompany;
               //Se verifica que sea Jueves
-                final today = DateTime.now();
-                if (today.weekday == DateTime.thursday) {
-                  if (!element['car_wash']) {
-                    final service = dataBase.serviceBox.query(Service_.service.equals("Car Wash")).build().findUnique();
-                    final serviceVehicle = dataBase.vehicleServicesBox.query(VehicleServices_.vehicle.equals(newVehicle.id).and(VehicleServices_.service.equals(service?.id ?? 0)).and(VehicleServices_.completed.equals(false)).and(VehicleServices_.serviceDate.between(today.weekday, today.add(const Duration(days: 2)).weekday))).build().findFirst();
-                    if (serviceVehicle == null) {
-                      final serviceVehicle = VehicleServices(
-                        completed: false,
-                        serviceDate: today.add(const Duration(days: 1)),
-                      );
-                      serviceVehicle.service.target = service;
-                      serviceVehicle.vehicle.target = newVehicle;
-                      newVehicle.vehicleServices.add(serviceVehicle);
-                      dataBase.vehicleServicesBox.put(serviceVehicle);
+                if (usuario.role.name == "Employee") {
+                  final today = DateTime.now();
+                  if (today.weekday == DateTime.thursday) {
+                    if (!element['car_wash']) {
+                      final service = dataBase.serviceBox.query(Service_.service.equals("Car Wash")).build().findUnique();
+                      final serviceVehicle = dataBase.vehicleServicesBox.query(VehicleServices_.vehicle.equals(newVehicle.id).and(VehicleServices_.service.equals(service?.id ?? 0)).and(VehicleServices_.completed.equals(false)).and(VehicleServices_.serviceDate.between(today.weekday, today.add(const Duration(days: 2)).weekday))).build().findFirst();
+                      if (serviceVehicle == null) {
+                        final serviceVehicle = VehicleServices(
+                          completed: false,
+                          serviceDate: today.add(const Duration(days: 1)),
+                        );
+                        serviceVehicle.service.target = service;
+                        serviceVehicle.vehicle.target = newVehicle;
+                        newVehicle.vehicleServices.add(serviceVehicle);
+                        dataBase.vehicleServicesBox.put(serviceVehicle);
 
-                      final nuevaInstruccion = Bitacora(
-                        instruccion: 'syncAddCarWashService',
-                        usuarioPropietario: prefs.getString("userId")!,
-                        idControlForm: 0,
-                      ); //Se crea la nueva instruccion a realizar en bitacora
+                        final nuevaInstruccion = Bitacora(
+                          instruccion: 'syncAddCarWashService',
+                          usuarioPropietario: prefs.getString("userId")!,
+                          idControlForm: 0,
+                        ); //Se crea la nueva instruccion a realizar en bitacora
 
-                      nuevaInstruccion.vehicleService.target = serviceVehicle; //Se asigna el verhicle service a la nueva instrucción
-                      serviceVehicle.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a el verhicle service
-                      dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+                        nuevaInstruccion.vehicleService.target = serviceVehicle; //Se asigna el verhicle service a la nueva instrucción
+                        serviceVehicle.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a el verhicle service
+                        dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
 
-                      newVehicle.carWash = true;
+                        newVehicle.carWash = true;
+                      }
                     }
                   }
                 }
               dataBase.vehicleBox.put(newVehicle);
             } else {
                 //Se actualiza el registro en Objectbox
-                final name = element['image'].toString().replaceAll("$supabaseUrl/storage/v1/object/public/assets/Vehicles/", "");
-                final uInt8ListImagen = await supabase.storage.from('assets/Vehicles').download(name);
-                final base64Image = const Base64Encoder().convert(uInt8ListImagen);
-                final tempDir = await getTemporaryDirectory();
-                File file = await File(
-                  '${tempDir.path}/$name')
-                .create();
-                file.writeAsBytesSync(uInt8ListImagen);
+                String? base64Image;
+                String? path;
+                if (element['image'] != null) {
+                  final name = element['image'].toString().replaceAll("$supabaseUrl/storage/v1/object/public/assets/Vehicles/", "");
+                  final uInt8ListImagen = await supabase.storage.from('assets/Vehicles').download(name);
+                  base64Image = const Base64Encoder().convert(uInt8ListImagen);
+                  final tempDir = await getTemporaryDirectory();
+                  final file = await File(
+                    '${tempDir.path}/$name')
+                  .create();
+                  file.writeAsBytesSync(uInt8ListImagen);
+                  path = file.path;
+                }
 
                 vehicleExistente.make = element['make'];
                 vehicleExistente.model = element['model'];
@@ -410,7 +424,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
                 vehicleExistente.motor = element['motor'];
                 vehicleExistente.color = element['color'];
                 vehicleExistente.mileage = element['mileage'];
-                vehicleExistente.path = file.path;
+                vehicleExistente.path = path;
                 vehicleExistente.image = base64Image;
                 vehicleExistente.oilChangeDue = element['oil_change_due'] == null ? null : DateTime.parse(element['oil_change_due']);
                 vehicleExistente.lastTransmissionFluidChange = element['last_transmission_fluid_change'] == null ? null : DateTime.parse(element['last_transmission_fluid_change']);
@@ -495,32 +509,34 @@ class RolesSupabaseProvider extends ChangeNotifier {
                 vehicleExistente.company.target = newCompany;
 
                 //Se verifica que sea Jueves
-                final today = DateTime.now();
+                if (usuario.role.name == "Employee") {
+                  final today = DateTime.now();
                 if (today.weekday == DateTime.thursday) {
-                  if (!element['car_wash']) {
-                    final service = dataBase.serviceBox.query(Service_.service.equals("Car Wash")).build().findUnique();
-                    final serviceVehicle = dataBase.vehicleServicesBox.query(VehicleServices_.vehicle.equals(vehicleExistente.id).and(VehicleServices_.service.equals(service?.id ?? 0)).and(VehicleServices_.completed.equals(false)).and(VehicleServices_.serviceDate.between(today.weekday, today.add(const Duration(days: 2)).weekday))).build().findFirst();
-                    if (serviceVehicle == null) {
-                      final serviceVehicle = VehicleServices(
-                        completed: false,
-                        serviceDate: today.add(const Duration(days: 1)),
-                      );
-                      serviceVehicle.service.target = service;
-                      serviceVehicle.vehicle.target = vehicleExistente;
-                      vehicleExistente.vehicleServices.add(serviceVehicle);
-                      dataBase.vehicleServicesBox.put(serviceVehicle);
+                    if (!element['car_wash']) {
+                      final service = dataBase.serviceBox.query(Service_.service.equals("Car Wash")).build().findUnique();
+                      final serviceVehicle = dataBase.vehicleServicesBox.query(VehicleServices_.vehicle.equals(vehicleExistente.id).and(VehicleServices_.service.equals(service?.id ?? 0)).and(VehicleServices_.completed.equals(false)).and(VehicleServices_.serviceDate.between(today.weekday, today.add(const Duration(days: 2)).weekday))).build().findFirst();
+                      if (serviceVehicle == null) {
+                        final serviceVehicle = VehicleServices(
+                          completed: false,
+                          serviceDate: today.add(const Duration(days: 1)),
+                        );
+                        serviceVehicle.service.target = service;
+                        serviceVehicle.vehicle.target = vehicleExistente;
+                        vehicleExistente.vehicleServices.add(serviceVehicle);
+                        dataBase.vehicleServicesBox.put(serviceVehicle);
 
-                      final nuevaInstruccion = Bitacora(
-                        instruccion: 'syncAddCarWashService',
-                        usuarioPropietario: prefs.getString("userId")!,
-                        idControlForm: 0,
-                      ); //Se crea la nueva instruccion a realizar en bitacora
+                        final nuevaInstruccion = Bitacora(
+                          instruccion: 'syncAddCarWashService',
+                          usuarioPropietario: prefs.getString("userId")!,
+                          idControlForm: 0,
+                        ); //Se crea la nueva instruccion a realizar en bitacora
 
-                      nuevaInstruccion.vehicleService.target = serviceVehicle; //Se asigna el verhicle service a la nueva instrucción
-                      serviceVehicle.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a el verhicle service
-                      dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
+                        nuevaInstruccion.vehicleService.target = serviceVehicle; //Se asigna el verhicle service a la nueva instrucción
+                        serviceVehicle.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a el verhicle service
+                        dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
 
-                      vehicleExistente.carWash = true;
+                        vehicleExistente.carWash = true;
+                      }
                     }
                   }
                 }

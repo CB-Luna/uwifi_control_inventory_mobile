@@ -1825,7 +1825,7 @@ class CheckOutFormController extends ChangeNotifier {
     return listNames;
   }
   
-  bool addControlForm(Users? user, DateTime dateAddedR) {
+  bool addControlForm(Users? user, Vehicle? vehicleRevision, DateTime dateAddedR) {
     try {
       Measures measures = Measures(
         gas: gasDieselString, 
@@ -2121,8 +2121,14 @@ class CheckOutFormController extends ChangeNotifier {
         issuesR: badStateLights + pendingMeasures + badStateSecurity + badStateEquipment,
         dateAddedR: dateAddedR,
       );
-      
-      final vehicle = user?.vehicle.target;
+
+      Vehicle? vehicle;
+
+      if (user?.role.target?.role == "Employee") {
+        vehicle = user?.vehicle.target;
+      } else {
+        vehicle = vehicleRevision;
+      }
 
       if (user != null && vehicle != null) {
         //Measures
@@ -2398,10 +2404,8 @@ class CheckOutFormController extends ChangeNotifier {
           headers: headers,
           body: body);
       if (responseAutomatizacion.statusCode == 200) {
-        print("Proceso exitoso");
         return true;
       } else {
-        print(responseAutomatizacion.body);
         final newEmail = Email(
           url: url, 
           body: body

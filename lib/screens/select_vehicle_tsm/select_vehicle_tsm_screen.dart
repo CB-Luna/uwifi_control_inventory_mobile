@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fleet_management_tool_rta/screens/tech_supervisor_manager/select_hour_check_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fleet_management_tool_rta/database/entitys.dart';
@@ -29,7 +30,7 @@ class _SelectVehicleTSMScreenState extends State<SelectVehicleTSMScreen> {
   void initState() {
     super.initState();
     setState(() {
-      vehicleAvailables = context.read<UsuarioController>().getVehiclesAvailables();
+      vehicleAvailables = context.read<UsuarioController>().getAllVehicles();
       context.read<VehiculoController>().vehicleSelected = vehicleAvailables.first;
     });
   }
@@ -38,7 +39,7 @@ class _SelectVehicleTSMScreenState extends State<SelectVehicleTSMScreen> {
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final vehiculoController = Provider.of<VehiculoController>(context);
     final UserState userState = Provider.of<UserState>(context);
-    vehicleAvailables = usuarioProvider.getVehiclesAvailables();
+    vehicleAvailables = usuarioProvider.getAllVehicles();
     usuarioProvider.recoverPreviousControlForms(DateTime.now());
     return WillPopScope(
       onWillPop: () async => false,
@@ -134,55 +135,65 @@ class _SelectVehicleTSMScreenState extends State<SelectVehicleTSMScreen> {
                           ),
                           child: InkWell(
                             onTap: () async {
-                              // if (vehiculoController.vehicleSelected == null) {
-                              //   snackbarKey.currentState
-                              //       ?.showSnackBar(const SnackBar(
-                              //     content: Text(
-                              //         "You need to select an Available Vehicle to continue."),
-                              //   ));
-                              // } else {
-                              //   await showDialog(
-                              //     context: context,
-                              //     builder: (alertDialogContext) {
-                              //       return AlertDialog(
-                              //         title: const Text('Validation'),
-                              //         content: Text(
-                              //             "Are you sure you want to Select the Vehicle with License Plates: '${vehiculoController.vehicleSelected!.licensePlates}'."),
-                              //         actions: [
-                              //           TextButton(
-                              //             onPressed: () =>
-                              //                 Navigator.pop(alertDialogContext),
-                              //             child: const Text('Cancel'),
-                              //           ),
-                              //           TextButton(
-                              //             onPressed: () async {
-                              //               if (await vehiculoController.vehicleAssigned(usuarioProvider.usuarioCurrent!)) {
-                              //                 // ignore: use_build_context_synchronously
-                              //                 await Navigator.push(
-                              //                     context,
-                              //                     MaterialPageRoute(
-                              //                       builder: (context) =>
-                              //                           const MainScreenSelector(),
-                              //                     ),
-                              //                   );
-                              //               } else {
-                              //                 // ignore: use_build_context_synchronously
-                              //                 await Navigator.push(
-                              //                     context,
-                              //                     MaterialPageRoute(
-                              //                       builder: (context) =>
-                              //                           const SelectVehicleFailedScreen(),
-                              //                     ),
-                              //                   );
-                              //               }
-                              //             },
-                              //             child: const Text('Ok'),
-                              //           ),
-                              //         ],
-                              //       );
-                              //     },
-                              //   );
-                              // }
+                              if (vehiculoController.vehicleSelected == null) {
+                                snackbarKey.currentState
+                                    ?.showSnackBar(const SnackBar(
+                                  content: Text(
+                                      "You need to select an Available Vehicle to continue."),
+                                ));
+                              } else {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: const Text('Validation'),
+                                      content: Text(
+                                          "Are you sure you want to Select the Vehicle with License Plates: '${vehiculoController.vehicleSelected!.licensePlates}'."),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () async {
+                                            // if (await vehiculoController.vehicleAssigned(usuarioProvider.usuarioCurrent!)) {
+                                            //   // ignore: use_build_context_synchronously
+                                            //   await Navigator.push(
+                                            //       context,
+                                            //       MaterialPageRoute(
+                                            //         builder: (context) =>
+                                            //             const MainScreenSelector(),
+                                            //       ),
+                                            //     );
+                                            // } else {
+                                            //   // ignore: use_build_context_synchronously
+                                            //   await Navigator.push(
+                                            //       context,
+                                            //       MaterialPageRoute(
+                                            //         builder: (context) =>
+                                            //             const SelectVehicleFailedScreen(),
+                                            //       ),
+                                            //     );
+                                            // }
+                                              if (vehiculoController.vehicleSelected != null) {
+                                                if (!mounted) return;
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const SelectHourCheckUpScreen(typeForm: true,),
+                                                    ),
+                                                  );
+                                              } 
+                                          },
+                                          child: const Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,

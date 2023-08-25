@@ -1,6 +1,7 @@
 import 'dart:io' as libraryIO;
 import 'dart:typed_data';
 import 'package:clay_containers/clay_containers.dart';
+import 'package:fleet_management_tool_rta/providers/database_providers/vehiculo_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -92,6 +93,7 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
   Widget build(BuildContext context) {
     final checkOutController = Provider.of<CheckOutFormController>(context);
     final userController = Provider.of<UsuarioController>(context);
+    final vehicleProvider = Provider.of<VehiculoController>(context);
     final mileage = checkOutController.mileage;
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
@@ -161,20 +163,39 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                       final mileageInt = int.parse(checkOutProvider.mileage != "" ? checkOutProvider.mileage.replaceAll(",", "") : "0");
                                       if (mileageInt != 0) {
                                         checkOutProvider.updateMileage(mileage);
-                                        if (mileageInt < userController.usuarioCurrent!.vehicle.target!.mileage) {
-                                          checkOutProvider.flagOilChange = false;
-                                          checkOutProvider.flagTransmissionFluidChange = false;
-                                          checkOutProvider.flagRadiatorFluidChange = false;
+                                        if (userController.usuarioCurrent?.role.target?.role == "Employee") {
+                                          if (mileageInt < userController.usuarioCurrent!.vehicle.target!.mileage) {
+                                            checkOutProvider.flagOilChange = false;
+                                            checkOutProvider.flagTransmissionFluidChange = false;
+                                            checkOutProvider.flagRadiatorFluidChange = false;
+                                          }
+                                          if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService) {
+                                            checkOutProvider.flagOilChange = false;
+                                          } 
+                                          if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.lastMileageService) {
+                                            checkOutProvider.flagTransmissionFluidChange = false;
+                                          } 
+                                          if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService) {
+                                            checkOutProvider.flagRadiatorFluidChange = false;
+                                          } 
+                                        } else {
+                                          if (vehicleProvider.vehicleSelected != null) {
+                                            if (mileageInt < vehicleProvider.vehicleSelected!.mileage) {
+                                              checkOutProvider.flagOilChange = false;
+                                              checkOutProvider.flagTransmissionFluidChange = false;
+                                              checkOutProvider.flagRadiatorFluidChange = false;
+                                            }
+                                            if (mileageInt > vehicleProvider.vehicleSelected!.ruleOilChange.target!.lastMileageService) {
+                                              checkOutProvider.flagOilChange = false;
+                                            } 
+                                            if (mileageInt > vehicleProvider.vehicleSelected!.ruleTransmissionFluidChange.target!.lastMileageService) {
+                                              checkOutProvider.flagTransmissionFluidChange = false;
+                                            } 
+                                            if (mileageInt > vehicleProvider.vehicleSelected!.ruleRadiatorFluidChange.target!.lastMileageService) {
+                                              checkOutProvider.flagRadiatorFluidChange = false;
+                                            } 
+                                          }
                                         }
-                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService) {
-                                          checkOutProvider.flagOilChange = false;
-                                        } 
-                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.lastMileageService) {
-                                          checkOutProvider.flagTransmissionFluidChange = false;
-                                        } 
-                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService) {
-                                          checkOutProvider.flagRadiatorFluidChange = false;
-                                        } 
                                       }
                                       if (mounted) Navigator.pop(context);
                                     }
@@ -285,11 +306,22 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                           if (value == null || value.isEmpty) {
                                               return 'The Mileage is required.';
                                             } 
-                                          if (int.parse(value.replaceAll(",", "")) < userController.usuarioCurrent!.vehicle.target!.mileage) {
-                                            return "The value can't be lower than '${
-                                              NumberFormat.decimalPattern().
-                                              format(userController.usuarioCurrent!
-                                              .vehicle.target!.mileage)}' Mi.";
+                                          if (userController.usuarioCurrent?.role.target?.role == "Employee") {
+                                            if (int.parse(value.replaceAll(",", "")) < userController.usuarioCurrent!.vehicle.target!.mileage) {
+                                              return "The value can't be lower than '${
+                                                NumberFormat.decimalPattern().
+                                                format(userController.usuarioCurrent!
+                                                .vehicle.target!.mileage)}' Mi.";
+                                            }
+                                          } else {
+                                            if (vehicleProvider.vehicleSelected != null) {
+                                              if (int.parse(value.replaceAll(",", "")) < vehicleProvider.vehicleSelected!.mileage) {
+                                              return "The value can't be lower than '${
+                                                NumberFormat.decimalPattern().
+                                                format(vehicleProvider
+                                                .vehicleSelected?.mileage)}' Mi.";
+                                            }
+                                            }
                                           }
                                           return null;
                                         },
@@ -466,7 +498,6 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                             return;
                                                           }
                                                         } while (quality > 0);
-                                                        print("Tamaño nuevo: ${compressImage.lengthInBytes}");
                                                         var newImageEvidence =
                                                             ImageEvidence(
                                                                 path:
@@ -542,7 +573,6 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                             return;
                                                           }
                                                         } while (quality > 0);
-                                                        print("Tamaño nuevo: ${compressImage.lengthInBytes}");
                                                         var newImageEvidence =
                                                             ImageEvidence(
                                                                 path:
@@ -620,31 +650,61 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                           //Este botón sí guarda la información ingresada para Mileage
                                           final mileageInt = int.parse(checkOutProvider.mileage != "" ? checkOutProvider.mileage.replaceAll(",", "") : "0");
                                           if (checkOutProvider.validateKeyForm(keyForm)) {
-                                            //Se valida para ruleOilChange
-                                            if (userController.usuarioCurrent!.vehicle.target?.ruleOilChange.target?.registered == "False") {
-                                              final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.value);
-                                              if (limitMileageService - mileageInt <= 100) {
-                                                //Se activa la bandera oil a true
-                                                checkOutProvider.flagOilChange = true;
+                                            if (userController.usuarioCurrent?.role.target?.role == "Employee") {
+                                              //Se valida para ruleOilChange
+                                              if (userController.usuarioCurrent!.vehicle.target?.ruleOilChange.target?.registered == "False") {
+                                                final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.value);
+                                                if (limitMileageService - mileageInt <= 100) {
+                                                  //Se activa la bandera oil a true
+                                                  checkOutProvider.flagOilChange = true;
+                                                }
                                               }
-                                            }
-                                            //Se valida para ruleTransmissionFluidChange
-                                            if (userController.usuarioCurrent!.vehicle.target?.ruleTransmissionFluidChange.target?.registered == "False") {
-                                              final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.value);
-                                              if (limitMileageService - mileageInt <= 100) {
-                                                // Se actualiza la bandera transmission a true
-                                                checkOutProvider.flagTransmissionFluidChange = true;
+                                              //Se valida para ruleTransmissionFluidChange
+                                              if (userController.usuarioCurrent!.vehicle.target?.ruleTransmissionFluidChange.target?.registered == "False") {
+                                                final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.value);
+                                                if (limitMileageService - mileageInt <= 100) {
+                                                  // Se actualiza la bandera transmission a true
+                                                  checkOutProvider.flagTransmissionFluidChange = true;
+                                                }
                                               }
-                                            }
-                                            //Se valida para ruleRadiatorFluidChange
-                                            if (userController.usuarioCurrent!.vehicle.target?.ruleRadiatorFluidChange.target?.registered == "False") {
-                                              final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.value);
-                                              if (limitMileageService - mileageInt <= 100) {
-                                                // Se actualiza la bandera radiator a true
-                                                checkOutProvider.flagRadiatorFluidChange = true;
+                                              //Se valida para ruleRadiatorFluidChange
+                                              if (userController.usuarioCurrent!.vehicle.target?.ruleRadiatorFluidChange.target?.registered == "False") {
+                                                final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.value);
+                                                if (limitMileageService - mileageInt <= 100) {
+                                                  // Se actualiza la bandera radiator a true
+                                                  checkOutProvider.flagRadiatorFluidChange = true;
+                                                }
                                               }
+                                              Navigator.pop(context);
+                                            } else {
+                                              if (vehicleProvider.vehicleSelected != null) {
+                                                //Se valida para ruleOilChange
+                                                if (vehicleProvider.vehicleSelected!.ruleOilChange.target?.registered == "False") {
+                                                  final limitMileageService = vehicleProvider.vehicleSelected!.ruleOilChange.target!.lastMileageService + int.parse(vehicleProvider.vehicleSelected!.ruleOilChange.target!.value);
+                                                  if (limitMileageService - mileageInt <= 100) {
+                                                    //Se activa la bandera oil a true
+                                                    checkOutProvider.flagOilChange = true;
+                                                  }
+                                                }
+                                                //Se valida para ruleTransmissionFluidChange
+                                                if (vehicleProvider.vehicleSelected!.ruleTransmissionFluidChange.target?.registered == "False") {
+                                                  final limitMileageService = vehicleProvider.vehicleSelected!.ruleTransmissionFluidChange.target!.lastMileageService + int.parse(vehicleProvider.vehicleSelected!.ruleTransmissionFluidChange.target!.value);
+                                                  if (limitMileageService - mileageInt <= 100) {
+                                                    // Se actualiza la bandera transmission a true
+                                                    checkOutProvider.flagTransmissionFluidChange = true;
+                                                  }
+                                                }
+                                                //Se valida para ruleRadiatorFluidChange
+                                                if (vehicleProvider.vehicleSelected!.ruleRadiatorFluidChange.target?.registered == "False") {
+                                                  final limitMileageService = vehicleProvider.vehicleSelected!.ruleRadiatorFluidChange.target!.lastMileageService + int.parse(vehicleProvider.vehicleSelected!.ruleRadiatorFluidChange.target!.value);
+                                                  if (limitMileageService - mileageInt <= 100) {
+                                                    // Se actualiza la bandera radiator a true
+                                                    checkOutProvider.flagRadiatorFluidChange = true;
+                                                  }
+                                                }
+                                              }
+                                              Navigator.pop(context);
                                             }
-                                            Navigator.pop(context);
                                           }
                                         },
                                         child: ClayContainer(
@@ -984,7 +1044,6 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                           return;
                                                         }
                                                       } while (quality > 0);
-                                                      print("Tamaño nuevo: ${compressImage.lengthInBytes}");
                                                       var newImageEvidence =
                                                           ImageEvidence(
                                                               path:
@@ -1060,7 +1119,6 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                           return;
                                                         }
                                                       } while (quality > 0);
-                                                      print("Tamaño nuevo: ${compressImage.lengthInBytes}");
                                                       var newImageEvidence =
                                                           ImageEvidence(
                                                               path:

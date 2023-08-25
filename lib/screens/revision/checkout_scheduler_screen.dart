@@ -177,7 +177,10 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                       child: InkWell(
                         onTap: () async {
                           if (checkOutFormProvider.validateForm()) {
-                            if (checkOutFormProvider.addControlForm(userProvider.usuarioCurrent, widget.registeredHour)) {
+                            if (checkOutFormProvider.addControlForm(
+                              userProvider.usuarioCurrent, 
+                              vehiculoController.vehicleSelected, 
+                              widget.registeredHour)) {
                               // checkOutFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
                               await Navigator.push(
