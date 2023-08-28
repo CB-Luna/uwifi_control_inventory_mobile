@@ -161,7 +161,7 @@ class _SelectVehicleTSMScreenState extends State<SelectVehicleTSMScreen> {
                                                 TextStyle(color: Colors.white),
                                           ),
                                           Text(
-                                            vehicle.status.target!.status,
+                                            vehicle.weeklyCheckUp.toString(),
                                             style: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold),
