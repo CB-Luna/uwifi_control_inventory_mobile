@@ -125,9 +125,13 @@ class RolesSupabaseProvider extends ChangeNotifier {
       // Obtener la fecha del mes actual y previos
       DateTime currentDate = DateTime.now();
       DateTime currentMonth = DateTime(currentDate.year, currentDate.month);
+
+      DateTime startOfDayCurrent = DateTime(currentDate.year, currentDate.month, currentDate.day);
+      DateTime endOfDayCurrent = DateTime(currentDate.year, currentDate.month, currentDate.day, 23, 59, 59);
+
       DateTime firstPreviousMonth = DateTime(currentDate.year, currentDate.month - 1);
       DateTime secondPreviousMonth = DateTime(currentDate.year, currentDate.month - 2);
-
+      
       DateTime startOfMonthCurrent = DateTime(currentMonth.year, currentMonth.month, 1);
       DateTime endOfMonthCurrent = DateTime(currentMonth.year, currentMonth.month + 1, 0, 23, 59, 59);
 
@@ -138,6 +142,9 @@ class RolesSupabaseProvider extends ChangeNotifier {
       DateTime endOfMonthThird = DateTime(secondPreviousMonth.year, secondPreviousMonth.month + 1, 0, 23, 59, 59);
 
       DateFormat format = DateFormat("yyyy-MM-dd HH:mm:ss");
+
+      String formattedStartOfDayCurrent = format.format(startOfDayCurrent);
+      String formattedEndOfDayCurrent = format.format(endOfDayCurrent);
 
       String formattedStartOfMonthCurrent = format.format(startOfMonthCurrent);
       String formattedEndOfMonthCurrent = format.format(endOfMonthCurrent);
@@ -266,6 +273,13 @@ class RolesSupabaseProvider extends ChangeNotifier {
             }
           }
           for (var element in responseListVehicle) {
+            //Se válida que ya se haya verificado el día de hoy
+            List<dynamic> filterCheckTSM = await supabaseCtrlV
+            .from('control_form')
+            .select()
+            .gt('date_added_r', formattedStartOfDayCurrent).lt('date_added_r', formattedEndOfDayCurrent)
+            .eq('id_vehicle_fk', element['id_vehicle'])
+            .is_('date_added_d', null);
             //Se valida que el nuevo vehicle aún no existe en Objectbox
             final vehicleExistente = dataBase.vehicleBox.query(Vehicle_.idDBR.equals(element['id_vehicle'].toString())).build().findUnique();
             if (vehicleExistente == null) {
@@ -300,6 +314,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
                 idDBR: element['id_vehicle'].toString(), 
                 carWash: element['car_wash'],
                 weeklyCheckUp: element['weekly_check_up'],
+                filterCheckTSM: filterCheckTSM.isNotEmpty ? false : true,
               );
 
               //Se recuperan las reglas
@@ -368,38 +383,6 @@ class RolesSupabaseProvider extends ChangeNotifier {
               }
               newVehicle.status.target = newStatus;
               newVehicle.company.target = newCompany;
-              //Se verifica que sea Jueves
-                if (usuario.role.name == "Employee") {
-                  final today = DateTime.now();
-                  if (today.weekday == DateTime.thursday) {
-                    if (!element['car_wash']) {
-                      final service = dataBase.serviceBox.query(Service_.service.equals("Car Wash")).build().findUnique();
-                      final serviceVehicle = dataBase.vehicleServicesBox.query(VehicleServices_.vehicle.equals(newVehicle.id).and(VehicleServices_.service.equals(service?.id ?? 0)).and(VehicleServices_.completed.equals(false)).and(VehicleServices_.serviceDate.between(today.weekday, today.add(const Duration(days: 2)).weekday))).build().findFirst();
-                      if (serviceVehicle == null) {
-                        final serviceVehicle = VehicleServices(
-                          completed: false,
-                          serviceDate: today.add(const Duration(days: 1)),
-                        );
-                        serviceVehicle.service.target = service;
-                        serviceVehicle.vehicle.target = newVehicle;
-                        newVehicle.vehicleServices.add(serviceVehicle);
-                        dataBase.vehicleServicesBox.put(serviceVehicle);
-
-                        final nuevaInstruccion = Bitacora(
-                          instruccion: 'syncAddCarWashService',
-                          usuarioPropietario: prefs.getString("userId")!,
-                          idControlForm: 0,
-                        ); //Se crea la nueva instruccion a realizar en bitacora
-
-                        nuevaInstruccion.vehicleService.target = serviceVehicle; //Se asigna el verhicle service a la nueva instrucción
-                        serviceVehicle.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a el verhicle service
-                        dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
-
-                        newVehicle.carWash = true;
-                      }
-                    }
-                  }
-                }
               dataBase.vehicleBox.put(newVehicle);
             } else {
                 //Se actualiza el registro en Objectbox
@@ -433,6 +416,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
                 vehicleExistente.dateAdded = DateTime.parse(element['date_added']);
                 vehicleExistente.carWash = element['car_wash'];
                 vehicleExistente.weeklyCheckUp = element['weekly_check_up'];
+                vehicleExistente.filterCheckTSM = filterCheckTSM.isNotEmpty ? false : true;
 
                 //Se recuperan las reglas
                 final ruleOilChange = RuleChange.fromMap(element['rule_oil_change']);
@@ -509,40 +493,6 @@ class RolesSupabaseProvider extends ChangeNotifier {
 
                 vehicleExistente.status.target = newStatus;
                 vehicleExistente.company.target = newCompany;
-
-                //Se verifica que sea Jueves
-                if (usuario.role.name == "Employee") {
-                  final today = DateTime.now();
-                if (today.weekday == DateTime.thursday) {
-                    if (!element['car_wash']) {
-                      final service = dataBase.serviceBox.query(Service_.service.equals("Car Wash")).build().findUnique();
-                      final serviceVehicle = dataBase.vehicleServicesBox.query(VehicleServices_.vehicle.equals(vehicleExistente.id).and(VehicleServices_.service.equals(service?.id ?? 0)).and(VehicleServices_.completed.equals(false)).and(VehicleServices_.serviceDate.between(today.weekday, today.add(const Duration(days: 2)).weekday))).build().findFirst();
-                      if (serviceVehicle == null) {
-                        final serviceVehicle = VehicleServices(
-                          completed: false,
-                          serviceDate: today.add(const Duration(days: 1)),
-                        );
-                        serviceVehicle.service.target = service;
-                        serviceVehicle.vehicle.target = vehicleExistente;
-                        vehicleExistente.vehicleServices.add(serviceVehicle);
-                        dataBase.vehicleServicesBox.put(serviceVehicle);
-
-                        final nuevaInstruccion = Bitacora(
-                          instruccion: 'syncAddCarWashService',
-                          usuarioPropietario: prefs.getString("userId")!,
-                          idControlForm: 0,
-                        ); //Se crea la nueva instruccion a realizar en bitacora
-
-                        nuevaInstruccion.vehicleService.target = serviceVehicle; //Se asigna el verhicle service a la nueva instrucción
-                        serviceVehicle.bitacora.add(nuevaInstruccion); //Se asigna la nueva instrucción a el verhicle service
-                        dataBase.bitacoraBox.put(nuevaInstruccion); //Agregamos la nueva instrucción en objectBox
-
-                        vehicleExistente.carWash = true;
-                      }
-                    }
-                  }
-                }
-
                 dataBase.vehicleBox.put(vehicleExistente);
             }
           }

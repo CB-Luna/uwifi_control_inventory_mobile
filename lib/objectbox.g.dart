@@ -2058,7 +2058,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(99, 8193815974638102829),
       name: 'Vehicle',
-      lastPropertyId: const IdUid(29, 3299131353643929306),
+      lastPropertyId: const IdUid(30, 2230459753270718169),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2187,6 +2187,11 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(29, 3299131353643929306),
             name: 'weeklyCheckUp',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(30, 2230459753270718169),
+            name: 'filterCheckTSM',
             type: 1,
             flags: 0)
       ],
@@ -5975,7 +5980,7 @@ ModelDefinition getObjectBoxModel() {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
           final licensePlatesOffset = fbb.writeString(object.licensePlates);
-          fbb.startTable(30);
+          fbb.startTable(31);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, makeOffset);
           fbb.addOffset(2, modelOffset);
@@ -6001,6 +6006,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(26, object.mileage);
           fbb.addBool(27, object.carWash);
           fbb.addBool(28, object.weeklyCheckUp);
+          fbb.addBool(29, object.filterCheckTSM);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -6038,6 +6044,7 @@ ModelDefinition getObjectBoxModel() {
               lastRadiatorFluidChange: lastRadiatorFluidChangeValue == null ? null : DateTime.fromMillisecondsSinceEpoch(lastRadiatorFluidChangeValue),
               carWash: const fb.BoolReader().vTableGet(buffer, rootOffset, 58, false),
               weeklyCheckUp: const fb.BoolReader().vTableGet(buffer, rootOffset, 60, false),
+              filterCheckTSM: const fb.BoolReader().vTableGet(buffer, rootOffset, 62, false),
               dateAdded: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32));
           object.status.targetId =
@@ -7954,6 +7961,10 @@ class Vehicle_ {
   /// see [Vehicle.weeklyCheckUp]
   static final weeklyCheckUp =
       QueryBooleanProperty<Vehicle>(_entities[13].properties[22]);
+
+  /// see [Vehicle.filterCheckTSM]
+  static final filterCheckTSM =
+      QueryBooleanProperty<Vehicle>(_entities[13].properties[23]);
 }
 
 /// [Users] entity fields to define ObjectBox queries.

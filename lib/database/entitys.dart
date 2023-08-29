@@ -44,7 +44,7 @@ class ControlForm {
       DateFormat('dd.MM.yyyy hh:mm:ss').format(dateAddedR);
 }
 
-@Entity()
+@Entity() 
 class Status {
   int id;
   String status;
@@ -824,6 +824,7 @@ class Vehicle {
   DateTime? lastRadiatorFluidChange;
   bool carWash;
   bool weeklyCheckUp;
+  bool filterCheckTSM;
   DateTime dateAdded;
   
   @Unique()
@@ -858,6 +859,7 @@ class Vehicle {
     this.lastRadiatorFluidChange,
     required this.carWash,
     required this.weeklyCheckUp,
+    required this.filterCheckTSM,
     DateTime? dateAdded,
     this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();

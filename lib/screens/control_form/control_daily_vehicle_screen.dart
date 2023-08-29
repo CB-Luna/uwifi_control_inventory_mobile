@@ -76,7 +76,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                       child: Row(
                         children: [
                           InkWell(
-                            onTap: () async {
+                            onTap: () {
                               scaffoldKey.currentState?.openDrawer();
                             },
                             child: Container(

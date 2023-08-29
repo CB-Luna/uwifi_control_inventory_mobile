@@ -189,8 +189,7 @@ class SideMenu extends StatelessWidget {
                       iconData: Icons.sync_rounded,
                       lineHeight: 1.2,
                       onTap: () async {
-                        if (currentUser.role.target!.role == "Admin" ||
-                            currentUser.role.target!.role == "Manager") {
+                        if (currentUser.role.target!.role == "Admin" ) {
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
                             content: Text(
@@ -235,12 +234,22 @@ class SideMenu extends StatelessWidget {
                       iconData: Icons.directions_car,
                       lineHeight: 1.2,
                       onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ServicesVehicleScreen(vehicle: currentUser.vehicle.target!,),
-                          ),
-                        );
+                        if (currentUser.role.target!.role == "Manager"  || 
+                        currentUser.role.target!.role == "Tech Supervisor" ) {
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Permission Denied. You're not authorized to perform this action."),
+                          ));
+                        } else {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ServicesVehicleScreen(vehicle: currentUser.vehicle.target!,),
+                            ),
+                          );
+                        }
+                        
                       },
                     ),
 

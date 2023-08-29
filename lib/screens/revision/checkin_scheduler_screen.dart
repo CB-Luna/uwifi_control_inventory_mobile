@@ -1,4 +1,5 @@
 import 'package:clay_containers/clay_containers.dart';
+import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,6 @@ import 'package:fleet_management_tool_rta/providers/database_providers/checkin_f
 import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
 import 'package:fleet_management_tool_rta/providers/database_providers/vehiculo_controller.dart';
 import 'package:fleet_management_tool_rta/screens/control_form/flutter_flow_animaciones.dart';
-import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
 import 'package:fleet_management_tool_rta/screens/revision/components/menu_form_button.dart';
 import 'package:fleet_management_tool_rta/screens/revision/control_form_d_created.dart';
 import 'package:fleet_management_tool_rta/screens/revision/control_form_d_not_created.dart';
@@ -121,14 +121,42 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                       ),
                       child: InkWell(
                         onTap: () async {
-                          checkInFormProvider.cleanInformation();
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const MainScreenSelector(),
-                            ),
-                          );
+                          await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: const Text(
+                                      'Are you sure you want to return main screen?'),
+                                  content: const Text(
+                                      'The recent input data will be deleted.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () async {
+                                        controlFormProvider.cleanData();
+                                        checkInFormProvider.cleanInformation();
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MainScreenSelector(),
+                                          ),
+                                        );
+                                      },
+                                      child:
+                                          const Text('Continue'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child:
+                                          const Text('Cancel'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                            return;
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
