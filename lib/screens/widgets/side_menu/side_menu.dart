@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:fleet_management_tool_rta/database/entitys.dart';
 import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
 import 'package:fleet_management_tool_rta/main.dart';
 import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
 import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
@@ -184,18 +183,14 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
                     
+                    if (currentUser.role.target?.role == "Employee" ||
+                        currentUser.role.target?.role == "Manager" ||
+                        currentUser.role.target?.role == "Tech Supervisor")
                     CustomMenuItem(
                       label: 'Sync. Data',
                       iconData: Icons.sync_rounded,
                       lineHeight: 1.2,
                       onTap: () async {
-                        if (currentUser.role.target!.role == "Admin" ) {
-                          snackbarKey.currentState
-                              ?.showSnackBar(const SnackBar(
-                            content: Text(
-                                "Permission Denied. You're not authorized to perform this action."),
-                          ));
-                        } else {
                           final connectivityResult =
                               await (Connectivity().checkConnectivity());
                           final bitacora = dataBase.bitacoraBox.getAll().toList();
@@ -224,32 +219,21 @@ class SideMenu extends StatelessWidget {
                               );
                             },
                           );
-                        }
                       },
                     ),
 
-                    
+                    if (currentUser.role.target?.role == "Employee")
                     CustomMenuItem(
                       label: 'Service',
                       iconData: Icons.directions_car,
                       lineHeight: 1.2,
                       onTap: () async {
-                        if (currentUser.role.target!.role == "Manager"  || 
-                        currentUser.role.target!.role == "Tech Supervisor" ) {
-                          snackbarKey.currentState
-                              ?.showSnackBar(const SnackBar(
-                            content: Text(
-                                "Permission Denied. You're not authorized to perform this action."),
-                          ));
-                        } else {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => ServicesVehicleScreen(vehicle: currentUser.vehicle.target!,),
                             ),
                           );
-                        }
-                        
                       },
                     ),
 
