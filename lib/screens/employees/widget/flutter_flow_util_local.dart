@@ -148,6 +148,22 @@ dynamic getJsonField(
   return isForList && value is! Iterable ? [value] : value;
 }
 
+dynamic getJsonFieldHours(
+  dynamic response,
+  String jsonPath, [
+  bool isForList = false,
+]) {
+  final field = JsonPath(jsonPath).read(response);
+  if (field.isEmpty) {
+    return null;
+  }
+  if (field.isNotEmpty) {
+    return field.map((f) => f.value).toList();
+  }
+  final value = field.first.value;
+  return isForList && value is! Iterable ? [value] : value;
+}
+
 Rect? getWidgetBoundingBox(BuildContext context) {
   try {
     final renderBox = context.findRenderObject() as RenderBox?;

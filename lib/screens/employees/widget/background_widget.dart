@@ -62,7 +62,7 @@ class _BackgroundWidgetState extends State<BackgroundWidget> {
               hours = controlFormProvider.hours;
             } else {
               final registeredHour = DateTime.now();
-              hours = getJsonField(
+              hours = getJsonFieldHours(
                 functions.getHours(registeredHour.hour),
                 r'''$.hours[*]''',
               ).toList();

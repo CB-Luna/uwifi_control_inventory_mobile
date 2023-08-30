@@ -1,6 +1,7 @@
 import 'package:fleet_management_tool_rta/database/entitys.dart';
 import 'package:fleet_management_tool_rta/providers/control_form_provider.dart';
 import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
+import 'package:fleet_management_tool_rta/providers/database_providers/vehiculo_controller.dart';
 import 'package:fleet_management_tool_rta/screens/revision/checkin_scheduler_screen.dart';
 import 'package:fleet_management_tool_rta/screens/revision/checkout_scheduler_screen.dart';
 import 'package:fleet_management_tool_rta/screens/widgets/get_image_widget.dart';
@@ -63,10 +64,20 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
   Widget build(BuildContext context) {
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    if (usuarioProvider.usuarioCurrent?.vehicle.target != null && widget.firstHour && controlFormProvider.boolCurrentHour) {
+    final vehicleProvider = Provider.of<VehiculoController>(context);
+    if ((usuarioProvider.usuarioCurrent?.vehicle.target != null || 
+    usuarioProvider.usuarioCurrent?.role.target?.role == "Manager" || 
+    usuarioProvider.usuarioCurrent?.role.target?.role == "Tech Supervisor") 
+    && widget.firstHour && controlFormProvider.boolCurrentHour) {
       caughtColor = blueRadial;
-      licensePlates = usuarioProvider.usuarioCurrent!.vehicle.target!.licensePlates;
-      image = usuarioProvider.usuarioCurrent?.vehicle.target?.path;
+      if (usuarioProvider.usuarioCurrent?.role.target?.role == "Manager" || 
+        usuarioProvider.usuarioCurrent?.role.target?.role == "Tech Supervisor") {
+        licensePlates = vehicleProvider.vehicleSelected!.licensePlates;
+        image = vehicleProvider.vehicleSelected!.path;
+      } else {
+        licensePlates = usuarioProvider.usuarioCurrent!.vehicle.target!.licensePlates;
+        image = usuarioProvider.usuarioCurrent?.vehicle.target?.path;
+      }
       controlFormProvider.changeIsSelectedHourValue(true);
       registeredHour = controlFormProvider.registeredHour;
     }
