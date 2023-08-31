@@ -18,7 +18,6 @@ class RolesSupabaseProvider extends ChangeNotifier {
   bool procesocargando = false;
   bool procesoterminado = false;
   bool procesoexitoso = false;
-  bool vehicleAssigned = false;
   String message = "";
   List<dynamic>? recordsMonthCurrentR;
   List<dynamic>? recordsMonthSecondR;
@@ -42,10 +41,6 @@ class RolesSupabaseProvider extends ChangeNotifier {
     // notifyListeners();
   }
 
-  void changeVehicleAssigned(bool boleano) {
-    vehicleAssigned = boleano;
-    // notifyListeners();
-  }
 
   Future<String> getRolesSupabase(GetUsuarioSupabase usuario) async {
     recordsMonthCurrentR = null;
@@ -87,17 +82,16 @@ class RolesSupabaseProvider extends ChangeNotifier {
       final recordsCompany = await supabase
           .from('company')
           .select();
-      //Se recupera la colección de vehicle especifica en Supabase
-      if (usuario.idVehicleFk != null) {
-        //Se recupera el vehicle de acuerdo a la información más reciente del Usuario
-        recordsVehicle = await supabaseCtrlV
+      //Se verifica el tipo de Usuario
+      if (usuario.role.name == "Employee") {
+        //Se recupera el vehicle asignado conforme a la información más reciente
+        if (usuario.idVehicleFk != null) {
+          recordsVehicle = await supabaseCtrlV
           .from('vehicle')
           .select()
           .eq('id_vehicle', usuario.idVehicleFk);
-        vehicleAssigned = true;
-      } else {
-        //Se recuperan los vehicles disponibles para el Usuario
-        if (usuario.role.name == "Employee") {
+        } else {
+          //Se recuperan los vehicles disponibles para el Usuario
           final recordAvailable = await supabaseCtrlV
             .from('status')
             .select()
@@ -110,12 +104,13 @@ class RolesSupabaseProvider extends ChangeNotifier {
             .eq('id_company_fk', usuario.company.companyId)
             .eq('id_status_fk', recordAvailable.first['id_status']);
           }
-        } else {
+        }
+      } else {
+        //Se recuperan los vehicles de toda la compañía para el Usuario
           recordsVehicle = await supabaseCtrlV
           .from('vehicle')
           .select()
           .eq('id_company_fk', usuario.company.companyId);
-        }
       }
       //Se recupera toda la colección de services en Supabase
       final recordsServices = await supabaseCtrlV

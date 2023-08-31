@@ -5,6 +5,7 @@ import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
 import 'package:fleet_management_tool_rta/main.dart';
 import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
 import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
+import 'package:fleet_management_tool_rta/screens/select_vehicle_tsm/select_vehicle_tsm_screen.dart';
 import 'package:fleet_management_tool_rta/screens/services_vehicle/services_vehicle_screen.dart';
 import 'package:fleet_management_tool_rta/screens/user_profile/perfil_usuario_screen.dart';
 import 'package:fleet_management_tool_rta/screens/widgets/bottom_sheet_cerrar_sesion.dart';
@@ -170,7 +171,10 @@ class SideMenu extends StatelessWidget {
                       ),
                     ),
 
-                    CustomMenuItem(
+                    if (currentUser.role.target?.role == "Employee" ||
+                        currentUser.role.target?.role == "Manager" ||
+                        currentUser.role.target?.role == "Tech Supervisor")
+                    CustomMenuItem( 
                       label: 'Main',
                       iconData: Icons.home,
                       onTap: () async {
@@ -178,6 +182,20 @@ class SideMenu extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => const MainScreenSelector(),
+                          ),
+                        );
+                      },
+                    ),
+
+                    if (currentUser.role.target?.role == "Tech Supervisor")
+                    CustomMenuItem( 
+                      label: 'Vehicles',
+                      iconData: Icons.local_shipping,
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SelectVehicleTSMScreen(),
                           ),
                         );
                       },

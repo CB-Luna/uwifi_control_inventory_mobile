@@ -62,7 +62,7 @@ class VehiculoController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> vehicleAssigned(Users employee) async {
+  Future<bool> vehicleAssigned(Users user) async {
     if (vehicleSelected != null) {
       //Antes verificar que el estatus no haya cambiado
       final validateStatus = await supabaseCtrlV
@@ -81,13 +81,13 @@ class VehiculoController extends ChangeNotifier {
           final updateEmployeeVehicle = await supabase
             .from('user_profile')
             .update({'id_vehicle_fk' : int.parse(vehicleSelected!.idDBR!)})
-            .match({'user_profile_id' : employee.idDBR})
+            .match({'user_profile_id' : user.idDBR})
             .select<PostgrestList>('user_profile_id');
           if (updateStatusVehicle.isNotEmpty && updateEmployeeVehicle.isNotEmpty) {
             vehicleSelected!.status.target = actualStatus;
             dataBase.vehicleBox.put(vehicleSelected!);
-            employee.vehicle.target = vehicleSelected;
-            dataBase.usersBox.put(employee);
+            user.vehicle.target = vehicleSelected;
+            dataBase.usersBox.put(user);
             return true;
           } else {
             final status = dataBase.statusBox.query(Status_.status.equals('Available')).build().findUnique();
@@ -98,7 +98,7 @@ class VehiculoController extends ChangeNotifier {
             await supabasePublic
               .from('user_profile')
               .update({'id_vehicle_fk' : null})
-              .match({'user_profile_id' : employee.idDBR});
+              .match({'user_profile_id' : user.idDBR});
             return false;
           }
         } else {

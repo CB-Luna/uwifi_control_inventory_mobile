@@ -2124,7 +2124,7 @@ class CheckOutFormController extends ChangeNotifier {
 
       Vehicle? vehicle;
 
-      if (user?.role.target?.role == "Employee") {
+      if (user?.role.target?.role == "Employee" || (user?.role.target?.role == "Tech Supervisor" && vehicleRevision == null)) {
         vehicle = user?.vehicle.target;
       } else {
         vehicle = vehicleRevision;
@@ -2327,7 +2327,7 @@ class CheckOutFormController extends ChangeNotifier {
         vehicle.mileage = int.parse(mileage.replaceAll(",", ""));
         dataBase.vehicleBox.put(vehicle);
 
-        if (user.role.target?.role == "Employee") {
+        if (user.role.target?.role == "Employee" || (user.role.target?.role == "Tech Supervisor" && vehicleRevision == null)) {
           final nuevaInstruccion = Bitacora(
             instruccion: 'syncAddControlFormR',
             usuarioPropietario: prefs.getString("userId")!,

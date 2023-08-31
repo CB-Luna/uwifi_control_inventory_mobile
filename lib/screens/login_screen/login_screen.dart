@@ -336,7 +336,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     rolesSupabaseProvider.procesoCargando(true);
                                     rolesSupabaseProvider.procesoTerminado(false);
                                     rolesSupabaseProvider.procesoExitoso(false);
-                                    rolesSupabaseProvider.changeVehicleAssigned(false);
                                     String messageSupabase =
                                         await rolesSupabaseProvider.getRolesSupabase(getUsuarioSupabase);
                                     if (messageSupabase == "Okay") {
@@ -411,8 +410,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       // //Se valida que el Usuario tenga un vehículo Asignado
                                       if (!mounted) return;
                                       //Se valida el tipo de Usuario
-                                      //Employee
-                                      if (usuarioProvider.isEmployee) {
+                                      //Employee / Tech Supervisor
+                                      if (usuarioProvider.isEmployee || usuarioProvider.isTechSupervisor) {
                                         if (usuarioProvider.usuarioCurrent?.vehicle.target != null) {
                                           await Navigator.push(
                                             context,

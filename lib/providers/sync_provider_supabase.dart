@@ -4133,7 +4133,8 @@ class SyncProviderSupabase extends ChangeNotifier {
             //Se actualiza el Mileage del vehicle
             final recordUpdateVehicle = await supabaseCtrlV.from('vehicle').update(
               {
-                'mileage': controlForm.vehicle.target!.mileage
+                'mileage': controlForm.vehicle.target!.mileage,
+                'weekly_check_up': controlForm.vehicle.target!.weeklyCheckUp,
               },
             ).eq('id_vehicle',int.parse(controlForm.vehicle.target!.idDBR!))
             .select<PostgrestList>('id_vehicle');

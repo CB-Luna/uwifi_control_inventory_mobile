@@ -117,6 +117,7 @@ class _SelectHourCheckUpScreenState extends State<SelectHourCheckUpScreen> {
                                       actions: [
                                         TextButton(
                                           onPressed: () async {
+                                            vehicleProvider.cleanComponents();
                                             controlFormProvider.cleanData();
                                             await Navigator.push(
                                               context,

@@ -172,7 +172,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                         TextButton(
                                           onPressed: () async {
                                             if (await vehiculoController.vehicleAssigned(usuarioProvider.usuarioCurrent!)) {
-                                              // ignore: use_build_context_synchronously
+                                              if (!mounted) return;
                                               await Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
@@ -181,7 +181,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                                   ),
                                                 );
                                             } else {
-                                              // ignore: use_build_context_synchronously
+                                              if (!mounted) return;
                                               await Navigator.push(
                                                   context,
                                                   MaterialPageRoute(

@@ -65,18 +65,27 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final vehicleProvider = Provider.of<VehiculoController>(context);
-    if ((usuarioProvider.usuarioCurrent?.vehicle.target != null || 
-    usuarioProvider.usuarioCurrent?.role.target?.role == "Manager" || 
-    usuarioProvider.usuarioCurrent?.role.target?.role == "Tech Supervisor") 
+    if ((usuarioProvider.isEmployee || 
+    usuarioProvider.isManager || 
+    usuarioProvider.isTechSupervisor) 
     && widget.firstHour && controlFormProvider.boolCurrentHour) {
       caughtColor = blueRadial;
-      if (usuarioProvider.usuarioCurrent?.role.target?.role == "Manager" || 
-        usuarioProvider.usuarioCurrent?.role.target?.role == "Tech Supervisor") {
+      if (usuarioProvider.isManager) {
         licensePlates = vehicleProvider.vehicleSelected!.licensePlates;
         image = vehicleProvider.vehicleSelected!.path;
       } else {
-        licensePlates = usuarioProvider.usuarioCurrent!.vehicle.target!.licensePlates;
-        image = usuarioProvider.usuarioCurrent?.vehicle.target?.path;
+        if (usuarioProvider.isEmployee) {
+          licensePlates = usuarioProvider.usuarioCurrent!.vehicle.target!.licensePlates;
+          image = usuarioProvider.usuarioCurrent?.vehicle.target?.path;
+        } else {
+          if (vehicleProvider.vehicleSelected != null) {
+            licensePlates = vehicleProvider.vehicleSelected!.licensePlates;
+            image = vehicleProvider.vehicleSelected!.path;
+          } else {
+            licensePlates = usuarioProvider.usuarioCurrent!.vehicle.target!.licensePlates;
+            image = usuarioProvider.usuarioCurrent?.vehicle.target?.path;
+          }
+        }
       }
       controlFormProvider.changeIsSelectedHourValue(true);
       registeredHour = controlFormProvider.registeredHour;

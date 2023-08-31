@@ -2307,7 +2307,9 @@ class CheckInFormController extends ChangeNotifier {
               }
             }
         }
-
+          if (user.role.target?.role == "Tech Supervisor") {
+            vehicle.weeklyCheckUp = true;
+          }
           //Se actualiza el mileage del vehicle
           vehicle.mileage = int.parse(mileage.replaceAll(",", ""));
           dataBase.vehicleBox.put(vehicle);

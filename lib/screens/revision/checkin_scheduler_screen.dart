@@ -134,6 +134,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                                       onPressed: () async {
                                         controlFormProvider.cleanData();
                                         checkInFormProvider.cleanInformation();
+                                        vehiculoController.cleanComponents();
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -208,6 +209,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                             if (checkInFormProvider.updateControlForm(userProvider.usuarioCurrent, widget.registeredHour)) {
                               // checkInFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
+                              vehiculoController.cleanComponents();
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -218,6 +220,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                             } else {
                               checkInFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
+                              vehiculoController.cleanComponents();
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(

@@ -457,15 +457,13 @@ bool updateData(
     final List<Vehicle> opcionesVehiculos = [];
     final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual != null) {
-        if (usuarioActual.vehicle.target != null) {
-          opcionesVehiculos.add(usuarioActual.vehicle.target!);
-        } else {
-          for (var vehicle in dataBase.vehicleBox.getAll().toList()) {
-              if (vehicle.company.target?.company == usuarioActual.company.target?.company) {
-                opcionesVehiculos.add(vehicle);
-              }
+      for (var vehicle in dataBase.vehicleBox.getAll().toList()) {
+        if (vehicle.company.target?.company == usuarioActual.company.target?.company) {
+          if (usuarioActual.vehicle.target?.idDBR != vehicle.idDBR) {
+            opcionesVehiculos.add(vehicle);
           }
         }
+      }
     }
     return opcionesVehiculos;
   }

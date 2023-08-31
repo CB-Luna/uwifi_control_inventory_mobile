@@ -134,6 +134,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                                       onPressed: () async {
                                         controlFormProvider.cleanData();
                                         checkOutFormProvider.cleanInformation();
+                                        vehiculoController.cleanComponents();
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -211,6 +212,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                               widget.registeredHour)) {
                               // checkOutFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
+                              vehiculoController.cleanComponents();
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -221,6 +223,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                             } else {
                               checkOutFormProvider.cleanInformation();
                               controlFormProvider.cleanData();
+                              vehiculoController.cleanComponents();
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
