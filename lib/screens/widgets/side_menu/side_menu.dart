@@ -240,7 +240,8 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-                    if (currentUser.role.target?.role == "Employee")
+                    if (currentUser.role.target?.role == "Employee" ||
+                        currentUser.role.target?.role == "Tech Supervisor")
                     CustomMenuItem(
                       label: 'Service',
                       iconData: Icons.directions_car,
