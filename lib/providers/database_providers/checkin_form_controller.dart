@@ -2353,7 +2353,7 @@ class CheckInFormController extends ChangeNotifier {
       "template": "FleetRTAEmail",
       "subject": "Issues_Form_Notification_RTA_CV",
       "mailto": 
-      urlNotificationsAPI.contains("supa43") ?
+      url.contains("supa43") ?
       "control.rta@cbluna.com" :
       user.company.target?.company == "CRY" ? 
       "cry@cbluna.com" : 

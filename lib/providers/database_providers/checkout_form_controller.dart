@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:fleet_management_tool_rta/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:fleet_management_tool_rta/database/entitys.dart';
@@ -2363,12 +2364,21 @@ class CheckOutFormController extends ChangeNotifier {
   }
 
   Future<bool> sendEmail(Users user) async {
-    String url = "https://supa43.rtatel.com/notifications/api";
+    String url = urlNotificationsAPI;
     String body = jsonEncode({
       "action": "rtaMail",
       "template": "FleetRTAEmail",
       "subject": "Issues_Form_Notification_RTA_CV",
-      "mailto": "control.rta@cbluna.com",
+      "mailto": 
+      url.contains("supa43") ?
+      "control.rta@cbluna.com" :
+      user.company.target?.company == "CRY" ? 
+      "cry@cbluna.com" : 
+      user.company.target?.company == "ODE" ?
+      "ode@cbluna.com" : 
+      user.company.target?.company == "SMI" ?
+      "smi@cbluna.com" : 
+      "control.rta@cbluna.com",
       "variables": [
         {"name": "company", "value": "${user.company.target?.company}"},
         {"name": "plates", "value": "${user.vehicle.target?.licensePlates}"},
