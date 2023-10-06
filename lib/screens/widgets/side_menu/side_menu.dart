@@ -9,6 +9,7 @@ import 'package:fleet_management_tool_rta/screens/select_vehicle_tsm/select_vehi
 import 'package:fleet_management_tool_rta/screens/services_vehicle/services_vehicle_screen.dart';
 import 'package:fleet_management_tool_rta/screens/user_profile/perfil_usuario_screen.dart';
 import 'package:fleet_management_tool_rta/screens/widgets/bottom_sheet_cerrar_sesion.dart';
+import 'package:fleet_management_tool_rta/screens/widgets/bottom_sheet_change_vehicle.dart';
 import 'package:fleet_management_tool_rta/screens/widgets/bottom_sheet_sincronizar_widget.dart';
 import 'package:fleet_management_tool_rta/util/flutter_flow_util.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -35,6 +36,8 @@ class SideMenu extends StatelessWidget {
     }
 
     final Users currentUser = usuarioProvider.usuarioCurrent!;
+    ControlForm? controlFormCheckOut = usuarioProvider.getControlFormCheckOutToday(DateTime.now());
+    ControlForm?  controlFormCheckIn = usuarioProvider.getControlFormCheckInToday(DateTime.now());
 
     return SafeArea(
       child: SizedBox(
@@ -256,7 +259,45 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-
+                    if (currentUser.role.target?.role == "Employee" ||
+                        currentUser.role.target?.role == "Tech Supervisor")
+                    CustomMenuItem(
+                      label: 'Change Vehicle',
+                      iconData: Icons.no_crash,
+                      lineHeight: 1.2,
+                      onTap: () async {
+                          final connectivityResult =
+                              await (Connectivity().checkConnectivity());
+                          final bitacora = dataBase.bitacoraBox.getAll().toList();
+                          //print("Tamaño bitacora: ${bitacora.length}");
+                          // ignore: use_build_context_synchronously
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: MediaQuery.of(context).viewInsets,
+                                child: SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.45,
+                                  child: connectivityResult ==
+                                              ConnectivityResult.none ||
+                                        bitacora.isNotEmpty ||
+                                        (controlFormCheckOut != null && controlFormCheckIn == null) ||
+                                        currentUser.vehicle.target == null
+                                      ? const BottomSheetChangeVehicle(
+                                          isVisible: false,
+                                        )
+                                      : const BottomSheetChangeVehicle(
+                                          isVisible: true,
+                                        ),
+                                ),
+                              );
+                            },
+                          );
+                      },
+                    ),
 
                     CustomMenuItem(
                       label: 'Log Out',

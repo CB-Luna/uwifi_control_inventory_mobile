@@ -3,7 +3,7 @@ import 'package:fleet_management_tool_rta/screens/select_vehicle_tsm/select_vehi
 import 'package:flutter/material.dart';
 import 'package:fleet_management_tool_rta/helpers/globals.dart';
 import 'package:fleet_management_tool_rta/screens/control_form/control_daily_vehicle_screen.dart';
-import 'package:fleet_management_tool_rta/screens/sync/sincronizacion_informacion_pocketbase_screen.dart';
+import 'package:fleet_management_tool_rta/screens/sync/sincronizacion_informacion_supabase_screen.dart';
 import 'package:provider/provider.dart';
 
 class MainScreenSelector extends StatefulWidget {

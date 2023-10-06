@@ -5,18 +5,18 @@ import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
 
 import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_widgets.dart';
 
-class BottomSheetSincronizarWidget extends StatefulWidget {
+class BottomSheetChangeVehicle extends StatefulWidget {
   final bool isVisible;
-  const BottomSheetSincronizarWidget({Key? key, required this.isVisible})
+  const BottomSheetChangeVehicle({Key? key, required this.isVisible})
       : super(key: key);
 
   @override
-  State<BottomSheetSincronizarWidget> createState() =>
-      _BottomSheetSincronizarWidgetState();
+  State<BottomSheetChangeVehicle> createState() =>
+      _BottomSheetChangeVehicleState();
 }
 
-class _BottomSheetSincronizarWidgetState
-    extends State<BottomSheetSincronizarWidget> {
+class _BottomSheetChangeVehicleState
+    extends State<BottomSheetChangeVehicle> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,7 +60,7 @@ class _BottomSheetSincronizarWidgetState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 4, 0, 0),
                               child: Text(
-                                'Are you sure you want to sync?',
+                                'Are you sure you want to change vehicle?',
                                 textAlign: TextAlign.center,
                                 style: FlutterFlowTheme.of(context).title2.override(
                                       fontFamily:
@@ -81,7 +81,7 @@ class _BottomSheetSincronizarWidgetState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 8, 0, 0),
                               child: Text(
-                                'All the input data in the control forms are going to saved in the cloud (Intenet Conection is required).',
+                                'It is necessary that you have a currently assigned vehicle and that you have already synchronized your data. If you have registered the "Check In" form, you need to complete the "Check Out" form to continue. (Intenet Conection is required).',
                                 textAlign: TextAlign.center,
                                 style: FlutterFlowTheme.of(context).bodyText2.override(
                                       fontFamily:
@@ -102,8 +102,8 @@ class _BottomSheetSincronizarWidgetState
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Lottie.asset(
-                              'assets/lottie_animations/lf30_editor_uguzblhq.json',
-                              height: 100,
+                              'assets/lottie_animations/warning.json',
+                              height: 120,
                               fit: BoxFit.cover,
                               animate: true,
                             ),
@@ -153,7 +153,7 @@ class _BottomSheetSincronizarWidgetState
                                     ),
                                   );
                                 },
-                                text: 'SYNC',
+                                text: 'CHANGE',
                                 options: FFButtonOptions(
                                   width: 150,
                                   height: 50,

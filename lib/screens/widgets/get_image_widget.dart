@@ -32,7 +32,7 @@ Widget getImageContainer(String? image, {double height = 180, double width = dou
       height: height,
       width: width,
       image: const AssetImage("assets/images/vehicle-placeholder.png"),
-      fit: BoxFit.cover,
+      fit: BoxFit.contain,
     );
   } else if (image.startsWith('http') || image.startsWith('https')) {
     return FadeInImage(

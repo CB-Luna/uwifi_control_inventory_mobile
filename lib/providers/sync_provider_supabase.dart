@@ -458,7 +458,7 @@ class SyncProviderSupabase extends ChangeNotifier {
       return exitoso;
     }
   }
-
+  
   Users? getFirstUsuario(
       List<Users> usuarios, int idInstruccionesBitacora) {
     for (var i = 0; i < usuarios.length; i++) {

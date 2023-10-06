@@ -226,7 +226,7 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                 ],
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              child: getImageEmprendimiento(
+                              child: getImageContainer(
                                 widget.vehicle.path).
                                   animateOnPageLoad(animationsMap['moveLoadAnimationRL']!),
                             ),

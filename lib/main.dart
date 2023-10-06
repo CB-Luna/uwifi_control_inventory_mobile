@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:fleet_management_tool_rta/helpers/constants.dart';
+import 'package:fleet_management_tool_rta/providers/sync_change_vehicle_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -71,6 +72,10 @@ void main() async {
         ),
         ChangeNotifierProvider<SyncProviderSupabase>(
           create: (context) => SyncProviderSupabase(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<SyncChangeVehicleProvider>(
+          create: (context) => SyncChangeVehicleProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<CatalogoSupabaseProvider>(
