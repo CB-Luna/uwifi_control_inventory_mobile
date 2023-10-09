@@ -484,10 +484,11 @@ bool updateData(
     ControlForm? controlFormToday;
     final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual?.actualControlForm.target != null) {
+      //La condición es que la fecha del ControlForm y la fecha de hoy sea la misma, así como el vehículo con el que se hizo.
       if ((DateFormat('dd-MM-yyyy')
           .format(usuarioActual!.actualControlForm.target!.dateAddedR).toString() == 
           DateFormat('dd-MM-yyyy')
-          .format(today).toString())) {
+          .format(today).toString()) && usuarioActual.vehicle.target?.licensePlates == usuarioActual.actualControlForm.target?.vehicle.target?.licensePlates) {
         controlFormToday = usuarioActual.actualControlForm.target;
       }
     }
@@ -498,10 +499,11 @@ bool updateData(
     ControlForm? controlFormToday;
     final usuarioActual = dataBase.usersBox.get(usuarioCurrent?.id ?? -1);
     if (usuarioActual?.actualControlForm.target?.dateAddedD != null) {
+      //La condición es que la fecha del ControlForm y la fecha de hoy sea la misma, así como el vehículo con el que se hizo.
         if ((DateFormat('dd-MM-yyyy')
           .format(usuarioActual!.actualControlForm.target!.dateAddedD!).toString() == 
           DateFormat('dd-MM-yyyy')
-          .format(today).toString())) {
+          .format(today).toString()) && usuarioActual.vehicle.target?.licensePlates == usuarioActual.actualControlForm.target?.vehicle.target?.licensePlates) {
         controlFormToday = usuarioActual.actualControlForm.target;
       }
     }
