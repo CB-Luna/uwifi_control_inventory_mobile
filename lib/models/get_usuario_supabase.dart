@@ -14,8 +14,7 @@ class GetUsuarioSupabase {
     final String? telephoneNumber;
     final String? homephoneNumber;
     final String? image;
-    final int idRoleFk;
-    final Roles role;
+    final List<Roles> roles;
     final Companys company;
     final Configuracion configuracion;
     final int idTema;
@@ -35,8 +34,7 @@ class GetUsuarioSupabase {
         this.telephoneNumber,
         this.homephoneNumber,
         this.image,
-        required this.idRoleFk,
-        required this.role,
+        required this.roles,
         required this.company,
         required this.configuracion,
         required this.idTema,
@@ -61,8 +59,7 @@ class GetUsuarioSupabase {
         telephoneNumber: json["mobile_phone"],
         homephoneNumber: json["home_phone"],
         image: json["image"],
-        idRoleFk: json["id_role_fk"],
-        role: Roles.fromMap(json["role"]),
+        roles: List<Roles>.from(json["roles"].map((x) => Roles.fromMap(x))),
         company: Companys.fromMap(json["company"]),
         configuracion: Configuracion.fromMap(json["configuracion"]),
         idTema: json["id_tema"],
@@ -83,8 +80,7 @@ class GetUsuarioSupabase {
         "mobile_phone": telephoneNumber,
         "home_phone": homephoneNumber,
         "image": image,
-        "id_role_fk": idRoleFk,
-        "role": role.toMap(),
+        "roles": List<dynamic>.from(roles.map((x) => x.toMap())),
         "company": company.toMap(),
         "configuracion": configuracion.toMap(),
         "id_tema": idTema,
@@ -216,11 +212,13 @@ class Roles {
     final int id;
     final String name;
     final Permissions permissions;
+    final String application;
 
     Roles({
         required this.id,
         required this.name,
         required this.permissions,
+        required this.application,
     });
 
     factory Roles.fromJson(String str) => Roles.fromMap(json.decode(str));
@@ -231,26 +229,28 @@ class Roles {
         id: json["role_id"],
         name: json["name"],
         permissions: Permissions.fromMap(json["permissions"]),
+        application: json["application"],
     );
 
     Map<String, dynamic> toMap() => {
         "role_id": id,
         "name": name,
         "permissions": permissions.toMap(),
+        "application": application,
     };
 }
 
 class Permissions {
-    final String home;
-    final String employees;
-    final String userProfile;
-    final String usersAdministration;
+    String? home;
+    String? employees;
+    String? userProfile;
+    String? usersAdministration;
 
     Permissions({
-        required this.home,
-        required this.employees,
-        required this.userProfile,
-        required this.usersAdministration,
+      this.home,
+      this.employees,
+      this.userProfile,
+      this.usersAdministration,
     });
 
     factory Permissions.fromJson(String str) => Permissions.fromMap(json.decode(str));

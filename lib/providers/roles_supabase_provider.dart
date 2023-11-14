@@ -83,7 +83,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
           .from('company')
           .select();
       //Se verifica el tipo de Usuario
-      if (usuario.role.name == "Employee") {
+      if (usuario.roles.first.name == "Employee") {
         //Se recupera el vehicle asignado conforme a la información más reciente
         if (usuario.idVehicleFk != null) {
           recordsVehicle = await supabaseCtrlV
