@@ -2074,7 +2074,7 @@
     },
     {
       "id": "99:8193815974638102829",
-      "lastPropertyId": "30:2230459753270718169",
+      "lastPropertyId": "34:4597880471000569725",
       "name": "Vehicle",
       "properties": [
         {
@@ -2218,6 +2218,32 @@
           "id": "30:2230459753270718169",
           "name": "filterCheckTSM",
           "type": 1
+        },
+        {
+          "id": "31:4598683369211093637",
+          "name": "lastTireChange",
+          "type": 10
+        },
+        {
+          "id": "32:6610378205763130232",
+          "name": "lastBrakeChange",
+          "type": 10
+        },
+        {
+          "id": "33:463082300819899243",
+          "name": "ruleTireChangeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "466:6468799379941506071",
+          "relationTarget": "Rule"
+        },
+        {
+          "id": "34:4597880471000569725",
+          "name": "ruleBrakeChangeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "467:5918560134820692401",
+          "relationTarget": "Rule"
         }
       ],
       "relations": []
@@ -2560,7 +2586,7 @@
     }
   ],
   "lastEntityId": "106:5179761477110208081",
-  "lastIndexId": "465:6133735737218365395",
+  "lastIndexId": "467:5918560134820692401",
   "lastRelationId": "98:3803692598585200085",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

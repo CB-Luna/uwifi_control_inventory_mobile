@@ -2058,7 +2058,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(99, 8193815974638102829),
       name: 'Vehicle',
-      lastPropertyId: const IdUid(30, 2230459753270718169),
+      lastPropertyId: const IdUid(34, 4597880471000569725),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2193,7 +2193,31 @@ final _entities = <ModelEntity>[
             id: const IdUid(30, 2230459753270718169),
             name: 'filterCheckTSM',
             type: 1,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(31, 4598683369211093637),
+            name: 'lastTireChange',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(32, 6610378205763130232),
+            name: 'lastBrakeChange',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(33, 463082300819899243),
+            name: 'ruleTireChangeId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(466, 6468799379941506071),
+            relationTarget: 'Rule'),
+        ModelProperty(
+            id: const IdUid(34, 4597880471000569725),
+            name: 'ruleBrakeChangeId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(467, 5918560134820692401),
+            relationTarget: 'Rule')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -2557,7 +2581,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(106, 5179761477110208081),
-      lastIndexId: const IdUid(465, 6133735737218365395),
+      lastIndexId: const IdUid(467, 5918560134820692401),
       lastRelationId: const IdUid(98, 3803692598585200085),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -5952,7 +5976,9 @@ ModelDefinition getObjectBoxModel() {
               object.company,
               object.ruleOilChange,
               object.ruleTransmissionFluidChange,
-              object.ruleRadiatorFluidChange
+              object.ruleRadiatorFluidChange,
+              object.ruleTireChange,
+              object.ruleBrakeChange
             ],
         toManyRelations: (Vehicle object) => {
               RelInfo<Bitacora>.toOneBacklink(
@@ -5980,7 +6006,7 @@ ModelDefinition getObjectBoxModel() {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
           final licensePlatesOffset = fbb.writeString(object.licensePlates);
-          fbb.startTable(31);
+          fbb.startTable(35);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, makeOffset);
           fbb.addOffset(2, modelOffset);
@@ -6007,6 +6033,10 @@ ModelDefinition getObjectBoxModel() {
           fbb.addBool(27, object.carWash);
           fbb.addBool(28, object.weeklyCheckUp);
           fbb.addBool(29, object.filterCheckTSM);
+          fbb.addInt64(30, object.lastTireChange?.millisecondsSinceEpoch);
+          fbb.addInt64(31, object.lastBrakeChange?.millisecondsSinceEpoch);
+          fbb.addInt64(32, object.ruleTireChange.targetId);
+          fbb.addInt64(33, object.ruleBrakeChange.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -6019,6 +6049,10 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 40);
           final lastRadiatorFluidChangeValue =
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 42);
+          final lastTireChangeValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 64);
+          final lastBrakeChangeValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 66);
           final object = Vehicle(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               make: const fb.StringReader(asciiOptimization: true)
@@ -6042,6 +6076,8 @@ ModelDefinition getObjectBoxModel() {
               oilChangeDue: oilChangeDueValue == null ? null : DateTime.fromMillisecondsSinceEpoch(oilChangeDueValue),
               lastTransmissionFluidChange: lastTransmissionFluidChangeValue == null ? null : DateTime.fromMillisecondsSinceEpoch(lastTransmissionFluidChangeValue),
               lastRadiatorFluidChange: lastRadiatorFluidChangeValue == null ? null : DateTime.fromMillisecondsSinceEpoch(lastRadiatorFluidChangeValue),
+              lastTireChange: lastTireChangeValue == null ? null : DateTime.fromMillisecondsSinceEpoch(lastTireChangeValue),
+              lastBrakeChange: lastBrakeChangeValue == null ? null : DateTime.fromMillisecondsSinceEpoch(lastBrakeChangeValue),
               carWash: const fb.BoolReader().vTableGet(buffer, rootOffset, 58, false),
               weeklyCheckUp: const fb.BoolReader().vTableGet(buffer, rootOffset, 60, false),
               filterCheckTSM: const fb.BoolReader().vTableGet(buffer, rootOffset, 62, false),
@@ -6062,6 +6098,12 @@ ModelDefinition getObjectBoxModel() {
           object.ruleRadiatorFluidChange.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 54, 0);
           object.ruleRadiatorFluidChange.attach(store);
+          object.ruleTireChange.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 68, 0);
+          object.ruleTireChange.attach(store);
+          object.ruleBrakeChange.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 70, 0);
+          object.ruleBrakeChange.attach(store);
           InternalToManyAccess.setRelInfo<Vehicle>(
               object.bitacora,
               store,
@@ -7965,6 +8007,22 @@ class Vehicle_ {
   /// see [Vehicle.filterCheckTSM]
   static final filterCheckTSM =
       QueryBooleanProperty<Vehicle>(_entities[13].properties[23]);
+
+  /// see [Vehicle.lastTireChange]
+  static final lastTireChange =
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[24]);
+
+  /// see [Vehicle.lastBrakeChange]
+  static final lastBrakeChange =
+      QueryIntegerProperty<Vehicle>(_entities[13].properties[25]);
+
+  /// see [Vehicle.ruleTireChange]
+  static final ruleTireChange =
+      QueryRelationToOne<Vehicle, Rule>(_entities[13].properties[26]);
+
+  /// see [Vehicle.ruleBrakeChange]
+  static final ruleBrakeChange =
+      QueryRelationToOne<Vehicle, Rule>(_entities[13].properties[27]);
 }
 
 /// [Users] entity fields to define ObjectBox queries.

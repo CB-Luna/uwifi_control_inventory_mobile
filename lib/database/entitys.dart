@@ -822,6 +822,8 @@ class Vehicle {
   DateTime? oilChangeDue;
   DateTime? lastTransmissionFluidChange;
   DateTime? lastRadiatorFluidChange;
+  DateTime? lastTireChange;
+  DateTime? lastBrakeChange;
   bool carWash;
   bool weeklyCheckUp;
   bool filterCheckTSM;
@@ -840,6 +842,8 @@ class Vehicle {
   final ruleOilChange = ToOne<Rule>();
   final ruleTransmissionFluidChange = ToOne<Rule>();
   final ruleRadiatorFluidChange = ToOne<Rule>();
+  final ruleTireChange = ToOne<Rule>();
+  final ruleBrakeChange = ToOne<Rule>();
 
 
   Vehicle({
@@ -857,6 +861,8 @@ class Vehicle {
     this.oilChangeDue,
     this.lastTransmissionFluidChange,
     this.lastRadiatorFluidChange,
+    this.lastTireChange,
+    this.lastBrakeChange,
     required this.carWash,
     required this.weeklyCheckUp,
     required this.filterCheckTSM,
