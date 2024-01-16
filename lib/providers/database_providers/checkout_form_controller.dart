@@ -2370,7 +2370,7 @@ class CheckOutFormController extends ChangeNotifier {
       "template": "FleetRTAEmail",
       "subject": "Issues_Form_Notification_RTA_CV",
       "mailto": 
-      url.contains("supa43") ?
+      url.contains(domain) ?
       "control.rta@cbluna.com" :
       user.company.target?.company == "CRY" ? 
       "cry@cbluna.com" : 
