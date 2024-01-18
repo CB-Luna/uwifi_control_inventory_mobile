@@ -1,5 +1,3 @@
-// ignore_for_file: overridden_fields, annotate_overrides
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -75,10 +73,10 @@ abstract class FlutterFlowTheme {
 }
 
 class LightModeTheme extends FlutterFlowTheme {
-  late Color primaryColor = const Color(0xFFD20030);
-  late Color secondaryColor = const Color(0xCC2372F0);
-  late Color tertiaryColor = const Color(0xFF2E5099);
-  late Color alternate = const Color(0xFF2E5899);
+  late Color primaryColor = const Color(0xFF00B837);
+  late Color secondaryColor = const Color(0xFF7949DC);
+  late Color tertiaryColor = const Color(0xFF8A5DD8);
+  late Color alternate = const Color(0xFF492C7C);
   late Color buenoColor = const Color(0xFF228B22);
   late Color recomendadoColor = const Color(0xFFFFBF00);
   late Color urgenteColor = const Color(0xFF9C432D);
@@ -238,23 +236,15 @@ extension TextStyleHelper on TextStyle {
             );
 }
 
-Gradient blueRadial = const LinearGradient(
+Gradient purpleRadial = const LinearGradient(
   begin: Alignment.centerLeft,
   end: Alignment.centerRight,
   colors: [
-    Color(0XFF2F6EDC),
-    Color(0XFF397CE0),
-    Color(0XFF3D82E4),
-    Color(0XFF4284DC),
-    Color(0XFF3A7BD8),
-    Color(0XFF275DBD),
-    Color(0XFF295EBF),
-    Color(0XFF2F66BE),
-    Color(0XFF336ABE),
-    Color(0XFF386DBA),
-    Color(0XFF3166B7),
-    Color(0XFF2C5EAE),
-    Color(0XFF234FA1),
+      Color(0xFF8A5DD8),
+      Color(0xFF7949DC),
+      Color(0xFF8A5DD8),
+      Color(0xFF7949DC),
+      Color(0xFF492C7C)
   ],
 );
 

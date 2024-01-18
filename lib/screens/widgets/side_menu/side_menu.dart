@@ -79,7 +79,7 @@ class SideMenu extends StatelessWidget {
                               shape: BoxShape.rectangle,
                             ),
                             child: Image.asset(
-                              'assets/images/rta_logo.png',
+                              'assets/images/uwifi.png',
                             ),
                           ),
                         ],

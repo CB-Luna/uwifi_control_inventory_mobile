@@ -88,7 +88,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                           width: 80,
                           height: 40,
                           decoration: BoxDecoration(
-                            gradient: blueRadial,
+                            gradient: purpleRadial,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: InkWell(
@@ -144,7 +144,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                           width: 100,
                           height: 40,
                           decoration: BoxDecoration(
-                            gradient: blueRadial,
+                            gradient: purpleRadial,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: InkWell(
@@ -787,7 +787,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                           height: 200,
                           width: 290,
                           decoration: BoxDecoration(
-                            gradient: blueRadial,
+                            gradient: purpleRadial,
                             boxShadow: [
                               BoxShadow(
                                 blurRadius: 4,

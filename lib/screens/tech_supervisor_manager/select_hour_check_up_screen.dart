@@ -257,7 +257,7 @@ class _SelectHourCheckUpScreenState extends State<SelectHourCheckUpScreen> {
                           offset: const Offset(3, 3),
                         )
                       ],
-                      gradient: blueRadial,
+                      gradient: purpleRadial,
                       borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(20),
                         bottomRight: Radius.circular(20),
@@ -298,7 +298,7 @@ class _SelectHourCheckUpScreenState extends State<SelectHourCheckUpScreen> {
                               offset: const Offset(3, 3),
                             )
                           ],
-                          gradient: blueRadial,
+                          gradient: purpleRadial,
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(50),
                             bottomRight: Radius.circular(50),

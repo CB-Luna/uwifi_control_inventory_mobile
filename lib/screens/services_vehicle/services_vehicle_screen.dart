@@ -376,7 +376,7 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                                       MediaQuery.of(context).size.width *
                                                           0.92,
                                                   decoration: BoxDecoration(
-                                                    gradient: blueRadial,
+                                                    gradient: purpleRadial,
                                                     boxShadow: const [
                                                       BoxShadow(
                                                         blurRadius: 4,

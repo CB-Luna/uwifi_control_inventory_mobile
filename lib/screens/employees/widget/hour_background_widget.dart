@@ -69,7 +69,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
     usuarioProvider.isManager || 
     usuarioProvider.isTechSupervisor) 
     && widget.firstHour && controlFormProvider.boolCurrentHour) {
-      caughtColor = blueRadial;
+      caughtColor = purpleRadial;
       if (usuarioProvider.isManager) {
         licensePlates = vehicleProvider.vehicleSelected!.licensePlates;
         image = vehicleProvider.vehicleSelected!.path;
@@ -117,7 +117,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
           }
           controlFormProvider.changeIsSelectedHourValue(true);
           setState(() {
-            caughtColor = blueRadial;
+            caughtColor = purpleRadial;
             licensePlates = data.licensePlates;
             image = data.path;
             registeredHour = widget.hourSection;

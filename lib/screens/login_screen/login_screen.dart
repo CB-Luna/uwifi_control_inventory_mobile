@@ -64,9 +64,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            'assets/images/rta_logo.png',
-                            width: 180,
-                            height: 180,
+                            'assets/images/uwifi.png',
+                            width: 220,
+                            height: 220,
                             fit: BoxFit.fitWidth,
                           ),
                         ],
@@ -75,10 +75,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: Text(
-                        'Fleet Management Tool',
+                        'Control Inventory',
                         style: FlutterFlowTheme.of(context).title1.override(
                               fontFamily: 'Outfit',
-                              color: FlutterFlowTheme.of(context).alternate,
+                              color: FlutterFlowTheme.of(context).white,
                               fontSize: 32,
                               fontWeight: FontWeight.bold
                             ),
@@ -91,10 +91,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 24),
                             child: Text(
-                              'Car Check Up',
+                              'Daily Operation',
                               style: FlutterFlowTheme.of(context).title3.override(
                                     fontFamily: 'Outfit',
-                                    color: FlutterFlowTheme.of(context).alternate,
+                                    color: FlutterFlowTheme.of(context).white,
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
@@ -501,7 +501,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             options: FFButtonOptions(
                               width: 130,
                               height: 50,
-                              color: FlutterFlowTheme.of(context).alternate,
+                              color: FlutterFlowTheme.of(context).primaryColor,
                               textStyle:
                                   FlutterFlowTheme.of(context).subtitle1.override(
                                         fontFamily: 'Lexend Deca',

@@ -9,18 +9,18 @@ import '../screens/widgets/flutter_flow_animations.dart';
 //***********< RTA VEHICLE CONTROL BD >**************/
 
 //>>>>>>TEST
-// const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAiYW5vbiIsCiAgICAiaXNzIjogInN1cGFiYXNlIiwKICAgICJpYXQiOiAxNjg0ODI1MjAwLAogICAgImV4cCI6IDE4NDI2NzgwMDAKfQ.Atj9wTNbdEEVPOjstsO14DtxbY2SEpnr50elVXBgAmM";
-// const supabaseUrl = "https://supa42.rtatel.com"; 
-// const supabaseGraphqlUrl = "https://supa42.rtatel.com/graphql/v1";
-// const urlNotificationsAPI = "https://supa42.rtatel.com/notifications/api";
-// const domain = "supa42";
+const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAiYW5vbiIsCiAgICAiaXNzIjogInN1cGFiYXNlIiwKICAgICJpYXQiOiAxNjg0ODI1MjAwLAogICAgImV4cCI6IDE4NDI2NzgwMDAKfQ.Atj9wTNbdEEVPOjstsO14DtxbY2SEpnr50elVXBgAmM";
+const supabaseUrl = "https://supa42.rtatel.com"; 
+const supabaseGraphqlUrl = "https://supa42.rtatel.com/graphql/v1";
+const urlNotificationsAPI = "https://supa42.rtatel.com/notifications/api";
+const domain = "supa42";
 
 //>>>>>>>PRODUCTION
-const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAiYW5vbiIsCiAgICAiaXNzIjogInN1cGFiYXNlIiwKICAgICJpYXQiOiAxNjg0ODI1MjAwLAogICAgImV4cCI6IDE4NDI2NzgwMDAKfQ.Atj9wTNbdEEVPOjstsO14DtxbY2SEpnr50elVXBgAmM";
-const supabaseUrl = "https://supa41.rtatel.com"; 
-const supabaseGraphqlUrl = "https://supa41.rtatel.com/graphql/v1";
-const urlNotificationsAPI = "https://supa41.rtatel.com/notifications/api";
-const domain = "supa41";
+// const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAiYW5vbiIsCiAgICAiaXNzIjogInN1cGFiYXNlIiwKICAgICJpYXQiOiAxNjg0ODI1MjAwLAogICAgImV4cCI6IDE4NDI2NzgwMDAKfQ.Atj9wTNbdEEVPOjstsO14DtxbY2SEpnr50elVXBgAmM";
+// const supabaseUrl = "https://supa41.rtatel.com"; 
+// const supabaseGraphqlUrl = "https://supa41.rtatel.com/graphql/v1";
+// const urlNotificationsAPI = "https://supa41.rtatel.com/notifications/api";
+// const domain = "supa41";
 
 //***********< REGEX >**************/
 

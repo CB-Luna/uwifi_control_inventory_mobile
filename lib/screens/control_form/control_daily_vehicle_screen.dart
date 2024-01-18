@@ -1135,7 +1135,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                     height: 50,
                                     width: MediaQuery.of(context).size.width * 0.75,
                                     decoration: BoxDecoration(
-                                      gradient: blueRadial,
+                                      gradient: purpleRadial,
                                       boxShadow: [
                                         BoxShadow(
                                           blurRadius: 4,
