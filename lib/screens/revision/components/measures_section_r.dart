@@ -168,6 +168,8 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                             checkOutProvider.flagOilChange = false;
                                             checkOutProvider.flagTransmissionFluidChange = false;
                                             checkOutProvider.flagRadiatorFluidChange = false;
+                                            checkOutProvider.flagTireChange = false;
+                                            checkOutProvider.flagBrakeChange = false;
                                           }
                                           if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService) {
                                             checkOutProvider.flagOilChange = false;
@@ -178,12 +180,20 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                           if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService) {
                                             checkOutProvider.flagRadiatorFluidChange = false;
                                           } 
+                                          if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleTireChange.target!.lastMileageService) {
+                                            checkOutProvider.flagTireChange = false;
+                                          }
+                                          if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleBrakeChange.target!.lastMileageService) {
+                                            checkOutProvider.flagBrakeChange = false;
+                                          }
                                         } else {
                                           if (vehicleProvider.vehicleSelected != null) {
                                             if (mileageInt < vehicleProvider.vehicleSelected!.mileage) {
                                               checkOutProvider.flagOilChange = false;
                                               checkOutProvider.flagTransmissionFluidChange = false;
                                               checkOutProvider.flagRadiatorFluidChange = false;
+                                              checkOutProvider.flagTireChange = false;
+                                              checkOutProvider.flagBrakeChange = false;
                                             }
                                             if (mileageInt > vehicleProvider.vehicleSelected!.ruleOilChange.target!.lastMileageService) {
                                               checkOutProvider.flagOilChange = false;
@@ -194,6 +204,12 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                             if (mileageInt > vehicleProvider.vehicleSelected!.ruleRadiatorFluidChange.target!.lastMileageService) {
                                               checkOutProvider.flagRadiatorFluidChange = false;
                                             } 
+                                            if (mileageInt > vehicleProvider.vehicleSelected!.ruleTireChange.target!.lastMileageService) {
+                                              checkOutProvider.flagTireChange = false;
+                                            }
+                                            if (mileageInt > vehicleProvider.vehicleSelected!.ruleBrakeChange.target!.lastMileageService) {
+                                              checkOutProvider.flagBrakeChange = false;
+                                            }
                                           }
                                         }
                                       }
@@ -675,6 +691,22 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                   checkOutProvider.flagRadiatorFluidChange = true;
                                                 }
                                               }
+                                              //Se valida para ruleTireChange
+                                              if (userController.usuarioCurrent!.vehicle.target?.ruleTireChange.target?.registered == "False") {
+                                                final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleTireChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleTireChange.target!.value);
+                                                if (limitMileageService - mileageInt <= 100) {
+                                                  // Se actualiza la bandera radiator a true
+                                                  checkOutProvider.flagTireChange = true;
+                                                }
+                                              }
+                                              //Se valida para ruleBrakeChange
+                                              if (userController.usuarioCurrent!.vehicle.target?.ruleBrakeChange.target?.registered == "False") {
+                                                final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleBrakeChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleBrakeChange.target!.value);
+                                                if (limitMileageService - mileageInt <= 100) {
+                                                  // Se actualiza la bandera radiator a true
+                                                  checkOutProvider.flagBrakeChange = true;
+                                                }
+                                              }
                                               Navigator.pop(context);
                                             } else {
                                               if (vehicleProvider.vehicleSelected != null) {
@@ -700,6 +732,22 @@ class _MeasuresSectionRState extends State<MeasuresSectionR> {
                                                   if (limitMileageService - mileageInt <= 100) {
                                                     // Se actualiza la bandera radiator a true
                                                     checkOutProvider.flagRadiatorFluidChange = true;
+                                                  }
+                                                }
+                                                //Se valida para ruleTireChange
+                                                if (vehicleProvider.vehicleSelected!.ruleTireChange.target?.registered == "False") {
+                                                  final limitMileageService = vehicleProvider.vehicleSelected!.ruleTireChange.target!.lastMileageService + int.parse(vehicleProvider.vehicleSelected!.ruleTireChange.target!.value);
+                                                  if (limitMileageService - mileageInt <= 100) {
+                                                    // Se actualiza la bandera radiator a true
+                                                    checkOutProvider.flagTireChange = true;
+                                                  }
+                                                }
+                                                //Se valida para ruleBrakeChange
+                                                if (vehicleProvider.vehicleSelected!.ruleBrakeChange.target?.registered == "False") {
+                                                  final limitMileageService = vehicleProvider.vehicleSelected!.ruleBrakeChange.target!.lastMileageService + int.parse(vehicleProvider.vehicleSelected!.ruleBrakeChange.target!.value);
+                                                  if (limitMileageService - mileageInt <= 100) {
+                                                    // Se actualiza la bandera radiator a true
+                                                    checkOutProvider.flagBrakeChange = true;
                                                   }
                                                 }
                                               }

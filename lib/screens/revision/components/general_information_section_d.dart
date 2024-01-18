@@ -255,7 +255,7 @@ class _GeneralInformationSectionDState extends State<GeneralInformationSectionD>
                   color: FlutterFlowTheme.of(context).grayLighter,
                 ),
 
-                // Last Transmission Fluid Change
+                  // Last Transmission Fluid Change
                 ItemForm(
                   textItem: "Last Transmission Fluid Change", 
                   applyFuction: true,
@@ -272,7 +272,7 @@ class _GeneralInformationSectionDState extends State<GeneralInformationSectionD>
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width * 0.4, 
-                  text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.lastTransmissionFluidChange ?? DateTime.now()),
+                  text: userController.usuarioCurrent?.vehicle.target?.lastTransmissionFluidChange == null ? "Not date yet" : DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.lastTransmissionFluidChange ?? DateTime.now()),
                 ),
                 Divider(
                   height: 4,
@@ -299,7 +299,7 @@ class _GeneralInformationSectionDState extends State<GeneralInformationSectionD>
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width * 0.4, 
-                  text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.lastRadiatorFluidChange?? DateTime.now()),
+                  text: userController.usuarioCurrent?.vehicle.target?.lastRadiatorFluidChange == null ? "Not date yet" : DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.lastRadiatorFluidChange?? DateTime.now()),
                 ),
                 Divider(
                   height: 4,
@@ -326,7 +326,61 @@ class _GeneralInformationSectionDState extends State<GeneralInformationSectionD>
                 ),
                 ExpandedText(
                   width: MediaQuery.of(context).size.width * 0.4, 
-                  text: DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.oilChangeDue ?? DateTime.now()),
+                  text: userController.usuarioCurrent?.vehicle.target?.oilChangeDue == null ? "Not date yet" : DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.oilChangeDue ?? DateTime.now()),
+                ),
+                Divider(
+                  height: 4,
+                  thickness: 4,
+                  indent: 20,
+                  endIndent: 20,
+                  color: FlutterFlowTheme.of(context).grayLighter,
+                ),
+
+                // Last Tire Change
+                ItemForm(
+                  textItem: "Last Tire Change", 
+                  applyFuction: true,
+                  onPressed: () {
+                    snackbarKey.currentState
+                        ?.showSnackBar(const SnackBar(
+                      content: Text(
+                          "This item can't be edited."),
+                    ));
+                  }, 
+                  isRight: false,
+                  readOnly: true,
+                  images: const [],
+                ),
+                ExpandedText(
+                  width: MediaQuery.of(context).size.width * 0.4, 
+                  text: userController.usuarioCurrent?.vehicle.target?.lastTireChange == null ? "Not date yet" : DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.lastTireChange ?? DateTime.now()),
+                ),
+                Divider(
+                  height: 4,
+                  thickness: 4,
+                  indent: 20,
+                  endIndent: 20,
+                  color: FlutterFlowTheme.of(context).grayLighter,
+                ),
+
+                // Last Brake Change
+                ItemForm(
+                  textItem: "Last Brake Change", 
+                  applyFuction: true,
+                  onPressed: () {
+                    snackbarKey.currentState
+                        ?.showSnackBar(const SnackBar(
+                      content: Text(
+                          "This item can't be edited."),
+                    ));
+                  }, 
+                  isRight: false,
+                  readOnly: true,
+                  images: const [],
+                ),
+                ExpandedText(
+                  width: MediaQuery.of(context).size.width * 0.4, 
+                  text: userController.usuarioCurrent?.vehicle.target?.lastBrakeChange == null ? "Not date yet" : DateFormat('d-MMMM-y').format(userController.usuarioCurrent?.vehicle.target?.lastBrakeChange ?? DateTime.now()),
                 ),
                 Divider(
                   height: 4,

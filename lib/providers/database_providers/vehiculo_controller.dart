@@ -146,6 +146,14 @@ class VehiculoController extends ChangeNotifier {
         vehicleServices.vehicle.target!.ruleRadiatorFluidChange.target!.registered = "False";
         dataBase.ruleBox.put(vehicleServices.vehicle.target!.ruleRadiatorFluidChange.target!);
       }
+      if (vehicleServices.service.target!.service == "Tire Change") {
+        vehicleServices.vehicle.target!.ruleTireChange.target!.registered = "False";
+        dataBase.ruleBox.put(vehicleServices.vehicle.target!.ruleTireChange.target!);
+      }
+      if (vehicleServices.service.target!.service == "Brake Change") {
+        vehicleServices.vehicle.target!.ruleBrakeChange.target!.registered = "False";
+        dataBase.ruleBox.put(vehicleServices.vehicle.target!.ruleBrakeChange.target!);
+      }
       vehicleServices.serviceDate = completedDate!;
       dataBase.vehicleServicesBox.put(vehicleServices);
       vehicleServices.completed = true;

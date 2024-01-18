@@ -237,6 +237,62 @@ class SyncProviderSupabase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
+        case "syncAddTireChangeService":
+          final vehicleServices = getFirstVehicleServices(
+              dataBase.vehicleServicesBox.getAll(), instruccionesBitacora[i].id);
+          if (vehicleServices != null) {
+            final responseSyncUpdateVehicleServices = await syncAddVehicleService(
+                vehicleServices, instruccionesBitacora[i]);
+            if (responseSyncUpdateVehicleServices.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  instruccion: responseSyncUpdateVehicleServices.descripcion,
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion:
+                    "Problems sync to Local Server, Vehicle Service not recovered.",
+                fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncAddBrakeChangeService":
+          final vehicleServices = getFirstVehicleServices(
+              dataBase.vehicleServicesBox.getAll(), instruccionesBitacora[i].id);
+          if (vehicleServices != null) {
+            final responseSyncUpdateVehicleServices = await syncAddVehicleService(
+                vehicleServices, instruccionesBitacora[i]);
+            if (responseSyncUpdateVehicleServices.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(responseSyncUpdateVehicleServices.exitoso);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  instruccion: responseSyncUpdateVehicleServices.descripcion,
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion:
+                    "Problems sync to Local Server, Vehicle Service not recovered.",
+                fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
         case "syncAddEmail":
           final email = getFirstEmail(
               dataBase.emailBox.getAll(), instruccionesBitacora[i].id);
@@ -6161,6 +6217,42 @@ class SyncProviderSupabase extends ChangeNotifier {
             exitoso: false,
             descripcion:
                 "Failed to sync update Rule Vehicle Service Radiator Fluid Change on Local Server: Vehicle Service 'Radiator Fluid Change' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}'.");
+          }
+        }
+        if (vehicleServices.service.target!.service == "Tire Change") {
+          final recordVehicle = await supabaseCtrlV.from('vehicle').update(
+            {
+              'rule_radiator_fluid_change': {
+              'Value': vehicleServices.vehicle.target!.ruleTireChange.target!.value,
+              'Registered': vehicleServices.vehicle.target!.ruleTireChange.target!.registered,
+              'Last Mileage Service': vehicleServices.vehicle.target!.ruleTireChange.target!.lastMileageService.toString()
+              }
+            },
+          ).eq('id_vehicle', int.parse(vehicleServices.vehicle.target!.idDBR!))
+          .select<PostgrestList>("id_vehicle");    
+          if (recordVehicle.isEmpty) {
+            return SyncInstruction(
+            exitoso: false,
+            descripcion:
+                "Failed to sync update Rule Vehicle Service Tire Change on Local Server: Vehicle Service 'Tire Change' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}'.");
+          }
+        }
+        if (vehicleServices.service.target!.service == "Brake Change") {
+          final recordVehicle = await supabaseCtrlV.from('vehicle').update(
+            {
+              'rule_radiator_fluid_change': {
+              'Value': vehicleServices.vehicle.target!.ruleBrakeChange.target!.value,
+              'Registered': vehicleServices.vehicle.target!.ruleBrakeChange.target!.registered,
+              'Last Mileage Service': vehicleServices.vehicle.target!.ruleBrakeChange.target!.lastMileageService.toString()
+              }
+            },
+          ).eq('id_vehicle', int.parse(vehicleServices.vehicle.target!.idDBR!))
+          .select<PostgrestList>("id_vehicle");    
+          if (recordVehicle.isEmpty) {
+            return SyncInstruction(
+            exitoso: false,
+            descripcion:
+                "Failed to sync update Rule Vehicle Service Brake Change on Local Server: Vehicle Service 'Brake Change' on Vehicle with License Plates '${vehicleServices.vehicle.target!.licensePlates}'.");
           }
         }
         if (recordVehicleServices.isNotEmpty) {

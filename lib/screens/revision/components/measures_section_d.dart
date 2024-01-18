@@ -165,6 +165,8 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                           checkInFormProvider.flagOilChange = false;
                                           checkInFormProvider.flagTransmissionFluidChange = false;
                                           checkInFormProvider.flagRadiatorFluidChange = false;
+                                          checkInFormProvider.flagTireChange = false;
+                                          checkInFormProvider.flagBrakeChange = false;
                                         }
                                         if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService) {
                                           checkInFormProvider.flagOilChange = false;
@@ -174,6 +176,12 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                         } 
                                         if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService) {
                                           checkInFormProvider.flagRadiatorFluidChange = false;
+                                        } 
+                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleTireChange.target!.lastMileageService) {
+                                          checkInFormProvider.flagTireChange = false;
+                                        } 
+                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleBrakeChange.target!.lastMileageService) {
+                                          checkInFormProvider.flagBrakeChange = false;
                                         } 
                                       }
                                       if (mounted) Navigator.pop(context);
@@ -647,6 +655,22 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                               if (limitMileageService - mileageInt <= 100) {
                                                 // Se actualiza la bandera radiator a true
                                                 checkInFormProvider.flagRadiatorFluidChange = true;
+                                              }
+                                            }
+                                            //Se valida para ruleTireChange
+                                            if (userController.usuarioCurrent!.vehicle.target?.ruleTireChange.target?.registered == "False") {
+                                              final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleTireChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleTireChange.target!.value);
+                                              if (limitMileageService - mileageInt <= 100) {
+                                                // Se actualiza la bandera radiator a true
+                                                checkInFormProvider.flagTireChange = true;
+                                              }
+                                            }
+                                            //Se valida para ruleBrakeChange
+                                            if (userController.usuarioCurrent!.vehicle.target?.ruleBrakeChange.target?.registered == "False") {
+                                              final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleBrakeChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleBrakeChange.target!.value);
+                                              if (limitMileageService - mileageInt <= 100) {
+                                                // Se actualiza la bandera radiator a true
+                                                checkInFormProvider.flagBrakeChange = true;
                                               }
                                             }
                                             Navigator.pop(context);

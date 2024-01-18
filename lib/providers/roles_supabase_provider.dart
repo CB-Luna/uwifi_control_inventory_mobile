@@ -316,6 +316,8 @@ class RolesSupabaseProvider extends ChangeNotifier {
               final ruleOilChange = RuleChange.fromMap(element['rule_oil_change']);
               final ruleTransmissionFluidChange = RuleChange.fromMap(element['rule_transmission_fluid_change']);
               final ruleRadiatorFluidChange = RuleChange.fromMap(element['rule_radiator_fluid_change']);
+              final ruleTireChange = RuleChange.fromMap(element['rule_tire_change']);
+              final ruleBrakeChange = RuleChange.fromMap(element['rule_brake_change']);
 
               //Se crea la regla para Oil Change
               final newRuleOilChange = Rule(
@@ -344,6 +346,24 @@ class RolesSupabaseProvider extends ChangeNotifier {
               newVehicle.ruleRadiatorFluidChange.target = newRuleRadiatorFluidChange;
               newRuleRadiatorFluidChange.vehicle.target = newVehicle;
               dataBase.ruleBox.put(newRuleRadiatorFluidChange);
+              //Se crea la regla para Tire Change
+              final newRuleTireChange = Rule(
+                value: ruleTireChange.value, 
+                registered: ruleTireChange.registered, 
+                lastMileageService: ruleTireChange.lastMileageService,
+              );
+              newVehicle.ruleTireChange.target = newRuleTireChange;
+              newRuleTireChange.vehicle.target = newVehicle;
+              dataBase.ruleBox.put(newRuleTireChange);
+              //Se crea la regla para Brake Change
+              final newRuleBrakeChange = Rule(
+                value: ruleBrakeChange.value, 
+                registered: ruleBrakeChange.registered, 
+                lastMileageService: ruleBrakeChange.lastMileageService,
+              );
+              newVehicle.ruleBrakeChange.target = newRuleBrakeChange;
+              newRuleBrakeChange.vehicle.target = newVehicle;
+              dataBase.ruleBox.put(newRuleBrakeChange);
 
               final newStatus = dataBase.statusBox.query(Status_.idDBR.equals(element['id_status_fk'].toString())).build().findUnique(); //Status recovered
               final newCompany = dataBase.companyBox.query(Company_.idDBR.equals(element['id_company_fk'].toString())).build().findUnique(); //Company recovered
@@ -417,6 +437,8 @@ class RolesSupabaseProvider extends ChangeNotifier {
                 final ruleOilChange = RuleChange.fromMap(element['rule_oil_change']);
                 final ruleTransmissionFluidChange = RuleChange.fromMap(element['rule_transmission_fluid_change']);
                 final ruleRadiatorFluidChange = RuleChange.fromMap(element['rule_radiator_fluid_change']);
+                final ruleTireChange = RuleChange.fromMap(element['rule_tire_change']);
+                final ruleBrakeChange = RuleChange.fromMap(element['rule_brake_change']);
 
                 //Se actualizan las reglas
 
@@ -437,6 +459,18 @@ class RolesSupabaseProvider extends ChangeNotifier {
                 vehicleExistente.ruleRadiatorFluidChange.target!.lastMileageService = ruleRadiatorFluidChange.lastMileageService;
 
                 dataBase.ruleBox.put(vehicleExistente.ruleRadiatorFluidChange.target!);
+
+                vehicleExistente.ruleTireChange.target!.value = ruleTireChange.value; 
+                vehicleExistente.ruleTireChange.target!.registered = ruleTireChange.registered; 
+                vehicleExistente.ruleTireChange.target!.lastMileageService = ruleTireChange.lastMileageService;
+
+                dataBase.ruleBox.put(vehicleExistente.ruleTireChange.target!);
+
+                vehicleExistente.ruleBrakeChange.target!.value = ruleBrakeChange.value; 
+                vehicleExistente.ruleBrakeChange.target!.registered = ruleBrakeChange.registered; 
+                vehicleExistente.ruleBrakeChange.target!.lastMileageService = ruleBrakeChange.lastMileageService;
+
+                dataBase.ruleBox.put(vehicleExistente.ruleBrakeChange.target!);
 
                 final newStatus = dataBase.statusBox.query(Status_.idDBR.equals(element['id_status_fk'].toString())).build().findUnique(); //Status recovered
                 final newCompany = dataBase.companyBox.query(Company_.idDBR.equals(element['id_company_fk'].toString())).build().findUnique(); //Company recovered
