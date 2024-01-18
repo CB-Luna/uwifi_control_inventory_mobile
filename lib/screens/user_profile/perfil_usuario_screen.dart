@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
-import 'package:fleet_management_tool_rta/main.dart';
-import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
-import 'package:fleet_management_tool_rta/screens/user_profile/device_information_widget.dart';
-import 'package:fleet_management_tool_rta/util/flutter_flow_util.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/main.dart';
+import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
+import 'package:uwifi_control_inventory_mobile/screens/user_profile/device_information_widget.dart';
+import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:fleet_management_tool_rta/database/entitys.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
-import 'package:fleet_management_tool_rta/screens/user_profile/editar_usuario_screen.dart';
-import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_expanded_image_view.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/screens/user_profile/editar_usuario_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_expanded_image_view.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
 

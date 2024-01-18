@@ -1,4 +1,4 @@
-package com.fleet_management_tool_rta
+package com.uwifi_control_inventory_mobile
 
 import io.flutter.embedding.android.FlutterActivity
 

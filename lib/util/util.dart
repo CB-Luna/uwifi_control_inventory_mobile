@@ -1,4 +1,4 @@
-import 'package:fleet_management_tool_rta/main.dart';
+import 'package:uwifi_control_inventory_mobile/main.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -8,7 +8,7 @@ export 'place.dart';
 export 'dart:math' show min, max;
 export 'package:intl/intl.dart';
 export 'package:page_transition/page_transition.dart';
-export 'package:fleet_management_tool_rta/internationalization/internationalization.dart'
+export 'package:uwifi_control_inventory_mobile/internationalization/internationalization.dart'
     show AppLocalizations;
 
 T valueOrDefault<T>(T? value, T defaultValue) =>

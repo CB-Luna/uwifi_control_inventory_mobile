@@ -1,10 +1,10 @@
-import 'package:fleet_management_tool_rta/database/entitys.dart';
-import 'package:fleet_management_tool_rta/providers/control_form_provider.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/vehiculo_controller.dart';
-import 'package:fleet_management_tool_rta/screens/revision/checkin_scheduler_screen.dart';
-import 'package:fleet_management_tool_rta/screens/revision/checkout_scheduler_screen.dart';
-import 'package:fleet_management_tool_rta/screens/widgets/get_image_widget.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/providers/control_form_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/vehiculo_controller.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/checkin_scheduler_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/checkout_scheduler_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/get_image_widget.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';

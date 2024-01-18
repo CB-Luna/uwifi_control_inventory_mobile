@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
-import 'package:fleet_management_tool_rta/models/get_usuario_supabase.dart';
-import 'package:fleet_management_tool_rta/models/response_login_supabase.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/models/get_usuario_supabase.dart';
+import 'package:uwifi_control_inventory_mobile/models/response_login_supabase.dart';
 
 // https://www.djamware.com/post/618d094c5b9095915c5621c6/flutter-tutorial-login-role-and-permissions
 // https://mundanecode.com/posts/flutter-restapi-login/

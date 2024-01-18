@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "fleet_management_tool_rta",
+            "name": "uwifi_control_inventory_mobile",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "fleet_management_tool_rta (profile mode)",
+            "name": "uwifi_control_inventory_mobile (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "fleet_management_tool_rta (release mode)",
+            "name": "uwifi_control_inventory_mobile (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

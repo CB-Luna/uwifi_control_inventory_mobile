@@ -1,5 +1,5 @@
-import 'package:fleet_management_tool_rta/theme/theme.dart';
-import 'package:fleet_management_tool_rta/util/util.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
+import 'package:uwifi_control_inventory_mobile/util/util.dart';
 import 'package:flutter/material.dart';
 
 String formatTimeOfDay(TimeOfDay timeOfDay) {

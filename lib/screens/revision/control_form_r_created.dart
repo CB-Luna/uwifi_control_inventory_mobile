@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/checkout_form_controller.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
-import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkout_form_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
 
-import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_widgets.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
 class ControlFormRCreatedScreen extends StatefulWidget {
   const ControlFormRCreatedScreen({Key? key}) : super(key: key);

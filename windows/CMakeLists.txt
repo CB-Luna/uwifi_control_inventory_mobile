@@ -1,10 +1,10 @@
 # Project-level configuration.
 cmake_minimum_required(VERSION 3.14)
-project(fleet_management_tool_rta LANGUAGES CXX)
+project(uwifi_control_inventory_mobile LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-set(BINARY_NAME "fleet_management_tool_rta")
+set(BINARY_NAME "uwifi_control_inventory_mobile")
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

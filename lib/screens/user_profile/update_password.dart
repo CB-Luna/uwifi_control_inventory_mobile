@@ -1,15 +1,15 @@
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
-import 'package:fleet_management_tool_rta/providers/user_provider.dart';
-import 'package:fleet_management_tool_rta/screens/user_profile/password_not_updated_screen.dart';
-import 'package:fleet_management_tool_rta/screens/user_profile/password_updated_screen.dart';
-import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_widgets.dart';
-import 'package:fleet_management_tool_rta/util/flutter_flow_util.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/user_provider.dart';
+import 'package:uwifi_control_inventory_mobile/screens/user_profile/password_not_updated_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/user_profile/password_updated_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
+import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fleet_management_tool_rta/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:provider/provider.dart';
 
 class UpdatePasswordScreen extends StatefulWidget {

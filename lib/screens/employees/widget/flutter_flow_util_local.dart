@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:from_css_color/from_css_color.dart';
 import 'package:intl/intl.dart';
 import 'package:json_path/json_path.dart';
-import 'package:fleet_management_tool_rta/main.dart';
+import 'package:uwifi_control_inventory_mobile/main.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 export 'keep_alive_wrapper.dart';

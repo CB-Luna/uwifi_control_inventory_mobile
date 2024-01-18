@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:fleet_management_tool_rta/helpers/constants.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:fleet_management_tool_rta/database/entitys.dart';
-import 'package:fleet_management_tool_rta/database/image_evidence.dart';
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
-import 'package:fleet_management_tool_rta/main.dart';
-import 'package:fleet_management_tool_rta/objectbox.g.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/database/image_evidence.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/main.dart';
+import 'package:uwifi_control_inventory_mobile/objectbox.g.dart';
 import 'package:uuid/uuid.dart';
 
 class CheckInFormController extends ChangeNotifier {

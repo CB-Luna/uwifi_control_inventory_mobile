@@ -1,13 +1,13 @@
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
-import 'package:fleet_management_tool_rta/main.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'package:fleet_management_tool_rta/providers/providers.dart';
-import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
-import 'package:fleet_management_tool_rta/screens/screens.dart';
+import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
+import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
+import 'package:uwifi_control_inventory_mobile/screens/screens.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({

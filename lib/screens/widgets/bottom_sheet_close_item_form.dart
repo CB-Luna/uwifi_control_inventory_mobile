@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fleet_management_tool_rta/theme/theme.dart';
-import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_widgets.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
 class BottomSheetCloseItemForm extends StatefulWidget {
   const BottomSheetCloseItemForm({

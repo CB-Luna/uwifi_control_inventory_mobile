@@ -1,10 +1,10 @@
-import 'package:fleet_management_tool_rta/objectbox.g.dart';
+import 'package:uwifi_control_inventory_mobile/objectbox.g.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
-import 'package:fleet_management_tool_rta/models/temp/instruccion_no_sincronizada.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/models/temp/instruccion_no_sincronizada.dart';
 import 'package:flutter/material.dart';
-import 'package:fleet_management_tool_rta/main.dart';
-import 'package:fleet_management_tool_rta/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/main.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 class SyncChangeVehicleProvider extends ChangeNotifier {
   bool procesocargando = false;
   bool procesoterminado = false;

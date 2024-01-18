@@ -1,6 +1,6 @@
-import 'package:fleet_management_tool_rta/database/entitys.dart';
-import 'package:fleet_management_tool_rta/objectbox.g.dart';
-// import 'package:fleet_management_tool_rta/objectbox.g.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/objectbox.g.dart';
+// import 'package:uwifi_control_inventory_mobile/objectbox.g.dart';
 
 class ObjectBoxDatabase {
   late final Store store;

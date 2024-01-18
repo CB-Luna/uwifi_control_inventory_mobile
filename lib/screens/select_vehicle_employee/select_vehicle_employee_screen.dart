@@ -3,16 +3,16 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:fleet_management_tool_rta/database/entitys.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/vehiculo_controller.dart';
-import 'package:fleet_management_tool_rta/providers/user_provider.dart';
-import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
-import 'package:fleet_management_tool_rta/screens/select_vehicle_employee/components/select_vehicle_failed.dart';
-import 'package:fleet_management_tool_rta/screens/widgets/get_image_widget.dart';
-import 'package:fleet_management_tool_rta/util/flutter_flow_util.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/vehiculo_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/user_provider.dart';
+import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
+import 'package:uwifi_control_inventory_mobile/screens/select_vehicle_employee/components/select_vehicle_failed.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/get_image_widget.dart';
+import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 
 class SelectVehicleEmployeeScreen extends StatefulWidget {
   const SelectVehicleEmployeeScreen({Key? key}) : super(key: key);

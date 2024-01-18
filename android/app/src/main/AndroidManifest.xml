@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.fleet_management_tool_rta">
+    package="com.uwifi_control_inventory_mobile">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="FMT"
+        android:label="UCI"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
@@ -34,7 +34,7 @@
                 <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
                 <data
                     android:scheme="rta"
-                    android:host="fmt-rta-app.com" />
+                    android:host="uci-app.com" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />

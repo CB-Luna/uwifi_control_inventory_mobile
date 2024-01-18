@@ -1,18 +1,18 @@
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:fleet_management_tool_rta/database/entitys.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_widgets.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_widgets.dart';
 
 import 'package:flutter/material.dart';
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/vehiculo_controller.dart';
-import 'package:fleet_management_tool_rta/screens/services_vehicle/services_vehicle_screen.dart';
-import 'package:fleet_management_tool_rta/screens/services_vehicle/services_vehicle_updated_screen.dart';
-import 'package:fleet_management_tool_rta/screens/widgets/drop_down.dart';
-import 'package:fleet_management_tool_rta/screens/widgets/get_image_widget.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/vehiculo_controller.dart';
+import 'package:uwifi_control_inventory_mobile/screens/services_vehicle/services_vehicle_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/services_vehicle/services_vehicle_updated_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/drop_down.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/get_image_widget.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as picker;
-import 'package:fleet_management_tool_rta/util/util.dart';
+import 'package:uwifi_control_inventory_mobile/util/util.dart';
 
 class CompletedServicesVehicleScreen extends StatefulWidget {
   final Vehicle vehicle;

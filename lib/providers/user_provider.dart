@@ -1,6 +1,6 @@
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
-import 'package:fleet_management_tool_rta/screens/screens.dart';
-import 'package:fleet_management_tool_rta/services/navigation_service.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/screens/screens.dart';
+import 'package:uwifi_control_inventory_mobile/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 
 import 'package:jwt_decode/jwt_decode.dart';

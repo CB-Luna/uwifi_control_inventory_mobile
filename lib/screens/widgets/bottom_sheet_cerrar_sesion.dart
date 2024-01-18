@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
-import 'package:fleet_management_tool_rta/providers/providers.dart';
-import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_widgets.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
 class BottomSheetCerrarSesion extends StatefulWidget {
   const BottomSheetCerrarSesion({Key? key})

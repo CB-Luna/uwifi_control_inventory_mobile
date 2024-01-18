@@ -1,4 +1,4 @@
-import 'package:fleet_management_tool_rta/services/api_interceptor.dart';
+import 'package:uwifi_control_inventory_mobile/services/api_interceptor.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
 

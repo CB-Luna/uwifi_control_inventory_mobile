@@ -1,9 +1,9 @@
-import 'package:fleet_management_tool_rta/screens/sync/sincronizacion_change_vehicle_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/sync/sincronizacion_change_vehicle_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
 
-import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_widgets.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
 class BottomSheetChangeVehicle extends StatefulWidget {
   final bool isVisible;

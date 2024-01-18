@@ -2,15 +2,15 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
-import 'package:fleet_management_tool_rta/models/temp/sync_instruction.dart';
-import 'package:fleet_management_tool_rta/models/temp/instruccion_no_sincronizada.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/models/temp/sync_instruction.dart';
+import 'package:uwifi_control_inventory_mobile/models/temp/instruccion_no_sincronizada.dart';
 import 'package:flutter/material.dart';
-import 'package:fleet_management_tool_rta/main.dart';
-import 'package:fleet_management_tool_rta/database/entitys.dart';
-import 'package:fleet_management_tool_rta/helpers/constants.dart';
+import 'package:uwifi_control_inventory_mobile/main.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:http/http.dart';
-import 'package:fleet_management_tool_rta/util/util.dart';
+import 'package:uwifi_control_inventory_mobile/util/util.dart';
 
 class SyncProviderSupabase extends ChangeNotifier {
   bool procesocargando = false;

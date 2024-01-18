@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:fleet_management_tool_rta/database/entitys.dart';
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
-import 'package:fleet_management_tool_rta/main.dart';
-import 'package:fleet_management_tool_rta/objectbox.g.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/general_information_section_r.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/equipment_section_r.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/lights_section_r.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/measures_section_r.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/security_section_r.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/general_information_section_d.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/equipment_section_d.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/lights_section_d.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/measures_section_d.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/security_section_d.dart';
-import 'package:fleet_management_tool_rta/util/flutter_flow_util.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/main.dart';
+import 'package:uwifi_control_inventory_mobile/objectbox.g.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/general_information_section_r.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/equipment_section_r.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/lights_section_r.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/measures_section_r.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/security_section_r.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/general_information_section_d.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/equipment_section_d.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/lights_section_d.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/measures_section_d.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/security_section_d.dart';
+import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 class VehiculoController extends ChangeNotifier {
   
   Vehicle? vehicleSelected;

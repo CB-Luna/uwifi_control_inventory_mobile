@@ -1,5 +1,5 @@
-import 'package:fleet_management_tool_rta/screens/employees/widget/app_state.dart';
-import 'package:fleet_management_tool_rta/screens/employees/widget/day_picker_widget.dart';
+import 'package:uwifi_control_inventory_mobile/screens/employees/widget/app_state.dart';
+import 'package:uwifi_control_inventory_mobile/screens/employees/widget/day_picker_widget.dart';
 import 'custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

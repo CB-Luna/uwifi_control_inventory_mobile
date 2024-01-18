@@ -1,8 +1,8 @@
-import 'package:fleet_management_tool_rta/screens/employees/widget/background_model.dart';
-import 'package:fleet_management_tool_rta/screens/employees/widget/events_model.dart';
-import 'package:fleet_management_tool_rta/screens/employees/widget/flutter_flow_model.dart';
-import 'package:fleet_management_tool_rta/screens/employees/widget/now_line_model.dart';
-import 'package:fleet_management_tool_rta/screens/employees/widget/week_days_model.dart';
+import 'package:uwifi_control_inventory_mobile/screens/employees/widget/background_model.dart';
+import 'package:uwifi_control_inventory_mobile/screens/employees/widget/events_model.dart';
+import 'package:uwifi_control_inventory_mobile/screens/employees/widget/flutter_flow_model.dart';
+import 'package:uwifi_control_inventory_mobile/screens/employees/widget/now_line_model.dart';
+import 'package:uwifi_control_inventory_mobile/screens/employees/widget/week_days_model.dart';
 import 'package:flutter/material.dart';
 
 class CalendarModel extends FlutterFlowModel {

@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.rta" "\0"
-            VALUE "FileDescription", "fleet_management_tool_rta" "\0"
+            VALUE "FileDescription", "uwifi_control_inventory_mobile" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "fleet_management_tool_rta" "\0"
+            VALUE "InternalName", "uwifi_control_inventory_mobile" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 com.rta. All rights reserved." "\0"
-            VALUE "OriginalFilename", "fleet_management_tool_rta.exe" "\0"
-            VALUE "ProductName", "fleet_management_tool_rta" "\0"
+            VALUE "OriginalFilename", "uwifi_control_inventory_mobile.exe" "\0"
+            VALUE "ProductName", "uwifi_control_inventory_mobile" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

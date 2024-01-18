@@ -1,18 +1,18 @@
 import 'package:clay_containers/clay_containers.dart';
-import 'package:fleet_management_tool_rta/database/entitys.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
-import 'package:fleet_management_tool_rta/helpers/constants.dart';
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
-import 'package:fleet_management_tool_rta/providers/sync_change_vehicle_provider.dart';
-import 'package:fleet_management_tool_rta/providers/user_provider.dart';
-import 'package:fleet_management_tool_rta/util/flutter_flow_util.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/sync_change_vehicle_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/user_provider.dart';
+import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
-import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_widgets.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
 class SincronizacionChangeVehicleScreen extends StatefulWidget {
 

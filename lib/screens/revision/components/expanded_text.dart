@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
 
 class ExpandedText extends StatefulWidget {
   const ExpandedText({

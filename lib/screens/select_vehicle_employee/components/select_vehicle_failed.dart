@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
-import 'package:fleet_management_tool_rta/screens/select_vehicle_employee/select_vehicle_employee_screen.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/screens/select_vehicle_employee/select_vehicle_employee_screen.dart';
 
-import 'package:fleet_management_tool_rta/screens/widgets/flutter_flow_widgets.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
 class SelectVehicleFailedScreen extends StatefulWidget {
   const SelectVehicleFailedScreen({Key? key}) : super(key: key);

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/checkout_form_controller.dart';
-import 'package:fleet_management_tool_rta/screens/control_form/flutter_flow_animaciones.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/header_shimmer.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/item_form.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkout_form_controller.dart';
+import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/header_shimmer.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/item_form.dart';
 
 class SecuritySectionR extends StatefulWidget {
   

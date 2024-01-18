@@ -1,4 +1,4 @@
-import 'package:fleet_management_tool_rta/screens/employees/widget/flutter_flow_model.dart';
+import 'package:uwifi_control_inventory_mobile/screens/employees/widget/flutter_flow_model.dart';
 import 'package:flutter/material.dart';
 
 class HourBackgroundModel extends FlutterFlowModel {

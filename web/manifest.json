@@ -1,6 +1,6 @@
 {
-    "name": "fleet_management_tool_rta",
-    "short_name": "fleet_management_tool_rta",
+    "name": "uwifi_control_inventory_mobile",
+    "short_name": "uwifi_control_inventory_mobile",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,6 +1,6 @@
-import 'package:fleet_management_tool_rta/screens/login_screen/login_screen.dart';
-import 'package:fleet_management_tool_rta/screens/widgets/custom_button.dart';
-import 'package:fleet_management_tool_rta/theme/theme.dart';
+import 'package:uwifi_control_inventory_mobile/screens/login_screen/login_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 

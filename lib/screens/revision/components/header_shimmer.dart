@@ -1,7 +1,7 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
 
 class HeaderShimmer extends StatefulWidget {
   const HeaderShimmer({

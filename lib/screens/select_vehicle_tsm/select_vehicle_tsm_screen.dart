@@ -1,18 +1,18 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:diacritic/diacritic.dart';
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
-import 'package:fleet_management_tool_rta/main.dart';
-import 'package:fleet_management_tool_rta/screens/tech_supervisor_manager/select_hour_check_up_screen.dart';
-import 'package:fleet_management_tool_rta/screens/widgets/side_menu/side_menu.dart';
-import 'package:fleet_management_tool_rta/util/flutter_flow_util.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/main.dart';
+import 'package:uwifi_control_inventory_mobile/screens/tech_supervisor_manager/select_hour_check_up_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/side_menu/side_menu.dart';
+import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:fleet_management_tool_rta/database/entitys.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/vehiculo_controller.dart';
-import 'package:fleet_management_tool_rta/screens/widgets/get_image_widget.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/vehiculo_controller.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/get_image_widget.dart';
 
 class SelectVehicleTSMScreen extends StatefulWidget {
   const SelectVehicleTSMScreen({Key? key}) : super(key: key);

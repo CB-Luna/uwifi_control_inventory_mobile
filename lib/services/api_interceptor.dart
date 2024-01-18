@@ -1,4 +1,4 @@
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:http_interceptor/http/interceptor_contract.dart';
 import 'package:http_interceptor/models/request_data.dart';
 import 'package:http_interceptor/models/response_data.dart';

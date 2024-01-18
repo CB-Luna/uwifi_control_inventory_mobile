@@ -1,20 +1,20 @@
-import 'package:fleet_management_tool_rta/screens/employees/widget/app_state.dart';
-import 'package:fleet_management_tool_rta/screens/employees/widget/background_widget.dart';
-import 'package:fleet_management_tool_rta/screens/employees/widget/calendar_model.dart';
-import 'package:fleet_management_tool_rta/screens/employees/widget/flutter_flow_util_local.dart';
-import 'package:fleet_management_tool_rta/screens/employees/widget/week_days_widget.dart';
+import 'package:uwifi_control_inventory_mobile/screens/employees/widget/app_state.dart';
+import 'package:uwifi_control_inventory_mobile/screens/employees/widget/background_widget.dart';
+import 'package:uwifi_control_inventory_mobile/screens/employees/widget/calendar_model.dart';
+import 'package:uwifi_control_inventory_mobile/screens/employees/widget/flutter_flow_util_local.dart';
+import 'package:uwifi_control_inventory_mobile/screens/employees/widget/week_days_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:fleet_management_tool_rta/database/entitys.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_icon_button.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
-import 'package:fleet_management_tool_rta/providers/control_form_provider.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_icon_button.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/providers/control_form_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
 
 import 'package:flutter/material.dart';
-import 'package:fleet_management_tool_rta/screens/control_form/main_screen_selector.dart';
-import 'package:fleet_management_tool_rta/screens/widgets/get_image_widget.dart';
-import 'package:fleet_management_tool_rta/screens/employees/widget/custom_functions.dart' as functions;
+import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/get_image_widget.dart';
+import 'package:uwifi_control_inventory_mobile/screens/employees/widget/custom_functions.dart' as functions;
 
 class AgregarVehiculoScreen extends StatefulWidget {
   final bool typeForm;

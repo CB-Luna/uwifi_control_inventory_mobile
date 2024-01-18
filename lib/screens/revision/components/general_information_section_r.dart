@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:fleet_management_tool_rta/flutter_flow/flutter_flow_theme.dart';
-import 'package:fleet_management_tool_rta/helpers/globals.dart';
-import 'package:fleet_management_tool_rta/providers/database_providers/usuario_controller.dart';
-import 'package:fleet_management_tool_rta/screens/control_form/flutter_flow_animaciones.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/expanded_text.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/header_shimmer.dart';
-import 'package:fleet_management_tool_rta/screens/revision/components/item_form.dart';
-import 'package:fleet_management_tool_rta/util/util.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/expanded_text.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/header_shimmer.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/item_form.dart';
+import 'package:uwifi_control_inventory_mobile/util/util.dart';
 
 class GeneralInformationSectionR extends StatefulWidget {
   
