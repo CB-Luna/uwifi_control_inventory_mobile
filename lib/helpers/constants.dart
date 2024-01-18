@@ -44,7 +44,7 @@ var telefonoFormat = MaskTextInputFormatter(
   filter: {'#': RegExp(r'[0-9]')},
   type: MaskAutoCompletionType.lazy,
 );
-var numbersFormat = CurrencyTextInputFormatter(symbol: '', name: '', decimalDigits: 0);
+var numbersFormat = CurrencyTextInputFormatter(symbol: '', name: '', decimalDigits: 0, enableNegative: false);
 RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
 
 //Animations

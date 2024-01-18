@@ -109,7 +109,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                       width: 80,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: FlutterFlowTheme.of(context).primaryColor,
                         boxShadow: const [
                           BoxShadow(
                             blurRadius: 4,
@@ -193,7 +193,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                       width: 100,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: FlutterFlowTheme.of(context).primaryColor,
                         boxShadow: const [
                           BoxShadow(
                             blurRadius: 4,
@@ -289,7 +289,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Check Out Form',
+                      'Control Inventory',
                       textAlign: TextAlign.center,
                       style:
                           FlutterFlowTheme.of(context).bodyText1.override(
