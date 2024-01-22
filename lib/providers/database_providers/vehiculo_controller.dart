@@ -29,7 +29,7 @@ class VehiculoController extends ChangeNotifier {
 
   //OPCIONES MENU:
   final menuTapedCheckOut = {
-    0: const MeasuresSectionR(),// Measures 0
+    0: MeasuresSectionR(),// Measures 0
     1: const LightsSectionR(), // Lights 1
     2: const SecuritySectionR(), // Security 2
     3: const EquipmentSectionR(), // Equipment 3

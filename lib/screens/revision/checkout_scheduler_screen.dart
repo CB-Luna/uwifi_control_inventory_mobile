@@ -16,13 +16,9 @@ import 'package:uwifi_control_inventory_mobile/screens/revision/control_form_r_c
 import 'package:uwifi_control_inventory_mobile/screens/revision/control_form_r_not_created.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 class CheckOutSchedulerScreen extends StatefulWidget {
-  final String hour;
-  final String period;
   final DateTime registeredHour;
   const CheckOutSchedulerScreen({
     super.key, 
-    required this.hour, 
-    required this.period, 
     required this.registeredHour,
     });
 
@@ -328,16 +324,6 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                               maybeHandleOverflow("${
                                 userProvider.usuarioCurrent?.name} ${
                                 userProvider.usuarioCurrent?.lastName}", 24, "..."),
-                              style: FlutterFlowTheme.of(context).bodyText1.override(
-                                fontFamily:
-                                    FlutterFlowTheme.of(context).bodyText1Family,
-                                color: FlutterFlowTheme.of(context).white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 15,
-                              ),
-                            ),
-                            Text(
-                              "${userProvider.usuarioCurrent?.company.target?.company}",
                               style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily:
                                     FlutterFlowTheme.of(context).bodyText1Family,

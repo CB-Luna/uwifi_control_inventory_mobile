@@ -12,7 +12,7 @@ import 'package:uwifi_control_inventory_mobile/screens/screens.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({
     Key? key,
-    this.splashTimer = 6,
+    this.splashTimer = 10,
   }) : super(key: key);
 
   final int splashTimer;

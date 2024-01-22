@@ -58,7 +58,7 @@ dependencies:
   flutter_image_compress: ^2.0.3
   flutter_localizations:
     sdk: flutter
-  flutter_scalable_ocr: ^1.0.1
+  flutter_scalable_ocr: ^2.0.0
   flutter_secure_storage: ^8.0.0
   flutter_slidable: ^3.0.0
   flutter_spinkit: ^5.1.0

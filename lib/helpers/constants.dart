@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
 
 import '../screens/widgets/flutter_flow_animations.dart';
 
@@ -23,6 +24,17 @@ const domain = "supa42";
 // const domain = "supa41";
 
 //***********< REGEX >**************/
+
+final referenceRegExp = RegExp(r'Reference: ([A-Za-z0-9]+)');
+final eeiRegExp = RegExp(r'EEI: NOEEI sec. \d+.\d+\([a-zA-Z]\)');
+final productIDRegExpo = RegExp(r'Product ID: (\d+)');
+const nameFieldProductID = "Product ID: ";
+final brandRegExp = RegExp(r'Brand: (\w+)');
+const nameFieldBrand = "Brand: ";
+final modelRegExp = RegExp(r'Model: (.+?)\.');
+const nameFieldModel = "Model: ";
+final serialNumberRegExp = RegExp(r'Serial Number: (\w+)');
+const nameFieldSerialNumber = "Serial Number: ";
 
 final nombreCharacters = RegExp(r'^(([A-Z]{1}|[ÁÉÍÓÚÑ]{1})[a-zá-ÿ]+[ ]?)+$');
 final curpCharacters = RegExp(
@@ -48,6 +60,34 @@ var numbersFormat = CurrencyTextInputFormatter(symbol: '', name: '', decimalDigi
 RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
 
 //Animations
+
+Row getProgressIndicatorOCR(BuildContext context, String message) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      SizedBox(
+        child: DefaultTextStyle(
+          style: FlutterFlowTheme.of(context).bodyText2,
+          child: Text(message),
+        ),
+      ),
+      const SizedBox(
+        width: 10,
+      ),
+      SpinKitCircle(
+        size: 30,
+        itemBuilder: (context, index) {
+          final colors = [FlutterFlowTheme.of(context).primaryColor, FlutterFlowTheme.of(context).secondaryColor];
+          final color = colors[index % colors.length];
+          return DecoratedBox(
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          );
+        },
+      ),
+      
+    ],
+  );
+}
 
 Column getProgressIndicatorAnimated(String message) {
   return Column(

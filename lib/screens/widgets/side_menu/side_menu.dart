@@ -243,61 +243,6 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-                    if (currentUser.role.target?.role == "Employee" ||
-                        currentUser.role.target?.role == "Tech Supervisor")
-                    CustomMenuItem(
-                      label: 'Service',
-                      iconData: Icons.directions_car,
-                      lineHeight: 1.2,
-                      onTap: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ServicesVehicleScreen(vehicle: currentUser.vehicle.target!,),
-                            ),
-                          );
-                      },
-                    ),
-
-                    if (currentUser.role.target?.role == "Employee" ||
-                        currentUser.role.target?.role == "Tech Supervisor")
-                    CustomMenuItem(
-                      label: 'Change Vehicle',
-                      iconData: Icons.no_crash,
-                      lineHeight: 1.2,
-                      onTap: () async {
-                          final connectivityResult =
-                              await (Connectivity().checkConnectivity());
-                          final bitacora = dataBase.bitacoraBox.getAll().toList();
-                          //print("Tamaño bitacora: ${bitacora.length}");
-                          // ignore: use_build_context_synchronously
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: MediaQuery.of(context).viewInsets,
-                                child: SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.45,
-                                  child: connectivityResult ==
-                                              ConnectivityResult.none ||
-                                        bitacora.isNotEmpty ||
-                                        (controlFormCheckOut != null && controlFormCheckIn == null) ||
-                                        currentUser.vehicle.target == null
-                                      ? const BottomSheetChangeVehicle(
-                                          isVisible: false,
-                                        )
-                                      : const BottomSheetChangeVehicle(
-                                          isVisible: true,
-                                        ),
-                                ),
-                              );
-                            },
-                          );
-                      },
-                    ),
 
                     CustomMenuItem(
                       label: 'Log Out',

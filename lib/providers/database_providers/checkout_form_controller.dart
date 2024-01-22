@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -14,6 +15,50 @@ import 'package:uuid/uuid.dart';
 class CheckOutFormController extends ChangeNotifier {
 
   GlobalKey<FormState> checkOutFormKey = GlobalKey<FormState>();
+  //************************OCR Components *********/
+  bool isActiveOCR = false;
+  String text = "";
+  TextEditingController productIDTextController = TextEditingController();
+  TextEditingController brandTextController = TextEditingController();
+  TextEditingController modelTextController = TextEditingController();
+  TextEditingController serialNumberTextController = TextEditingController();
+
+  void autofillFields(String value) {
+    if (value.contains(productIDRegExpo) 
+    && value.contains(brandRegExp) 
+    && value.contains(modelRegExp)
+    && value.contains(serialNumberRegExp)) {
+      print("****Entramos*****");
+      // Intenta encontrar la primera coincidencia en el texto
+      Match? matchProductID = productIDRegExpo.firstMatch(value);
+      Match? matchBrand = brandRegExp.firstMatch(value);
+      Match? matchModel = modelRegExp.firstMatch(value);
+      Match? matchSerialNumber = serialNumberRegExp.firstMatch(value);
+      // Si se encuentra una coincidencia, extrae la subcadena
+      if (matchProductID != null) {
+          modelTextController.text =
+              matchProductID.group(0)!.replaceAll(nameFieldModel, "");
+      }
+      if (matchBrand != null) {
+          modelTextController.text =
+              matchBrand.group(0)!.replaceAll(nameFieldModel, "");
+      }
+      if (matchModel != null) {
+          modelTextController.text =
+              matchModel.group(0)!.replaceAll(nameFieldModel, "");
+      }
+      if (matchSerialNumber != null) {
+          modelTextController.text =
+              matchSerialNumber.group(0)!.replaceAll(nameFieldModel, "");
+      }
+    } 
+  }
+
+
+  void changeActiveOCR (bool value) {
+    isActiveOCR = value;
+    notifyListeners();
+  }
 
   //***********************<Bnaderas Services>************************
   bool flagOilChange = false;
