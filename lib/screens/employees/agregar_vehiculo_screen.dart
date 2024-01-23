@@ -40,7 +40,6 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
     @override
   void initState() {
     super.initState();
-    vehicleAssigned = context.read<UsuarioController>().getVehicleAsigned();
     _model = createModel(context, () => CalendarModel());
   }
 
@@ -48,7 +47,6 @@ class _AgregarVehiculoScreenState extends State<AgregarVehiculoScreen> {
   Widget build(BuildContext context) {
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    vehicleAssigned = usuarioProvider.getVehicleAsigned();
     return WillPopScope(
       onWillPop: () async => false,
       child: GestureDetector(

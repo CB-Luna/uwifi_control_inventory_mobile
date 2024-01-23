@@ -31,7 +31,6 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
   void initState() {
     super.initState();
     setState(() {
-      vehicleAvailables = context.read<UsuarioController>().getVehiclesAvailables();
       context.read<VehiculoController>().vehicleSelected = vehicleAvailables.first;
     });
   }
@@ -40,8 +39,6 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final vehiculoController = Provider.of<VehiculoController>(context);
     final UserState userState = Provider.of<UserState>(context);
-    vehicleAvailables = usuarioProvider.getVehiclesAvailables();
-    usuarioProvider.recoverPreviousControlForms(DateTime.now());
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -124,20 +121,6 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                 ),
                               ],
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            '${usuarioProvider.usuarioCurrent?.company.target?.company}',
-                            textAlign: TextAlign.center,
-                            style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: FlutterFlowTheme.of(context)
-                                        .title1Family,
-                                    color: FlutterFlowTheme.of(context).tertiaryColor,
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.bold,
-                                  ),
                           ),
                         ),
                         Container(
@@ -735,39 +718,6 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                     ),
                   ),
 
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
-                    child: Container(
-                      width: 260,
-                      height: 260,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(40.0),
-                            bottomRight: Radius.circular(40.0),
-                            topLeft: Radius.circular(40.0),
-                            topRight: Radius.circular(40.0),
-                          ),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 4.0,
-                            color: FlutterFlowTheme.of(context).grayLighter,
-                            offset: const Offset(3.0, 3.0),
-                          )
-                        ],
-                      ),
-                      child: 
-                      vehiculoController.vehicleSelected?.path != null ?
-                      Image.file(
-                        File(vehiculoController.vehicleSelected!.path!),
-                        fit: BoxFit.contain,
-                      )
-                      :
-                      Image.asset(
-                        'assets/images/vehicle-placeholder.png',
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),

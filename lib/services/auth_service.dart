@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
-import 'package:uwifi_control_inventory_mobile/models/get_usuario_supabase.dart';
+import 'package:uwifi_control_inventory_mobile/models/get_user_supabase.dart';
 import 'package:uwifi_control_inventory_mobile/models/response_login_supabase.dart';
 
 // https://www.djamware.com/post/618d094c5b9095915c5621c6/flutter-tutorial-login-role-and-permissions
@@ -23,15 +23,15 @@ abstract class AuthService {
         return null;
       }
     } catch (e) {
-      print("Error: $e");
+      print("Error at 'ResponseLoginSupabase': $e");
       return null;
     }
   }
 
-  static Future<GetUsuarioSupabase?> getUserByUserIDSupabase(String userId) async {
+  static Future<GetUserSupabase?> getUserByUserIDSupabase(String userId) async {
     try {
-      final user = supabase.auth.currentUser;
-      if (user == null) return null;
+      final currentUser = supabase.auth.currentUser;
+      if (currentUser == null) return null;
 
       final res = await supabase
           .from('users')
@@ -41,17 +41,17 @@ abstract class AuthService {
       if (res[0] != null) {
         final userProfile = res[0];
         // final userProfileString = jsonEncode(userProfile).toString();
-        userProfile['id'] = user.id;
-        userProfile['email'] = user.email!;
+        userProfile['id'] = currentUser.id;
+        userProfile['email'] = currentUser.email!;
         //Existen datos del Usuario en Supabase
-        final usuario = GetUsuarioSupabase.fromJson(jsonEncode(userProfile));
-        return usuario;
+        final user = GetUserSupabase.fromJson(jsonEncode(userProfile));
+        return user;
       } else {
-        //No existen el Usuario en Supabase
+        //No existe el Usuario en Supabase
         return null;
       }
     } catch (e) {
-      print("Error en GetUsuarioSupabase: $e");
+      print("Error at 'GetUserSupabase': $e");
       return null;
     }
   }

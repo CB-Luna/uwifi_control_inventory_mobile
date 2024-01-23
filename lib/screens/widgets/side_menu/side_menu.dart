@@ -1,15 +1,13 @@
 import 'dart:io';
 
-import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart' as DBO;
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
 import 'package:uwifi_control_inventory_mobile/main.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
 import 'package:uwifi_control_inventory_mobile/screens/select_vehicle_tsm/select_vehicle_tsm_screen.dart';
-import 'package:uwifi_control_inventory_mobile/screens/services_vehicle/services_vehicle_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/user_profile/perfil_usuario_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/bottom_sheet_cerrar_sesion.dart';
-import 'package:uwifi_control_inventory_mobile/screens/widgets/bottom_sheet_change_vehicle.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/bottom_sheet_sincronizar_widget.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -35,9 +33,7 @@ class SideMenu extends StatelessWidget {
       );
     }
 
-    final Users currentUser = usuarioProvider.usuarioCurrent!;
-    ControlForm? controlFormCheckOut = usuarioProvider.getControlFormCheckOutToday(DateTime.now());
-    ControlForm?  controlFormCheckIn = usuarioProvider.getControlFormCheckInToday(DateTime.now());
+    final DBO.Users currentUser = usuarioProvider.usuarioCurrent!;
 
     return SafeArea(
       child: SizedBox(
@@ -101,7 +97,7 @@ class SideMenu extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            currentUser.image == null
+                            currentUser.image.target == null
                                 ? Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -117,7 +113,7 @@ class SideMenu extends StatelessWidget {
                                         color: FlutterFlowTheme.of(context).secondaryColor,
                                         child: Center(
                                           child: Text(
-                                            "${currentUser.name.substring(0, 1)} ${currentUser.lastName.substring(0, 1)}",
+                                            "${currentUser.firstName.substring(0, 1)} ${currentUser.lastName.substring(0, 1)}",
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText1
                                                 .override(
@@ -146,7 +142,7 @@ class SideMenu extends StatelessWidget {
                                         image: DecorationImage(
                                             fit: BoxFit.cover,
                                             image: FileImage(File(currentUser
-                                                .path!))),
+                                                .image.target!.path))),
                                         shape: BoxShape.circle,
                                       ),
                                     ),
@@ -157,7 +153,7 @@ class SideMenu extends StatelessWidget {
                               child: SizedBox(
                                 width: 130,
                                 child: Text(
-                                  maybeHandleOverflow("${usuarioProvider.usuarioCurrent!.name} ${usuarioProvider.usuarioCurrent!.lastName}", 22, "..."),
+                                  maybeHandleOverflow("${usuarioProvider.usuarioCurrent!.firstName} ${usuarioProvider.usuarioCurrent!.lastName}", 22, "..."),
                                   maxLines: 2,
                                   style: FlutterFlowTheme.of(context).bodyText1.override(
                                         fontFamily:
@@ -174,7 +170,7 @@ class SideMenu extends StatelessWidget {
                       ),
                     ),
 
-                    if (currentUser.role.target?.role == "Employee" ||
+                    if (currentUser.role.target?.role == "Inventory Warehouse" ||
                         currentUser.role.target?.role == "Manager" ||
                         currentUser.role.target?.role == "Tech Supervisor")
                     CustomMenuItem( 
@@ -204,7 +200,7 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
                     
-                    if (currentUser.role.target?.role == "Employee" ||
+                    if (currentUser.role.target?.role == "Inventory Warehouse" ||
                         currentUser.role.target?.role == "Manager" ||
                         currentUser.role.target?.role == "Tech Supervisor")
                     CustomMenuItem(

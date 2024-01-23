@@ -7,14 +7,14 @@ import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.d
 
 import '../screens/widgets/flutter_flow_animations.dart';
 
-//***********< RTA VEHICLE CONTROL BD >**************/
+//***********< U-wifi BD >**************/
 
 //>>>>>>TEST
-const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAiYW5vbiIsCiAgICAiaXNzIjogInN1cGFiYXNlIiwKICAgICJpYXQiOiAxNjg0ODI1MjAwLAogICAgImV4cCI6IDE4NDI2NzgwMDAKfQ.Atj9wTNbdEEVPOjstsO14DtxbY2SEpnr50elVXBgAmM";
-const supabaseUrl = "https://supa42.rtatel.com"; 
-const supabaseGraphqlUrl = "https://supa42.rtatel.com/graphql/v1";
-const urlNotificationsAPI = "https://supa42.rtatel.com/notifications/api";
-const domain = "supa42";
+const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zcnBybHlncWFxZ2xqcGZnZ2poIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDAxNzU2MjUsImV4cCI6MjAxNTc1MTYyNX0.JQUJ2i2mZlygBys5Gd5elAL_00TM_U2vJrXlIVuOtbk";
+const supabaseUrl = "https://nsrprlygqaqgljpfggjh.supabase.co"; 
+const supabaseGraphqlUrl = "https://nsrprlygqaqgljpfggjh.supabase.co/graphql/v1";
+const urlNotificationsAPI = "https://nsrprlygqaqgljpfggjh.supabase.co/notifications/api";
+const domain = "supabase";
 
 //>>>>>>>PRODUCTION
 // const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAiYW5vbiIsCiAgICAiaXNzIjogInN1cGFiYXNlIiwKICAgICJpYXQiOiAxNjg0ODI1MjAwLAogICAgImV4cCI6IDE4NDI2NzgwMDAKfQ.Atj9wTNbdEEVPOjstsO14DtxbY2SEpnr50elVXBgAmM";

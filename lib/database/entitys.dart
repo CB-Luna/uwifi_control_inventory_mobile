@@ -973,7 +973,7 @@ class Bitacora {
   final service = ToOne<Service>();
   final vehicleService = ToOne<VehicleServices>();
   final rule = ToOne<Rule>();
-  final email = ToOne<Email>();
+  final image = ToOne<Image>();
   @Backlink()
   final users = ToMany<Users>();
 
@@ -995,58 +995,25 @@ class Bitacora {
 @Entity()
 class Users {
   int id;
-  String name;
+  String firstName;
   String lastName;
-  String? middleName;
-  String? homePhone;
-  String? mobilePhone;
-  String address;
-  String correo;
+  String email;
   String password;
-  String? image;
-  String? nameImage;
-  String? path;
-  DateTime? birthDate;
   DateTime dateAdded;
-  int recordsMonthCurrentR;
-  int recordsMonthSecondR;
-  int recordsMonthThirdR;
-  int recordsMonthCurrentD;
-  int recordsMonthSecondD;
-  int recordsMonthThirdD;
   @Unique()
   String idDBR;
   final bitacora = ToMany<Bitacora>();
   final role = ToOne<Role>();
   final roles = ToMany<Role>();
-  final company = ToOne<Company>(); 
-  final vehicle = ToOne<Vehicle>();
-  final emails = ToMany<Email>();
-  @Backlink()
-  final controlForms = ToMany<ControlForm>();
-  final actualControlForm = ToOne<ControlForm>();
+  final image = ToOne<Image>();
   
   Users({
     this.id = 0,
-    required this.name,
+    required this.firstName,
     required this.lastName,
-    this.middleName,
-    this.homePhone,
-    this.mobilePhone,
-    required this.address,
-    required this.correo,
     required this.password,
-    this.image,
-    this.nameImage,
-    this.path,
-    this.birthDate,
+    required this.email,
     DateTime? dateAdded,
-    required this.recordsMonthCurrentR,
-    required this.recordsMonthSecondR,
-    required this.recordsMonthThirdR,
-    required this.recordsMonthCurrentD,
-    required this.recordsMonthSecondD,
-    required this.recordsMonthThirdD,
     required this.idDBR,
   }) : dateAdded = dateAdded ?? DateTime.now();
 
@@ -1055,19 +1022,21 @@ class Users {
 }
 
 @Entity()
-class Email {
+class Image {
   int id;
   String url;
-  String body;
+  String path;
+  String base64;
   DateTime dateAdded;
   @Backlink()
   final bitacora = ToMany<Bitacora>();
   final user = ToOne<Users>();
 
-  Email({
+  Image({
     this.id = 0,
     required this.url,
-    required this.body,
+    required this.path,
+    required this.base64,
     DateTime? dateAdded,
   }) : dateAdded = dateAdded ?? DateTime.now();
 

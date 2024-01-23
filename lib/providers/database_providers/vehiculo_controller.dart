@@ -113,7 +113,6 @@ Widget optionInventorySection() {
           if (updateStatusVehicle.isNotEmpty && updateEmployeeVehicle.isNotEmpty) {
             vehicleSelected!.status.target = actualStatus;
             dataBase.vehicleBox.put(vehicleSelected!);
-            user.vehicle.target = vehicleSelected;
             dataBase.usersBox.put(user);
             return true;
           } else {

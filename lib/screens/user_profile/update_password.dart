@@ -165,7 +165,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               25, 0, 0, 0),
                                       child: AutoSizeText(
-                                        "Password of ${maybeHandleOverflow('${widget.usuario.name} ${widget.usuario.lastName}', 25, '...')}",
+                                        "Password of ${maybeHandleOverflow('${widget.usuario.firstName} ${widget.usuario.lastName}', 25, '...')}",
                                         maxLines: 2,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
@@ -203,7 +203,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(35, 20, 35, 0),
                       child: TextFormField(
-                        initialValue: widget.usuario.correo,
+                        initialValue: widget.usuario.email,
                         readOnly: true,
                         enabled: false,
                         textCapitalization: TextCapitalization.words,

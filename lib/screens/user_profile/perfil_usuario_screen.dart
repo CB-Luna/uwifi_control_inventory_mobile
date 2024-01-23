@@ -7,7 +7,7 @@ import 'package:uwifi_control_inventory_mobile/screens/user_profile/device_infor
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart' as BDO;
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/user_profile/editar_usuario_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_expanded_image_view.dart';
@@ -49,7 +49,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
       );
     }
 
-    final Users currentUser = usuarioProvider.usuarioCurrent!;
+    final BDO.Users currentUser = usuarioProvider.usuarioCurrent!;
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -155,7 +155,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             25, 0, 0, 0),
                                     child: AutoSizeText(
-                                      "Profile of ${maybeHandleOverflow('${currentUser.name} ${currentUser.lastName}', 18, '...')}",
+                                      "Profile of ${maybeHandleOverflow('${currentUser.firstName} ${currentUser.lastName}', 18, '...')}",
                                       maxLines: 2,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
@@ -207,7 +207,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                       ),
                     ),
                   ),
-                  currentUser.path == null
+                  currentUser.image.target == null
                       ? Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
@@ -222,7 +222,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                               color: FlutterFlowTheme.of(context).secondaryColor,
                               child: Center(
                                 child: Text(
-                                  "${currentUser.name.substring(0, 1)} ${currentUser.lastName.substring(0, 1)}",
+                                  "${currentUser.firstName.substring(0, 1)} ${currentUser.lastName.substring(0, 1)}",
                                   style:
                                       FlutterFlowTheme.of(context).bodyText1.override(
                                             fontFamily: FlutterFlowTheme.of(context)
@@ -247,18 +247,18 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                   type: PageTransitionType.fade,
                                   child: FlutterFlowExpandedImageView(
                                     image: Image.file(
-                                      File(currentUser.path!),
+                                      File(currentUser.image.target!.path),
                                       fit: BoxFit.contain,
                                     ),
                                     allowRotation: false,
-                                    tag: currentUser.name,
+                                    tag: currentUser.firstName,
                                     useHeroAnimation: true,
                                   ),
                                 ),
                               );
                             },
                             child: Hero(
-                              tag: currentUser.name,
+                              tag: currentUser.firstName,
                               transitionOnUserGestures: true,
                               child: Container(
                                 width: 200,
@@ -269,7 +269,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                 ),
                                 child: //TODO: manejar imagen de red
                                     Image.file(
-                                  File(currentUser.path!),
+                                  File(currentUser.image.target!.path),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -286,7 +286,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 2, 0),
                           child: Text(
-                            "${currentUser.name} ${currentUser.lastName}",
+                            "${currentUser.firstName} ${currentUser.lastName}",
                             style: FlutterFlowTheme.of(context).bodyText1.override(
                                   fontFamily:
                                       FlutterFlowTheme.of(context).bodyText1Family,
@@ -302,7 +302,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                     child: Text(
-                      currentUser.correo,
+                      currentUser.email,
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
                             fontSize: 15,

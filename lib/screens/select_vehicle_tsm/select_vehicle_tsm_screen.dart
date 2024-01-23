@@ -30,7 +30,6 @@ class _SelectVehicleTSMScreenState extends State<SelectVehicleTSMScreen> {
   void initState() {
     super.initState();
     setState(() {
-      vehicleAvailables = context.read<UsuarioController>().getAllVehicles();
     });
   }
 
@@ -39,7 +38,6 @@ class _SelectVehicleTSMScreenState extends State<SelectVehicleTSMScreen> {
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final vehiculoController = Provider.of<VehiculoController>(context);
     //final UserState userState = Provider.of<UserState>(context);
-    vehicleAvailables = usuarioProvider.getAllVehicles();
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -90,18 +88,6 @@ class _SelectVehicleTSMScreenState extends State<SelectVehicleTSMScreen> {
                                 ],
                               ),
                             ),
-                          ),
-                          Text(
-                            '${usuarioProvider.usuarioCurrent?.company.target?.company}',
-                            textAlign: TextAlign.center,
-                            style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyText1Family,
-                                    color: FlutterFlowTheme.of(context).tertiaryColor,
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.bold,
-                                  ),
                           ),
                           const SizedBox(
                             width: 10,

@@ -288,7 +288,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                           children: [
                             Text(
                               maybeHandleOverflow("${
-                                userProvider.usuarioCurrent?.name} ${
+                                userProvider.usuarioCurrent?.firstName} ${
                                 userProvider.usuarioCurrent?.lastName}", 24, "..."),
                               style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily:

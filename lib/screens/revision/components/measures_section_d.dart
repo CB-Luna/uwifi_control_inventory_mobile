@@ -130,64 +130,6 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                               ),
                               GestureDetector(
                                 onTap: () async {
-                                  //Este botón no guarda la información ingresada para Mileage
-                                  bool? booleano =
-                                      await showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor:
-                                        Colors.transparent,
-                                    context: context,
-                                    builder: (context) {
-                                      return Padding(
-                                        padding:
-                                            MediaQuery.of(context)
-                                                .viewInsets,
-                                        child: SizedBox(
-                                          height:
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.45,
-                                          child:
-                                              const BottomSheetCloseItemForm(),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                  if (booleano != null &&
-                                      booleano == true){
-                                    if (mileage == checkInFormProvider.mileage) {
-                                      if (mounted) Navigator.pop(context);
-                                    } else {
-                                      final mileageInt = int.parse(checkInFormProvider.mileage != "" ? checkInFormProvider.mileage.replaceAll(",", "") : "0");
-                                      if (mileageInt != 0) {
-                                        checkInFormProvider.updateMileage(mileage);
-                                        if (mileageInt < userController.usuarioCurrent!.vehicle.target!.mileage) {
-                                          checkInFormProvider.flagOilChange = false;
-                                          checkInFormProvider.flagTransmissionFluidChange = false;
-                                          checkInFormProvider.flagRadiatorFluidChange = false;
-                                          checkInFormProvider.flagTireChange = false;
-                                          checkInFormProvider.flagBrakeChange = false;
-                                        }
-                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService) {
-                                          checkInFormProvider.flagOilChange = false;
-                                        } 
-                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.lastMileageService) {
-                                          checkInFormProvider.flagTransmissionFluidChange = false;
-                                        } 
-                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService) {
-                                          checkInFormProvider.flagRadiatorFluidChange = false;
-                                        } 
-                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleTireChange.target!.lastMileageService) {
-                                          checkInFormProvider.flagTireChange = false;
-                                        } 
-                                        if (mileageInt > userController.usuarioCurrent!.vehicle.target!.ruleBrakeChange.target!.lastMileageService) {
-                                          checkInFormProvider.flagBrakeChange = false;
-                                        } 
-                                      }
-                                      if (mounted) Navigator.pop(context);
-                                    }
-                                  }
                                 },
                                 child: ClayContainer(
                                   height: 30,
@@ -291,15 +233,6 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                         inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(12),],
                                         keyboardType: const TextInputType.numberWithOptions(decimal: false),
                                         validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                              return 'The Mileage is required.';
-                                            } 
-                                          if (int.parse(value.replaceAll(",", "")) < userController.usuarioCurrent!.vehicle.target!.mileage) {
-                                            return "The value can't be lower than '${
-                                              NumberFormat.decimalPattern().
-                                              format(userController.usuarioCurrent!
-                                              .vehicle.target!.mileage)}' Mi.";
-                                          }
                                           return null;
                                         },
                                       ),
@@ -631,51 +564,6 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                                       child: GestureDetector(
                                         onTap: () {
-                                          //Este botón sí guarda la información ingresada para Mileage
-                                          final mileageInt = int.parse(checkInFormProvider.mileage != "" ? checkInFormProvider.mileage.replaceAll(",", ""): "0");
-                                          if (checkInFormProvider.validateKeyForm(keyForm)) {
-                                            //Se valida para ruleOilChange
-                                            if (userController.usuarioCurrent!.vehicle.target?.ruleOilChange.target?.registered == "False") {
-                                              final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleOilChange.target!.value);
-                                              if (limitMileageService - mileageInt <= 100) {
-                                                //Se activa la bandera oil a true
-                                                checkInFormProvider.flagOilChange = true;
-                                              }
-                                            }
-                                            //Se valida para ruleTransmissionFluidChange
-                                            if (userController.usuarioCurrent!.vehicle.target?.ruleTransmissionFluidChange.target?.registered == "False") {
-                                              final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleTransmissionFluidChange.target!.value);
-                                              if (limitMileageService - mileageInt <= 100) {
-                                                // Se actualiza la bandera transmission a true
-                                                checkInFormProvider.flagTransmissionFluidChange = true;
-                                              }
-                                            }
-                                            //Se valida para ruleRadiatorFluidChange
-                                            if (userController.usuarioCurrent!.vehicle.target?.ruleRadiatorFluidChange.target?.registered == "False") {
-                                              final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleRadiatorFluidChange.target!.value);
-                                              if (limitMileageService - mileageInt <= 100) {
-                                                // Se actualiza la bandera radiator a true
-                                                checkInFormProvider.flagRadiatorFluidChange = true;
-                                              }
-                                            }
-                                            //Se valida para ruleTireChange
-                                            if (userController.usuarioCurrent!.vehicle.target?.ruleTireChange.target?.registered == "False") {
-                                              final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleTireChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleTireChange.target!.value);
-                                              if (limitMileageService - mileageInt <= 100) {
-                                                // Se actualiza la bandera radiator a true
-                                                checkInFormProvider.flagTireChange = true;
-                                              }
-                                            }
-                                            //Se valida para ruleBrakeChange
-                                            if (userController.usuarioCurrent!.vehicle.target?.ruleBrakeChange.target?.registered == "False") {
-                                              final limitMileageService = userController.usuarioCurrent!.vehicle.target!.ruleBrakeChange.target!.lastMileageService + int.parse(userController.usuarioCurrent!.vehicle.target!.ruleBrakeChange.target!.value);
-                                              if (limitMileageService - mileageInt <= 100) {
-                                                // Se actualiza la bandera radiator a true
-                                                checkInFormProvider.flagBrakeChange = true;
-                                              }
-                                            }
-                                            Navigator.pop(context);
-                                          }
                                         },
                                         child: ClayContainer(
                                           height: 50,

@@ -16,7 +16,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart' as DBO;
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/user_profile/usuario_actualizado.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_bottom_sheet.dart';
@@ -28,7 +28,7 @@ class EditarUsuarioScreen extends StatefulWidget {
     required this.usuario,
   }) : super(key: key);
 
-  final Users usuario;
+  final DBO.Users usuario;
 
   @override
   State<EditarUsuarioScreen> createState() => _EditarUsuarioScreenState();
@@ -59,13 +59,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
       listRoles.add(element.role);
     }
     newImage = null;
-    imageTemp = widget.usuario.path;
-    nameController = TextEditingController(text: widget.usuario.name);
+    imageTemp = widget.usuario.image.target?.path;
+    nameController = TextEditingController(text: widget.usuario.firstName);
     lastNameController = TextEditingController(text: widget.usuario.lastName);
-    middleNameController = TextEditingController(text: widget.usuario.middleName);
-    homePhoneController = TextEditingController(text: widget.usuario.homePhone);
-    mobilePhoneController = TextEditingController(text: widget.usuario.mobilePhone);
-    addressController = TextEditingController(text: widget.usuario.address);
   }
 
   @override
@@ -190,7 +186,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               25, 0, 0, 0),
                                       child: AutoSizeText(
-                                        "Profile of ${maybeHandleOverflow('${widget.usuario.name} ${widget.usuario.lastName}', 25, '...')}",
+                                        "Profile of ${maybeHandleOverflow('${widget.usuario.firstName} ${widget.usuario.lastName}', 25, '...')}",
                                         maxLines: 2,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
@@ -232,7 +228,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                       color: FlutterFlowTheme.of(context).secondaryColor,
                                       child: Center(
                                         child: Text(
-                                          "${widget.usuario.name.substring(0, 1)} ${widget.usuario.lastName.substring(0, 1)}",
+                                          "${widget.usuario.firstName.substring(0, 1)} ${widget.usuario.lastName.substring(0, 1)}",
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1
                                               .override(
@@ -458,7 +454,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 20, 0, 0),
                             child: Text(
-                              widget.usuario.correo,
+                              widget.usuario.email,
                               style: FlutterFlowTheme.of(context).bodyText1.override(
                                     fontFamily:
                                         FlutterFlowTheme.of(context).bodyText1Family,
@@ -479,57 +475,57 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                             0, 20, 0, 0),
                                     child: CustomButton(
                                       onPressed: () async {
-                                        if (nameController.text !=
-                                              widget.usuario.name ||
-                                          lastNameController.text !=
-                                              widget.usuario.lastName ||
-                                          middleNameController.text !=
-                                              widget.usuario.middleName ||
-                                          homePhoneController.text !=
-                                              widget.usuario.homePhone ||
-                                          mobilePhoneController.text !=
-                                              widget.usuario.mobilePhone ||
-                                          imageTemp != widget.usuario.path) {
-                                          if (usuarioProvider.validateForm(formKey)) {
-                                              usuarioProvider.updateData(
-                                                widget.usuario,
-                                                nameController.text,
-                                                lastNameController.text,
-                                                middleNameController.text,
-                                                homePhoneController.text,
-                                                mobilePhoneController.text,
-                                                addressController.text,
-                                                newImage,
-                                                imageTemp,
-                                              );
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const UsuarioActualizado(),
-                                                ),
-                                              );
-                                          } else {
-                                            await showDialog(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return AlertDialog(
-                                                  title: const Text('Empty Fields'),
-                                                  content: const Text(
-                                                      'To continue, you have to write all required fields.'),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () => Navigator.pop(
-                                                          alertDialogContext),
-                                                      child: const Text('Okay'),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                            return;
-                                          }
-                                        } 
+                                        // if (nameController.text !=
+                                        //       widget.usuario.name ||
+                                        //   lastNameController.text !=
+                                        //       widget.usuario.lastName ||
+                                        //   middleNameController.text !=
+                                        //       widget.usuario.middleName ||
+                                        //   homePhoneController.text !=
+                                        //       widget.usuario.homePhone ||
+                                        //   mobilePhoneController.text !=
+                                        //       widget.usuario.mobilePhone ||
+                                        //   imageTemp != widget.usuario.path) {
+                                        //   if (usuarioProvider.validateForm(formKey)) {
+                                        //       usuarioProvider.updateData(
+                                        //         widget.usuario,
+                                        //         nameController.text,
+                                        //         lastNameController.text,
+                                        //         middleNameController.text,
+                                        //         homePhoneController.text,
+                                        //         mobilePhoneController.text,
+                                        //         addressController.text,
+                                        //         newImage,
+                                        //         imageTemp,
+                                        //       );
+                                        //       await Navigator.push(
+                                        //         context,
+                                        //         MaterialPageRoute(
+                                        //           builder: (context) =>
+                                        //               const UsuarioActualizado(),
+                                        //         ),
+                                        //       );
+                                        //   } else {
+                                        //     await showDialog(
+                                        //       context: context,
+                                        //       builder: (alertDialogContext) {
+                                        //         return AlertDialog(
+                                        //           title: const Text('Empty Fields'),
+                                        //           content: const Text(
+                                        //               'To continue, you have to write all required fields.'),
+                                        //           actions: [
+                                        //             TextButton(
+                                        //               onPressed: () => Navigator.pop(
+                                        //                   alertDialogContext),
+                                        //               child: const Text('Okay'),
+                                        //             ),
+                                        //           ],
+                                        //         );
+                                        //       },
+                                        //     );
+                                        //     return;
+                                        //   }
+                                        // } 
                                       },
                                       text: 'Save changes',
                                       icon: Icon(

@@ -70,14 +70,6 @@ class UserState extends ChangeNotifier {
     return expiryDate.isBefore(DateTime.now());
   }
 
-  //Funciones de autenticacion
-  Future<void> setTokenPocketbase(String jwt) async {
-    tokenPocketbase.clear();
-    tokenPocketbase.add(jwt);
-    await storage.write(key: 'tokenPocketbase', value: jwt);
-    notifyListeners();
-  }
-
   Future<void> setTokenEmiWeb(String jwt) async {
     tokenEmiWeb = "";
     tokenEmiWeb = jwt;

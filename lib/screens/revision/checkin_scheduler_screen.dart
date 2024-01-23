@@ -323,18 +323,8 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                           children: [
                             Text(
                               maybeHandleOverflow("${
-                                userProvider.usuarioCurrent?.name} ${
+                                userProvider.usuarioCurrent?.firstName} ${
                                 userProvider.usuarioCurrent?.lastName}", 24, "..."),
-                              style: FlutterFlowTheme.of(context).bodyText1.override(
-                                fontFamily:
-                                    FlutterFlowTheme.of(context).bodyText1Family,
-                                color: FlutterFlowTheme.of(context).white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 15,
-                              ),
-                            ),
-                            Text(
-                              "${userProvider.usuarioCurrent?.company.target?.company}",
                               style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily:
                                     FlutterFlowTheme.of(context).bodyText1Family,

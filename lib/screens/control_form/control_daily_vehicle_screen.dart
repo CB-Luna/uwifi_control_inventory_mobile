@@ -27,23 +27,8 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
   List<VehicleServices>? vehicleServicesList = [];
   // List<String> vehicleServicesList = ["Hola", "Adios"];
 
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      context.read<UsuarioController>().recoverPreviousControlForms(DateTime.now());
-      controlFormCheckOut = context.read<UsuarioController>().getControlFormCheckOutToday(DateTime.now());
-      controlFormCheckIn = context.read<UsuarioController>().getControlFormCheckInToday(DateTime.now());
-      context.read<UsuarioController>().getUser(prefs.getString("userId") ?? "");
-      vehicleServicesList = context.read<UsuarioController>().usuarioCurrent?.vehicle.target?.vehicleServices.where((element) => !element.completed).toList();
-      
-    });
-  }
   @override
   Widget build(BuildContext context) {
-    final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
-    final checkInFormProvider = Provider.of<CheckInFormController>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     return WillPopScope(
       onWillPop: () async => false,
@@ -117,7 +102,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                     padding: const EdgeInsetsDirectional
                       .fromSTEB(0, 5, 0, 5),
                     child: GradientText(
-                      "${usuarioProvider.usuarioCurrent?.name} ${usuarioProvider.usuarioCurrent?.lastName}",
+                      "${usuarioProvider.usuarioCurrent?.firstName} ${usuarioProvider.usuarioCurrent?.lastName}",
                       style: FlutterFlowTheme.of(
                               context)
                           .bodyText1

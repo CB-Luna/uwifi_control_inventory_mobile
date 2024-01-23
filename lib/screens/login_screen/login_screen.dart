@@ -1,4 +1,3 @@
-import 'package:uwifi_control_inventory_mobile/screens/select_vehicle_tsm/select_vehicle_tsm_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -10,7 +9,6 @@ import 'package:uwifi_control_inventory_mobile/providers/database_providers/usua
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/providers/roles_supabase_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
-import 'package:uwifi_control_inventory_mobile/screens/select_vehicle_employee/select_vehicle_employee_screen.dart';
 import 'package:uwifi_control_inventory_mobile/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -114,19 +112,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Email',
-                                labelStyle: FlutterFlowTheme.of(context).bodyText2,
+                                labelStyle: FlutterFlowTheme.of(context).bodyText1,
                                 hintText: 'Input your email...',
-                                hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                                hintStyle: FlutterFlowTheme.of(context).bodyText1,
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFFDBE2E7),
+                                  borderSide:BorderSide(
+                                    color: FlutterFlowTheme.of(context).white,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFFDBE2E7),
+                                  borderSide:BorderSide(
+                                    color: FlutterFlowTheme.of(context).white,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
@@ -187,19 +185,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               obscuringCharacter: '*',
                               decoration: InputDecoration(
                                 labelText: 'Password',
-                                labelStyle: FlutterFlowTheme.of(context).bodyText2,
+                                labelStyle: FlutterFlowTheme.of(context).bodyText1,
                                 hintText: 'Input your password...',
-                                hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                                hintStyle: FlutterFlowTheme.of(context).bodyText1,
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFFDBE2E7),
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).white,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFFDBE2E7),
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).white,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
@@ -270,49 +268,49 @@ class _LoginScreenState extends State<LoginScreen> {
                               final connectivityResult =
                                   await (Connectivity().checkConnectivity());
                               if (connectivityResult == ConnectivityResult.none) {
-                                //Proceso Offline
-                                final usuarioActual =
-                                    usuarioProvider.validateUserOffline(
-                                        userState.emailController.text,
-                                        userState.passwordController.text);
-                                if (usuarioActual != null) {
-                                  //Usuario ya existe localmente
-                                  prefs.setBool(
-                                  "boolLogin", true);
-                                  prefs.setString(
-                                      "userId", userState.emailController.text);
-                                  //Se guarda el Password encriptado
-                                  prefs.setString(
-                                      "passEncrypted", userState.passwordController.text);
-                                  usuarioProvider
-                                      .getUser(prefs.getString("userId")!);
+                                // //Proceso Offline
+                                // final usuarioActual =
+                                //     usuarioProvider.validateUserOffline(
+                                //         userState.emailController.text,
+                                //         userState.passwordController.text);
+                                // if (usuarioActual != null) {
+                                //   //Usuario ya existe localmente
+                                //   prefs.setBool(
+                                //   "boolLogin", true);
+                                //   prefs.setString(
+                                //       "userId", userState.emailController.text);
+                                //   //Se guarda el Password encriptado
+                                //   prefs.setString(
+                                //       "passEncrypted", userState.passwordController.text);
+                                //   usuarioProvider
+                                //       .getUser(prefs.getString("userId")!);
               
-                                  if (userState.recuerdame == true) {
-                                    await userState.setEmail();
-                                    await userState.setPassword();
-                                  } else {
-                                    userState.emailController.text = '';
-                                    userState.passwordController.text = '';
-                                    await prefs.remove('email');
-                                    await prefs.remove('password');
-                                  }
+                                //   if (userState.recuerdame == true) {
+                                //     await userState.setEmail();
+                                //     await userState.setPassword();
+                                //   } else {
+                                //     userState.emailController.text = '';
+                                //     userState.passwordController.text = '';
+                                //     await prefs.remove('email');
+                                //     await prefs.remove('password');
+                                //   }
                   
-                                  if (!mounted) return;
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const MainScreenSelector(),
-                                    ),
-                                  );
-                                } else {
-                                  //Usuario no existe localmente
-                                  snackbarKey.currentState
-                                      ?.showSnackBar(const SnackBar(
-                                    content: Text(
-                                        "Wrong credentials! Invalid email or password."),
-                                  ));
-                                }
+                                //   if (!mounted) return;
+                                //   await Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (context) =>
+                                //           const MainScreenSelector(),
+                                //     ),
+                                //   );
+                                // } else {
+                                //   //Usuario no existe localmente
+                                //   snackbarKey.currentState
+                                //       ?.showSnackBar(const SnackBar(
+                                //     content: Text(
+                                //         "Wrong credentials! Invalid email or password."),
+                                //   ));
+                                // }
                               } else {
                                 //Proceso Online
                                 //Login a Supabase
@@ -322,11 +320,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   userState.passwordController.text,
                                 );
                                 if (loginResponseSupabase != null) {
-                                  final getUsuarioSupabase =
+                                  final getUserSupabase =
                                     await AuthService.getUserByUserIDSupabase(
                                     loginResponseSupabase.user.id
                                   );
-                                  if (getUsuarioSupabase != null) {
+                                  if (getUserSupabase != null) {
                                     final userId =
                                           loginResponseSupabase.user.email;
                                     //Se guarda el ID DEL USUARIO (correo)
@@ -337,61 +335,35 @@ class _LoginScreenState extends State<LoginScreen> {
                                     rolesSupabaseProvider.procesoTerminado(false);
                                     rolesSupabaseProvider.procesoExitoso(false);
                                     String messageSupabase =
-                                        await rolesSupabaseProvider.getRolesSupabase(getUsuarioSupabase);
+                                        await rolesSupabaseProvider.getRolesSupabase(getUserSupabase);
                                     if (messageSupabase == "Okay") {
-                                      await userState.setTokenPocketbase(
-                                          loginResponseSupabase.accessToken);
                                       //Se guarda el Password encriptado
                                       prefs.setString(
                                           "passEncrypted", userState.passwordController.text);
-                                      //Se válida que el Usuario exista localmente
+                                      //Se valida que el Usuario exista localmente
                                       if (usuarioProvider
                                           .validateUsuario(userId)) {
                                         //print('Usuario ya existente');
                                         usuarioProvider.update(
                                           userState.emailController.text,
-                                          getUsuarioSupabase.name,
-                                          getUsuarioSupabase.lastName,
-                                          getUsuarioSupabase.middleName,
-                                          getUsuarioSupabase.homephoneNumber,
-                                          getUsuarioSupabase.telephoneNumber,
-                                          getUsuarioSupabase.address,
+                                          getUserSupabase.firstName,
+                                          getUserSupabase.lastName,
                                           userState.passwordController.text,
-                                          getUsuarioSupabase.image,
-                                          [getUsuarioSupabase.roles.first.id.toString()],
-                                          getUsuarioSupabase.birthdate,
-                                          getUsuarioSupabase.company.companyId.toString(),
-                                          getUsuarioSupabase.idVehicleFk.toString(),
-                                          rolesSupabaseProvider.recordsMonthCurrentR!.length,
-                                          rolesSupabaseProvider.recordsMonthSecondR!.length,
-                                          rolesSupabaseProvider.recordsMonthThirdR!.length,
-                                          rolesSupabaseProvider.recordsMonthCurrentD!.length,
-                                          rolesSupabaseProvider.recordsMonthSecondD!.length,
-                                          rolesSupabaseProvider.recordsMonthThirdD!.length,
+                                          getUserSupabase.image,
+                                          [getUserSupabase.role],
+                                          getUserSupabase.idRoleFk.toString(),
                                         );
                                         usuarioProvider.getUser(userId);
                                       } else {
                                         usuarioProvider.add(
-                                          getUsuarioSupabase.name,
-                                          getUsuarioSupabase.lastName,
-                                          getUsuarioSupabase.middleName,
-                                          getUsuarioSupabase.homephoneNumber,
-                                          getUsuarioSupabase.telephoneNumber,
-                                          getUsuarioSupabase.address,
+                                          getUserSupabase.firstName,
+                                          getUserSupabase.lastName,
                                           loginResponseSupabase.user.email,
                                           userState.passwordController.text,
-                                          getUsuarioSupabase.image,
-                                          [getUsuarioSupabase.roles.first.id.toString()],
-                                          getUsuarioSupabase.id,
-                                          getUsuarioSupabase.birthdate,
-                                          getUsuarioSupabase.company.companyId.toString(),
-                                          getUsuarioSupabase.idVehicleFk.toString(),
-                                          rolesSupabaseProvider.recordsMonthCurrentR!.length,
-                                          rolesSupabaseProvider.recordsMonthSecondR!.length,
-                                          rolesSupabaseProvider.recordsMonthThirdR!.length,
-                                          rolesSupabaseProvider.recordsMonthCurrentD!.length,
-                                          rolesSupabaseProvider.recordsMonthSecondD!.length,
-                                          rolesSupabaseProvider.recordsMonthThirdD!.length,
+                                          getUserSupabase.image,
+                                          [getUserSupabase.role],
+                                          getUserSupabase.id,
+                                          getUserSupabase.idRoleFk.toString()
                                         );
                                         usuarioProvider.getUser(loginResponseSupabase.user.email);
                                       }
@@ -409,46 +381,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                       }
                                       // //Se valida que el Usuario tenga un vehículo Asignado
                                       if (!mounted) return;
-                                      //Se valida el tipo de Usuario
-                                      //Employee / Tech Supervisor
-                                      if (usuarioProvider.isEmployee || usuarioProvider.isTechSupervisor) {
-                                        if (usuarioProvider.usuarioCurrent?.vehicle.target != null) {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const MainScreenSelector(),
-                                            ),
-                                          );
-                                        } else {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const SelectVehicleEmployeeScreen(),
-                                            ),
-                                          );
-                                        }
-                                      } 
-                                      //Tech Supervisor / Manager
-                                      else if (usuarioProvider.isTechSupervisor ||
-                                          usuarioProvider.isManager) {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SelectVehicleTSMScreen(),
-                                          ),
-                                        );
-                                      } 
-                                      //Otro tipo de Usuario
-                                      else {
-                                        snackbarKey.currentState
-                                            ?.showSnackBar(const SnackBar(
-                                          content: Text(
-                                              "Invalid Permissions! Your user can't to access to this App."),
-                                          ));
-                                      }
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const MainScreenSelector(),
+                                        ),
+                                      );
                                     } else {
                                       switch (messageSupabase) {
                                         case "Not-Data":

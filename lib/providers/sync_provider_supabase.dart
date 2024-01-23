@@ -7,7 +7,7 @@ import 'package:uwifi_control_inventory_mobile/models/temp/sync_instruction.dart
 import 'package:uwifi_control_inventory_mobile/models/temp/instruccion_no_sincronizada.dart';
 import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/main.dart';
-import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart' as DBO;
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:http/http.dart';
 import 'package:uwifi_control_inventory_mobile/util/util.dart';
@@ -37,7 +37,7 @@ class SyncProviderSupabase extends ChangeNotifier {
     // notifyListeners();
   }
 
-  Future<bool> executeInstrucciones(List<Bitacora> instruccionesBitacora) async {
+  Future<bool> executeInstrucciones(List<DBO.Bitacora> instruccionesBitacora) async {
     // Se recuperan instrucciones fallidas anteriores
     for (var i = 0; i < instruccionesBitacora.length; i++) {
       switch (instruccionesBitacora[i].instruccion) {
@@ -293,34 +293,6 @@ class SyncProviderSupabase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
-        case "syncAddEmail":
-          final email = getFirstEmail(
-              dataBase.emailBox.getAll(), instruccionesBitacora[i].id);
-          if (email != null) {
-            final responseSyncAddEmail = await syncAddEmail(
-                email, instruccionesBitacora[i]);
-            if (responseSyncAddEmail.exitoso) {
-              banderasExistoSync.add(responseSyncAddEmail.exitoso);
-              continue;
-            } else {
-              //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(responseSyncAddEmail.exitoso);
-              final instruccionNoSincronizada = InstruccionNoSincronizada(
-                  instruccion: responseSyncAddEmail.descripcion,
-                  fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
-              continue;
-            }
-          } else {
-            //Recuperamos la instrucción que no se ejecutó
-            banderasExistoSync.add(false);
-            final instruccionNoSincronizada = InstruccionNoSincronizada(
-                instruccion:
-                    "Problems sync to Local Server, Vehicle Service not recovered.",
-                fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
-            continue;
-          }
         case "syncUpdateVehicleServices":
           final vehicleServices = getFirstVehicleServices(
               dataBase.vehicleServicesBox.getAll(), instruccionesBitacora[i].id);
@@ -515,8 +487,8 @@ class SyncProviderSupabase extends ChangeNotifier {
     }
   }
   
-  Users? getFirstUsuario(
-      List<Users> usuarios, int idInstruccionesBitacora) {
+  DBO.Users? getFirstUsuario(
+      List<DBO.Users> usuarios, int idInstruccionesBitacora) {
     for (var i = 0; i < usuarios.length; i++) {
       if (usuarios[i].bitacora.isEmpty) {
       } else {
@@ -530,8 +502,8 @@ class SyncProviderSupabase extends ChangeNotifier {
     return null;
   }
 
-  Users? getFirstCliente(
-      List<Users> clientes, int idInstruccionesBitacora) {
+  DBO.Users? getFirstCliente(
+      List<DBO.Users> clientes, int idInstruccionesBitacora) {
     for (var i = 0; i < clientes.length; i++) {
       if (clientes[i].bitacora.isEmpty) {
       } else {
@@ -545,8 +517,8 @@ class SyncProviderSupabase extends ChangeNotifier {
     return null;
   }
 
-  Vehicle? getFirstVehiculo(
-      List<Vehicle> vehiculos, int idInstruccionesBitacora) {
+  DBO.Vehicle? getFirstVehiculo(
+      List<DBO.Vehicle> vehiculos, int idInstruccionesBitacora) {
     for (var i = 0; i < vehiculos.length; i++) {
       if (vehiculos[i].bitacora.isEmpty) {
       } else {
@@ -560,8 +532,8 @@ class SyncProviderSupabase extends ChangeNotifier {
     return null;
   }
 
-  ControlForm? getFirstControlForm(
-      List<ControlForm> controlForm, int idInstruccionesBitacora) {
+  DBO.ControlForm? getFirstControlForm(
+      List<DBO.ControlForm> controlForm, int idInstruccionesBitacora) {
     for (var i = 0; i < controlForm.length; i++) {
       if (controlForm[i].bitacora.isEmpty) {
       } else {
@@ -575,8 +547,8 @@ class SyncProviderSupabase extends ChangeNotifier {
     return null;
   }
 
-  VehicleServices? getFirstVehicleServices(
-      List<VehicleServices> vehicleServices, int idInstruccionesBitacora) {
+  DBO.VehicleServices? getFirstVehicleServices(
+      List<DBO.VehicleServices> vehicleServices, int idInstruccionesBitacora) {
     for (var i = 0; i < vehicleServices.length; i++) {
       if (vehicleServices[i].bitacora.isEmpty) {
       } else {
@@ -590,24 +562,9 @@ class SyncProviderSupabase extends ChangeNotifier {
     return null;
   }
 
-  Email? getFirstEmail(
-      List<Email> email, int idInstruccionesBitacora) {
-    for (var i = 0; i < email.length; i++) {
-      if (email[i].bitacora.isEmpty) {
-      } else {
-        for (var j = 0; j < email[i].bitacora.length; j++) {
-          if (email[i].bitacora[j].id == idInstruccionesBitacora) {
-            return email[i];
-          }
-        }
-      }
-    }
-    return null;
-  }
-
 
   Future<SyncInstruction> syncAddCliente(
-      Users usuario, Bitacora bitacora) async {
+      DBO.Users usuario, DBO.Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
         if (usuario.idDBR.contains("sinIdDBR")) {
@@ -617,29 +574,23 @@ class SyncProviderSupabase extends ChangeNotifier {
             headers: {'Content-Type': 'application/json', 'apiKey': anonKey},
             body: json.encode(
               {
-                "email": usuario.correo,
+                "email": usuario.email,
                 "password": usuario.password,
               },
             ),
           );
           if (response.statusCode == 400) {
-            final recordClienteExistente = await supabase.from('users').select<PostgrestList>().eq('email', usuario.correo);
+            final recordClienteExistente = await supabase.from('users').select<PostgrestList>().eq('email', usuario.email);
             if (recordClienteExistente.isEmpty) {
               //Aún no hay registro en la tabla perfil_usuario
-              final recordInviteCliente = await supabase.auth.admin.inviteUserByEmail(usuario.correo);
+              final recordInviteCliente = await supabase.auth.admin.inviteUserByEmail(usuario.email);
               if (recordInviteCliente.user?.id != null) {
                 final String clienteId = recordInviteCliente.user!.id;
                 final recordCliente = await supabase.from('user_profile').insert(
                   {
                     'user_profile_id': clienteId,
-                    'nombre': usuario.name,
                     'apellido_p': usuario.lastName,
-                    'apellido_m': usuario.middleName,
-                    'imagen': usuario.image,
-                    'rol_fk': usuario.role.target!.idDBR,
-                    'telefono': usuario.homePhone,
-                    'celular': usuario.mobilePhone,
-                    'domicilio': usuario.address,
+                    'imagen': usuario.image
                   },
                 ).select<PostgrestList>('user_profile_id');
                 if (recordCliente.isNotEmpty) {
@@ -655,19 +606,19 @@ class SyncProviderSupabase extends ChangeNotifier {
                   return SyncInstruction(
                   exitoso: false,
                   descripcion:
-                      "Falló en proceso de sincronizar alta de Cliente en el Servidor Local: Problema al postear los datos del Cliente con correo '${usuario.correo}'.");
+                      "Falló en proceso de sincronizar alta de Cliente en el Servidor Local: Problema al postear los datos del Cliente con correo '${usuario.email}'.");
                 }
               } else {
                 return SyncInstruction(
                   exitoso: false,
                   descripcion:
-                      "Falló en proceso de sincronizar alta de Cliente en el Servidor Local: Problema al recuperar el id del Cliente Existente con correo '${usuario.correo}'.");
+                      "Falló en proceso de sincronizar alta de Cliente en el Servidor Local: Problema al recuperar el id del Cliente Existente con correo '${usuario.email}'.");
               }
             } else {
               return SyncInstruction(
                 exitoso: false,
                 descripcion:
-                    "Falló en proceso de sincronizar alta de Cliente en el Servidor Local: El Cliente con correo '${usuario.correo}' ya existe.");
+                    "Falló en proceso de sincronizar alta de Cliente en el Servidor Local: El Cliente con correo '${usuario.email}' ya existe.");
             }
           } else {
             final String? clienteId = jsonDecode(response.body)['user']['id'];
@@ -675,14 +626,9 @@ class SyncProviderSupabase extends ChangeNotifier {
               final recordCliente = await supabase.from('user_profile').insert(
                 {
                   'user_profile_id': clienteId,
-                  'nombre': usuario.name,
                   'apellido_p': usuario.lastName,
-                  'apellido_m': usuario.middleName,
                   'imagen': usuario.image,
                   'rol_fk': usuario.role.target!.idDBR,
-                  'telefono': usuario.homePhone,
-                  'celular': usuario.mobilePhone,
-                  'domicilio': usuario.address,
                 },
               ).select<PostgrestList>('user_profile_id');
               if (recordCliente.isNotEmpty) {
@@ -698,13 +644,13 @@ class SyncProviderSupabase extends ChangeNotifier {
                 return SyncInstruction(
                 exitoso: false,
                 descripcion:
-                    "Falló en proceso de sincronizar alta de Cliente en el Servidor Local: Problema al postear los datos del Cliente con correo '${usuario.correo}'.");
+                    "Falló en proceso de sincronizar alta de Cliente en el Servidor Local: Problema al postear los datos del Cliente con correo '${usuario.email}'.");
               }
             } else {
               return SyncInstruction(
                 exitoso: false,
                 descripcion:
-                    "Falló en proceso de sincronizar alta de Cliente en el Servidor Local: Problema al recuperar id del Cliente con correo '${usuario.correo}'.");
+                    "Falló en proceso de sincronizar alta de Cliente en el Servidor Local: Problema al recuperar id del Cliente con correo '${usuario.email}'.");
             }
           }
         } else {
@@ -723,12 +669,12 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Falló en proceso de sincronizar alta de Cliente con correo '${usuario.correo}' en el Servidor Local, detalles: '$e'");
+              "Falló en proceso de sincronizar alta de Cliente con correo '${usuario.email}' en el Servidor Local, detalles: '$e'");
     }
   }
 
   Future<SyncInstruction> syncAddControlFormR(
-      ControlForm controlForm, Bitacora bitacora) async {
+      DBO.ControlForm controlForm, DBO.Bitacora bitacora) async {
     String gasImages = "";
     String mileageImages = "";
 
@@ -2497,7 +2443,7 @@ class SyncProviderSupabase extends ChangeNotifier {
   }
 
   Future<SyncInstruction> syncAddControlFormD(
-      ControlForm controlForm, Bitacora bitacora) async {
+      DBO.ControlForm controlForm, DBO.Bitacora bitacora) async {
     String gasImages = "";
     String mileageImages = "";
 
@@ -4278,7 +4224,7 @@ class SyncProviderSupabase extends ChangeNotifier {
   }
 
   Future<SyncInstruction> syncUpdateVehicleServices(
-      VehicleServices vehicleServices, Bitacora bitacora) async {
+      DBO.VehicleServices vehicleServices, DBO.Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
         //Update Vehicle Services
@@ -4374,7 +4320,7 @@ class SyncProviderSupabase extends ChangeNotifier {
   }
 
     Future<SyncInstruction> syncAddControlFormWeekly(
-      ControlForm controlForm, Bitacora bitacora) async {
+      DBO.ControlForm controlForm, DBO.Bitacora bitacora) async {
     String gasImages = "";
     String mileageImages = "";
 
@@ -6150,7 +6096,7 @@ class SyncProviderSupabase extends ChangeNotifier {
   }
 
   Future<SyncInstruction> syncAddVehicleService(
-      VehicleServices vehicleServices, Bitacora bitacora) async {
+      DBO.VehicleServices vehicleServices, DBO.Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
         //Add Vehicle Services
@@ -6284,7 +6230,7 @@ class SyncProviderSupabase extends ChangeNotifier {
   }
 
     Future<SyncInstruction> syncUpdateMileageRemainingVehicleServices(
-      VehicleServices vehicleServices, Bitacora bitacora) async {
+      DBO.VehicleServices vehicleServices, DBO.Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
         //Update Vehicle Services
@@ -6321,17 +6267,12 @@ class SyncProviderSupabase extends ChangeNotifier {
   }
 
   Future<SyncInstruction> syncUpdateUser(
-    Users usuario, Bitacora bitacora) async {
+    DBO.Users usuario, DBO.Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
         final recordUser = await supabase.from('user_profile').update(
             {
-              'name': usuario.name,
-              'middle_name': usuario.middleName,
               'last_name': usuario.lastName,
-              'home_phone': usuario.homePhone,
-              'mobile_phone': usuario.mobilePhone,
-              'address': usuario.address,
             },
           ).eq('user_profile_id', usuario.idDBR)
         .select<PostgrestList>("user_profile_id");   
@@ -6345,7 +6286,7 @@ class SyncProviderSupabase extends ChangeNotifier {
           return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Failed to sync data Update Data on Local Server to User '${usuario.correo}'");
+              "Failed to sync data Update Data on Local Server to User '${usuario.email}'");
         }
       } else {
         dataBase.bitacoraBox.remove(bitacora.id);
@@ -6356,12 +6297,12 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Failed to sync data Update Data on Local Server to User '${usuario.correo}', details: '$e'");
+              "Failed to sync data Update Data on Local Server to User '${usuario.email}', details: '$e'");
     }
   }
 
   Future<SyncInstruction> syncAddUserImage(
-    Users usuario, Bitacora bitacora) async {
+    DBO.Users usuario, DBO.Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
         //Parsear a Uint8List
@@ -6410,12 +6351,12 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Failed to sync add User Image Profile on Local Server to User '${usuario.correo}', details: '$e'");
+              "Failed to sync add User Image Profile on Local Server to User '${usuario.email}', details: '$e'");
     }
   }
 
   Future<SyncInstruction> syncDeleteUserImage(
-    Users usuario, Bitacora bitacora) async {
+    DBO.Users usuario, DBO.Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
         final nameImage = bitacora.instruccionAdicional!;
@@ -6457,12 +6398,12 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Failed to sync delete User Image Profile on Local Server to User '${usuario.correo}', details: '$e'");
+              "Failed to sync delete User Image Profile on Local Server to User '${usuario.email}', details: '$e'");
     }
   }
 
   Future<SyncInstruction> syncUpdateUserImage(
-    Users usuario, Bitacora bitacora) async {
+    DBO.Users usuario, DBO.Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
         //Parsear a Uint8List
@@ -6522,12 +6463,12 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Failed to sync update User Image Profile on Local Server to User '${usuario.correo}', details: '$e'");
+              "Failed to sync update User Image Profile on Local Server to User '${usuario.email}', details: '$e'");
     }
   }
 
   Future<SyncInstruction> syncUpdatePassword(
-    Users usuario, Bitacora bitacora) async {
+    DBO.Users usuario, DBO.Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
         final res = await supabase.rpc('change_user_password', params: {
@@ -6545,7 +6486,7 @@ class SyncProviderSupabase extends ChangeNotifier {
           return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Failed to sync data Update Password on Local Server to User '${usuario.correo}'");
+              "Failed to sync data Update Password on Local Server to User '${usuario.email}'");
         }
       } else {
         dataBase.bitacoraBox.remove(bitacora.id);
@@ -6556,12 +6497,12 @@ class SyncProviderSupabase extends ChangeNotifier {
       return SyncInstruction(
           exitoso: false,
           descripcion:
-              "Failed to sync data Update Password on Local Server to User '${usuario.correo}', details: '$e'");
+              "Failed to sync data Update Password on Local Server to User '${usuario.email}', details: '$e'");
     }
   }
 
   Future<SyncInstruction> syncAddEmail(
-    Email email, Bitacora bitacora) async {
+    DBO.Image email, DBO.Bitacora bitacora) async {
     try {
       if (bitacora.executeSupabase == false) {
         var urlAutomatizacion =
@@ -6571,7 +6512,7 @@ class SyncProviderSupabase extends ChangeNotifier {
         });
         var responseAutomatizacion = await post(urlAutomatizacion,
           headers: headers,
-          body: email.body);
+          body: email.base64);
         if (responseAutomatizacion.statusCode == 200) {
          //Se marca como ejecutada la instrucción en Bitacora
           bitacora.executeSupabase = true;
