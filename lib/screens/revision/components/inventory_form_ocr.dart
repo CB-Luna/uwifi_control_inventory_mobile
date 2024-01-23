@@ -49,6 +49,10 @@ class InventoryFormOCR extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                       ScalableOCR(
+                        boxTopOff: 5,
+                        boxBottomOff: 5,
+                        boxLeftOff: 7,
+                        boxRightOff: 7,
                           paintboxCustom: Paint()
                             ..style = PaintingStyle.stroke
                             ..strokeWidth = 5.0
