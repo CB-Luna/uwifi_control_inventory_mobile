@@ -1,6 +1,9 @@
 
 import 'dart:io' as libraryIO;
 import 'package:clay_containers/clay_containers.dart';
+import 'package:flutter/services.dart';
+import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_widgets.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkout_form_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/vehiculo_controller.dart';
 import 'package:flutter/material.dart';
@@ -31,16 +34,52 @@ class ResultSection extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(
+                      5, 5, 5, 15),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      checkOutProvider.clearControllers();
+                      vehicleProvider.changeOptionInventorySection(1);
+                    },
+                    text: 'Close',
+                    icon: const Icon(
+                      Icons.cancel_outlined,
+                      size: 15,
+                    ),
+                    options: FFButtonOptions(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: 40,
+                      color: FlutterFlowTheme.of(context)
+                          .white,
+                      textStyle: FlutterFlowTheme.of(context)
+                          .subtitle2
+                          .override(
+                            fontFamily: FlutterFlowTheme.of(context)
+                                .subtitle2Family,
+                            color: FlutterFlowTheme.of(context).alternate,
+                            fontSize: 15,
+                          ),
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).alternate,
+                        width: 2,
+                      ),
+                      borderRadius:
+                          BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
                       5, 0, 5, 20),
                   child: TextFormField(
                     controller: checkOutProvider.serialNumberTextController,
+                    textCapitalization: TextCapitalization.characters,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
                     obscureText: false,
                     decoration: InputDecoration(
                       errorMaxLines: 3,
                       prefixIcon: Icon(
-                        Icons.speed_outlined,
+                        Icons.numbers,
                         color: FlutterFlowTheme.of(context).alternate,
                       ),
                       labelText: 'Serial Number*',
@@ -90,7 +129,7 @@ class ResultSection extends StatelessWidget {
                     textAlign: TextAlign.start,
                     validator: (value) {
                       if (value == "" || value == null || value.isEmpty) {
-                        'Please input a valid serial number.';
+                        return 'Please input a valid serial number.';
                       }
                       return null;
                     },
@@ -107,7 +146,7 @@ class ResultSection extends StatelessWidget {
                     decoration: InputDecoration(
                       errorMaxLines: 3,
                       prefixIcon: Icon(
-                        Icons.speed_outlined,
+                        Icons.pin_outlined,
                         color: FlutterFlowTheme.of(context).alternate,
                       ),
                       labelText: 'Product ID*',
@@ -155,9 +194,11 @@ class ResultSection extends StatelessWidget {
                     ),
                     style: FlutterFlowTheme.of(context).bodyText1,
                     textAlign: TextAlign.start,
+                    inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(12),],
+                    keyboardType: const TextInputType.numberWithOptions(decimal: false),
                     validator: (value) {
                       if (value == "" || value == null || value.isEmpty) {
-                        'Please input a valid product ID.';
+                        return 'Please input a valid product ID.';
                       }
                       return null;
                     },
@@ -168,13 +209,14 @@ class ResultSection extends StatelessWidget {
                       5, 0, 5, 20),
                   child: TextFormField(
                     controller: checkOutProvider.brandTextController,
+                    textCapitalization: TextCapitalization.words,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
                     obscureText: false,
                     decoration: InputDecoration(
                       errorMaxLines: 3,
                       prefixIcon: Icon(
-                        Icons.speed_outlined,
+                        Icons.label_outline,
                         color: FlutterFlowTheme.of(context).alternate,
                       ),
                       labelText: 'Brand*',
@@ -224,7 +266,7 @@ class ResultSection extends StatelessWidget {
                     textAlign: TextAlign.start,
                     validator: (value) {
                       if (value == "" || value == null || value.isEmpty) {
-                        'Please input a valid brand.';
+                        return 'Please input a valid brand.';
                       }
                       return null;
                     },
@@ -235,13 +277,14 @@ class ResultSection extends StatelessWidget {
                       5, 0, 5, 20),
                   child: TextFormField(
                     controller: checkOutProvider.modelTextController,
+                    textCapitalization: TextCapitalization.words,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
                     obscureText: false,
                     decoration: InputDecoration(
                       errorMaxLines: 3,
                       prefixIcon: Icon(
-                        Icons.speed_outlined,
+                        Icons.router,
                         color: FlutterFlowTheme.of(context).alternate,
                       ),
                       labelText: 'Model*',
@@ -291,7 +334,7 @@ class ResultSection extends StatelessWidget {
                     textAlign: TextAlign.start,
                     validator: (value) {
                       if (value == "" || value == null || value.isEmpty) {
-                        'Please input a valid model.';
+                        return 'Please input a valid model.';
                       }
                       return null;
                     },

@@ -2,6 +2,7 @@ import 'dart:io' as libraryIO;
 import 'dart:typed_data';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
@@ -287,7 +288,7 @@ class _MeasuresSectionDState extends State<MeasuresSectionD> {
                                         ),
                                         style: FlutterFlowTheme.of(context).bodyText1,
                                         textAlign: TextAlign.start,
-                                        inputFormatters: [numbersFormat],
+                                        inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(12),],
                                         keyboardType: const TextInputType.numberWithOptions(decimal: false),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {

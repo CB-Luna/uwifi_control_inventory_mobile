@@ -7,7 +7,7 @@ import 'package:uwifi_control_inventory_mobile/objectbox.g.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/general_information_section_r.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/equipment_section_r.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/inventory_form_ocr.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/lights_section_r.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/search_gateways_created.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/control_inventory_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/options_add_products.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/result_section.dart';
@@ -35,7 +35,7 @@ class VehiculoController extends ChangeNotifier {
   //OPCIONES MENU:
   final menuTapedCheckOut = {
     0: ControlInventoryScreen(),// Measures 0
-    1: const LightsSectionR(), // Lights 1
+    1: const SearchGatewaysCreadted(), // Lights 1
     2: const SecuritySectionR(), // Security 2
     3: const EquipmentSectionR(), // Equipment 3
     4: const GeneralInformationSectionR(), // General information 4
@@ -61,9 +61,9 @@ Widget optionInventorySection() {
       case 1:
         return OptionsAddProducts();
       case 2:
-        return InventoryFormOCR();
+        return const InventoryFormOCR();
       case 3:
-        return InventoryFormQR();
+        return const InventoryFormQR();
       case 4:
         return ResultSection();
       default:

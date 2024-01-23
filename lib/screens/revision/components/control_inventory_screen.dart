@@ -3,7 +3,6 @@ import 'dart:io' as libraryIO;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkout_form_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/header_shimmer.dart';
 
 import '../../../providers/database_providers/vehiculo_controller.dart';
@@ -17,7 +16,6 @@ class ControlInventoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final checkOutProvider = Provider.of<CheckOutFormController>(context);
     final vehicleProvider = Provider.of<VehiculoController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),

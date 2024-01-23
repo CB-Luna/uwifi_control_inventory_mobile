@@ -335,69 +335,33 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                         elevation: 4,
                       ),
                       child: MenuFormButton(
-                        icon: Icons.speed_outlined, 
+                        icon: Icons.note_alt_outlined, 
                         onPressed: () {
                           vehiculoController.setTapedOptionCheckOut(0);
                         },
                         isTaped: vehiculoController.isTapedCheckOut == 0,
                       ),
                     ),
-                    badge.Badge(
-                      badgeContent: Text(
-                        "${checkOutFormProvider.badStateLights}",
-                          style: TextStyle(
-                              color: FlutterFlowTheme.of(context).white)),
-                      showBadge: checkOutFormProvider.badStateLights != 0,
-                      position: badge.BadgePosition.topEnd(),
-                      badgeStyle: badge.BadgeStyle(
-                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
-                        elevation: 4,
-                      ),
-                      child: MenuFormButton(
-                        icon: Icons.flare, 
-                        onPressed: () {
-                          vehiculoController.setTapedOptionCheckOut(1);
-                        },
-                        isTaped: vehiculoController.isTapedCheckOut == 1,
-                      ),
+                    MenuFormButton(
+                      icon: Icons.search_outlined, 
+                      onPressed: () {
+                        vehiculoController.setTapedOptionCheckOut(1);
+                      },
+                      isTaped: vehiculoController.isTapedCheckOut == 1,
                     ),
-                    badge.Badge(
-                      badgeContent: Text(
-                        "${checkOutFormProvider.badStateSecurity}",
-                          style: TextStyle(
-                              color: FlutterFlowTheme.of(context).white)),
-                      showBadge: checkOutFormProvider.badStateSecurity != 0,
-                      position: badge.BadgePosition.topEnd(),
-                      badgeStyle: badge.BadgeStyle(
-                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
-                        elevation: 4,
-                      ),
-                      child: MenuFormButton(
-                        icon: Icons.health_and_safety, 
-                        onPressed: () {
-                          vehiculoController.setTapedOptionCheckOut(2);
-                        },
-                        isTaped: vehiculoController.isTapedCheckOut == 2,
-                      ),
+                    MenuFormButton(
+                      icon: Icons.inventory_outlined, 
+                      onPressed: () {
+                        vehiculoController.setTapedOptionCheckOut(2);
+                      },
+                      isTaped: vehiculoController.isTapedCheckOut == 2,
                     ),
-                    badge.Badge(
-                      badgeContent: Text(
-                        "${checkOutFormProvider.badStateEquipment}",
-                          style: TextStyle(
-                              color: FlutterFlowTheme.of(context).white)),
-                      showBadge: checkOutFormProvider.badStateEquipment != 0,
-                      position: badge.BadgePosition.topEnd(),
-                      badgeStyle: badge.BadgeStyle(
-                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
-                        elevation: 4,
-                      ),
-                      child: MenuFormButton(
-                        icon: Icons.build, 
-                        onPressed: () {
-                          vehiculoController.setTapedOptionCheckOut(3);
-                        },
-                        isTaped: vehiculoController.isTapedCheckOut == 3,
-                      ),
+                    MenuFormButton(
+                      icon: Icons.bar_chart_outlined, 
+                      onPressed: () {
+                        vehiculoController.setTapedOptionCheckOut(3);
+                      },
+                      isTaped: vehiculoController.isTapedCheckOut == 3,
                     ),
                     MenuFormButton(
                     icon: Icons.local_shipping, 
