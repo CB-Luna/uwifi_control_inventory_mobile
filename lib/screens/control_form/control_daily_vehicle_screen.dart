@@ -10,7 +10,6 @@ import 'package:uwifi_control_inventory_mobile/providers/database_providers/chec
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/employees/agregar_vehiculo_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/checkout_scheduler_screen.dart';
-import 'package:badges/badges.dart' as badge;
 import 'package:uwifi_control_inventory_mobile/screens/widgets/side_menu/side_menu.dart';
 
 class ControlDailyVehicleScreen extends StatefulWidget {
@@ -98,7 +97,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                           ),
                           Expanded(
                             child: Text(
-                              'Control Daily Invetory',
+                              'Control Daily Inventory',
                               textAlign: TextAlign.center,
                               style:
                                 FlutterFlowTheme.of(context).bodyText1.override(
@@ -256,7 +255,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                             ],
                                           ),
                                           Text(
-                                            'Add Router',
+                                            'Add Gateway Data',
                                             style: FlutterFlowTheme.of(
                                                     context)
                                                 .bodyText1
@@ -276,55 +275,37 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                     Padding(
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                               10.0, 10.0, 10.0, 10.0),
-                                      child: badge.Badge(
-                                        badgeContent: Text(
-                                          "${checkOutFormProvider
-                                          .pendingMeasures + checkOutFormProvider
-                                          .badStateLights + checkOutFormProvider
-                                          .badStateSecurity + checkOutFormProvider
-                                          .badStateEquipment}",
-                                            style: TextStyle(
-                                                color: FlutterFlowTheme.of(context).white)),
-                                        showBadge: controlFormCheckOut == null,
-                                        position: badge.BadgePosition.bottomEnd(),
-                                        badgeStyle: badge.BadgeStyle(
-                                          badgeColor: FlutterFlowTheme.of(context).secondaryColor,
-                                        ),
-                                        child: ClayContainer(
-                                          height: 30,
-                                          width: 30,
-                                          depth: 10,
-                                          spread: 1,
-                                          borderRadius: 25,
-                                          curveType: CurveType.concave,
-                                          color: 
-                                          controlFormCheckOut != null ?
-                                          FlutterFlowTheme.of(context).buenoColor
-                                          :
-                                          FlutterFlowTheme.of(context).primaryColor,
-                                          surfaceColor: 
-                                          controlFormCheckOut != null ?
-                                          FlutterFlowTheme.of(context).buenoColor
-                                          :
-                                          FlutterFlowTheme.of(context).primaryColor,
-                                          parentColor: 
-                                          controlFormCheckOut != null ?
-                                          FlutterFlowTheme.of(context).buenoColor
-                                          :
-                                          FlutterFlowTheme.of(context).primaryColor,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(25),
-                                            ),
-                                            child: Icon(
-                                              controlFormCheckOut != null ?
-                                                Icons.check
-                                                :
-                                                Icons.close,
-                                              color:
-                                              FlutterFlowTheme.of(context).white,
-                                              size: 20,
-                                            ),
+                                      child: ClayContainer(
+                                        height: 30,
+                                        width: 30,
+                                        depth: 10,
+                                        spread: 1,
+                                        borderRadius: 25,
+                                        curveType: CurveType.concave,
+                                        color: 
+                                        controlFormCheckOut != null ?
+                                        FlutterFlowTheme.of(context).buenoColor
+                                        :
+                                        FlutterFlowTheme.of(context).primaryColor,
+                                        surfaceColor: 
+                                        controlFormCheckOut != null ?
+                                        FlutterFlowTheme.of(context).buenoColor
+                                        :
+                                        FlutterFlowTheme.of(context).primaryColor,
+                                        parentColor: 
+                                        controlFormCheckOut != null ?
+                                        FlutterFlowTheme.of(context).buenoColor
+                                        :
+                                        FlutterFlowTheme.of(context).primaryColor,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(25),
+                                          ),
+                                          child: Icon(
+                                              Icons.info_outline,
+                                            color:
+                                            FlutterFlowTheme.of(context).white,
+                                            size: 20,
                                           ),
                                         ),
                                       ),
@@ -418,7 +399,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 ),
                                               ),
                                               Icon(
-                                                Icons.tablet_android_outlined,
+                                                Icons.sim_card_outlined,
                                                 color: FlutterFlowTheme
                                                         .of(context)
                                                     .white,
@@ -427,7 +408,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                             ],
                                           ),
                                           Text(
-                                            'Add Tablet',
+                                            'Add SIM Card Data',
                                             style: FlutterFlowTheme.of(
                                                     context)
                                                 .bodyText1
@@ -447,55 +428,37 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                     Padding(
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                               10.0, 10.0, 10.0, 10.0),
-                                      child: badge.Badge(
-                                        badgeContent: Text(
-                                          "${checkInFormProvider
-                                          .pendingMeasures + checkInFormProvider
-                                          .badStateLights + checkInFormProvider
-                                          .badStateSecurity + checkInFormProvider
-                                          .badStateEquipment}",
-                                            style: TextStyle(
-                                                color: FlutterFlowTheme.of(context).white)),
-                                        showBadge: controlFormCheckIn == null,
-                                        position: badge.BadgePosition.bottomEnd(),
-                                        badgeStyle: badge.BadgeStyle(
-                                          badgeColor: FlutterFlowTheme.of(context).secondaryColor,
-                                        ),
-                                        child: ClayContainer(
-                                          height: 30,
-                                          width: 30,
-                                          depth: 10,
-                                          spread: 1,
-                                          borderRadius: 25,
-                                          curveType: CurveType.concave,
-                                          color: 
-                                          controlFormCheckIn != null ?
-                                          FlutterFlowTheme.of(context).buenoColor
-                                          :
-                                          FlutterFlowTheme.of(context).primaryColor,
-                                          surfaceColor: 
-                                          controlFormCheckIn != null ?
-                                          FlutterFlowTheme.of(context).buenoColor
-                                          :
-                                          FlutterFlowTheme.of(context).primaryColor,
-                                          parentColor: 
-                                          controlFormCheckIn != null ?
-                                          FlutterFlowTheme.of(context).buenoColor
-                                          :
-                                          FlutterFlowTheme.of(context).primaryColor,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(25),
-                                            ),
-                                            child: Icon(
-                                              controlFormCheckIn != null ?
-                                                Icons.check
-                                                :
-                                                Icons.close,
-                                              color:
-                                              FlutterFlowTheme.of(context).white,
-                                              size: 20,
-                                            ),
+                                      child: ClayContainer(
+                                        height: 30,
+                                        width: 30,
+                                        depth: 10,
+                                        spread: 1,
+                                        borderRadius: 25,
+                                        curveType: CurveType.concave,
+                                        color: 
+                                        controlFormCheckIn != null ?
+                                        FlutterFlowTheme.of(context).buenoColor
+                                        :
+                                        FlutterFlowTheme.of(context).primaryColor,
+                                        surfaceColor: 
+                                        controlFormCheckIn != null ?
+                                        FlutterFlowTheme.of(context).buenoColor
+                                        :
+                                        FlutterFlowTheme.of(context).primaryColor,
+                                        parentColor: 
+                                        controlFormCheckIn != null ?
+                                        FlutterFlowTheme.of(context).buenoColor
+                                        :
+                                        FlutterFlowTheme.of(context).primaryColor,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(25),
+                                          ),
+                                          child: Icon(
+                                              Icons.info_outline,
+                                            color:
+                                            FlutterFlowTheme.of(context).white,
+                                            size: 20,
                                           ),
                                         ),
                                       ),

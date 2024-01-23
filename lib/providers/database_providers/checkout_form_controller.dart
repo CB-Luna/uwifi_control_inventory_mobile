@@ -13,17 +13,20 @@ import 'package:uwifi_control_inventory_mobile/main.dart';
 import 'package:uwifi_control_inventory_mobile/objectbox.g.dart';
 import 'package:uuid/uuid.dart';
 class CheckOutFormController extends ChangeNotifier {
+  
+  bool validateForm(GlobalKey<FormState> keyForm) {
+    return keyForm.currentState!.validate() ? true : false;
+  }
 
-  GlobalKey<FormState> checkOutFormKey = GlobalKey<FormState>();
   //************************OCR Components *********/
-  bool isActiveOCR = false;
-  String text = "";
   TextEditingController productIDTextController = TextEditingController();
   TextEditingController brandTextController = TextEditingController();
   TextEditingController modelTextController = TextEditingController();
   TextEditingController serialNumberTextController = TextEditingController();
+  String codeQR =  "";
 
-  void autofillFields(String value) {
+  void autofillFieldsQR(String value) {
+    codeQR = value;
     if (value.contains(productIDRegExpo) 
     && value.contains(brandRegExp) 
     && value.contains(modelRegExp)
@@ -36,29 +39,74 @@ class CheckOutFormController extends ChangeNotifier {
       Match? matchSerialNumber = serialNumberRegExp.firstMatch(value);
       // Si se encuentra una coincidencia, extrae la subcadena
       if (matchProductID != null) {
-          modelTextController.text =
-              matchProductID.group(0)!.replaceAll(nameFieldModel, "");
+          productIDTextController.text =
+              matchProductID.group(0)!.replaceAll(nameFieldProductID, "");
       }
       if (matchBrand != null) {
-          modelTextController.text =
-              matchBrand.group(0)!.replaceAll(nameFieldModel, "");
+          brandTextController.text =
+              matchBrand.group(0)!.replaceAll(nameFieldBrand, "");
       }
       if (matchModel != null) {
           modelTextController.text =
               matchModel.group(0)!.replaceAll(nameFieldModel, "");
       }
       if (matchSerialNumber != null) {
-          modelTextController.text =
-              matchSerialNumber.group(0)!.replaceAll(nameFieldModel, "");
+          serialNumberTextController.text =
+              matchSerialNumber.group(0)!.replaceAll(nameFieldSerialNumber, "");
       }
     } 
-  }
-
-
-  void changeActiveOCR (bool value) {
-    isActiveOCR = value;
     notifyListeners();
   }
+
+  Future<bool> autofillFieldsOCR(String value) async {
+    if (value.contains(productIDRegExpo) 
+    && value.contains(brandRegExp) 
+    && value.contains(modelRegExp)
+    && value.contains(serialNumberRegExp)) {
+      // Intenta encontrar la primera coincidencia en el texto
+      Match? matchProductID = productIDRegExpo.firstMatch(value);
+      Match? matchBrand = brandRegExp.firstMatch(value);
+      Match? matchModel = modelRegExp.firstMatch(value);
+      Match? matchSerialNumber = serialNumberRegExp.firstMatch(value);
+      // Si se encuentra una coincidencia, extrae la subcadena
+      if (matchProductID != null) {
+        await Future.microtask(() => {
+          productIDTextController.text =
+              matchProductID.group(0)!.replaceAll(nameFieldProductID, "")
+        });
+      }
+      if (matchBrand != null) {
+        await Future.microtask(() => {
+          brandTextController.text =
+              matchBrand.group(0)!.replaceAll(nameFieldBrand, "")
+        });
+      }
+      if (matchModel != null) {
+        await Future.microtask(() => {
+          modelTextController.text =
+              matchModel.group(0)!.replaceAll(nameFieldModel, "")
+        });
+      }
+      if (matchSerialNumber != null) {
+        await Future.microtask(() => {
+          serialNumberTextController.text =
+              matchSerialNumber.group(0)!.replaceAll(nameFieldSerialNumber, "")
+        });
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void clearControllers() {
+    productIDTextController.clear();
+    brandTextController.clear();
+    modelTextController.clear();
+    serialNumberTextController.clear();
+    codeQR =  "";
+  }
+
 
   //***********************<Bnaderas Services>************************
   bool flagOilChange = false;
@@ -1835,17 +1883,7 @@ class CheckOutFormController extends ChangeNotifier {
   }
 
 
-  bool validateForm() {
-    if (isGasRegistered && isMileageRegistered) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
-  bool validateKeyForm(GlobalKey<FormState> formKey) {
-    return formKey.currentState!.validate() ? true : false;
-  }
 
   List<String> getListImages(List<ImageEvidence> imagesEvidence) {
     List<String> listImages = [];

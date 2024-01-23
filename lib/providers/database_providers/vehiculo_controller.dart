@@ -6,8 +6,11 @@ import 'package:uwifi_control_inventory_mobile/main.dart';
 import 'package:uwifi_control_inventory_mobile/objectbox.g.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/general_information_section_r.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/equipment_section_r.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/inventory_form_ocr.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/lights_section_r.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/measures_section_r.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/control_inventory_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/options_add_products.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/result_section.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/security_section_r.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/general_information_section_d.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/equipment_section_d.dart';
@@ -15,6 +18,8 @@ import 'package:uwifi_control_inventory_mobile/screens/revision/components/light
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/measures_section_d.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/security_section_d.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
+
+import '../../screens/revision/components/inventory_form_qr.dart';
 class VehiculoController extends ChangeNotifier {
   
   Vehicle? vehicleSelected;
@@ -29,7 +34,7 @@ class VehiculoController extends ChangeNotifier {
 
   //OPCIONES MENU:
   final menuTapedCheckOut = {
-    0: MeasuresSectionR(),// Measures 0
+    0: ControlInventoryScreen(),// Measures 0
     1: const LightsSectionR(), // Lights 1
     2: const SecuritySectionR(), // Security 2
     3: const EquipmentSectionR(), // Equipment 3
@@ -43,6 +48,28 @@ class VehiculoController extends ChangeNotifier {
     3: const EquipmentSectionD(), // Equipment 3
     4: const GeneralInformationSectionD(), // General information 4
   };
+
+int valueOptionInventorySection = 1;
+
+void changeOptionInventorySection(int value) {
+    valueOptionInventorySection = value;
+    notifyListeners();
+  }
+
+Widget optionInventorySection() { 
+ switch (valueOptionInventorySection) {
+      case 1:
+        return OptionsAddProducts();
+      case 2:
+        return InventoryFormOCR();
+      case 3:
+        return InventoryFormQR();
+      case 4:
+        return ResultSection();
+      default:
+        return OptionsAddProducts();
+    }
+  }
 
   int isTapedCheckOut = 0;
 

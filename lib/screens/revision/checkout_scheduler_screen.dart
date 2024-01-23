@@ -201,52 +201,6 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                       ),
                       child: InkWell(
                         onTap: () async {
-                          if (checkOutFormProvider.validateForm()) {
-                            if (checkOutFormProvider.addControlForm(
-                              userProvider.usuarioCurrent, 
-                              vehiculoController.vehicleSelected, 
-                              widget.registeredHour)) {
-                              // checkOutFormProvider.cleanInformation();
-                              controlFormProvider.cleanData();
-                              vehiculoController.cleanComponents();
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ControlFormRCreatedScreen(),
-                                ),
-                              );
-                            } else {
-                              checkOutFormProvider.cleanInformation();
-                              controlFormProvider.cleanData();
-                              vehiculoController.cleanComponents();
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ControlFormRNotCreatedScreen(),
-                                ),
-                              );
-                            }
-                          } else {
-                            await showDialog(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: const Text('Invalid action'),
-                                  content: const Text(
-                                      "The value of 'Mileage' and '% Gas/Diesel' are required."),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(alertDialogContext),
-                                      child: const Text('Ok'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          }
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
@@ -282,7 +236,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                   24, 16, 24, 16),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
                       'Control Inventory',
@@ -291,8 +245,20 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                           FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: FlutterFlowTheme.of(context)
                                     .bodyText1Family,
-                                color: FlutterFlowTheme.of(context).tertiaryColor,
-                                fontSize: 28,
+                                color: FlutterFlowTheme.of(context).secondaryColor,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                    ),
+                    Text(
+                      'Gateway',
+                      textAlign: TextAlign.center,
+                      style:
+                          FlutterFlowTheme.of(context).bodyText1.override(
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .bodyText1Family,
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                                fontSize: 22,
                                 fontWeight: FontWeight.bold,
                               ),
                     ),
