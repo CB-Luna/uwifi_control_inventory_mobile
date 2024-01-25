@@ -323,24 +323,12 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    badge.Badge(
-                      badgeContent: Text(
-                        "${checkOutFormProvider.pendingMeasures}",
-                          style: TextStyle(
-                              color: FlutterFlowTheme.of(context).white)),
-                      showBadge: checkOutFormProvider.pendingMeasures != 0,
-                      position: badge.BadgePosition.topEnd(),
-                      badgeStyle: badge.BadgeStyle(
-                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
-                        elevation: 4,
-                      ),
-                      child: MenuFormButton(
-                        icon: Icons.note_alt_outlined, 
-                        onPressed: () {
-                          vehiculoController.setTapedOptionCheckOut(0);
-                        },
-                        isTaped: vehiculoController.isTapedCheckOut == 0,
-                      ),
+                    MenuFormButton(
+                      icon: Icons.add_outlined, 
+                      onPressed: () {
+                        vehiculoController.setTapedOptionCheckOut(0);
+                      },
+                      isTaped: vehiculoController.isTapedCheckOut == 0,
                     ),
                     MenuFormButton(
                       icon: Icons.search_outlined, 
@@ -350,7 +338,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                       isTaped: vehiculoController.isTapedCheckOut == 1,
                     ),
                     MenuFormButton(
-                      icon: Icons.inventory_outlined, 
+                      icon: Icons.sim_card_download_outlined, 
                       onPressed: () {
                         vehiculoController.setTapedOptionCheckOut(2);
                       },
@@ -384,7 +372,6 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
               Builder(
                 builder: (context) {
                   return ListView.builder(
-                      controller: ScrollController(),
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
                       reverse: true,
                       shrinkWrap: true,

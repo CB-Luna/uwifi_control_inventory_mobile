@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animated_text_kit: ^4.2.2
+  auto_animated: ^3.2.0
   auto_size_text: ^3.0.0
   badges: ^3.1.1
   better_open_file: ^3.6.3
@@ -95,6 +96,7 @@ dependencies:
   shared_preferences: ^2.0.15
   shimmer_animation: ^2.1.0+1
   simple_gradient_text: ^1.2.4
+  slidable_button: ^3.0.0+1
   stepper_counter_swipe: ^1.0.2
   substring_highlight: ^1.0.33
   supabase_flutter: ^1.4.0

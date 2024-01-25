@@ -5,14 +5,14 @@ import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.d
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkout_form_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/header_shimmer.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/item_form.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/components/item_form_bundle_gateway_sims_card.dart';
 
-class SearchGatewaysCreadted extends StatefulWidget {
+class BundleGatewayaSIMSCard extends StatefulWidget {
   
-  const SearchGatewaysCreadted({super.key});
+  const BundleGatewayaSIMSCard({super.key});
 
   @override
-  State<SearchGatewaysCreadted> createState() => _SearchGatewaysCreadtedState();
+  State<BundleGatewayaSIMSCard> createState() => _BundleGatewayaSIMSCardState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -70,7 +70,7 @@ final animationsMap = {
     ),
   };
 
-class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
+class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
   @override
   Widget build(BuildContext context) {
     final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
@@ -83,8 +83,9 @@ class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
             // HEADER
             HeaderShimmer(
               width: MediaQuery.of(context).size.width, 
-              text: "Search Gateways Created",
+              text: "Bundle Gateways to SIMS Card",
             ),
+            // Searcher
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(
                   0, 10, 0, 10),
@@ -213,7 +214,7 @@ class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
               ),
             ),
             Padding(
-               padding: const EdgeInsetsDirectional.fromSTEB(0, 8.0, 0, 8.0),
+               padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
                child: Container(
                 clipBehavior: Clip.antiAlias,
                 decoration: ShapeDecoration(
@@ -243,7 +244,7 @@ class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
                         ),
                       ),
                       Text(
-                        "Created",
+                        "Date Created",
                         style: FlutterFlowTheme.of(context)
                         .bodyText1.override(
                           fontFamily:
@@ -254,7 +255,7 @@ class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
                         ),
                       ),
                       Text(
-                        "Options",
+                        "SIMS Card",
                         style: FlutterFlowTheme.of(context)
                         .bodyText1.override(
                           fontFamily:
@@ -288,7 +289,7 @@ class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
                   child: Column(
                     children: [
                       // HSG4GS5
-                      ItemForm(
+                      ItemFormBundleGatewaySIMSCard(
                         textItem: "HSG4GS5", 
                         onPressed: () {
                             
@@ -317,7 +318,7 @@ class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
                       ),
                             
                       // GSGS243
-                      ItemForm(
+                      ItemFormBundleGatewaySIMSCard(
                         textItem: "GSGS243", 
                         onPressed: () {
                             
@@ -346,7 +347,7 @@ class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
                       ),
                             
                       // HSG4GS5
-                      ItemForm(
+                      ItemFormBundleGatewaySIMSCard(
                         textItem: "HSG4GS5", 
                         onPressed: () {
                             
@@ -375,7 +376,7 @@ class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
                       ),
                             
                       // GSGS243
-                      ItemForm(
+                      ItemFormBundleGatewaySIMSCard(
                         textItem: "GSGS243", 
                         onPressed: () {
                             
@@ -404,7 +405,7 @@ class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
                       ),
                             
                       // HSG4GS5
-                      ItemForm(
+                      ItemFormBundleGatewaySIMSCard(
                         textItem: "HSG4GS5", 
                         onPressed: () {
                             
@@ -433,7 +434,7 @@ class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
                       ),
                             
                       // GSGS243
-                      ItemForm(
+                      ItemFormBundleGatewaySIMSCard(
                         textItem: "GSGS243", 
                         onPressed: () {
                             
@@ -462,7 +463,7 @@ class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
                       ),
                             
                       // HSG4GS5
-                      ItemForm(
+                      ItemFormBundleGatewaySIMSCard(
                         textItem: "HSG4GS5", 
                         onPressed: () {
                             
@@ -491,7 +492,7 @@ class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
                       ),
                             
                       // GSGS243
-                      ItemForm(
+                      ItemFormBundleGatewaySIMSCard(
                         textItem: "GSGS243", 
                         onPressed: () {
                             
