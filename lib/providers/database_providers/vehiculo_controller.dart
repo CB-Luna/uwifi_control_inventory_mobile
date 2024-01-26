@@ -12,11 +12,6 @@ import 'package:uwifi_control_inventory_mobile/screens/revision/components/contr
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/options_add_products.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/result_section.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/bundle_gateway_sims_card.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/general_information_section_d.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/equipment_section_d.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/lights_section_d.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/measures_section_d.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/security_section_d.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 
 import '../../screens/revision/components/inventory_form_qr.dart';
@@ -35,18 +30,18 @@ class VehiculoController extends ChangeNotifier {
   //OPCIONES MENU:
   final menuTapedCheckOut = {
     0: ControlInventoryScreen(),// Measures 0
-    1: const SearchGatewaysCreadted(), // Lights 1
+    1: const SearchGatewaysCreated(), // Lights 1
     2: const BundleGatewayaSIMSCard(), // Security 2
     3: const EquipmentSectionR(), // Equipment 3
     4: const GeneralInformationSectionR(), // General information 4
   };
 
   final menuTapedCheckIn = {
-    0: const MeasuresSectionD(),// Measures 0
-    1: const LightsSectionD(), // Lights 1
-    2: const SecuritySectionD(), // Security 2
-    3: const EquipmentSectionD(), // Equipment 3
-    4: const GeneralInformationSectionD(), // General information 4
+    0: ControlInventoryScreen(),// Measures 0
+    1: Container(), // Lights 1
+    2: Container(), // Security 2
+    3: Container(), // Equipment 3
+    4: Container(), // General information 4
   };
 
 int valueOptionInventorySection = 1;

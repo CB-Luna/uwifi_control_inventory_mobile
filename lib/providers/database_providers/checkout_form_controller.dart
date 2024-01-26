@@ -2,15 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:uwifi_control_inventory_mobile/database/image_evidence.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
-import 'package:uwifi_control_inventory_mobile/main.dart';
-import 'package:uwifi_control_inventory_mobile/objectbox.g.dart';
 import 'package:uuid/uuid.dart';
 class CheckOutFormController extends ChangeNotifier {
   
@@ -18,7 +15,7 @@ class CheckOutFormController extends ChangeNotifier {
     return keyForm.currentState!.validate() ? true : false;
   }
 
-  //************************OCR Components *********/
+  //************************Gateways Components *********/
   TextEditingController productIDTextController = TextEditingController();
   TextEditingController brandTextController = TextEditingController();
   TextEditingController modelTextController = TextEditingController();
@@ -97,6 +94,34 @@ class CheckOutFormController extends ChangeNotifier {
     } else {
       return false;
     }
+  }
+
+  Future<String> addNewGatewayBackend() async {
+    try {
+      if (await existsRegisterInBackend("gateway_test_mobile", "serial_no", serialNumberTextController.text)) {
+        return "Duplicate";
+      }
+      final recordGateway = await supabase.from('gateway_test_mobile').insert(
+        {
+          'serial_no': serialNumberTextController.text,
+          'product_id': productIDTextController.text,
+          'brand': brandTextController.text,
+          'model': modelTextController.text
+        },
+      ).select<PostgrestList>('id');
+      if (recordGateway.isNotEmpty) {
+        return "True";
+      } else {
+        return "False";
+      }
+    } catch (e) {
+      return "$e";
+    }
+  }
+
+  Future<bool> existsRegisterInBackend(String table, String column, String idUnique) async {
+    final results = await supabase.from(table).select().eq(column, idUnique);
+    return results.isNotEmpty;
   }
 
   void clearControllers() {

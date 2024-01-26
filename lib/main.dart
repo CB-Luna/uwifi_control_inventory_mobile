@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
+import 'package:uwifi_control_inventory_mobile/providers/gateways_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/sync_change_vehicle_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -96,6 +97,10 @@ void main() async {
         ),
         ChangeNotifierProvider<FFAppState>(
           create: (context) => FFAppState(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<GatewaysProvider>(
+          create: (context) => GatewaysProvider(),
           lazy: false,
         ),
       ],

@@ -300,9 +300,8 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                             ),
                             Text(
                               DateFormat(
-                               'hh:mm a').
-                                format(
-                                  widget.registeredHour),
+                               'MMM-dd-yyyy').
+                                format(DateTime.now()),
                               style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily:
                                     FlutterFlowTheme.of(context).bodyText1Family,

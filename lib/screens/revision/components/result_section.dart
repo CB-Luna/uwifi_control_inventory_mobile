@@ -4,6 +4,7 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/services.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_widgets.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkout_form_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/vehiculo_controller.dart';
 import 'package:flutter/material.dart';
@@ -345,8 +346,55 @@ class ResultSection extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () async {
                       if (checkOutProvider.validateForm(keyForm)) {
-                        checkOutProvider.clearControllers();
-                        vehicleProvider.changeOptionInventorySection(1);
+                        final message = await checkOutProvider.addNewGatewayBackend();
+                        switch (message) {
+                          case "True":
+                            if (!context.mounted) return;
+                            snackbarKey.currentState
+                                ?.showSnackBar(SnackBar(
+                              backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+                              content: const Text(
+                                  "Gateway registered successfully."),
+                            ));
+                            checkOutProvider.clearControllers();
+                            vehicleProvider.changeOptionInventorySection(1);
+                            break;
+                          case "False":
+                            if (!context.mounted) return;
+                            showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: const Text('Invalid action'),
+                                  content: const Text(
+                                      "Failed to load Gateway, please try again."),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: const Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                            break;
+                          case "Duplicate":
+                            if (!context.mounted) return;
+                            snackbarKey.currentState
+                                ?.showSnackBar(const SnackBar(
+                              content: Text(
+                                  "Gateway already registered, please register a new one."),
+                            ));
+                            break;
+                          default:
+                            snackbarKey.currentState
+                                ?.showSnackBar(SnackBar(
+                              content: Text(
+                                  "Gateway not registered, more info: '$message'"),
+                            ));
+                            break;
+                        }
                       } else {
                         await showDialog(
                           context: context,

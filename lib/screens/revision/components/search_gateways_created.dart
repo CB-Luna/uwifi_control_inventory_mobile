@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkout_form_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/gateways_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/header_shimmer.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/item_form.dart';
 
-class SearchGatewaysCreadted extends StatefulWidget {
+class SearchGatewaysCreated extends StatefulWidget {
   
-  const SearchGatewaysCreadted({super.key});
+  const SearchGatewaysCreated({super.key});
 
   @override
-  State<SearchGatewaysCreadted> createState() => _SearchGatewaysCreadtedState();
+  State<SearchGatewaysCreated> createState() => _SearchGatewaysCreatedState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -70,10 +70,24 @@ final animationsMap = {
     ),
   };
 
-class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
+class _SearchGatewaysCreatedState extends State<SearchGatewaysCreated> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      GatewaysProvider provider = Provider.of<GatewaysProvider>(
+        context,
+        listen: false,
+      );
+      await provider.updateState();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
+    final provider = Provider.of<GatewaysProvider>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
@@ -270,257 +284,31 @@ class _SearchGatewaysCreadtedState extends State<SearchGatewaysCreadted> {
                ),
             ),
             Container(
-              height: 400,
-              clipBehavior: Clip.antiAlias,
-                decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                    width: 2.0,
-                    color: FlutterFlowTheme.of(context).grayLighter,
-                    ),
-                  borderRadius: BorderRadius.circular(8.0),
+            height: 400,
+            clipBehavior: Clip.antiAlias,
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  width: 2.0,
+                  color: FlutterFlowTheme.of(context).grayLighter,
                   ),
+                borderRadius: BorderRadius.circular(8.0),
                 ),
-              child: SingleChildScrollView(
-                controller: ScrollController(),
-                child: Padding(
+              ),
+              child: Builder(
+                builder: (context) {
+                  return ListView.builder(
                   padding: const EdgeInsets.all(5.0),
-                  child: Column(
-                    children: [
-                      // HSG4GS5
-                      ItemForm(
-                        textItem: "HSG4GS5", 
-                        onPressed: () {
-                            
-                        }, 
-                        isRight: false,
-                        readOnly: false,
-                        images: checkOutFormProvider.headLightsImages,
-                        addImage: (image) {
-                          checkOutFormProvider.addHeadLightsImage(image);
-                        },
-                        deleteImage: (image) {
-                          checkOutFormProvider.deleteHeadLightsImage(image);
-                        },
-                        comments: checkOutFormProvider.headLightsComments,
-                        report: checkOutFormProvider.headLights,
-                        updateReport: (report) {
-                          checkOutFormProvider.updateHeadLights(report);
-                        },
-                      ),
-                      Divider(
-                        height: 4,
-                        thickness: 4,
-                        indent: 20,
-                        endIndent: 20,
-                        color: FlutterFlowTheme.of(context).grayLighter,
-                      ),
-                            
-                      // GSGS243
-                      ItemForm(
-                        textItem: "GSGS243", 
-                        onPressed: () {
-                            
-                        }, 
-                        isRight: false,
-                        readOnly: false,
-                        images: checkOutFormProvider.brakeLightsImages,
-                        addImage: (image) {
-                          checkOutFormProvider.addBrakeLightsImage(image);
-                        },
-                        deleteImage: (image) {
-                          checkOutFormProvider.deleteBrakeLightsImage(image);
-                        },
-                        comments: checkOutFormProvider.brakeLightsComments,
-                        report: checkOutFormProvider.brakeLights,
-                        updateReport: (report) {
-                          checkOutFormProvider.updateBrakeLights(report);
-                        }
-                      ),
-                      Divider(
-                        height: 4,
-                        thickness: 4,
-                        indent: 20,
-                        endIndent: 20,
-                        color: FlutterFlowTheme.of(context).grayLighter,
-                      ),
-                            
-                      // HSG4GS5
-                      ItemForm(
-                        textItem: "HSG4GS5", 
-                        onPressed: () {
-                            
-                        }, 
-                        isRight: false,
-                        readOnly: false,
-                        images: checkOutFormProvider.headLightsImages,
-                        addImage: (image) {
-                          checkOutFormProvider.addHeadLightsImage(image);
-                        },
-                        deleteImage: (image) {
-                          checkOutFormProvider.deleteHeadLightsImage(image);
-                        },
-                        comments: checkOutFormProvider.headLightsComments,
-                        report: checkOutFormProvider.headLights,
-                        updateReport: (report) {
-                          checkOutFormProvider.updateHeadLights(report);
-                        },
-                      ),
-                      Divider(
-                        height: 4,
-                        thickness: 4,
-                        indent: 20,
-                        endIndent: 20,
-                        color: FlutterFlowTheme.of(context).grayLighter,
-                      ),
-                            
-                      // GSGS243
-                      ItemForm(
-                        textItem: "GSGS243", 
-                        onPressed: () {
-                            
-                        }, 
-                        isRight: false,
-                        readOnly: false,
-                        images: checkOutFormProvider.brakeLightsImages,
-                        addImage: (image) {
-                          checkOutFormProvider.addBrakeLightsImage(image);
-                        },
-                        deleteImage: (image) {
-                          checkOutFormProvider.deleteBrakeLightsImage(image);
-                        },
-                        comments: checkOutFormProvider.brakeLightsComments,
-                        report: checkOutFormProvider.brakeLights,
-                        updateReport: (report) {
-                          checkOutFormProvider.updateBrakeLights(report);
-                        }
-                      ),
-                      Divider(
-                        height: 4,
-                        thickness: 4,
-                        indent: 20,
-                        endIndent: 20,
-                        color: FlutterFlowTheme.of(context).grayLighter,
-                      ),
-                            
-                      // HSG4GS5
-                      ItemForm(
-                        textItem: "HSG4GS5", 
-                        onPressed: () {
-                            
-                        }, 
-                        isRight: false,
-                        readOnly: false,
-                        images: checkOutFormProvider.headLightsImages,
-                        addImage: (image) {
-                          checkOutFormProvider.addHeadLightsImage(image);
-                        },
-                        deleteImage: (image) {
-                          checkOutFormProvider.deleteHeadLightsImage(image);
-                        },
-                        comments: checkOutFormProvider.headLightsComments,
-                        report: checkOutFormProvider.headLights,
-                        updateReport: (report) {
-                          checkOutFormProvider.updateHeadLights(report);
-                        },
-                      ),
-                      Divider(
-                        height: 4,
-                        thickness: 4,
-                        indent: 20,
-                        endIndent: 20,
-                        color: FlutterFlowTheme.of(context).grayLighter,
-                      ),
-                            
-                      // GSGS243
-                      ItemForm(
-                        textItem: "GSGS243", 
-                        onPressed: () {
-                            
-                        }, 
-                        isRight: false,
-                        readOnly: false,
-                        images: checkOutFormProvider.brakeLightsImages,
-                        addImage: (image) {
-                          checkOutFormProvider.addBrakeLightsImage(image);
-                        },
-                        deleteImage: (image) {
-                          checkOutFormProvider.deleteBrakeLightsImage(image);
-                        },
-                        comments: checkOutFormProvider.brakeLightsComments,
-                        report: checkOutFormProvider.brakeLights,
-                        updateReport: (report) {
-                          checkOutFormProvider.updateBrakeLights(report);
-                        }
-                      ),
-                      Divider(
-                        height: 4,
-                        thickness: 4,
-                        indent: 20,
-                        endIndent: 20,
-                        color: FlutterFlowTheme.of(context).grayLighter,
-                      ),
-                            
-                      // HSG4GS5
-                      ItemForm(
-                        textItem: "HSG4GS5", 
-                        onPressed: () {
-                            
-                        }, 
-                        isRight: false,
-                        readOnly: false,
-                        images: checkOutFormProvider.headLightsImages,
-                        addImage: (image) {
-                          checkOutFormProvider.addHeadLightsImage(image);
-                        },
-                        deleteImage: (image) {
-                          checkOutFormProvider.deleteHeadLightsImage(image);
-                        },
-                        comments: checkOutFormProvider.headLightsComments,
-                        report: checkOutFormProvider.headLights,
-                        updateReport: (report) {
-                          checkOutFormProvider.updateHeadLights(report);
-                        },
-                      ),
-                      Divider(
-                        height: 4,
-                        thickness: 4,
-                        indent: 20,
-                        endIndent: 20,
-                        color: FlutterFlowTheme.of(context).grayLighter,
-                      ),
-                            
-                      // GSGS243
-                      ItemForm(
-                        textItem: "GSGS243", 
-                        onPressed: () {
-                            
-                        }, 
-                        isRight: false,
-                        readOnly: false,
-                        images: checkOutFormProvider.brakeLightsImages,
-                        addImage: (image) {
-                          checkOutFormProvider.addBrakeLightsImage(image);
-                        },
-                        deleteImage: (image) {
-                          checkOutFormProvider.deleteBrakeLightsImage(image);
-                        },
-                        comments: checkOutFormProvider.brakeLightsComments,
-                        report: checkOutFormProvider.brakeLights,
-                        updateReport: (report) {
-                          checkOutFormProvider.updateBrakeLights(report);
-                        }
-                      ),
-                      Divider(
-                        height: 4,
-                        thickness: 4,
-                        indent: 20,
-                        endIndent: 20,
-                        color: FlutterFlowTheme.of(context).grayLighter,
-                      ),
-                    ],
-                  ),
-                ),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: provider.gateways.length,
+                  itemBuilder: (context, index) {
+                    final gateway = provider.gateways[index];
+                    return ItemForm(
+                      gateway: gateway,
+                    );
+                  });
+                },
               ),
             ),
         ]),
