@@ -103,7 +103,7 @@ class OptionsAddProducts extends StatelessWidget {
                 onPressed: () async {
                   vehicleProvider.changeOptionInventorySection(4);
                 },
-                text: 'Manual',
+                text: 'SKU',
                 icon: const Icon(
                   Icons.edit_outlined,
                   size: 15,
