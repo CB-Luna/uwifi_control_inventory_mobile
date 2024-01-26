@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/database/image_evidence.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/gateway.dart';
 import 'package:uwifi_control_inventory_mobile/providers/gateways_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
@@ -105,8 +106,13 @@ class _ItemFormState extends State<ItemForm> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            child: const Text("Gateway")
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: Row(
+                              children: [
+                                const Text("Created at: "),
+                                Text(DateFormat("MMM-dd-yyyy").format(widget.gateway.createdAt)),
+                              ],
+                            )
                           ),
                           GestureDetector(
                             onTap: () {
@@ -163,7 +169,7 @@ class _ItemFormState extends State<ItemForm> {
                                       Icons.numbers,
                                       color: FlutterFlowTheme.of(context).alternate,
                                     ),
-                                    labelText: 'Serial Number*',
+                                    labelText: 'Serial Number',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .title3
                                         .override(
@@ -216,7 +222,7 @@ class _ItemFormState extends State<ItemForm> {
                                 child: TextFormField(
                                   readOnly: true,
                                   enabled: false,
-                                  initialValue: widget.gateway.productId.toString(),
+                                  initialValue: "1",
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
                                   obscureText: false,
@@ -226,7 +232,7 @@ class _ItemFormState extends State<ItemForm> {
                                       Icons.pin_outlined,
                                       color: FlutterFlowTheme.of(context).alternate,
                                     ),
-                                    labelText: 'Product ID*',
+                                    labelText: 'Product ID',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .title3
                                         .override(
@@ -279,7 +285,7 @@ class _ItemFormState extends State<ItemForm> {
                                 child: TextFormField(
                                   readOnly: true,
                                   enabled: false,
-                                  initialValue: widget.gateway.brand,
+                                  initialValue: "U-wifi Router",
                                   textCapitalization: TextCapitalization.words,
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
@@ -290,7 +296,7 @@ class _ItemFormState extends State<ItemForm> {
                                       Icons.label_outline,
                                       color: FlutterFlowTheme.of(context).alternate,
                                     ),
-                                    labelText: 'Brand*',
+                                    labelText: 'Name',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .title3
                                         .override(
@@ -299,7 +305,7 @@ class _ItemFormState extends State<ItemForm> {
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
-                                    hintText: 'Input the brand...',
+                                    hintText: 'Input the name...',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
@@ -335,12 +341,6 @@ class _ItemFormState extends State<ItemForm> {
                                   ),
                                   style: FlutterFlowTheme.of(context).bodyText1,
                                   textAlign: TextAlign.start,
-                                  validator: (value) {
-                                    if (value == "" || value == null || value.isEmpty) {
-                                      return 'Please input a valid brand.';
-                                    }
-                                    return null;
-                                  },
                                 ),
                               ),
                               Padding(
@@ -349,7 +349,7 @@ class _ItemFormState extends State<ItemForm> {
                                 child: TextFormField(
                                   readOnly: true,
                                   enabled: false,
-                                  initialValue: widget.gateway.model,
+                                  initialValue: "U-wifi Router by HUAWEI",
                                   textCapitalization: TextCapitalization.words,
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
@@ -360,7 +360,7 @@ class _ItemFormState extends State<ItemForm> {
                                       Icons.router,
                                       color: FlutterFlowTheme.of(context).alternate,
                                     ),
-                                    labelText: 'Model*',
+                                    labelText: 'Description',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .title3
                                         .override(
@@ -369,7 +369,7 @@ class _ItemFormState extends State<ItemForm> {
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
-                                    hintText: 'Input the model...',
+                                    hintText: 'Input the description...',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
@@ -405,12 +405,198 @@ class _ItemFormState extends State<ItemForm> {
                                   ),
                                   style: FlutterFlowTheme.of(context).bodyText1,
                                   textAlign: TextAlign.start,
-                                  validator: (value) {
-                                    if (value == "" || value == null || value.isEmpty) {
-                                      return 'Please input a valid model.';
-                                    }
-                                    return null;
-                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    5, 0, 5, 20),
+                                child: TextFormField(
+                                  readOnly: true,
+                                  enabled: false,
+                                  initialValue: "MOSNFOEN-12",
+                                  textCapitalization: TextCapitalization.words,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    errorMaxLines: 3,
+                                    prefixIcon: Icon(
+                                      Icons.qr_code_outlined,
+                                      color: FlutterFlowTheme.of(context).alternate,
+                                    ),
+                                    labelText: 'Product Code',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .title3
+                                        .override(
+                                          fontFamily: 'Montserrat',
+                                          color: FlutterFlowTheme.of(context).grayDark,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    hintText: 'Input the product code...',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    contentPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                                  ),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    5, 0, 5, 20),
+                                child: TextFormField(
+                                  readOnly: true,
+                                  enabled: false,
+                                  initialValue: widget.gateway.networkConfiguration,
+                                  textCapitalization: TextCapitalization.words,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    errorMaxLines: 3,
+                                    prefixIcon: Icon(
+                                      Icons.travel_explore_outlined,
+                                      color: FlutterFlowTheme.of(context).alternate,
+                                    ),
+                                    labelText: 'Network Configuration',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .title3
+                                        .override(
+                                          fontFamily: 'Montserrat',
+                                          color: FlutterFlowTheme.of(context).grayDark,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    hintText: 'Input the network configuration...',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    contentPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                                  ),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    5, 0, 5, 20),
+                                child: TextFormField(
+                                  readOnly: true,
+                                  enabled: false,
+                                  initialValue: widget.gateway.location,
+                                  textCapitalization: TextCapitalization.words,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    errorMaxLines: 3,
+                                    prefixIcon: Icon(
+                                      Icons.location_on_outlined,
+                                      color: FlutterFlowTheme.of(context).alternate,
+                                    ),
+                                    labelText: 'Location',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .title3
+                                        .override(
+                                          fontFamily: 'Montserrat',
+                                          color: FlutterFlowTheme.of(context).grayDark,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    hintText: 'Input the location...',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    contentPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                                  ),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  textAlign: TextAlign.start,
                                 ),
                               ),
                             ],
@@ -439,9 +625,24 @@ class _ItemFormState extends State<ItemForm> {
                       actions: [
                         TextButton(
                           onPressed: () async {        
-                            await provider.deleteGateway(widget.gateway.serialNo);
-                            if(!mounted) return;
-                            Navigator.pop(alertDialogContext);
+                            if (await provider.deleteGateway(widget.gateway.inventoryProductFk)) {
+                              if(!mounted) return;
+                              Navigator.pop(alertDialogContext);
+                              snackbarKey.currentState
+                                  ?.showSnackBar(const SnackBar(
+                                backgroundColor: Color(0xFF00B837),
+                                content: Text(
+                                    "Gateway deleted successfully."),
+                              ));
+                            } else {
+                              if(!mounted) return;
+                              Navigator.pop(alertDialogContext);
+                              snackbarKey.currentState
+                                  ?.showSnackBar(SnackBar(
+                                content: Text(
+                                    "Falied to deleted with serial no. '${widget.gateway.serialNo}'"),
+                              ));
+                            }
                           },
                           child:
                               const Text('Continue'),

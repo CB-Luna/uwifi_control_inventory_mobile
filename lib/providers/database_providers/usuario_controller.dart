@@ -81,6 +81,7 @@ class UsuarioController extends ChangeNotifier {
       List<RoleSupabase> rolesIdDBR,
       String idDBR,
       String idRoleFk,
+      int sequentialId
       ) async {
     final newUser = DOB.Users(
         firstName: fisrtName,
@@ -88,6 +89,7 @@ class UsuarioController extends ChangeNotifier {
         email: email,
         password: password,
         idDBR: idDBR, 
+        sequentialId: sequentialId,
         );
     if (nameImage != null) {
       final urlImage = supabase.storage.from('assets/user_profile').getPublicUrl(nameImage);
@@ -134,6 +136,7 @@ class UsuarioController extends ChangeNotifier {
       String? newImage,
       List<RoleSupabase> newRolesIdDBR,
       String idRoleFk,
+      int newSequentialId
       ) async {
     // Se recupera el usuario por id
     final updateUser = dataBase.usersBox.query(Users_.email.equals(email)).build().findUnique();
@@ -141,6 +144,7 @@ class UsuarioController extends ChangeNotifier {
       updateUser.firstName = newFirstName;
       updateUser.lastName = newLastName;
       updateUser.password = newPassword;
+      updateUser.sequentialId = newSequentialId;
       //Se agregan los roles actualizados
       updateUser.roles.clear();
       for (var i = 0; i < newRolesIdDBR.length; i++) {

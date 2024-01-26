@@ -1002,6 +1002,8 @@ class Users {
   DateTime dateAdded;
   @Unique()
   String idDBR;
+  @Unique()
+  int sequentialId;
   final bitacora = ToMany<Bitacora>();
   final role = ToOne<Role>();
   final roles = ToMany<Role>();
@@ -1015,6 +1017,7 @@ class Users {
     required this.email,
     DateTime? dateAdded,
     required this.idDBR,
+    required this.sequentialId,
   }) : dateAdded = dateAdded ?? DateTime.now();
 
   String get dateAddedFormat =>

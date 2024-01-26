@@ -2228,7 +2228,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(100, 5432875809935853718),
       name: 'Users',
-      lastPropertyId: const IdUid(29, 5167023569986539374),
+      lastPropertyId: const IdUid(30, 657085238545464014),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2280,7 +2280,13 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(471, 2935817121366324441),
-            relationTarget: 'Image')
+            relationTarget: 'Image'),
+        ModelProperty(
+            id: const IdUid(30, 657085238545464014),
+            name: 'sequentialId',
+            type: 6,
+            flags: 40,
+            indexId: const IdUid(472, 4152656161778133287))
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -2495,7 +2501,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(107, 7007361126005261051),
-      lastIndexId: const IdUid(471, 2935817121366324441),
+      lastIndexId: const IdUid(472, 4152656161778133287),
       lastRelationId: const IdUid(98, 3803692598585200085),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -6080,7 +6086,7 @@ ModelDefinition getObjectBoxModel() {
           final idDBROffset = fbb.writeString(object.idDBR);
           final firstNameOffset = fbb.writeString(object.firstName);
           final emailOffset = fbb.writeString(object.email);
-          fbb.startTable(30);
+          fbb.startTable(31);
           fbb.addInt64(0, object.id);
           fbb.addOffset(2, lastNameOffset);
           fbb.addOffset(8, passwordOffset);
@@ -6090,6 +6096,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(26, firstNameOffset);
           fbb.addOffset(27, emailOffset);
           fbb.addInt64(28, object.image.targetId);
+          fbb.addInt64(29, object.sequentialId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -6110,7 +6117,9 @@ ModelDefinition getObjectBoxModel() {
               dateAdded: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 30, ''));
+                  .vTableGet(buffer, rootOffset, 30, ''),
+              sequentialId:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 62, 0));
           object.role.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
           object.role.attach(store);
@@ -7939,6 +7948,10 @@ class Users_ {
   /// see [Users.image]
   static final image =
       QueryRelationToOne<Users, Image>(_entities[14].properties[8]);
+
+  /// see [Users.sequentialId]
+  static final sequentialId =
+      QueryIntegerProperty<Users>(_entities[14].properties[9]);
 
   /// see [Users.bitacora]
   static final bitacora =

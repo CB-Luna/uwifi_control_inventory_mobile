@@ -2250,7 +2250,7 @@
     },
     {
       "id": "100:5432875809935853718",
-      "lastPropertyId": "29:5167023569986539374",
+      "lastPropertyId": "30:657085238545464014",
       "name": "Users",
       "properties": [
         {
@@ -2306,6 +2306,13 @@
           "flags": 520,
           "indexId": "471:2935817121366324441",
           "relationTarget": "Image"
+        },
+        {
+          "id": "30:657085238545464014",
+          "name": "sequentialId",
+          "type": 6,
+          "flags": 40,
+          "indexId": "472:4152656161778133287"
         }
       ],
       "relations": [
@@ -2500,7 +2507,7 @@
     }
   ],
   "lastEntityId": "107:7007361126005261051",
-  "lastIndexId": "471:2935817121366324441",
+  "lastIndexId": "472:4152656161778133287",
   "lastRelationId": "98:3803692598585200085",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

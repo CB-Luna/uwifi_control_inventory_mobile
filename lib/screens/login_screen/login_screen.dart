@@ -352,6 +352,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           getUserSupabase.image,
                                           [getUserSupabase.role],
                                           getUserSupabase.idRoleFk.toString(),
+                                          getUserSupabase.idSecuencial
                                         );
                                         usuarioProvider.getUser(userId);
                                       } else {
@@ -363,7 +364,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           getUserSupabase.image,
                                           [getUserSupabase.role],
                                           getUserSupabase.id,
-                                          getUserSupabase.idRoleFk.toString()
+                                          getUserSupabase.idRoleFk.toString(),
+                                          getUserSupabase.idSecuencial
                                         );
                                         usuarioProvider.getUser(loginResponseSupabase.user.email);
                                       }

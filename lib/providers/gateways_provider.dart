@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/gateway.dart';
 
+import '../util/flutter_flow_util.dart';
+
 class GatewaysProvider extends ChangeNotifier {
 
   List<Gateway> gateways = [];
 
   final searchController = TextEditingController();
-
-  String orden = "serial_no";
 
   Future<void> updateState() async {
     searchController.clear();
@@ -18,7 +18,25 @@ class GatewaysProvider extends ChangeNotifier {
 
   Future<void> getGateways() async {
     try {
-      final res = await supabase.from('gateway_test_mobile').select();
+      gateways.clear();
+      // Se recuperan los gateways creados el día anteror y hoy
+      // Obtener la fecha del día de hoy y la fecha de ayer
+      DateTime today = DateTime.now();
+      DateTime yesterday = today.subtract(const Duration(days: 1));
+
+      DateTime startOfYesterday = DateTime(yesterday.year, yesterday.month, yesterday.day);
+      DateTime endOfToday = DateTime(today.year, today.month, today.day, 23, 59, 59);
+
+      DateFormat format = DateFormat("yyyy-MM-dd HH:mm:ss");
+
+      String formattedStartOfYesteday = format.format(startOfYesterday);
+      String formattedEndOfToday = format.format(endOfToday);
+
+
+      final res = await supabase
+      .from('router_detail')
+      .select()
+      .gt('created_at', formattedStartOfYesteday).lt('created_at', formattedEndOfToday);
 
       // final res = await query.like('serial_no', '%${searchController.text}%').order(orden, ascending: true);
 
@@ -35,14 +53,17 @@ class GatewaysProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteGateway(String serialNo) async {
+  Future<bool> deleteGateway(int inventoryProductFk) async {
     try {
-      await supabase.from("gateway_test_mobile").delete().eq('serial_no', serialNo);
+      await supabase.from("router_detail").delete().eq('inventory_product_fk', inventoryProductFk);
+      await supabase.from("inventory_product").delete().eq('inventory_product_id', inventoryProductFk);
     } catch (e) {
       log('Error en deleteOpportunity() - $e');
+      return false;
     }
     await getGateways();
     notifyListeners();
+    return true;
   }
 
 

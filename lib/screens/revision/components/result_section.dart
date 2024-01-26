@@ -2,10 +2,12 @@
 import 'dart:io' as libraryIO;
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/services.dart';
+import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_widgets.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkout_form_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/vehiculo_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +24,7 @@ class ResultSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final vehicleProvider = Provider.of<VehiculoController>(context);
     final checkOutProvider = Provider.of<CheckOutFormController>(context);
+    final usuarioProvider = Provider.of<UsuarioController>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
       child: Form(
@@ -34,319 +37,11 @@ class ResultSection extends StatelessWidget {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      5, 5, 5, 15),
-                  child: FFButtonWidget(
-                    onPressed: () async {
-                      checkOutProvider.clearControllers();
-                      vehicleProvider.changeOptionInventorySection(1);
-                    },
-                    text: 'Close',
-                    icon: const Icon(
-                      Icons.cancel_outlined,
-                      size: 15,
-                    ),
-                    options: FFButtonOptions(
-                      width: MediaQuery.of(context).size.width * 0.2,
-                      height: 40,
-                      color: FlutterFlowTheme.of(context)
-                          .white,
-                      textStyle: FlutterFlowTheme.of(context)
-                          .subtitle2
-                          .override(
-                            fontFamily: FlutterFlowTheme.of(context)
-                                .subtitle2Family,
-                            color: FlutterFlowTheme.of(context).alternate,
-                            fontSize: 15,
-                          ),
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).alternate,
-                        width: 2,
-                      ),
-                      borderRadius:
-                          BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      5, 0, 5, 20),
-                  child: TextFormField(
-                    controller: checkOutProvider.serialNumberTextController,
-                    textCapitalization: TextCapitalization.characters,
-                    autovalidateMode:
-                        AutovalidateMode.onUserInteraction,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      errorMaxLines: 3,
-                      prefixIcon: Icon(
-                        Icons.numbers,
-                        color: FlutterFlowTheme.of(context).alternate,
-                      ),
-                      labelText: 'Serial Number*',
-                      labelStyle: FlutterFlowTheme.of(context)
-                          .title3
-                          .override(
-                            fontFamily: 'Montserrat',
-                            color: FlutterFlowTheme.of(context).grayDark,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                      hintText: 'Input the serial number...',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      contentPadding:
-                          const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                    textAlign: TextAlign.start,
-                    validator: (value) {
-                      if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid serial number.';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      5, 0, 5, 20),
-                  child: TextFormField(
-                    controller: checkOutProvider.productIDTextController,
-                    autovalidateMode:
-                        AutovalidateMode.onUserInteraction,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      errorMaxLines: 3,
-                      prefixIcon: Icon(
-                        Icons.pin_outlined,
-                        color: FlutterFlowTheme.of(context).alternate,
-                      ),
-                      labelText: 'Product ID*',
-                      labelStyle: FlutterFlowTheme.of(context)
-                          .title3
-                          .override(
-                            fontFamily: 'Montserrat',
-                            color: FlutterFlowTheme.of(context).grayDark,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                      hintText: 'Input the product ID...',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      contentPadding:
-                          const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                    textAlign: TextAlign.start,
-                    inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(12),],
-                    keyboardType: const TextInputType.numberWithOptions(decimal: false),
-                    validator: (value) {
-                      if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid product ID.';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      5, 0, 5, 20),
-                  child: TextFormField(
-                    controller: checkOutProvider.brandTextController,
-                    textCapitalization: TextCapitalization.words,
-                    autovalidateMode:
-                        AutovalidateMode.onUserInteraction,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      errorMaxLines: 3,
-                      prefixIcon: Icon(
-                        Icons.label_outline,
-                        color: FlutterFlowTheme.of(context).alternate,
-                      ),
-                      labelText: 'Brand*',
-                      labelStyle: FlutterFlowTheme.of(context)
-                          .title3
-                          .override(
-                            fontFamily: 'Montserrat',
-                            color: FlutterFlowTheme.of(context).grayDark,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                      hintText: 'Input the brand...',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      contentPadding:
-                          const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                    textAlign: TextAlign.start,
-                    validator: (value) {
-                      if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid brand.';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      5, 0, 5, 20),
-                  child: TextFormField(
-                    controller: checkOutProvider.modelTextController,
-                    textCapitalization: TextCapitalization.words,
-                    autovalidateMode:
-                        AutovalidateMode.onUserInteraction,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      errorMaxLines: 3,
-                      prefixIcon: Icon(
-                        Icons.router,
-                        color: FlutterFlowTheme.of(context).alternate,
-                      ),
-                      labelText: 'Model*',
-                      labelStyle: FlutterFlowTheme.of(context)
-                          .title3
-                          .override(
-                            fontFamily: 'Montserrat',
-                            color: FlutterFlowTheme.of(context).grayDark,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                      hintText: 'Input the model...',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      contentPadding:
-                          const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                    textAlign: TextAlign.start,
-                    validator: (value) {
-                      if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid model.';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 16),
                   child: GestureDetector(
                     onTap: () async {
                       if (checkOutProvider.validateForm(keyForm)) {
-                        final message = await checkOutProvider.addNewGatewayBackend();
+                        final message = await checkOutProvider.addNewGatewayBackend(usuarioProvider.usuarioCurrent!);
                         switch (message) {
                           case "True":
                             if (!context.mounted) return;
@@ -444,6 +139,383 @@ class ResultSection extends StatelessWidget {
                           ),
                         ),
                       ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      5, 0, 5, 20),
+                  child: TextFormField(
+                    controller: checkOutProvider.serialNumberTextController,
+                    textCapitalization: TextCapitalization.characters,
+                    autovalidateMode:
+                        AutovalidateMode.onUserInteraction,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      errorMaxLines: 3,
+                      prefixIcon: Icon(
+                        Icons.numbers,
+                        color: FlutterFlowTheme.of(context).alternate,
+                      ),
+                      labelText: 'Serial Number*',
+                      labelStyle: FlutterFlowTheme.of(context)
+                          .title3
+                          .override(
+                            fontFamily: 'Montserrat',
+                            color: FlutterFlowTheme.of(context).grayDark,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                          ),
+                      hintText: 'Input the serial number...',
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                              FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                              FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      contentPadding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                    ),
+                    style: FlutterFlowTheme.of(context).bodyText1,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                    textAlign: TextAlign.start,
+                    validator: (value) {
+                      if (value == "" || value == null || value.isEmpty) {
+                        return 'Please input a valid serial number.';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      5, 0, 5, 20),
+                  child: TextFormField(
+                    controller: checkOutProvider.productIDTextController,
+                    autovalidateMode:
+                        AutovalidateMode.onUserInteraction,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      errorMaxLines: 3,
+                      prefixIcon: Icon(
+                        Icons.pin_outlined,
+                        color: FlutterFlowTheme.of(context).alternate,
+                      ),
+                      labelText: 'Product ID*',
+                      labelStyle: FlutterFlowTheme.of(context)
+                          .title3
+                          .override(
+                            fontFamily: 'Montserrat',
+                            color: FlutterFlowTheme.of(context).grayDark,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                          ),
+                      hintText: 'Input the product ID...',
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                              FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                              FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      contentPadding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                    ),
+                    style: FlutterFlowTheme.of(context).bodyText1,
+                    textAlign: TextAlign.start,
+                    inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(12),],
+                    keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                    validator: (value) {
+                      if (value == "" || value == null || value.isEmpty) {
+                        return 'Please input a valid product ID.';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      5, 0, 5, 20),
+                  child: TextFormField(
+                    controller: checkOutProvider.nameTextController,
+                    textCapitalization: TextCapitalization.words,
+                    autovalidateMode:
+                        AutovalidateMode.onUserInteraction,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      errorMaxLines: 3,
+                      prefixIcon: Icon(
+                        Icons.label_outline,
+                        color: FlutterFlowTheme.of(context).alternate,
+                      ),
+                      labelText: 'Name*',
+                      labelStyle: FlutterFlowTheme.of(context)
+                          .title3
+                          .override(
+                            fontFamily: 'Montserrat',
+                            color: FlutterFlowTheme.of(context).grayDark,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                          ),
+                      hintText: 'Input the name...',
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                              FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                              FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      contentPadding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                    ),
+                    style: FlutterFlowTheme.of(context).bodyText1,
+                    textAlign: TextAlign.start,
+                    validator: (value) {
+                      if (value == "" || value == null || value.isEmpty) {
+                        return 'Please input a valid name.';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      5, 0, 5, 20),
+                  child: TextFormField(
+                    controller: checkOutProvider.descriptionTextController,
+                    textCapitalization: TextCapitalization.words,
+                    autovalidateMode:
+                        AutovalidateMode.onUserInteraction,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      errorMaxLines: 3,
+                      prefixIcon: Icon(
+                        Icons.router,
+                        color: FlutterFlowTheme.of(context).alternate,
+                      ),
+                      labelText: 'Description*',
+                      labelStyle: FlutterFlowTheme.of(context)
+                          .title3
+                          .override(
+                            fontFamily: 'Montserrat',
+                            color: FlutterFlowTheme.of(context).grayDark,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                          ),
+                      hintText: 'Input the description...',
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                              FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                              FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      contentPadding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                    ),
+                    style: FlutterFlowTheme.of(context).bodyText1,
+                    textAlign: TextAlign.start,
+                    validator: (value) {
+                      if (value == "" || value == null || value.isEmpty) {
+                        return 'Please input a valid description.';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      5, 0, 5, 20),
+                  child: TextFormField(
+                    controller: checkOutProvider.productCodeTextController,
+                    textCapitalization: TextCapitalization.characters,
+                    autovalidateMode:
+                        AutovalidateMode.onUserInteraction,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      errorMaxLines: 3,
+                      prefixIcon: Icon(
+                        Icons.numbers,
+                        color: FlutterFlowTheme.of(context).alternate,
+                      ),
+                      labelText: 'Product Code*',
+                      labelStyle: FlutterFlowTheme.of(context)
+                          .title3
+                          .override(
+                            fontFamily: 'Montserrat',
+                            color: FlutterFlowTheme.of(context).grayDark,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                          ),
+                      hintText: 'Input the product code...',
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                              FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                              FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      contentPadding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                    ),
+                    style: FlutterFlowTheme.of(context).bodyText1,
+                    textAlign: TextAlign.start,
+                    validator: (value) {
+                      if (value == "" || value == null || value.isEmpty) {
+                        return 'Please input a valid product code.';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      5, 5, 5, 15),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      checkOutProvider.clearControllers();
+                      vehicleProvider.changeOptionInventorySection(1);
+                    },
+                    text: 'Close',
+                    icon: const Icon(
+                      Icons.cancel_outlined,
+                      size: 15,
+                    ),
+                    options: FFButtonOptions(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: 40,
+                      color: FlutterFlowTheme.of(context)
+                          .white,
+                      textStyle: FlutterFlowTheme.of(context)
+                          .subtitle2
+                          .override(
+                            fontFamily: FlutterFlowTheme.of(context)
+                                .subtitle2Family,
+                            color: FlutterFlowTheme.of(context).alternate,
+                            fontSize: 15,
+                          ),
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).alternate,
+                        width: 2,
+                      ),
+                      borderRadius:
+                          BorderRadius.circular(8),
                     ),
                   ),
                 ),

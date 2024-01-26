@@ -9,6 +9,7 @@ import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:uwifi_control_inventory_mobile/database/image_evidence.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uuid/uuid.dart';
+import 'package:uwifi_control_inventory_mobile/main.dart';
 class CheckOutFormController extends ChangeNotifier {
   
   bool validateForm(GlobalKey<FormState> keyForm) {
@@ -17,39 +18,52 @@ class CheckOutFormController extends ChangeNotifier {
 
   //************************Gateways Components *********/
   TextEditingController productIDTextController = TextEditingController();
-  TextEditingController brandTextController = TextEditingController();
-  TextEditingController modelTextController = TextEditingController();
+  TextEditingController nameTextController = TextEditingController();
+  TextEditingController descriptionTextController = TextEditingController();
   TextEditingController serialNumberTextController = TextEditingController();
+  TextEditingController productCodeTextController = TextEditingController();
   String codeQR =  "";
 
   void autofillFieldsQR(String value) {
     codeQR = value;
+    print(">>>>>>>>>>Value: $value");
+    final one =  value.contains(productIDRegExpo);
+    final two = value.contains(nameRegExp);
+    final three = value.contains(descriptionRegExp);
+    final four = value.contains(serialNumberRegExp);
+    final five = value.contains(productCodeRegExp);
     if (value.contains(productIDRegExpo) 
-    && value.contains(brandRegExp) 
-    && value.contains(modelRegExp)
-    && value.contains(serialNumberRegExp)) {
+    && value.contains(nameRegExp) 
+    && value.contains(descriptionRegExp)
+    && value.contains(serialNumberRegExp)
+    && value.contains(productCodeRegExp)) {
       print("****Entramos*****");
       // Intenta encontrar la primera coincidencia en el texto
       Match? matchProductID = productIDRegExpo.firstMatch(value);
-      Match? matchBrand = brandRegExp.firstMatch(value);
-      Match? matchModel = modelRegExp.firstMatch(value);
+      Match? matchName = nameRegExp.firstMatch(value);
+      Match? matchDescription = descriptionRegExp.firstMatch(value);
       Match? matchSerialNumber = serialNumberRegExp.firstMatch(value);
+      Match? matchProductCode = productCodeRegExp.firstMatch(value);
       // Si se encuentra una coincidencia, extrae la subcadena
       if (matchProductID != null) {
           productIDTextController.text =
               matchProductID.group(0)!.replaceAll(nameFieldProductID, "");
       }
-      if (matchBrand != null) {
-          brandTextController.text =
-              matchBrand.group(0)!.replaceAll(nameFieldBrand, "");
+      if (matchName != null) {
+          nameTextController.text =
+              matchName.group(0)!.replaceAll(nameFieldName, "");
       }
-      if (matchModel != null) {
-          modelTextController.text =
-              matchModel.group(0)!.replaceAll(nameFieldModel, "");
+      if (matchDescription != null) {
+          descriptionTextController.text =
+              matchDescription.group(0)!.replaceAll(nameFieldDescription, "");
       }
       if (matchSerialNumber != null) {
           serialNumberTextController.text =
               matchSerialNumber.group(0)!.replaceAll(nameFieldSerialNumber, "");
+      }
+      if (matchProductCode != null) {
+          productCodeTextController.text =
+              matchProductCode.group(0)!.replaceAll(nameFieldProductCode, "");
       }
     } 
     notifyListeners();
@@ -57,14 +71,16 @@ class CheckOutFormController extends ChangeNotifier {
 
   Future<bool> autofillFieldsOCR(String value) async {
     if (value.contains(productIDRegExpo) 
-    && value.contains(brandRegExp) 
-    && value.contains(modelRegExp)
-    && value.contains(serialNumberRegExp)) {
+    && value.contains(nameRegExp) 
+    && value.contains(descriptionRegExp)
+    && value.contains(serialNumberRegExp)
+    && value.contains(productCodeRegExp)) {
       // Intenta encontrar la primera coincidencia en el texto
       Match? matchProductID = productIDRegExpo.firstMatch(value);
-      Match? matchBrand = brandRegExp.firstMatch(value);
-      Match? matchModel = modelRegExp.firstMatch(value);
+      Match? matchName = nameRegExp.firstMatch(value);
+      Match? matchDescription = descriptionRegExp.firstMatch(value);
       Match? matchSerialNumber = serialNumberRegExp.firstMatch(value);
+      Match? matchProductCode = productCodeRegExp.firstMatch(value);
       // Si se encuentra una coincidencia, extrae la subcadena
       if (matchProductID != null) {
         await Future.microtask(() => {
@@ -72,16 +88,16 @@ class CheckOutFormController extends ChangeNotifier {
               matchProductID.group(0)!.replaceAll(nameFieldProductID, "")
         });
       }
-      if (matchBrand != null) {
+      if (matchName != null) {
         await Future.microtask(() => {
-          brandTextController.text =
-              matchBrand.group(0)!.replaceAll(nameFieldBrand, "")
+          nameTextController.text =
+              matchName.group(0)!.replaceAll(nameFieldName, "")
         });
       }
-      if (matchModel != null) {
+      if (matchDescription != null) {
         await Future.microtask(() => {
-          modelTextController.text =
-              matchModel.group(0)!.replaceAll(nameFieldModel, "")
+          descriptionTextController.text =
+              matchDescription.group(0)!.replaceAll(nameFieldDescription, "")
         });
       }
       if (matchSerialNumber != null) {
@@ -90,27 +106,48 @@ class CheckOutFormController extends ChangeNotifier {
               matchSerialNumber.group(0)!.replaceAll(nameFieldSerialNumber, "")
         });
       }
+      if (matchProductCode != null) {
+        await Future.microtask(() => {
+          productCodeTextController.text =
+              matchProductCode.group(0)!.replaceAll(nameFieldProductCode, "")
+        });
+      }
       return true;
     } else {
       return false;
     }
   }
 
-  Future<String> addNewGatewayBackend() async {
+  Future<String> addNewGatewayBackend(Users currentUser) async {
     try {
-      if (await existsRegisterInBackend("gateway_test_mobile", "serial_no", serialNumberTextController.text)) {
+      if (await existsRegisterInBackend("router_detail", "serie_no", serialNumberTextController.text)) {
         return "Duplicate";
       }
-      final recordGateway = await supabase.from('gateway_test_mobile').insert(
+      final recordInventoryProduct = await supabase.from('inventory_product').insert(
         {
-          'serial_no': serialNumberTextController.text,
-          'product_id': productIDTextController.text,
-          'brand': brandTextController.text,
-          'model': modelTextController.text
+          'inventory_location_fk': 1,
+          'provider_invoice_fk': 1,
+          'product_fk': productIDTextController.text,
+          'barcode_type_fk': 1,
+          'created_by': currentUser.id,
+          'inventory_product_status_fk': 1
         },
-      ).select<PostgrestList>('id');
-      if (recordGateway.isNotEmpty) {
-        return "True";
+      ).select<PostgrestList>('inventory_product_id');
+
+      if (recordInventoryProduct.isNotEmpty) {
+        final recordRouterDetail = await supabase.from('router_detail').insert(
+          {
+            'network_configuration': 'Static Routing',
+            'inventory_product_fk': recordInventoryProduct.first['inventory_product_id'],
+            'serie_no': serialNumberTextController.text,
+            'location': 'Store'
+          },
+        ).select<PostgrestList>('router_detail_id');
+        if (recordRouterDetail.isNotEmpty) {
+          return "True";
+        } else {
+          return "False";
+        }
       } else {
         return "False";
       }
@@ -126,8 +163,8 @@ class CheckOutFormController extends ChangeNotifier {
 
   void clearControllers() {
     productIDTextController.clear();
-    brandTextController.clear();
-    modelTextController.clear();
+    nameTextController.clear();
+    descriptionTextController.clear();
     serialNumberTextController.clear();
     codeQR =  "";
   }
