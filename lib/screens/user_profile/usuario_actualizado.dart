@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
+import 'package:uwifi_control_inventory_mobile/screens/main/main_screen_selector.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
 class UsuarioActualizado extends StatefulWidget {

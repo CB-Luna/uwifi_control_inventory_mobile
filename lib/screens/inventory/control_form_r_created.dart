@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/screens/main/main_screen_selector.dart';
 
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
-class ControlFormDNotCreatedScreen extends StatefulWidget {
-  const ControlFormDNotCreatedScreen({Key? key}) : super(key: key);
+class ControlFormRCreatedScreen extends StatefulWidget {
+  const ControlFormRCreatedScreen({Key? key}) : super(key: key);
 
   @override
-  State<ControlFormDNotCreatedScreen> createState() => _ControlFormDNotCreatedScreenState();
+  State<ControlFormRCreatedScreen> createState() => _ControlFormRCreatedScreenState();
 }
 
-class _ControlFormDNotCreatedScreenState extends State<ControlFormDNotCreatedScreen> {
+class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
+    final userProvider = Provider.of<UsuarioController>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -36,7 +42,7 @@ class _ControlFormDNotCreatedScreenState extends State<ControlFormDNotCreatedScr
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Check In\nForm\nNot Created!',
+                        '¡Check Out\nControl Form\nCreated!',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -49,7 +55,7 @@ class _ControlFormDNotCreatedScreenState extends State<ControlFormDNotCreatedScr
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(                                
-                        'Failed to save the data of check in form.',
+                        'The form has been saved successfully.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -63,8 +69,8 @@ class _ControlFormDNotCreatedScreenState extends State<ControlFormDNotCreatedScr
                           const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                       child: SizedBox(
                         child: Icon(
-                          Icons.cancel_outlined,
-                          color: AppTheme.of(context).tertiaryColor,
+                          Icons.check_circle_outline,
+                          color: AppTheme.of(context).secondaryColor,
                           size: 250,
                           )
                       ),
@@ -74,6 +80,15 @@ class _ControlFormDNotCreatedScreenState extends State<ControlFormDNotCreatedScr
                           const EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
+                          if (!await checkOutFormProvider.sendEmail(userProvider.usuarioCurrent!)){
+                            snackbarKey.currentState
+                                ?.showSnackBar(const SnackBar(
+                              content: Text(
+                                  "The email wasn't send successfully."),
+                            ));
+                          }
+                          if (!mounted) return;
+                          checkOutFormProvider.cleanInformation();
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -86,7 +101,7 @@ class _ControlFormDNotCreatedScreenState extends State<ControlFormDNotCreatedScr
                         options: FFButtonOptions(
                           width: 200,
                           height: 45,
-                          color: AppTheme.of(context).primaryColor,
+                          color: AppTheme.of(context).secondaryColor,
                           textStyle: AppTheme.of(context).subtitle2.override(
                                 fontFamily: 'Poppins',
                                 color: Colors.white,

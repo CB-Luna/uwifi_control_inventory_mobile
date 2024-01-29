@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/main.dart';
-import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
+import 'package:uwifi_control_inventory_mobile/screens/main/main_screen_selector.dart';
 import 'package:uwifi_control_inventory_mobile/screens/user_profile/device_information_widget.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';

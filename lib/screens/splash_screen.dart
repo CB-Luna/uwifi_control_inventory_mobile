@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/user_provider.dart';
 
-import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
+import 'package:uwifi_control_inventory_mobile/screens/main/main_screen_selector.dart';
 import 'package:uwifi_control_inventory_mobile/screens/screens.dart';
 
 class SplashScreen extends StatefulWidget {

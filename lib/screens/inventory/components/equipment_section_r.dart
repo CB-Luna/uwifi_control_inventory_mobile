@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/header_shimmer.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/components/header_shimmer.dart';
 
-class GeneralInformationSectionD extends StatefulWidget {
+class EquipmentSectionR extends StatefulWidget {
   
-  const GeneralInformationSectionD({super.key});
+  const EquipmentSectionR({super.key});
 
   @override
-  State<GeneralInformationSectionD> createState() => _GeneralInformationSectionDState();
+  State<EquipmentSectionR> createState() => _EquipmentSectionRState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -66,28 +68,23 @@ final animationsMap = {
     ),
   };
 
-class _GeneralInformationSectionDState extends State<GeneralInformationSectionD> {
+class _EquipmentSectionRState extends State<EquipmentSectionR> {
   @override
   Widget build(BuildContext context) {
-    
+    final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.4,
-            child: Column(
-              children: [
-                // HEADER
-                HeaderShimmer(
-                  width: MediaQuery.of(context).size.width, 
-                  text: "General information",
-                ),
-            ]),
-          ),
-        ],
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Column(
+          children: [
+            // HEADER
+            HeaderShimmer(
+              width: MediaQuery.of(context).size.width, 
+              text: "Section 4",
+            ),
+
+        ]),
       ),
     );
   }

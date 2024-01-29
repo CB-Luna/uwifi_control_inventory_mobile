@@ -5,7 +5,7 @@ import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button_opt
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
-import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
+import 'package:uwifi_control_inventory_mobile/screens/main/main_screen_selector.dart';
 import 'package:uwifi_control_inventory_mobile/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {

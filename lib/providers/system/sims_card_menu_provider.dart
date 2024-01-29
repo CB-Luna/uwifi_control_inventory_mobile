@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/general_information_section_r.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/equipment_section_r.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/inventory_form_ocr.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/search_gateways_created.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/control_inventory_screen.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/options_add_products.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/result_section.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/bundle_gateway_sims_card.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/components/general_information_section_r.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/components/equipment_section_r.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/components/inventory_form_ocr.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/components/search_gateways_created.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/components/control_inventory_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/components/options_add_products.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/components/result_section.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/components/bundle_gateway_sims_card.dart';
 
-import '../../screens/revision/components/inventory_form_qr.dart';
+import '../../screens/inventory/components/inventory_form_qr.dart';
 class SIMSCardMenuProvider extends ChangeNotifier {
 
   int buttonMenuTaped = 0;

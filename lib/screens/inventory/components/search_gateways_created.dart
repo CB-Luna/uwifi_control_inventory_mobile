@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/gateways_provider.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/header_shimmer.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/item_form.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/components/header_shimmer.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/components/item_form.dart';
 
 class SearchGatewaysCreated extends StatefulWidget {
   

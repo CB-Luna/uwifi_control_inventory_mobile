@@ -4,7 +4,7 @@ import 'package:uwifi_control_inventory_mobile/database/entitys.dart' as DBO;
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/main.dart';
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
-import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
+import 'package:uwifi_control_inventory_mobile/screens/main/main_screen_selector.dart';
 import 'package:uwifi_control_inventory_mobile/screens/user_profile/perfil_usuario_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/bottom_sheet_cerrar_sesion.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/bottom_sheet_sincronizar_widget.dart';

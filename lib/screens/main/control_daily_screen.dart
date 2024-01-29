@@ -5,8 +5,8 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/checkin_scheduler_screen.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/control_inventory_gateway_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/checkin_scheduler_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/control_inventory_gateway_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/side_menu/side_menu.dart';
 
 class ControlDailyScreen extends StatefulWidget {

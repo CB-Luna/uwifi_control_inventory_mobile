@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
+import 'package:uwifi_control_inventory_mobile/screens/main/main_screen_selector.dart';
 
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
-class ControlFormRNotCreatedScreen extends StatefulWidget {
-  const ControlFormRNotCreatedScreen({Key? key}) : super(key: key);
+class ControlFormDNotCreatedScreen extends StatefulWidget {
+  const ControlFormDNotCreatedScreen({Key? key}) : super(key: key);
 
   @override
-  State<ControlFormRNotCreatedScreen> createState() => _ControlFormRNotCreatedScreenState();
+  State<ControlFormDNotCreatedScreen> createState() => _ControlFormDNotCreatedScreenState();
 }
 
-class _ControlFormRNotCreatedScreenState extends State<ControlFormRNotCreatedScreen> {
+class _ControlFormDNotCreatedScreenState extends State<ControlFormDNotCreatedScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -36,7 +36,7 @@ class _ControlFormRNotCreatedScreenState extends State<ControlFormRNotCreatedScr
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Check Out\nControl Form\nNot Created!',
+                        '¡Check In\nForm\nNot Created!',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -49,7 +49,7 @@ class _ControlFormRNotCreatedScreenState extends State<ControlFormRNotCreatedScr
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(                                
-                        'Failed to save the data of check out form.',
+                        'Failed to save the data of check in form.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
