@@ -4,6 +4,7 @@ import 'package:uwifi_control_inventory_mobile/database/entitys.dart' as DBO;
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
 import 'package:uwifi_control_inventory_mobile/main.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/network_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
 import 'package:uwifi_control_inventory_mobile/screens/user_profile/perfil_usuario_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/bottom_sheet_cerrar_sesion.dart';
@@ -20,6 +21,7 @@ class SideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
+    final networkState = Provider.of<NetworkState>(context);
 
     if (usuarioProvider.usuarioCurrent == null) {
       return WillPopScope(
@@ -194,7 +196,7 @@ class SideMenu extends StatelessWidget {
                       lineHeight: 1.2,
                       onTap: () async {
                           final connectivityResult =
-                              await (Connectivity().checkConnectivity());
+                          await networkState.getConnectionStatus();
                           final bitacora = dataBase.bitacoraBox.getAll().toList();
                           //print("Tamaño bitacora: ${bitacora.length}");
                           // ignore: use_build_context_synchronously
@@ -208,8 +210,7 @@ class SideMenu extends StatelessWidget {
                                 child: SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height * 0.45,
-                                  child: connectivityResult ==
-                                              ConnectivityResult.none ||
+                                  child: !connectivityResult ||
                                           bitacora.isEmpty
                                       ? const BottomSheetSincronizarWidget(
                                           isVisible: false,

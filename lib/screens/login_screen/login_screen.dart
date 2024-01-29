@@ -6,8 +6,9 @@ import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.d
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_widgets.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
-import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
+import 'package:uwifi_control_inventory_mobile/providers/network_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/roles_supabase_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/user_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
 import 'package:uwifi_control_inventory_mobile/services/auth_service.dart';
 
@@ -28,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final UserState userState = Provider.of<UserState>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final rolesSupabaseProvider = Provider.of<RolesSupabaseProvider>(context);
+    final networkState = Provider.of<NetworkState>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -264,10 +266,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (!formKey.currentState!.validate()) {
                                 return;
                               }
-                              //Se revisa el estatus de la Red
-                              final connectivityResult =
-                                  await (Connectivity().checkConnectivity());
-                              if (connectivityResult == ConnectivityResult.none) {
+                              if (!await networkState.getConnectionStatus()) {
                                 // //Proceso Offline
                                 // final usuarioActual =
                                 //     usuarioProvider.validateUserOffline(

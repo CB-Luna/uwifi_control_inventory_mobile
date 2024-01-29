@@ -1,7 +1,9 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/providers/network_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/screens.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -33,6 +35,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final networkState = Provider.of<NetworkState>(context);
+    
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -198,9 +202,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       if (!formKey.currentState!.validate()) {
                         return;
                       }
-                      final connectivityResult =
-                        await (Connectivity().checkConnectivity());
-                      if(connectivityResult == ConnectivityResult.none) {
+                      if(!await networkState.getConnectionStatus()) {
                         snackbarKey.currentState
                           ?.showSnackBar(const SnackBar(
                         content: Text(

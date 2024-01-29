@@ -11,12 +11,6 @@ class RolesSupabaseProvider extends ChangeNotifier {
   bool procesoterminado = false;
   bool procesoexitoso = false;
   String message = "";
-  List<dynamic>? recordsMonthCurrentR;
-  List<dynamic>? recordsMonthSecondR;
-  List<dynamic>? recordsMonthThirdR;
-  List<dynamic>? recordsMonthCurrentD;
-  List<dynamic>? recordsMonthSecondD;
-  List<dynamic>? recordsMonthThirdD;
 
   void procesoCargando(bool boleano) {
     procesocargando = boleano;
@@ -84,7 +78,7 @@ class RolesSupabaseProvider extends ChangeNotifier {
           return "Not-Data";
         }
     } catch (e) {
-      print("Error getRoleSupabase: $e");
+      print("Error at 'getRoles': $e");
       return "$e";
     }
   }

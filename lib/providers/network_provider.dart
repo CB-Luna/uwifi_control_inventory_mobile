@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 
 class NetworkState extends ChangeNotifier {
   final networkStream = Connectivity().onConnectivityChanged;
+  final connection = Connectivity().checkConnectivity();
 
 // converts the network events to the appropriate Color
-  Color getConnectionColor(ConnectivityResult connection) {
+  Future<Color> getConnectionColor() async {
     var color = Colors.red[900];
-    switch (connection) {
+    switch (await connection) {
       case ConnectivityResult.wifi:
         color = Colors.green[800];
         break;
@@ -25,20 +26,40 @@ class NetworkState extends ChangeNotifier {
   }
 
 // converts the network events to the appropriate user-readable strings
-  String getConnectionMessage(ConnectivityResult connection) {
-    var msg = 'Conexión desconocida';
-    switch (connection) {
+  Future<String> getConnectionMessage() async {
+    var msg = 'Unknown connection';
+    switch (await connection) {
       case ConnectivityResult.wifi:
-        msg = 'Conectado a wifi';
+        msg = 'Wifi connection';
         break;
       case ConnectivityResult.mobile:
-        msg = 'Conectado a datos móbiles';
+        msg = 'Mobile data connection';
         break;
       case ConnectivityResult.none:
-        msg = 'Desconectado';
+        msg = 'Not connection';
         break;
       default:
-        msg = 'Conexión desconocida';
+        msg = 'Unknown connection';
+        break;
+    }
+    return msg;
+  }
+
+// converts the network events to the appropriate user-readable widgets status
+  Future<bool> getConnectionStatus() async {
+    var msg = false;
+    switch (await connection) {
+      case ConnectivityResult.wifi:
+        msg = true;
+        break;
+      case ConnectivityResult.mobile:
+        msg = true;
+        break;
+      case ConnectivityResult.none:
+        msg = false;
+        break;
+      default:
+        msg = false;
         break;
     }
     return msg;

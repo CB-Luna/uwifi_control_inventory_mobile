@@ -9,7 +9,6 @@ import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:uwifi_control_inventory_mobile/database/image_evidence.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uuid/uuid.dart';
-import 'package:uwifi_control_inventory_mobile/main.dart';
 class CheckOutFormController extends ChangeNotifier {
   
   bool validateForm(GlobalKey<FormState> keyForm) {
@@ -26,18 +25,11 @@ class CheckOutFormController extends ChangeNotifier {
 
   void autofillFieldsQR(String value) {
     codeQR = value;
-    print(">>>>>>>>>>Value: $value");
-    final one =  value.contains(productIDRegExpo);
-    final two = value.contains(nameRegExp);
-    final three = value.contains(descriptionRegExp);
-    final four = value.contains(serialNumberRegExp);
-    final five = value.contains(productCodeRegExp);
     if (value.contains(productIDRegExpo) 
     && value.contains(nameRegExp) 
     && value.contains(descriptionRegExp)
     && value.contains(serialNumberRegExp)
     && value.contains(productCodeRegExp)) {
-      print("****Entramos*****");
       // Intenta encontrar la primera coincidencia en el texto
       Match? matchProductID = productIDRegExpo.firstMatch(value);
       Match? matchName = nameRegExp.firstMatch(value);
