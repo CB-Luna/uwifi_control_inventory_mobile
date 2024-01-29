@@ -2,8 +2,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-class FFButtonOptions {
-  const FFButtonOptions({
+class CustomButtonOption {
+  const CustomButtonOption({
     this.textStyle,
     this.elevation,
     this.height,
@@ -59,7 +59,7 @@ class FFButtonWidget extends StatefulWidget {
   final Widget? icon;
   final IconData? iconData;
   final Function()? onPressed;
-  final FFButtonOptions options;
+  final CustomButtonOption options;
   final bool showLoadingIndicator;
 
   @override

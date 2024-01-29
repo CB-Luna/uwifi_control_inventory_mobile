@@ -2,7 +2,6 @@
 import 'dart:io' as libraryIO;
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/services.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_widgets.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
@@ -10,6 +9,7 @@ import 'package:uwifi_control_inventory_mobile/providers/database/usuario_contro
 import 'package:uwifi_control_inventory_mobile/providers/database/vehiculo_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button_option.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 
 class ResultSection extends StatelessWidget {
@@ -496,7 +496,7 @@ class ResultSection extends StatelessWidget {
                       Icons.cancel_outlined,
                       size: 15,
                     ),
-                    options: FFButtonOptions(
+                    options: CustomButtonOption(
                       width: MediaQuery.of(context).size.width * 0.2,
                       height: 40,
                       color: AppTheme.of(context)

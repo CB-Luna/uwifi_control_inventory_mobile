@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button_option.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_widgets.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
@@ -434,7 +434,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               }
                             },
                             text: 'Log In',
-                            options: FFButtonOptions(
+                            options: CustomButtonOption(
                               width: 130,
                               height: 50,
                               color: AppTheme.of(context).primaryColor,
@@ -482,7 +482,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         // );
                                       },
                                       text: 'Forget your password?',
-                                      options: FFButtonOptions(
+                                      options: CustomButtonOption(
                                         width: 170,
                                         height: 30,
                                         color: const Color(0x00FFFFFF),

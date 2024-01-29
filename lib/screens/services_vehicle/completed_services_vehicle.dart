@@ -1,8 +1,8 @@
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button_option.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_widgets.dart';
 
 import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
@@ -427,7 +427,7 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                         }
                       },
                       text: 'Accept',
-                      options: FFButtonOptions(
+                      options: CustomButtonOption(
                         width: 200,
                         height: 50,
                         color: AppTheme.of(context).alternate,
