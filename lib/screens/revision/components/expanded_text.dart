@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 
 class ExpandedText extends StatefulWidget {
   const ExpandedText({
@@ -23,11 +23,11 @@ class _ExpandedTextState extends State<ExpandedText> {
       child: Text(
         textAlign: TextAlign.center,
         widget.text,
-        style: FlutterFlowTheme.of(context)
+        style: AppTheme.of(context)
         .bodyText1.override(
           fontFamily:
-                FlutterFlowTheme.of(context).bodyText1Family,
-          color: FlutterFlowTheme.of(context).tertiaryColor,
+                AppTheme.of(context).bodyText1Family,
+          color: AppTheme.of(context).tertiaryColor,
           fontWeight: FontWeight.bold,
           fontSize: 15,
         ),

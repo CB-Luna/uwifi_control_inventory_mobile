@@ -1,6 +1,6 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 
 class MenuFormButton extends StatefulWidget {
   const MenuFormButton({
@@ -36,12 +36,12 @@ class _MenuFormButtonState extends State<MenuFormButton> {
         borderRadius: 5,
         curveType: CurveType.concave,
         color: widget.isTaped
-          ? FlutterFlowTheme.of(context).alternate
+          ? AppTheme.of(context).alternate
           : widget.fillColor,
         child: Icon(
           widget.icon,
           color: widget.isTaped
-            ? FlutterFlowTheme.of(context).white
+            ? AppTheme.of(context).white
             : widget.iconColor,
           size: 30,
         ),

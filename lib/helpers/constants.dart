@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 
 import '../screens/widgets/flutter_flow_animations.dart';
 
@@ -69,7 +69,7 @@ Row getProgressIndicatorOCR(BuildContext context, String message) {
     children: [
       SizedBox(
         child: DefaultTextStyle(
-          style: FlutterFlowTheme.of(context).bodyText2,
+          style: AppTheme.of(context).bodyText2,
           child: Text(message),
         ),
       ),
@@ -79,7 +79,7 @@ Row getProgressIndicatorOCR(BuildContext context, String message) {
       SpinKitCircle(
         size: 30,
         itemBuilder: (context, index) {
-          final colors = [FlutterFlowTheme.of(context).primaryColor, FlutterFlowTheme.of(context).secondaryColor];
+          final colors = [AppTheme.of(context).primaryColor, AppTheme.of(context).secondaryColor];
           final color = colors[index % colors.length];
           return DecoratedBox(
             decoration: BoxDecoration(color: color, shape: BoxShape.circle),

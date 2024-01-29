@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
-import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/expanded_text.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/header_shimmer.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/item_form.dart';
-import 'package:uwifi_control_inventory_mobile/util/util.dart';
 
 class GeneralInformationSectionD extends StatefulWidget {
   
@@ -76,7 +69,6 @@ final animationsMap = {
 class _GeneralInformationSectionDState extends State<GeneralInformationSectionD> {
   @override
   Widget build(BuildContext context) {
-    final userController = Provider.of<UsuarioController>(context);
     
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
@@ -93,10 +85,8 @@ class _GeneralInformationSectionDState extends State<GeneralInformationSectionD>
                   width: MediaQuery.of(context).size.width, 
                   text: "General information",
                 ),
-              
             ]),
           ),
-          
         ],
       ),
     );

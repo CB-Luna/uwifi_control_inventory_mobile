@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/user_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
@@ -24,7 +24,7 @@ class _BottomSheetCerrarSesionState
       width: MediaQuery.of(context).size.width,
       height: 350,
       decoration: BoxDecoration(
-        color: FlutterFlowTheme.of(context).secondaryBackground,
+        color: AppTheme.of(context).secondaryBackground,
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(0),
           bottomRight: Radius.circular(0),
@@ -50,7 +50,7 @@ class _BottomSheetCerrarSesionState
                         thickness: 3,
                         indent: 150,
                         endIndent: 150,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        color: AppTheme.of(context).primaryBackground,
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
@@ -63,10 +63,10 @@ class _BottomSheetCerrarSesionState
                               child: Text(
                                 'Are you sure you want to log out?',
                                 textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context).title2.override(
+                                style: AppTheme.of(context).title2.override(
                                       fontFamily:
-                                          FlutterFlowTheme.of(context).title2Family,
-                                      color: FlutterFlowTheme.of(context).primaryText,
+                                          AppTheme.of(context).title2Family,
+                                      color: AppTheme.of(context).primaryText,
                                       fontSize: 22,
                                     ),
                               ),
@@ -84,10 +84,10 @@ class _BottomSheetCerrarSesionState
                               child: Text(
                                 'All data that you input is will saved in your device.',
                                 textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context).bodyText2.override(
+                                style: AppTheme.of(context).bodyText2.override(
                                       fontFamily:
-                                          FlutterFlowTheme.of(context).bodyText2Family,
-                                      color: FlutterFlowTheme.of(context).secondaryText,
+                                          AppTheme.of(context).bodyText2Family,
+                                      color: AppTheme.of(context).secondaryText,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 20
                                     ),
@@ -106,7 +106,7 @@ class _BottomSheetCerrarSesionState
                             Icon(
                               Icons.exit_to_app_outlined,
                               size: 80,
-                              color: FlutterFlowTheme.of(context).secondaryColor,
+                              color: AppTheme.of(context).secondaryColor,
                             ),
                           ],
                         ),
@@ -127,11 +127,11 @@ class _BottomSheetCerrarSesionState
                                 width: 150,
                                 height: 50,
                                 color: const Color(0xFF8C8C8C),
-                                textStyle: FlutterFlowTheme.of(context)
+                                textStyle: AppTheme.of(context)
                                     .subtitle2
                                     .override(
                                       fontFamily:
-                                          FlutterFlowTheme.of(context).subtitle2Family,
+                                          AppTheme.of(context).subtitle2Family,
                                       color: Colors.white,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -153,9 +153,9 @@ class _BottomSheetCerrarSesionState
                               options: FFButtonOptions(
                                 width: 150,
                                 height: 50,
-                                color: FlutterFlowTheme.of(context).secondaryColor,
+                                color: AppTheme.of(context).secondaryColor,
                                 textStyle:
-                                  FlutterFlowTheme.of(context).subtitle2.override(
+                                  AppTheme.of(context).subtitle2.override(
                                     fontFamily: 'Poppins',
                                     color: Colors.white,
                                     fontSize: 16,

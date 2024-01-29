@@ -1,5 +1,5 @@
 import 'package:clay_containers/clay_containers.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/main.dart';
@@ -54,7 +54,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor: FlutterFlowTheme.of(context).background,
+        backgroundColor: AppTheme.of(context).background,
         body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: SingleChildScrollView(
@@ -79,10 +79,10 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                               child: Text(
                                 'Sync data!',
                                 textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context).bodyText1.override(
+                                style: AppTheme.of(context).bodyText1.override(
                                       fontFamily:
-                                          FlutterFlowTheme.of(context).bodyText1Family,
-                                      color: FlutterFlowTheme.of(context).primaryText,
+                                          AppTheme.of(context).bodyText1Family,
+                                      color: AppTheme.of(context).primaryText,
                                       fontSize: 25,
                                     ),
                               ),
@@ -97,10 +97,10 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                 "Control data form\nsynchronizing\nto Data Base, don't interrput internet connection\nuntil the proccess finish.",
                                 textAlign: TextAlign.center,
                                 maxLines: 5,
-                                style: FlutterFlowTheme.of(context).bodyText1.override(
+                                style: AppTheme.of(context).bodyText1.override(
                                       fontFamily:
-                                          FlutterFlowTheme.of(context).bodyText1Family,
-                                      color: FlutterFlowTheme.of(context).dark400,
+                                          AppTheme.of(context).bodyText1Family,
+                                      color: AppTheme.of(context).dark400,
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -145,7 +145,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                             0, 30, 0, 0),
                                     child: Icon(
                                         Icons.warning_amber_outlined,
-                                        color: FlutterFlowTheme.of(context).customColor4,
+                                        color: AppTheme.of(context).customColor4,
                                         size: 150,
                                         ),
                                   ),
@@ -178,12 +178,12 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                 options: FFButtonOptions(
                                   width: 130,
                                   height: 45,
-                                  color: FlutterFlowTheme.of(context).dark400,
+                                  color: AppTheme.of(context).dark400,
                                   textStyle:
-                                      FlutterFlowTheme.of(context).subtitle2.override(
-                                            fontFamily: FlutterFlowTheme.of(context)
+                                      AppTheme.of(context).subtitle2.override(
+                                            fontFamily: AppTheme.of(context)
                                                 .subtitle2Family,
-                                            color: FlutterFlowTheme.of(context).white,
+                                            color: AppTheme.of(context).white,
                                           ),
                                   borderSide: const BorderSide(
                                     color: Colors.transparent,
@@ -205,10 +205,10 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                     'Failed sync.\nDeploy the details\nto more information.',
                                     textAlign: TextAlign.center,
                                     maxLines: 4,
-                                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                                    style: AppTheme.of(context).bodyText1.override(
                                           fontFamily:
-                                              FlutterFlowTheme.of(context).bodyText1Family,
-                                          color: FlutterFlowTheme.of(context).dark400,
+                                              AppTheme.of(context).bodyText1Family,
+                                          color: AppTheme.of(context).dark400,
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -236,19 +236,19 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                     .fromSTEB(0, 0, 8, 0),
                                                 child: Icon(
                                                   Icons.error_outline_sharp,
-                                                  color: FlutterFlowTheme.of(context)
+                                                  color: AppTheme.of(context)
                                                       .dark400,
                                                   size: 20,
                                                 ),
                                               ),
                                               Text(
                                                 'Details',
-                                                style: FlutterFlowTheme.of(context)
+                                                style: AppTheme.of(context)
                                                     .title1
                                                     .override(
-                                                      fontFamily: FlutterFlowTheme.of(context)
+                                                      fontFamily: AppTheme.of(context)
                                                           .title1Family,
-                                                      color: FlutterFlowTheme.of(context)
+                                                      color: AppTheme.of(context)
                                                           .primaryText,
                                                       fontSize: 20,
                                                     ),
@@ -257,7 +257,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                           ),
                                           collapsed: Divider(
                                             thickness: 1.5,
-                                            color: FlutterFlowTheme.of(context).white,
+                                            color: AppTheme.of(context).white,
                                           ),
                                           expanded: Builder(
                                             builder: (context) {
@@ -295,18 +295,18 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                                     borderRadius: 15,
                                                                     curveType: CurveType.concave,
                                                                     color:
-                                                                    FlutterFlowTheme.of(context).secondaryColor,
+                                                                    AppTheme.of(context).secondaryColor,
                                                                     surfaceColor:
-                                                                    FlutterFlowTheme.of(context).secondaryColor,
+                                                                    AppTheme.of(context).secondaryColor,
                                                                     parentColor:
-                                                                    FlutterFlowTheme.of(context).secondaryColor,
+                                                                    AppTheme.of(context).secondaryColor,
                                                                     child: Container(
                                                                       decoration: BoxDecoration(
                                                                         borderRadius: BorderRadius.circular(25),
                                                                       ),
                                                                       child: Icon(
                                                                         Icons.close,
-                                                                        color: FlutterFlowTheme.of(context).white,
+                                                                        color: AppTheme.of(context).white,
                                                                         size: 30,
                                                                       ),
                                                                     ),
@@ -330,13 +330,13 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                                           children: [
                                                                             Text(
                                                                               'Date: ',
-                                                                              style: FlutterFlowTheme.of(
+                                                                              style: AppTheme.of(
                                                                                   context)
                                                                               .bodyText2
                                                                               .override(
                                                                                 fontFamily:
                                                                                     'Poppins',
-                                                                                color: FlutterFlowTheme.of(context).dark400,
+                                                                                color: AppTheme.of(context).dark400,
                                                                                 fontSize: 15,
                                                                                 fontWeight:
                                                                                     FontWeight
@@ -345,13 +345,13 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                                             ),
                                                                             Text(
                                                                               dateTimeFormat('dd-MM-y hh:mm:ss', error.fecha),
-                                                                              style: FlutterFlowTheme.of(
+                                                                              style: AppTheme.of(
                                                                                   context)
                                                                               .bodyText2
                                                                               .override(
                                                                                 fontFamily:
                                                                                     'Poppins',
-                                                                                color: FlutterFlowTheme.of(context).dark400,
+                                                                                color: AppTheme.of(context).dark400,
                                                                                 fontSize: 13,
                                                                                 fontWeight:
                                                                                     FontWeight
@@ -367,13 +367,13 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                                           5, 0, 5, 5),
                                                                       child: Text(
                                                                         'Action: ',
-                                                                        style: FlutterFlowTheme.of(
+                                                                        style: AppTheme.of(
                                                                             context)
                                                                         .bodyText2
                                                                         .override(
                                                                           fontFamily:
                                                                               'Poppins',
-                                                                          color: FlutterFlowTheme.of(context).dark400,
+                                                                          color: AppTheme.of(context).dark400,
                                                                           fontSize: 15,
                                                                           fontWeight:
                                                                               FontWeight
@@ -383,13 +383,13 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                                     ),
                                                                     Text(
                                                                       error.instruccion,
-                                                                      style: FlutterFlowTheme.of(
+                                                                      style: AppTheme.of(
                                                                           context)
                                                                       .bodyText2
                                                                       .override(
                                                                         fontFamily:
                                                                             'Poppins',
-                                                                        color: FlutterFlowTheme.of(context).dark400,
+                                                                        color: AppTheme.of(context).dark400,
                                                                         fontSize: 13,
                                                                         fontWeight:
                                                                             FontWeight
@@ -413,7 +413,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                         height: 100,
                                                         decoration: BoxDecoration(
                                                           color:
-                                                              FlutterFlowTheme.of(context).secondaryColor,
+                                                              AppTheme.of(context).secondaryColor,
                                                           boxShadow: const [
                                                             BoxShadow(
                                                               blurRadius: 4,
@@ -438,13 +438,13 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                               child: Text(
                                                                 'Action: ${error.instruccion}',
                                                                 maxLines: 2,
-                                                                style: FlutterFlowTheme.of(
+                                                                style: AppTheme.of(
                                                                         context)
                                                                     .bodyText2
                                                                     .override(
                                                                       fontFamily:
                                                                           'Poppins',
-                                                                      color: FlutterFlowTheme.of(context)
+                                                                      color: AppTheme.of(context)
                                                                           .white,
                                                                       fontSize: 13,
                                                                       fontWeight:
@@ -462,13 +462,13 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                               child: Text(
                                                                 'Date: ${dateTimeFormat('dd-MM-y hh:mm:ss', error.fecha)}',
                                                                 maxLines: 1,
-                                                                style: FlutterFlowTheme.of(
+                                                                style: AppTheme.of(
                                                                         context)
                                                                     .bodyText2
                                                                     .override(
                                                                       fontFamily:
                                                                           'Poppins',
-                                                                      color: FlutterFlowTheme.of(context)
+                                                                      color: AppTheme.of(context)
                                                                           .white,
                                                                       fontSize: 13,
                                                                       fontWeight:
@@ -485,7 +485,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                               child: Icon(
                                                                 Icons.remove_red_eye_outlined,
                                                                 size: 30,
-                                                                color: FlutterFlowTheme.of(context).white,
+                                                                color: AppTheme.of(context).white,
                                                               ),
                                                             ),
                                                           ],
@@ -505,7 +505,7 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                                 ExpandablePanelHeaderAlignment.center,
                                             hasIcon: true,
                                             iconColor:
-                                                FlutterFlowTheme.of(context).dark400,
+                                                AppTheme.of(context).dark400,
                                           ),
                                         ),
                                       ),
@@ -538,12 +538,12 @@ class _SincronizacionInformacionSupabaseScreenState extends State<Sincronizacion
                                     options: FFButtonOptions(
                                       width: 130,
                                       height: 45,
-                                      color: FlutterFlowTheme.of(context).dark400,
+                                      color: AppTheme.of(context).dark400,
                                       textStyle:
-                                          FlutterFlowTheme.of(context).subtitle2.override(
-                                                fontFamily: FlutterFlowTheme.of(context)
+                                          AppTheme.of(context).subtitle2.override(
+                                                fontFamily: AppTheme.of(context)
                                                     .subtitle2Family,
-                                                color: FlutterFlowTheme.of(context).white,
+                                                color: AppTheme.of(context).white,
                                               ),
                                       borderSide: const BorderSide(
                                         color: Colors.transparent,

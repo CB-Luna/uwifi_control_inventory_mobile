@@ -1,7 +1,7 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 
 class HeaderShimmer extends StatefulWidget {
   const HeaderShimmer({
@@ -30,7 +30,7 @@ class _HeaderShimmerState extends State<HeaderShimmer> {
           bottomRight: Radius.circular(20),
         ),
         curveType: CurveType.concave,
-        color: FlutterFlowTheme.of(context).secondaryColor,
+        color: AppTheme.of(context).secondaryColor,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -40,10 +40,10 @@ class _HeaderShimmerState extends State<HeaderShimmer> {
               child: Text(
                 widget.text,
                 textAlign: TextAlign.center,
-                style: FlutterFlowTheme.of(context).bodyText1.override(
+                style: AppTheme.of(context).bodyText1.override(
                   fontFamily:
-                      FlutterFlowTheme.of(context).bodyText1Family,
-                  color: FlutterFlowTheme.of(context).white,
+                      AppTheme.of(context).bodyText1Family,
+                  color: AppTheme.of(context).white,
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
                 ),

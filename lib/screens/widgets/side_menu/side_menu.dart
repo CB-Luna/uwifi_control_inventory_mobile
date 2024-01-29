@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart' as DBO;
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/main.dart';
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
@@ -110,15 +110,15 @@ class SideMenu extends StatelessWidget {
                                         shape: BoxShape.circle,
                                       ),
                                       child: Container(
-                                        color: FlutterFlowTheme.of(context).secondaryColor,
+                                        color: AppTheme.of(context).secondaryColor,
                                         child: Center(
                                           child: Text(
                                             "${currentUser.firstName.substring(0, 1)} ${currentUser.lastName.substring(0, 1)}",
-                                            style: FlutterFlowTheme.of(context)
+                                            style: AppTheme.of(context)
                                                 .bodyText1
                                                 .override(
                                                   fontFamily:
-                                                      FlutterFlowTheme.of(context)
+                                                      AppTheme.of(context)
                                                           .bodyText1Family,
                                                   color: Colors.white,
                                                   fontSize: 14,
@@ -155,10 +155,10 @@ class SideMenu extends StatelessWidget {
                                 child: Text(
                                   maybeHandleOverflow("${usuarioProvider.usuarioCurrent!.firstName} ${usuarioProvider.usuarioCurrent!.lastName}", 22, "..."),
                                   maxLines: 2,
-                                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                                  style: AppTheme.of(context).bodyText1.override(
                                         fontFamily:
-                                            FlutterFlowTheme.of(context).bodyText1Family,
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                            AppTheme.of(context).bodyText1Family,
+                                        color: AppTheme.of(context).alternate,
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold
                                       ),

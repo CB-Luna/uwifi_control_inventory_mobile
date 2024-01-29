@@ -1,4 +1,4 @@
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomMenuItem extends StatelessWidget {
@@ -27,7 +27,7 @@ class CustomMenuItem extends StatelessWidget {
           width: 200,
           height: 40,
           decoration: BoxDecoration(
-            color: FlutterFlowTheme.of(context).tertiaryColor,
+            color: AppTheme.of(context).tertiaryColor,
             borderRadius: BorderRadius.circular(12),
           ),
           child: InkWell(
@@ -51,8 +51,8 @@ class CustomMenuItem extends StatelessWidget {
                   const SizedBox(width: 10),
                   Text(
                     label,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
+                    style: AppTheme.of(context).bodyText1.override(
+                        fontFamily: AppTheme.of(context).bodyText1Family,
                         color: Colors.white,
                         fontSize: 15,
                         fontWeight: FontWeight.normal,

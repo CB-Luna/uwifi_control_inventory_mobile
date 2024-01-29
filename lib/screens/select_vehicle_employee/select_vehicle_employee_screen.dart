@@ -4,7 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/vehiculo_controller.dart';
@@ -43,7 +43,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).background,
+        backgroundColor: AppTheme.of(context).background,
         body: Column(
           children: [
             Expanded(
@@ -61,10 +61,10 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                               'Please select an Available Vehicle to continue',
                               textAlign: TextAlign.center,
                               style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: FlutterFlowTheme.of(context)
+                                AppTheme.of(context).bodyText1.override(
+                                      fontFamily: AppTheme.of(context)
                                           .title1Family,
-                                      color: FlutterFlowTheme.of(context).tertiaryColor,
+                                      color: AppTheme.of(context).tertiaryColor,
                                       fontSize: 28,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -103,18 +103,18 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                               children: [
                                 Icon(
                                   Icons.arrow_back_ios_rounded,
-                                  color: FlutterFlowTheme.of(context).white,
+                                  color: AppTheme.of(context).white,
                                   size: 16,
                                 ),
                                 Text(
                                   'Back',
-                                  style: FlutterFlowTheme.of(context)
+                                  style: AppTheme.of(context)
                                       .bodyText1
                                       .override(
                                         fontFamily:
-                                            FlutterFlowTheme.of(context)
+                                            AppTheme.of(context)
                                                 .bodyText1Family,
-                                        color: FlutterFlowTheme.of(context).white,
+                                        color: AppTheme.of(context).white,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w300,
                                       ),
@@ -189,20 +189,20 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                               children: [
                                 Text(
                                   'Continue',
-                                  style: FlutterFlowTheme.of(context)
+                                  style: AppTheme.of(context)
                                       .bodyText1
                                       .override(
                                         fontFamily:
-                                            FlutterFlowTheme.of(context)
+                                            AppTheme.of(context)
                                                 .bodyText1Family,
-                                        color: FlutterFlowTheme.of(context).white,
+                                        color: AppTheme.of(context).white,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w300,
                                       ),
                                 ),
                                 Icon(
                                   Icons.arrow_forward_ios_rounded,
-                                  color: FlutterFlowTheme.of(context).white,
+                                  color: AppTheme.of(context).white,
                                   size: 16,
                                 ),
                               ],
@@ -222,7 +222,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 4.0,
-                            color: FlutterFlowTheme.of(context).secondaryColor,
+                            color: AppTheme.of(context).secondaryColor,
                             offset: const Offset(3.0, 3.0),
                           )
                         ],
@@ -230,8 +230,8 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                           begin: Alignment.topRight,
                           end: Alignment.bottomLeft,
                           colors: [
-                            FlutterFlowTheme.of(context).alternate,
-                            FlutterFlowTheme.of(context).secondaryColor.withOpacity(0.8),
+                            AppTheme.of(context).alternate,
+                            AppTheme.of(context).secondaryColor.withOpacity(0.8),
                           ],
                         ),
                         borderRadius: const BorderRadius.only(
@@ -269,7 +269,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                           height: 20.0,
                                           decoration:
                                               BoxDecoration(
-                                            color: FlutterFlowTheme
+                                            color: AppTheme
                                                     .of(context)
                                                 .white,
                                             shape:
@@ -284,7 +284,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                             children: [
                                               Icon(
                                                 Icons.label_important_outline,
-                                                color: FlutterFlowTheme
+                                                color: AppTheme
                                                         .of(context)
                                                     .secondaryColor,
                                                 size: 15.0,
@@ -305,12 +305,12 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                           'Make:',
                                           textAlign:
                                               TextAlign.center,
-                                          style: FlutterFlowTheme
+                                          style: AppTheme
                                                   .of(context)
                                               .bodyText1
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color: FlutterFlowTheme
+                                                color: AppTheme
                                                         .of(context)
                                                     .white,
                                                 fontSize: 15.0,
@@ -326,12 +326,12 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                           15, "..."),
                                         textAlign:
                                             TextAlign.center,
-                                        style: FlutterFlowTheme
+                                        style: AppTheme
                                                 .of(context)
                                             .bodyText1
                                             .override(
                                               fontFamily: 'Inter',
-                                              color: FlutterFlowTheme
+                                              color: AppTheme
                                                       .of(context)
                                                   .white,
                                               fontSize: 15.0,
@@ -359,7 +359,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                           height: 20.0,
                                           decoration:
                                               BoxDecoration(
-                                            color: FlutterFlowTheme
+                                            color: AppTheme
                                                     .of(context)
                                                 .white,
                                             shape:
@@ -374,7 +374,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                             children: [
                                               Icon(
                                                 Icons.calendar_month_outlined,
-                                                color: FlutterFlowTheme
+                                                color: AppTheme
                                                         .of(context)
                                                     .secondaryColor,
                                                 size: 15.0,
@@ -395,12 +395,12 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                           'Year:',
                                           textAlign:
                                               TextAlign.center,
-                                          style: FlutterFlowTheme
+                                          style: AppTheme
                                                   .of(context)
                                               .bodyText1
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color: FlutterFlowTheme
+                                                color: AppTheme
                                                         .of(context)
                                                     .white,
                                                 fontSize: 15.0,
@@ -414,12 +414,12 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                         '---',
                                         textAlign:
                                             TextAlign.center,
-                                        style: FlutterFlowTheme
+                                        style: AppTheme
                                                 .of(context)
                                             .bodyText1
                                             .override(
                                               fontFamily: 'Inter',
-                                              color: FlutterFlowTheme
+                                              color: AppTheme
                                                       .of(context)
                                                   .white,
                                               fontSize: 15.0,
@@ -457,7 +457,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                           height: 20.0,
                                           decoration:
                                               BoxDecoration(
-                                            color: FlutterFlowTheme
+                                            color: AppTheme
                                                     .of(context)
                                                 .white,
                                             shape:
@@ -472,7 +472,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                             children: [
                                               Icon(
                                                 Icons.local_shipping_outlined,
-                                                color: FlutterFlowTheme
+                                                color: AppTheme
                                                         .of(context)
                                                     .secondaryColor,
                                                 size: 15.0,
@@ -493,12 +493,12 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                           'Model:',
                                           textAlign:
                                               TextAlign.center,
-                                          style: FlutterFlowTheme
+                                          style: AppTheme
                                                   .of(context)
                                               .bodyText1
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color: FlutterFlowTheme
+                                                color: AppTheme
                                                         .of(context)
                                                     .white,
                                                 fontSize: 15.0,
@@ -514,12 +514,12 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                           15, "..."),
                                         textAlign:
                                             TextAlign.center,
-                                        style: FlutterFlowTheme
+                                        style: AppTheme
                                                 .of(context)
                                             .bodyText1
                                             .override(
                                               fontFamily: 'Inter',
-                                              color: FlutterFlowTheme
+                                              color: AppTheme
                                                       .of(context)
                                                   .white,
                                               fontSize: 15.0,
@@ -547,7 +547,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                           height: 20.0,
                                           decoration:
                                               BoxDecoration(
-                                            color: FlutterFlowTheme
+                                            color: AppTheme
                                                     .of(context)
                                                 .white,
                                             shape:
@@ -562,7 +562,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                             children: [
                                               Icon(
                                                 Icons.key_outlined,
-                                                color: FlutterFlowTheme
+                                                color: AppTheme
                                                         .of(context)
                                                     .secondaryColor,
                                                 size: 15.0,
@@ -583,12 +583,12 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                           'ID:',
                                           textAlign:
                                               TextAlign.center,
-                                          style: FlutterFlowTheme
+                                          style: AppTheme
                                                   .of(context)
                                               .bodyText1
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color: FlutterFlowTheme
+                                                color: AppTheme
                                                         .of(context)
                                                     .white,
                                                 fontSize: 15.0,
@@ -602,12 +602,12 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                         '---',
                                         textAlign:
                                             TextAlign.center,
-                                        style: FlutterFlowTheme
+                                        style: AppTheme
                                                 .of(context)
                                             .bodyText1
                                             .override(
                                               fontFamily: 'Inter',
-                                              color: FlutterFlowTheme
+                                              color: AppTheme
                                                       .of(context)
                                                   .white,
                                               fontSize: 15.0,
@@ -642,7 +642,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                     height: 20.0,
                                     decoration:
                                         BoxDecoration(
-                                      color: FlutterFlowTheme
+                                      color: AppTheme
                                               .of(context)
                                           .white,
                                       shape:
@@ -657,7 +657,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                       children: [
                                         Icon(
                                           Icons.pin_outlined,
-                                          color: FlutterFlowTheme
+                                          color: AppTheme
                                                   .of(context)
                                               .secondaryColor,
                                           size: 15.0,
@@ -678,12 +678,12 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                     'License Plates:',
                                     textAlign:
                                         TextAlign.center,
-                                    style: FlutterFlowTheme
+                                    style: AppTheme
                                             .of(context)
                                         .bodyText1
                                         .override(
                                           fontFamily: 'Inter',
-                                          color: FlutterFlowTheme
+                                          color: AppTheme
                                                   .of(context)
                                               .white,
                                           fontSize: 15.0,
@@ -697,12 +697,12 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                   '---',
                                   textAlign:
                                       TextAlign.center,
-                                  style: FlutterFlowTheme
+                                  style: AppTheme
                                       .of(context)
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Inter',
-                                    color: FlutterFlowTheme
+                                    color: AppTheme
                                             .of(context)
                                         .white,
                                     fontSize: 15.0,
@@ -741,11 +741,11 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                             boxShadow: [
                               BoxShadow(
                                 blurRadius: 4,
-                                color: FlutterFlowTheme.of(context).secondaryColor,
+                                color: AppTheme.of(context).secondaryColor,
                                 offset: const Offset(2, 2),
                               )
                             ],
-                            color: FlutterFlowTheme.of(context).secondaryColor,
+                            color: AppTheme.of(context).secondaryColor,
                             borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(50),
                               bottomRight: Radius.circular(50),
@@ -773,7 +773,7 @@ class _SelectVehicleEmployeeScreenState extends State<SelectVehicleEmployeeScree
                                 Text(
                                   "License Plates: ${data.licensePlates}", 
                                   style: TextStyle(
-                                    color: FlutterFlowTheme.of(context).white,
+                                    color: AppTheme.of(context).white,
                                     fontSize: 15.0,
                                     fontWeight: FontWeight.bold),
                                 ),

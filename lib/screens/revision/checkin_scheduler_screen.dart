@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/vehiculo_controller.dart';
@@ -83,7 +83,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
     final checkInFormProvider = Provider.of<CheckOutFormController>(context);
     final userProvider = Provider.of<UsuarioController>(context);
     return Scaffold(
-      backgroundColor: FlutterFlowTheme.of(context).background,
+      backgroundColor: AppTheme.of(context).background,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -100,7 +100,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                       width: 80,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryColor,
+                        color: AppTheme.of(context).primaryColor,
                         boxShadow: const [
                           BoxShadow(
                             blurRadius: 4,
@@ -156,17 +156,17 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                           children: [
                             Icon(
                               Icons.arrow_back_ios_rounded,
-                              color: FlutterFlowTheme.of(context).white,
+                              color: AppTheme.of(context).white,
                               size: 16,
                             ),
                             Text(
                               'Back',
-                              style: FlutterFlowTheme.of(context)
+                              style: AppTheme.of(context)
                                   .bodyText1
                                   .override(
-                                    fontFamily: FlutterFlowTheme.of(context)
+                                    fontFamily: AppTheme.of(context)
                                         .bodyText1Family,
-                                    color: FlutterFlowTheme.of(context).white,
+                                    color: AppTheme.of(context).white,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w300,
                                   ),
@@ -189,10 +189,10 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                       'Control Inventory',
                       textAlign: TextAlign.center,
                       style:
-                          FlutterFlowTheme.of(context).bodyText1.override(
-                                fontFamily: FlutterFlowTheme.of(context)
+                          AppTheme.of(context).bodyText1.override(
+                                fontFamily: AppTheme.of(context)
                                     .bodyText1Family,
-                                color: FlutterFlowTheme.of(context).secondaryColor,
+                                color: AppTheme.of(context).secondaryColor,
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -201,10 +201,10 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                       'SIMS Card',
                       textAlign: TextAlign.center,
                       style:
-                          FlutterFlowTheme.of(context).bodyText1.override(
-                                fontFamily: FlutterFlowTheme.of(context)
+                          AppTheme.of(context).bodyText1.override(
+                                fontFamily: AppTheme.of(context)
                                     .bodyText1Family,
-                                color: FlutterFlowTheme.of(context).primaryColor,
+                                color: AppTheme.of(context).primaryColor,
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -224,7 +224,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                       bottomRight: Radius.circular(30),
                     ),
                     curveType: CurveType.concave,
-                    color: FlutterFlowTheme.of(context).secondaryColor,
+                    color: AppTheme.of(context).secondaryColor,
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -237,10 +237,10 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                               maybeHandleOverflow("${
                                 userProvider.usuarioCurrent?.firstName} ${
                                 userProvider.usuarioCurrent?.lastName}", 24, "..."),
-                              style: FlutterFlowTheme.of(context).bodyText1.override(
+                              style: AppTheme.of(context).bodyText1.override(
                                 fontFamily:
-                                    FlutterFlowTheme.of(context).bodyText1Family,
-                                color: FlutterFlowTheme.of(context).white,
+                                    AppTheme.of(context).bodyText1Family,
+                                color: AppTheme.of(context).white,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 15,
                               ),
@@ -249,10 +249,10 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                               DateFormat(
                                'MMM-dd-yyyy').
                                 format(DateTime.now()),
-                              style: FlutterFlowTheme.of(context).bodyText1.override(
+                              style: AppTheme.of(context).bodyText1.override(
                                 fontFamily:
-                                    FlutterFlowTheme.of(context).bodyText1Family,
-                                color: FlutterFlowTheme.of(context).white,
+                                    AppTheme.of(context).bodyText1Family,
+                                color: AppTheme.of(context).white,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 15,
                               ),
@@ -312,7 +312,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                 thickness: 4,
                 indent: 20,
                 endIndent: 20,
-                color: FlutterFlowTheme.of(context).grayLighter,
+                color: AppTheme.of(context).grayLighter,
               ),
 
               Builder(

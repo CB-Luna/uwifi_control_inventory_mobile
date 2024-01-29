@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/header_shimmer.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/components/item_form_bundle_gateway_sims_card.dart';
 
 class BundleGatewayaSIMSCard extends StatefulWidget {
   
@@ -73,7 +70,6 @@ final animationsMap = {
 class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
   @override
   Widget build(BuildContext context) {
-    final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
@@ -122,12 +118,12 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
                                     setState(() {}),
                                 decoration: InputDecoration(
                                   labelText: 'Search...',
-                                  labelStyle: FlutterFlowTheme.of(
+                                  labelStyle: AppTheme.of(
                                           context)
                                       .bodyText2
                                       .override(
                                         fontFamily: 'Poppins',
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         fontSize: 13,
                                         fontWeight:
                                             FontWeight.normal,
@@ -136,7 +132,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
                                       OutlineInputBorder(
                                     borderSide:
                                         BorderSide(
-                                      color: FlutterFlowTheme.of(context).grayLighter,
+                                      color: AppTheme.of(context).grayLighter,
                                       width: 2,
                                     ),
                                     borderRadius:
@@ -147,7 +143,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
                                       OutlineInputBorder(
                                     borderSide:
                                         BorderSide(
-                                      color: FlutterFlowTheme.of(context).grayLighter,
+                                      color: AppTheme.of(context).grayLighter,
                                       width: 2,
                                     ),
                                     borderRadius:
@@ -156,15 +152,15 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
                                   ),
                                   prefixIcon: Icon(
                                     Icons.search_sharp,
-                                    color: FlutterFlowTheme.of(context).alternate,
+                                    color: AppTheme.of(context).alternate,
                                     size: 15,
                                   ),
                                 ),
-                                style: FlutterFlowTheme.of(context)
+                                style: AppTheme.of(context)
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Poppins',
-                                      color: FlutterFlowTheme.of(context).primaryText,
+                                      color: AppTheme.of(context).primaryText,
                                       fontSize: 13,
                                       fontWeight:
                                           FontWeight.normal,
@@ -179,7 +175,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
                               width: 40,
                               height: 40,
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
+                                color: AppTheme.of(context)
                                     .white,
                                 borderRadius:
                                     const BorderRadius.only(
@@ -191,7 +187,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
                                   topRight: Radius.circular(30),
                                 ),
                                 border: Border.all(
-                                  color: FlutterFlowTheme.of(context).alternate,
+                                  color: AppTheme.of(context).alternate,
                                   width: 2)
                               ),
                               child: InkWell(
@@ -200,7 +196,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
                                 },
                                 child: Icon(
                                   Icons.search_rounded,
-                                  color: FlutterFlowTheme.of(context).alternate,
+                                  color: AppTheme.of(context).alternate,
                                   size: 24,
                                 ),
                               ),
@@ -221,7 +217,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
                   shape: RoundedRectangleBorder(
                   side: BorderSide(
                     width: 3.0,
-                    color: FlutterFlowTheme.of(context).alternate,
+                    color: AppTheme.of(context).alternate,
                     ),
                   borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -234,33 +230,33 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
                     children: [
                       Text(
                         "Serial No.",
-                        style: FlutterFlowTheme.of(context)
+                        style: AppTheme.of(context)
                         .bodyText1.override(
                           fontFamily:
-                                FlutterFlowTheme.of(context).bodyText1Family,
-                          color: FlutterFlowTheme.of(context).alternate,
+                                AppTheme.of(context).bodyText1Family,
+                          color: AppTheme.of(context).alternate,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                         ),
                       ),
                       Text(
                         "Date Created",
-                        style: FlutterFlowTheme.of(context)
+                        style: AppTheme.of(context)
                         .bodyText1.override(
                           fontFamily:
-                                FlutterFlowTheme.of(context).bodyText1Family,
-                          color: FlutterFlowTheme.of(context).alternate,
+                                AppTheme.of(context).bodyText1Family,
+                          color: AppTheme.of(context).alternate,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                         ),
                       ),
                       Text(
                         "SIMS Card",
-                        style: FlutterFlowTheme.of(context)
+                        style: AppTheme.of(context)
                         .bodyText1.override(
                           fontFamily:
-                                FlutterFlowTheme.of(context).bodyText1Family,
-                          color: FlutterFlowTheme.of(context).alternate,
+                                AppTheme.of(context).bodyText1Family,
+                          color: AppTheme.of(context).alternate,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                         ),
@@ -277,7 +273,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
             //       shape: RoundedRectangleBorder(
             //       side: BorderSide(
             //         width: 2.0,
-            //         color: FlutterFlowTheme.of(context).grayLighter,
+            //         color: AppTheme.of(context).grayLighter,
             //         ),
             //       borderRadius: BorderRadius.circular(8.0),
             //       ),
@@ -314,7 +310,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
             //             thickness: 4,
             //             indent: 20,
             //             endIndent: 20,
-            //             color: FlutterFlowTheme.of(context).grayLighter,
+            //             color: AppTheme.of(context).grayLighter,
             //           ),
                             
             //           // GSGS243
@@ -343,7 +339,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
             //             thickness: 4,
             //             indent: 20,
             //             endIndent: 20,
-            //             color: FlutterFlowTheme.of(context).grayLighter,
+            //             color: AppTheme.of(context).grayLighter,
             //           ),
                             
             //           // HSG4GS5
@@ -372,7 +368,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
             //             thickness: 4,
             //             indent: 20,
             //             endIndent: 20,
-            //             color: FlutterFlowTheme.of(context).grayLighter,
+            //             color: AppTheme.of(context).grayLighter,
             //           ),
                             
             //           // GSGS243
@@ -401,7 +397,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
             //             thickness: 4,
             //             indent: 20,
             //             endIndent: 20,
-            //             color: FlutterFlowTheme.of(context).grayLighter,
+            //             color: AppTheme.of(context).grayLighter,
             //           ),
                             
             //           // HSG4GS5
@@ -430,7 +426,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
             //             thickness: 4,
             //             indent: 20,
             //             endIndent: 20,
-            //             color: FlutterFlowTheme.of(context).grayLighter,
+            //             color: AppTheme.of(context).grayLighter,
             //           ),
                             
             //           // GSGS243
@@ -459,7 +455,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
             //             thickness: 4,
             //             indent: 20,
             //             endIndent: 20,
-            //             color: FlutterFlowTheme.of(context).grayLighter,
+            //             color: AppTheme.of(context).grayLighter,
             //           ),
                             
             //           // HSG4GS5
@@ -488,7 +484,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
             //             thickness: 4,
             //             indent: 20,
             //             endIndent: 20,
-            //             color: FlutterFlowTheme.of(context).grayLighter,
+            //             color: AppTheme.of(context).grayLighter,
             //           ),
                             
             //           // GSGS243
@@ -517,7 +513,7 @@ class _BundleGatewayaSIMSCardState extends State<BundleGatewayaSIMSCard> {
             //             thickness: 4,
             //             indent: 20,
             //             endIndent: 20,
-            //             color: FlutterFlowTheme.of(context).grayLighter,
+            //             color: AppTheme.of(context).grayLighter,
             //           ),
             //         ],
             //       ),

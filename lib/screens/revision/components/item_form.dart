@@ -4,7 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/models/image_evidence.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/gateway.dart';
@@ -92,8 +92,8 @@ class _ItemFormState extends State<ItemForm> {
           children: [
             SlidableAction(
               icon: Icons.visibility_outlined,
-              backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-              foregroundColor: FlutterFlowTheme.of(context).white,
+              backgroundColor: AppTheme.of(context).primaryColor,
+              foregroundColor: AppTheme.of(context).white,
               borderRadius: BorderRadius.circular(20.0),
               onPressed: (context) async {
                 if (!mounted) return;
@@ -126,18 +126,18 @@ class _ItemFormState extends State<ItemForm> {
                               borderRadius: 15,
                               curveType: CurveType.concave,
                               color:
-                              FlutterFlowTheme.of(context).secondaryColor,
+                              AppTheme.of(context).secondaryColor,
                               surfaceColor:
-                              FlutterFlowTheme.of(context).secondaryColor,
+                              AppTheme.of(context).secondaryColor,
                               parentColor:
-                              FlutterFlowTheme.of(context).secondaryColor,
+                              AppTheme.of(context).secondaryColor,
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25),
                                 ),
                                 child: Icon(
                                   Icons.close,
-                                  color: FlutterFlowTheme.of(context).white,
+                                  color: AppTheme.of(context).white,
                                   size: 30,
                                 ),
                               ),
@@ -167,14 +167,14 @@ class _ItemFormState extends State<ItemForm> {
                                     errorMaxLines: 3,
                                     prefixIcon: Icon(
                                       Icons.numbers,
-                                      color: FlutterFlowTheme.of(context).alternate,
+                                      color: AppTheme.of(context).alternate,
                                     ),
                                     labelText: 'Serial Number',
-                                    labelStyle: FlutterFlowTheme.of(context)
+                                    labelStyle: AppTheme.of(context)
                                         .title3
                                         .override(
                                           fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context).grayDark,
+                                          color: AppTheme.of(context).grayDark,
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
@@ -182,7 +182,7 @@ class _ItemFormState extends State<ItemForm> {
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                                            AppTheme.of(context).alternate.withOpacity(0.5),
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -190,21 +190,21 @@ class _ItemFormState extends State<ItemForm> {
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).alternate,
+                                            AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -212,7 +212,7 @@ class _ItemFormState extends State<ItemForm> {
                                     contentPadding:
                                         const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                                   ),
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  style: AppTheme.of(context).bodyText1,
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -230,14 +230,14 @@ class _ItemFormState extends State<ItemForm> {
                                     errorMaxLines: 3,
                                     prefixIcon: Icon(
                                       Icons.pin_outlined,
-                                      color: FlutterFlowTheme.of(context).alternate,
+                                      color: AppTheme.of(context).alternate,
                                     ),
                                     labelText: 'Product ID',
-                                    labelStyle: FlutterFlowTheme.of(context)
+                                    labelStyle: AppTheme.of(context)
                                         .title3
                                         .override(
                                           fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context).grayDark,
+                                          color: AppTheme.of(context).grayDark,
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
@@ -245,7 +245,7 @@ class _ItemFormState extends State<ItemForm> {
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                                            AppTheme.of(context).alternate.withOpacity(0.5),
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -253,21 +253,21 @@ class _ItemFormState extends State<ItemForm> {
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).alternate,
+                                            AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -275,7 +275,7 @@ class _ItemFormState extends State<ItemForm> {
                                     contentPadding:
                                         const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                                   ),
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  style: AppTheme.of(context).bodyText1,
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -294,14 +294,14 @@ class _ItemFormState extends State<ItemForm> {
                                     errorMaxLines: 3,
                                     prefixIcon: Icon(
                                       Icons.label_outline,
-                                      color: FlutterFlowTheme.of(context).alternate,
+                                      color: AppTheme.of(context).alternate,
                                     ),
                                     labelText: 'Name',
-                                    labelStyle: FlutterFlowTheme.of(context)
+                                    labelStyle: AppTheme.of(context)
                                         .title3
                                         .override(
                                           fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context).grayDark,
+                                          color: AppTheme.of(context).grayDark,
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
@@ -309,7 +309,7 @@ class _ItemFormState extends State<ItemForm> {
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                                            AppTheme.of(context).alternate.withOpacity(0.5),
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -317,21 +317,21 @@ class _ItemFormState extends State<ItemForm> {
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).alternate,
+                                            AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -339,7 +339,7 @@ class _ItemFormState extends State<ItemForm> {
                                     contentPadding:
                                         const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                                   ),
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  style: AppTheme.of(context).bodyText1,
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -358,14 +358,14 @@ class _ItemFormState extends State<ItemForm> {
                                     errorMaxLines: 3,
                                     prefixIcon: Icon(
                                       Icons.router,
-                                      color: FlutterFlowTheme.of(context).alternate,
+                                      color: AppTheme.of(context).alternate,
                                     ),
                                     labelText: 'Description',
-                                    labelStyle: FlutterFlowTheme.of(context)
+                                    labelStyle: AppTheme.of(context)
                                         .title3
                                         .override(
                                           fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context).grayDark,
+                                          color: AppTheme.of(context).grayDark,
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
@@ -373,7 +373,7 @@ class _ItemFormState extends State<ItemForm> {
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                                            AppTheme.of(context).alternate.withOpacity(0.5),
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -381,21 +381,21 @@ class _ItemFormState extends State<ItemForm> {
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).alternate,
+                                            AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -403,7 +403,7 @@ class _ItemFormState extends State<ItemForm> {
                                     contentPadding:
                                         const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                                   ),
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  style: AppTheme.of(context).bodyText1,
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -422,14 +422,14 @@ class _ItemFormState extends State<ItemForm> {
                                     errorMaxLines: 3,
                                     prefixIcon: Icon(
                                       Icons.qr_code_outlined,
-                                      color: FlutterFlowTheme.of(context).alternate,
+                                      color: AppTheme.of(context).alternate,
                                     ),
                                     labelText: 'Product Code',
-                                    labelStyle: FlutterFlowTheme.of(context)
+                                    labelStyle: AppTheme.of(context)
                                         .title3
                                         .override(
                                           fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context).grayDark,
+                                          color: AppTheme.of(context).grayDark,
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
@@ -437,7 +437,7 @@ class _ItemFormState extends State<ItemForm> {
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                                            AppTheme.of(context).alternate.withOpacity(0.5),
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -445,21 +445,21 @@ class _ItemFormState extends State<ItemForm> {
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).alternate,
+                                            AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -467,7 +467,7 @@ class _ItemFormState extends State<ItemForm> {
                                     contentPadding:
                                         const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                                   ),
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  style: AppTheme.of(context).bodyText1,
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -486,14 +486,14 @@ class _ItemFormState extends State<ItemForm> {
                                     errorMaxLines: 3,
                                     prefixIcon: Icon(
                                       Icons.travel_explore_outlined,
-                                      color: FlutterFlowTheme.of(context).alternate,
+                                      color: AppTheme.of(context).alternate,
                                     ),
                                     labelText: 'Network Configuration',
-                                    labelStyle: FlutterFlowTheme.of(context)
+                                    labelStyle: AppTheme.of(context)
                                         .title3
                                         .override(
                                           fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context).grayDark,
+                                          color: AppTheme.of(context).grayDark,
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
@@ -501,7 +501,7 @@ class _ItemFormState extends State<ItemForm> {
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                                            AppTheme.of(context).alternate.withOpacity(0.5),
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -509,21 +509,21 @@ class _ItemFormState extends State<ItemForm> {
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).alternate,
+                                            AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -531,7 +531,7 @@ class _ItemFormState extends State<ItemForm> {
                                     contentPadding:
                                         const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                                   ),
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  style: AppTheme.of(context).bodyText1,
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -550,14 +550,14 @@ class _ItemFormState extends State<ItemForm> {
                                     errorMaxLines: 3,
                                     prefixIcon: Icon(
                                       Icons.location_on_outlined,
-                                      color: FlutterFlowTheme.of(context).alternate,
+                                      color: AppTheme.of(context).alternate,
                                     ),
                                     labelText: 'Location',
-                                    labelStyle: FlutterFlowTheme.of(context)
+                                    labelStyle: AppTheme.of(context)
                                         .title3
                                         .override(
                                           fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context).grayDark,
+                                          color: AppTheme.of(context).grayDark,
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
@@ -565,7 +565,7 @@ class _ItemFormState extends State<ItemForm> {
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                                            AppTheme.of(context).alternate.withOpacity(0.5),
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -573,21 +573,21 @@ class _ItemFormState extends State<ItemForm> {
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
-                                            FlutterFlowTheme.of(context).alternate,
+                                            AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -595,7 +595,7 @@ class _ItemFormState extends State<ItemForm> {
                                     contentPadding:
                                         const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                                   ),
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  style: AppTheme.of(context).bodyText1,
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -610,8 +610,8 @@ class _ItemFormState extends State<ItemForm> {
             ),
             SlidableAction(
               icon: Icons.delete_outline,
-              backgroundColor: FlutterFlowTheme.of(context).customColor3,
-              foregroundColor: FlutterFlowTheme.of(context).white,
+              backgroundColor: AppTheme.of(context).customColor3,
+              foregroundColor: AppTheme.of(context).white,
               borderRadius: BorderRadius.circular(20.0),
               onPressed: (context) async {
                 await showDialog(
@@ -667,22 +667,22 @@ class _ItemFormState extends State<ItemForm> {
             children: [
               Text(
                 widget.gateway.serialNo,
-                style: FlutterFlowTheme.of(context)
+                style: AppTheme.of(context)
                 .bodyText1.override(
                   fontFamily:
-                        FlutterFlowTheme.of(context).bodyText1Family,
-                  color: FlutterFlowTheme.of(context).tertiaryColor,
+                        AppTheme.of(context).bodyText1Family,
+                  color: AppTheme.of(context).tertiaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 15,
                 ),
               ),
               Text(
                 DateFormat("MMM-dd-yyyy").format(widget.gateway.createdAt),
-                style: FlutterFlowTheme.of(context)
+                style: AppTheme.of(context)
                 .bodyText1.override(
                   fontFamily:
-                        FlutterFlowTheme.of(context).bodyText1Family,
-                  color: FlutterFlowTheme.of(context).secondaryText,
+                        AppTheme.of(context).bodyText1Family,
+                  color: AppTheme.of(context).secondaryText,
                   fontWeight: FontWeight.bold,
                   fontSize: 15,
                 ),
@@ -692,7 +692,7 @@ class _ItemFormState extends State<ItemForm> {
                 child: Icon(
                     Icons.double_arrow_rounded,
                     size: 35,
-                    color: FlutterFlowTheme.of(context).alternate,
+                    color: AppTheme.of(context).alternate,
                 ),
               ),
             ],
@@ -704,7 +704,7 @@ class _ItemFormState extends State<ItemForm> {
         thickness: 4,
         indent: 20,
         endIndent: 20,
-        color: FlutterFlowTheme.of(context).grayLighter,
+        color: AppTheme.of(context).grayLighter,
       ),
       ],
     );

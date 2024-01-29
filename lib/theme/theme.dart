@@ -1,35 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
+const kThemeModeKey = '__theme_mode__';
+SharedPreferences? _prefs;
+
 abstract class AppTheme {
-  static AppTheme of(BuildContext context) => LightModeTheme();
+  static Future initialize() async =>
+      _prefs = await SharedPreferences.getInstance();
+  static ThemeMode get themeMode {
+    final darkMode = _prefs?.getBool(kThemeModeKey);
+    return darkMode == null
+        ? ThemeMode.system
+        : darkMode
+            ? ThemeMode.dark
+            : ThemeMode.light;
+  }
 
-  abstract Color primaryColor;
-  abstract Color secondaryColor;
-  abstract Color tertiaryColor;
-  abstract Color alternate;
-  abstract Color primaryBackground;
-  abstract Color secondaryBackground;
-  abstract Color primaryText;
-  abstract Color secondaryText;
+  static void saveThemeMode(ThemeMode mode) => mode == ThemeMode.system
+      ? _prefs?.remove(kThemeModeKey)
+      : _prefs?.setBool(kThemeModeKey, mode == ThemeMode.dark);
 
-  abstract Color primaryBtnText;
-  abstract Color lineColor;
-  abstract Color customColor1;
-  abstract Color richBlackFOGRA39;
-  abstract Color blue;
-  abstract Color turquoise;
-  abstract Color cultured;
-  abstract Color cerise;
-  abstract Color grayIcon;
-  abstract Color gray200;
-  abstract Color gray600;
-  abstract Color black600;
-  abstract Color tertiary400;
-  abstract Color textColor;
-  abstract Color smiPrimary;
-  abstract Color odePrimary;
-  abstract Color cryPrimary;
+  static AppTheme of(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark
+        ? DarkModeTheme()
+        : LightModeTheme();
+  }
+
+  late Color primaryColor;
+  late Color secondaryColor;
+  late Color tertiaryColor;
+  late Color alternate;
+  late Color buenoColor;
+  late Color recomendadoColor;
+  late Color urgenteColor;
+  late Color primaryBackground;
+  late Color secondaryBackground;
+  late Color primaryText;
+  late Color secondaryText;
+
+  late Color customColor1;
+  late Color grayLight;
+  late Color grayLighter;
+  late Color background;
+  late Color dark400;
+  late Color grayDark;
+  late Color btnText;
+  late Color lineColor;
+  late Color customColor3;
+  late Color customColor4;
+  late Color white;
+  late Color primaryBtnText;
+  late Color backgroundComponents;
 
   String get title1Family => typography.title1Family;
   TextStyle get title1 => typography.title1;
@@ -50,57 +73,31 @@ abstract class AppTheme {
 }
 
 class LightModeTheme extends AppTheme {
-  @override
-  Color primaryColor = Colors.black;
-  @override
-  Color secondaryColor = const Color(0xFF39D2C0);
-  @override
-  Color tertiaryColor = const Color(0xFFEE8B60);
-  @override
-  Color alternate = const Color(0xFFFF5963);
-  @override
-  Color primaryBackground = const Color(0xFFF1F4F8);
-  @override
-  Color secondaryBackground = const Color(0xFFFFFFFF);
-  @override
-  Color primaryText = Colors.black;
-  @override
-  Color secondaryText = Colors.black;
+  late Color primaryColor = const Color(0xFF00B837);
+  late Color secondaryColor = const Color(0xFF7949DC);
+  late Color tertiaryColor = const Color(0xFF8A5DD8);
+  late Color alternate = const Color(0xFF492C7C);
+  late Color buenoColor = const Color(0xFF228B22);
+  late Color recomendadoColor = const Color(0xFFFFBF00);
+  late Color urgenteColor = const Color(0xFF9C432D);
+  late Color primaryBackground = const Color(0xFFF0F5F6);
+  late Color secondaryBackground = const Color(0xFFFFFFFF);
+  late Color primaryText = const Color(0xFF14181B);
+  late Color secondaryText = const Color(0xFF57636C);
 
-  @override
-  Color primaryBtnText = const Color(0xFFFFFFFF);
-  @override
-  Color lineColor = const Color(0xFFE0E3E7);
-  @override
-  Color customColor1 = const Color(0xFF2FB73C);
-  @override
-  Color richBlackFOGRA39 = const Color(0xFF070707);
-  @override
-  Color blue = Colors.black;
-  @override
-  Color turquoise = const Color(0xFF34D1BF);
-  @override
-  Color cultured = const Color(0xFFEFEFEF);
-  @override
-  Color cerise = const Color(0xFFD1345B);
-  @override
-  Color grayIcon = const Color(0xFF95A1AC);
-  @override
-  Color gray200 = const Color(0xFFDBE2E7);
-  @override
-  Color gray600 = const Color(0xFF262D34);
-  @override
-  Color black600 = const Color(0xFF090F13);
-  @override
-  Color tertiary400 = const Color(0xFF39D2C0);
-  @override
-  Color textColor = const Color(0xFF1E2429);
-  @override
-  Color smiPrimary = const Color.fromRGBO(255, 138, 0, 1);
-  @override
-  Color odePrimary = const Color(0XFFB2333A);
-  @override
-  Color cryPrimary = const Color(0XFF345694);
+  late Color customColor1 = Color(0xFFFFFFFF);
+  late Color grayLight = Color(0xFF95A1AC);
+  late Color grayLighter = Color(0xFFDBE2E7);
+  late Color background = Color(0xFFF0F5F6);
+  late Color dark400 = Color(0xFF1D2429);
+  late Color grayDark = Color(0xFF57636C);
+  late Color btnText = Color(0xFFFFFFFF);
+  late Color lineColor = Color(0xFFDBE2E7);
+  late Color customColor3 = Color(0xFFDF3F3F);
+  late Color customColor4 = Color(0xFF090F13);
+  late Color white = Color(0xFFFFFFFF);
+  late Color primaryBtnText = Color(0xFFFFFFFF);
+  late Color backgroundComponents = Color(0xFF1D2428);
 }
 
 abstract class Typography {
@@ -125,77 +122,92 @@ class ThemeTypography extends Typography {
 
   final AppTheme theme;
 
-  @override
-  String get title1Family => 'Poppins';
-  @override
+  String get title1Family => 'Outfit';
   TextStyle get title1 => GoogleFonts.getFont(
-        'Poppins',
+        'Outfit',
+        color: theme.primaryText,
+        fontWeight: FontWeight.bold,
+        fontSize: 28,
+      );
+  String get title2Family => 'Outfit';
+  TextStyle get title2 => GoogleFonts.getFont(
+        'Outfit',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 24,
       );
-  @override
-  String get title2Family => 'Poppins';
-  @override
-  TextStyle get title2 => GoogleFonts.getFont(
-        'Poppins',
-        color: theme.secondaryText,
-        fontWeight: FontWeight.w600,
-        fontSize: 22,
-      );
-  @override
-  String get title3Family => 'Poppins';
-  @override
+  String get title3Family => 'Outfit';
   TextStyle get title3 => GoogleFonts.getFont(
-        'Poppins',
+        'Outfit',
         color: theme.primaryText,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w500,
         fontSize: 20,
       );
-  @override
-  String get subtitle1Family => 'Poppins';
-  @override
+  String get subtitle1Family => 'Outfit';
   TextStyle get subtitle1 => GoogleFonts.getFont(
-        'Poppins',
+        'Outfit',
         color: theme.primaryText,
-        fontWeight: FontWeight.w600,
-        fontSize: 18,
+        fontWeight: FontWeight.w500,
+        fontSize: 20,
       );
-  @override
-  String get subtitle2Family => 'Poppins';
-  @override
+  String get subtitle2Family => 'Outfit';
   TextStyle get subtitle2 => GoogleFonts.getFont(
-        'Poppins',
-        color: theme.secondaryText,
-        fontWeight: FontWeight.w600,
+        'Outfit',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
         fontSize: 16,
       );
-  @override
-  String get bodyText1Family => 'Poppins';
-  @override
+  String get bodyText1Family => 'Outfit';
   TextStyle get bodyText1 => GoogleFonts.getFont(
-        'Poppins',
+        'Outfit',
         color: theme.primaryText,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.normal,
         fontSize: 14,
       );
-  @override
-  String get bodyText2Family => 'Poppins';
-  @override
+  String get bodyText2Family => 'Outfit';
   TextStyle get bodyText2 => GoogleFonts.getFont(
-        'Poppins',
+        'Outfit',
         color: theme.secondaryText,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.normal,
         fontSize: 14,
       );
 }
 
+class DarkModeTheme extends AppTheme {
+  late Color primaryColor = const Color(0xFFDE2979);
+  late Color secondaryColor = const Color(0xFF4B39EF);
+  late Color tertiaryColor = const Color(0xFF101213);
+  late Color alternate = const Color(0xFFFFFFFF);
+  late Color buenoColor = const Color(0xFFABEBEC);
+  late Color recomendadoColor = const Color(0xFFD5B460);
+  late Color urgenteColor = const Color(0xFF9C432D);
+  late Color primaryBackground = const Color(0xFF1D2428);
+  late Color secondaryBackground = const Color(0xFF14181B);
+  late Color primaryText = const Color(0xFFFFFFFF);
+  late Color secondaryText = const Color(0xFF95A1AC);
+
+  late Color customColor1 = Color(0xFF14181B);
+  late Color grayLight = Color(0xFF95A1AC);
+  late Color grayLighter = Color(0xFF323B45);
+  late Color background = Color(0xFF1D2428);
+  late Color dark400 = Color(0xFFFFFFFF);
+  late Color grayDark = Color(0xFF95A1AC);
+  late Color btnText = Color(0xFFFFFFFF);
+  late Color lineColor = Color(0xFF323B45);
+  late Color customColor3 = Color(0xFFDF3F3F);
+  late Color customColor4 = Color(0xFF090F13);
+  late Color white = Color(0xFFFFFFFF);
+  late Color primaryBtnText = Color(0xFFFFFFFF);
+  late Color backgroundComponents = Color(0xFF1D2428);
+}
+
 extension TextStyleHelper on TextStyle {
   TextStyle override({
-    required String fontFamily,
+    String? fontFamily,
     Color? color,
     double? fontSize,
     FontWeight? fontWeight,
+    double? letterSpacing,
     FontStyle? fontStyle,
     bool useGoogleFonts = true,
     TextDecoration? decoration,
@@ -203,9 +215,10 @@ extension TextStyleHelper on TextStyle {
   }) =>
       useGoogleFonts
           ? GoogleFonts.getFont(
-              fontFamily,
+              fontFamily!,
               color: color ?? this.color,
               fontSize: fontSize ?? this.fontSize,
+              letterSpacing: letterSpacing ?? this.letterSpacing,
               fontWeight: fontWeight ?? this.fontWeight,
               fontStyle: fontStyle ?? this.fontStyle,
               decoration: decoration,
@@ -215,9 +228,31 @@ extension TextStyleHelper on TextStyle {
               fontFamily: fontFamily,
               color: color,
               fontSize: fontSize,
+              letterSpacing: letterSpacing,
               fontWeight: fontWeight,
               fontStyle: fontStyle,
               decoration: decoration,
               height: lineHeight,
             );
 }
+
+Gradient purpleRadial = const LinearGradient(
+  begin: Alignment.centerLeft,
+  end: Alignment.centerRight,
+  colors: [
+      Color(0xFF8A5DD8),
+      Color(0xFF7949DC),
+      Color(0xFF8A5DD8),
+      Color(0xFF7949DC),
+      Color(0xFF492C7C)
+  ],
+);
+
+Gradient whiteRadial = const LinearGradient(
+  begin: Alignment.centerLeft,
+  end: Alignment.centerRight,
+  colors: [
+    Colors.white,
+    Colors.white,
+  ],
+);

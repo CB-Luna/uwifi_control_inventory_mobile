@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
@@ -109,14 +109,14 @@ with TickerProviderStateMixin {
           //                         children: [
           //                           Text(
           //                             'Switch to Dark Mode',
-          //                             style: FlutterFlowTheme.of(context)
+          //                             style: AppTheme.of(context)
           //                                 .bodyText1,
           //                           ),
           //                           Container(
           //                             width: 80,
           //                             height: 40,
           //                             decoration: BoxDecoration(
-          //                               color: FlutterFlowTheme.of(context)
+          //                               color: AppTheme.of(context)
           //                                   .primaryBackground,
           //                               borderRadius: BorderRadius.circular(20),
           //                             ),
@@ -144,7 +144,7 @@ with TickerProviderStateMixin {
           //                                     height: 36,
           //                                     decoration: BoxDecoration(
           //                                       color:
-          //                                           FlutterFlowTheme.of(context)
+          //                                           AppTheme.of(context)
           //                                               .secondaryBackground,
           //                                       boxShadow: [
           //                                         BoxShadow(
@@ -208,7 +208,7 @@ with TickerProviderStateMixin {
           //                         children: [
           //                           Text(
           //                             'Switch to Light Mode',
-          //                             style: FlutterFlowTheme.of(context)
+          //                             style: AppTheme.of(context)
           //                                 .bodyText1
           //                                 .override(
           //                                   fontFamily: 'Outfit',
@@ -279,7 +279,7 @@ with TickerProviderStateMixin {
           ExpansionTile(
             title: Text(
               'Device Information',
-              style: FlutterFlowTheme.of(context).bodyText1.override(
+              style: AppTheme.of(context).bodyText1.override(
                     fontFamily: 'Poppins',
                     color: Colors.black,
                     fontSize: 20,
@@ -297,7 +297,7 @@ with TickerProviderStateMixin {
                       children: [
                         Text(
                           "Model: ${snapshot.data?.model}",
-                          style: FlutterFlowTheme.of(context).bodyText1.override(
+                          style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
                                 fontSize: 15,
@@ -306,7 +306,7 @@ with TickerProviderStateMixin {
                         ),
                         Text(
                           "Manufacturer: ${snapshot.data?.manufacturer}",
-                          style: FlutterFlowTheme.of(context).bodyText1.override(
+                          style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
                                 fontSize: 15,
@@ -315,7 +315,7 @@ with TickerProviderStateMixin {
                         ),
                         Text(
                           "Brand: ${snapshot.data?.brand}",
-                          style: FlutterFlowTheme.of(context).bodyText1.override(
+                          style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
                                 fontSize: 15,
@@ -324,7 +324,7 @@ with TickerProviderStateMixin {
                         ),
                         Text(
                           "Device: ${snapshot.data?.device}",
-                          style: FlutterFlowTheme.of(context).bodyText1.override(
+                          style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
                                 fontSize: 15,
@@ -333,7 +333,7 @@ with TickerProviderStateMixin {
                         ),
                         Text(
                           "Version: ${snapshot.data!.version.release}",
-                          style: FlutterFlowTheme.of(context).bodyText1.override(
+                          style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
                                 fontSize: 15,
@@ -348,7 +348,7 @@ with TickerProviderStateMixin {
                         width: 50,
                         height: 50,
                         child: SpinKitRipple(
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: AppTheme.of(context).primaryColor,
                           size: 50,
                         ),
                       ),
@@ -366,7 +366,7 @@ with TickerProviderStateMixin {
                       children: [
                         Text(
                           "Model: ${snapshot.data?.name}",
-                          style: FlutterFlowTheme.of(context).bodyText1.override(
+                          style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
                                 fontSize: 15,
@@ -375,7 +375,7 @@ with TickerProviderStateMixin {
                         ),
                         Text(
                           "Release: ${snapshot.data?.utsname.release}",
-                          style: FlutterFlowTheme.of(context).bodyText1.override(
+                          style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
                                 fontSize: 15,
@@ -384,7 +384,7 @@ with TickerProviderStateMixin {
                         ),
                         Text(
                           "System Name: ${snapshot.data?.systemName}",
-                          style: FlutterFlowTheme.of(context).bodyText1.override(
+                          style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
                                 fontSize: 15,
@@ -393,7 +393,7 @@ with TickerProviderStateMixin {
                         ),
                         Text(
                           "System Version: ${snapshot.data!.systemVersion}",
-                          style: FlutterFlowTheme.of(context).bodyText1.override(
+                          style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
                                 fontSize: 15,
@@ -408,7 +408,7 @@ with TickerProviderStateMixin {
                         width: 50,
                         height: 50,
                         child: SpinKitRipple(
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: AppTheme.of(context).primaryColor,
                           size: 50,
                         ),
                       ),

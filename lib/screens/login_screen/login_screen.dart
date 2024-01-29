@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_widgets.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
-            color: FlutterFlowTheme.of(context).tertiaryColor,
+            color: AppTheme.of(context).tertiaryColor,
             image: DecorationImage(
               fit: BoxFit.fill,
               image: Image.asset(
@@ -72,9 +72,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: MediaQuery.of(context).size.width,
                       child: Text(
                         'Control Inventory',
-                        style: FlutterFlowTheme.of(context).title1.override(
+                        style: AppTheme.of(context).title1.override(
                               fontFamily: 'Outfit',
-                              color: FlutterFlowTheme.of(context).white,
+                              color: AppTheme.of(context).white,
                               fontSize: 32,
                               fontWeight: FontWeight.bold
                             ),
@@ -88,9 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 24),
                             child: Text(
                               'Daily Operation',
-                              style: FlutterFlowTheme.of(context).title3.override(
+                              style: AppTheme.of(context).title3.override(
                                     fontFamily: 'Outfit',
-                                    color: FlutterFlowTheme.of(context).white,
+                                    color: AppTheme.of(context).white,
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
@@ -110,19 +110,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Email',
-                                labelStyle: FlutterFlowTheme.of(context).bodyText1,
+                                labelStyle: AppTheme.of(context).bodyText1,
                                 hintText: 'Input your email...',
-                                hintStyle: FlutterFlowTheme.of(context).bodyText1,
+                                hintStyle: AppTheme.of(context).bodyText1,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide:BorderSide(
-                                    color: FlutterFlowTheme.of(context).white,
+                                    color: AppTheme.of(context).white,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide:BorderSide(
-                                    color: FlutterFlowTheme.of(context).white,
+                                    color: AppTheme.of(context).white,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
@@ -142,19 +142,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 filled: true,
-                                fillColor: FlutterFlowTheme.of(context).white,
+                                fillColor: AppTheme.of(context).white,
                                 contentPadding:
                                     const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
                                 errorStyle: TextStyle(
-                                  color: FlutterFlowTheme.of(context).white,
+                                  color: AppTheme.of(context).white,
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context)
+                              style: AppTheme.of(context)
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Outfit',
                                     color:
-                                        FlutterFlowTheme.of(context).tertiaryColor,
+                                        AppTheme.of(context).tertiaryColor,
                                   ),
                               validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -183,19 +183,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               obscuringCharacter: '*',
                               decoration: InputDecoration(
                                 labelText: 'Password',
-                                labelStyle: FlutterFlowTheme.of(context).bodyText1,
+                                labelStyle: AppTheme.of(context).bodyText1,
                                 hintText: 'Input your password...',
-                                hintStyle: FlutterFlowTheme.of(context).bodyText1,
+                                hintStyle: AppTheme.of(context).bodyText1,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).white,
+                                    color: AppTheme.of(context).white,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).white,
+                                    color: AppTheme.of(context).white,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
@@ -215,9 +215,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 filled: true,
-                                fillColor: FlutterFlowTheme.of(context).white,
+                                fillColor: AppTheme.of(context).white,
                                 errorStyle: TextStyle(
-                                  color: FlutterFlowTheme.of(context).white,
+                                  color: AppTheme.of(context).white,
                                 ),
                                 contentPadding:
                                     const EdgeInsetsDirectional.fromSTEB(16, 24, 24, 24),
@@ -231,17 +231,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                     contrasenaVisibility
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
-                                    color: FlutterFlowTheme.of(context).primaryColor,
+                                    color: AppTheme.of(context).primaryColor,
                                     size: 22,
                                   ),
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context)
+                              style: AppTheme.of(context)
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Lexend Deca',
                                     color:
-                                        FlutterFlowTheme.of(context).tertiaryColor,
+                                        AppTheme.of(context).tertiaryColor,
                                     fontSize: 14,
                                     fontWeight: FontWeight.normal,
                                   ),
@@ -437,9 +437,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             options: FFButtonOptions(
                               width: 130,
                               height: 50,
-                              color: FlutterFlowTheme.of(context).primaryColor,
+                              color: AppTheme.of(context).primaryColor,
                               textStyle:
-                                  FlutterFlowTheme.of(context).subtitle1.override(
+                                  AppTheme.of(context).subtitle1.override(
                                         fontFamily: 'Lexend Deca',
                                         color: Colors.white,
                                         fontSize: 18,
@@ -486,7 +486,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         width: 170,
                                         height: 30,
                                         color: const Color(0x00FFFFFF),
-                                        textStyle: FlutterFlowTheme.of(context)
+                                        textStyle: AppTheme.of(context)
                                             .subtitle2
                                             .override(
                                               fontFamily: 'Lexend Deca',

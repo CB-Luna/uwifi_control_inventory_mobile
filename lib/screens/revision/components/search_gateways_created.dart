@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/gateways_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/header_shimmer.dart';
@@ -135,12 +135,12 @@ class _SearchGatewaysCreatedState extends State<SearchGatewaysCreated> {
                                     setState(() {}),
                                 decoration: InputDecoration(
                                   labelText: 'Search...',
-                                  labelStyle: FlutterFlowTheme.of(
+                                  labelStyle: AppTheme.of(
                                           context)
                                       .bodyText2
                                       .override(
                                         fontFamily: 'Poppins',
-                                        color: FlutterFlowTheme.of(context).alternate,
+                                        color: AppTheme.of(context).alternate,
                                         fontSize: 13,
                                         fontWeight:
                                             FontWeight.normal,
@@ -149,7 +149,7 @@ class _SearchGatewaysCreatedState extends State<SearchGatewaysCreated> {
                                       OutlineInputBorder(
                                     borderSide:
                                         BorderSide(
-                                      color: FlutterFlowTheme.of(context).grayLighter,
+                                      color: AppTheme.of(context).grayLighter,
                                       width: 2,
                                     ),
                                     borderRadius:
@@ -160,7 +160,7 @@ class _SearchGatewaysCreatedState extends State<SearchGatewaysCreated> {
                                       OutlineInputBorder(
                                     borderSide:
                                         BorderSide(
-                                      color: FlutterFlowTheme.of(context).grayLighter,
+                                      color: AppTheme.of(context).grayLighter,
                                       width: 2,
                                     ),
                                     borderRadius:
@@ -169,15 +169,15 @@ class _SearchGatewaysCreatedState extends State<SearchGatewaysCreated> {
                                   ),
                                   prefixIcon: Icon(
                                     Icons.search_sharp,
-                                    color: FlutterFlowTheme.of(context).alternate,
+                                    color: AppTheme.of(context).alternate,
                                     size: 15,
                                   ),
                                 ),
-                                style: FlutterFlowTheme.of(context)
+                                style: AppTheme.of(context)
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Poppins',
-                                      color: FlutterFlowTheme.of(context).primaryText,
+                                      color: AppTheme.of(context).primaryText,
                                       fontSize: 13,
                                       fontWeight:
                                           FontWeight.normal,
@@ -192,7 +192,7 @@ class _SearchGatewaysCreatedState extends State<SearchGatewaysCreated> {
                               width: 40,
                               height: 40,
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
+                                color: AppTheme.of(context)
                                     .white,
                                 borderRadius:
                                     const BorderRadius.only(
@@ -204,7 +204,7 @@ class _SearchGatewaysCreatedState extends State<SearchGatewaysCreated> {
                                   topRight: Radius.circular(30),
                                 ),
                                 border: Border.all(
-                                  color: FlutterFlowTheme.of(context).alternate,
+                                  color: AppTheme.of(context).alternate,
                                   width: 2)
                               ),
                               child: InkWell(
@@ -213,7 +213,7 @@ class _SearchGatewaysCreatedState extends State<SearchGatewaysCreated> {
                                 },
                                 child: Icon(
                                   Icons.search_rounded,
-                                  color: FlutterFlowTheme.of(context).alternate,
+                                  color: AppTheme.of(context).alternate,
                                   size: 24,
                                 ),
                               ),
@@ -234,7 +234,7 @@ class _SearchGatewaysCreatedState extends State<SearchGatewaysCreated> {
                   shape: RoundedRectangleBorder(
                   side: BorderSide(
                     width: 3.0,
-                    color: FlutterFlowTheme.of(context).alternate,
+                    color: AppTheme.of(context).alternate,
                     ),
                   borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -247,33 +247,33 @@ class _SearchGatewaysCreatedState extends State<SearchGatewaysCreated> {
                     children: [
                       Text(
                         "Serial No.",
-                        style: FlutterFlowTheme.of(context)
+                        style: AppTheme.of(context)
                         .bodyText1.override(
                           fontFamily:
-                                FlutterFlowTheme.of(context).bodyText1Family,
-                          color: FlutterFlowTheme.of(context).alternate,
+                                AppTheme.of(context).bodyText1Family,
+                          color: AppTheme.of(context).alternate,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                         ),
                       ),
                       Text(
                         "Created",
-                        style: FlutterFlowTheme.of(context)
+                        style: AppTheme.of(context)
                         .bodyText1.override(
                           fontFamily:
-                                FlutterFlowTheme.of(context).bodyText1Family,
-                          color: FlutterFlowTheme.of(context).alternate,
+                                AppTheme.of(context).bodyText1Family,
+                          color: AppTheme.of(context).alternate,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                         ),
                       ),
                       Text(
                         "Options",
-                        style: FlutterFlowTheme.of(context)
+                        style: AppTheme.of(context)
                         .bodyText1.override(
                           fontFamily:
-                                FlutterFlowTheme.of(context).bodyText1Family,
-                          color: FlutterFlowTheme.of(context).alternate,
+                                AppTheme.of(context).bodyText1Family,
+                          color: AppTheme.of(context).alternate,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                         ),
@@ -290,7 +290,7 @@ class _SearchGatewaysCreatedState extends State<SearchGatewaysCreated> {
                 shape: RoundedRectangleBorder(
                 side: BorderSide(
                   width: 2.0,
-                  color: FlutterFlowTheme.of(context).grayLighter,
+                  color: AppTheme.of(context).grayLighter,
                   ),
                 borderRadius: BorderRadius.circular(8.0),
                 ),

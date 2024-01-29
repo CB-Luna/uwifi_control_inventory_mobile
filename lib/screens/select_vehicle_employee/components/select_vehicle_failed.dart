@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/screens/select_vehicle_employee/select_vehicle_employee_screen.dart';
 
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
@@ -38,7 +38,7 @@ class _SelectVehicleFailedScreenState extends State<SelectVehicleFailedScreen> {
                       child: Text(
                         '¡Failed in\nSelect\nVehicle!',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               color: Colors.black,
                               fontSize: 30,
@@ -51,7 +51,7 @@ class _SelectVehicleFailedScreenState extends State<SelectVehicleFailedScreen> {
                       child: Text(                                
                         'A problem occurs while it selected the vehicle.',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               color: Colors.black,
                               fontSize: 15,
@@ -64,7 +64,7 @@ class _SelectVehicleFailedScreenState extends State<SelectVehicleFailedScreen> {
                       child: SizedBox(
                         child: Icon(
                           Icons.cancel_outlined,
-                          color: FlutterFlowTheme.of(context).tertiaryColor,
+                          color: AppTheme.of(context).tertiaryColor,
                           size: 250,
                           )
                       ),
@@ -86,8 +86,8 @@ class _SelectVehicleFailedScreenState extends State<SelectVehicleFailedScreen> {
                         options: FFButtonOptions(
                           width: 200,
                           height: 45,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                          textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                          color: AppTheme.of(context).primaryColor,
+                          textStyle: AppTheme.of(context).subtitle2.override(
                                 fontFamily: 'Poppins',
                                 color: Colors.white,
                               ),

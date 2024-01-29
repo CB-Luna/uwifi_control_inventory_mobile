@@ -2,7 +2,7 @@
 import 'dart:io' as libraryIO;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/header_shimmer.dart';
 
 import '../../../providers/database/vehiculo_controller.dart';
@@ -39,7 +39,7 @@ class ControlInventoryScreen extends StatelessWidget {
               thickness: 4,
               indent: 20,
               endIndent: 20,
-              color: FlutterFlowTheme.of(context).grayLighter,
+              color: AppTheme.of(context).grayLighter,
             ),
         ]),
       ),

@@ -1,7 +1,7 @@
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_widgets.dart';
 
 import 'package:flutter/material.dart';
@@ -48,7 +48,7 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).background,
+        backgroundColor: AppTheme.of(context).background,
         body: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: SingleChildScrollView(
@@ -69,7 +69,7 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                           width: 80,
                           height: 40,
                           decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).alternate,
+                            color: AppTheme.of(context).alternate,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: InkWell(
@@ -117,17 +117,17 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                               children: [
                                 Icon(
                                   Icons.arrow_back_ios_rounded,
-                                  color: FlutterFlowTheme.of(context).white,
+                                  color: AppTheme.of(context).white,
                                   size: 16,
                                 ),
                                 Text(
                                   'Back',
-                                  style: FlutterFlowTheme.of(context)
+                                  style: AppTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: FlutterFlowTheme.of(context)
+                                        fontFamily: AppTheme.of(context)
                                             .bodyText1Family,
-                                        color: FlutterFlowTheme.of(context).white,
+                                        color: AppTheme.of(context).white,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w300,
                                       ),
@@ -149,10 +149,10 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                         Text(
                           'Service Vehicle Form',
                           style:
-                          FlutterFlowTheme.of(context).bodyText1.override(
-                                fontFamily: FlutterFlowTheme.of(context)
+                          AppTheme.of(context).bodyText1.override(
+                                fontFamily: AppTheme.of(context)
                                     .bodyText1Family,
-                                color: FlutterFlowTheme.of(context).tertiaryColor,
+                                color: AppTheme.of(context).tertiaryColor,
                                 fontSize: 34,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -167,7 +167,7 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                       children: [
                         Text(
                           "${widget.vehicle.make} - ${widget.vehicle.model} ${widget.vehicle.year}",
-                          style: FlutterFlowTheme.of(context).bodyText2,
+                          style: AppTheme.of(context).bodyText2,
                         ),
                       ],
                     ),
@@ -179,9 +179,9 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                       children: [
                         Text(
                           "${widget.vehicle.company.target!.company}: ${widget.vehicle.licensePlates}",
-                          style: FlutterFlowTheme.of(context).title1.override(
+                          style: AppTheme.of(context).title1.override(
                                 fontFamily: 'Outfit',
-                                color: FlutterFlowTheme.of(context).dark400,
+                                color: AppTheme.of(context).dark400,
                               ),
                         ),
                       ],
@@ -215,10 +215,10 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                         Text(
                           widget.vehicleServices.service.target!.service,
                           style:
-                          FlutterFlowTheme.of(context).bodyText1.override(
-                                fontFamily: FlutterFlowTheme.of(context)
+                          AppTheme.of(context).bodyText1.override(
+                                fontFamily: AppTheme.of(context)
                                     .bodyText1Family,
-                                color: FlutterFlowTheme.of(context).tertiaryColor,
+                                color: AppTheme.of(context).tertiaryColor,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -232,9 +232,9 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                     child: SizedBox(
                       child: Text(
                         widget.vehicleServices.service.target!.description,
-                        style: FlutterFlowTheme.of(context).bodyText2.override(
+                        style: AppTheme.of(context).bodyText2.override(
                           fontFamily: 'Outfit',
-                          color: FlutterFlowTheme.of(context).primaryText,
+                          color: AppTheme.of(context).primaryText,
                           fontSize: 18,
                         ),
                       ),
@@ -248,9 +248,9 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                         children: [
                           Text(
                             "Service Completed",
-                            style: FlutterFlowTheme.of(context).bodyText2.override(
+                            style: AppTheme.of(context).bodyText2.override(
                               fontFamily: 'Outfit',
-                              color: FlutterFlowTheme.of(context).alternate,
+                              color: AppTheme.of(context).alternate,
                               fontSize: 14,
                               fontWeight: FontWeight.bold
                             ),
@@ -273,21 +273,21 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                           width: double.infinity,
                           height: 50,
                           textStyle:
-                              FlutterFlowTheme.of(context).title3.override(
+                              AppTheme.of(context).title3.override(
                                     fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context).tertiaryColor,
+                                    color: AppTheme.of(context).tertiaryColor,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal,
                                   ),
                           hintText: 'Service Completed',
                           icon: Icon(
                             Icons.keyboard_arrow_down_rounded,
-                            color: FlutterFlowTheme.of(context).tertiaryColor,
+                            color: AppTheme.of(context).tertiaryColor,
                             size: 30,
                           ),
-                          fillColor: FlutterFlowTheme.of(context).white,
+                          fillColor: AppTheme.of(context).white,
                           elevation: 2,
-                          borderColor: FlutterFlowTheme.of(context).tertiaryColor,
+                          borderColor: AppTheme.of(context).tertiaryColor,
                           borderWidth: 2,
                           borderRadius: 8,
                           margin: const EdgeInsetsDirectional.fromSTEB(
@@ -320,12 +320,12 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                       obscureText: false,
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: FlutterFlowTheme.of(context).white,
+                        fillColor: AppTheme.of(context).white,
                         hintText: 'Completed Date...',
                         enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
-                              FlutterFlowTheme.of(context).alternate,
+                              AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -333,21 +333,21 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
-                              FlutterFlowTheme.of(context).alternate,
+                              AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: AppTheme.of(context).primaryColor,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: AppTheme.of(context).primaryColor,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -356,12 +356,12 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                           const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                       suffixIcon: Icon(
                           Icons.date_range_outlined,
-                          color: FlutterFlowTheme.of(context)
+                          color: AppTheme.of(context)
                               .primaryText,
                           size: 24,
                         ),
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
+                      style: AppTheme.of(context).bodyText1,
                       textAlign: TextAlign.start,
                       keyboardType: TextInputType.none,
                       validator: (value) {
@@ -430,11 +430,11 @@ class _CompletedServicesVehicleScreenState extends State<CompletedServicesVehicl
                       options: FFButtonOptions(
                         width: 200,
                         height: 50,
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: AppTheme.of(context).alternate,
                         textStyle:
-                            FlutterFlowTheme.of(context).subtitle1.override(
+                            AppTheme.of(context).subtitle1.override(
                                   fontFamily: 'Lexend Deca',
-                                  color: FlutterFlowTheme.of(context).white,
+                                  color: AppTheme.of(context).white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),

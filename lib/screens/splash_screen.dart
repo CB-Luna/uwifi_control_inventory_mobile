@@ -1,4 +1,4 @@
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -65,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       return Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
+                        color: AppTheme.of(context).tertiaryColor,
                         child: Builder(
                           builder: (context) => Image.asset(
                             'assets/images/Final_Comp.gif',
@@ -87,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   width: 50,
                   height: 50,
                   child: SpinKitRipple(
-                    color: FlutterFlowTheme.of(context).tertiaryColor,
+                    color: AppTheme.of(context).tertiaryColor,
                     size: 50,
                   ),
                 ),

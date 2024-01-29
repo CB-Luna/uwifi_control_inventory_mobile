@@ -2,7 +2,7 @@
 import 'dart:io' as libraryIO;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/vehiculo_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
@@ -35,18 +35,18 @@ class OptionsAddProducts extends StatelessWidget {
                 options: FFButtonOptions(
                   width: MediaQuery.of(context).size.width * 0.2,
                   height: 40,
-                  color: FlutterFlowTheme.of(context)
+                  color: AppTheme.of(context)
                       .white,
-                  textStyle: FlutterFlowTheme.of(context)
+                  textStyle: AppTheme.of(context)
                       .subtitle2
                       .override(
-                        fontFamily: FlutterFlowTheme.of(context)
+                        fontFamily: AppTheme.of(context)
                             .subtitle2Family,
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: AppTheme.of(context).alternate,
                         fontSize: 15,
                       ),
                   borderSide: BorderSide(
-                    color: FlutterFlowTheme.of(context).alternate,
+                    color: AppTheme.of(context).alternate,
                     width: 2,
                   ),
                   borderRadius:
@@ -73,18 +73,18 @@ class OptionsAddProducts extends StatelessWidget {
                 options: FFButtonOptions(
                   width: MediaQuery.of(context).size.width * 0.2,
                   height: 40,
-                  color: FlutterFlowTheme.of(context)
+                  color: AppTheme.of(context)
                       .white,
-                  textStyle: FlutterFlowTheme.of(context)
+                  textStyle: AppTheme.of(context)
                       .subtitle2
                       .override(
-                        fontFamily: FlutterFlowTheme.of(context)
+                        fontFamily: AppTheme.of(context)
                             .subtitle2Family,
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: AppTheme.of(context).alternate,
                         fontSize: 15,
                       ),
                   borderSide: BorderSide(
-                    color: FlutterFlowTheme.of(context).alternate,
+                    color: AppTheme.of(context).alternate,
                     width: 2,
                   ),
                   borderRadius:
@@ -111,18 +111,18 @@ class OptionsAddProducts extends StatelessWidget {
                 options: FFButtonOptions(
                   width: MediaQuery.of(context).size.width * 0.2,
                   height: 40,
-                  color: FlutterFlowTheme.of(context)
+                  color: AppTheme.of(context)
                       .white,
-                  textStyle: FlutterFlowTheme.of(context)
+                  textStyle: AppTheme.of(context)
                       .subtitle2
                       .override(
-                        fontFamily: FlutterFlowTheme.of(context)
+                        fontFamily: AppTheme.of(context)
                             .subtitle2Family,
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: AppTheme.of(context).alternate,
                         fontSize: 15,
                       ),
                   borderSide: BorderSide(
-                    color: FlutterFlowTheme.of(context).alternate,
+                    color: AppTheme.of(context).alternate,
                     width: 2,
                   ),
                   borderRadius:

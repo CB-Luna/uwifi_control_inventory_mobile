@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/control_daily_vehicle_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
@@ -86,7 +86,7 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
       child: Scaffold(
         key: scaffoldKey,
         drawer: const SideMenu(),
-        backgroundColor: FlutterFlowTheme.of(context).white,
+        backgroundColor: AppTheme.of(context).white,
         body: SafeArea(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
@@ -94,7 +94,7 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context).background,
+                color: AppTheme.of(context).background,
               ),
               child: SingleChildScrollView(
                 controller: ScrollController(),
@@ -114,7 +114,7 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                   width: 80,
                                   height: 40,
                                   decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context).alternate,
+                                    color: AppTheme.of(context).alternate,
                                     boxShadow: const [
                                       BoxShadow(
                                         blurRadius: 4,
@@ -141,17 +141,17 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                       children: [
                                         Icon(
                                           Icons.arrow_back_ios_rounded,
-                                          color: FlutterFlowTheme.of(context).white,
+                                          color: AppTheme.of(context).white,
                                           size: 16,
                                         ),
                                         Text(
                                           'Back',
-                                          style: FlutterFlowTheme.of(context)
+                                          style: AppTheme.of(context)
                                               .bodyText1
                                               .override(
-                                                fontFamily: FlutterFlowTheme.of(context)
+                                                fontFamily: AppTheme.of(context)
                                                     .bodyText1Family,
-                                                color: FlutterFlowTheme.of(context).white,
+                                                color: AppTheme.of(context).white,
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w300,
                                               ),
@@ -174,10 +174,10 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                   'Service',
                                   textAlign: TextAlign.center,
                                   style:
-                                      FlutterFlowTheme.of(context).bodyText1.override(
-                                            fontFamily: FlutterFlowTheme.of(context)
+                                      AppTheme.of(context).bodyText1.override(
+                                            fontFamily: AppTheme.of(context)
                                                 .bodyText1Family,
-                                            color: FlutterFlowTheme.of(context).tertiaryColor,
+                                            color: AppTheme.of(context).tertiaryColor,
                                             fontSize: 34,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -192,7 +192,7 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                               children: [
                                 Text(
                                   "${widget.vehicle.make} - ${widget.vehicle.model} ${widget.vehicle.year}",
-                                  style: FlutterFlowTheme.of(context).bodyText2,
+                                  style: AppTheme.of(context).bodyText2,
                                 ),
                               ],
                             ),
@@ -204,9 +204,9 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                               children: [
                                 Text(
                                   "${widget.vehicle.company.target!.company}: ${widget.vehicle.licensePlates}",
-                                  style: FlutterFlowTheme.of(context).title1.override(
+                                  style: AppTheme.of(context).title1.override(
                                         fontFamily: 'Outfit',
-                                        color: FlutterFlowTheme.of(context).dark400,
+                                        color: AppTheme.of(context).dark400,
                                       ),
                                 ),
                               ],
@@ -245,15 +245,15 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                                       child: Text(
                                         'Total Services',
-                                        style: FlutterFlowTheme.of(context).bodyText2,
+                                        style: AppTheme.of(context).bodyText2,
                                       ),
                                     ),
                                     Text(
                                       "${widget.vehicle.vehicleServices.toList().length}",
-                                      style: FlutterFlowTheme.of(context).title1.override(
+                                      style: AppTheme.of(context).title1.override(
                                             fontFamily: 'Outfit',
                                             color:
-                                                FlutterFlowTheme.of(context).alternate,
+                                                AppTheme.of(context).alternate,
                                           ),
                                     ),
                                   ],
@@ -266,12 +266,12 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                                       child: Text(
                                         'Motor',
-                                        style: FlutterFlowTheme.of(context).bodyText2,
+                                        style: AppTheme.of(context).bodyText2,
                                       ),
                                     ),
                                     Text(
                                       widget.vehicle.motor,
-                                      style: FlutterFlowTheme.of(context).title1,
+                                      style: AppTheme.of(context).title1,
                                     ),
                                   ],
                                 ),
@@ -296,17 +296,17 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                               children: [
                                 Text(
                                   'Pending Services:',
-                                  style: FlutterFlowTheme.of(context).bodyText2.override(
+                                  style: AppTheme.of(context).bodyText2.override(
                                     fontFamily: 'Outfit',
-                                    color: FlutterFlowTheme.of(context).primaryText,
+                                    color: AppTheme.of(context).primaryText,
                                     fontSize: 20,
                                   ),
                                 ),
                                 Text(
                                   "${widget.vehicle.vehicleServices.where((element) => !element.completed).toList().length}",
-                                  style: FlutterFlowTheme.of(context).bodyText2.override(
+                                  style: AppTheme.of(context).bodyText2.override(
                                     fontFamily: 'Outfit',
-                                    color: FlutterFlowTheme.of(context).alternate,
+                                    color: AppTheme.of(context).alternate,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold
                                   ),
@@ -397,7 +397,7 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                                           width: 35,
                                                           height: 35,
                                                           decoration: BoxDecoration(
-                                                            color: FlutterFlowTheme.of(context)
+                                                            color: AppTheme.of(context)
                                                                 .secondaryBackground,
                                                             shape: BoxShape.circle,
                                                           ),
@@ -410,10 +410,10 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                                               Text(
                                                                 (index + 1).toString(),
                                                                 style:
-                                                                    FlutterFlowTheme.of(context)
+                                                                    AppTheme.of(context)
                                                                         .bodyText1
                                                                         .override(
-                                                                          fontFamily: FlutterFlowTheme.of(
+                                                                          fontFamily: AppTheme.of(
                                                                                   context)
                                                                               .bodyText1Family,
                                                                           fontSize: 20,
@@ -450,14 +450,14 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                                                         25,
                                                                         "..."),
                                                                     style:
-                                                                        FlutterFlowTheme.of(
+                                                                        AppTheme.of(
                                                                                 context)
                                                                             .bodyText1
                                                                             .override(
                                                                               fontFamily:
-                                                                                  FlutterFlowTheme.of(context)
+                                                                                  AppTheme.of(context)
                                                                                       .bodyText1Family,
-                                                                              color: FlutterFlowTheme.of(
+                                                                              color: AppTheme.of(
                                                                                       context)
                                                                                   .grayLighter,
                                                                             ),
@@ -481,14 +481,14 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                                                     "Over: ${vehicleServices.mileageRemaining?.abs()} Mi",
                                                                     textAlign:
                                                                         TextAlign.end,
-                                                                    style: FlutterFlowTheme.of(
+                                                                    style: AppTheme.of(
                                                                             context)
                                                                         .bodyText1
                                                                         .override(
-                                                                          fontFamily: FlutterFlowTheme.of(
+                                                                          fontFamily: AppTheme.of(
                                                                                   context)
                                                                               .bodyText1Family,
-                                                                          color: FlutterFlowTheme.of(
+                                                                          color: AppTheme.of(
                                                                                   context)
                                                                               .white,
                                                                           fontSize: 12,
@@ -503,14 +503,14 @@ class _ServicesVehicleScreenState extends State<ServicesVehicleScreen> {
                                                                 child: Text(
                                                                   maybeHandleOverflow(vehicleServices.service.target!.description, 50, "..."),
                                                                   maxLines: 2,
-                                                                  style: FlutterFlowTheme.of(
+                                                                  style: AppTheme.of(
                                                                           context)
                                                                       .subtitle1
                                                                       .override(
-                                                                        fontFamily: FlutterFlowTheme.of(
+                                                                        fontFamily: AppTheme.of(
                                                                                 context)
                                                                             .subtitle1Family,
-                                                                        color: FlutterFlowTheme.of(
+                                                                        color: AppTheme.of(
                                                                                 context)
                                                                             .white,
                                                                         fontSize: 12,

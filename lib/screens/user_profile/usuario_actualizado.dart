@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
@@ -20,7 +20,7 @@ class _UsuarioActualizadoState extends State<UsuarioActualizado> {
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).background,
+        backgroundColor: AppTheme.of(context).background,
         body: SafeArea(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
@@ -38,9 +38,9 @@ class _UsuarioActualizadoState extends State<UsuarioActualizado> {
                       child: Text(
                         '¡User\nUpdated!',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
-                              color: FlutterFlowTheme.of(context).dark400,
+                              color: AppTheme.of(context).dark400,
                               fontSize: 30,
                             ),
                       ),
@@ -51,9 +51,9 @@ class _UsuarioActualizadoState extends State<UsuarioActualizado> {
                       child: Text(
                         'The user was updated \nsuccessfully',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
-                              color: FlutterFlowTheme.of(context).dark400,
+                              color: AppTheme.of(context).dark400,
                               fontSize: 15,
                             ),
                       ),
@@ -87,10 +87,10 @@ class _UsuarioActualizadoState extends State<UsuarioActualizado> {
                         options: FFButtonOptions(
                           width: 200,
                           height: 45,
-                          color: FlutterFlowTheme.of(context).secondaryColor,
-                          textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                          color: AppTheme.of(context).secondaryColor,
+                          textStyle: AppTheme.of(context).subtitle2.override(
                                 fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.of(context).white,
+                                color: AppTheme.of(context).white,
                               ),
                           borderSide: const BorderSide(
                             color: Colors.transparent,

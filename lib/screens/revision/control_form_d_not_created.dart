@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
 
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
@@ -20,7 +20,7 @@ class _ControlFormDNotCreatedScreenState extends State<ControlFormDNotCreatedScr
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).background,
+        backgroundColor: AppTheme.of(context).background,
         body: SafeArea(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
@@ -38,7 +38,7 @@ class _ControlFormDNotCreatedScreenState extends State<ControlFormDNotCreatedScr
                       child: Text(
                         '¡Check In\nForm\nNot Created!',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               color: Colors.black,
                               fontSize: 30,
@@ -51,7 +51,7 @@ class _ControlFormDNotCreatedScreenState extends State<ControlFormDNotCreatedScr
                       child: Text(                                
                         'Failed to save the data of check in form.',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               color: Colors.black,
                               fontSize: 15,
@@ -64,7 +64,7 @@ class _ControlFormDNotCreatedScreenState extends State<ControlFormDNotCreatedScr
                       child: SizedBox(
                         child: Icon(
                           Icons.cancel_outlined,
-                          color: FlutterFlowTheme.of(context).tertiaryColor,
+                          color: AppTheme.of(context).tertiaryColor,
                           size: 250,
                           )
                       ),
@@ -86,8 +86,8 @@ class _ControlFormDNotCreatedScreenState extends State<ControlFormDNotCreatedScr
                         options: FFButtonOptions(
                           width: 200,
                           height: 45,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                          textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                          color: AppTheme.of(context).primaryColor,
+                          textStyle: AppTheme.of(context).subtitle2.override(
                                 fontFamily: 'Poppins',
                                 color: Colors.white,
                               ),

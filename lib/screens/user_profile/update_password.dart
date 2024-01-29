@@ -1,4 +1,4 @@
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/screens/user_profile/password_not_updated_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/user_profile/password_updated_screen.dart';
@@ -60,7 +60,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: AppTheme.of(context).primaryBackground,
         body: SingleChildScrollView(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
@@ -70,7 +70,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 1,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).white,
+                    color: AppTheme.of(context).white,
                   ),
                 ),
                 Padding(
@@ -100,7 +100,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                         width: MediaQuery.of(context).size.width,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).grayLighter,
+                          color: AppTheme.of(context).grayLighter,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
@@ -118,7 +118,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                     width: 80,
                                     height: 40,
                                     decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context).secondaryColor,
+                                      color: AppTheme.of(context).secondaryColor,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: InkWell(
@@ -132,18 +132,18 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                         children: [
                                           Icon(
                                             Icons.arrow_back_ios_rounded,
-                                            color: FlutterFlowTheme.of(context).white,
+                                            color: AppTheme.of(context).white,
                                             size: 16,
                                           ),
                                           Text(
                                             'Back',
-                                            style: FlutterFlowTheme.of(context)
+                                            style: AppTheme.of(context)
                                                 .bodyText1
                                                 .override(
                                                   fontFamily:
-                                                      FlutterFlowTheme.of(context)
+                                                      AppTheme.of(context)
                                                           .bodyText1Family,
-                                                  color: FlutterFlowTheme.of(context).white,
+                                                  color: AppTheme.of(context).white,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w300,
                                                 ),
@@ -166,12 +166,12 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                       child: AutoSizeText(
                                         "Password of ${maybeHandleOverflow('${widget.usuario.firstName} ${widget.usuario.lastName}', 25, '...')}",
                                         maxLines: 2,
-                                        style: FlutterFlowTheme.of(context)
+                                        style: AppTheme.of(context)
                                             .bodyText1
                                             .override(
-                                              fontFamily: FlutterFlowTheme.of(context)
+                                              fontFamily: AppTheme.of(context)
                                                   .bodyText1Family,
-                                              color: FlutterFlowTheme.of(context)
+                                              color: AppTheme.of(context)
                                                   .primaryText,
                                               fontSize: 15,
                                             ),
@@ -190,11 +190,11 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                           const EdgeInsetsDirectional.fromSTEB(0, 35, 0, 50),
                       child: Text(
                         'Update Password',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
+                        style: AppTheme.of(context).bodyText1.override(
+                              fontFamily: AppTheme.of(context).bodyText1Family,
                               fontSize: 20,
                               useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                  FlutterFlowTheme.of(context).bodyText1Family),
+                                  AppTheme.of(context).bodyText1Family),
                             ),
                       ),
                     ),
@@ -209,30 +209,30 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: InputDecoration(
                           labelText: "Email",
-                          labelStyle: FlutterFlowTheme.of(context).bodyText1.override(
+                          labelStyle: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.of(context).alternate,
+                                color: AppTheme.of(context).alternate,
                                 fontSize: 15,
                                 fontWeight: FontWeight.normal,
                               ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).alternate,
+                              color: AppTheme.of(context).alternate,
                               width: 2,
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).alternate,
+                              color: AppTheme.of(context).alternate,
                               width: 2,
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           filled: true,
-                          fillColor: FlutterFlowTheme.of(context).white,
+                          fillColor: AppTheme.of(context).white,
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: AppTheme.of(context).bodyText1,
                       ),
                     ),
                     Form(
@@ -256,43 +256,43 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                 obscureText: !contrasenaActualVisibility,
                                 decoration: InputDecoration(
                                   labelText: 'Actual Password',
-                                  labelStyle: FlutterFlowTheme.of(context)
+                                  labelStyle: AppTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: FlutterFlowTheme.of(context)
+                                        fontFamily: AppTheme.of(context)
                                             .bodyText1Family,
                                         color:
-                                            FlutterFlowTheme.of(context).secondaryText,
+                                            AppTheme.of(context).secondaryText,
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(FlutterFlowTheme.of(context)
+                                            .containsKey(AppTheme.of(context)
                                                 .bodyText1Family),
                                       ),
                                   hintText: 'Actual password...',
-                                  hintStyle: FlutterFlowTheme.of(context)
+                                  hintStyle: AppTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: FlutterFlowTheme.of(context)
+                                        fontFamily: AppTheme.of(context)
                                             .bodyText1Family,
                                         color:
-                                            FlutterFlowTheme.of(context).secondaryText,
+                                            AppTheme.of(context).secondaryText,
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(FlutterFlowTheme.of(context)
+                                            .containsKey(AppTheme.of(context)
                                                 .bodyText1Family),
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).primaryText,
+                                      color: AppTheme.of(context).primaryText,
                                       width: 1.5,
                                     ),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).primaryText,
+                                      color: AppTheme.of(context).primaryText,
                                       width: 1.5,
                                     ),
                                     borderRadius: BorderRadius.circular(12),
@@ -312,7 +312,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: FlutterFlowTheme.of(context).white,
+                                  fillColor: AppTheme.of(context).white,
                                   suffixIcon: InkWell(
                                     onTap: () => setState(
                                       () => contrasenaActualVisibility =
@@ -323,19 +323,19 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                       contrasenaActualVisibility
                                           ? Icons.visibility_outlined
                                           : Icons.visibility_off_outlined,
-                                      color: FlutterFlowTheme.of(context).secondaryColor,
+                                      color: AppTheme.of(context).secondaryColor,
                                       size: 22,
                                     ),
                                   ),
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1.override(
+                                style: AppTheme.of(context).bodyText1.override(
                                       fontFamily:
-                                          FlutterFlowTheme.of(context).bodyText1Family,
-                                      color: FlutterFlowTheme.of(context).primaryText,
+                                          AppTheme.of(context).bodyText1Family,
+                                      color: AppTheme.of(context).primaryText,
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
                                       useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(FlutterFlowTheme.of(context)
+                                          .containsKey(AppTheme.of(context)
                                               .bodyText1Family),
                                     ),
                                 validator: (value) {
@@ -363,43 +363,43 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                 decoration: InputDecoration(
                                   errorMaxLines: 3,
                                   labelText: 'New Password',
-                                  labelStyle: FlutterFlowTheme.of(context)
+                                  labelStyle: AppTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: FlutterFlowTheme.of(context)
+                                        fontFamily: AppTheme.of(context)
                                             .bodyText1Family,
                                         color:
-                                            FlutterFlowTheme.of(context).secondaryText,
+                                            AppTheme.of(context).secondaryText,
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(FlutterFlowTheme.of(context)
+                                            .containsKey(AppTheme.of(context)
                                                 .bodyText1Family),
                                       ),
                                   hintText: 'New password...',
-                                  hintStyle: FlutterFlowTheme.of(context)
+                                  hintStyle: AppTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: FlutterFlowTheme.of(context)
+                                        fontFamily: AppTheme.of(context)
                                             .bodyText1Family,
                                         color:
-                                            FlutterFlowTheme.of(context).secondaryText,
+                                            AppTheme.of(context).secondaryText,
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(FlutterFlowTheme.of(context)
+                                            .containsKey(AppTheme.of(context)
                                                 .bodyText1Family),
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).primaryText,
+                                      color: AppTheme.of(context).primaryText,
                                       width: 1.5,
                                     ),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).primaryText,
+                                      color: AppTheme.of(context).primaryText,
                                       width: 1.5,
                                     ),
                                     borderRadius: BorderRadius.circular(12),
@@ -419,7 +419,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: FlutterFlowTheme.of(context).white,
+                                  fillColor: AppTheme.of(context).white,
                                   suffixIcon: InkWell(
                                     onTap: () => setState(
                                       () => contrasenaNuevaVisibility =
@@ -430,19 +430,19 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                       contrasenaNuevaVisibility
                                           ? Icons.visibility_outlined
                                           : Icons.visibility_off_outlined,
-                                      color: FlutterFlowTheme.of(context).secondaryColor,
+                                      color: AppTheme.of(context).secondaryColor,
                                       size: 22,
                                     ),
                                   ),
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1.override(
+                                style: AppTheme.of(context).bodyText1.override(
                                       fontFamily:
-                                          FlutterFlowTheme.of(context).bodyText1Family,
-                                      color: FlutterFlowTheme.of(context).primaryText,
+                                          AppTheme.of(context).bodyText1Family,
+                                      color: AppTheme.of(context).primaryText,
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
                                       useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(FlutterFlowTheme.of(context)
+                                          .containsKey(AppTheme.of(context)
                                               .bodyText1Family),
                                     ),
                                 validator: (value) {
@@ -472,43 +472,43 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                 decoration: InputDecoration(
                                   errorMaxLines: 3,
                                   labelText: 'Confirm Password',
-                                  labelStyle: FlutterFlowTheme.of(context)
+                                  labelStyle: AppTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: FlutterFlowTheme.of(context)
+                                        fontFamily: AppTheme.of(context)
                                             .bodyText1Family,
                                         color:
-                                            FlutterFlowTheme.of(context).secondaryText,
+                                            AppTheme.of(context).secondaryText,
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(FlutterFlowTheme.of(context)
+                                            .containsKey(AppTheme.of(context)
                                                 .bodyText1Family),
                                       ),
                                   hintText: 'Confirm password...',
-                                  hintStyle: FlutterFlowTheme.of(context)
+                                  hintStyle: AppTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: FlutterFlowTheme.of(context)
+                                        fontFamily: AppTheme.of(context)
                                             .bodyText1Family,
                                         color:
-                                            FlutterFlowTheme.of(context).secondaryText,
+                                            AppTheme.of(context).secondaryText,
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(FlutterFlowTheme.of(context)
+                                            .containsKey(AppTheme.of(context)
                                                 .bodyText1Family),
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).primaryText,
+                                      color: AppTheme.of(context).primaryText,
                                       width: 1.5,
                                     ),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).primaryText,
+                                      color: AppTheme.of(context).primaryText,
                                       width: 1.5,
                                     ),
                                     borderRadius: BorderRadius.circular(12),
@@ -528,7 +528,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: FlutterFlowTheme.of(context).white,
+                                  fillColor: AppTheme.of(context).white,
                                   suffixIcon: InkWell(
                                     onTap: () => setState(
                                       () => contrasenaConfirmarVisibility =
@@ -539,19 +539,19 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                       contrasenaConfirmarVisibility
                                           ? Icons.visibility_outlined
                                           : Icons.visibility_off_outlined,
-                                      color: FlutterFlowTheme.of(context).secondaryColor,
+                                      color: AppTheme.of(context).secondaryColor,
                                       size: 22,
                                     ),
                                   ),
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1.override(
+                                style: AppTheme.of(context).bodyText1.override(
                                       fontFamily:
-                                          FlutterFlowTheme.of(context).bodyText1Family,
-                                      color: FlutterFlowTheme.of(context).primaryText,
+                                          AppTheme.of(context).bodyText1Family,
+                                      color: AppTheme.of(context).primaryText,
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
                                       useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(FlutterFlowTheme.of(context)
+                                          .containsKey(AppTheme.of(context)
                                               .bodyText1Family),
                                     ),
                                 validator: (value) {
@@ -637,15 +637,15 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                               options: FFButtonOptions(
                                 width: 200,
                                 height: 50,
-                                color: FlutterFlowTheme.of(context).secondaryColor,
+                                color: AppTheme.of(context).secondaryColor,
                                 textStyle:
-                                    FlutterFlowTheme.of(context).subtitle2.override(
+                                    AppTheme.of(context).subtitle2.override(
                                           fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context).white,
+                                          color: AppTheme.of(context).white,
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500,
                                           useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(FlutterFlowTheme.of(context)
+                                              .containsKey(AppTheme.of(context)
                                                   .subtitle2Family),
                                         ),
                                 elevation: 0,

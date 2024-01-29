@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/checkin_scheduler_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/checkout_scheduler_screen.dart';
@@ -32,14 +32,14 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
       child: Scaffold(
         key: scaffoldKey,
         drawer: const SideMenu(),
-        backgroundColor: FlutterFlowTheme.of(context).white,
+        backgroundColor: AppTheme.of(context).white,
         body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).background,
+              color: AppTheme.of(context).background,
             ),
             child: SingleChildScrollView(
               controller: ScrollController(),
@@ -60,7 +60,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                               width: 50,
                               height: 40,
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).alternate,
+                                color: AppTheme.of(context).alternate,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Column(
@@ -70,7 +70,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                 children: [
                                   Icon(
                                     Icons.menu_rounded,
-                                    color: FlutterFlowTheme.of(context).white,
+                                    color: AppTheme.of(context).white,
                                     size: 28,
                                   ),
                                 ],
@@ -82,10 +82,10 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                               'Control Daily Inventory',
                               textAlign: TextAlign.center,
                               style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: FlutterFlowTheme.of(context)
+                                AppTheme.of(context).bodyText1.override(
+                                      fontFamily: AppTheme.of(context)
                                           .bodyText1Family,
-                                      color: FlutterFlowTheme.of(context).tertiaryColor,
+                                      color: AppTheme.of(context).tertiaryColor,
                                       fontSize: 28,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -100,13 +100,13 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                       .fromSTEB(0, 5, 0, 5),
                     child: GradientText(
                       "${usuarioProvider.usuarioCurrent?.firstName} ${usuarioProvider.usuarioCurrent?.lastName}",
-                      style: FlutterFlowTheme.of(
+                      style: AppTheme.of(
                               context)
                           .bodyText1
                           .override(
                             fontFamily: 'Inter',
                             color:
-                                FlutterFlowTheme.of(
+                                AppTheme.of(
                                         context)
                                     .primaryText,
                             fontSize: 30.0,
@@ -114,9 +114,9 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                 FontWeight.w600,
                           ),
                       colors: [
-                        FlutterFlowTheme.of(context)
+                        AppTheme.of(context)
                           .alternate,
-                        FlutterFlowTheme.of(context)
+                        AppTheme.of(context)
                           .secondaryColor
                       ],
                       gradientDirection:
@@ -133,11 +133,11 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 4.0,
-                            color: FlutterFlowTheme.of(context).secondaryColor,
+                            color: AppTheme.of(context).secondaryColor,
                             offset: const Offset(1.0, 1.0),
                           )
                         ],
-                        color: FlutterFlowTheme.of(context).grayLighter,
+                        color: AppTheme.of(context).grayLighter,
                         borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(30.0),
                           bottomRight: Radius.circular(30.0),
@@ -146,7 +146,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                         ),
                         border: Border.all(
                           width: 1,
-                          color: FlutterFlowTheme.of(context).secondaryColor,
+                          color: AppTheme.of(context).secondaryColor,
                         )
                       ),
                       child: Column(
@@ -172,7 +172,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                   boxShadow: [
                                     BoxShadow(
                                       blurRadius: 4.0,
-                                      color: FlutterFlowTheme.of(context).alternate,
+                                      color: AppTheme.of(context).alternate,
                                       offset: const Offset(2.0, 2.0),
                                     )
                                   ],
@@ -180,8 +180,8 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                     begin: Alignment.topRight,
                                     end: Alignment.bottomLeft,
                                     colors: [
-                                      FlutterFlowTheme.of(context).alternate,
-                                      FlutterFlowTheme.of(context).alternate.withOpacity(0.8),
+                                      AppTheme.of(context).alternate,
+                                      AppTheme.of(context).alternate.withOpacity(0.8),
                                     ],
                                   ),
                                   borderRadius: const BorderRadius.only(
@@ -213,7 +213,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 transform: Matrix4.rotationY(3.14159), // Rotación en radiane
                                                 child: Icon(
                                                   Icons.sort_outlined,
-                                                  color: FlutterFlowTheme
+                                                  color: AppTheme
                                                           .of(context)
                                                       .white,
                                                   size: 35.0,
@@ -221,7 +221,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                               ),
                                               Icon(
                                                 Icons.router_outlined,
-                                                color: FlutterFlowTheme
+                                                color: AppTheme
                                                         .of(context)
                                                     .white,
                                                 size: 35.0,
@@ -230,12 +230,12 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                           ),
                                           Text(
                                             'Add Gateway Data',
-                                            style: FlutterFlowTheme.of(
+                                            style: AppTheme.of(
                                                     context)
                                                 .bodyText1
                                                 .override(
                                                   fontFamily: 'Inter',
-                                                  color: FlutterFlowTheme
+                                                  color: AppTheme
                                                           .of(context)
                                                       .primaryBackground,
                                                   fontSize: 18.0,
@@ -258,19 +258,19 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                         curveType: CurveType.concave,
                                         color: 
                                         controlFormCheckOut != null ?
-                                        FlutterFlowTheme.of(context).buenoColor
+                                        AppTheme.of(context).buenoColor
                                         :
-                                        FlutterFlowTheme.of(context).primaryColor,
+                                        AppTheme.of(context).primaryColor,
                                         surfaceColor: 
                                         controlFormCheckOut != null ?
-                                        FlutterFlowTheme.of(context).buenoColor
+                                        AppTheme.of(context).buenoColor
                                         :
-                                        FlutterFlowTheme.of(context).primaryColor,
+                                        AppTheme.of(context).primaryColor,
                                         parentColor: 
                                         controlFormCheckOut != null ?
-                                        FlutterFlowTheme.of(context).buenoColor
+                                        AppTheme.of(context).buenoColor
                                         :
-                                        FlutterFlowTheme.of(context).primaryColor,
+                                        AppTheme.of(context).primaryColor,
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(25),
@@ -278,7 +278,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                           child: Icon(
                                               Icons.info_outline,
                                             color:
-                                            FlutterFlowTheme.of(context).white,
+                                            AppTheme.of(context).white,
                                             size: 20,
                                           ),
                                         ),
@@ -309,7 +309,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                   boxShadow: [
                                     BoxShadow(
                                       blurRadius: 4.0,
-                                      color: FlutterFlowTheme.of(context).alternate,
+                                      color: AppTheme.of(context).alternate,
                                       offset: const Offset(2.0, 2.0),
                                     )
                                   ],
@@ -317,8 +317,8 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                     begin: Alignment.topRight,
                                     end: Alignment.bottomLeft,
                                     colors: [
-                                      FlutterFlowTheme.of(context).alternate,
-                                      FlutterFlowTheme.of(context).alternate.withOpacity(0.8),
+                                      AppTheme.of(context).alternate,
+                                      AppTheme.of(context).alternate.withOpacity(0.8),
                                     ],
                                   ),
                                   borderRadius: const BorderRadius.only(
@@ -350,7 +350,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                                 transform: Matrix4.rotationY(3.14159), // Rotación en radiane
                                                 child: Icon(
                                                   Icons.sort_outlined,
-                                                  color: FlutterFlowTheme
+                                                  color: AppTheme
                                                           .of(context)
                                                       .white,
                                                   size: 35.0,
@@ -358,7 +358,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                               ),
                                               Icon(
                                                 Icons.sim_card_outlined,
-                                                color: FlutterFlowTheme
+                                                color: AppTheme
                                                         .of(context)
                                                     .white,
                                                 size: 30.0,
@@ -367,12 +367,12 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                           ),
                                           Text(
                                             'Add SIM Card Data',
-                                            style: FlutterFlowTheme.of(
+                                            style: AppTheme.of(
                                                     context)
                                                 .bodyText1
                                                 .override(
                                                   fontFamily: 'Inter',
-                                                  color: FlutterFlowTheme
+                                                  color: AppTheme
                                                           .of(context)
                                                       .primaryBackground,
                                                   fontSize: 18.0,
@@ -395,19 +395,19 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                         curveType: CurveType.concave,
                                         color: 
                                         controlFormCheckIn != null ?
-                                        FlutterFlowTheme.of(context).buenoColor
+                                        AppTheme.of(context).buenoColor
                                         :
-                                        FlutterFlowTheme.of(context).primaryColor,
+                                        AppTheme.of(context).primaryColor,
                                         surfaceColor: 
                                         controlFormCheckIn != null ?
-                                        FlutterFlowTheme.of(context).buenoColor
+                                        AppTheme.of(context).buenoColor
                                         :
-                                        FlutterFlowTheme.of(context).primaryColor,
+                                        AppTheme.of(context).primaryColor,
                                         parentColor: 
                                         controlFormCheckIn != null ?
-                                        FlutterFlowTheme.of(context).buenoColor
+                                        AppTheme.of(context).buenoColor
                                         :
-                                        FlutterFlowTheme.of(context).primaryColor,
+                                        AppTheme.of(context).primaryColor,
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(25),
@@ -415,7 +415,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                           child: Icon(
                                               Icons.info_outline,
                                             color:
-                                            FlutterFlowTheme.of(context).white,
+                                            AppTheme.of(context).white,
                                             size: 20,
                                           ),
                                         ),

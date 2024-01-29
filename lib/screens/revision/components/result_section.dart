@@ -2,7 +2,6 @@
 import 'dart:io' as libraryIO;
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/services.dart';
-import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_widgets.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
@@ -11,7 +10,7 @@ import 'package:uwifi_control_inventory_mobile/providers/database/usuario_contro
 import 'package:uwifi_control_inventory_mobile/providers/database/vehiculo_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 
 class ResultSection extends StatelessWidget {
   
@@ -47,7 +46,7 @@ class ResultSection extends StatelessWidget {
                             if (!context.mounted) return;
                             snackbarKey.currentState
                                 ?.showSnackBar(SnackBar(
-                              backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+                              backgroundColor: AppTheme.of(context).primaryColor,
                               content: const Text(
                                   "Gateway registered successfully."),
                             ));
@@ -118,11 +117,11 @@ class ResultSection extends StatelessWidget {
                       borderRadius: 25,
                       curveType: CurveType.concave,
                       color:
-                      FlutterFlowTheme.of(context).primaryColor,
+                      AppTheme.of(context).primaryColor,
                       surfaceColor:
-                      FlutterFlowTheme.of(context).primaryColor,
+                      AppTheme.of(context).primaryColor,
                       parentColor:
-                      FlutterFlowTheme.of(context).primaryColor,
+                      AppTheme.of(context).primaryColor,
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
@@ -130,9 +129,9 @@ class ResultSection extends StatelessWidget {
                         child: Center(
                           child: Text(
                             'Save',
-                            style: FlutterFlowTheme.of(context).subtitle1.override(
+                            style: AppTheme.of(context).subtitle1.override(
                               fontFamily: 'Lexend Deca',
-                              color: FlutterFlowTheme.of(context).white,
+                              color: AppTheme.of(context).white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -155,14 +154,14 @@ class ResultSection extends StatelessWidget {
                       errorMaxLines: 3,
                       prefixIcon: Icon(
                         Icons.numbers,
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: AppTheme.of(context).alternate,
                       ),
                       labelText: 'Serial Number*',
-                      labelStyle: FlutterFlowTheme.of(context)
+                      labelStyle: AppTheme.of(context)
                           .title3
                           .override(
                             fontFamily: 'Montserrat',
-                            color: FlutterFlowTheme.of(context).grayDark,
+                            color: AppTheme.of(context).grayDark,
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
@@ -170,7 +169,7 @@ class ResultSection extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
-                              FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                              AppTheme.of(context).alternate.withOpacity(0.5),
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -178,21 +177,21 @@ class ResultSection extends StatelessWidget {
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
-                              FlutterFlowTheme.of(context).alternate,
+                              AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
+                          color: AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
+                          color: AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -200,7 +199,7 @@ class ResultSection extends StatelessWidget {
                       contentPadding:
                           const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                     ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    style: AppTheme.of(context).bodyText1,
                     keyboardType: const TextInputType.numberWithOptions(decimal: false),
                     textAlign: TextAlign.start,
                     validator: (value) {
@@ -223,14 +222,14 @@ class ResultSection extends StatelessWidget {
                       errorMaxLines: 3,
                       prefixIcon: Icon(
                         Icons.pin_outlined,
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: AppTheme.of(context).alternate,
                       ),
                       labelText: 'Product ID*',
-                      labelStyle: FlutterFlowTheme.of(context)
+                      labelStyle: AppTheme.of(context)
                           .title3
                           .override(
                             fontFamily: 'Montserrat',
-                            color: FlutterFlowTheme.of(context).grayDark,
+                            color: AppTheme.of(context).grayDark,
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
@@ -238,7 +237,7 @@ class ResultSection extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
-                              FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                              AppTheme.of(context).alternate.withOpacity(0.5),
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -246,21 +245,21 @@ class ResultSection extends StatelessWidget {
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
-                              FlutterFlowTheme.of(context).alternate,
+                              AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
+                          color: AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
+                          color: AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -268,7 +267,7 @@ class ResultSection extends StatelessWidget {
                       contentPadding:
                           const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                     ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    style: AppTheme.of(context).bodyText1,
                     textAlign: TextAlign.start,
                     inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(12),],
                     keyboardType: const TextInputType.numberWithOptions(decimal: false),
@@ -293,14 +292,14 @@ class ResultSection extends StatelessWidget {
                       errorMaxLines: 3,
                       prefixIcon: Icon(
                         Icons.label_outline,
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: AppTheme.of(context).alternate,
                       ),
                       labelText: 'Name*',
-                      labelStyle: FlutterFlowTheme.of(context)
+                      labelStyle: AppTheme.of(context)
                           .title3
                           .override(
                             fontFamily: 'Montserrat',
-                            color: FlutterFlowTheme.of(context).grayDark,
+                            color: AppTheme.of(context).grayDark,
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
@@ -308,7 +307,7 @@ class ResultSection extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
-                              FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                              AppTheme.of(context).alternate.withOpacity(0.5),
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -316,21 +315,21 @@ class ResultSection extends StatelessWidget {
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
-                              FlutterFlowTheme.of(context).alternate,
+                              AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
+                          color: AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
+                          color: AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -338,7 +337,7 @@ class ResultSection extends StatelessWidget {
                       contentPadding:
                           const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                     ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    style: AppTheme.of(context).bodyText1,
                     textAlign: TextAlign.start,
                     validator: (value) {
                       if (value == "" || value == null || value.isEmpty) {
@@ -361,14 +360,14 @@ class ResultSection extends StatelessWidget {
                       errorMaxLines: 3,
                       prefixIcon: Icon(
                         Icons.router,
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: AppTheme.of(context).alternate,
                       ),
                       labelText: 'Description*',
-                      labelStyle: FlutterFlowTheme.of(context)
+                      labelStyle: AppTheme.of(context)
                           .title3
                           .override(
                             fontFamily: 'Montserrat',
-                            color: FlutterFlowTheme.of(context).grayDark,
+                            color: AppTheme.of(context).grayDark,
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
@@ -376,7 +375,7 @@ class ResultSection extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
-                              FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                              AppTheme.of(context).alternate.withOpacity(0.5),
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -384,21 +383,21 @@ class ResultSection extends StatelessWidget {
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
-                              FlutterFlowTheme.of(context).alternate,
+                              AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
+                          color: AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
+                          color: AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -406,7 +405,7 @@ class ResultSection extends StatelessWidget {
                       contentPadding:
                           const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                     ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    style: AppTheme.of(context).bodyText1,
                     textAlign: TextAlign.start,
                     validator: (value) {
                       if (value == "" || value == null || value.isEmpty) {
@@ -429,14 +428,14 @@ class ResultSection extends StatelessWidget {
                       errorMaxLines: 3,
                       prefixIcon: Icon(
                         Icons.numbers,
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: AppTheme.of(context).alternate,
                       ),
                       labelText: 'Product Code*',
-                      labelStyle: FlutterFlowTheme.of(context)
+                      labelStyle: AppTheme.of(context)
                           .title3
                           .override(
                             fontFamily: 'Montserrat',
-                            color: FlutterFlowTheme.of(context).grayDark,
+                            color: AppTheme.of(context).grayDark,
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
@@ -444,7 +443,7 @@ class ResultSection extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
-                              FlutterFlowTheme.of(context).alternate.withOpacity(0.5),
+                              AppTheme.of(context).alternate.withOpacity(0.5),
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -452,21 +451,21 @@ class ResultSection extends StatelessWidget {
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
-                              FlutterFlowTheme.of(context).alternate,
+                              AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
+                          color: AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
+                          color: AppTheme.of(context).alternate,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -474,7 +473,7 @@ class ResultSection extends StatelessWidget {
                       contentPadding:
                           const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                     ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    style: AppTheme.of(context).bodyText1,
                     textAlign: TextAlign.start,
                     validator: (value) {
                       if (value == "" || value == null || value.isEmpty) {
@@ -500,18 +499,18 @@ class ResultSection extends StatelessWidget {
                     options: FFButtonOptions(
                       width: MediaQuery.of(context).size.width * 0.2,
                       height: 40,
-                      color: FlutterFlowTheme.of(context)
+                      color: AppTheme.of(context)
                           .white,
-                      textStyle: FlutterFlowTheme.of(context)
+                      textStyle: AppTheme.of(context)
                           .subtitle2
                           .override(
-                            fontFamily: FlutterFlowTheme.of(context)
+                            fontFamily: AppTheme.of(context)
                                 .subtitle2Family,
-                            color: FlutterFlowTheme.of(context).alternate,
+                            color: AppTheme.of(context).alternate,
                             fontSize: 15,
                           ),
                       borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: AppTheme.of(context).alternate,
                         width: 2,
                       ),
                       borderRadius:

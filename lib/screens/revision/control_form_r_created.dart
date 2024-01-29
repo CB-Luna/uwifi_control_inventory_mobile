@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
@@ -26,7 +26,7 @@ class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).background,
+        backgroundColor: AppTheme.of(context).background,
         body: SafeArea(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
@@ -44,7 +44,7 @@ class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
                       child: Text(
                         '¡Check Out\nControl Form\nCreated!',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               color: Colors.black,
                               fontSize: 30,
@@ -57,7 +57,7 @@ class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
                       child: Text(                                
                         'The form has been saved successfully.',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               color: Colors.black,
                               fontSize: 15,
@@ -70,7 +70,7 @@ class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
                       child: SizedBox(
                         child: Icon(
                           Icons.check_circle_outline,
-                          color: FlutterFlowTheme.of(context).secondaryColor,
+                          color: AppTheme.of(context).secondaryColor,
                           size: 250,
                           )
                       ),
@@ -101,8 +101,8 @@ class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
                         options: FFButtonOptions(
                           width: 200,
                           height: 45,
-                          color: FlutterFlowTheme.of(context).secondaryColor,
-                          textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                          color: AppTheme.of(context).secondaryColor,
+                          textStyle: AppTheme.of(context).subtitle2.override(
                                 fontFamily: 'Poppins',
                                 color: Colors.white,
                               ),

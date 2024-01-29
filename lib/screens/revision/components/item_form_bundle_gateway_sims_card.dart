@@ -1,8 +1,5 @@
-import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:uwifi_control_inventory_mobile/models/image_evidence.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:uwifi_control_inventory_mobile/models/gateway.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
@@ -81,30 +78,30 @@ class _ItemFormBundleGatewaySIMSCardState extends State<ItemFormBundleGatewaySIM
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-    padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 8),
+    return const Padding(
+    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 8),
     child: Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         // Text(
         //   widget.textItem,
-        //   style: FlutterFlowTheme.of(context)
+        //   style: AppTheme.of(context)
         //   .bodyText1.override(
         //     fontFamily:
-        //           FlutterFlowTheme.of(context).bodyText1Family,
-        //     color: FlutterFlowTheme.of(context).tertiaryColor,
+        //           AppTheme.of(context).bodyText1Family,
+        //     color: AppTheme.of(context).tertiaryColor,
         //     fontWeight: FontWeight.bold,
         //     fontSize: 15,
         //   ),
         // ),
         // Text(
         //   DateFormat("MMM-dd-yyyy").format(DateTime.now()),
-        //   style: FlutterFlowTheme.of(context)
+        //   style: AppTheme.of(context)
         //   .bodyText1.override(
         //     fontFamily:
-        //           FlutterFlowTheme.of(context).bodyText1Family,
-        //     color: FlutterFlowTheme.of(context).secondaryText,
+        //           AppTheme.of(context).bodyText1Family,
+        //     color: AppTheme.of(context).secondaryText,
         //     fontWeight: FontWeight.bold,
         //     fontSize: 15,
         //   ),
@@ -127,24 +124,24 @@ class _ItemFormBundleGatewaySIMSCardState extends State<ItemFormBundleGatewaySIM
         //           borderRadius: 25,
         //           curveType: CurveType.concave,
         //           color: widget.report == "Good" || widget.report == "Yes" || widget.readOnly || widget.isRegistered ?
-        //           FlutterFlowTheme.of(context).buenoColor
+        //           AppTheme.of(context).buenoColor
         //           :
-        //           FlutterFlowTheme.of(context).customColor3,
+        //           AppTheme.of(context).customColor3,
         //           surfaceColor: widget.report == "Good" || widget.report == "Yes" || widget.readOnly || widget.isRegistered ?
-        //           FlutterFlowTheme.of(context).buenoColor
+        //           AppTheme.of(context).buenoColor
         //           :
-        //           FlutterFlowTheme.of(context).customColor3,
+        //           AppTheme.of(context).customColor3,
         //           parentColor: widget.report == "Good" || widget.report == "Yes" || widget.readOnly || widget.isRegistered ?
-        //           FlutterFlowTheme.of(context).buenoColor
+        //           AppTheme.of(context).buenoColor
         //           :
-        //           FlutterFlowTheme.of(context).customColor3,
+        //           AppTheme.of(context).customColor3,
         //           child: Container(
         //             decoration: BoxDecoration(
         //               borderRadius: BorderRadius.circular(25),
         //             ),
         //             child: Icon(
         //               Icons.looks_one_outlined,
-        //               color: FlutterFlowTheme.of(context).white,
+        //               color: AppTheme.of(context).white,
         //               size: 20,
         //             ),
         //           ),
@@ -163,16 +160,16 @@ class _ItemFormBundleGatewaySIMSCardState extends State<ItemFormBundleGatewaySIM
         //           spread: 1,
         //           borderRadius: 25,
         //           curveType: CurveType.concave,
-        //           color: FlutterFlowTheme.of(context).customColor3,
-        //           surfaceColor: FlutterFlowTheme.of(context).customColor3,
-        //           parentColor: FlutterFlowTheme.of(context).customColor3,
+        //           color: AppTheme.of(context).customColor3,
+        //           surfaceColor: AppTheme.of(context).customColor3,
+        //           parentColor: AppTheme.of(context).customColor3,
         //           child: Container(
         //             decoration: BoxDecoration(
         //               borderRadius: BorderRadius.circular(25),
         //             ),
         //             child: Icon(
         //               Icons.looks_two_outlined,
-        //               color: FlutterFlowTheme.of(context).white,
+        //               color: AppTheme.of(context).white,
         //               size: 20,
         //             ),
         //           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
+import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
@@ -22,7 +22,7 @@ class _BottomSheetSincronizarWidgetState
       width: MediaQuery.of(context).size.width,
       height: 350,
       decoration: BoxDecoration(
-        color: FlutterFlowTheme.of(context).secondaryBackground,
+        color: AppTheme.of(context).secondaryBackground,
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(0),
           bottomRight: Radius.circular(0),
@@ -48,7 +48,7 @@ class _BottomSheetSincronizarWidgetState
                         thickness: 3,
                         indent: 150,
                         endIndent: 150,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        color: AppTheme.of(context).primaryBackground,
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
@@ -61,10 +61,10 @@ class _BottomSheetSincronizarWidgetState
                               child: Text(
                                 'Are you sure you want to sync?',
                                 textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context).title2.override(
+                                style: AppTheme.of(context).title2.override(
                                       fontFamily:
-                                          FlutterFlowTheme.of(context).title2Family,
-                                      color: FlutterFlowTheme.of(context).primaryText,
+                                          AppTheme.of(context).title2Family,
+                                      color: AppTheme.of(context).primaryText,
                                       fontSize: 19,
                                     ),
                               ),
@@ -82,10 +82,10 @@ class _BottomSheetSincronizarWidgetState
                               child: Text(
                                 'All the input data in the control forms are going to saved in the cloud (Intenet Conection is required).',
                                 textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context).bodyText2.override(
+                                style: AppTheme.of(context).bodyText2.override(
                                       fontFamily:
-                                          FlutterFlowTheme.of(context).bodyText2Family,
-                                      color: FlutterFlowTheme.of(context).secondaryText,
+                                          AppTheme.of(context).bodyText2Family,
+                                      color: AppTheme.of(context).secondaryText,
                                       fontWeight: FontWeight.w500,
                                     ),
                               ),
@@ -125,11 +125,11 @@ class _BottomSheetSincronizarWidgetState
                                 width: 150,
                                 height: 50,
                                 color: const Color(0xFF8C8C8C),
-                                textStyle: FlutterFlowTheme.of(context)
+                                textStyle: AppTheme.of(context)
                                     .subtitle2
                                     .override(
                                       fontFamily:
-                                          FlutterFlowTheme.of(context).subtitle2Family,
+                                          AppTheme.of(context).subtitle2Family,
                                       color: Colors.white,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -149,9 +149,9 @@ class _BottomSheetSincronizarWidgetState
                                 options: FFButtonOptions(
                                   width: 150,
                                   height: 50,
-                                  color: FlutterFlowTheme.of(context).secondaryColor,
+                                  color: AppTheme.of(context).secondaryColor,
                                   textStyle:
-                                    FlutterFlowTheme.of(context).subtitle2.override(
+                                    AppTheme.of(context).subtitle2.override(
                                       fontFamily: 'Poppins',
                                       color: Colors.white,
                                       fontSize: 16,
