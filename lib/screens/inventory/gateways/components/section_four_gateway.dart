@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/components/header_shimmer.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/header_shimmer.dart';
 
-class GeneralInformationSectionD extends StatefulWidget {
+class SectionFourGateway extends StatefulWidget {
   
-  const GeneralInformationSectionD({super.key});
+  const SectionFourGateway({super.key});
 
   @override
-  State<GeneralInformationSectionD> createState() => _GeneralInformationSectionDState();
+  State<SectionFourGateway> createState() => _SectionFourGatewayState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -66,28 +66,22 @@ final animationsMap = {
     ),
   };
 
-class _GeneralInformationSectionDState extends State<GeneralInformationSectionD> {
+class _SectionFourGatewayState extends State<SectionFourGateway> {
   @override
   Widget build(BuildContext context) {
-    
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.4,
-            child: Column(
-              children: [
-                // HEADER
-                HeaderShimmer(
-                  width: MediaQuery.of(context).size.width, 
-                  text: "General information",
-                ),
-            ]),
-          ),
-        ],
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Column(
+          children: [
+            // HEADER
+            HeaderShimmer(
+              width: MediaQuery.of(context).size.width, 
+              text: "Section 4",
+            ),
+
+        ]),
       ),
     );
   }

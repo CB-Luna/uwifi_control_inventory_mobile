@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/components/header_shimmer.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/header_shimmer.dart';
 
 class BundleGatewayaSIMSCard extends StatefulWidget {
   

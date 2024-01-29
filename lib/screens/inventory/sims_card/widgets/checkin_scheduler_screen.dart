@@ -1,24 +1,22 @@
 import 'package:clay_containers/clay_containers.dart';
-import 'package:uwifi_control_inventory_mobile/providers/system/sims_card_menu_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/screens/main/main_screen_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/components/menu_form_button.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
-class ControlInventoryGatewayScreen extends StatefulWidget {
-
-  const ControlInventoryGatewayScreen({
+class CheckInSchedulerScreen extends StatefulWidget {
+  final DateTime registeredHour;
+  const CheckInSchedulerScreen({
     super.key, 
+    required this.registeredHour,
     });
 
   @override
-  State<ControlInventoryGatewayScreen> createState() => _ControlInventoryGatewayScreenState();
+  State<CheckInSchedulerScreen> createState() => _CheckInSchedulerScreenState();
 }
 final animationsMap = {
     'moveLoadAnimationLR': AnimationInfo(
@@ -75,11 +73,10 @@ final animationsMap = {
     ),
   };
 
-class _ControlInventoryGatewayScreenState extends State<ControlInventoryGatewayScreen> {
+class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
   @override
   Widget build(BuildContext context) {
-    final simsCardMenuProvider = Provider.of<SIMSCardMenuProvider>(context);
-    final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
+    final checkInFormProvider = Provider.of<CheckOutFormController>(context);
     final userProvider = Provider.of<UsuarioController>(context);
     return Scaffold(
       backgroundColor: AppTheme.of(context).background,
@@ -122,8 +119,7 @@ class _ControlInventoryGatewayScreenState extends State<ControlInventoryGatewayS
                                   actions: [
                                     TextButton(
                                       onPressed: () async {
-                                        checkOutFormProvider.cleanInformation();
-                                        simsCardMenuProvider.dispose();
+                                        checkInFormProvider.cleanInformation();
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -197,7 +193,7 @@ class _ControlInventoryGatewayScreenState extends State<ControlInventoryGatewayS
                               ),
                     ),
                     Text(
-                      'Gateway',
+                      'SIMS Card',
                       textAlign: TextAlign.center,
                       style:
                           AppTheme.of(context).bodyText1.override(
@@ -268,41 +264,6 @@ class _ControlInventoryGatewayScreenState extends State<ControlInventoryGatewayS
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    MenuFormButton(
-                      icon: Icons.add_outlined, 
-                      onPressed: () {
-                        simsCardMenuProvider.setButtonMenuTaped(0);
-                      },
-                      isTaped: simsCardMenuProvider.buttonMenuTaped == 0,
-                    ),
-                    MenuFormButton(
-                      icon: Icons.search_outlined, 
-                      onPressed: () {
-                        simsCardMenuProvider.setButtonMenuTaped(1);
-                      },
-                      isTaped: simsCardMenuProvider.buttonMenuTaped == 1,
-                    ),
-                    MenuFormButton(
-                      icon: Icons.sim_card_download_outlined, 
-                      onPressed: () {
-                        simsCardMenuProvider.setButtonMenuTaped(2);
-                      },
-                      isTaped: simsCardMenuProvider.buttonMenuTaped == 2,
-                    ),
-                    MenuFormButton(
-                      icon: Icons.bar_chart_outlined, 
-                      onPressed: () {
-                        simsCardMenuProvider.setButtonMenuTaped(3);
-                      },
-                      isTaped: simsCardMenuProvider.buttonMenuTaped == 3,
-                    ),
-                    MenuFormButton(
-                    icon: Icons.local_shipping, 
-                      onPressed: () {
-                        simsCardMenuProvider.setButtonMenuTaped(4);
-                      },
-                      isTaped: simsCardMenuProvider.buttonMenuTaped == 4,
-                    ),
                   ],
                 ),
               ).animateOnPageLoad(animationsMap['moveLoadAnimationLR']!),
@@ -312,17 +273,6 @@ class _ControlInventoryGatewayScreenState extends State<ControlInventoryGatewayS
                 indent: 20,
                 endIndent: 20,
                 color: AppTheme.of(context).grayLighter,
-              ),
-
-              Builder(
-                builder: (context) {
-                  final section = simsCardMenuProvider.menuTaped[
-                      simsCardMenuProvider.buttonMenuTaped]; 
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
-                    child: section,
-                  );
-                },
               ),
 
               const SizedBox(

@@ -5,8 +5,7 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/checkin_scheduler_screen.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/control_inventory_gateway_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/control_inventory_gateway_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/side_menu/side_menu.dart';
 
 class ControlDailyScreen extends StatefulWidget {
@@ -291,13 +290,6 @@ class _ControlDailyScreenState extends State<ControlDailyScreen> {
                           ),
                           GestureDetector(
                             onTap: () async {
-                                await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      CheckInSchedulerScreen(registeredHour: DateTime.now(),),
-                                ),
-                              );
                             },
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(

@@ -1,23 +1,23 @@
 import 'package:clay_containers/clay_containers.dart';
-import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/gateway_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/main/main_screen_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/components/menu_form_button.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/menu_form_button.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
-class CheckInSchedulerScreen extends StatefulWidget {
-  final DateTime registeredHour;
-  const CheckInSchedulerScreen({
+class ControlInventoryGatewayScreen extends StatefulWidget {
+
+  const ControlInventoryGatewayScreen({
     super.key, 
-    required this.registeredHour,
     });
 
   @override
-  State<CheckInSchedulerScreen> createState() => _CheckInSchedulerScreenState();
+  State<ControlInventoryGatewayScreen> createState() => _ControlInventoryGatewayScreenState();
 }
 final animationsMap = {
     'moveLoadAnimationLR': AnimationInfo(
@@ -74,11 +74,10 @@ final animationsMap = {
     ),
   };
 
-class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
+class _ControlInventoryGatewayScreenState extends State<ControlInventoryGatewayScreen> {
   @override
   Widget build(BuildContext context) {
-    final gatewaMenupProvider = Provider.of<GatewayMenuProvider>(context);
-    final checkInFormProvider = Provider.of<CheckOutFormController>(context);
+    final gatewayMenuProvider = Provider.of<GatewayMenuProvider>(context);
     final userProvider = Provider.of<UsuarioController>(context);
     return Scaffold(
       backgroundColor: AppTheme.of(context).background,
@@ -121,8 +120,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                                   actions: [
                                     TextButton(
                                       onPressed: () async {
-                                        checkInFormProvider.cleanInformation();
-                                        gatewaMenupProvider.cleanComponents();
+                                        gatewayMenuProvider.dispose();
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -196,7 +194,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                               ),
                     ),
                     Text(
-                      'SIMS Card',
+                      'Gateway',
                       textAlign: TextAlign.center,
                       style:
                           AppTheme.of(context).bodyText1.override(
@@ -270,37 +268,37 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                     MenuFormButton(
                       icon: Icons.add_outlined, 
                       onPressed: () {
-                        gatewaMenupProvider.setTapedOptionCheckOut(0);
+                        gatewayMenuProvider.setButtonMenuTaped(0);
                       },
-                      isTaped: gatewaMenupProvider.isTapedCheckOut == 0,
+                      isTaped: gatewayMenuProvider.buttonMenuTaped == 0,
                     ),
                     MenuFormButton(
                       icon: Icons.search_outlined, 
                       onPressed: () {
-                        gatewaMenupProvider.setTapedOptionCheckOut(1);
+                        gatewayMenuProvider.setButtonMenuTaped(1);
                       },
-                      isTaped: gatewaMenupProvider.isTapedCheckOut == 1,
+                      isTaped: gatewayMenuProvider.buttonMenuTaped == 1,
                     ),
                     MenuFormButton(
                       icon: Icons.sim_card_download_outlined, 
                       onPressed: () {
-                        gatewaMenupProvider.setTapedOptionCheckOut(2);
+                        gatewayMenuProvider.setButtonMenuTaped(2);
                       },
-                      isTaped: gatewaMenupProvider.isTapedCheckOut == 2,
+                      isTaped: gatewayMenuProvider.buttonMenuTaped == 2,
                     ),
                     MenuFormButton(
                       icon: Icons.bar_chart_outlined, 
                       onPressed: () {
-                        gatewaMenupProvider.setTapedOptionCheckOut(3);
+                        gatewayMenuProvider.setButtonMenuTaped(3);
                       },
-                      isTaped: gatewaMenupProvider.isTapedCheckOut == 3,
+                      isTaped: gatewayMenuProvider.buttonMenuTaped == 3,
                     ),
                     MenuFormButton(
                     icon: Icons.local_shipping, 
                       onPressed: () {
-                        gatewaMenupProvider.setTapedOptionCheckOut(4);
+                        gatewayMenuProvider.setButtonMenuTaped(4);
                       },
-                      isTaped: gatewaMenupProvider.isTapedCheckOut == 4,
+                      isTaped: gatewayMenuProvider.buttonMenuTaped == 4,
                     ),
                   ],
                 ),
@@ -315,17 +313,12 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
 
               Builder(
                 builder: (context) {
-                  return ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
-                      reverse: true,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: 1,
-                      itemBuilder: (context, index) {
-                        final section = gatewaMenupProvider.menuTapedCheckOut[
-                            gatewaMenupProvider.isTapedCheckOut];
-                        return section;
-                      });
+                  final section = gatewayMenuProvider.menuTaped[
+                      gatewayMenuProvider.buttonMenuTaped]; 
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                    child: section,
+                  );
                 },
               ),
 

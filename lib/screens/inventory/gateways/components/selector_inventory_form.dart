@@ -3,13 +3,13 @@ import 'dart:io' as libraryIO;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/components/header_shimmer.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/header_shimmer.dart';
 
-import '../../../providers/system/gateway_menu_provider.dart';
+import '../../../../providers/system/gateway_menu_provider.dart';
 
-class ControlInventoryScreen extends StatelessWidget {
+class SelectorInventoryFormGateway extends StatelessWidget {
   
-  ControlInventoryScreen({super.key});
+  SelectorInventoryFormGateway({super.key});
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final keyForm = GlobalKey<FormState>();
@@ -27,7 +27,7 @@ class ControlInventoryScreen extends StatelessWidget {
             // HEADER
             HeaderShimmer(
               width: MediaQuery.of(context).size.width, 
-              text: "Inventory Form",
+              text: "Inventory Form Gateway",
             ),
             Builder(
               builder: (context) {

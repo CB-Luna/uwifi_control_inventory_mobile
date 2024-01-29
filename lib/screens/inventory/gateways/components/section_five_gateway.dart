@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/components/header_shimmer.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/header_shimmer.dart';
 
-class EquipmentSectionR extends StatefulWidget {
+class SectionFiveGateway extends StatefulWidget {
   
-  const EquipmentSectionR({super.key});
+  const SectionFiveGateway({super.key});
 
   @override
-  State<EquipmentSectionR> createState() => _EquipmentSectionRState();
+  State<SectionFiveGateway> createState() => _SectionFiveGatewayState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -68,10 +66,9 @@ final animationsMap = {
     ),
   };
 
-class _EquipmentSectionRState extends State<EquipmentSectionR> {
+class _SectionFiveGatewayState extends State<SectionFiveGateway> {
   @override
   Widget build(BuildContext context) {
-    final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
@@ -81,9 +78,8 @@ class _EquipmentSectionRState extends State<EquipmentSectionR> {
             // HEADER
             HeaderShimmer(
               width: MediaQuery.of(context).size.width, 
-              text: "Section 4",
+              text: "Section 5",
             ),
-
         ]),
       ),
     );
