@@ -1,5 +1,4 @@
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
-import 'package:uwifi_control_inventory_mobile/screens/select_vehicle_tsm/select_vehicle_tsm_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/control_daily_vehicle_screen.dart';
@@ -24,17 +23,11 @@ class _MainScreenSelectorState extends State<MainScreenSelector> {
   }
   @override
   Widget build(BuildContext context) {
-    final usuarioProvider = Provider.of<UsuarioController>(context);
     switch (prefs.getBool("boolSyncData")) {
       case true:
         return const SincronizacionInformacionSupabaseScreen();
       default:
-        if (usuarioProvider.isInventory || usuarioProvider.isTechSupervisor) {
           return const ControlDailyVehicleScreen();
-        } else {
-          return const SelectVehicleTSMScreen();
-        }
-        
     }
   }
 }

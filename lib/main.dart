@@ -12,7 +12,6 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
-import 'package:uwifi_control_inventory_mobile/providers/control_form_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/deeplink_bloc.dart';
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/database/object_box_database.dart';
@@ -52,10 +51,6 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<ControlFormProvider>(
-          create: (context) => ControlFormProvider(),
-          lazy: false,
-        ),
         ChangeNotifierProvider<VehiculoController>(
           create: (context) => VehiculoController(),
           lazy: false,

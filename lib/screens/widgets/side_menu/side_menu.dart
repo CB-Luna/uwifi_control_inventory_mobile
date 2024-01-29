@@ -5,7 +5,6 @@ import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.d
 import 'package:uwifi_control_inventory_mobile/main.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
-import 'package:uwifi_control_inventory_mobile/screens/select_vehicle_tsm/select_vehicle_tsm_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/user_profile/perfil_usuario_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/bottom_sheet_cerrar_sesion.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/bottom_sheet_sincronizar_widget.dart';
@@ -181,20 +180,6 @@ class SideMenu extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => const MainScreenSelector(),
-                          ),
-                        );
-                      },
-                    ),
-
-                    if (currentUser.role.target?.role == "Tech Supervisor")
-                    CustomMenuItem( 
-                      label: 'Vehicles',
-                      iconData: Icons.local_shipping,
-                      onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SelectVehicleTSMScreen(),
                           ),
                         );
                       },

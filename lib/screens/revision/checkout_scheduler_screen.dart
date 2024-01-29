@@ -6,7 +6,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
-import 'package:uwifi_control_inventory_mobile/providers/control_form_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkout_form_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
@@ -83,7 +82,6 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
     final simsCardMenuProvider = Provider.of<SIMSCardMenuProvider>(context);
     final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
     final userProvider = Provider.of<UsuarioController>(context);
-    final controlFormProvider = Provider.of<ControlFormProvider>(context);
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).background,
       body: SafeArea(
@@ -125,7 +123,6 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                                   actions: [
                                     TextButton(
                                       onPressed: () async {
-                                        controlFormProvider.cleanData();
                                         checkOutFormProvider.cleanInformation();
                                         simsCardMenuProvider.dispose();
                                         await Navigator.push(
