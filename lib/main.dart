@@ -1,9 +1,6 @@
 import 'dart:async';
 
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
-import 'package:uwifi_control_inventory_mobile/providers/gateways_provider.dart';
-import 'package:uwifi_control_inventory_mobile/providers/network_provider.dart';
-import 'package:uwifi_control_inventory_mobile/providers/sims_card_menu_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,21 +8,16 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
-import 'package:uwifi_control_inventory_mobile/providers/deeplink_bloc.dart';
 import 'package:uwifi_control_inventory_mobile/database/object_box_database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:uwifi_control_inventory_mobile/providers/user_provider.dart';
-import 'providers/database_providers/checkout_form_controller.dart';
-import 'providers/database_providers/usuario_controller.dart';
-import 'package:uwifi_control_inventory_mobile/providers/roles_supabase_provider.dart';
-import 'package:uwifi_control_inventory_mobile/providers/sync_provider_supabase.dart';
+
 
 import 'package:uwifi_control_inventory_mobile/screens/screens.dart';
 import 'package:uwifi_control_inventory_mobile/services/navigation_service.dart';
 import 'package:uwifi_control_inventory_mobile/internationalization/internationalization.dart';
 
-import 'providers/database_providers/vehiculo_controller.dart';
+import 'providers/providers.dart';
 
 late ObjectBoxDatabase dataBase;
 DeepLinkBloc bloc = DeepLinkBloc();

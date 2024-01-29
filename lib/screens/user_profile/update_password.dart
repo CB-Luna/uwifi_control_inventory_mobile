@@ -1,6 +1,5 @@
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
-import 'package:uwifi_control_inventory_mobile/providers/user_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/screens/user_profile/password_not_updated_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/user_profile/password_updated_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';

@@ -1,7 +1,7 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:uwifi_control_inventory_mobile/database/image_evidence.dart';
+import 'package:uwifi_control_inventory_mobile/models/image_evidence.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:uwifi_control_inventory_mobile/models/gateway.dart';

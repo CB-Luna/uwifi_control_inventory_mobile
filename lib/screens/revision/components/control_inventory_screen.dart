@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/header_shimmer.dart';
 
-import '../../../providers/database_providers/vehiculo_controller.dart';
+import '../../../providers/database/vehiculo_controller.dart';
 
 class ControlInventoryScreen extends StatelessWidget {
   

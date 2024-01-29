@@ -1,9 +1,8 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/gateway.dart';
-
-import '../util/flutter_flow_util.dart';
 
 class GatewaysProvider extends ChangeNotifier {
 

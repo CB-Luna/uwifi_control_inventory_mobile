@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:uwifi_control_inventory_mobile/database/image_evidence.dart';
+import 'package:uwifi_control_inventory_mobile/models/image_evidence.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/get_user_supabase.dart';
 import 'package:uwifi_control_inventory_mobile/objectbox.g.dart';

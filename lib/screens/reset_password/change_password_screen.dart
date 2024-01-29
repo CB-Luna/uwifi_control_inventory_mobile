@@ -1,5 +1,5 @@
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
-import 'package:uwifi_control_inventory_mobile/providers/user_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/screens/screens.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';

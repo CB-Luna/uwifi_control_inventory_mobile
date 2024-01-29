@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:page_transition/page_transition.dart';
 import 'dart:io';
-import 'package:uwifi_control_inventory_mobile/database/image_evidence.dart';
+import 'package:uwifi_control_inventory_mobile/models/image_evidence.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_expanded_image_view.dart';
 class FlutterFlowCarousel extends StatefulWidget {

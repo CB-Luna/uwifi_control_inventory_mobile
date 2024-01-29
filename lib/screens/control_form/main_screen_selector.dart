@@ -1,4 +1,4 @@
-import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/control_daily_vehicle_screen.dart';

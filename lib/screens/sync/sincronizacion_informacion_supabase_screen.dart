@@ -3,15 +3,13 @@ import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.d
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/main.dart';
-import 'package:uwifi_control_inventory_mobile/providers/user_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-
-import 'package:uwifi_control_inventory_mobile/providers/sync_provider_supabase.dart';
+import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 

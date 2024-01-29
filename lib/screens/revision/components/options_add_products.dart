@@ -3,7 +3,7 @@ import 'dart:io' as libraryIO;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database_providers/vehiculo_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/vehiculo_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
 class OptionsAddProducts extends StatelessWidget {

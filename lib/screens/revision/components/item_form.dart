@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/database/image_evidence.dart';
+import 'package:uwifi_control_inventory_mobile/models/image_evidence.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/gateway.dart';
-import 'package:uwifi_control_inventory_mobile/providers/gateways_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/gateways_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
 class ItemForm extends StatefulWidget {
   const ItemForm({

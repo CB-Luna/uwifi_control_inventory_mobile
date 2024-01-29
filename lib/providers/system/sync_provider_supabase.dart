@@ -3,8 +3,8 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
-import 'package:uwifi_control_inventory_mobile/models/temp/sync_instruction.dart';
-import 'package:uwifi_control_inventory_mobile/models/temp/instruccion_no_sincronizada.dart';
+import 'package:uwifi_control_inventory_mobile/models/sync_instruction.dart';
+import 'package:uwifi_control_inventory_mobile/models/instruccion_no_sincronizada.dart';
 import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/main.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart' as DBO;

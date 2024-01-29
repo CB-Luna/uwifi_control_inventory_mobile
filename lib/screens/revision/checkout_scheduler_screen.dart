@@ -1,13 +1,13 @@
 import 'package:clay_containers/clay_containers.dart';
-import 'package:uwifi_control_inventory_mobile/providers/sims_card_menu_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/sims_card_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkout_form_controller.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/menu_form_button.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';

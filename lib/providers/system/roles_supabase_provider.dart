@@ -3,7 +3,7 @@ import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/main.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:uwifi_control_inventory_mobile/models/get_user_supabase.dart';
-import '../objectbox.g.dart';
+import 'package:uwifi_control_inventory_mobile/objectbox.g.dart';
 
 class RolesSupabaseProvider extends ChangeNotifier {
 

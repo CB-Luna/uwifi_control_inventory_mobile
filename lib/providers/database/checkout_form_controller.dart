@@ -6,7 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
-import 'package:uwifi_control_inventory_mobile/database/image_evidence.dart';
+import 'package:uwifi_control_inventory_mobile/models/image_evidence.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uuid/uuid.dart';
 class CheckOutFormController extends ChangeNotifier {

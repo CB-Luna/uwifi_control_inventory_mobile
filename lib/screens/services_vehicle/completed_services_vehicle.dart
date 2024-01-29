@@ -6,7 +6,7 @@ import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_widgets
 
 import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database_providers/vehiculo_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/vehiculo_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/services_vehicle/services_vehicle_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/services_vehicle/services_vehicle_updated_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/drop_down.dart';

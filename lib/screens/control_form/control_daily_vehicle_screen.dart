@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/checkin_scheduler_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/checkout_scheduler_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/side_menu/side_menu.dart';
