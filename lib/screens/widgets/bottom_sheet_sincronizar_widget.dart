@@ -1,4 +1,3 @@
-import 'package:uwifi_control_inventory_mobile/screens/sync/sincronizacion_change_vehicle_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
@@ -145,13 +144,6 @@ class _BottomSheetSincronizarWidgetState
                               visible: widget.isVisible,
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SincronizacionChangeVehicleScreen(),
-                                    ),
-                                  );
                                 },
                                 text: 'SYNC',
                                 options: FFButtonOptions(

@@ -4,7 +4,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:uwifi_control_inventory_mobile/providers/gateways_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/sims_card_menu_provider.dart';
-import 'package:uwifi_control_inventory_mobile/providers/sync_change_vehicle_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -69,10 +68,6 @@ void main() async {
         ),
         ChangeNotifierProvider<SyncProviderSupabase>(
           create: (context) => SyncProviderSupabase(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<SyncChangeVehicleProvider>(
-          create: (context) => SyncChangeVehicleProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<CatalogoSupabaseProvider>(
