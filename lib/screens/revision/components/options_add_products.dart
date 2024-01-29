@@ -3,7 +3,7 @@ import 'dart:io' as libraryIO;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/vehiculo_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/gateway_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
 class OptionsAddProducts extends StatelessWidget {
@@ -15,7 +15,7 @@ class OptionsAddProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vehicleProvider = Provider.of<VehiculoController>(context);
+    final gatewayMenuProvider = Provider.of<GatewayMenuProvider>(context);
     return Column(
       children: [
         Padding(
@@ -25,7 +25,7 @@ class OptionsAddProducts extends StatelessWidget {
             children: [
               FFButtonWidget(
                 onPressed: () async {
-                  vehicleProvider.changeOptionInventorySection(2);
+                  gatewayMenuProvider.changeOptionInventorySection(2);
                 },
                 text: 'OCR',
                 icon: const Icon(
@@ -63,7 +63,7 @@ class OptionsAddProducts extends StatelessWidget {
             children: [
               FFButtonWidget(
                 onPressed: () async {
-                  vehicleProvider.changeOptionInventorySection(3);
+                  gatewayMenuProvider.changeOptionInventorySection(3);
                 },
                 text: 'QR',
                 icon: const Icon(
@@ -101,7 +101,7 @@ class OptionsAddProducts extends StatelessWidget {
             children: [
               FFButtonWidget(
                 onPressed: () async {
-                  vehicleProvider.changeOptionInventorySection(4);
+                  gatewayMenuProvider.changeOptionInventorySection(4);
                 },
                 text: 'SKU',
                 icon: const Icon(

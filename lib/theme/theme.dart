@@ -85,19 +85,19 @@ class LightModeTheme extends AppTheme {
   late Color primaryText = const Color(0xFF14181B);
   late Color secondaryText = const Color(0xFF57636C);
 
-  late Color customColor1 = Color(0xFFFFFFFF);
-  late Color grayLight = Color(0xFF95A1AC);
-  late Color grayLighter = Color(0xFFDBE2E7);
-  late Color background = Color(0xFFF0F5F6);
-  late Color dark400 = Color(0xFF1D2429);
-  late Color grayDark = Color(0xFF57636C);
-  late Color btnText = Color(0xFFFFFFFF);
-  late Color lineColor = Color(0xFFDBE2E7);
-  late Color customColor3 = Color(0xFFDF3F3F);
-  late Color customColor4 = Color(0xFF090F13);
-  late Color white = Color(0xFFFFFFFF);
-  late Color primaryBtnText = Color(0xFFFFFFFF);
-  late Color backgroundComponents = Color(0xFF1D2428);
+  late Color customColor1 = const Color(0xFFFFFFFF);
+  late Color grayLight = const Color(0xFF95A1AC);
+  late Color grayLighter = const Color(0xFFDBE2E7);
+  late Color background = const Color(0xFFF0F5F6);
+  late Color dark400 = const Color(0xFF1D2429);
+  late Color grayDark = const Color(0xFF57636C);
+  late Color btnText = const Color(0xFFFFFFFF);
+  late Color lineColor = const Color(0xFFDBE2E7);
+  late Color customColor3 = const Color(0xFFDF3F3F);
+  late Color customColor4 = const Color(0xFF090F13);
+  late Color white = const Color(0xFFFFFFFF);
+  late Color primaryBtnText = const Color(0xFFFFFFFF);
+  late Color backgroundComponents = const Color(0xFF1D2428);
 }
 
 abstract class Typography {
@@ -186,19 +186,19 @@ class DarkModeTheme extends AppTheme {
   late Color primaryText = const Color(0xFFFFFFFF);
   late Color secondaryText = const Color(0xFF95A1AC);
 
-  late Color customColor1 = Color(0xFF14181B);
-  late Color grayLight = Color(0xFF95A1AC);
-  late Color grayLighter = Color(0xFF323B45);
-  late Color background = Color(0xFF1D2428);
-  late Color dark400 = Color(0xFFFFFFFF);
-  late Color grayDark = Color(0xFF95A1AC);
-  late Color btnText = Color(0xFFFFFFFF);
-  late Color lineColor = Color(0xFF323B45);
-  late Color customColor3 = Color(0xFFDF3F3F);
-  late Color customColor4 = Color(0xFF090F13);
-  late Color white = Color(0xFFFFFFFF);
-  late Color primaryBtnText = Color(0xFFFFFFFF);
-  late Color backgroundComponents = Color(0xFF1D2428);
+  late Color customColor1 = const Color(0xFF14181B);
+  late Color grayLight = const Color(0xFF95A1AC);
+  late Color grayLighter = const Color(0xFF323B45);
+  late Color background = const Color(0xFF1D2428);
+  late Color dark400 = const Color(0xFFFFFFFF);
+  late Color grayDark = const Color(0xFF95A1AC);
+  late Color btnText = const Color(0xFFFFFFFF);
+  late Color lineColor = const Color(0xFF323B45);
+  late Color customColor3 = const Color(0xFFDF3F3F);
+  late Color customColor4 = const Color(0xFF090F13);
+  late Color white = const Color(0xFFFFFFFF);
+  late Color primaryBtnText = const Color(0xFFFFFFFF);
+  late Color backgroundComponents = const Color(0xFF1D2428);
 }
 
 extension TextStyleHelper on TextStyle {

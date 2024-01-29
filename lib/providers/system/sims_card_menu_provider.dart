@@ -14,8 +14,8 @@ class SIMSCardMenuProvider extends ChangeNotifier {
   int buttonMenuTaped = 0;
 
 
-  //OPCIONES MENU:
-  final menuTapedCheckOut = {
+  //Menu Options:
+  final menuTaped = {
     0: ControlInventoryScreen(), // Measures 0
     1: const SearchGatewaysCreated(), // Lights 1
     2: const BundleGatewayaSIMSCard(), // Security 2
@@ -24,15 +24,15 @@ class SIMSCardMenuProvider extends ChangeNotifier {
   };
 
 
-  int valueOptionInventorySection = 1;
+  int valueOptionSection = 1;
 
-  void changeOptionInventorySection(int value) {
-      valueOptionInventorySection = value;
+  void changeOptionSection(int value) {
+      valueOptionSection = value;
       notifyListeners();
     }
 
-  Widget optionInventorySection() { 
-  switch (valueOptionInventorySection) {
+  Widget optionSection() { 
+  switch (valueOptionSection) {
         case 1:
           return OptionsAddProducts();
         case 2:

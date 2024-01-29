@@ -8,18 +8,17 @@ import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
-import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
+import 'package:uwifi_control_inventory_mobile/util/animations.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/menu_form_button.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
-class CheckOutSchedulerScreen extends StatefulWidget {
-  final DateTime registeredHour;
-  const CheckOutSchedulerScreen({
+class ControlInventoryGatewayScreen extends StatefulWidget {
+
+  const ControlInventoryGatewayScreen({
     super.key, 
-    required this.registeredHour,
     });
 
   @override
-  State<CheckOutSchedulerScreen> createState() => _CheckOutSchedulerScreenState();
+  State<ControlInventoryGatewayScreen> createState() => _ControlInventoryGatewayScreenState();
 }
 final animationsMap = {
     'moveLoadAnimationLR': AnimationInfo(
@@ -76,7 +75,7 @@ final animationsMap = {
     ),
   };
 
-class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
+class _ControlInventoryGatewayScreenState extends State<ControlInventoryGatewayScreen> {
   @override
   Widget build(BuildContext context) {
     final simsCardMenuProvider = Provider.of<SIMSCardMenuProvider>(context);
@@ -317,17 +316,12 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
 
               Builder(
                 builder: (context) {
-                  return ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
-                      reverse: true,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: 1,
-                      itemBuilder: (context, index) {
-                        final section = simsCardMenuProvider.menuTapedCheckOut[
-                            simsCardMenuProvider.buttonMenuTaped];
-                        return section;
-                      });
+                  final section = simsCardMenuProvider.menuTaped[
+                      simsCardMenuProvider.buttonMenuTaped]; 
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                    child: section,
+                  );
                 },
               ),
 

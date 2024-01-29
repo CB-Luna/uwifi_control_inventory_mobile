@@ -6,13 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/database/object_box_database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-
 import 'package:uwifi_control_inventory_mobile/screens/screens.dart';
 import 'package:uwifi_control_inventory_mobile/services/navigation_service.dart';
 import 'package:uwifi_control_inventory_mobile/internationalization/internationalization.dart';
@@ -53,10 +50,6 @@ void main() async {
           create: (context) => RolesSupabaseProvider(),
           lazy: false,
         ),
-        ChangeNotifierProvider<VehiculoController>(
-          create: (context) => VehiculoController(),
-          lazy: false,
-        ),
         ChangeNotifierProvider<CheckOutFormController>(
           create: (context) => CheckOutFormController(),
           lazy: false,
@@ -67,6 +60,10 @@ void main() async {
         ),
         ChangeNotifierProvider<SIMSCardMenuProvider>(
           create: (context) => SIMSCardMenuProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<GatewayMenuProvider>(
+          create: (context) => GatewayMenuProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<SyncProviderSupabase>(

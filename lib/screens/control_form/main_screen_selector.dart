@@ -1,7 +1,7 @@
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
-import 'package:uwifi_control_inventory_mobile/screens/control_form/control_daily_vehicle_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/control_form/control_daily_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/sync/sincronizacion_informacion_supabase_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,7 @@ class _MainScreenSelectorState extends State<MainScreenSelector> {
       case true:
         return const SincronizacionInformacionSupabaseScreen();
       default:
-          return const ControlDailyVehicleScreen();
+          return const ControlDailyScreen();
     }
   }
 }

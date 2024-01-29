@@ -1,14 +1,12 @@
 import 'package:clay_containers/clay_containers.dart';
+import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/vehiculo_controller.dart';
-import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
+import 'package:uwifi_control_inventory_mobile/util/animations.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/menu_form_button.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 class CheckInSchedulerScreen extends StatefulWidget {
@@ -79,7 +77,7 @@ final animationsMap = {
 class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
   @override
   Widget build(BuildContext context) {
-    final vehiculoController = Provider.of<VehiculoController>(context);
+    final gatewaMenupProvider = Provider.of<GatewayMenuProvider>(context);
     final checkInFormProvider = Provider.of<CheckOutFormController>(context);
     final userProvider = Provider.of<UsuarioController>(context);
     return Scaffold(
@@ -124,7 +122,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                                     TextButton(
                                       onPressed: () async {
                                         checkInFormProvider.cleanInformation();
-                                        vehiculoController.cleanComponents();
+                                        gatewaMenupProvider.cleanComponents();
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -272,37 +270,37 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                     MenuFormButton(
                       icon: Icons.add_outlined, 
                       onPressed: () {
-                        vehiculoController.setTapedOptionCheckOut(0);
+                        gatewaMenupProvider.setTapedOptionCheckOut(0);
                       },
-                      isTaped: vehiculoController.isTapedCheckOut == 0,
+                      isTaped: gatewaMenupProvider.isTapedCheckOut == 0,
                     ),
                     MenuFormButton(
                       icon: Icons.search_outlined, 
                       onPressed: () {
-                        vehiculoController.setTapedOptionCheckOut(1);
+                        gatewaMenupProvider.setTapedOptionCheckOut(1);
                       },
-                      isTaped: vehiculoController.isTapedCheckOut == 1,
+                      isTaped: gatewaMenupProvider.isTapedCheckOut == 1,
                     ),
                     MenuFormButton(
                       icon: Icons.sim_card_download_outlined, 
                       onPressed: () {
-                        vehiculoController.setTapedOptionCheckOut(2);
+                        gatewaMenupProvider.setTapedOptionCheckOut(2);
                       },
-                      isTaped: vehiculoController.isTapedCheckOut == 2,
+                      isTaped: gatewaMenupProvider.isTapedCheckOut == 2,
                     ),
                     MenuFormButton(
                       icon: Icons.bar_chart_outlined, 
                       onPressed: () {
-                        vehiculoController.setTapedOptionCheckOut(3);
+                        gatewaMenupProvider.setTapedOptionCheckOut(3);
                       },
-                      isTaped: vehiculoController.isTapedCheckOut == 3,
+                      isTaped: gatewaMenupProvider.isTapedCheckOut == 3,
                     ),
                     MenuFormButton(
                     icon: Icons.local_shipping, 
                       onPressed: () {
-                        vehiculoController.setTapedOptionCheckOut(4);
+                        gatewaMenupProvider.setTapedOptionCheckOut(4);
                       },
-                      isTaped: vehiculoController.isTapedCheckOut == 4,
+                      isTaped: gatewaMenupProvider.isTapedCheckOut == 4,
                     ),
                   ],
                 ),
@@ -324,8 +322,8 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                       scrollDirection: Axis.vertical,
                       itemCount: 1,
                       itemBuilder: (context, index) {
-                        final section = vehiculoController.menuTapedCheckOut[
-                            vehiculoController.isTapedCheckOut];
+                        final section = gatewaMenupProvider.menuTapedCheckOut[
+                            gatewaMenupProvider.isTapedCheckOut];
                         return section;
                       });
                 },

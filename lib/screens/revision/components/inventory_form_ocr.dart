@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'dart:io' as libraryIO;
 import 'package:flutter_scalable_ocr/flutter_scalable_ocr.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/vehiculo_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/gateway_menu_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
@@ -16,7 +16,7 @@ class InventoryFormOCR extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final checkOutProvider = Provider.of<CheckOutFormController>(context);
-    final vehicleProvider = Provider.of<VehiculoController>(context);
+    final gatewayMenuProvider = Provider.of<GatewayMenuProvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
       child: SizedBox( // Need to use container to add size constraint.
@@ -60,13 +60,13 @@ class InventoryFormOCR extends StatelessWidget {
                           boxHeight: MediaQuery.of(context).size.width * 0.7,
                           getScannedText: (value) async {
                             if (await checkOutProvider.autofillFieldsOCR(value)) {
-                              vehicleProvider.changeOptionInventorySection(4);
+                              gatewayMenuProvider.changeOptionInventorySection(4);
                             }
                           }),
                       FFButtonWidget(
                         onPressed: () async {
                           checkOutProvider.clearControllers();
-                          vehicleProvider.changeOptionInventorySection(1);
+                          gatewayMenuProvider.changeOptionInventorySection(1);
                         },
                         text: 'Close',
                         icon: const Icon(

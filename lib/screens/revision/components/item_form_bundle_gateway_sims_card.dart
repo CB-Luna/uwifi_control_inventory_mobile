@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/models/image_evidence.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:uwifi_control_inventory_mobile/models/gateway.dart';
-import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
+import 'package:uwifi_control_inventory_mobile/util/animations.dart';
 class ItemFormBundleGatewaySIMSCard extends StatefulWidget {
     const ItemFormBundleGatewaySIMSCard({
     Key? key,

@@ -6,17 +6,17 @@ import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/checkin_scheduler_screen.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/checkout_scheduler_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/control_inventory_gateway_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/side_menu/side_menu.dart';
 
-class ControlDailyVehicleScreen extends StatefulWidget {
-  const ControlDailyVehicleScreen({Key? key}) : super(key: key);
+class ControlDailyScreen extends StatefulWidget {
+  const ControlDailyScreen({Key? key}) : super(key: key);
 
   @override
-  State<ControlDailyVehicleScreen> createState() => _ControlDailyVehicleScreenState();
+  State<ControlDailyScreen> createState() => _ControlDailyScreenState();
 }
 
-class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
+class _ControlDailyScreenState extends State<ControlDailyScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   ControlForm? controlFormCheckOut;
@@ -158,7 +158,7 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      CheckOutSchedulerScreen(registeredHour: DateTime.now(),),
+                                      const ControlInventoryGatewayScreen(),
                                 ),
                               );
                             },

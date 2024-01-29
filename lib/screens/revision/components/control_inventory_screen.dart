@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/header_shimmer.dart';
 
-import '../../../providers/database/vehiculo_controller.dart';
+import '../../../providers/system/gateway_menu_provider.dart';
 
 class ControlInventoryScreen extends StatelessWidget {
   
@@ -16,7 +16,7 @@ class ControlInventoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vehicleProvider = Provider.of<VehiculoController>(context);
+    final gatewayMenuProvider = Provider.of<GatewayMenuProvider>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
@@ -31,7 +31,7 @@ class ControlInventoryScreen extends StatelessWidget {
             ),
             Builder(
               builder: (context) {
-                return vehicleProvider.optionInventorySection();
+                return gatewayMenuProvider.optionInventorySection();
               },
             ),
             Divider(

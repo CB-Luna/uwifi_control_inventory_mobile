@@ -6,7 +6,7 @@ import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/vehiculo_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/gateway_menu_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button_option.dart';
@@ -21,7 +21,7 @@ class ResultSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vehicleProvider = Provider.of<VehiculoController>(context);
+    final gatewayMenuProvider = Provider.of<GatewayMenuProvider>(context);
     final checkOutProvider = Provider.of<CheckOutFormController>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     return Padding(
@@ -51,7 +51,7 @@ class ResultSection extends StatelessWidget {
                                   "Gateway registered successfully."),
                             ));
                             checkOutProvider.clearControllers();
-                            vehicleProvider.changeOptionInventorySection(1);
+                            gatewayMenuProvider.changeOptionInventorySection(1);
                             break;
                           case "False":
                             if (!context.mounted) return;
@@ -489,7 +489,7 @@ class ResultSection extends StatelessWidget {
                   child: FFButtonWidget(
                     onPressed: () async {
                       checkOutProvider.clearControllers();
-                      vehicleProvider.changeOptionInventorySection(1);
+                      gatewayMenuProvider.changeOptionInventorySection(1);
                     },
                     text: 'Close',
                     icon: const Icon(

@@ -7,7 +7,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../control_form/flutter_flow_animaciones.dart';
+import '../../util/animations.dart';
 
 class DeviceInformationWidget extends StatefulWidget {
   const DeviceInformationWidget({Key? key}) : super(key: key);

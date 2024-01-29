@@ -2,11 +2,11 @@
 import 'dart:io' as libraryIO;
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_scanner_overlay/qr_scanner_overlay.dart';
-import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_widgets.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/vehiculo_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/gateway_menu_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button_option.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 
 class InventoryFormQR extends StatelessWidget {
@@ -16,7 +16,7 @@ class InventoryFormQR extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vehicleProvider = Provider.of<VehiculoController>(context);
+    final gatewayMenuProvider = Provider.of<GatewayMenuProvider>(context);
     final checkOutProvider = Provider.of<CheckOutFormController>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
@@ -53,7 +53,7 @@ class InventoryFormQR extends StatelessWidget {
                       allowDuplicates: true,
                       onDetect: ((barcode, args) {
                         checkOutProvider.autofillFieldsQR(barcode.rawValue ?? "");
-                        vehicleProvider.changeOptionInventorySection(4);
+                        gatewayMenuProvider.changeOptionInventorySection(4);
                       }),
                     ),
                     QRScannerOverlay(
@@ -69,14 +69,14 @@ class InventoryFormQR extends StatelessWidget {
               child: FFButtonWidget(
                 onPressed: () async {
                   checkOutProvider.clearControllers();
-                  vehicleProvider.changeOptionInventorySection(1);
+                  gatewayMenuProvider.changeOptionInventorySection(1);
                 },
                 text: 'Close',
                 icon: const Icon(
                   Icons.cancel_outlined,
                   size: 15,
                 ),
-                options: FFButtonOptions(
+                options: CustomButtonOption(
                   width: MediaQuery.of(context).size.width * 0.2,
                   height: 40,
                   color: AppTheme.of(context)
