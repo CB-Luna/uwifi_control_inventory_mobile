@@ -4,11 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
-import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkin_form_controller.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkout_form_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
-import 'package:uwifi_control_inventory_mobile/screens/employees/agregar_vehiculo_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/revision/checkin_scheduler_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/checkout_scheduler_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/side_menu/side_menu.dart';
 
@@ -157,21 +154,13 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                         children: [
                           GestureDetector(
                             onTap: () async {
-                              if (controlFormCheckOut == null) {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        CheckOutSchedulerScreen(registeredHour: DateTime.now(),),
-                                  ),
-                                );
-                              } else {
-                                snackbarKey.currentState
-                                    ?.showSnackBar(const SnackBar(
-                                  content: Text(
-                                      "Check Out Form is already has been registered."),
-                                ));
-                              }
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      CheckOutSchedulerScreen(registeredHour: DateTime.now(),),
+                                ),
+                              );
                             },
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -302,29 +291,13 @@ class _ControlDailyVehicleScreenState extends State<ControlDailyVehicleScreen> {
                           ),
                           GestureDetector(
                             onTap: () async {
-                              if (controlFormCheckOut == null) {
-                                snackbarKey.currentState
-                                    ?.showSnackBar(const SnackBar(
-                                  content: Text(
-                                      "Check Out Form hadn't registered yet."),
-                                ));
-                              } else {
-                                if (controlFormCheckIn == null) {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            AgregarVehiculoScreen(typeForm: false,),
-                                      ),
-                                    );
-                                  } else {
-                                    snackbarKey.currentState
-                                        ?.showSnackBar(const SnackBar(
-                                      content: Text(
-                                          "Check In Form is already has been registered."),
-                                    ));
-                                  }
-                              }
+                                await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      CheckInSchedulerScreen(registeredHour: DateTime.now(),),
+                                ),
+                              );
                             },
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(

@@ -3,26 +3,19 @@ import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:badges/badges.dart' as badge;
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/control_form_provider.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkin_form_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkout_form_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/vehiculo_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/menu_form_button.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/control_form_d_created.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/control_form_d_not_created.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 class CheckInSchedulerScreen extends StatefulWidget {
-  final String hour;
-  final String period;
   final DateTime registeredHour;
   const CheckInSchedulerScreen({
     super.key, 
-    required this.hour, 
-    required this.period, 
     required this.registeredHour,
     });
 
@@ -88,7 +81,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
   @override
   Widget build(BuildContext context) {
     final vehiculoController = Provider.of<VehiculoController>(context);
-    final checkInFormProvider = Provider.of<CheckInFormController>(context);
+    final checkInFormProvider = Provider.of<CheckOutFormController>(context);
     final userProvider = Provider.of<UsuarioController>(context);
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
     return Scaffold(
@@ -109,7 +102,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                       width: 80,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).alternate,
+                        color: FlutterFlowTheme.of(context).primaryColor,
                         boxShadow: const [
                           BoxShadow(
                             blurRadius: 4,
@@ -126,7 +119,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                               builder: (alertDialogContext) {
                                 return AlertDialog(
                                   title: const Text(
-                                      'Are you sure you want to return main screen?'),
+                                      'Are you sure you want to return to main screen?'),
                                   content: const Text(
                                       'The recent input data will be deleted.'),
                                   actions: [
@@ -186,96 +179,6 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                       ),
                     ),
                   ).animateOnPageLoad(animationsMap['moveLoadAnimationLR']!),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                      0, 5, 5, 0),
-                    child: Container(
-                      width: 100,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).alternate,
-                        boxShadow: const [
-                          BoxShadow(
-                            blurRadius: 4,
-                            color: Color(0x39000000),
-                            offset: Offset(-4, 8),
-                          )
-                        ],
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: InkWell(
-                        onTap: () async {
-                          if (checkInFormProvider.validateForm()) {
-                            if (checkInFormProvider.updateControlForm(userProvider.usuarioCurrent, widget.registeredHour)) {
-                              // checkInFormProvider.cleanInformation();
-                              controlFormProvider.cleanData();
-                              vehiculoController.cleanComponents();
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ControlFormDCreatedScreen(),
-                                ),
-                              );
-                            } else {
-                              checkInFormProvider.cleanInformation();
-                              controlFormProvider.cleanData();
-                              vehiculoController.cleanComponents();
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ControlFormDNotCreatedScreen(),
-                                ),
-                              );
-                            }
-                          } else {
-                            await showDialog(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: const Text('Invalid action'),
-                                  content: const Text(
-                                      "The value of 'Mileage' and '% Gas/Diesel' are required."),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(alertDialogContext),
-                                      child: const Text('Ok'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          }
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment:
-                              MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'Continue',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyText1Family,
-                                    color: FlutterFlowTheme.of(context).white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: FlutterFlowTheme.of(context).white,
-                              size: 16,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ).animateOnPageLoad(animationsMap['moveLoadAnimationRL']!),
                 ],
               ),
               Padding(
@@ -283,17 +186,29 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                   24, 16, 24, 16),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      'Check In Form',
+                      'Control Inventory',
                       textAlign: TextAlign.center,
                       style:
                           FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: FlutterFlowTheme.of(context)
                                     .bodyText1Family,
-                                color: FlutterFlowTheme.of(context).tertiaryColor,
-                                fontSize: 28,
+                                color: FlutterFlowTheme.of(context).secondaryColor,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                    ),
+                    Text(
+                      'SIMS Card',
+                      textAlign: TextAlign.center,
+                      style:
+                          FlutterFlowTheme.of(context).bodyText1.override(
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .bodyText1Family,
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                                fontSize: 22,
                                 fontWeight: FontWeight.bold,
                               ),
                     ),
@@ -335,9 +250,8 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                             ),
                             Text(
                               DateFormat(
-                               'hh:mm a').
-                                format(
-                                  widget.registeredHour),
+                               'MMM-dd-yyyy').
+                                format(DateTime.now()),
                               style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily:
                                     FlutterFlowTheme.of(context).bodyText1Family,
@@ -358,88 +272,40 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    badge.Badge(
-                      badgeContent: Text(
-                        "${checkInFormProvider.pendingMeasures}",
-                          style: TextStyle(
-                              color: FlutterFlowTheme.of(context).white)),
-                      showBadge: checkInFormProvider.pendingMeasures != 0,
-                      position: badge.BadgePosition.topEnd(),
-                      badgeStyle: badge.BadgeStyle(
-                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
-                        elevation: 4,
-                      ),
-                      child: MenuFormButton(
-                        icon: Icons.speed_outlined, 
-                        onPressed: () {
-                          vehiculoController.setTapedOptionCheckIn(0);
-                        },
-                        isTaped: vehiculoController.isTapedCheckIn == 0,
-                      ),
+                    MenuFormButton(
+                      icon: Icons.add_outlined, 
+                      onPressed: () {
+                        vehiculoController.setTapedOptionCheckOut(0);
+                      },
+                      isTaped: vehiculoController.isTapedCheckOut == 0,
                     ),
-                    badge.Badge(
-                      badgeContent: Text(
-                        "${checkInFormProvider.badStateLights}",
-                          style: TextStyle(
-                              color: FlutterFlowTheme.of(context).white)),
-                      showBadge: checkInFormProvider.badStateLights != 0,
-                      position: badge.BadgePosition.topEnd(),
-                      badgeStyle: badge.BadgeStyle(
-                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
-                        elevation: 4,
-                      ),
-                      child: MenuFormButton(
-                        icon: Icons.flare, 
-                        onPressed: () {
-                          vehiculoController.setTapedOptionCheckIn(1);
-                        },
-                        isTaped: vehiculoController.isTapedCheckIn == 1,
-                      ),
+                    MenuFormButton(
+                      icon: Icons.search_outlined, 
+                      onPressed: () {
+                        vehiculoController.setTapedOptionCheckOut(1);
+                      },
+                      isTaped: vehiculoController.isTapedCheckOut == 1,
                     ),
-                    badge.Badge(
-                      badgeContent: Text(
-                        "${checkInFormProvider.badStateSecurity}",
-                          style: TextStyle(
-                              color: FlutterFlowTheme.of(context).white)),
-                      showBadge: checkInFormProvider.badStateSecurity != 0,
-                      position: badge.BadgePosition.topEnd(),
-                      badgeStyle: badge.BadgeStyle(
-                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
-                        elevation: 4,
-                      ),
-                      child: MenuFormButton(
-                        icon: Icons.health_and_safety, 
-                        onPressed: () {
-                          vehiculoController.setTapedOptionCheckIn(2);
-                        },
-                        isTaped: vehiculoController.isTapedCheckIn == 2,
-                      ),
+                    MenuFormButton(
+                      icon: Icons.sim_card_download_outlined, 
+                      onPressed: () {
+                        vehiculoController.setTapedOptionCheckOut(2);
+                      },
+                      isTaped: vehiculoController.isTapedCheckOut == 2,
                     ),
-                    badge.Badge(
-                      badgeContent: Text(
-                        "${checkInFormProvider.badStateEquipment}",
-                          style: TextStyle(
-                              color: FlutterFlowTheme.of(context).white)),
-                      showBadge: checkInFormProvider.badStateEquipment != 0,
-                      position: badge.BadgePosition.topEnd(),
-                      badgeStyle: badge.BadgeStyle(
-                        badgeColor: FlutterFlowTheme.of(context).primaryColor,
-                        elevation: 4,
-                      ),
-                      child: MenuFormButton(
-                        icon: Icons.build, 
-                        onPressed: () {
-                          vehiculoController.setTapedOptionCheckIn(3);
-                        },
-                        isTaped: vehiculoController.isTapedCheckIn == 3,
-                      ),
+                    MenuFormButton(
+                      icon: Icons.bar_chart_outlined, 
+                      onPressed: () {
+                        vehiculoController.setTapedOptionCheckOut(3);
+                      },
+                      isTaped: vehiculoController.isTapedCheckOut == 3,
                     ),
                     MenuFormButton(
                     icon: Icons.local_shipping, 
                       onPressed: () {
-                        vehiculoController.setTapedOptionCheckIn(4);
+                        vehiculoController.setTapedOptionCheckOut(4);
                       },
-                      isTaped: vehiculoController.isTapedCheckIn == 4,
+                      isTaped: vehiculoController.isTapedCheckOut == 4,
                     ),
                   ],
                 ),
@@ -455,15 +321,14 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
               Builder(
                 builder: (context) {
                   return ListView.builder(
-                      controller: ScrollController(),
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
                       reverse: true,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       itemCount: 1,
                       itemBuilder: (context, index) {
-                        final section = vehiculoController.menuTapedCheckIn [
-                            vehiculoController.isTapedCheckIn];
+                        final section = vehiculoController.menuTapedCheckOut[
+                            vehiculoController.isTapedCheckOut];
                         return section;
                       });
                 },

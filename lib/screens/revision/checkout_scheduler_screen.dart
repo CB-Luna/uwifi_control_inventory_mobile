@@ -1,19 +1,16 @@
 import 'package:clay_containers/clay_containers.dart';
+import 'package:uwifi_control_inventory_mobile/providers/sims_card_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/main_screen_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:badges/badges.dart' as badge;
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uwifi_control_inventory_mobile/flutter_flow/flutter_flow_theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/control_form_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/checkout_form_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database_providers/usuario_controller.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database_providers/vehiculo_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/control_form/flutter_flow_animaciones.dart';
 import 'package:uwifi_control_inventory_mobile/screens/revision/components/menu_form_button.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/control_form_r_created.dart';
-import 'package:uwifi_control_inventory_mobile/screens/revision/control_form_r_not_created.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 class CheckOutSchedulerScreen extends StatefulWidget {
   final DateTime registeredHour;
@@ -83,7 +80,7 @@ final animationsMap = {
 class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
   @override
   Widget build(BuildContext context) {
-    final vehiculoController = Provider.of<VehiculoController>(context);
+    final simsCardMenuProvider = Provider.of<SIMSCardMenuProvider>(context);
     final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
     final userProvider = Provider.of<UsuarioController>(context);
     final controlFormProvider = Provider.of<ControlFormProvider>(context);
@@ -130,7 +127,7 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                                       onPressed: () async {
                                         controlFormProvider.cleanData();
                                         checkOutFormProvider.cleanInformation();
-                                        vehiculoController.cleanComponents();
+                                        simsCardMenuProvider.dispose();
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -182,53 +179,6 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                       ),
                     ),
                   ).animateOnPageLoad(animationsMap['moveLoadAnimationLR']!),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                      0, 5, 5, 0),
-                    child: Container(
-                      width: 100,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        boxShadow: const [
-                          BoxShadow(
-                            blurRadius: 4,
-                            color: Color(0x39000000),
-                            offset: Offset(-4, 8),
-                          )
-                        ],
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: InkWell(
-                        onTap: () async {
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment:
-                              MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'Continue',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyText1Family,
-                                    color: FlutterFlowTheme.of(context).white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: FlutterFlowTheme.of(context).white,
-                              size: 16,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ).animateOnPageLoad(animationsMap['moveLoadAnimationRL']!),
                 ],
               ),
               Padding(
@@ -325,37 +275,37 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                     MenuFormButton(
                       icon: Icons.add_outlined, 
                       onPressed: () {
-                        vehiculoController.setTapedOptionCheckOut(0);
+                        simsCardMenuProvider.setButtonMenuTaped(0);
                       },
-                      isTaped: vehiculoController.isTapedCheckOut == 0,
+                      isTaped: simsCardMenuProvider.buttonMenuTaped == 0,
                     ),
                     MenuFormButton(
                       icon: Icons.search_outlined, 
                       onPressed: () {
-                        vehiculoController.setTapedOptionCheckOut(1);
+                        simsCardMenuProvider.setButtonMenuTaped(1);
                       },
-                      isTaped: vehiculoController.isTapedCheckOut == 1,
+                      isTaped: simsCardMenuProvider.buttonMenuTaped == 1,
                     ),
                     MenuFormButton(
                       icon: Icons.sim_card_download_outlined, 
                       onPressed: () {
-                        vehiculoController.setTapedOptionCheckOut(2);
+                        simsCardMenuProvider.setButtonMenuTaped(2);
                       },
-                      isTaped: vehiculoController.isTapedCheckOut == 2,
+                      isTaped: simsCardMenuProvider.buttonMenuTaped == 2,
                     ),
                     MenuFormButton(
                       icon: Icons.bar_chart_outlined, 
                       onPressed: () {
-                        vehiculoController.setTapedOptionCheckOut(3);
+                        simsCardMenuProvider.setButtonMenuTaped(3);
                       },
-                      isTaped: vehiculoController.isTapedCheckOut == 3,
+                      isTaped: simsCardMenuProvider.buttonMenuTaped == 3,
                     ),
                     MenuFormButton(
                     icon: Icons.local_shipping, 
                       onPressed: () {
-                        vehiculoController.setTapedOptionCheckOut(4);
+                        simsCardMenuProvider.setButtonMenuTaped(4);
                       },
-                      isTaped: vehiculoController.isTapedCheckOut == 4,
+                      isTaped: simsCardMenuProvider.buttonMenuTaped == 4,
                     ),
                   ],
                 ),
@@ -377,8 +327,8 @@ class _CheckOutSchedulerScreenState extends State<CheckOutSchedulerScreen> {
                       scrollDirection: Axis.vertical,
                       itemCount: 1,
                       itemBuilder: (context, index) {
-                        final section = vehiculoController.menuTapedCheckOut[
-                            vehiculoController.isTapedCheckOut];
+                        final section = simsCardMenuProvider.menuTapedCheckOut[
+                            simsCardMenuProvider.buttonMenuTaped];
                         return section;
                       });
                 },

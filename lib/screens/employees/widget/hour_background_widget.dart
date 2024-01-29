@@ -367,7 +367,7 @@ class _HourBackgroundWidgetState extends State<HourBackgroundWidget> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                        CheckInSchedulerScreen(hour: widget.time!, period: widget.period!, registeredHour: registeredHour ?? DateTime.now(),),
+                                        CheckInSchedulerScreen(registeredHour: registeredHour ?? DateTime.now(),),
                                       ),
                                     );
                                   }
