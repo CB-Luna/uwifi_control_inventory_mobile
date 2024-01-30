@@ -9,5 +9,5 @@ export 'package:uwifi_control_inventory_mobile/providers/system/user_provider.da
 
 //Database
 export 'package:uwifi_control_inventory_mobile/providers/system/gateway_menu_provider.dart';
-export 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
+export 'package:uwifi_control_inventory_mobile/providers/database/gateway_form_provider.dart';
 export 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';

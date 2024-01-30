@@ -1,10 +1,9 @@
 
-import 'dart:io' as libraryIO;
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/services.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/gateway_form_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/gateway_menu_provider.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,7 @@ class ResultSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gatewayMenuProvider = Provider.of<GatewayMenuProvider>(context);
-    final checkOutProvider = Provider.of<CheckOutFormController>(context);
+    final gatewayFormProvider = Provider.of<GatewayFormProvider>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
@@ -39,8 +38,8 @@ class ResultSection extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 16),
                   child: GestureDetector(
                     onTap: () async {
-                      if (checkOutProvider.validateForm(keyForm)) {
-                        final message = await checkOutProvider.addNewGatewayBackend(usuarioProvider.usuarioCurrent!);
+                      if (gatewayFormProvider.validateForm(keyForm)) {
+                        final message = await gatewayFormProvider.addNewGatewayBackend(usuarioProvider.usuarioCurrent!);
                         switch (message) {
                           case "True":
                             if (!context.mounted) return;
@@ -50,7 +49,7 @@ class ResultSection extends StatelessWidget {
                               content: const Text(
                                   "Gateway registered successfully."),
                             ));
-                            checkOutProvider.clearControllers();
+                            gatewayFormProvider.clearControllers();
                             gatewayMenuProvider.changeOptionInventorySection(1);
                             break;
                           case "False":
@@ -145,7 +144,7 @@ class ResultSection extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       5, 0, 5, 20),
                   child: TextFormField(
-                    controller: checkOutProvider.serialNumberTextController,
+                    controller: gatewayFormProvider.serialNumberTextController,
                     textCapitalization: TextCapitalization.characters,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
@@ -214,7 +213,7 @@ class ResultSection extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       5, 0, 5, 20),
                   child: TextFormField(
-                    controller: checkOutProvider.productIDTextController,
+                    controller: gatewayFormProvider.productIDTextController,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
                     obscureText: false,
@@ -283,7 +282,7 @@ class ResultSection extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       5, 0, 5, 20),
                   child: TextFormField(
-                    controller: checkOutProvider.nameTextController,
+                    controller: gatewayFormProvider.nameTextController,
                     textCapitalization: TextCapitalization.words,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
@@ -351,7 +350,7 @@ class ResultSection extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       5, 0, 5, 20),
                   child: TextFormField(
-                    controller: checkOutProvider.descriptionTextController,
+                    controller: gatewayFormProvider.descriptionTextController,
                     textCapitalization: TextCapitalization.words,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
@@ -419,7 +418,7 @@ class ResultSection extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       5, 0, 5, 20),
                   child: TextFormField(
-                    controller: checkOutProvider.productCodeTextController,
+                    controller: gatewayFormProvider.productCodeTextController,
                     textCapitalization: TextCapitalization.characters,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
@@ -488,7 +487,7 @@ class ResultSection extends StatelessWidget {
                       5, 5, 5, 15),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      checkOutProvider.clearControllers();
+                      gatewayFormProvider.clearControllers();
                       gatewayMenuProvider.changeOptionInventorySection(1);
                     },
                     text: 'Close',

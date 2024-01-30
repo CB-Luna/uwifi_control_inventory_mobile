@@ -3,12 +3,12 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/header_shimmer.dart';
 
-class SectionFourGateway extends StatefulWidget {
+class SectionFourSIMSCard extends StatefulWidget {
   
-  const SectionFourGateway({super.key});
+  const SectionFourSIMSCard({super.key});
 
   @override
-  State<SectionFourGateway> createState() => _SectionFourGatewayState();
+  State<SectionFourSIMSCard> createState() => _SectionFourSIMSCardState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -66,7 +66,7 @@ final animationsMap = {
     ),
   };
 
-class _SectionFourGatewayState extends State<SectionFourGateway> {
+class _SectionFourSIMSCardState extends State<SectionFourSIMSCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -80,6 +80,7 @@ class _SectionFourGatewayState extends State<SectionFourGateway> {
               width: MediaQuery.of(context).size.width, 
               text: "Section 4",
             ),
+
         ]),
       ),
     );

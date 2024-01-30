@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/gateway_form_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/main/main_screen_selector.dart';
 
@@ -20,7 +19,7 @@ class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final checkOutFormProvider = Provider.of<CheckOutFormController>(context);
+    final gatewayFormProvider = Provider.of<GatewayFormProvider>(context);
     final userProvider = Provider.of<UsuarioController>(context);
     return WillPopScope(
       onWillPop: () async => false,
@@ -80,15 +79,7 @@ class _ControlFormRCreatedScreenState extends State<ControlFormRCreatedScreen> {
                           const EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          if (!await checkOutFormProvider.sendEmail(userProvider.usuarioCurrent!)){
-                            snackbarKey.currentState
-                                ?.showSnackBar(const SnackBar(
-                              content: Text(
-                                  "The email wasn't send successfully."),
-                            ));
-                          }
                           if (!mounted) return;
-                          checkOutFormProvider.cleanInformation();
                           await Navigator.push(
                             context,
                             MaterialPageRoute(

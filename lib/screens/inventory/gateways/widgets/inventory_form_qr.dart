@@ -1,8 +1,6 @@
-
-import 'dart:io' as libraryIO;
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_scanner_overlay/qr_scanner_overlay.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/gateway_form_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/gateway_menu_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +15,7 @@ class InventoryFormQR extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gatewayMenuProvider = Provider.of<GatewayMenuProvider>(context);
-    final checkOutProvider = Provider.of<CheckOutFormController>(context);
+    final gatewayFormProvider = Provider.of<GatewayFormProvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
       child: SizedBox( // Need to use container to add size constraint.
@@ -52,7 +50,7 @@ class InventoryFormQR extends StatelessWidget {
                     MobileScanner(
                       allowDuplicates: true,
                       onDetect: ((barcode, args) {
-                        checkOutProvider.autofillFieldsQR(barcode.rawValue ?? "");
+                        gatewayFormProvider.autofillFieldsQR(barcode.rawValue ?? "");
                         gatewayMenuProvider.changeOptionInventorySection(4);
                       }),
                     ),
@@ -68,7 +66,7 @@ class InventoryFormQR extends StatelessWidget {
                   5, 15, 5, 15),
               child: FFButtonWidget(
                 onPressed: () async {
-                  checkOutProvider.clearControllers();
+                  gatewayFormProvider.clearControllers();
                   gatewayMenuProvider.changeOptionInventorySection(1);
                 },
                 text: 'Close',

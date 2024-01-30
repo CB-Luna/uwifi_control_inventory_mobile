@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/section_five_gateway.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/section_four_gateway.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/search_gateways_created.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/selector_inventory_form.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/selector_inventory_form_gateway.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/inventory_form_ocr.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/inventory_form_qr.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/options_add_products.dart';
@@ -31,7 +31,7 @@ class SIMSCardMenuProvider extends ChangeNotifier {
       notifyListeners();
     }
 
-  Widget optionSection() { 
+  Widget optionInventorySection() { 
   switch (valueOptionSection) {
         case 1:
           return OptionsAddProducts();

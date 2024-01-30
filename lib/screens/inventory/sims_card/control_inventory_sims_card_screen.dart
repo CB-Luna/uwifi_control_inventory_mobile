@@ -7,16 +7,16 @@ import 'package:provider/provider.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/menu_form_button.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
-class CheckInSchedulerScreen extends StatefulWidget {
-  final DateTime registeredHour;
-  const CheckInSchedulerScreen({
+class ControlInventorySIMSCardScreen extends StatefulWidget {
+
+  const ControlInventorySIMSCardScreen({
     super.key, 
-    required this.registeredHour,
     });
 
   @override
-  State<CheckInSchedulerScreen> createState() => _CheckInSchedulerScreenState();
+  State<ControlInventorySIMSCardScreen> createState() => _ControlInventorySIMSCardScreenState();
 }
 final animationsMap = {
     'moveLoadAnimationLR': AnimationInfo(
@@ -73,10 +73,10 @@ final animationsMap = {
     ),
   };
 
-class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
+class _ControlInventorySIMSCardScreenState extends State<ControlInventorySIMSCardScreen> {
   @override
   Widget build(BuildContext context) {
-    final gatewayFormProvider = Provider.of<GatewayFormProvider>(context);
+    final simsCardMenuProvider = Provider.of<SIMSCardMenuProvider>(context);
     final userProvider = Provider.of<UsuarioController>(context);
     return Scaffold(
       backgroundColor: AppTheme.of(context).background,
@@ -119,6 +119,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                                   actions: [
                                     TextButton(
                                       onPressed: () async {
+                                        simsCardMenuProvider.dispose();
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -192,7 +193,7 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                               ),
                     ),
                     Text(
-                      'SIMS Card',
+                      'Gateway',
                       textAlign: TextAlign.center,
                       style:
                           AppTheme.of(context).bodyText1.override(
@@ -263,6 +264,41 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    MenuFormButton(
+                      icon: Icons.add_outlined, 
+                      onPressed: () {
+                        simsCardMenuProvider.setButtonMenuTaped(0);
+                      },
+                      isTaped: simsCardMenuProvider.buttonMenuTaped == 0,
+                    ),
+                    MenuFormButton(
+                      icon: Icons.search_outlined, 
+                      onPressed: () {
+                        simsCardMenuProvider.setButtonMenuTaped(1);
+                      },
+                      isTaped: simsCardMenuProvider.buttonMenuTaped == 1,
+                    ),
+                    MenuFormButton(
+                      icon: Icons.sim_card_download_outlined, 
+                      onPressed: () {
+                        simsCardMenuProvider.setButtonMenuTaped(2);
+                      },
+                      isTaped: simsCardMenuProvider.buttonMenuTaped == 2,
+                    ),
+                    MenuFormButton(
+                      icon: Icons.bar_chart_outlined, 
+                      onPressed: () {
+                        simsCardMenuProvider.setButtonMenuTaped(3);
+                      },
+                      isTaped: simsCardMenuProvider.buttonMenuTaped == 3,
+                    ),
+                    MenuFormButton(
+                    icon: Icons.local_shipping, 
+                      onPressed: () {
+                        simsCardMenuProvider.setButtonMenuTaped(4);
+                      },
+                      isTaped: simsCardMenuProvider.buttonMenuTaped == 4,
+                    ),
                   ],
                 ),
               ).animateOnPageLoad(animationsMap['moveLoadAnimationLR']!),
@@ -272,6 +308,17 @@ class _CheckInSchedulerScreenState extends State<CheckInSchedulerScreen> {
                 indent: 20,
                 endIndent: 20,
                 color: AppTheme.of(context).grayLighter,
+              ),
+
+              Builder(
+                builder: (context) {
+                  final section = simsCardMenuProvider.menuTaped[
+                      simsCardMenuProvider.buttonMenuTaped]; 
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                    child: section,
+                  );
+                },
               ),
 
               const SizedBox(

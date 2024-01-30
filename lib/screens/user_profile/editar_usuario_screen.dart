@@ -1,5 +1,4 @@
 import 'dart:io' as libraryIO;
-
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:uwifi_control_inventory_mobile/models/image_evidence.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
@@ -18,7 +17,6 @@ import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart' as DBO;
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
-import 'package:uwifi_control_inventory_mobile/screens/user_profile/usuario_actualizado.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_bottom_sheet.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button.dart';
 

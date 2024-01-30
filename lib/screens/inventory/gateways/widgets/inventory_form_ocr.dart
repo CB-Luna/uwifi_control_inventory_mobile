@@ -1,12 +1,9 @@
-
-import 'dart:async';
-import 'dart:io' as libraryIO;
 import 'package:flutter_scalable_ocr/flutter_scalable_ocr.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/gateway_menu_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/checkout_form_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/gateway_form_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
 class InventoryFormOCR extends StatelessWidget {
@@ -15,7 +12,7 @@ class InventoryFormOCR extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    final checkOutProvider = Provider.of<CheckOutFormController>(context);
+    final gatewayFormProvider = Provider.of<GatewayFormProvider>(context);
     final gatewayMenuProvider = Provider.of<GatewayMenuProvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
@@ -59,13 +56,13 @@ class InventoryFormOCR extends StatelessWidget {
                             ..color = AppTheme.of(context).primaryColor,
                           boxHeight: MediaQuery.of(context).size.width * 0.7,
                           getScannedText: (value) async {
-                            if (await checkOutProvider.autofillFieldsOCR(value)) {
+                            if (await gatewayFormProvider.autofillFieldsOCR(value)) {
                               gatewayMenuProvider.changeOptionInventorySection(4);
                             }
                           }),
                       FFButtonWidget(
                         onPressed: () async {
-                          checkOutProvider.clearControllers();
+                          gatewayFormProvider.clearControllers();
                           gatewayMenuProvider.changeOptionInventorySection(1);
                         },
                         text: 'Close',
