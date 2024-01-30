@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/control_inventory_sims_card_screen.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/control_inventory_gateway_screen.dart';
@@ -290,6 +291,13 @@ class _ControlDailyScreenState extends State<ControlDailyScreen> {
                           ),
                           GestureDetector(
                             onTap: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ControlInventorySIMSCardScreen(),
+                                ),
+                              );
                             },
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(

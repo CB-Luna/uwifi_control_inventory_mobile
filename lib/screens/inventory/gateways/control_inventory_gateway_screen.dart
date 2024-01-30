@@ -120,7 +120,7 @@ class _ControlInventoryGatewayScreenState extends State<ControlInventoryGatewayS
                                   actions: [
                                     TextButton(
                                       onPressed: () async {
-                                        gatewayMenuProvider.dispose();
+                                        gatewayMenuProvider.clean();
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -315,9 +315,11 @@ class _ControlInventoryGatewayScreenState extends State<ControlInventoryGatewayS
                 builder: (context) {
                   final section = gatewayMenuProvider.menuTaped[
                       gatewayMenuProvider.buttonMenuTaped]; 
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
-                    child: section,
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                      child: section,
+                    ),
                   );
                 },
               ),

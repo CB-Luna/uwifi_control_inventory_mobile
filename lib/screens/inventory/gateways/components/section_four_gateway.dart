@@ -72,7 +72,7 @@ class _SectionFourGatewayState extends State<SectionFourGateway> {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.8,
+        width: MediaQuery.of(context).size.width * 0.9,
         child: Column(
           children: [
             // HEADER

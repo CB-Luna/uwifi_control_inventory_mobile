@@ -10,6 +10,7 @@ import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/database/object_box_database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/sims_card_form_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/sims_card_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/screens.dart';
 import 'package:uwifi_control_inventory_mobile/services/navigation_service.dart';
@@ -53,6 +54,10 @@ void main() async {
         ),
         ChangeNotifierProvider<GatewayFormProvider>(
           create: (context) => GatewayFormProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<SIMSCardFormProvider>(
+          create: (context) => SIMSCardFormProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<SIMSCardProvider>(

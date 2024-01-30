@@ -9,7 +9,6 @@ import 'package:uwifi_control_inventory_mobile/screens/user_profile/perfil_usuar
 import 'package:uwifi_control_inventory_mobile/screens/widgets/bottom_sheet_cerrar_sesion.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/bottom_sheet_sincronizar_widget.dart';
 import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/side_menu/custom_menu_item.dart';

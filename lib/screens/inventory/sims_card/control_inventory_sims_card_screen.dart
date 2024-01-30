@@ -119,7 +119,7 @@ class _ControlInventorySIMSCardScreenState extends State<ControlInventorySIMSCar
                                   actions: [
                                     TextButton(
                                       onPressed: () async {
-                                        simsCardMenuProvider.dispose();
+                                        simsCardMenuProvider.clean();
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -193,7 +193,7 @@ class _ControlInventorySIMSCardScreenState extends State<ControlInventorySIMSCar
                               ),
                     ),
                     Text(
-                      'Gateway',
+                      'SIMS Card',
                       textAlign: TextAlign.center,
                       style:
                           AppTheme.of(context).bodyText1.override(
@@ -314,9 +314,11 @@ class _ControlInventorySIMSCardScreenState extends State<ControlInventorySIMSCar
                 builder: (context) {
                   final section = simsCardMenuProvider.menuTaped[
                       simsCardMenuProvider.buttonMenuTaped]; 
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
-                    child: section,
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                      child: section,
+                    ),
                   );
                 },
               ),

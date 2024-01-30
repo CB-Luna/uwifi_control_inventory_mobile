@@ -54,6 +54,11 @@ class GatewayMenuProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clean() {
+    buttonMenuTaped = 0;
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     buttonMenuTaped = 0;
