@@ -144,6 +144,7 @@ class ResultSection extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       5, 0, 5, 20),
                   child: TextFormField(
+                    controller: simsCardFormProvider.imeiTextController,
                     textCapitalization: TextCapitalization.characters,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
@@ -212,18 +213,17 @@ class ResultSection extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       5, 0, 5, 20),
                   child: TextFormField(
-                    controller: simsCardFormProvider.serialNumberTextController,
-                    textCapitalization: TextCapitalization.characters,
+                    controller: simsCardFormProvider.pinTextController,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
                     obscureText: false,
                     decoration: InputDecoration(
                       errorMaxLines: 3,
                       prefixIcon: Icon(
-                        Icons.numbers,
+                        Icons.pin_outlined,
                         color: AppTheme.of(context).alternate,
                       ),
-                      labelText: 'Serial Number*',
+                      labelText: 'PIN*',
                       labelStyle: AppTheme.of(context)
                           .title3
                           .override(
@@ -232,7 +232,7 @@ class ResultSection extends StatelessWidget {
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
-                      hintText: 'Input the serial number...',
+                      hintText: 'Input the PIN...',
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
@@ -267,11 +267,12 @@ class ResultSection extends StatelessWidget {
                           const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
                     ),
                     style: AppTheme.of(context).bodyText1,
-                    keyboardType: const TextInputType.numberWithOptions(decimal: false),
                     textAlign: TextAlign.start,
+                    inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(12),],
+                    keyboardType: const TextInputType.numberWithOptions(decimal: false),
                     validator: (value) {
                       if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid serial number.';
+                        return 'Please input a valid PIN.';
                       }
                       return null;
                     },
@@ -350,7 +351,7 @@ class ResultSection extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       5, 0, 5, 20),
                   child: TextFormField(
-                    controller: simsCardFormProvider.descriptionTextController,
+                    controller: simsCardFormProvider.descriptionSTextController,
                     textCapitalization: TextCapitalization.words,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,

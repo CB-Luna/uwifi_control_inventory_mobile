@@ -154,6 +154,7 @@ class GatewayFormProvider extends ChangeNotifier {
     nameTextController.clear();
     descriptionTextController.clear();
     serialNumberTextController.clear();
+    productCodeTextController.clear();
     codeQR =  "";
   }
 }

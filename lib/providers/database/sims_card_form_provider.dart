@@ -12,86 +12,80 @@ class SIMSCardFormProvider extends ChangeNotifier {
   }
 
   //************************SIMS Cards Components *********/
-  TextEditingController productIDTextController = TextEditingController();
-  TextEditingController nameTextController = TextEditingController();
-  TextEditingController descriptionTextController = TextEditingController();
-  TextEditingController serialNumberTextController = TextEditingController();
+  TextEditingController pinTextController = TextEditingController();
+  TextEditingController descriptionSTextController = TextEditingController();
+  TextEditingController imeiTextController = TextEditingController();
   TextEditingController productCodeTextController = TextEditingController();
+  TextEditingController productIDTextController = TextEditingController();
   String codeQR =  "";
 
   void autofillFieldsQR(String value) {
     codeQR = value;
-    if (value.contains(productIDRegExpo) 
-    && value.contains(nameRegExp) 
-    && value.contains(descriptionRegExp)
-    && value.contains(serialNumberRegExp)
-    && value.contains(productCodeRegExp)) {
+    if (value.contains(pinRegExpo) 
+    && value.contains(descriptionSRegExp)
+    && value.contains(imeiRegExp)
+    && value.contains(productCodeRegExp)
+    && value.contains(productIDRegExpo)) {
       // Intenta encontrar la primera coincidencia en el texto
-      Match? matchProductID = productIDRegExpo.firstMatch(value);
-      Match? matchName = nameRegExp.firstMatch(value);
-      Match? matchDescription = descriptionRegExp.firstMatch(value);
-      Match? matchSerialNumber = serialNumberRegExp.firstMatch(value);
+      Match? matchpin = pinRegExpo.firstMatch(value);
+      Match? matchDescriptionS = descriptionSRegExp.firstMatch(value);
+      Match? matchImei = imeiRegExp.firstMatch(value);
       Match? matchProductCode = productCodeRegExp.firstMatch(value);
+      Match? matchProductID = productIDRegExpo.firstMatch(value);
       // Si se encuentra una coincidencia, extrae la subcadena
-      if (matchProductID != null) {
-          productIDTextController.text =
-              matchProductID.group(0)!.replaceAll(nameFieldProductID, "");
+      if (matchpin != null) {
+          pinTextController.text =
+              matchpin.group(0)!.replaceAll(nameFieldPin, "");
       }
-      if (matchName != null) {
-          nameTextController.text =
-              matchName.group(0)!.replaceAll(nameFieldName, "");
+      if (matchDescriptionS != null) {
+          descriptionSTextController.text =
+              matchDescriptionS.group(0)!.replaceAll(nameFieldDescriptionS, "");
       }
-      if (matchDescription != null) {
-          descriptionTextController.text =
-              matchDescription.group(0)!.replaceAll(nameFieldDescription, "");
-      }
-      if (matchSerialNumber != null) {
-          serialNumberTextController.text =
-              matchSerialNumber.group(0)!.replaceAll(nameFieldSerialNumber, "");
+      if (matchImei != null) {
+          imeiTextController.text =
+              matchImei.group(0)!.replaceAll(nameFieldImei, "");
       }
       if (matchProductCode != null) {
           productCodeTextController.text =
               matchProductCode.group(0)!.replaceAll(nameFieldProductCode, "");
+      }
+      if (matchProductID != null) {
+          productIDTextController.text =
+              matchProductID.group(0)!.replaceAll(nameFieldProductID, "");
       }
     } 
     notifyListeners();
   }
 
   Future<bool> autofillFieldsOCR(String value) async {
-    if (value.contains(productIDRegExpo) 
-    && value.contains(nameRegExp) 
-    && value.contains(descriptionRegExp)
-    && value.contains(serialNumberRegExp)
-    && value.contains(productCodeRegExp)) {
+    if (value.contains(pinRegExpo) 
+    && value.contains(descriptionSRegExp)
+    && value.contains(imeiRegExp)
+    && value.contains(productCodeRegExp)
+    && value.contains(productIDRegExpo)) {
       // Intenta encontrar la primera coincidencia en el texto
-      Match? matchProductID = productIDRegExpo.firstMatch(value);
-      Match? matchName = nameRegExp.firstMatch(value);
-      Match? matchDescription = descriptionRegExp.firstMatch(value);
-      Match? matchSerialNumber = serialNumberRegExp.firstMatch(value);
+      Match? matchpin = pinRegExpo.firstMatch(value);
+      Match? matchDescriptionS = descriptionSRegExp.firstMatch(value);
+      Match? matchimei = imeiRegExp.firstMatch(value);
       Match? matchProductCode = productCodeRegExp.firstMatch(value);
+      Match? matchProductID = productIDRegExpo.firstMatch(value);
       // Si se encuentra una coincidencia, extrae la subcadena
-      if (matchProductID != null) {
+      if (matchpin != null) {
         await Future.microtask(() => {
-          productIDTextController.text =
-              matchProductID.group(0)!.replaceAll(nameFieldProductID, "")
+          pinTextController.text =
+              matchpin.group(0)!.replaceAll(nameFieldPin, "")
         });
       }
-      if (matchName != null) {
+      if (matchDescriptionS != null) {
         await Future.microtask(() => {
-          nameTextController.text =
-              matchName.group(0)!.replaceAll(nameFieldName, "")
+          descriptionSTextController.text =
+              matchDescriptionS.group(0)!.replaceAll(nameFieldDescriptionS, "")
         });
       }
-      if (matchDescription != null) {
+      if (matchimei != null) {
         await Future.microtask(() => {
-          descriptionTextController.text =
-              matchDescription.group(0)!.replaceAll(nameFieldDescription, "")
-        });
-      }
-      if (matchSerialNumber != null) {
-        await Future.microtask(() => {
-          serialNumberTextController.text =
-              matchSerialNumber.group(0)!.replaceAll(nameFieldSerialNumber, "")
+          imeiTextController.text =
+              matchimei.group(0)!.replaceAll(nameFieldImei, "")
         });
       }
       if (matchProductCode != null) {
@@ -100,15 +94,21 @@ class SIMSCardFormProvider extends ChangeNotifier {
               matchProductCode.group(0)!.replaceAll(nameFieldProductCode, "")
         });
       }
+      if (matchProductID != null) {
+        await Future.microtask(() => {
+          productIDTextController.text =
+              matchProductID.group(0)!.replaceAll(nameFieldProductID, "")
+        });
+      }
       return true;
     } else {
       return false;
     }
   }
 
-  Future<String> addNewSIMSCardBackend(Users currentUser) async {
+    Future<String> addNewSIMSCardBackend(Users currentUser) async {
     try {
-      if (await existsRegisterInBackend("sims_detail", "serie_no", serialNumberTextController.text)) {
+      if (await existsRegisterInBackend("sim_detail", "imei", imeiTextController.text)) {
         return "Duplicate";
       }
       final recordInventoryProduct = await supabase.from('inventory_product').insert(
@@ -123,15 +123,17 @@ class SIMSCardFormProvider extends ChangeNotifier {
       ).select<PostgrestList>('inventory_product_id');
 
       if (recordInventoryProduct.isNotEmpty) {
-        final recordRouterDetail = await supabase.from('sims_detail').insert(
+        final recordRouterSim = await supabase.from('sim_detail').insert(
           {
-            'network_configuration': 'Static Routing',
-            'inventory_product_fk': recordInventoryProduct.first['inventory_product_id'],
-            'serie_no': serialNumberTextController.text,
-            'location': 'Store'
+            'imei': imeiTextController.text,
+            'phone_association': '(524) 1234233',
+            'data_plan': 'Unlimited',
+            'pin': pinTextController.text,
+            'inventory_product_fk': recordInventoryProduct.first['inventory_product_id']
           },
-        ).select<PostgrestList>('sims_detail_id');
-        if (recordRouterDetail.isNotEmpty) {
+        ).select<PostgrestList>('sim_detail_id');
+
+        if (recordRouterSim.isNotEmpty) {
           return "True";
         } else {
           return "False";
@@ -150,10 +152,11 @@ class SIMSCardFormProvider extends ChangeNotifier {
   }
 
   void clearControllers() {
+    pinTextController.clear();
+    descriptionSTextController.clear();
+    imeiTextController.clear();
     productIDTextController.clear();
-    nameTextController.clear();
-    descriptionTextController.clear();
-    serialNumberTextController.clear();
+    productCodeTextController.clear();
     codeQR =  "";
   }
 }

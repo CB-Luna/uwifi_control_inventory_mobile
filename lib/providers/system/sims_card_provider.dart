@@ -2,11 +2,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
-import 'package:uwifi_control_inventory_mobile/models/gateway.dart';
+import 'package:uwifi_control_inventory_mobile/models/sims_card.dart';
 
 class SIMSCardProvider extends ChangeNotifier {
 
-  List<Gateway> simsCard = [];
+  List<SIMSCard> simsCard = [];
 
   final searchController = TextEditingController();
 
@@ -33,7 +33,7 @@ class SIMSCardProvider extends ChangeNotifier {
 
 
       final res = await supabase
-      .from('router_detail')
+      .from('sim_detail')
       .select()
       .gt('created_at', formattedStartOfYesteday).lt('created_at', formattedEndOfToday);
 
@@ -44,7 +44,7 @@ class SIMSCardProvider extends ChangeNotifier {
         return;
       }
 
-      simsCard = (res as List<dynamic>).map((gateway) => Gateway.fromMap(gateway)).toList();
+      simsCard = (res as List<dynamic>).map((simCard) => SIMSCard.fromMap(simCard)).toList();
 
     } catch (e) {
       log('Error en getSIMSCard() - $e');
@@ -52,9 +52,9 @@ class SIMSCardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> deleteGateway(int inventoryProductFk) async {
+  Future<bool> deleteSIMSCard(int inventoryProductFk) async {
     try {
-      await supabase.from("router_detail").delete().eq('inventory_product_fk', inventoryProductFk);
+      await supabase.from("sim_detail").delete().eq('inventory_product_fk', inventoryProductFk);
       await supabase.from("inventory_product").delete().eq('inventory_product_id', inventoryProductFk);
     } catch (e) {
       log('Error en deleteOpportunity() - $e');

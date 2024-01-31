@@ -2,36 +2,33 @@ import 'dart:convert';
 
 class SIMSCard {
   SIMSCard({
-    required this.routerDetailId,
-    required this.serialNo,
+    required this.simDetailId,
     required this.inventoryProductFk,
-    required this.networkConfiguration,
-    required this.location,
-    this.idSIMSCardFkOne,
-    this.idSIMSCardFkTwo,
+    required this.phoneAssociation,
+    required this.pin,
+    required this.dataPlan,
+    this.imei,
     required this.createdAt
   });
 
-  int routerDetailId;
-  String serialNo;
+  int simDetailId;
   int inventoryProductFk;
-  String networkConfiguration;
-  String location;
-  int? idSIMSCardFkOne;
-  int? idSIMSCardFkTwo;
+  String phoneAssociation;
+  String pin;
+  String dataPlan;
+  String? imei;
   DateTime createdAt;
 
   factory SIMSCard.fromJson(String str) => SIMSCard.fromMap(json.decode(str));
 
   factory SIMSCard.fromMap(Map<String, dynamic> json) {
     SIMSCard simsCard = SIMSCard(
-      routerDetailId: json["router_detail_id"],
-      serialNo: json['serie_no'],
+      simDetailId: json["sim_detail_id"],
       inventoryProductFk: json['inventory_product_fk'],
-      networkConfiguration: json["network_configuration"],
-      location: json['location'],
-      idSIMSCardFkOne: json['id_sims_card_fk_one'],
-      idSIMSCardFkTwo: json['id_sims_card_fk_two'],
+      phoneAssociation: json['phone_association'],
+      pin: json['pin'],
+      dataPlan: json["data_plan"],
+      imei: json['imei'],
       createdAt: DateTime.parse(json["created_at"]),
     );
 

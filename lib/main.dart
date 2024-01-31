@@ -10,8 +10,7 @@ import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/database/object_box_database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/sims_card_form_provider.dart';
-import 'package:uwifi_control_inventory_mobile/providers/system/sims_card_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/bundle_form_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/screens.dart';
 import 'package:uwifi_control_inventory_mobile/services/navigation_service.dart';
 import 'package:uwifi_control_inventory_mobile/internationalization/internationalization.dart';
@@ -60,20 +59,28 @@ void main() async {
           create: (context) => SIMSCardFormProvider(),
           lazy: false,
         ),
-        ChangeNotifierProvider<SIMSCardProvider>(
-          create: (context) => SIMSCardProvider(),
+        ChangeNotifierProvider<BundleFormProvider>(
+          create: (context) => BundleFormProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<GatewaysProvider>(
           create: (context) => GatewaysProvider(),
           lazy: false,
         ),
-        ChangeNotifierProvider<SIMSCardMenuProvider>(
-          create: (context) => SIMSCardMenuProvider(),
+        ChangeNotifierProvider<SIMSCardProvider>(
+          create: (context) => SIMSCardProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<GatewayMenuProvider>(
           create: (context) => GatewayMenuProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<SIMSCardMenuProvider>(
+          create: (context) => SIMSCardMenuProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<BundleMenuProvider>(
+          create: (context) => BundleMenuProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<SyncProviderSupabase>(

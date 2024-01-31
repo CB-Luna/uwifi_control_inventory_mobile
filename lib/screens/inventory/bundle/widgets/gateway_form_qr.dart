@@ -1,20 +1,21 @@
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_scanner_overlay/qr_scanner_overlay.dart';
-import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/bundle_form_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/bundle_menu_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button_option.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 
-class InventoryFormQR extends StatelessWidget {
+class GatewayFormQR extends StatelessWidget {
   
-  const InventoryFormQR({super.key});
+  const GatewayFormQR({super.key});
 
 
   @override
   Widget build(BuildContext context) {
-    final simsCardMenuProvider = Provider.of<SIMSCardMenuProvider>(context);
-    final simsCardFormProvider = Provider.of<SIMSCardFormProvider>(context);
+    final bundleMenuProvider = Provider.of<BundleMenuProvider>(context);
+    final bundleFormProvider = Provider.of<BundleFormProvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
       child: SizedBox( // Need to use container to add size constraint.
@@ -48,9 +49,10 @@ class InventoryFormQR extends StatelessWidget {
                   children: [
                     MobileScanner(
                       allowDuplicates: true,
-                      onDetect: ((barcode, args) {
-                        simsCardFormProvider.autofillFieldsQR(barcode.rawValue ?? "");
-                        simsCardMenuProvider.changeOptionInventorySection(4);
+                      onDetect: ((barcode, args) async {
+                        if (await bundleFormProvider.autofillFieldsGatewayQR(barcode.rawValue ?? "")) {
+                          bundleMenuProvider.changeOptionInventorySection(4);
+                        }
                       }),
                     ),
                     QRScannerOverlay(
@@ -65,12 +67,12 @@ class InventoryFormQR extends StatelessWidget {
                   5, 15, 5, 15),
               child: FFButtonWidget(
                 onPressed: () async {
-                  simsCardFormProvider.clearControllers();
-                  simsCardMenuProvider.changeOptionInventorySection(1);
+                  bundleFormProvider.clearGatewayControllers();
+                  bundleMenuProvider.changeOptionInventorySection(0);
                 },
-                text: 'Close',
+                text: 'Back',
                 icon: const Icon(
-                  Icons.cancel_outlined,
+                  Icons.arrow_back_outlined,
                   size: 15,
                 ),
                 options: CustomButtonOption(

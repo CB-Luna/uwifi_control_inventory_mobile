@@ -158,7 +158,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                                 child: TextFormField(
                                   readOnly: true,
                                   enabled: false,
-                                  initialValue: widget.simsCard.serialNo,
+                                  initialValue: widget.simsCard.imei,
                                   textCapitalization: TextCapitalization.characters,
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
@@ -169,7 +169,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                                       Icons.numbers,
                                       color: AppTheme.of(context).alternate,
                                     ),
-                                    labelText: 'Serial Number',
+                                    labelText: 'IMEI',
                                     labelStyle: AppTheme.of(context)
                                         .title3
                                         .override(
@@ -178,7 +178,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
-                                    hintText: 'Input the serial number...',
+                                    hintText: 'Input the imei...',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
@@ -222,7 +222,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                                 child: TextFormField(
                                   readOnly: true,
                                   enabled: false,
-                                  initialValue: "1",
+                                  initialValue: "${widget.simsCard.pin}",
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
                                   obscureText: false,
@@ -232,7 +232,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                                       Icons.pin_outlined,
                                       color: AppTheme.of(context).alternate,
                                     ),
-                                    labelText: 'Product ID',
+                                    labelText: 'PIN',
                                     labelStyle: AppTheme.of(context)
                                         .title3
                                         .override(
@@ -241,7 +241,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
-                                    hintText: 'Input the product ID...',
+                                    hintText: 'Input the PIN...',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
@@ -285,71 +285,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                                 child: TextFormField(
                                   readOnly: true,
                                   enabled: false,
-                                  initialValue: "U-wifi Router",
-                                  textCapitalization: TextCapitalization.words,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    errorMaxLines: 3,
-                                    prefixIcon: Icon(
-                                      Icons.label_outline,
-                                      color: AppTheme.of(context).alternate,
-                                    ),
-                                    labelText: 'Name',
-                                    labelStyle: AppTheme.of(context)
-                                        .title3
-                                        .override(
-                                          fontFamily: 'Montserrat',
-                                          color: AppTheme.of(context).grayDark,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    hintText: 'Input the name...',
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            AppTheme.of(context).alternate.withOpacity(0.5),
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            AppTheme.of(context).alternate,
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppTheme.of(context).alternate,
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppTheme.of(context).alternate,
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    contentPadding:
-                                        const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                                  ),
-                                  style: AppTheme.of(context).bodyText1,
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    5, 0, 5, 20),
-                                child: TextFormField(
-                                  readOnly: true,
-                                  enabled: false,
-                                  initialValue: "U-wifi Router by HUAWEI",
+                                  initialValue: "SIM Card by AT&T",
                                   textCapitalization: TextCapitalization.words,
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
@@ -413,7 +349,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                                 child: TextFormField(
                                   readOnly: true,
                                   enabled: false,
-                                  initialValue: "MOSNFOEN-12",
+                                  initialValue: "SIMNFOEN-14",
                                   textCapitalization: TextCapitalization.words,
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
@@ -477,7 +413,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                                 child: TextFormField(
                                   readOnly: true,
                                   enabled: false,
-                                  initialValue: widget.simsCard.networkConfiguration,
+                                  initialValue: widget.simsCard.dataPlan,
                                   textCapitalization: TextCapitalization.words,
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
@@ -488,7 +424,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                                       Icons.travel_explore_outlined,
                                       color: AppTheme.of(context).alternate,
                                     ),
-                                    labelText: 'Network Configuration',
+                                    labelText: 'Data Plan',
                                     labelStyle: AppTheme.of(context)
                                         .title3
                                         .override(
@@ -497,7 +433,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
-                                    hintText: 'Input the network configuration...',
+                                    hintText: 'Input the data plan...',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
@@ -541,7 +477,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                                 child: TextFormField(
                                   readOnly: true,
                                   enabled: false,
-                                  initialValue: widget.simsCard.location,
+                                  initialValue: widget.simsCard.phoneAssociation,
                                   textCapitalization: TextCapitalization.words,
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
@@ -552,7 +488,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                                       Icons.location_on_outlined,
                                       color: AppTheme.of(context).alternate,
                                     ),
-                                    labelText: 'Location',
+                                    labelText: 'Phone Association',
                                     labelStyle: AppTheme.of(context)
                                         .title3
                                         .override(
@@ -561,7 +497,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
-                                    hintText: 'Input the location...',
+                                    hintText: 'Input the phone association...',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
@@ -619,20 +555,20 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                   builder: (alertDialogContext) {
                     return AlertDialog(
                       title: Text(
-                          'Are you sure you want to delete the gateway with serial no. "${widget.simsCard.serialNo}"?'),
+                          'Are you sure you want to delete the SIM Card with imei. "${widget.simsCard.imei}"?'),
                       content: const Text(
                           'This action can not be undone.'),
                       actions: [
                         TextButton(
                           onPressed: () async {        
-                            if (await provider.deleteGateway(widget.simsCard.inventoryProductFk)) {
+                            if (await provider.deleteSIMSCard(widget.simsCard.inventoryProductFk)) {
                               if(!mounted) return;
                               Navigator.pop(alertDialogContext);
                               snackbarKey.currentState
                                   ?.showSnackBar(const SnackBar(
                                 backgroundColor: Color(0xFF00B837),
                                 content: Text(
-                                    "Gateway deleted successfully."),
+                                    "SIM Card deleted successfully."),
                               ));
                             } else {
                               if(!mounted) return;
@@ -640,7 +576,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                               snackbarKey.currentState
                                   ?.showSnackBar(SnackBar(
                                 content: Text(
-                                    "Falied to deleted with serial no. '${widget.simsCard.serialNo}'"),
+                                    "Falied to deleted with IMEI no. '${widget.simsCard.imei}'"),
                               ));
                             }
                           },
@@ -665,15 +601,19 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                widget.simsCard.serialNo,
-                style: AppTheme.of(context)
-                .bodyText1.override(
-                  fontFamily:
-                        AppTheme.of(context).bodyText1Family,
-                  color: AppTheme.of(context).tertiaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
+              Container(
+                width: MediaQuery.of(context).size.width * 0.25,
+                child: Text(
+                  widget.simsCard.imei ?? "NOT IMEI",
+                  style: AppTheme.of(context)
+                  .bodyText1.override(
+                    fontFamily:
+                          AppTheme.of(context).bodyText1Family,
+                    color: AppTheme.of(context).tertiaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               Text(

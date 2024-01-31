@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/providers/system/sims_card_provider.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widgets/item_form_sims_card.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/gateways_provider.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/header_shimmer.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/item_form_gateway.dart';
 
-class SearchSIMSCardCreated extends StatefulWidget {
+class SearchBundlesCreated extends StatefulWidget {
   
-  const SearchSIMSCardCreated({super.key});
+  const SearchBundlesCreated({super.key});
 
   @override
-  State<SearchSIMSCardCreated> createState() => _SearchSIMSCardCreatedState();
+  State<SearchBundlesCreated> createState() => _SearchBundlesCreatedState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -70,14 +70,14 @@ final animationsMap = {
     ),
   };
 
-class _SearchSIMSCardCreatedState extends State<SearchSIMSCardCreated> {
+class _SearchBundlesCreatedState extends State<SearchBundlesCreated> {
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      SIMSCardProvider provider = Provider.of<SIMSCardProvider>(
+      GatewaysProvider provider = Provider.of<GatewaysProvider>(
         context,
         listen: false,
       );
@@ -87,7 +87,7 @@ class _SearchSIMSCardCreatedState extends State<SearchSIMSCardCreated> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<SIMSCardProvider>(context);
+    final provider = Provider.of<GatewaysProvider>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
@@ -97,7 +97,7 @@ class _SearchSIMSCardCreatedState extends State<SearchSIMSCardCreated> {
             // HEADER
             HeaderShimmer(
               width: MediaQuery.of(context).size.width, 
-              text: "Search SIMS Card Created",
+              text: "Search Gateways Created",
             ),
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -245,18 +245,15 @@ class _SearchSIMSCardCreatedState extends State<SearchSIMSCardCreated> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        child: Text(
-                          "IMEI",
-                          style: AppTheme.of(context)
-                          .bodyText1.override(
-                            fontFamily:
-                                  AppTheme.of(context).bodyText1Family,
-                            color: AppTheme.of(context).alternate,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
+                      Text(
+                        "Serial No.",
+                        style: AppTheme.of(context)
+                        .bodyText1.override(
+                          fontFamily:
+                                AppTheme.of(context).bodyText1Family,
+                          color: AppTheme.of(context).alternate,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
                         ),
                       ),
                       Text(
@@ -304,11 +301,11 @@ class _SearchSIMSCardCreatedState extends State<SearchSIMSCardCreated> {
                   padding: const EdgeInsets.all(5.0),
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  itemCount: provider.simsCard.length,
+                  itemCount: provider.gateways.length,
                   itemBuilder: (context, index) {
-                    final simsCard = provider.simsCard[index];
-                    return ItemFormSIMSCard(
-                      simsCard: simsCard,
+                    final gateway = provider.gateways[index];
+                    return ItemFormGateway(
+                      gateway: gateway,
                     );
                   });
                 },

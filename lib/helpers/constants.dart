@@ -37,6 +37,12 @@ final serialNumberRegExp = RegExp(r'Serial Number: (\d{9}-\d)');
 const nameFieldSerialNumber = "Serial Number: ";
 final productCodeRegExp = RegExp(r'Product Code: [A-Z]{8}-\d{2}$');
 const nameFieldProductCode = "Product Code: ";
+final imeiRegExp = RegExp(r'IMEI: (\d{15})');
+const nameFieldImei = "IMEI: ";
+final pinRegExpo = RegExp(r'PIN: (\d+)');
+const nameFieldPin = "PIN: ";
+final descriptionSRegExp = RegExp(r'Description: SIM Card by AT&T');
+const nameFieldDescriptionS = "Description: ";
 
 final nombreCharacters = RegExp(r'^(([A-Z]{1}|[ÁÉÍÓÚÑ]{1})[a-zá-ÿ]+[ ]?)+$');
 final curpCharacters = RegExp(
