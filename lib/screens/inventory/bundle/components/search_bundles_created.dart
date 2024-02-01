@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/bundles_provider.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/item_form_bundle.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/providers/system/gateways_provider.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/header_shimmer.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/item_form_gateway.dart';
 
 class SearchBundlesCreated extends StatefulWidget {
   
@@ -77,17 +78,21 @@ class _SearchBundlesCreatedState extends State<SearchBundlesCreated> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      GatewaysProvider provider = Provider.of<GatewaysProvider>(
+      final userProvider = Provider.of<UsuarioController>(
         context,
         listen: false,
       );
-      await provider.updateState();
+      BundlesProvider provider = Provider.of<BundlesProvider>(
+        context,
+        listen: false
+      );
+      await provider.updateState(userProvider.usuarioCurrent!.sequentialId);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<GatewaysProvider>(context);
+    final provider = Provider.of<BundlesProvider>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
@@ -97,7 +102,7 @@ class _SearchBundlesCreatedState extends State<SearchBundlesCreated> {
             // HEADER
             HeaderShimmer(
               width: MediaQuery.of(context).size.width, 
-              text: "Search Gateways Created",
+              text: "Search Bundles Created",
             ),
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -301,11 +306,11 @@ class _SearchBundlesCreatedState extends State<SearchBundlesCreated> {
                   padding: const EdgeInsets.all(5.0),
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  itemCount: provider.gateways.length,
+                  itemCount: provider.bundles.length,
                   itemBuilder: (context, index) {
-                    final gateway = provider.gateways[index];
-                    return ItemFormGateway(
-                      gateway: gateway,
+                    final bundle = provider.bundles[index];
+                    return ItemFormBundle(
+                      bundle: bundle,
                     );
                   });
                 },

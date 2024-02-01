@@ -117,7 +117,7 @@ class SIMSCardFormProvider extends ChangeNotifier {
           'provider_invoice_fk': 1,
           'product_fk': productIDTextController.text,
           'barcode_type_fk': 1,
-          'created_by': currentUser.id,
+          'created_by': currentUser.sequentialId,
           'inventory_product_status_fk': 1
         },
       ).select<PostgrestList>('inventory_product_id');

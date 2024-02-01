@@ -223,7 +223,7 @@ class BundleFormProvider extends ChangeNotifier {
           'port': 1,
           'router_detail_fk': gatewayCaptured!.routerDetailId,
           'sim_detail_fk': simCard1!.simDetailId,
-          'created_by': currentUser.id
+          'created_by': currentUser.sequentialId
         },
       ).select<PostgrestList>('router_sim_connection_id');
       
@@ -232,7 +232,7 @@ class BundleFormProvider extends ChangeNotifier {
           'port': 2,
           'router_detail_fk': gatewayCaptured!.routerDetailId,
           'sim_detail_fk': simCard2!.simDetailId,
-          'created_by': currentUser.id
+          'created_by': currentUser.sequentialId
         },
       ).select<PostgrestList>('router_sim_connection_id');
 
@@ -253,8 +253,11 @@ class BundleFormProvider extends ChangeNotifier {
 
   void clearGatewayControllers() {
     serialNumberTextController.clear();
+    imeiTextController.clear();
     codeQRG =  "";
     codeQRSC =  "";
     gatewayCaptured = null;
+    simCard1 = null;
+    simCard2 = null;
   }
 }

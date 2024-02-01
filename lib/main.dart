@@ -11,6 +11,7 @@ import 'package:uwifi_control_inventory_mobile/database/object_box_database.dart
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/bundle_form_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/bundles_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/screens.dart';
 import 'package:uwifi_control_inventory_mobile/services/navigation_service.dart';
 import 'package:uwifi_control_inventory_mobile/internationalization/internationalization.dart';
@@ -69,6 +70,10 @@ void main() async {
         ),
         ChangeNotifierProvider<SIMSCardProvider>(
           create: (context) => SIMSCardProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<BundlesProvider>(
+          create: (context) => BundlesProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<GatewayMenuProvider>(

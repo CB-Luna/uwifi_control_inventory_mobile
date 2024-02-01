@@ -60,7 +60,7 @@ class SIMCardFormOCR extends StatelessWidget {
                               bundleMenuProvider.changeOptionInventorySection(4);
                               bundleMenuProvider.changeOptionButtonsGC(0, null);
                             }
-                          }),
+                          },),
                       FFButtonWidget(
                         onPressed: () async {
                           bundleMenuProvider.changeOptionInventorySection(4);

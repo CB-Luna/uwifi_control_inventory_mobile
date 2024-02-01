@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
@@ -23,6 +24,18 @@ class BundleCreated extends StatelessWidget {
             "Bundle Created",
             style: AppTheme.of(context).title2,
           )
+        ),
+        Padding(
+          padding:
+              const EdgeInsetsDirectional.symmetric(horizontal: 15, vertical: 10),
+          child: Lottie.asset(
+            'assets/lottie_animations/elemento-creado.json',
+            width: 180,
+            height: 180,
+            fit: BoxFit.cover,
+            repeat: true,
+            animate: true,
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
