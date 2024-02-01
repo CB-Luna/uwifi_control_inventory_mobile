@@ -112,7 +112,7 @@ class _ItemFormBundleState extends State<ItemFormBundle> {
                             child: Row(
                               children: [
                                 const Text("Created at: "),
-                                Text(DateFormat("MMM-dd-yyyy").format(widget.bundle.createdAt)),
+                                Text(DateFormat("MMM-dd-yyyy").format(widget.bundle.sim.first!.connectedAt)),
                               ],
                             )
                           ),
