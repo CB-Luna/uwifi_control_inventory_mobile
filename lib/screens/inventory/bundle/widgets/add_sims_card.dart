@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/bundle_form_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
@@ -128,8 +129,47 @@ class AddSIMSCard extends StatelessWidget {
                   children: [
                     FFButtonWidget(
                     onPressed: () async {
-                      if (await bundleFormProvider.addNewBundleBackend(usuarioProvider.usuarioCurrent!) == "True") {
-                        bundleMenuProvider.changeOptionInventorySection(7);
+                      final message = await bundleFormProvider.addNewBundleBackend(usuarioProvider.usuarioCurrent!);
+                      switch (message) {
+                        case "True":
+                          if (!context.mounted) return;
+                          bundleMenuProvider.changeOptionInventorySection(7);
+                          break;
+                        case "False":
+                          if (!context.mounted) return;
+                          showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: const Text('Invalid action'),
+                                content: const Text(
+                                    "Failed to load Bundle, please try again."),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                          break;
+                        case "Duplicate":
+                          if (!context.mounted) return;
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Bundle already registered, please register a new one."),
+                          ));
+                          break;
+                        default:
+                          snackbarKey.currentState
+                              ?.showSnackBar(SnackBar(
+                            content: Text(
+                                "Bundle not registered, more info: '$message'"),
+                          ));
+                          break;
                       }
                     },
                     text: 'Save',

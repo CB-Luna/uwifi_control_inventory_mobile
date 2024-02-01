@@ -109,6 +109,7 @@ class BundleFormProvider extends ChangeNotifier {
                 phoneAssociation: bundleCaptured.sim[0]!.phoneAssociation, 
                 pin: bundleCaptured.sim[0]!.pin, 
                 dataPlan: bundleCaptured.sim[0]!.dataPlan, 
+                imei: bundleCaptured.sim[0]?.imei,
                 createdAt: DateTime.now()
               );
               simCard2 = SIMSCard(
@@ -117,6 +118,7 @@ class BundleFormProvider extends ChangeNotifier {
                 phoneAssociation: bundleCaptured.sim[1]!.phoneAssociation, 
                 pin: bundleCaptured.sim[1]!.pin, 
                 dataPlan: bundleCaptured.sim[1]!.dataPlan, 
+                imei: bundleCaptured.sim[1]?.imei,
                 createdAt: DateTime.now()
               );
               break;
