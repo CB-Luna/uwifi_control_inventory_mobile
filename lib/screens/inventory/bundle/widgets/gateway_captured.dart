@@ -17,19 +17,10 @@ class GatewayCaptured extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
       child: SizedBox( // Need to use container to add size constraint.
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.5,
         child: SingleChildScrollView(
           controller: ScrollController(),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(
-                    5, 5, 5, 5),
-                child: Text(
-                  "Please add the sims card to Create the Bundle",
-                  style: AppTheme.of(context).subtitle2,
-                )
-              ),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(
                     5, 5, 5, 5),
@@ -54,14 +45,93 @@ class GatewayCaptured extends StatelessWidget {
                       borderRadius: BorderRadius.circular(0)),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                    5, 5, 5, 5),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.sim_card_outlined,
+                            size: 15,
+                            color: AppTheme.of(context).alternate,
+                          ),
+                          Text(
+                            "1: ",
+                            style: AppTheme.of(context)
+                            .subtitle2
+                            .override(
+                              fontFamily: AppTheme.of(context)
+                                  .subtitle2Family,
+                              color: AppTheme.of(context).alternate,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          Text(
+                            bundleFormProvider.simCard1?.imei ?? "None Sim Card",
+                            style: AppTheme.of(context)
+                            .subtitle2
+                            .override(
+                              fontFamily: AppTheme.of(context)
+                                  .subtitle2Family,
+                              color: AppTheme.of(context).alternate,
+                              fontSize: 17,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.sim_card_outlined,
+                            size: 15,
+                            color: AppTheme.of(context).alternate,
+                          ),
+                          Text(
+                            "2: ",
+                            style: AppTheme.of(context)
+                            .subtitle2
+                            .override(
+                              fontFamily: AppTheme.of(context)
+                                  .subtitle2Family,
+                              color: AppTheme.of(context).alternate,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          Text(
+                            bundleFormProvider.simCard2?.imei ?? "None Sim Card",
+                            style: AppTheme.of(context)
+                            .subtitle2
+                            .override(
+                              fontFamily: AppTheme.of(context)
+                                  .subtitle2Family,
+                              color: AppTheme.of(context).alternate,
+                              fontSize: 17,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                )
+              ),
               Builder(
                 builder: (context) {
-                  // final section = bundleMenuProvider.menuTaped[
-                  //     bundleMenuProvider.buttonMenuTaped]; 
-                  return const Center(
+                  final section = bundleMenuProvider.optionButtonsGC(); 
+                  return Center(
                     child: Padding(
-                      padding: EdgeInsets.all(15.0),
-                      child: Text("Buttons"),
+                      padding: const EdgeInsets.all(15.0),
+                      child: section,
                     ),
                   );
                 },
@@ -76,6 +146,7 @@ class GatewayCaptured extends StatelessWidget {
                         onPressed: () async {
                           bundleFormProvider.clearGatewayControllers();
                           bundleMenuProvider.changeOptionInventorySection(0);
+                          bundleMenuProvider.changeOptionButtonsGC(0 ,null);
                         },
                         text: 'Back',
                         icon: const Icon(

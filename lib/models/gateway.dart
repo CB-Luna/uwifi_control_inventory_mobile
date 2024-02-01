@@ -7,8 +7,8 @@ class Gateway {
     required this.inventoryProductFk,
     required this.networkConfiguration,
     required this.location,
-    this.idSIMSCardFkOne,
-    this.idSIMSCardFkTwo,
+    // this.idSIMSCardFkOne,
+    // this.idSIMSCardFkTwo,
     required this.createdAt
   });
 
@@ -17,8 +17,8 @@ class Gateway {
   int inventoryProductFk;
   String networkConfiguration;
   String location;
-  int? idSIMSCardFkOne;
-  int? idSIMSCardFkTwo;
+  // int? idSIMSCardFkOne;
+  // int? idSIMSCardFkTwo;
   DateTime createdAt;
 
   factory Gateway.fromJson(String str) => Gateway.fromMap(json.decode(str));
@@ -30,8 +30,8 @@ class Gateway {
       inventoryProductFk: json['inventory_product_fk'],
       networkConfiguration: json["network_configuration"],
       location: json['location'],
-      idSIMSCardFkOne: json['id_sims_card_fk_one'],
-      idSIMSCardFkTwo: json['id_sims_card_fk_two'],
+      // idSIMSCardFkOne: json['id_sims_card_fk_one'],
+      // idSIMSCardFkTwo: json['id_sims_card_fk_two'],
       createdAt: DateTime.parse(json["created_at"]),
     );
 
