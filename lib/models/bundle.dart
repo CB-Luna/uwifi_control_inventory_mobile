@@ -50,8 +50,9 @@ class Sim {
     final String statusName;
     final String operatorName;
     final int simDetailId;
-    final String? activationDate;
-    final String? expirationDate;
+    final DateTime connectedAt;
+    final DateTime? activationDate;
+    final DateTime? expirationDate;
     final String phoneAssociation;
     final int inventoryProductId;
 
@@ -68,6 +69,7 @@ class Sim {
         required this.statusName,
         required this.operatorName,
         required this.simDetailId,
+        required this.connectedAt,
         this.activationDate,
         this.expirationDate,
         required this.phoneAssociation,
@@ -79,7 +81,7 @@ class Sim {
     factory Sim.fromMap(Map<String, dynamic> json) {
       Sim sim = Sim(
         pin: json["pin"],
-        imei: json["imei"],
+        imei: json["IMEI"],
         port: json["port"],
         notes: json["notes"],
         latitude: json["latitude"],
@@ -90,8 +92,9 @@ class Sim {
         statusName: json["status_name"],
         operatorName: json["operator_name"],
         simDetailId: json["sim_detail_id"],
-        activationDate: json["activation_date"],
-        expirationDate: json["expiration_date"],
+        connectedAt: DateTime.parse(json["connected_at"]),
+        activationDate: json["activation_date"] == null ? null : DateTime.parse(json["activation_date"]),
+        expirationDate: json["expiration_date"] == null ? null : DateTime.parse(json["expiration_date"]),
         phoneAssociation: json["phone_association"],
         inventoryProductId: json["inventory_product_id"],
     );
