@@ -150,9 +150,9 @@ class _ItemFormOrderState extends State<ItemFormOrder> {
                         height: MediaQuery.of(context).size.height * 0.5,
                         child: SingleChildScrollView(
                           controller: ScrollController(),
-                          child: Builder(
-                            builder: (context) {
-                              return Center(child: orderMenuProvider.optionInventorySection());
+                          child: Consumer<OrderMenuProvider>(
+                            builder: (context, orderMenuProvider, _) {
+                              return orderMenuProvider.optionInventorySection();
                             },
                           ),
                         ),
