@@ -11,7 +11,10 @@ import 'package:uwifi_control_inventory_mobile/database/object_box_database.dart
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/bundle_form_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/order_form_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/bundles_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/order_menu_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/orders_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/screens.dart';
 import 'package:uwifi_control_inventory_mobile/services/navigation_service.dart';
 import 'package:uwifi_control_inventory_mobile/internationalization/internationalization.dart';
@@ -64,6 +67,10 @@ void main() async {
           create: (context) => BundleFormProvider(),
           lazy: false,
         ),
+        ChangeNotifierProvider<OrderFormProvider>(
+          create: (context) => OrderFormProvider(),
+          lazy: false,
+        ),
         ChangeNotifierProvider<GatewaysProvider>(
           create: (context) => GatewaysProvider(),
           lazy: false,
@@ -76,6 +83,10 @@ void main() async {
           create: (context) => BundlesProvider(),
           lazy: false,
         ),
+        ChangeNotifierProvider<OrdersProvider>(
+          create: (context) => OrdersProvider(),
+          lazy: false,
+        ),
         ChangeNotifierProvider<GatewayMenuProvider>(
           create: (context) => GatewayMenuProvider(),
           lazy: false,
@@ -86,6 +97,10 @@ void main() async {
         ),
         ChangeNotifierProvider<BundleMenuProvider>(
           create: (context) => BundleMenuProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<OrderMenuProvider>(
+          create: (context) => OrderMenuProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<SyncProviderSupabase>(

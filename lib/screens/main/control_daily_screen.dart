@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/control_inventory_bundle_screen.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/order/control_inventory_order_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/control_inventory_sims_card_screen.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
@@ -505,6 +506,143 @@ class _ControlDailyScreenState extends State<ControlDailyScreen> {
                                           ),
                                           Text(
                                             'Add Bundle Data',
+                                            style: AppTheme.of(
+                                                    context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  color: AppTheme
+                                                          .of(context)
+                                                      .primaryBackground,
+                                                  fontSize: 18.0,
+                                                  fontWeight:
+                                                      FontWeight.bold,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                              10.0, 10.0, 10.0, 10.0),
+                                      child: ClayContainer(
+                                        height: 30,
+                                        width: 30,
+                                        depth: 10,
+                                        spread: 1,
+                                        borderRadius: 25,
+                                        curveType: CurveType.concave,
+                                        color: 
+                                        controlFormCheckIn != null ?
+                                        AppTheme.of(context).buenoColor
+                                        :
+                                        AppTheme.of(context).primaryColor,
+                                        surfaceColor: 
+                                        controlFormCheckIn != null ?
+                                        AppTheme.of(context).buenoColor
+                                        :
+                                        AppTheme.of(context).primaryColor,
+                                        parentColor: 
+                                        controlFormCheckIn != null ?
+                                        AppTheme.of(context).buenoColor
+                                        :
+                                        AppTheme.of(context).primaryColor,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(25),
+                                          ),
+                                          child: Icon(
+                                              Icons.info_outline,
+                                            color:
+                                            AppTheme.of(context).white,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ControlInventoryOrderScreen(),
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 20, 0, 15),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.85,
+                                height: 80.0,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 4.0,
+                                      color: AppTheme.of(context).alternate,
+                                      offset: const Offset(2.0, 2.0),
+                                    )
+                                  ],
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topRight,
+                                    end: Alignment.bottomLeft,
+                                    colors: [
+                                      AppTheme.of(context).alternate,
+                                      AppTheme.of(context).alternate.withOpacity(0.8),
+                                    ],
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    bottomLeft: Radius.circular(0.0),
+                                    bottomRight: Radius.circular(30.0),
+                                    topLeft: Radius.circular(30.0),
+                                    topRight: Radius.circular(0.0),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              10.0, 10.0, 0.0, 10.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisSize:
+                                                MainAxisSize.max,
+                                            children: [
+                                              Transform(
+                                                alignment: Alignment.center,
+                                                transform: Matrix4.rotationY(3.14159), // Rotación en radiane
+                                                child: Icon(
+                                                  Icons.sort_outlined,
+                                                  color: AppTheme
+                                                          .of(context)
+                                                      .white,
+                                                  size: 35.0,
+                                                ),
+                                              ),
+                                              Icon(
+                                                Icons.local_shipping_outlined,
+                                                color: AppTheme
+                                                        .of(context)
+                                                    .white,
+                                                size: 30.0,
+                                              ),
+                                            ],
+                                          ),
+                                          Text(
+                                            'Add Orden Data',
                                             style: AppTheme.of(
                                                     context)
                                                 .bodyText1
