@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/order_form_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/order_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
@@ -15,6 +15,7 @@ class BundleAssigned extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final orderMenuProvider = Provider.of<OrderMenuProvider>(context);
+    final orderFormProvider = Provider.of<OrderFormProvider>(context);
     return Column(
       children: [
        Padding(
@@ -26,16 +27,108 @@ class BundleAssigned extends StatelessWidget {
           )
         ),
         Padding(
-          padding:
-              const EdgeInsetsDirectional.symmetric(horizontal: 15, vertical: 10),
-          child: Lottie.asset(
-            'assets/lottie_animations/elemento-creado.json',
-            width: 180,
-            height: 180,
-            fit: BoxFit.cover,
-            repeat: true,
-            animate: true,
+          padding: const EdgeInsetsDirectional.fromSTEB(
+              5, 5, 5, 5),
+          child: Text(
+            "No. Serial ${orderFormProvider.bundleCaptured?.serieNo}",
+            style: AppTheme.of(context).subtitle1,
+          )
+        ),
+        Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(
+              5, 5, 5, 5),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.3,
+            height: MediaQuery.of(context).size.width * 0.3,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: Image.asset(
+                    'assets/images/gateway.png',
+                  ).image,
+                ),
+                borderRadius: BorderRadius.circular(0)),
           ),
+        ),
+        Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(
+              5, 5, 5, 5),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.sim_card_outlined,
+                      size: 15,
+                      color: AppTheme.of(context).alternate,
+                    ),
+                    Text(
+                      "1: ",
+                      style: AppTheme.of(context)
+                      .subtitle2
+                      .override(
+                        fontFamily: AppTheme.of(context)
+                            .subtitle2Family,
+                        color: AppTheme.of(context).alternate,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    Text(
+                      orderFormProvider.simCard1?.imei ?? "None Sim Card",
+                      style: AppTheme.of(context)
+                      .subtitle2
+                      .override(
+                        fontFamily: AppTheme.of(context)
+                            .subtitle2Family,
+                        color: AppTheme.of(context).alternate,
+                        fontSize: 17,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.sim_card_outlined,
+                      size: 15,
+                      color: AppTheme.of(context).alternate,
+                    ),
+                    Text(
+                      "2: ",
+                      style: AppTheme.of(context)
+                      .subtitle2
+                      .override(
+                        fontFamily: AppTheme.of(context)
+                            .subtitle2Family,
+                        color: AppTheme.of(context).alternate,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    Text(
+                      orderFormProvider.simCard2?.imei ?? "None Sim Card",
+                      style: AppTheme.of(context)
+                      .subtitle2
+                      .override(
+                        fontFamily: AppTheme.of(context)
+                            .subtitle2Family,
+                        color: AppTheme.of(context).alternate,
+                        fontSize: 17,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          )
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -49,10 +142,12 @@ class BundleAssigned extends StatelessWidget {
                     onPressed: () async {
                       orderMenuProvider.changeOptionButtonsGC(0, null);
                       orderMenuProvider.changeOptionInventorySection(0);
+                      orderFormProvider.clearBundleControllers();
+                      Navigator.pop(context);
                     },
-                    text: 'Create New One',
+                    text: 'Close',
                     icon: const Icon(
-                      Icons.restart_alt_outlined,
+                      Icons.close_outlined,
                       size: 20,
                     ),
                     options: FFButtonOptions(

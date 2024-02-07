@@ -56,13 +56,13 @@ class BundleFormOCR extends StatelessWidget {
                             ..color = AppTheme.of(context).primaryColor,
                           boxHeight: MediaQuery.of(context).size.width * 0.7,
                           getScannedText: (value) async {
-                            if (await orderFormProvider.autofillFieldsGatewayOCR(value)) {
+                            if (await orderFormProvider.autofillFieldsBundleOCR(value)) {
                               orderMenuProvider.changeOptionInventorySection(4);
                             }
                           }),
                       FFButtonWidget(
                         onPressed: () async {
-                          orderFormProvider.clearGatewayControllers();
+                          orderFormProvider.clearBundleControllers();
                           orderMenuProvider.changeOptionInventorySection(0);
                         },
                         text: 'Back',
