@@ -4,7 +4,7 @@ import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/options_recover_bundles.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/search_orders_list.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/search_orders_delivery.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/bundle_assigned.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/bundle_founded.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/bundle_form_ocr.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/bundle_form_qr.dart';
 
@@ -42,7 +42,7 @@ class OrderMenuProvider extends ChangeNotifier {
       case 3:
         return Container();
       case 4:
-        return BundleAssigned();
+        return BundleFounded();
       default:
         return OptionsRecoverBundles();
     }

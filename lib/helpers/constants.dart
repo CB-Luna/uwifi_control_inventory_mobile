@@ -15,6 +15,7 @@ const supabaseUrl = "https://nsrprlygqaqgljpfggjh.supabase.co";
 const supabaseGraphqlUrl = "https://nsrprlygqaqgljpfggjh.supabase.co/graphql/v1";
 const urlNotificationsAPI = "https://nsrprlygqaqgljpfggjh.supabase.co/notifications/api";
 const domain = "supabase";
+const urlAirflow = "http://34.72.21.124";
 
 //>>>>>>>PRODUCTION
 // const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAiYW5vbiIsCiAgICAiaXNzIjogInN1cGFiYXNlIiwKICAgICJpYXQiOiAxNjg0ODI1MjAwLAogICAgImV4cCI6IDE4NDI2NzgwMDAKfQ.Atj9wTNbdEEVPOjstsO14DtxbY2SEpnr50elVXBgAmM";
@@ -22,6 +23,7 @@ const domain = "supabase";
 // const supabaseGraphqlUrl = "https://supa41.rtatel.com/graphql/v1";
 // const urlNotificationsAPI = "https://supa41.rtatel.com/notifications/api";
 // const domain = "supa41";
+// const urlAirflow = "http://34.72.21.124";
 
 //***********< REGEX >**************/
 

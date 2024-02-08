@@ -1,14 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:http/http.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/bundle.dart';
+import 'package:uwifi_control_inventory_mobile/models/inventory_order.dart';
 import 'package:uwifi_control_inventory_mobile/models/sims_card.dart';
 
 class OrderFormProvider extends ChangeNotifier {
 
   Bundle? bundleCaptured;
+  InventoryOrder? order;
 
   SIMSCard? simCard1;
   SIMSCard? simCard2;
@@ -201,6 +204,81 @@ class OrderFormProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> shippingBundleBundleAssignedV1() async {
+    try {
+      if (order != null) {
+        var urlAPI = Uri.parse("$urlAirflow/api/v1/dags/shipping_bundle_bundle_assigned_v1/dagRuns");
+        final headers = ({
+          "Content-Type": "application/json",
+        });
+        var responseAPI = await post(urlAPI,
+          headers: headers,
+          body: json.encode(
+              {
+                  "conf": {
+                      "order_id": order!.orderId,
+                      "router_inventory_product_id": bundleCaptured?.inventoryProductFk,
+                      "sim_inventory_product_ids": [
+                          bundleCaptured?.sim[0]?.inventoryProductId,
+                          bundleCaptured?.sim[1]?.inventoryProductId
+                      ]
+                  },
+                  "note": "DAG runned by API"
+              },
+            ),
+          );
+        if (responseAPI.statusCode == 200) {
+          //Se marca como ejecutada la instrucción en Bitacora
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('ERROR - function shippingBundleBundleAssignedV1(): $e');
+      return false;
+    }
+  }
+
+  Future<bool> shippingBundleBundlePackagedV1() async {
+    try {
+      if (order != null) {
+        var urlAPI = Uri.parse("$urlAirflow/api/v1/dags/shipping_bundle_bundle_packaged_v1/dagRuns");
+        final headers = ({
+          "Content-Type": "application/json",
+        });
+        var responseAPI = await post(urlAPI,
+          headers: headers,
+          body: json.encode(
+              {
+                  "conf": {
+                      "order_id": order!.orderId,
+                      "router_inventory_product_id": bundleCaptured?.inventoryProductFk,
+                      "sim_inventory_product_ids": [
+                          bundleCaptured?.sim[0]?.inventoryProductId,
+                          bundleCaptured?.sim[1]?.inventoryProductId
+                      ]
+                  },
+                  "note": "DAG runned by API"
+              },
+            ),
+          );
+        if (responseAPI.statusCode == 200) {
+          //Se marca como ejecutada la instrucción en Bitacora
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('ERROR - function shippingBundleBundleAssignedV1(): $e');
+      return false;
+    }
+  }
 
 
   Future<bool> existsRegisterInBackend(String table, String column, String idUnique) async {
@@ -216,5 +294,6 @@ class OrderFormProvider extends ChangeNotifier {
     bundleCaptured = null;
     simCard1 = null;
     simCard2 = null;
+    order = null;
   }
 }
