@@ -35,6 +35,7 @@ class OrdersDeliveryProvider extends ChangeNotifier {
               ordersDelivery.add(order);
             }
           }
+          ordersDelivery.sort((a, b) => b.orderCreation!.compareTo(a.orderCreation!));
         }
       } catch (e) {
         log('Error en getOrdersDelivery() - $e');
