@@ -62,6 +62,7 @@ class BundlesProvider extends ChangeNotifier {
             bundles.add(Bundle.fromJson(jsonEncode(bundle)));
           }
         }
+        bundles.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       }
 
     } catch (e) {

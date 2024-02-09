@@ -46,6 +46,8 @@ class SIMSCardProvider extends ChangeNotifier {
 
       simsCard = (res as List<dynamic>).map((simCard) => SIMSCard.fromMap(simCard)).toList();
 
+      simsCard.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
     } catch (e) {
       log('Error en getSIMSCard() - $e');
     }

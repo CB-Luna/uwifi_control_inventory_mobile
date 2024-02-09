@@ -46,6 +46,8 @@ class GatewaysProvider extends ChangeNotifier {
 
       gateways = (res as List<dynamic>).map((gateway) => Gateway.fromMap(gateway)).toList();
 
+      gateways.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
     } catch (e) {
       log('Error en getGateways() - $e');
     }
