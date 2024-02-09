@@ -138,94 +138,100 @@ class BundleFounded extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
               child: Column(
                 children: [
-                  FFButtonWidget(
-                    onPressed: () async {
-                      if (await orderFormProvider.shippingBundleBundleAssignedV1()) {
-                        if (!context.mounted) return;
-                        orderMenuProvider.changeOptionButtonsGC(0, null);
-                        orderMenuProvider.changeOptionInventorySection(0);
-                        orderFormProvider.clearBundleControllers();
-                        Navigator.pop(context);
-                        snackbarKey.currentState
-                            ?.showSnackBar(const SnackBar(
-                          backgroundColor: Color(0xFF00B837),
-                          content: Text(
-                              "Bundle assigned successfully."),
-                        ));
-                      } else {
-                        if (!context.mounted) return;
-                        orderMenuProvider.changeOptionButtonsGC(0, null);
-                        orderMenuProvider.changeOptionInventorySection(0);
-                        orderFormProvider.clearBundleControllers();
-                        Navigator.pop(context);
-                        snackbarKey.currentState
-                            ?.showSnackBar(const SnackBar(
-                          content: Text(
-                              "Failed while bundle was assigned, try again"),
-                        ));
-                      }
-                    },
-                    text: 'Assign',
-                    icon: const Icon(
-                      Icons.check_outlined,
-                      size: 20,
-                    ),
-                    options: FFButtonOptions(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      height: 40,
-                      color: AppTheme.of(context)
-                          .white,
-                      textStyle: AppTheme.of(context)
-                          .subtitle2
-                          .override(
-                            fontFamily: AppTheme.of(context)
-                                .subtitle2Family,
-                            color: AppTheme.of(context)
-                          .alternate,
-                            fontSize: 15,
-                          ),
-                      borderSide: BorderSide(
-                        color: AppTheme.of(context)
-                          .alternate,
-                        width: 2,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        if (await orderFormProvider.shippingBundleBundleAssignedV1()) {
+                          if (!context.mounted) return;
+                          orderMenuProvider.changeOptionButtonsGC(0, null);
+                          orderMenuProvider.changeOptionInventorySection(0);
+                          orderFormProvider.clearBundleControllers();
+                          Navigator.pop(context);
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            backgroundColor: Color(0xFF00B837),
+                            content: Text(
+                                "Bundle assigned successfully."),
+                          ));
+                        } else {
+                          if (!context.mounted) return;
+                          orderMenuProvider.changeOptionButtonsGC(0, null);
+                          orderMenuProvider.changeOptionInventorySection(0);
+                          orderFormProvider.clearBundleControllers();
+                          Navigator.pop(context);
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Failed while bundle was assigned, try again"),
+                          ));
+                        }
+                      },
+                      text: 'Assign',
+                      icon: const Icon(
+                        Icons.check_outlined,
+                        size: 20,
                       ),
-                      borderRadius:
-                          BorderRadius.circular(8),
+                      options: FFButtonOptions(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        height: 40,
+                        color: AppTheme.of(context)
+                            .white,
+                        textStyle: AppTheme.of(context)
+                            .subtitle2
+                            .override(
+                              fontFamily: AppTheme.of(context)
+                                  .subtitle2Family,
+                              color: AppTheme.of(context)
+                            .alternate,
+                              fontSize: 15,
+                            ),
+                        borderSide: BorderSide(
+                          color: AppTheme.of(context)
+                            .alternate,
+                          width: 2,
+                        ),
+                        borderRadius:
+                            BorderRadius.circular(8),
+                      ),
                     ),
                   ),
-                  FFButtonWidget(
-                    onPressed: () async {
-                      orderMenuProvider.changeOptionButtonsGC(0, null);
-                      orderMenuProvider.changeOptionInventorySection(0);
-                      orderFormProvider.clearBundleControllers();
-                      Navigator.pop(context);
-                    },
-                    text: 'Cancel',
-                    icon: const Icon(
-                      Icons.close_outlined,
-                      size: 20,
-                    ),
-                    options: FFButtonOptions(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      height: 40,
-                      color: AppTheme.of(context)
-                          .white,
-                      textStyle: AppTheme.of(context)
-                          .subtitle2
-                          .override(
-                            fontFamily: AppTheme.of(context)
-                                .subtitle2Family,
-                            color: AppTheme.of(context)
-                          .alternate,
-                            fontSize: 15,
-                          ),
-                      borderSide: BorderSide(
-                        color: AppTheme.of(context)
-                          .alternate,
-                        width: 2,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        orderMenuProvider.changeOptionButtonsGC(0, null);
+                        orderMenuProvider.changeOptionInventorySection(0);
+                        orderFormProvider.clearBundleControllers();
+                        Navigator.pop(context);
+                      },
+                      text: 'Cancel',
+                      icon: const Icon(
+                        Icons.close_outlined,
+                        size: 20,
                       ),
-                      borderRadius:
-                          BorderRadius.circular(8),
+                      options: FFButtonOptions(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        height: 40,
+                        color: AppTheme.of(context)
+                            .white,
+                        textStyle: AppTheme.of(context)
+                            .subtitle2
+                            .override(
+                              fontFamily: AppTheme.of(context)
+                                  .subtitle2Family,
+                              color: AppTheme.of(context)
+                            .alternate,
+                              fontSize: 15,
+                            ),
+                        borderSide: BorderSide(
+                          color: AppTheme.of(context)
+                            .alternate,
+                          width: 2,
+                        ),
+                        borderRadius:
+                            BorderRadius.circular(8),
+                      ),
                     ),
                   ),
                 ],

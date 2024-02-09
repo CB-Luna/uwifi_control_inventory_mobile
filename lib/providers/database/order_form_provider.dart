@@ -210,6 +210,7 @@ class OrderFormProvider extends ChangeNotifier {
         var urlAPI = Uri.parse("$urlAirflow/api/v1/dags/shipping_bundle_bundle_assigned_v1/dagRuns");
         final headers = ({
           "Content-Type": "application/json",
+          "Authorization": bearerAirflow
         });
         var responseAPI = await post(urlAPI,
           headers: headers,
@@ -245,32 +246,60 @@ class OrderFormProvider extends ChangeNotifier {
   Future<bool> shippingBundleBundlePackagedV1() async {
     try {
       if (order != null) {
-        var urlAPI = Uri.parse("$urlAirflow/api/v1/dags/shipping_bundle_bundle_packaged_v1/dagRuns");
-        final headers = ({
-          "Content-Type": "application/json",
-        });
-        var responseAPI = await post(urlAPI,
-          headers: headers,
-          body: json.encode(
-              {
-                  "conf": {
-                      "order_id": order!.orderId,
-                      "router_inventory_product_id": bundleCaptured?.inventoryProductFk,
-                      "sim_inventory_product_ids": [
-                          bundleCaptured?.sim[0]?.inventoryProductId,
-                          bundleCaptured?.sim[1]?.inventoryProductId
-                      ]
+        if (order != null) {
+        final res1 = await supabase
+            .from('order_product')
+            .select('inventory_product_fk')
+            .eq('order_fk', order!.orderId);
+
+        if (res1[0] != null) {
+          final inventoryProductFk = res1[0]['inventory_product_fk'];
+          final res2 = await supabase
+            .from('router_details_view')
+            .select()
+            .eq('inventory_product_fk', inventoryProductFk);
+
+          if (res2[0] != null) {
+            final bundle = res2[0];
+            bundleCaptured = Bundle.fromJson(jsonEncode(bundle));
+            var urlAPI = Uri.parse("$urlAirflow/api/v1/dags/shipping_bundle_bundle_packaged_v1/dagRuns");
+            final headers = ({
+              "Content-Type": "application/json",
+              "Authorization": bearerAirflow
+            });
+            var responseAPI = await post(urlAPI,
+              headers: headers,
+              body: json.encode(
+                  {
+                      "conf": {
+                          "order_id": order!.orderId,
+                          "router_inventory_product_id": bundleCaptured?.inventoryProductFk,
+                          "sim_inventory_product_ids": [
+                              bundleCaptured?.sim[0]?.inventoryProductId,
+                              bundleCaptured?.sim[1]?.inventoryProductId
+                          ]
+                      },
+                      "note": "DAG runned by API"
                   },
-                  "note": "DAG runned by API"
-              },
-            ),
-          );
-        if (responseAPI.statusCode == 200) {
-          //Se marca como ejecutada la instrucción en Bitacora
-          return true;
+                ),
+              );
+            if (responseAPI.statusCode == 200) {
+              //Se marca como ejecutada la instrucción en Bitacora
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            // Bundle doesn't exist
+            return false;
+          }
         } else {
+          // SIM Card doesn't exist
           return false;
         }
+      } else {
+        return false;
+      }
       } else {
         return false;
       }

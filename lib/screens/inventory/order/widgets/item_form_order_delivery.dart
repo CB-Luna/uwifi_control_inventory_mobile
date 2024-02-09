@@ -93,8 +93,8 @@ class _ItemFormOrderDeliveryState extends State<ItemFormOrderDelivery> {
             motion: const DrawerMotion(), 
             children: [
               SlidableAction(
-                icon: Icons.router_outlined,
-                backgroundColor: AppTheme.of(context).primaryColor,
+                icon: Icons.print_outlined,
+                backgroundColor: AppTheme.of(context).secondaryColor,
                 foregroundColor: AppTheme.of(context).white,
                 borderRadius: BorderRadius.circular(20.0),
                 onPressed: (context) async {
@@ -150,13 +150,24 @@ class _ItemFormOrderDeliveryState extends State<ItemFormOrderDelivery> {
                         content: SizedBox( // Need to use container to add size constraint.
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.5,
-                          child: SingleChildScrollView(
-                            controller: ScrollController(),
-                            child: Consumer<OrderMenuProvider>(
-                              builder: (context, orderMenuProvider, _) {
-                                return orderMenuProvider.optionInventorySection();
-                              },
-                            ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Ticket Order",
+                              style: AppTheme.of(context).title1,),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                height: MediaQuery.of(context).size.width * 0.5,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: Image.asset(
+                                        'assets/images/gateway.png',
+                                      ).image,
+                                    ),
+                                    borderRadius: BorderRadius.circular(0)),
+                              ),
+                            ],
                           ),
                         ),
                       );

@@ -179,193 +179,190 @@ class _ItemFormOrderState extends State<ItemFormOrder> {
                   }
                 }
               ),
-              Visibility(
-                visible: widget.order.orderActions?.first.status == "Waiting for Packaging",
-                child: SlidableAction(
-                  icon: Icons.beenhere_outlined,
-                  backgroundColor: AppTheme.of(context).grayLight,
-                  foregroundColor: AppTheme.of(context).white,
-                  borderRadius: BorderRadius.circular(20.0),
-                  onPressed: (context) async {
-                    await showDialog(
-                      context: context,
-                      builder: (context) {
-                        orderFormProvider.order = widget.order;
-                        return AlertDialog(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Row(
-                                  children: [
-                                    const Text("No Order: "),
-                                    Text("${widget.order.orderId}"),
-                                  ],
-                                )
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: ClayContainer(
-                                  height: 30,
-                                  width: 30,
-                                  depth: 15,
-                                  spread: 1,
-                                  borderRadius: 15,
-                                  curveType: CurveType.concave,
-                                  color:
-                                  AppTheme.of(context).secondaryColor,
-                                  surfaceColor:
-                                  AppTheme.of(context).secondaryColor,
-                                  parentColor:
-                                  AppTheme.of(context).secondaryColor,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                    child: Icon(
-                                      Icons.close,
-                                      color: AppTheme.of(context).white,
-                                      size: 30,
-                                    ),
+              SlidableAction(
+                icon: Icons.beenhere_outlined,
+                backgroundColor: AppTheme.of(context).grayLight,
+                foregroundColor: AppTheme.of(context).white,
+                borderRadius: BorderRadius.circular(20.0),
+                onPressed: (context) async {
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      orderFormProvider.order = widget.order;
+                      return AlertDialog(
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              child: Row(
+                                children: [
+                                  const Text("No Order: "),
+                                  Text("${widget.order.orderId}"),
+                                ],
+                              )
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: ClayContainer(
+                                height: 30,
+                                width: 30,
+                                depth: 15,
+                                spread: 1,
+                                borderRadius: 15,
+                                curveType: CurveType.concave,
+                                color:
+                                AppTheme.of(context).secondaryColor,
+                                surfaceColor:
+                                AppTheme.of(context).secondaryColor,
+                                parentColor:
+                                AppTheme.of(context).secondaryColor,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  child: Icon(
+                                    Icons.close,
+                                    color: AppTheme.of(context).white,
+                                    size: 30,
                                   ),
                                 ),
-                              )
+                              ),
+                            )
+                          ],
+                        ),
+                        content: SizedBox( // Need to use container to add size constraint.
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          child: Column(
+                            children: [
+                              FormField(
+                                builder: (state) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            5, 0, 5, 20),
+                                    child: DropDown(
+                                      initialOption: orderFormProvider.provider,
+                                      options: const ['DHL', 'Fedex', 'UPS'],
+                                      onChanged: (value) {
+                                        state.setState(() {
+                                          orderFormProvider.updateProvider(value!);
+                                        });
+                                      },
+                                      width: double.infinity,
+                                      height: 50,
+                                      textStyle: AppTheme.of(context)
+                                          .title3
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: AppTheme.of(context).alternate,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      hintText: 'Provider*',
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        color: AppTheme.of(context).alternate,
+                                        size: 30,
+                                      ),
+                                      fillColor: AppTheme.of(context).white,
+                                      elevation: 2,
+                                      borderColor: AppTheme.of(context).alternate,
+                                      borderWidth: 2,
+                                      borderRadius: 8,
+                                      margin: const EdgeInsetsDirectional
+                                          .fromSTEB(12, 4, 12, 4),
+                                      hidesUnderline: true,
+                                    ),
+                                  );
+                                },
+                                validator: (val) {
+                                  if (orderFormProvider.provider == "") {
+                                    return 'Provider is required.';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    if (orderFormProvider
+                                        .validateForm(keyForm)) {
+                                      if (await orderFormProvider.shippingBundleBundlePackagedV1()) {
+                                        if (!context.mounted) return;
+                                        orderFormProvider.clearBundleControllers();
+                                        Navigator.pop(context);
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          backgroundColor: Color(0xFF00B837),
+                                          content: Text(
+                                              "Packing process done successfully."),
+                                        ));
+                                      } else {
+                                        if (!context.mounted) return;
+                                        orderFormProvider.clearBundleControllers();
+                                        Navigator.pop(context);
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Failed while packing process, try again"),
+                                        ));
+                                      }
+                                    } else {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: const Text(
+                                                'Field empty required or incomplete service.'),
+                                            content: const Text(
+                                                "Full in all the fields and change the status of the Service to 'Yes' to continue."),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pop(
+                                                        alertDialogContext),
+                                                child:
+                                                    const Text('Okay'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
+                                  },
+                                  text: 'Accept',
+                                  options: FFButtonOptions(
+                                    width: 200,
+                                    height: 50,
+                                    color: AppTheme.of(context).alternate,
+                                    textStyle:
+                                        AppTheme.of(context).subtitle1.override(
+                                              fontFamily: 'Lexend Deca',
+                                              color: AppTheme.of(context).white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                    elevation: 3,
+                                    borderSide: const BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                          content: SizedBox( // Need to use container to add size constraint.
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 0.5,
-                            child: Column(
-                              children: [
-                                FormField(
-                                  builder: (state) {
-                                    return Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              5, 0, 5, 20),
-                                      child: DropDown(
-                                        initialOption: orderFormProvider.provider,
-                                        options: const ['DHL', 'Fedex', 'UPS'],
-                                        onChanged: (value) {
-                                          state.setState(() {
-                                            orderFormProvider.updateProvider(value!);
-                                          });
-                                        },
-                                        width: double.infinity,
-                                        height: 50,
-                                        textStyle: AppTheme.of(context)
-                                            .title3
-                                            .override(
-                                              fontFamily: 'Poppins',
-                                              color: AppTheme.of(context).alternate,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                        hintText: 'Provider*',
-                                        icon: Icon(
-                                          Icons.keyboard_arrow_down_rounded,
-                                          color: AppTheme.of(context).alternate,
-                                          size: 30,
-                                        ),
-                                        fillColor: AppTheme.of(context).white,
-                                        elevation: 2,
-                                        borderColor: AppTheme.of(context).alternate,
-                                        borderWidth: 2,
-                                        borderRadius: 8,
-                                        margin: const EdgeInsetsDirectional
-                                            .fromSTEB(12, 4, 12, 4),
-                                        hidesUnderline: true,
-                                      ),
-                                    );
-                                  },
-                                  validator: (val) {
-                                    if (orderFormProvider.provider == "") {
-                                      return 'Provider is required.';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      if (orderFormProvider
-                                          .validateForm(keyForm)) {
-                                        if (await orderFormProvider.shippingBundleBundlePackagedV1()) {
-                                          if (!context.mounted) return;
-                                          orderFormProvider.clearBundleControllers();
-                                          Navigator.pop(context);
-                                          snackbarKey.currentState
-                                              ?.showSnackBar(const SnackBar(
-                                            backgroundColor: Color(0xFF00B837),
-                                            content: Text(
-                                                "Packing process done successfully."),
-                                          ));
-                                        } else {
-                                          if (!context.mounted) return;
-                                          orderFormProvider.clearBundleControllers();
-                                          Navigator.pop(context);
-                                          snackbarKey.currentState
-                                              ?.showSnackBar(const SnackBar(
-                                            content: Text(
-                                                "Failed while packing process, try again"),
-                                          ));
-                                        }
-                                      } else {
-                                        await showDialog(
-                                          context: context,
-                                          builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: const Text(
-                                                  'Field empty required or incomplete service.'),
-                                              content: const Text(
-                                                  "Full in all the fields and change the status of the Service to 'Yes' to continue."),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext),
-                                                  child:
-                                                      const Text('Okay'),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      }
-                                    },
-                                    text: 'Accept',
-                                    options: FFButtonOptions(
-                                      width: 200,
-                                      height: 50,
-                                      color: AppTheme.of(context).alternate,
-                                      textStyle:
-                                          AppTheme.of(context).subtitle1.override(
-                                                fontFamily: 'Lexend Deca',
-                                                color: AppTheme.of(context).white,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                      elevation: 3,
-                                      borderSide: const BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(50),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  }
-                ),
+                        ),
+                      );
+                    },
+                  );
+                }
               ),
             ]),
             child: Row(
