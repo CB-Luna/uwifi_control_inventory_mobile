@@ -23,7 +23,7 @@ class BundleFounded extends StatelessWidget {
           padding: const EdgeInsetsDirectional.fromSTEB(
               5, 15, 5, 15),
           child: Text(
-            "Bundle Founded",
+            "Bundle Found",
             style: AppTheme.of(context).title2,
           )
         ),
