@@ -15,7 +15,7 @@ const supabaseUrl = "https://nsrprlygqaqgljpfggjh.supabase.co";
 const supabaseGraphqlUrl = "https://nsrprlygqaqgljpfggjh.supabase.co/graphql/v1";
 const urlNotificationsAPI = "https://nsrprlygqaqgljpfggjh.supabase.co/notifications/api";
 const domain = "supabase";
-const urlAirflow = "http://34.123.63.165";
+const urlAirflow = "https://u-airflow.cbluna-dev.com";
 const bearerAirflow = "Basic YWlyZmxvdzpjYiF1bmEyMDIz";
 
 //>>>>>>>PRODUCTION
@@ -24,7 +24,7 @@ const bearerAirflow = "Basic YWlyZmxvdzpjYiF1bmEyMDIz";
 // const supabaseGraphqlUrl = "https://supa41.rtatel.com/graphql/v1";
 // const urlNotificationsAPI = "https://supa41.rtatel.com/notifications/api";
 // const domain = "supa41";
-// const urlAirflow = "http://34.123.63.165";
+// const urlAirflow = "https://u-airflow.cbluna-dev.com";
 // const bearerAirflow = "Basic YWlyZmxvdzpjYiF1bmEyMDIz";
 
 //***********< REGEX >**************/
