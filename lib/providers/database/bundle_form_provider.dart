@@ -143,14 +143,14 @@ class BundleFormProvider extends ChangeNotifier {
 
   Future<bool> autofillFieldsSIMCardQR(String value, int number) async {
     codeQRSC = value;
-    if (value.contains(imeiRegExp)) {
+    if (value.contains(imeiSCRegExp)) {
       // Intenta encontrar la primera coincidencia en el texto
-      Match? matchImei = imeiRegExp.firstMatch(value);
+      Match? matchImeiSC = imeiSCRegExp.firstMatch(value);
       // Si se encuentra una coincidencia, extrae la subcadena
-      if (matchImei != null) {
+      if (matchImeiSC != null) {
           imeiTextController.text =
-              matchImei.group(0)!.replaceAll(nameFieldImei, "");
-          if (await validateSIMCardBackend(serialNumberTextController.text, number)) {
+              matchImeiSC.group(0)!.replaceAll(nameFieldImeiSC, "");
+          if (await validateSIMCardBackend(imeiTextController.text, number)) {
           return true;
         } else {
           return false;
@@ -164,14 +164,14 @@ class BundleFormProvider extends ChangeNotifier {
   }
 
   Future<bool> autofillFieldsSIMCardOCR(String value, int number) async {
-    if (value.contains(imeiRegExp)) {
+    if (value.contains(imeiSCRegExp)) {
       // Intenta encontrar la primera coincidencia en el texto
-      Match? matchimei = imeiRegExp.firstMatch(value);
+      Match? matchImeiSC = imeiSCRegExp.firstMatch(value);
       // Si se encuentra una coincidencia, extrae la subcadena
-      if (matchimei != null) {
+      if (matchImeiSC != null) {
         await Future.microtask(() => {
           imeiTextController.text =
-              matchimei.group(0)!.replaceAll(nameFieldImei, "")
+              matchImeiSC.group(0)!.replaceAll(nameFieldImeiSC, "")
         });
         if (await validateSIMCardBackend(imeiTextController.text, number)) {
           return true;

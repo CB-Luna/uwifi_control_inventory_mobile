@@ -1,18 +1,19 @@
 import 'package:flutter_scalable_ocr/flutter_scalable_ocr.dart';
-import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/order_form_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/order_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
-class InventoryFormOCR extends StatelessWidget {
+class BundleFormSKU extends StatelessWidget {
   
-  const InventoryFormOCR({super.key});
+  const BundleFormSKU({super.key});
   
   @override
   Widget build(BuildContext context) {
-    final simsCardFormProvider = Provider.of<SIMSCardFormProvider>(context);
-    final simsCardMenuProvider = Provider.of<SIMSCardMenuProvider>(context);
+    final orderFormProvider = Provider.of<OrderFormProvider>(context);
+    final orderMenuProvider = Provider.of<OrderMenuProvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
       child: SizedBox( // Need to use container to add size constraint.
@@ -34,7 +35,7 @@ class InventoryFormOCR extends StatelessWidget {
                 padding: const EdgeInsetsDirectional.fromSTEB(
                     5, 5, 5, 5),
                 child: Text(
-                  "It will be redirect to form, once detect all values",
+                  "It will be redirect, once match all values",
                   style: AppTheme.of(context).bodyText2,
                 )
               ),
@@ -55,18 +56,18 @@ class InventoryFormOCR extends StatelessWidget {
                             ..color = AppTheme.of(context).primaryColor,
                           boxHeight: MediaQuery.of(context).size.width * 0.7,
                           getScannedText: (value) async {
-                            if (await simsCardFormProvider.autofillFieldsOCR(value)) {
-                              simsCardMenuProvider.changeOptionInventorySection(4);
+                            if (await orderFormProvider.autofillFieldsBundleOCR(value)) {
+                              orderMenuProvider.changeOptionInventorySection(4);
                             }
                           }),
                       FFButtonWidget(
                         onPressed: () async {
-                          simsCardFormProvider.clearControllers();
-                          simsCardMenuProvider.changeOptionInventorySection(1);
+                          orderFormProvider.clearBundleControllers();
+                          orderMenuProvider.changeOptionInventorySection(0);
                         },
-                        text: 'Close',
+                        text: 'Back',
                         icon: const Icon(
-                          Icons.cancel_outlined,
+                          Icons.arrow_back_outlined,
                           size: 15,
                         ),
                         options: FFButtonOptions(

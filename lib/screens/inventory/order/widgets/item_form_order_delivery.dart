@@ -1,11 +1,8 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/models/image_evidence.dart';
 import 'package:uwifi_control_inventory_mobile/models/inventory_order.dart';
-import 'package:uwifi_control_inventory_mobile/providers/database/order_form_provider.dart';
-import 'package:uwifi_control_inventory_mobile/providers/system/order_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
@@ -81,7 +78,6 @@ class _ItemFormOrderDeliveryState extends State<ItemFormOrderDelivery> {
 
   @override
   Widget build(BuildContext context) {
-    final orderFormProvider = Provider.of<OrderFormProvider>(context);
     return Form(
       key: keyForm,
       child: Column(

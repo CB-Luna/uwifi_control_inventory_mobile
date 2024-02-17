@@ -12,92 +12,82 @@ class GatewayFormProvider extends ChangeNotifier {
   }
 
   //************************Gateways Components *********/
-  TextEditingController productIDTextController = TextEditingController();
-  TextEditingController nameTextController = TextEditingController();
-  TextEditingController descriptionTextController = TextEditingController();
+  TextEditingController wifiKeyTextController = TextEditingController();
+  TextEditingController imeiGTextController = TextEditingController();
+  TextEditingController macTextController = TextEditingController();
   TextEditingController serialNumberTextController = TextEditingController();
-  TextEditingController productCodeTextController = TextEditingController();
   String codeQR =  "";
 
   void autofillFieldsQR(String value) {
     codeQR = value;
-    if (value.contains(productIDRegExpo) 
-    && value.contains(nameRegExp) 
-    && value.contains(descriptionRegExp)
-    && value.contains(serialNumberRegExp)
-    && value.contains(productCodeRegExp)) {
+    if (value.contains(wifiKeyRegExp) 
+    && value.contains(imeiGRegExp) 
+    && value.contains(macRegExp)
+    && value.contains(serialNumberRegExp)) {
       // Intenta encontrar la primera coincidencia en el texto
-      Match? matchProductID = productIDRegExpo.firstMatch(value);
-      Match? matchName = nameRegExp.firstMatch(value);
-      Match? matchDescription = descriptionRegExp.firstMatch(value);
+      Match? matchWifiKey = wifiKeyRegExp.firstMatch(value);
+      Match? matchImeiG = imeiGRegExp.firstMatch(value);
+      Match? matchMac = macRegExp.firstMatch(value);
       Match? matchSerialNumber = serialNumberRegExp.firstMatch(value);
-      Match? matchProductCode = productCodeRegExp.firstMatch(value);
       // Si se encuentra una coincidencia, extrae la subcadena
-      if (matchProductID != null) {
-          productIDTextController.text =
-              matchProductID.group(0)!.replaceAll(nameFieldProductID, "");
+      if (matchWifiKey != null) {
+          wifiKeyTextController.text =
+              matchWifiKey.group(0)!.replaceAll(nameFieldWifiKey, "");
       }
-      if (matchName != null) {
-          nameTextController.text =
-              matchName.group(0)!.replaceAll(nameFieldName, "");
+      if (matchImeiG != null) {
+          imeiGTextController.text =
+              matchImeiG.group(0)!.replaceAll(nameFieldImeiG, "");
       }
-      if (matchDescription != null) {
-          descriptionTextController.text =
-              matchDescription.group(0)!.replaceAll(nameFieldDescription, "");
+      if (matchMac != null) {
+          macTextController.text =
+              matchMac.group(0)!.replaceAll(nameFieldMac, "");
       }
       if (matchSerialNumber != null) {
           serialNumberTextController.text =
               matchSerialNumber.group(0)!.replaceAll(nameFieldSerialNumber, "");
-      }
-      if (matchProductCode != null) {
-          productCodeTextController.text =
-              matchProductCode.group(0)!.replaceAll(nameFieldProductCode, "");
       }
     } 
     notifyListeners();
   }
 
   Future<bool> autofillFieldsOCR(String value) async {
-    if (value.contains(productIDRegExpo) 
-    && value.contains(nameRegExp) 
-    && value.contains(descriptionRegExp)
-    && value.contains(serialNumberRegExp)
-    && value.contains(productCodeRegExp)) {
+    print("*****<<<<<>>>>$value<<<<<>>>>>********");
+    print("Wi-Fi: KEY: ${value.contains(wifiKeyRegExp)}");
+    print("IMEI: ${value.contains(imeiGRegExp)}");
+    print("MAC: ${value.contains(macRegExp)}");
+    print("S/N: ${value.contains(serialNumberRegExp)}");
+    if (value.contains(wifiKeyRegExp) 
+    && value.contains(imeiGRegExp) 
+    && value.contains(macRegExp)
+    && value.contains(serialNumberRegExp)) {
       // Intenta encontrar la primera coincidencia en el texto
-      Match? matchProductID = productIDRegExpo.firstMatch(value);
-      Match? matchName = nameRegExp.firstMatch(value);
-      Match? matchDescription = descriptionRegExp.firstMatch(value);
+      Match? matchWifiKey = wifiKeyRegExp.firstMatch(value);
+      Match? matchImeiG = imeiGRegExp.firstMatch(value);
+      Match? matchMac = macRegExp.firstMatch(value);
       Match? matchSerialNumber = serialNumberRegExp.firstMatch(value);
-      Match? matchProductCode = productCodeRegExp.firstMatch(value);
       // Si se encuentra una coincidencia, extrae la subcadena
-      if (matchProductID != null) {
+      if (matchWifiKey != null) {
         await Future.microtask(() => {
-          productIDTextController.text =
-              matchProductID.group(0)!.replaceAll(nameFieldProductID, "")
+          wifiKeyTextController.text =
+              matchWifiKey.group(0)!.replaceAll(nameFieldWifiKey, "")
         });
       }
-      if (matchName != null) {
+      if (matchImeiG != null) {
         await Future.microtask(() => {
-          nameTextController.text =
-              matchName.group(0)!.replaceAll(nameFieldName, "")
+          imeiGTextController.text =
+              matchImeiG.group(0)!.replaceAll(nameFieldImeiG, "")
         });
       }
-      if (matchDescription != null) {
+      if (matchMac != null) {
         await Future.microtask(() => {
-          descriptionTextController.text =
-              matchDescription.group(0)!.replaceAll(nameFieldDescription, "")
+          macTextController.text =
+              matchMac.group(0)!.replaceAll(nameFieldMac, "")
         });
       }
       if (matchSerialNumber != null) {
         await Future.microtask(() => {
           serialNumberTextController.text =
               matchSerialNumber.group(0)!.replaceAll(nameFieldSerialNumber, "")
-        });
-      }
-      if (matchProductCode != null) {
-        await Future.microtask(() => {
-          productCodeTextController.text =
-              matchProductCode.group(0)!.replaceAll(nameFieldProductCode, "")
         });
       }
       return true;
@@ -115,7 +105,7 @@ class GatewayFormProvider extends ChangeNotifier {
         {
           'inventory_location_fk': 1,
           'provider_invoice_fk': 1,
-          'product_fk': productIDTextController.text,
+          'product_fk': 1,
           'barcode_type_fk': 1,
           'created_by': currentUser.sequentialId,
           'inventory_product_status_fk': 1
@@ -150,11 +140,10 @@ class GatewayFormProvider extends ChangeNotifier {
   }
 
   void clearControllers() {
-    productIDTextController.clear();
-    nameTextController.clear();
-    descriptionTextController.clear();
+    wifiKeyTextController.clear();
+    imeiGTextController.clear();
+    macTextController.clear();
     serialNumberTextController.clear();
-    productCodeTextController.clear();
     codeQR =  "";
   }
 }

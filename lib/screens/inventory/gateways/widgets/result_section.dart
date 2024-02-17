@@ -213,7 +213,7 @@ class ResultSection extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       5, 0, 5, 20),
                   child: TextFormField(
-                    controller: gatewayFormProvider.productIDTextController,
+                    controller: gatewayFormProvider.imeiGTextController,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
                     obscureText: false,
@@ -223,7 +223,7 @@ class ResultSection extends StatelessWidget {
                         Icons.pin_outlined,
                         color: AppTheme.of(context).alternate,
                       ),
-                      labelText: 'Product ID*',
+                      labelText: 'IMEI*',
                       labelStyle: AppTheme.of(context)
                           .title3
                           .override(
@@ -232,7 +232,7 @@ class ResultSection extends StatelessWidget {
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
-                      hintText: 'Input the product ID...',
+                      hintText: 'Input the IMEI...',
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
@@ -268,11 +268,11 @@ class ResultSection extends StatelessWidget {
                     ),
                     style: AppTheme.of(context).bodyText1,
                     textAlign: TextAlign.start,
-                    inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(12),],
+                    inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(15),],
                     keyboardType: const TextInputType.numberWithOptions(decimal: false),
                     validator: (value) {
                       if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid product ID.';
+                        return 'Please input a valid IMEI.';
                       }
                       return null;
                     },
@@ -282,7 +282,7 @@ class ResultSection extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       5, 0, 5, 20),
                   child: TextFormField(
-                    controller: gatewayFormProvider.nameTextController,
+                    controller: gatewayFormProvider.wifiKeyTextController,
                     textCapitalization: TextCapitalization.words,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
@@ -293,7 +293,7 @@ class ResultSection extends StatelessWidget {
                         Icons.label_outline,
                         color: AppTheme.of(context).alternate,
                       ),
-                      labelText: 'Name*',
+                      labelText: 'Wi-Fi Key*',
                       labelStyle: AppTheme.of(context)
                           .title3
                           .override(
@@ -302,7 +302,7 @@ class ResultSection extends StatelessWidget {
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
-                      hintText: 'Input the name...',
+                      hintText: 'Input the wi-fi key...',
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
@@ -340,7 +340,7 @@ class ResultSection extends StatelessWidget {
                     textAlign: TextAlign.start,
                     validator: (value) {
                       if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid name.';
+                        return 'Please input a wi-fi key.';
                       }
                       return null;
                     },
@@ -350,75 +350,7 @@ class ResultSection extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       5, 0, 5, 20),
                   child: TextFormField(
-                    controller: gatewayFormProvider.descriptionTextController,
-                    textCapitalization: TextCapitalization.words,
-                    autovalidateMode:
-                        AutovalidateMode.onUserInteraction,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      errorMaxLines: 3,
-                      prefixIcon: Icon(
-                        Icons.router,
-                        color: AppTheme.of(context).alternate,
-                      ),
-                      labelText: 'Description*',
-                      labelStyle: AppTheme.of(context)
-                          .title3
-                          .override(
-                            fontFamily: 'Montserrat',
-                            color: AppTheme.of(context).grayDark,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                      hintText: 'Input the description...',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              AppTheme.of(context).alternate.withOpacity(0.5),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              AppTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      contentPadding:
-                          const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                    ),
-                    style: AppTheme.of(context).bodyText1,
-                    textAlign: TextAlign.start,
-                    validator: (value) {
-                      if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid description.';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      5, 0, 5, 20),
-                  child: TextFormField(
-                    controller: gatewayFormProvider.productCodeTextController,
+                    controller: gatewayFormProvider.macTextController,
                     textCapitalization: TextCapitalization.characters,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
@@ -429,7 +361,7 @@ class ResultSection extends StatelessWidget {
                         Icons.numbers,
                         color: AppTheme.of(context).alternate,
                       ),
-                      labelText: 'Product Code*',
+                      labelText: 'MAC*',
                       labelStyle: AppTheme.of(context)
                           .title3
                           .override(
@@ -438,7 +370,7 @@ class ResultSection extends StatelessWidget {
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
-                      hintText: 'Input the product code...',
+                      hintText: 'Input the MAC...',
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
@@ -476,7 +408,7 @@ class ResultSection extends StatelessWidget {
                     textAlign: TextAlign.start,
                     validator: (value) {
                       if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid product code.';
+                        return 'Please input a valid MAC.';
                       }
                       return null;
                     },

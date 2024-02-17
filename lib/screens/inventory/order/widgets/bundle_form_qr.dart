@@ -51,7 +51,7 @@ class BundleFormQR extends StatelessWidget {
                       allowDuplicates: true,
                       onDetect: ((barcode, args) async {
                         if (await orderFormProvider.autofillFieldsBundleQR(barcode.rawValue ?? "")) {
-                          orderMenuProvider.changeOptionInventorySection(4);
+                          orderMenuProvider.changeOptionInventorySection(3);
                         }
                       }),
                     ),

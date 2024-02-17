@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/order_form_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/order_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
-class BundleFounded extends StatelessWidget {
+class BundleDetected extends StatelessWidget {
   
-  BundleFounded({super.key});
+  BundleDetected({super.key});
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final keyForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +21,7 @@ class BundleFounded extends StatelessWidget {
           padding: const EdgeInsetsDirectional.fromSTEB(
               5, 15, 5, 15),
           child: Text(
-            "Bundle Found",
+            "Bundle Detected",
             style: AppTheme.of(context).title2,
           )
         ),
@@ -51,86 +49,6 @@ class BundleFounded extends StatelessWidget {
                 borderRadius: BorderRadius.circular(0)),
           ),
         ),
-        Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(
-              5, 5, 5, 5),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.sim_card_outlined,
-                      size: 15,
-                      color: AppTheme.of(context).alternate,
-                    ),
-                    Text(
-                      "1: ",
-                      style: AppTheme.of(context)
-                      .subtitle2
-                      .override(
-                        fontFamily: AppTheme.of(context)
-                            .subtitle2Family,
-                        color: AppTheme.of(context).alternate,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold
-                      ),
-                    ),
-                    Text(
-                      orderFormProvider.simCard1?.imei ?? "None Sim Card",
-                      style: AppTheme.of(context)
-                      .subtitle2
-                      .override(
-                        fontFamily: AppTheme.of(context)
-                            .subtitle2Family,
-                        color: AppTheme.of(context).alternate,
-                        fontSize: 17,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.sim_card_outlined,
-                      size: 15,
-                      color: AppTheme.of(context).alternate,
-                    ),
-                    Text(
-                      "2: ",
-                      style: AppTheme.of(context)
-                      .subtitle2
-                      .override(
-                        fontFamily: AppTheme.of(context)
-                            .subtitle2Family,
-                        color: AppTheme.of(context).alternate,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold
-                      ),
-                    ),
-                    Text(
-                      orderFormProvider.simCard2?.imei ?? "None Sim Card",
-                      style: AppTheme.of(context)
-                      .subtitle2
-                      .override(
-                        fontFamily: AppTheme.of(context)
-                            .subtitle2Family,
-                        color: AppTheme.of(context).alternate,
-                        fontSize: 17,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          )
-        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -142,32 +60,11 @@ class BundleFounded extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        if (await orderFormProvider.shippingBundleBundleAssignedV1()) {
-                          if (!context.mounted) return;
-                          orderMenuProvider.changeOptionButtonsGC(0, null);
-                          orderMenuProvider.changeOptionInventorySection(0);
-                          orderFormProvider.clearBundleControllers();
-                          Navigator.pop(context);
-                          snackbarKey.currentState
-                              ?.showSnackBar(const SnackBar(
-                            backgroundColor: Color(0xFF00B837),
-                            content: Text(
-                                "Bundle assigned successfully."),
-                          ));
-                        } else {
-                          if (!context.mounted) return;
-                          orderMenuProvider.changeOptionButtonsGC(0, null);
-                          orderMenuProvider.changeOptionInventorySection(0);
-                          orderFormProvider.clearBundleControllers();
-                          Navigator.pop(context);
-                          snackbarKey.currentState
-                              ?.showSnackBar(const SnackBar(
-                            content: Text(
-                                "Failed while bundle was assigned, try again"),
-                          ));
-                        }
+                        // if (await orderFormProvider.autofillFieldsBundleOCR(value)) {
+                          orderMenuProvider.changeOptionInventorySection(5);
+                        // }
                       },
-                      text: 'Assign',
+                      text: 'Suggestions',
                       icon: const Icon(
                         Icons.check_outlined,
                         size: 20,
@@ -199,7 +96,7 @@ class BundleFounded extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: FFButtonWidget(
-                      onPressed: () {
+                      onPressed: () async {
                         orderMenuProvider.changeOptionButtonsGC(0, null);
                         orderMenuProvider.changeOptionInventorySection(0);
                         orderFormProvider.clearBundleControllers();

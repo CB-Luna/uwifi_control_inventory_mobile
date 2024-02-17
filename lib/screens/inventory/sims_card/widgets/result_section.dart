@@ -144,7 +144,7 @@ class ResultSection extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       5, 0, 5, 20),
                   child: TextFormField(
-                    controller: simsCardFormProvider.imeiTextController,
+                    controller: simsCardFormProvider.imeiSCTextController,
                     textCapitalization: TextCapitalization.characters,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
@@ -213,7 +213,7 @@ class ResultSection extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       5, 0, 5, 20),
                   child: TextFormField(
-                    controller: simsCardFormProvider.pinTextController,
+                    controller: simsCardFormProvider.sapIdTextController,
                     autovalidateMode:
                         AutovalidateMode.onUserInteraction,
                     obscureText: false,
@@ -223,7 +223,7 @@ class ResultSection extends StatelessWidget {
                         Icons.pin_outlined,
                         color: AppTheme.of(context).alternate,
                       ),
-                      labelText: 'PIN*',
+                      labelText: 'SAP Id*',
                       labelStyle: AppTheme.of(context)
                           .title3
                           .override(
@@ -232,7 +232,7 @@ class ResultSection extends StatelessWidget {
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
-                      hintText: 'Input the PIN...',
+                      hintText: 'Input the SAP Id...',
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color:
@@ -268,216 +268,11 @@ class ResultSection extends StatelessWidget {
                     ),
                     style: AppTheme.of(context).bodyText1,
                     textAlign: TextAlign.start,
-                    inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(12),],
+                    inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(6),],
                     keyboardType: const TextInputType.numberWithOptions(decimal: false),
                     validator: (value) {
                       if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid PIN.';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      5, 0, 5, 20),
-                  child: TextFormField(
-                    controller: simsCardFormProvider.productIDTextController,
-                    autovalidateMode:
-                        AutovalidateMode.onUserInteraction,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      errorMaxLines: 3,
-                      prefixIcon: Icon(
-                        Icons.pin_outlined,
-                        color: AppTheme.of(context).alternate,
-                      ),
-                      labelText: 'Product ID*',
-                      labelStyle: AppTheme.of(context)
-                          .title3
-                          .override(
-                            fontFamily: 'Montserrat',
-                            color: AppTheme.of(context).grayDark,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                      hintText: 'Input the product ID...',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              AppTheme.of(context).alternate.withOpacity(0.5),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              AppTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      contentPadding:
-                          const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                    ),
-                    style: AppTheme.of(context).bodyText1,
-                    textAlign: TextAlign.start,
-                    inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(12),],
-                    keyboardType: const TextInputType.numberWithOptions(decimal: false),
-                    validator: (value) {
-                      if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid product ID.';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      5, 0, 5, 20),
-                  child: TextFormField(
-                    controller: simsCardFormProvider.descriptionSTextController,
-                    textCapitalization: TextCapitalization.words,
-                    autovalidateMode:
-                        AutovalidateMode.onUserInteraction,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      errorMaxLines: 3,
-                      prefixIcon: Icon(
-                        Icons.sim_card_outlined,
-                        color: AppTheme.of(context).alternate,
-                      ),
-                      labelText: 'Description*',
-                      labelStyle: AppTheme.of(context)
-                          .title3
-                          .override(
-                            fontFamily: 'Montserrat',
-                            color: AppTheme.of(context).grayDark,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                      hintText: 'Input the description...',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              AppTheme.of(context).alternate.withOpacity(0.5),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              AppTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      contentPadding:
-                          const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                    ),
-                    style: AppTheme.of(context).bodyText1,
-                    textAlign: TextAlign.start,
-                    validator: (value) {
-                      if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid description.';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      5, 0, 5, 20),
-                  child: TextFormField(
-                    controller: simsCardFormProvider.productCodeTextController,
-                    textCapitalization: TextCapitalization.characters,
-                    autovalidateMode:
-                        AutovalidateMode.onUserInteraction,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      errorMaxLines: 3,
-                      prefixIcon: Icon(
-                        Icons.numbers,
-                        color: AppTheme.of(context).alternate,
-                      ),
-                      labelText: 'Product Code*',
-                      labelStyle: AppTheme.of(context)
-                          .title3
-                          .override(
-                            fontFamily: 'Montserrat',
-                            color: AppTheme.of(context).grayDark,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                      hintText: 'Input the product code...',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              AppTheme.of(context).alternate.withOpacity(0.5),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color:
-                              AppTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      contentPadding:
-                          const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
-                    ),
-                    style: AppTheme.of(context).bodyText1,
-                    textAlign: TextAlign.start,
-                    validator: (value) {
-                      if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid product code.';
+                        return 'Please input a valid SAP Id.';
                       }
                       return null;
                     },

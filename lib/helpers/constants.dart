@@ -29,24 +29,21 @@ const bearerAirflow = "Basic YWlyZmxvdzpjYiF1bmEyMDIz";
 
 //***********< REGEX >**************/
 
-final referenceRegExp = RegExp(r'Reference: ([A-Za-z0-9]+)');
-final eeiRegExp = RegExp(r'EEI: NOEEI sec. \d+.\d+\([a-zA-Z]\)');
-final productIDRegExpo = RegExp(r'Product ID: (\d+)');
-const nameFieldProductID = "Product ID: ";
-final nameRegExp = RegExp(r'Name: U-wifi Router');
-const nameFieldName = "Name: ";
-final descriptionRegExp = RegExp(r'Description: U-wifi Router by HUAWEI');
-const nameFieldDescription = "Description: ";
-final serialNumberRegExp = RegExp(r'Serial Number: (\d{9}-\d)');
-const nameFieldSerialNumber = "Serial Number: ";
-final productCodeRegExp = RegExp(r'Product Code: [A-Z]{8}-\d{2}$');
-const nameFieldProductCode = "Product Code: ";
-final imeiRegExp = RegExp(r'IMEI: [0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}');
-const nameFieldImei = "IMEI: ";
-final pinRegExpo = RegExp(r'PIN: (\d+)');
-const nameFieldPin = "PIN: ";
-final descriptionSRegExp = RegExp(r'Description: SIM Card by AT&T');
-const nameFieldDescriptionS = "Description: ";
+//Sims Card
+final sapIdRegExp = RegExp(r'SAP ID: [0-9]{6}');
+const nameFieldSapId = "SAP ID: ";
+final imeiSCRegExp = RegExp(r' [0-9]{20}');
+const nameFieldImeiSC = " ";
+
+//Gateways
+final serialNumberRegExp = RegExp(r'N:[0-9A-Z]{21}');
+const nameFieldSerialNumber = "N:";
+final wifiKeyRegExp = RegExp(r'Wi-Fi KEY: [0-9A-Z]{8}');
+const nameFieldWifiKey = "Wi-Fi KEY: ";
+final imeiGRegExp = RegExp(r'IMEI:[0-9]{15}');
+const nameFieldImeiG = "IMEI:";
+final macRegExp = RegExp(r'MAC:[0-9A-Z]{12}');
+const nameFieldMac = "MAC:";
 
 final nombreCharacters = RegExp(r'^(([A-Z]{1}|[ÁÉÍÓÚÑ]{1})[a-zá-ÿ]+[ ]?)+$');
 final curpCharacters = RegExp(

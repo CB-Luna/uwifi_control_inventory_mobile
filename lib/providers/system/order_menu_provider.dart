@@ -4,9 +4,11 @@ import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/options_recover_bundles.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/search_orders_list.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/search_orders_delivery.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/bundle_detected.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/bundle_form_sku.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/bundle_founded.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/bundle_form_ocr.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/bundle_form_qr.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/suggestions_sims_config.dart';
 
 class OrderMenuProvider extends ChangeNotifier {
 
@@ -38,11 +40,13 @@ class OrderMenuProvider extends ChangeNotifier {
       case 1:
         return const BundleFormOCR();
       case 2:
-        return const BundleFormQR();
+        return const BundleFormSKU();
       case 3:
-        return Container();
-      case 4:
         return BundleFounded();
+      case 4:
+        return BundleDetected();
+      case 5:
+        return const SuggestionsSimsConfig();
       default:
         return OptionsRecoverBundles();
     }

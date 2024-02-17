@@ -84,6 +84,7 @@ class _ItemFormOrderState extends State<ItemFormOrder> {
 
   @override
   Widget build(BuildContext context) {
+    final orderMenuProvider = Provider.of<OrderMenuProvider>(context);
     final orderFormProvider = Provider.of<OrderFormProvider>(context);
     return Form(
       key: keyForm,
@@ -126,6 +127,9 @@ class _ItemFormOrderState extends State<ItemFormOrder> {
                               ),
                               GestureDetector(
                                 onTap: () {
+                                  orderMenuProvider.changeOptionButtonsGC(0, null);
+                                  orderMenuProvider.changeOptionInventorySection(0);
+                                  orderFormProvider.clearBundleControllers();
                                   Navigator.pop(context);
                                 },
                                 child: ClayContainer(

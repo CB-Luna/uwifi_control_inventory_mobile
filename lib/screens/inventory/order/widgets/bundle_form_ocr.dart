@@ -57,7 +57,7 @@ class BundleFormOCR extends StatelessWidget {
                           boxHeight: MediaQuery.of(context).size.width * 0.7,
                           getScannedText: (value) async {
                             if (await orderFormProvider.autofillFieldsBundleOCR(value)) {
-                              orderMenuProvider.changeOptionInventorySection(4);
+                              orderMenuProvider.changeOptionInventorySection(3);
                             }
                           }),
                       FFButtonWidget(
