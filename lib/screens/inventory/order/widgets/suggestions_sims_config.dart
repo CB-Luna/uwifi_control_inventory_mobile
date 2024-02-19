@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/order_form_provider.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/item_suggestions_sims_config.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/header_shimmer.dart';
 
@@ -120,8 +121,10 @@ class _SuggestionsSimsConfigState extends State<SuggestionsSimsConfig> {
                   scrollDirection: Axis.vertical,
                   itemCount: orderFormProvider.suggestionsSimsConfig.length,
                   itemBuilder: (context, index) {
-                    final order = orderFormProvider.suggestionsSimsConfig[index];
-                    return Container(
+                    final sku = orderFormProvider.suggestionsSimsConfig[index];
+                    return ItemSuggestionsSimsConfig(
+                      sku: sku, 
+                      index: index + 1
                     );
                   });
                 },

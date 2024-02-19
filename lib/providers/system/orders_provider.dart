@@ -32,7 +32,8 @@ class OrdersProvider extends ChangeNotifier {
           for (InventoryOrder order in totalOrders) {
             order.orderActions!.sort((a, b) => b.startedAt!.compareTo(a.startedAt!));
             if (order.orderActions!.first.status == "Waiting for Equipment Assignment" ||
-                order.orderActions!.first.status == "Waiting for Packaging") {
+                order.orderActions!.first.status == "Waiting for Carrier Assignment" ||
+                order.orderActions!.first.status == "Waiting for Shipment Provider") {
               orders.add(order);
             }
           }

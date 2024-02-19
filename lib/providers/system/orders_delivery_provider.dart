@@ -31,7 +31,8 @@ class OrdersDeliveryProvider extends ChangeNotifier {
           final totalOrders = (resOrders as List<dynamic>).map((product) => InventoryOrder.fromMap(product)).toList();
           for (InventoryOrder order in totalOrders) {
             order.orderActions!.sort((a, b) => b.startedAt!.compareTo(a.startedAt!));
-            if (order.orderActions!.first.status == "Waiting for Delivery") {
+            if (order.orderActions!.first.status == "Waiting for Delivery" || 
+                order.orderActions!.first.status == "Waiting for Tracking Number") {
               ordersDelivery.add(order);
             }
           }

@@ -89,8 +89,80 @@ class _ItemFormOrderDeliveryState extends State<ItemFormOrderDelivery> {
             motion: const DrawerMotion(), 
             children: [
               SlidableAction(
+                icon: Icons.document_scanner_outlined,
+                backgroundColor: widget.order.orderActions?.first.status == "Waiting for Tracking Number" ? 
+                AppTheme.of(context).grayLight
+                : 
+                AppTheme.of(context).primaryColor,
+                foregroundColor: AppTheme.of(context).white,
+                borderRadius: BorderRadius.circular(20.0),
+                onPressed: (context) async {
+                  if (!mounted) return;
+                  await showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              child: Row(
+                                children: [
+                                  const Text("No Order: "),
+                                  Text("${widget.order.orderId}"),
+                                ],
+                              )
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: ClayContainer(
+                                height: 30,
+                                width: 30,
+                                depth: 15,
+                                spread: 1,
+                                borderRadius: 15,
+                                curveType: CurveType.concave,
+                                color:
+                                AppTheme.of(context).secondaryColor,
+                                surfaceColor:
+                                AppTheme.of(context).secondaryColor,
+                                parentColor:
+                                AppTheme.of(context).secondaryColor,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  child: Icon(
+                                    Icons.close,
+                                    color: AppTheme.of(context).white,
+                                    size: 30,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        content: SizedBox( // Need to use container to add size constraint.
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+              ),
+              SlidableAction(
                 icon: Icons.print_outlined,
-                backgroundColor: AppTheme.of(context).secondaryColor,
+                backgroundColor: AppTheme.of(context).grayLight,
                 foregroundColor: AppTheme.of(context).white,
                 borderRadius: BorderRadius.circular(20.0),
                 onPressed: (context) async {

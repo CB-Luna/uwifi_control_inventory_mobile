@@ -5,11 +5,12 @@ import 'package:uwifi_control_inventory_mobile/providers/system/order_menu_provi
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
-class BundleDetected extends StatelessWidget {
+class BundleAssigned extends StatelessWidget {
   
-  BundleDetected({super.key});
+  BundleAssigned({super.key});
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final keyForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class BundleDetected extends StatelessWidget {
           padding: const EdgeInsetsDirectional.fromSTEB(
               5, 15, 5, 15),
           child: Text(
-            "Bundle Detected",
+            "Bundle Assigned",
             style: AppTheme.of(context).title2,
           )
         ),
@@ -49,6 +50,86 @@ class BundleDetected extends StatelessWidget {
                 borderRadius: BorderRadius.circular(0)),
           ),
         ),
+        Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(
+              5, 5, 5, 5),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.sim_card_outlined,
+                      size: 15,
+                      color: AppTheme.of(context).alternate,
+                    ),
+                    Text(
+                      "1: ",
+                      style: AppTheme.of(context)
+                      .subtitle2
+                      .override(
+                        fontFamily: AppTheme.of(context)
+                            .subtitle2Family,
+                        color: AppTheme.of(context).alternate,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    Text(
+                      orderFormProvider.simCard1?.imei ?? "None Sim Card",
+                      style: AppTheme.of(context)
+                      .subtitle2
+                      .override(
+                        fontFamily: AppTheme.of(context)
+                            .subtitle2Family,
+                        color: AppTheme.of(context).alternate,
+                        fontSize: 17,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.sim_card_outlined,
+                      size: 15,
+                      color: AppTheme.of(context).alternate,
+                    ),
+                    Text(
+                      "2: ",
+                      style: AppTheme.of(context)
+                      .subtitle2
+                      .override(
+                        fontFamily: AppTheme.of(context)
+                            .subtitle2Family,
+                        color: AppTheme.of(context).alternate,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    Text(
+                      orderFormProvider.simCard2?.imei ?? "None Sim Card",
+                      style: AppTheme.of(context)
+                      .subtitle2
+                      .override(
+                        fontFamily: AppTheme.of(context)
+                            .subtitle2Family,
+                        color: AppTheme.of(context).alternate,
+                        fontSize: 17,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          )
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -60,51 +141,15 @@ class BundleDetected extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        if (await orderFormProvider.searchSuggestionsSimsConfig()) {
-                          orderMenuProvider.changeOptionInventorySection(5);
-                        }
-                      },
-                      text: 'Suggestions',
-                      icon: const Icon(
-                        Icons.check_outlined,
-                        size: 20,
-                      ),
-                      options: FFButtonOptions(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        height: 40,
-                        color: AppTheme.of(context)
-                            .white,
-                        textStyle: AppTheme.of(context)
-                            .subtitle2
-                            .override(
-                              fontFamily: AppTheme.of(context)
-                                  .subtitle2Family,
-                              color: AppTheme.of(context)
-                            .alternate,
-                              fontSize: 15,
-                            ),
-                        borderSide: BorderSide(
-                          color: AppTheme.of(context)
-                            .alternate,
-                          width: 2,
-                        ),
-                        borderRadius:
-                            BorderRadius.circular(8),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: FFButtonWidget(
-                      onPressed: () async {
+                        if (!context.mounted) return;
                         orderMenuProvider.changeOptionButtonsGC(0, null);
                         orderMenuProvider.changeOptionInventorySection(0);
                         orderFormProvider.clearBundleControllers();
                         Navigator.pop(context);
                       },
-                      text: 'Cancel',
+                      text: 'Accept',
                       icon: const Icon(
-                        Icons.close_outlined,
+                        Icons.check_outlined,
                         size: 20,
                       ),
                       options: FFButtonOptions(

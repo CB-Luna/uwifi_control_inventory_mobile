@@ -7,6 +7,7 @@ import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/bundle.dart';
 import 'package:uwifi_control_inventory_mobile/models/inventory_order.dart';
 import 'package:uwifi_control_inventory_mobile/models/sims_card.dart';
+import 'package:uwifi_control_inventory_mobile/models/suggestions_sims_config.dart';
 
 class OrderFormProvider extends ChangeNotifier {
 
@@ -74,6 +75,43 @@ class OrderFormProvider extends ChangeNotifier {
         return false;
       }
     } else {
+      return false;
+    }
+  }
+
+  Future<bool> searchSuggestionsSimsConfig() async {
+    suggestionsSimsConfig.clear();
+    try {
+      if (order != null) {
+        var urlAPI = Uri.parse("$urlAirflow/inventory/api");
+        final headers = ({
+          "Content-Type": "application/json",
+        });
+        var responseAPI = await post(urlAPI,
+          headers: headers,
+          body: json.encode(
+              {
+                  "action": "scan_zc_area",
+                  "data": {
+                      "zipcode": order!.customerZipcode,
+                  }
+              },
+            ),
+          );
+        if (responseAPI.statusCode == 200) {
+          //Se marca como ejecutada la instrucción en Bitacora
+          final listResponseSuggestions = SuggestionsSimsConfig.fromJson(responseAPI.body);
+          suggestionsSimsConfig = listResponseSuggestions.msg;
+          notifyListeners();
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('ERROR - function searchSuggestionsSimsConfig(): $e');
       return false;
     }
   }
@@ -231,7 +269,6 @@ class OrderFormProvider extends ChangeNotifier {
             ),
           );
         if (responseAPI.statusCode == 200) {
-          //Se marca como ejecutada la instrucción en Bitacora
           return true;
         } else {
           return false;
@@ -244,6 +281,74 @@ class OrderFormProvider extends ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> shippingBundleBundleAssignedCarriersAssignedV1(List<String> sku) async {
+    try {
+      if (order != null) {
+        var urlAPI = Uri.parse("$urlAirflow/api/v1/dags/shipping_bundle_bundle_assigned_v1/dagRuns");
+        final headers = ({
+          "Content-Type": "application/json",
+          "Authorization": bearerAirflow
+        });
+        var responseAPI = await post(urlAPI,
+          headers: headers,
+          body: json.encode(
+              {
+                  "conf": {
+                      "order_id": order!.orderId,
+                      "router_inventory_product_id": bundleCaptured?.inventoryProductFk,
+                      "sim_inventory_product_ids": [
+                          bundleCaptured?.sim[0]?.inventoryProductId,
+                          bundleCaptured?.sim[1]?.inventoryProductId
+                      ]
+                  },
+                  "note": "DAG runned by API"
+              },
+            ),
+          );
+        if (responseAPI.statusCode == 200) {
+          var urlAPI2 = Uri.parse("$urlAirflow/api/v1/dags/shipping_bundle_bundle_carriers_assigned_v1/dagRuns");
+          final headers2 = ({
+            "Content-Type": "application/json",
+            "Authorization": bearerAirflow
+          });
+          var responseAPI2 = await post(urlAPI2,
+            headers: headers2,
+            body: json.encode(
+                {
+                    "conf": {
+                        "order_id": order!.orderId,
+                        "router_inventory_product_id": bundleCaptured?.inventoryProductFk,
+                        "sim_inventory_product_ids": [
+                            bundleCaptured?.sim[0]?.inventoryProductId,
+                            bundleCaptured?.sim[1]?.inventoryProductId
+                        ],
+                        "carriers": [
+                            sku[0],
+                            sku[1]
+                        ]
+                    },
+                    "note": "DAG runned by API"
+                },
+              ),
+            );
+          if (responseAPI2.statusCode == 200) {
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('ERROR - function shippingBundleBundleAssignedV1(): $e');
+      return false;
+    }
+  }
+
 
   Future<bool> shippingBundleBundlePackagedV1() async {
     try {

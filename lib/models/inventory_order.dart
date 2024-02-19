@@ -12,6 +12,7 @@ class InventoryOrder {
   DateTime? orderCreation;
   DateTime? orderFinished;
   String? customerStatus;
+  String? customerZipcode;
   dynamic orderCreatorId;
   dynamic creatorLastName;
   DateTime? customerCreation;
@@ -32,6 +33,7 @@ class InventoryOrder {
     this.orderCreation,
     this.orderFinished,
     this.customerStatus,
+    this.customerZipcode,
     this.orderCreatorId,
     this.creatorLastName,
     this.customerCreation,
@@ -59,6 +61,7 @@ class InventoryOrder {
         orderCreation: json["order_creation"] == null ? null : DateTime.parse(json["order_creation"]),
         orderFinished: json["order_finished"] == null ? null : DateTime.parse(json["order_finished"]),
         customerStatus: json["customer_status"],
+        customerZipcode: json["customer_zipcode"],
         orderCreatorId: json["order_creator_id"],
         creatorLastName: json["creator_last_name"],
         customerCreation: json["customer_creation"] == null ? null : DateTime.parse(json["customer_creation"]),
@@ -80,6 +83,7 @@ class InventoryOrder {
         "order_creation": orderCreation?.toIso8601String(),
         "order_finished": orderFinished?.toIso8601String(),
         "customer_status": customerStatus,
+        "customer_zipcode": customerZipcode,
         "order_creator_id": orderCreatorId,
         "creator_last_name": creatorLastName,
         "customer_creation": customerCreation?.toIso8601String(),
