@@ -61,7 +61,7 @@ class BundleDetected extends StatelessWidget {
                     child: FFButtonWidget(
                       onPressed: () async {
                         if (await orderFormProvider.searchSuggestionsSimsConfig()) {
-                          orderMenuProvider.changeOptionInventorySection(5);
+                          orderMenuProvider.changeOptionOrders(5);
                         }
                       },
                       text: 'Suggestions',
@@ -98,7 +98,7 @@ class BundleDetected extends StatelessWidget {
                     child: FFButtonWidget(
                       onPressed: () async {
                         orderMenuProvider.changeOptionButtonsGC(0, null);
-                        orderMenuProvider.changeOptionInventorySection(0);
+                        orderMenuProvider.changeOptionOrders(0);
                         orderFormProvider.clearBundleControllers();
                         Navigator.pop(context);
                       },

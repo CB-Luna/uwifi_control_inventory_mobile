@@ -57,13 +57,13 @@ class BundleFormSKU extends StatelessWidget {
                           boxHeight: MediaQuery.of(context).size.width * 0.7,
                           getScannedText: (value) async {
                             if (await orderFormProvider.autofillFieldsBundleOCR(value)) {
-                              orderMenuProvider.changeOptionInventorySection(4);
+                              orderMenuProvider.changeOptionOrders(4);
                             }
                           }),
                       FFButtonWidget(
                         onPressed: () async {
                           orderFormProvider.clearBundleControllers();
-                          orderMenuProvider.changeOptionInventorySection(0);
+                          orderMenuProvider.changeOptionOrders(0);
                         },
                         text: 'Back',
                         icon: const Icon(

@@ -81,7 +81,7 @@ class _ItemFormOrderState extends State<ItemFormOrder> {
                             GestureDetector(
                               onTap: () {
                                 orderMenuProvider.changeOptionButtonsGC(0, null);
-                                orderMenuProvider.changeOptionInventorySection(0);
+                                orderMenuProvider.changeOptionOrders(0);
                                 orderFormProvider.clearBundleControllers();
                                 Navigator.pop(context);
                               },
@@ -119,7 +119,7 @@ class _ItemFormOrderState extends State<ItemFormOrder> {
                             controller: ScrollController(),
                             child: Consumer<OrderMenuProvider>(
                               builder: (context, orderMenuProvider, _) {
-                                return orderMenuProvider.optionInventorySection();
+                                return orderMenuProvider.optionOrders();
                               },
                             ),
                           ),

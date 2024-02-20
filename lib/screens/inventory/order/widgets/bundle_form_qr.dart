@@ -51,7 +51,7 @@ class BundleFormQR extends StatelessWidget {
                       allowDuplicates: true,
                       onDetect: ((barcode, args) async {
                         if (await orderFormProvider.autofillFieldsBundleQR(barcode.rawValue ?? "")) {
-                          orderMenuProvider.changeOptionInventorySection(3);
+                          orderMenuProvider.changeOptionOrders(3);
                         }
                       }),
                     ),
@@ -68,7 +68,7 @@ class BundleFormQR extends StatelessWidget {
               child: FFButtonWidget(
                 onPressed: () async {
                   orderFormProvider.clearBundleControllers();
-                  orderMenuProvider.changeOptionInventorySection(0);
+                  orderMenuProvider.changeOptionOrders(0);
                 },
                 text: 'Back',
                 icon: const Icon(

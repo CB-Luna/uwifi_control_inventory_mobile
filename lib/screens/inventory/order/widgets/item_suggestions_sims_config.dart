@@ -57,7 +57,7 @@ class _ItemSuggestionsSimsConfigState extends State<ItemSuggestionsSimsConfig> {
                             if (await orderFormProvider.shippingBundleBundleAssignedCarriersAssignedV1(widget.sku)) {
                               if (!mounted) return;
                               Navigator.pop(context);
-                              orderMenuProvider.changeOptionInventorySection(6);
+                              orderMenuProvider.changeOptionOrders(6);
                             } 
                           },
                           child:

@@ -1,8 +1,11 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/image_evidence.dart';
 import 'package:uwifi_control_inventory_mobile/models/inventory_order.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/order_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
@@ -98,71 +101,82 @@ class _ItemFormOrderDeliveryState extends State<ItemFormOrderDelivery> {
                 borderRadius: BorderRadius.circular(20.0),
                 onPressed: (context) async {
                   if (!mounted) return;
-                  await showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.6,
-                              child: Row(
-                                children: [
-                                  const Text("No Order: "),
-                                  Text("${widget.order.orderId}"),
-                                ],
-                              )
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: ClayContainer(
-                                height: 30,
-                                width: 30,
-                                depth: 15,
-                                spread: 1,
-                                borderRadius: 15,
-                                curveType: CurveType.concave,
-                                color:
-                                AppTheme.of(context).secondaryColor,
-                                surfaceColor:
-                                AppTheme.of(context).secondaryColor,
-                                parentColor:
-                                AppTheme.of(context).secondaryColor,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  child: Icon(
-                                    Icons.close,
-                                    color: AppTheme.of(context).white,
-                                    size: 30,
+                  if (widget.order.orderActions?.first.status == "Waiting for Tracking Number") {
+                    await showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                child: Row(
+                                  children: [
+                                    const Text("No Order: "),
+                                    Text("${widget.order.orderId}"),
+                                  ],
+                                )
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: ClayContainer(
+                                  height: 30,
+                                  width: 30,
+                                  depth: 15,
+                                  spread: 1,
+                                  borderRadius: 15,
+                                  curveType: CurveType.concave,
+                                  color:
+                                  AppTheme.of(context).secondaryColor,
+                                  surfaceColor:
+                                  AppTheme.of(context).secondaryColor,
+                                  parentColor:
+                                  AppTheme.of(context).secondaryColor,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    child: Icon(
+                                      Icons.close,
+                                      color: AppTheme.of(context).white,
+                                      size: 30,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
-                        content: SizedBox( // Need to use container to add size constraint.
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.5,
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                              )
                             ],
                           ),
+                          content: SizedBox( // Need to use container to add size constraint.
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          child: SingleChildScrollView(
+                            controller: ScrollController(),
+                            child: Consumer<OrderMenuProvider>(
+                              builder: (context, orderMenuProvider, _) {
+                                return orderMenuProvider.optionOrders();
+                              },
+                            ),
+                          ),
                         ),
-                      );
-                    },
-                  );
+                        );
+                      },
+                    );
+                  } else {
+                    snackbarKey.currentState
+                        ?.showSnackBar(SnackBar(
+                      content: Text(
+                          "Tracking number have already assigned to order with Id. '${widget.order.orderId}'"),
+                    ));
+                  }
                 }
               ),
               SlidableAction(
                 icon: Icons.print_outlined,
-                backgroundColor: AppTheme.of(context).grayLight,
+                backgroundColor: AppTheme.of(context).secondaryColor,
                 foregroundColor: AppTheme.of(context).white,
                 borderRadius: BorderRadius.circular(20.0),
                 onPressed: (context) async {

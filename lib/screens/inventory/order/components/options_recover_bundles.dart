@@ -23,7 +23,7 @@ class OptionsRecoverBundles extends StatelessWidget {
             children: [
               FFButtonWidget(
                 onPressed: () async {
-                  orderMenuProvider.changeOptionInventorySection(1);
+                  orderMenuProvider.changeOptionOrders(1);
                 },
                 text: 'OCR',
                 icon: const Icon(
@@ -61,7 +61,7 @@ class OptionsRecoverBundles extends StatelessWidget {
             children: [
               FFButtonWidget(
                 onPressed: () async {
-                  orderMenuProvider.changeOptionInventorySection(2);
+                  orderMenuProvider.changeOptionOrders(2);
                 },
                 text: 'SKU',
                 icon: const Icon(

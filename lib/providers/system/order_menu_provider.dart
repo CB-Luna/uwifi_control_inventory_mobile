@@ -29,15 +29,15 @@ class OrderMenuProvider extends ChangeNotifier {
   };
 
 
-  int valueOptionSection = 0;
+  int valueSectionOrders = 0;
 
-  void changeOptionInventorySection(int value) {
-      valueOptionSection = value;
+  void changeOptionOrders(int value) {
+      valueSectionOrders = value;
     notifyListeners();
   }
 
-  Widget optionInventorySection() { 
-  switch (valueOptionSection) {
+  Widget optionOrders() { 
+  switch (valueSectionOrders) {
       case 0:
         return OptionsRecoverBundles();
       case 1:
@@ -51,6 +51,28 @@ class OrderMenuProvider extends ChangeNotifier {
       case 5:
         return const SuggestionsSimsConfig();
       case 6:
+        return BundleAssigned();
+      default:
+        return OptionsRecoverBundles();
+    }
+  }
+
+  int valueSectionOrdersDelivery = 0;
+
+  void changeOptionOrdersDelivery(int value) {
+      valueSectionOrdersDelivery = value;
+    notifyListeners();
+  }
+
+  Widget optionOrdersDelivery() { 
+  switch (valueSectionOrdersDelivery) {
+      case 0:
+        return OptionsRecoverBundles();
+      case 1:
+        return const BundleFormOCR();
+      case 2:
+        return const BundleFormSKU();
+      case 3:
         return BundleAssigned();
       default:
         return OptionsRecoverBundles();

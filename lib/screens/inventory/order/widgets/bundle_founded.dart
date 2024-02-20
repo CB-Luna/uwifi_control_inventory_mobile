@@ -145,7 +145,7 @@ class BundleFounded extends StatelessWidget {
                         if (await orderFormProvider.shippingBundleBundleAssignedV1()) {
                           if (!context.mounted) return;
                           orderMenuProvider.changeOptionButtonsGC(0, null);
-                          orderMenuProvider.changeOptionInventorySection(0);
+                          orderMenuProvider.changeOptionOrders(0);
                           orderFormProvider.clearBundleControllers();
                           Navigator.pop(context);
                           snackbarKey.currentState
@@ -157,7 +157,7 @@ class BundleFounded extends StatelessWidget {
                         } else {
                           if (!context.mounted) return;
                           orderMenuProvider.changeOptionButtonsGC(0, null);
-                          orderMenuProvider.changeOptionInventorySection(0);
+                          orderMenuProvider.changeOptionOrders(0);
                           orderFormProvider.clearBundleControllers();
                           Navigator.pop(context);
                           snackbarKey.currentState
@@ -201,7 +201,7 @@ class BundleFounded extends StatelessWidget {
                     child: FFButtonWidget(
                       onPressed: () {
                         orderMenuProvider.changeOptionButtonsGC(0, null);
-                        orderMenuProvider.changeOptionInventorySection(0);
+                        orderMenuProvider.changeOptionOrders(0);
                         orderFormProvider.clearBundleControllers();
                         Navigator.pop(context);
                       },

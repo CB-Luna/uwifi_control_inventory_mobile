@@ -143,7 +143,7 @@ class BundleAssigned extends StatelessWidget {
                       onPressed: () async {
                         if (!context.mounted) return;
                         orderMenuProvider.changeOptionButtonsGC(0, null);
-                        orderMenuProvider.changeOptionInventorySection(0);
+                        orderMenuProvider.changeOptionOrders(0);
                         orderFormProvider.clearBundleControllers();
                         Navigator.pop(context);
                       },
