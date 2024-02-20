@@ -4,6 +4,7 @@ import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/options_recover_bundles.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/search_orders_list.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/search_orders_delivery.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/search_orders_package.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/bundle_assigned.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/bundle_detected.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/bundle_form_sku.dart';
@@ -23,7 +24,8 @@ class OrderMenuProvider extends ChangeNotifier {
   //Menu Options:
   final menuTaped = {
     0: const SearchOrdersList(), // Lights 0
-    1: const SearchOrdersDelivery(), // Equipment 1
+    1: const SearchOrdersPackageList(), // Equipment 1
+    2: const SearchOrdersDelivery(), // Equipment 1
   };
 
 

@@ -15,6 +15,7 @@ import 'package:uwifi_control_inventory_mobile/providers/database/order_form_pro
 import 'package:uwifi_control_inventory_mobile/providers/system/bundles_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/order_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/orders_delivery_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/orders_package_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/orders_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/screens.dart';
 import 'package:uwifi_control_inventory_mobile/services/navigation_service.dart';
@@ -90,6 +91,10 @@ void main() async {
         ),
         ChangeNotifierProvider<OrdersDeliveryProvider>(
           create: (context) => OrdersDeliveryProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<OrdersPackageProvider>(
+          create: (context) => OrdersPackageProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<GatewayMenuProvider>(

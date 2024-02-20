@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/bundle.dart';
 import 'package:uwifi_control_inventory_mobile/models/inventory_order.dart';
+import 'package:uwifi_control_inventory_mobile/models/shipment_company.dart';
 import 'package:uwifi_control_inventory_mobile/models/sims_card.dart';
 import 'package:uwifi_control_inventory_mobile/models/suggestions_sims_config.dart';
 
@@ -17,12 +19,37 @@ class OrderFormProvider extends ChangeNotifier {
   SIMSCard? simCard1;
   SIMSCard? simCard2;
 
-  String provider = "";
+  ShipmentCompany? shipmentCompany;
+  List<ShipmentCompany> shipmentCompanies= [];
+
+  Future<void> getShipmentCompanies() async {
+    try {
+      shipmentCompanies.clear();
+
+      final res = await supabase
+      .from('shipment_company')
+      .select();
+
+      if (res == null) {
+        log('Error en getShipmentCompanies()');
+        return;
+      }
+
+      shipmentCompanies = (res as List<dynamic>).map((shipmentCompany) => ShipmentCompany.fromMap(shipmentCompany)).toList();
+
+      shipmentCompanies.sort((a, b) => b.name.compareTo(a.name));
+      notifyListeners();
+    } catch (e) {
+      log('Error en getShipmentCompanies() - $e');
+      notifyListeners();
+    }
+  }
 
   List<List<String>> suggestionsSimsConfig = [];
 
-  void updateProvider(String value) {
-    provider = value;
+  void updateShipmentCompany(String name) {
+    final newShipmentCompany = shipmentCompanies.firstWhere((element) => element.name == name);
+    shipmentCompany = newShipmentCompany;
     notifyListeners();
   }
 
@@ -349,10 +376,71 @@ class OrderFormProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> shippingBundleBundleShipmentProviderV1() async {
+    try {
+      if (order != null && shipmentCompany != null) {
+        final res1 = await supabase
+            .from('order_product')
+            .select('inventory_product_fk')
+            .eq('order_fk', order!.orderId);
+
+        if (res1[0] != null) {
+          final inventoryProductFk = res1[0]['inventory_product_fk'];
+          final res2 = await supabase
+            .from('router_details_view')
+            .select()
+            .eq('inventory_product_fk', inventoryProductFk);
+
+          if (res2[0] != null) {
+            final bundle = res2[0];
+            bundleCaptured = Bundle.fromJson(jsonEncode(bundle));
+            var urlAPI = Uri.parse("$urlAirflow/api/v1/dags/shipping_bundle_bundle_shipment_provider_v1/dagRuns");
+            final headers = ({
+              "Content-Type": "application/json",
+              "Authorization": bearerAirflow
+            });
+            var responseAPI = await post(urlAPI,
+              headers: headers,
+              body: json.encode(
+                  {
+                      "conf": {
+                          "order_id": order!.orderId,
+                          "router_inventory_product_id": bundleCaptured?.inventoryProductFk,
+                          "sim_inventory_product_ids": [
+                              bundleCaptured?.sim[0]?.inventoryProductId,
+                              bundleCaptured?.sim[1]?.inventoryProductId
+                          ],
+                          "shipment_provider_id": shipmentCompany!.shipmentCompayId
+                      },
+                      "note": "DAG runned by API"
+                  },
+                ),
+              );
+            if (responseAPI.statusCode == 200) {
+              //Se marca como ejecutada la instrucción en Bitacora
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            // Bundle doesn't exist
+            return false;
+          }
+        } else {
+          // SIM Card doesn't exist
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('ERROR - function shippingBundleBundleShipmentProviderV1(): $e');
+      return false;
+    }
+  }
 
   Future<bool> shippingBundleBundlePackagedV1() async {
     try {
-      if (order != null) {
         if (order != null) {
         final res1 = await supabase
             .from('order_product')
@@ -407,9 +495,6 @@ class OrderFormProvider extends ChangeNotifier {
       } else {
         return false;
       }
-      } else {
-        return false;
-      }
     } catch (e) {
       print('ERROR - function shippingBundleBundleAssignedV1(): $e');
       return false;
@@ -423,6 +508,8 @@ class OrderFormProvider extends ChangeNotifier {
   }
 
   void clearBundleControllers() {
+    shipmentCompanies.clear();
+    shipmentCompany = null;
     suggestionsSimsConfig.clear();
     serialNumberTextController.clear();
     imeiTextController.clear();

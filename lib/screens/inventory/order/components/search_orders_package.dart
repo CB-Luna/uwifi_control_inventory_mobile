@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/providers/system/orders_delivery_provider.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/item_form_order_delivery.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/orders_package_provider.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/item_form_order_package.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/header_shimmer.dart';
 
-class SearchOrdersDelivery extends StatefulWidget {
+class SearchOrdersPackageList extends StatefulWidget {
   
-  const SearchOrdersDelivery({super.key});
+  const SearchOrdersPackageList({super.key});
 
   @override
-  State<SearchOrdersDelivery> createState() => _SearchOrdersDeliveryState();
+  State<SearchOrdersPackageList> createState() => _SearchOrdersPackageListState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -70,14 +70,14 @@ final animationsMap = {
     ),
   };
 
-class _SearchOrdersDeliveryState extends State<SearchOrdersDelivery> {
+class _SearchOrdersPackageListState extends State<SearchOrdersPackageList> {
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      OrdersDeliveryProvider provider = Provider.of<OrdersDeliveryProvider>(
+      OrdersPackageProvider provider = Provider.of<OrdersPackageProvider>(
         context,
         listen: false
       );
@@ -87,7 +87,7 @@ class _SearchOrdersDeliveryState extends State<SearchOrdersDelivery> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<OrdersDeliveryProvider>(context);
+    final provider = Provider.of<OrdersPackageProvider>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
@@ -97,7 +97,7 @@ class _SearchOrdersDeliveryState extends State<SearchOrdersDelivery> {
             // HEADER
             HeaderShimmer(
               width: MediaQuery.of(context).size.width, 
-              text: "Search Orders Delivery",
+              text: "Search Orders Package",
             ),
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -301,10 +301,10 @@ class _SearchOrdersDeliveryState extends State<SearchOrdersDelivery> {
                   padding: const EdgeInsets.all(5.0),
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  itemCount: provider.ordersDelivery.length,
+                  itemCount: provider.orders.length,
                   itemBuilder: (context, index) {
-                    final order = provider.ordersDelivery[index];
-                    return ItemFormOrderDelivery(
+                    final order = provider.orders[index];
+                    return ItemFormOrderPackage(
                       order: order,
                     );
                   });

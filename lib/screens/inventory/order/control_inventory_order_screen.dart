@@ -273,11 +273,18 @@ class _ControlInventoryOrderScreenState extends State<ControlInventoryOrderScree
                       isTaped: orderMenuProvider.buttonMenuTaped == 0,
                     ),
                     MenuFormButton(
-                      icon: Icons.local_shipping,
+                      icon: Icons.inventory_2_outlined, 
                       onPressed: () {
                         orderMenuProvider.setButtonMenuTaped(1);
                       },
                       isTaped: orderMenuProvider.buttonMenuTaped == 1,
+                    ),
+                    MenuFormButton(
+                      icon: Icons.local_shipping,
+                      onPressed: () {
+                        orderMenuProvider.setButtonMenuTaped(2);
+                      },
+                      isTaped: orderMenuProvider.buttonMenuTaped == 2,
                     ),
                   ],
                 ),
