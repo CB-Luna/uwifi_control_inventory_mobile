@@ -56,6 +56,8 @@ class OrderFormProvider extends ChangeNotifier {
   bool validateForm(GlobalKey<FormState> keyForm) {
     return keyForm.currentState!.validate() ? true : false;
   }
+  //************************Tracking Number *********/
+  TextEditingController trackingNumberTextController = TextEditingController();
 
   //************************Bundles Components *********/
   TextEditingController serialNumberTextController = TextEditingController();
@@ -94,6 +96,29 @@ class OrderFormProvider extends ChangeNotifier {
               matchSerialNumber.group(0)!.replaceAll(nameFieldSerialNumber, "")
         });
         if (await validateBundleBackend(serialNumberTextController.text)) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> autofillFieldsTrackingOCR(String value) async {
+    if (value.contains(trackingNumberRegExp)) {
+      // Intenta encontrar la primera coincidencia en el texto
+      Match? matchTrackingNumber = trackingNumberRegExp.firstMatch(value);
+      // Si se encuentra una coincidencia, extrae la subcadena
+      if (matchTrackingNumber != null) {
+        await Future.microtask(() => {
+          trackingNumberTextController.text =
+              matchTrackingNumber.group(0)!.replaceAll(nameFieldTrackingNumber, "")
+        });
+        if (await shippingBundleBundleTrackingNumberV1()) {
           return true;
         } else {
           return false;
@@ -501,6 +526,68 @@ class OrderFormProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> shippingBundleBundleTrackingNumberV1() async {
+    try {
+        if (order != null) {
+        final res1 = await supabase
+            .from('order_product')
+            .select('inventory_product_fk')
+            .eq('order_fk', order!.orderId);
+
+        if (res1[0] != null) {
+          final inventoryProductFk = res1[0]['inventory_product_fk'];
+          final res2 = await supabase
+            .from('router_details_view')
+            .select()
+            .eq('inventory_product_fk', inventoryProductFk);
+
+          if (res2[0] != null) {
+            final bundle = res2[0];
+            bundleCaptured = Bundle.fromJson(jsonEncode(bundle));
+            var urlAPI = Uri.parse("$urlAirflow/api/v1/dags/shipping_bundle_bundle_tracking_number_v1/dagRuns");
+            final headers = ({
+              "Content-Type": "application/json",
+              "Authorization": bearerAirflow
+            });
+            var responseAPI = await post(urlAPI,
+              headers: headers,
+              body: json.encode(
+                  {
+                      "conf": {
+                          "order_id": order!.orderId,
+                          "router_inventory_product_id": bundleCaptured?.inventoryProductFk,
+                          "sim_inventory_product_ids": [
+                              bundleCaptured?.sim[0]?.inventoryProductId,
+                              bundleCaptured?.sim[1]?.inventoryProductId
+                          ],
+                          "tracking_number": trackingNumberTextController.text.replaceAll(" ", "")
+                      },
+                      "note": "DAG runned by API"
+                  },
+                ),
+              );
+            if (responseAPI.statusCode == 200) {
+              //Se marca como ejecutada la instrucción en Bitacora
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            // Bundle doesn't exist
+            return false;
+          }
+        } else {
+          // SIM Card doesn't exist
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('ERROR - function shippingBundleBundleTrackingNumberV1(): $e');
+      return false;
+    }
+  }
 
   Future<bool> existsRegisterInBackend(String table, String column, String idUnique) async {
     final results = await supabase.from(table).select().eq(column, idUnique);
@@ -512,6 +599,7 @@ class OrderFormProvider extends ChangeNotifier {
     shipmentCompany = null;
     suggestionsSimsConfig.clear();
     serialNumberTextController.clear();
+    trackingNumberTextController.clear();
     imeiTextController.clear();
     codeQRG =  "";
     codeQRSC =  "";

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/add_sims_card.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/options_recover_sims_card.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/options_recover_bundles.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/options_recover_tickets.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/search_orders_list.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/search_orders_delivery.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/components/search_orders_package.dart';
@@ -11,6 +12,8 @@ import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/b
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/bundle_founded.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/bundle_form_ocr.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/suggestions_sims_config.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/tracking_assigned.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/tracking_form_ocr.dart';
 
 class OrderMenuProvider extends ChangeNotifier {
 
@@ -67,15 +70,15 @@ class OrderMenuProvider extends ChangeNotifier {
   Widget optionOrdersDelivery() { 
   switch (valueSectionOrdersDelivery) {
       case 0:
-        return OptionsRecoverBundles();
+        return OptionsRecoverTracking();
       case 1:
-        return const BundleFormOCR();
+        return const TrackingFormOCR();
       case 2:
         return const BundleFormSKU();
       case 3:
-        return BundleAssigned();
+        return TrackingAssigned();
       default:
-        return OptionsRecoverBundles();
+        return OptionsRecoverTracking();
     }
   }
 

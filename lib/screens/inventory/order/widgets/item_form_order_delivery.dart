@@ -7,8 +7,8 @@ import 'package:uwifi_control_inventory_mobile/models/image_evidence.dart';
 import 'package:uwifi_control_inventory_mobile/models/inventory_order.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/order_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:uwifi_control_inventory_mobile/util/animations.dart';
+
+import '../../../../providers/database/order_form_provider.dart';
 class ItemFormOrderDelivery extends StatefulWidget {
   const ItemFormOrderDelivery({
     Key? key,
@@ -24,63 +24,10 @@ class ItemFormOrderDelivery extends StatefulWidget {
 class _ItemFormOrderDeliveryState extends State<ItemFormOrderDelivery> {
   List<ImageEvidence> imagesTemp = [];
   final keyForm = GlobalKey<FormState>();
-  final animationsMap = {
-    'moveLoadAnimationLR': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0,
-          end: 1,
-        ),
-        MoveEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(-79, 0),
-          end: const Offset(0, 0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(1, 1),
-          end: const Offset(1, 1),
-        ),
-      ],
-    ),
-    'moveLoadAnimationRL': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0,
-          end: 1,
-        ),
-        MoveEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(79, 0),
-          end: const Offset(0, 0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(1, 1),
-          end: const Offset(1, 1),
-        ),
-      ],
-    ),
-  };
 
   @override
   Widget build(BuildContext context) {
+    final orderFormProvider = Provider.of<OrderFormProvider>(context);
     return Form(
       key: keyForm,
       child: Column(
@@ -106,6 +53,7 @@ class _ItemFormOrderDeliveryState extends State<ItemFormOrderDelivery> {
                       barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
+                        orderFormProvider.order = widget.order;
                         return AlertDialog(
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,7 +105,7 @@ class _ItemFormOrderDeliveryState extends State<ItemFormOrderDelivery> {
                             controller: ScrollController(),
                             child: Consumer<OrderMenuProvider>(
                               builder: (context, orderMenuProvider, _) {
-                                return orderMenuProvider.optionOrders();
+                                return orderMenuProvider.optionOrdersDelivery();
                               },
                             ),
                           ),
@@ -191,10 +139,12 @@ class _ItemFormOrderDeliveryState extends State<ItemFormOrderDelivery> {
                           children: [
                             SizedBox(
                               width: MediaQuery.of(context).size.width * 0.6,
-                              child: Row(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text("No Order: "),
-                                  Text("${widget.order.orderId}"),
+                                  const Text("Ticket Order"),
+                                  Text("Order Id: ${widget.order.orderId}",
+                                  style: AppTheme.of(context).bodyText2,),
                                 ],
                               )
                             ),
@@ -229,25 +179,158 @@ class _ItemFormOrderDeliveryState extends State<ItemFormOrderDelivery> {
                             )
                           ],
                         ),
-                        content: SizedBox( // Need to use container to add size constraint.
+                        content: Container( // Need to use container to add size constraint.
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.5,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: AppTheme.of(context).dark400,
+                              width: 1.5,
+                            )
+                          ),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Ticket Order",
-                              style: AppTheme.of(context).title1,),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                height: MediaQuery.of(context).size.width * 0.5,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: Image.asset(
-                                        'assets/images/gateway.png',
-                                      ).image,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                                child: Text("Ship to:",
+                                style: AppTheme.of(context).subtitle1,),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Text("${widget.order.fullName}",
+                                style: AppTheme.of(context).bodyText2,),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Text("${widget.order.customerPhone}",
+                                style: AppTheme.of(context).bodyText2,),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Text("MILO DR",
+                                style: AppTheme.of(context).bodyText2,),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Text("BEAUMONT TX ${widget.order.customerZipcode}",
+                                style: AppTheme.of(context).bodyText1,),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Text("US",
+                                style: AppTheme.of(context).bodyText1,),
+                              ),
+                              Divider(
+                                height: 4,
+                                thickness: 4,
+                                indent: 0,
+                                endIndent: 0,
+                                color: AppTheme.of(context).dark400,
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 90,
+                                    height: 90,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: AppTheme.of(context).dark400,
+                                        width: 1.5,
+                                      ),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: Image.asset(
+                                          'assets/images/qrcode.jpg',
+                                        ).image,
+                                      ),
                                     ),
-                                    borderRadius: BorderRadius.circular(0)),
+                                  ),
+                                  const Spacer(),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width * 0.3,
+                                      height: 80,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: Image.asset(
+                                              'assets/images/barcode.png',
+                                            ).image,
+                                          ),
+                                          borderRadius: BorderRadius.circular(0)),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                height: 8,
+                                thickness: 8,
+                                indent: 0,
+                                endIndent: 0,
+                                color: AppTheme.of(context).dark400,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("UPS SAVER",
+                                    style: AppTheme.of(context).title1,),
+                                    Text("1P",
+                                    style: AppTheme.of(context).title1,),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Text("TRACKING #: 1ZA668990495524105",
+                                style: AppTheme.of(context).subtitle2,),
+                              ),
+                              Divider(
+                                height: 4,
+                                thickness: 2,
+                                indent: 0,
+                                endIndent: 0,
+                                color: AppTheme.of(context).dark400,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width * 0.5,
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: Image.asset(
+                                          'assets/images/barcode.png',
+                                        ).image,
+                                      ),
+                                      borderRadius: BorderRadius.circular(0)),
+                                ),
+                              ),
+                              Divider(
+                                height: 8,
+                                thickness: 6,
+                                indent: 0,
+                                endIndent: 0,
+                                color: AppTheme.of(context).dark400,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Text("BILLING: P/P:",
+                                style: AppTheme.of(context).bodyText2,),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Text("DESC: 1 X test",
+                                style: AppTheme.of(context).bodyText2,),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                                child: Text("Reference No.1: ESHK35431948",
+                                style: AppTheme.of(context).bodyText1,),
                               ),
                             ],
                           ),
