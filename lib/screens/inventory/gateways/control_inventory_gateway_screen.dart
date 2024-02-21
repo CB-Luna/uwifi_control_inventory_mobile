@@ -116,7 +116,7 @@ class _ControlInventoryGatewayScreenState extends State<ControlInventoryGatewayS
                                   title: const Text(
                                       'Are you sure you want to return to main screen?'),
                                   content: const Text(
-                                      'The recent input data will be deleted.'),
+                                      'Check if you save your changes..'),
                                   actions: [
                                     TextButton(
                                       onPressed: () async {
