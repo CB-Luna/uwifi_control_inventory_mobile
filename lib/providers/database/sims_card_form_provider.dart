@@ -80,6 +80,7 @@ class SIMSCardFormProvider extends ChangeNotifier {
       if (recordInventoryProduct.isNotEmpty) {
         final recordRouterSim = await supabase.from('sim_detail').insert(
           {
+            'sap_id': sapIdTextController.text,
             'imei': imeiSCTextController.text,
             'phone_association': '(524) 1234233',
             'data_plan': 'Unlimited',

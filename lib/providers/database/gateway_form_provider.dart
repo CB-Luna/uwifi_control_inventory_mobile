@@ -118,6 +118,8 @@ class GatewayFormProvider extends ChangeNotifier {
             'network_configuration': 'Static Routing',
             'inventory_product_fk': recordInventoryProduct.first['inventory_product_id'],
             'serie_no': serialNumberTextController.text,
+            'mac': macTextController.text,
+            'imei': imeiGTextController.text,
             'location': 'Store'
           },
         ).select<PostgrestList>('router_detail_id');
