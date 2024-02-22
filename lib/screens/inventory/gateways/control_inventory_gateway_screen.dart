@@ -116,7 +116,7 @@ class _ControlInventoryGatewayScreenState extends State<ControlInventoryGatewayS
                                   title: const Text(
                                       'Are you sure you want to return to main screen?'),
                                   content: const Text(
-                                      'Check if you save your changes..'),
+                                      'Check if you save your changes.'),
                                   actions: [
                                     TextButton(
                                       onPressed: () async {
@@ -278,27 +278,6 @@ class _ControlInventoryGatewayScreenState extends State<ControlInventoryGatewayS
                         gatewayMenuProvider.setButtonMenuTaped(1);
                       },
                       isTaped: gatewayMenuProvider.buttonMenuTaped == 1,
-                    ),
-                    MenuFormButton(
-                      icon: Icons.sim_card_download_outlined, 
-                      onPressed: () {
-                        gatewayMenuProvider.setButtonMenuTaped(2);
-                      },
-                      isTaped: gatewayMenuProvider.buttonMenuTaped == 2,
-                    ),
-                    MenuFormButton(
-                      icon: Icons.bar_chart_outlined, 
-                      onPressed: () {
-                        gatewayMenuProvider.setButtonMenuTaped(3);
-                      },
-                      isTaped: gatewayMenuProvider.buttonMenuTaped == 3,
-                    ),
-                    MenuFormButton(
-                    icon: Icons.local_shipping, 
-                      onPressed: () {
-                        gatewayMenuProvider.setButtonMenuTaped(4);
-                      },
-                      isTaped: gatewayMenuProvider.buttonMenuTaped == 4,
                     ),
                   ],
                 ),

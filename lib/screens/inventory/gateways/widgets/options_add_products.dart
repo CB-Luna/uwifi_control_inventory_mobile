@@ -61,11 +61,11 @@ class OptionsAddProducts extends StatelessWidget {
             children: [
               FFButtonWidget(
                 onPressed: () async {
-                  gatewayMenuProvider.changeOptionInventorySection(3);
+                  gatewayMenuProvider.changeOptionInventorySection(4);
                 },
-                text: 'QR',
+                text: 'SKU',
                 icon: const Icon(
-                  Icons.qr_code_scanner_outlined,
+                  Icons.edit_outlined,
                   size: 15,
                 ),
                 options: FFButtonOptions(
@@ -99,11 +99,11 @@ class OptionsAddProducts extends StatelessWidget {
             children: [
               FFButtonWidget(
                 onPressed: () async {
-                  gatewayMenuProvider.changeOptionInventorySection(4);
+                  gatewayMenuProvider.changeOptionInventorySection(3);
                 },
-                text: 'SKU',
+                text: 'BATCH',
                 icon: const Icon(
-                  Icons.edit_outlined,
+                  Icons.upload_file_outlined,
                   size: 15,
                 ),
                 options: FFButtonOptions(

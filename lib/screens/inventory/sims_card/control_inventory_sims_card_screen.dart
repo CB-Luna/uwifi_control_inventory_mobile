@@ -115,7 +115,7 @@ class _ControlInventorySIMSCardScreenState extends State<ControlInventorySIMSCar
                                   title: const Text(
                                       'Are you sure you want to return to main screen?'),
                                   content: const Text(
-                                      'Check if you save your changes..'),
+                                      'Check if you save your changes.'),
                                   actions: [
                                     TextButton(
                                       onPressed: () async {
@@ -277,27 +277,6 @@ class _ControlInventorySIMSCardScreenState extends State<ControlInventorySIMSCar
                         simsCardMenuProvider.setButtonMenuTaped(1);
                       },
                       isTaped: simsCardMenuProvider.buttonMenuTaped == 1,
-                    ),
-                    MenuFormButton(
-                      icon: Icons.sim_card_download_outlined, 
-                      onPressed: () {
-                        simsCardMenuProvider.setButtonMenuTaped(2);
-                      },
-                      isTaped: simsCardMenuProvider.buttonMenuTaped == 2,
-                    ),
-                    MenuFormButton(
-                      icon: Icons.bar_chart_outlined, 
-                      onPressed: () {
-                        simsCardMenuProvider.setButtonMenuTaped(3);
-                      },
-                      isTaped: simsCardMenuProvider.buttonMenuTaped == 3,
-                    ),
-                    MenuFormButton(
-                    icon: Icons.local_shipping, 
-                      onPressed: () {
-                        simsCardMenuProvider.setButtonMenuTaped(4);
-                      },
-                      isTaped: simsCardMenuProvider.buttonMenuTaped == 4,
                     ),
                   ],
                 ),
