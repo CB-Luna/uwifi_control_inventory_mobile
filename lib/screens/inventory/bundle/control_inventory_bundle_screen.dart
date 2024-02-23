@@ -1,15 +1,12 @@
-import 'package:clay_containers/clay_containers.dart';
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/screens/main/main_screen_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/indicator_filter_button.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/menu_form_button.dart';
-import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 class ControlInventoryBundleScreen extends StatefulWidget {
 
   const ControlInventoryBundleScreen({
@@ -78,7 +75,6 @@ class _ControlInventoryBundleScreenState extends State<ControlInventoryBundleScr
   @override
   Widget build(BuildContext context) {
     final bundleMenuProvider = Provider.of<BundleMenuProvider>(context);
-    final userProvider = Provider.of<UsuarioController>(context);
     return Scaffold(
       backgroundColor: AppTheme.of(context).background,
       body: SafeArea(
@@ -273,18 +269,11 @@ class _ControlInventoryBundleScreenState extends State<ControlInventoryBundleScr
                       isTaped: bundleMenuProvider.buttonMenuTaped == 0,
                     ),
                     MenuFormButton(
-                      icon: Icons.search_outlined, 
+                      icon: Icons.list_outlined, 
                       onPressed: () {
                         bundleMenuProvider.setButtonMenuTaped(1);
                       },
                       isTaped: bundleMenuProvider.buttonMenuTaped == 1,
-                    ),
-                    MenuFormButton(
-                      icon: Icons.local_shipping,
-                      onPressed: () {
-                        bundleMenuProvider.setButtonMenuTaped(2);
-                      },
-                      isTaped: bundleMenuProvider.buttonMenuTaped == 2,
                     ),
                   ],
                 ),

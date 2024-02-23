@@ -272,7 +272,7 @@ class _ControlInventorySIMSCardScreenState extends State<ControlInventorySIMSCar
                       isTaped: simsCardMenuProvider.buttonMenuTaped == 0,
                     ),
                     MenuFormButton(
-                      icon: Icons.search_outlined, 
+                      icon: Icons.list_outlined, 
                       onPressed: () {
                         simsCardMenuProvider.setButtonMenuTaped(1);
                       },

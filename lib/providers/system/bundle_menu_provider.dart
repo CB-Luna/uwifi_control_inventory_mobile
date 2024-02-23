@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/components/search_bundles_created.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/components/section_three_bundle.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/components/selector_inventory_form_bundle.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/add_sims_card.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/gateway_captured.dart';
@@ -25,7 +24,6 @@ class BundleMenuProvider extends ChangeNotifier {
   final menuTaped = {
     0: SelectorInventoryFormBundle(),// Measures 0
     1: const SearchBundlesCreated(), // Lights 1
-    2: const SectionThreeBundle(), // Equipment 2
   };
 
 

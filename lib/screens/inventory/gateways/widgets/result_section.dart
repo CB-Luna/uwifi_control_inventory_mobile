@@ -422,9 +422,9 @@ class ResultSection extends StatelessWidget {
                       gatewayFormProvider.clearControllers();
                       gatewayMenuProvider.changeOptionInventorySection(1);
                     },
-                    text: 'Close',
+                    text: 'Back',
                     icon: const Icon(
-                      Icons.cancel_outlined,
+                      Icons.arrow_back_outlined,
                       size: 15,
                     ),
                     options: CustomButtonOption(

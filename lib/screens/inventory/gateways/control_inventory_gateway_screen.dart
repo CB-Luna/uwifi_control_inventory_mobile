@@ -273,7 +273,7 @@ class _ControlInventoryGatewayScreenState extends State<ControlInventoryGatewayS
                       isTaped: gatewayMenuProvider.buttonMenuTaped == 0,
                     ),
                     MenuFormButton(
-                      icon: Icons.search_outlined, 
+                      icon: Icons.list_outlined, 
                       onPressed: () {
                         gatewayMenuProvider.setButtonMenuTaped(1);
                       },

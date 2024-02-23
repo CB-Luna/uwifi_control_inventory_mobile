@@ -102,7 +102,7 @@ class _SearchBundlesCreatedState extends State<SearchBundlesCreated> {
             // HEADER
             HeaderShimmer(
               width: MediaQuery.of(context).size.width, 
-              text: "Search Bundles Created",
+              text: "Bundles Created Recently",
             ),
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(

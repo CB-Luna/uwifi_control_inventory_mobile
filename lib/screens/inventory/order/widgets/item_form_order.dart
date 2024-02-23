@@ -342,7 +342,7 @@ class _ItemFormOrderState extends State<ItemFormOrder> {
                 ),
               ),
               Text(
-                "${widget.order.customerFirstName} ${widget.order.customerLastName}",
+                "${widget.order.customerFirstName} ${widget.order.customerLastName} [AT&T]",
                 style: AppTheme.of(context)
                 .bodyText1.override(
                   fontFamily:

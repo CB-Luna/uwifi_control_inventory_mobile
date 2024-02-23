@@ -267,7 +267,7 @@ class _ControlInventoryOrderScreenState extends State<ControlInventoryOrderScree
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     MenuFormButton(
-                      icon: Icons.search_outlined, 
+                      icon: Icons.list_outlined, 
                       onPressed: () {
                         orderMenuProvider.setButtonMenuTaped(0);
                       },

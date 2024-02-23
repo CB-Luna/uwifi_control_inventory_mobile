@@ -1,103 +1,112 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/providers/system/sims_card_provider.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widgets/item_form_sims_card.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/batch_sim_card_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/sims_card_menu_provider.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widgets/item_sim_card_batch.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button_option.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/util/animations.dart';
-import 'package:uwifi_control_inventory_mobile/screens/widgets/header_shimmer.dart';
 
-class SearchSIMSCardCreated extends StatefulWidget {
+class PreviewSimsCardCSV extends StatefulWidget {
   
-  const SearchSIMSCardCreated({super.key});
+  const PreviewSimsCardCSV({super.key});
 
   @override
-  State<SearchSIMSCardCreated> createState() => _SearchSIMSCardCreatedState();
+  State<PreviewSimsCardCSV> createState() => _PreviewSimsCardCSVState();
 }
-final scaffoldKey = GlobalKey<ScaffoldState>();
-final animationsMap = {
-    'moveLoadAnimationLR': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0,
-          end: 1,
-        ),
-        MoveEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(-79, 0),
-          end: const Offset(0, 0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(1, 1),
-          end: const Offset(1, 1),
-        ),
-      ],
-    ),
-    'moveLoadAnimationRL': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0,
-          end: 1,
-        ),
-        MoveEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(79, 0),
-          end: const Offset(0, 0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(1, 1),
-          end: const Offset(1, 1),
-        ),
-      ],
-    ),
-  };
-
-class _SearchSIMSCardCreatedState extends State<SearchSIMSCardCreated> {
+class _PreviewSimsCardCSVState extends State<PreviewSimsCardCSV> {
 
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      SIMSCardProvider provider = Provider.of<SIMSCardProvider>(
-        context,
-        listen: false,
-      );
-      await provider.updateState();
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<SIMSCardProvider>(context);
+    final provider = Provider.of<BatchSimCardProvider>(context);
+    final simsCardMenuProvider = Provider.of<SIMSCardMenuProvider>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
         child: Column(
           children: [
-            // HEADER
-            HeaderShimmer(
-              width: MediaQuery.of(context).size.width, 
-              text: "Search SIMS Card Created",
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      5, 10, 5, 10),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      simsCardMenuProvider.changeOptionInventorySection(3);
+                    },
+                    text: 'Back',
+                    icon: const Icon(
+                      Icons.arrow_back_outlined,
+                      size: 15,
+                    ),
+                    options: CustomButtonOption(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: 40,
+                      color: AppTheme.of(context)
+                          .white,
+                      textStyle: AppTheme.of(context)
+                          .subtitle2
+                          .override(
+                            fontFamily: AppTheme.of(context)
+                                .subtitle2Family,
+                            color: AppTheme.of(context).alternate,
+                            fontSize: 15,
+                          ),
+                      borderSide: BorderSide(
+                        color: AppTheme.of(context).alternate,
+                        width: 2,
+                      ),
+                      borderRadius:
+                          BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+                Text(
+                  "Rows: ${provider.simsCardBatch.length}",
+                  style: AppTheme.of(context)
+                  .subtitle1
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      5, 10, 5, 10),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      simsCardMenuProvider.changeOptionInventorySection(6);
+                    },
+                    text: 'Add',
+                    icon: const Icon(
+                      Icons.add_outlined,
+                      size: 15,
+                    ),
+                    options: CustomButtonOption(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: 40,
+                      color: AppTheme.of(context)
+                          .white,
+                      textStyle: AppTheme.of(context)
+                          .subtitle2
+                          .override(
+                            fontFamily: AppTheme.of(context)
+                                .subtitle2Family,
+                            color: AppTheme.of(context).alternate,
+                            fontSize: 15,
+                          ),
+                      borderSide: BorderSide(
+                        color: AppTheme.of(context).alternate,
+                        width: 2,
+                      ),
+                      borderRadius:
+                          BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -246,7 +255,21 @@ class _SearchSIMSCardCreatedState extends State<SearchSIMSCardCreated> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.25,
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: Text(
+                          "SAP ID",
+                          style: AppTheme.of(context)
+                          .bodyText1.override(
+                            fontFamily:
+                                  AppTheme.of(context).bodyText1Family,
+                            color: AppTheme.of(context).alternate,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.3,
                         child: Text(
                           "IMEI",
                           style: AppTheme.of(context)
@@ -259,26 +282,18 @@ class _SearchSIMSCardCreatedState extends State<SearchSIMSCardCreated> {
                           ),
                         ),
                       ),
-                      Text(
-                        "Created",
-                        style: AppTheme.of(context)
-                        .bodyText1.override(
-                          fontFamily:
-                                AppTheme.of(context).bodyText1Family,
-                          color: AppTheme.of(context).alternate,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                      Text(
-                        "Options",
-                        style: AppTheme.of(context)
-                        .bodyText1.override(
-                          fontFamily:
-                                AppTheme.of(context).bodyText1Family,
-                          color: AppTheme.of(context).alternate,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        child: Text(
+                          "Options",
+                          style: AppTheme.of(context)
+                          .bodyText1.override(
+                            fontFamily:
+                                  AppTheme.of(context).bodyText1Family,
+                            color: AppTheme.of(context).alternate,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
                         ),
                       ),
                     ],
@@ -287,7 +302,7 @@ class _SearchSIMSCardCreatedState extends State<SearchSIMSCardCreated> {
                ),
             ),
             Container(
-            height: 400,
+            height: 300,
             clipBehavior: Clip.antiAlias,
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
@@ -304,11 +319,12 @@ class _SearchSIMSCardCreatedState extends State<SearchSIMSCardCreated> {
                   padding: const EdgeInsets.all(5.0),
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  itemCount: provider.simsCard.length,
+                  itemCount: provider.simsCardBatch.length,
                   itemBuilder: (context, index) {
-                    final simsCard = provider.simsCard[index];
-                    return ItemFormSIMSCard(
-                      simsCard: simsCard,
+                    final simCardBatch = provider.simsCardBatch[index];
+                    return ItemSimCardBatch(
+                      simCardBatch: simCardBatch,
+                      index: index,
                     );
                   });
                 },

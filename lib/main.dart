@@ -12,6 +12,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/bundle_form_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/database/order_form_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/batch_gateway_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/batch_sim_card_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/bundles_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/order_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/orders_delivery_provider.dart';
@@ -115,6 +117,14 @@ void main() async {
         ),
         ChangeNotifierProvider<SyncProviderSupabase>(
           create: (context) => SyncProviderSupabase(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<BatchGatewayProvider>(
+          create: (context) => BatchGatewayProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<BatchSimCardProvider>(
+          create: (context) => BatchSimCardProvider(),
           lazy: false,
         ),
       ],

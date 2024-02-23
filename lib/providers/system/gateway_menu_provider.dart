@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/search_gateways_created.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/preview_gateways_csv.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/gateways_created_list.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/selector_inventory_form_gateway.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/gateways_created.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/inventory_form_ocr.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/inventory_form_qr.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/inventory_form_batch.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/options_add_products.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/result_section.dart';
 class GatewayMenuProvider extends ChangeNotifier {
@@ -17,7 +19,7 @@ class GatewayMenuProvider extends ChangeNotifier {
   //Menu Options:
   final menuTaped = {
     0: SelectorInventoryFormGateway(),//  0
-    1: const SearchGatewaysCreated(), // 1
+    1: const GatewaysCreatedList(), // 1
   };
 
 
@@ -35,9 +37,13 @@ class GatewayMenuProvider extends ChangeNotifier {
       case 2:
         return const InventoryFormOCR();
       case 3:
-        return const InventoryFormQR();
+        return const InventoryFormBatch();
       case 4:
         return ResultSection();
+      case 5:
+        return const PreviewGatewaysCSV();
+      case 6:
+        return GatewaysCreated();
       default:
         return OptionsAddProducts();
     }

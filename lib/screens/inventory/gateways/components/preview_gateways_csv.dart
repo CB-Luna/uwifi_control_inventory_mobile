@@ -1,46 +1,112 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/providers/system/orders_provider.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/order/widgets/item_form_order.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/batch_gateway_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/gateway_menu_provider.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/item_gateway_batch.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button_option.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/screens/widgets/header_shimmer.dart';
 
-class SearchOrdersList extends StatefulWidget {
+class PreviewGatewaysCSV extends StatefulWidget {
   
-  const SearchOrdersList({super.key});
+  const PreviewGatewaysCSV({super.key});
 
   @override
-  State<SearchOrdersList> createState() => _SearchOrdersListState();
+  State<PreviewGatewaysCSV> createState() => _PreviewGatewaysCSVState();
 }
-class _SearchOrdersListState extends State<SearchOrdersList> {
+class _PreviewGatewaysCSVState extends State<PreviewGatewaysCSV> {
 
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      OrdersProvider provider = Provider.of<OrdersProvider>(
-        context,
-        listen: false
-      );
-      await provider.updateState();
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<OrdersProvider>(context);
+    final provider = Provider.of<BatchGatewayProvider>(context);
+    final gatewayMenuProvider = Provider.of<GatewayMenuProvider>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
         child: Column(
           children: [
-            // HEADER
-            HeaderShimmer(
-              width: MediaQuery.of(context).size.width, 
-              text: "Search Orders",
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      5, 10, 5, 10),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      gatewayMenuProvider.changeOptionInventorySection(3);
+                    },
+                    text: 'Back',
+                    icon: const Icon(
+                      Icons.arrow_back_outlined,
+                      size: 15,
+                    ),
+                    options: CustomButtonOption(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: 40,
+                      color: AppTheme.of(context)
+                          .white,
+                      textStyle: AppTheme.of(context)
+                          .subtitle2
+                          .override(
+                            fontFamily: AppTheme.of(context)
+                                .subtitle2Family,
+                            color: AppTheme.of(context).alternate,
+                            fontSize: 15,
+                          ),
+                      borderSide: BorderSide(
+                        color: AppTheme.of(context).alternate,
+                        width: 2,
+                      ),
+                      borderRadius:
+                          BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+                Text(
+                  "Rows: ${provider.gatewaysBatch.length}",
+                  style: AppTheme.of(context)
+                  .subtitle1
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      5, 10, 5, 10),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      gatewayMenuProvider.changeOptionInventorySection(6);
+                    },
+                    text: 'Add',
+                    icon: const Icon(
+                      Icons.add_outlined,
+                      size: 15,
+                    ),
+                    options: CustomButtonOption(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: 40,
+                      color: AppTheme.of(context)
+                          .white,
+                      textStyle: AppTheme.of(context)
+                          .subtitle2
+                          .override(
+                            fontFamily: AppTheme.of(context)
+                                .subtitle2Family,
+                            color: AppTheme.of(context).alternate,
+                            fontSize: 15,
+                          ),
+                      borderSide: BorderSide(
+                        color: AppTheme.of(context).alternate,
+                        width: 2,
+                      ),
+                      borderRadius:
+                          BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -131,61 +197,34 @@ class _SearchOrdersListState extends State<SearchOrdersList> {
                           Padding(
                             padding: const EdgeInsetsDirectional
                                 .fromSTEB(0, 0, 5, 0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: const Text(
-                                          'Are you sure you want to print all ticket orders?'),
-                                      content: const Text(
-                                          'Check if you save your changes.'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child:
-                                              const Text('Continue'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child:
-                                              const Text('Cancel'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                return;
-                              },
-                              text: 'All',
-                              icon: const Icon(
-                                Icons.print_outlined,
-                                size: 20,
-                              ),
-                              options: CustomButtonOption(
-                                width: MediaQuery.of(context).size.width * 0.2,
-                                height: 40,
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
                                 color: AppTheme.of(context)
                                     .white,
-                                textStyle: AppTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: AppTheme.of(context)
-                                          .subtitle2Family,
-                                      color: AppTheme.of(context).alternate,
-                                      fontSize: 15,
-                                    ),
-                                borderSide: BorderSide(
-                                  color: AppTheme.of(context).alternate,
-                                  width: 2,
-                                ),
                                 borderRadius:
-                                    BorderRadius.circular(8),
+                                    const BorderRadius.only(
+                                  bottomLeft:
+                                      Radius.circular(8),
+                                  bottomRight:
+                                      Radius.circular(30),
+                                  topLeft: Radius.circular(8),
+                                  topRight: Radius.circular(30),
+                                ),
+                                border: Border.all(
+                                  color: AppTheme.of(context).alternate,
+                                  width: 2)
+                              ),
+                              child: InkWell(
+                                onTap: () async {
+                                  setState(() {});
+                                },
+                                child: Icon(
+                                  Icons.search_rounded,
+                                  color: AppTheme.of(context).alternate,
+                                  size: 24,
+                                ),
                               ),
                             ),
                           ),
@@ -215,37 +254,46 @@ class _SearchOrdersListState extends State<SearchOrdersList> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "No. Order",
-                        style: AppTheme.of(context)
-                        .bodyText1.override(
-                          fontFamily:
-                                AppTheme.of(context).bodyText1Family,
-                          color: AppTheme.of(context).alternate,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: Text(
+                          "S/N.",
+                          style: AppTheme.of(context)
+                          .bodyText1.override(
+                            fontFamily:
+                                  AppTheme.of(context).bodyText1Family,
+                            color: AppTheme.of(context).alternate,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
                         ),
                       ),
-                      Text(
-                        "Client",
-                        style: AppTheme.of(context)
-                        .bodyText1.override(
-                          fontFamily:
-                                AppTheme.of(context).bodyText1Family,
-                          color: AppTheme.of(context).alternate,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: Text(
+                          "MAC",
+                          style: AppTheme.of(context)
+                          .bodyText1.override(
+                            fontFamily:
+                                  AppTheme.of(context).bodyText1Family,
+                            color: AppTheme.of(context).alternate,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
                         ),
                       ),
-                      Text(
-                        "Options",
-                        style: AppTheme.of(context)
-                        .bodyText1.override(
-                          fontFamily:
-                                AppTheme.of(context).bodyText1Family,
-                          color: AppTheme.of(context).alternate,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        child: Text(
+                          "Options",
+                          style: AppTheme.of(context)
+                          .bodyText1.override(
+                            fontFamily:
+                                  AppTheme.of(context).bodyText1Family,
+                            color: AppTheme.of(context).alternate,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
                         ),
                       ),
                     ],
@@ -254,7 +302,7 @@ class _SearchOrdersListState extends State<SearchOrdersList> {
                ),
             ),
             Container(
-            height: 400,
+            height: 300,
             clipBehavior: Clip.antiAlias,
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
@@ -271,11 +319,12 @@ class _SearchOrdersListState extends State<SearchOrdersList> {
                   padding: const EdgeInsets.all(5.0),
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  itemCount: provider.orders.length,
+                  itemCount: provider.gatewaysBatch.length,
                   itemBuilder: (context, index) {
-                    final order = provider.orders[index];
-                    return ItemFormOrder(
-                      order: order,
+                    final gatewayBatch = provider.gatewaysBatch[index];
+                    return ItemGatewayBatch(
+                      gatewayBatch: gatewayBatch,
+                      index: index,
                     );
                   });
                 },

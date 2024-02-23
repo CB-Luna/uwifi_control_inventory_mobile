@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/models/image_evidence.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/gateway.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/gateways_provider.dart';
-import 'package:uwifi_control_inventory_mobile/util/animations.dart';
 class ItemFormGateway extends StatefulWidget {
   const ItemFormGateway({
     Key? key,
@@ -23,61 +20,6 @@ class ItemFormGateway extends StatefulWidget {
 }
 
 class _ItemFormGatewayState extends State<ItemFormGateway> {
-  List<ImageEvidence> imagesTemp = [];
-  final animationsMap = {
-    'moveLoadAnimationLR': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0,
-          end: 1,
-        ),
-        MoveEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(-79, 0),
-          end: const Offset(0, 0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(1, 1),
-          end: const Offset(1, 1),
-        ),
-      ],
-    ),
-    'moveLoadAnimationRL': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0,
-          end: 1,
-        ),
-        MoveEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(79, 0),
-          end: const Offset(0, 0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(1, 1),
-          end: const Offset(1, 1),
-        ),
-      ],
-    ),
-  };
 
   @override
   Widget build(BuildContext context) {

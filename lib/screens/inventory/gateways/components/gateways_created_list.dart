@@ -7,12 +7,12 @@ import 'package:uwifi_control_inventory_mobile/util/animations.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/header_shimmer.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/item_form_gateway.dart';
 
-class SearchGatewaysCreated extends StatefulWidget {
+class GatewaysCreatedList extends StatefulWidget {
   
-  const SearchGatewaysCreated({super.key});
+  const GatewaysCreatedList({super.key});
 
   @override
-  State<SearchGatewaysCreated> createState() => _SearchGatewaysCreatedState();
+  State<GatewaysCreatedList> createState() => _GatewaysCreatedListState();
 }
 final scaffoldKey = GlobalKey<ScaffoldState>();
 final animationsMap = {
@@ -70,7 +70,7 @@ final animationsMap = {
     ),
   };
 
-class _SearchGatewaysCreatedState extends State<SearchGatewaysCreated> {
+class _GatewaysCreatedListState extends State<GatewaysCreatedList> {
 
   @override
   void initState() {
@@ -97,7 +97,7 @@ class _SearchGatewaysCreatedState extends State<SearchGatewaysCreated> {
             // HEADER
             HeaderShimmer(
               width: MediaQuery.of(context).size.width, 
-              text: "Search Gateways Created",
+              text: "Gateways Created Recently",
             ),
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(
