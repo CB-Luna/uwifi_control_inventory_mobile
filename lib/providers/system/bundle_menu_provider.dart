@@ -79,6 +79,13 @@ class BundleMenuProvider extends ChangeNotifier {
     }
   }
 
+  int valueSKUProvider = 0;
+
+  void changeOptionSKUProvider(int value) {
+      valueSKUProvider = value;
+    notifyListeners();
+  }
+
   void setButtonMenuTaped(int index) {
     buttonMenuTaped = index;
     notifyListeners();

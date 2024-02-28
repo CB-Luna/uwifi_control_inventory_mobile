@@ -305,23 +305,23 @@ class _ControlInventoryOrderScreenState extends State<ControlInventoryOrderScree
                     IndicatorFilterButton(
                       text: "TOTAL\n10", 
                       onPressed: () {
-
+                        orderMenuProvider.changeOptionSKUProvider(0);
                       },
-                      isTaped: true,
+                      isTaped: orderMenuProvider.valueSKUProvider == 0,
                     ),
                     IndicatorFilterButton(
                       text: "AT&T\n5", 
                       onPressed: () {
-
+                        orderMenuProvider.changeOptionSKUProvider(1);
                       },
-                      isTaped: false,
+                      isTaped: orderMenuProvider.valueSKUProvider == 1,
                     ),
                     IndicatorFilterButton(
                       text: "T-Mobile\n5", 
                       onPressed: () {
-
+                        orderMenuProvider.changeOptionSKUProvider(2);
                       },
-                      isTaped: false,
+                      isTaped: orderMenuProvider.valueSKUProvider == 2,
                     ),
                   ],
                 ),

@@ -1,3 +1,6 @@
+import 'package:clay_containers/constants.dart';
+import 'package:clay_containers/widgets/clay_container.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/screens/main/main_screen_selector.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +10,7 @@ import 'package:uwifi_control_inventory_mobile/screens/widgets/indicator_filter_
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/menu_form_button.dart';
+import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 class ControlInventoryBundleScreen extends StatefulWidget {
 
   const ControlInventoryBundleScreen({
@@ -75,6 +79,7 @@ class _ControlInventoryBundleScreenState extends State<ControlInventoryBundleScr
   @override
   Widget build(BuildContext context) {
     final bundleMenuProvider = Provider.of<BundleMenuProvider>(context);
+    final userProvider = Provider.of<UsuarioController>(context);
     return Scaffold(
       backgroundColor: AppTheme.of(context).background,
       body: SafeArea(
@@ -293,16 +298,16 @@ class _ControlInventoryBundleScreenState extends State<ControlInventoryBundleScr
                     IndicatorFilterButton(
                       text: "AT&T", 
                       onPressed: () {
-
+                        bundleMenuProvider.changeOptionSKUProvider(0);
                       },
-                      isTaped: true,
+                      isTaped: bundleMenuProvider.valueSKUProvider == 0,
                     ),
                     IndicatorFilterButton(
                       text: "T-Mobile", 
                       onPressed: () {
-
+                        bundleMenuProvider.changeOptionSKUProvider(1);
                       },
-                      isTaped: false,
+                      isTaped: bundleMenuProvider.valueSKUProvider == 1,
                     ),
                   ],
                 ),
