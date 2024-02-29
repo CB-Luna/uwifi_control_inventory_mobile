@@ -6,7 +6,8 @@ import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widge
 import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widgets/result_section.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/components/sims_card_created_list.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/components/selector_inventory_form_sims_card.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widgets/sims_card_created.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widgets/sims_card_added.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widgets/sims_card_not_created.dart';
 
 class SIMSCardMenuProvider extends ChangeNotifier {
 
@@ -40,7 +41,9 @@ class SIMSCardMenuProvider extends ChangeNotifier {
           case 5:
         return const PreviewSimsCardCSV();
           case 6:
-            return SimsCardCreated();
+        return SimsCardAdded();
+          case 7:
+        return SimsCardNotCreated();
         default:
           return OptionsAddProducts();
       }

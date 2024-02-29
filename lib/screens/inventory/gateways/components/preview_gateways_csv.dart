@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/batch_gateway_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/gateway_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/item_gateway_batch.dart';
@@ -24,6 +25,7 @@ class _PreviewGatewaysCSVState extends State<PreviewGatewaysCSV> {
   Widget build(BuildContext context) {
     final provider = Provider.of<BatchGatewayProvider>(context);
     final gatewayMenuProvider = Provider.of<GatewayMenuProvider>(context);
+    final userProvider = Provider.of<UsuarioController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
@@ -77,7 +79,11 @@ class _PreviewGatewaysCSVState extends State<PreviewGatewaysCSV> {
                       5, 10, 5, 10),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      gatewayMenuProvider.changeOptionInventorySection(6);
+                      if (await provider.addGatewaysBatch(userProvider.usuarioCurrent)) {
+                        gatewayMenuProvider.changeOptionInventorySection(6);
+                      } else {
+                        gatewayMenuProvider.changeOptionInventorySection(7);
+                      }
                     },
                     text: 'Add',
                     icon: const Icon(
@@ -324,7 +330,7 @@ class _PreviewGatewaysCSVState extends State<PreviewGatewaysCSV> {
                     final gatewayBatch = provider.gatewaysBatch[index];
                     return ItemGatewayBatch(
                       gatewayBatch: gatewayBatch,
-                      index: index,
+                      index: index + 1,
                     );
                   });
                 },

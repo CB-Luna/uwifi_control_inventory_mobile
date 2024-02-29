@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/batch_sim_card_provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/sims_card_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widgets/item_sim_card_batch.dart';
@@ -24,6 +25,7 @@ class _PreviewSimsCardCSVState extends State<PreviewSimsCardCSV> {
   Widget build(BuildContext context) {
     final provider = Provider.of<BatchSimCardProvider>(context);
     final simsCardMenuProvider = Provider.of<SIMSCardMenuProvider>(context);
+    final userProvider = Provider.of<UsuarioController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
@@ -77,7 +79,11 @@ class _PreviewSimsCardCSVState extends State<PreviewSimsCardCSV> {
                       5, 10, 5, 10),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      simsCardMenuProvider.changeOptionInventorySection(6);
+                      if (await provider.addSimsCardBatch(userProvider.usuarioCurrent)) {
+                        simsCardMenuProvider.changeOptionInventorySection(6);
+                      } else {
+                        simsCardMenuProvider.changeOptionInventorySection(7);
+                      }
                     },
                     text: 'Add',
                     icon: const Icon(

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/preview_gateways_csv.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/gateways_created_list.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/selector_inventory_form_gateway.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/gateways_created.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/gateways_added.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/gateways_not_created.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/inventory_form_ocr.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/inventory_form_batch.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/options_add_products.dart';
@@ -43,7 +44,9 @@ class GatewayMenuProvider extends ChangeNotifier {
       case 5:
         return const PreviewGatewaysCSV();
       case 6:
-        return GatewaysCreated();
+        return GatewaysAdded();
+      case 7:
+        return GatewaysNotCreated();
       default:
         return OptionsAddProducts();
     }

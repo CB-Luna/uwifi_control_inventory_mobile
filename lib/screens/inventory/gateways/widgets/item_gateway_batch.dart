@@ -1,11 +1,8 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/models/gateway_batch.dart';
-import 'package:uwifi_control_inventory_mobile/providers/system/batch_gateway_provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
-import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 
 class ItemGatewayBatch extends StatefulWidget {
   const ItemGatewayBatch({
@@ -25,7 +22,6 @@ class _ItemGatewayBatchState extends State<ItemGatewayBatch> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<BatchGatewayProvider>(context);
     return Column(
       children: [
         Padding(
@@ -354,58 +350,6 @@ class _ItemGatewayBatchState extends State<ItemGatewayBatch> {
                           ),
                         ),
                       ),
-                    );
-                  },
-                );
-              }
-            ),
-            SlidableAction(
-              icon: Icons.delete_outline,
-              backgroundColor: AppTheme.of(context).customColor3,
-              foregroundColor: AppTheme.of(context).white,
-              borderRadius: BorderRadius.circular(20.0),
-              onPressed: (context) async {
-                await showDialog(
-                  context: context,
-                  builder: (alertDialogContext) {
-                    return AlertDialog(
-                      title: Text(
-                          'Are you sure you want to remove the gateway with serial no. "${widget.gatewayBatch.serialNo}"?'),
-                      content: const Text(
-                          'This action can not be undone.'),
-                      actions: [
-                        TextButton(
-                          onPressed: () {        
-                            if (provider.removeGateway(widget.gatewayBatch.serialNo)) {
-                              if(!mounted) return;
-                              Navigator.pop(alertDialogContext);
-                              snackbarKey.currentState
-                                  ?.showSnackBar(const SnackBar(
-                                backgroundColor: Color(0xFF00B837),
-                                content: Text(
-                                    "Gateway removed successfully."),
-                              ));
-                            } else {
-                              if(!mounted) return;
-                              Navigator.pop(alertDialogContext);
-                              snackbarKey.currentState
-                                  ?.showSnackBar(SnackBar(
-                                content: Text(
-                                    "Falied to removed with serial no. '${widget.gatewayBatch.serialNo}'"),
-                              ));
-                            }
-                          },
-                          child:
-                              const Text('Continue'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(alertDialogContext); 
-                          },
-                          child:
-                              const Text('Cancel'),
-                        ),
-                      ],
                     );
                   },
                 );

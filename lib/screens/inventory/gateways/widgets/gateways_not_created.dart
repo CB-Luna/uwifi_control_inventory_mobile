@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
-class GatewaysCreated extends StatelessWidget {
+class GatewaysNotCreated extends StatelessWidget {
   
-  GatewaysCreated({super.key});
+  GatewaysNotCreated({super.key});
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -20,20 +19,17 @@ class GatewaysCreated extends StatelessWidget {
           padding: const EdgeInsetsDirectional.fromSTEB(
               5, 15, 5, 15),
           child: Text(
-            "Gateways Created",
+            "Failed Adding Gateways",
             style: AppTheme.of(context).title2,
           )
         ),
         Padding(
           padding:
               const EdgeInsetsDirectional.symmetric(horizontal: 15, vertical: 10),
-          child: Lottie.asset(
-            'assets/lottie_animations/elemento-creado.json',
-            width: 180,
-            height: 180,
-            fit: BoxFit.cover,
-            repeat: true,
-            animate: true,
+          child: Icon(
+            Icons.error_outline_outlined,
+            size: 120,
+            color: AppTheme.of(context).secondaryColor,
           ),
         ),
         Row(
@@ -48,7 +44,7 @@ class GatewaysCreated extends StatelessWidget {
                     onPressed: () async {
                       gatewayMenuProvider.changeOptionInventorySection(0);
                     },
-                    text: 'Accept',
+                    text: 'Try Again',
                     icon: const Icon(
                       Icons.check_outlined,
                       size: 20,
