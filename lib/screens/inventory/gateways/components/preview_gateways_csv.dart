@@ -264,6 +264,7 @@ class _PreviewGatewaysCSVState extends State<PreviewGatewaysCSV> {
                         width: MediaQuery.of(context).size.width * 0.3,
                         child: Text(
                           "S/N.",
+                          textAlign: TextAlign.center,
                           style: AppTheme.of(context)
                           .bodyText1.override(
                             fontFamily:
@@ -278,6 +279,7 @@ class _PreviewGatewaysCSVState extends State<PreviewGatewaysCSV> {
                         width: MediaQuery.of(context).size.width * 0.3,
                         child: Text(
                           "MAC",
+                          textAlign: TextAlign.center,
                           style: AppTheme.of(context)
                           .bodyText1.override(
                             fontFamily:
@@ -292,6 +294,7 @@ class _PreviewGatewaysCSVState extends State<PreviewGatewaysCSV> {
                         width: MediaQuery.of(context).size.width * 0.15,
                         child: Text(
                           "Options",
+                          textAlign: TextAlign.center,
                           style: AppTheme.of(context)
                           .bodyText1.override(
                             fontFamily:

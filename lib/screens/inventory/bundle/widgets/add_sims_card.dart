@@ -129,7 +129,10 @@ class AddSIMSCard extends StatelessWidget {
                   children: [
                     FFButtonWidget(
                     onPressed: () async {
-                      final message = await bundleFormProvider.addNewBundleBackend(usuarioProvider.usuarioCurrent!);
+                      final message = await bundleFormProvider.addNewBundleBackend(
+                        usuarioProvider.usuarioCurrent!,
+                        bundleMenuProvider.valueSimCarrier
+                      );
                       switch (message) {
                         case "True":
                           if (!context.mounted) return;

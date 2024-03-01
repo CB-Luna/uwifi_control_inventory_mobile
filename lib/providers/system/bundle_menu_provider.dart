@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/models/sim_carrier.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/components/search_bundles_created.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/components/selector_inventory_form_bundle.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/add_sims_card.dart';
@@ -12,6 +14,36 @@ import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/
 import '../../screens/inventory/bundle/widgets/options_recover_gateways.dart';
 
 class BundleMenuProvider extends ChangeNotifier {
+
+  List<SimCarrier> simCarriers = [];
+
+  Future<void> updateState() async {
+    await getSimCarriers();
+  }
+
+  Future<void> getSimCarriers() async {
+    try {
+      simCarriers.clear();
+      // Se recuperan los simCarriers 
+      final res = await supabase
+      .from('sim_carrier')
+      .select();
+
+
+      if (res == null) {
+        print('Error en getSimCarriers()');
+        return;
+      }
+
+      simCarriers = (res as List<dynamic>).map((simCarrier) => SimCarrier.fromMap(simCarrier)).toList();
+      if (simCarriers.isNotEmpty) {
+        valueSimCarrier = simCarriers.first.simCarrierId;
+      }
+      notifyListeners();
+    } catch (e) {
+      print('Error en getSimCarriers() - $e');
+    }
+  }
 
 
    bool validateForm(GlobalKey<FormState> vehicleKey) {
@@ -79,10 +111,10 @@ class BundleMenuProvider extends ChangeNotifier {
     }
   }
 
-  int valueSKUProvider = 0;
+  int valueSimCarrier = 1;
 
-  void changeOptionSKUProvider(int value) {
-      valueSKUProvider = value;
+  void changeOptionSimCarrier(int value) {
+      valueSimCarrier = value;
     notifyListeners();
   }
 

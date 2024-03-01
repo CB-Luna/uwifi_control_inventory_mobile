@@ -261,9 +261,10 @@ class _PreviewSimsCardCSVState extends State<PreviewSimsCardCSV> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
+                        width: MediaQuery.of(context).size.width * 0.4,
                         child: Text(
-                          "SAP ID",
+                          "IMEI",
+                          textAlign: TextAlign.center,
                           style: AppTheme.of(context)
                           .bodyText1.override(
                             fontFamily:
@@ -275,9 +276,10 @@ class _PreviewSimsCardCSVState extends State<PreviewSimsCardCSV> {
                         ),
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
+                        width: MediaQuery.of(context).size.width * 0.2,
                         child: Text(
-                          "IMEI",
+                          "SAP ID",
+                          textAlign: TextAlign.center,
                           style: AppTheme.of(context)
                           .bodyText1.override(
                             fontFamily:
@@ -292,6 +294,7 @@ class _PreviewSimsCardCSVState extends State<PreviewSimsCardCSV> {
                         width: MediaQuery.of(context).size.width * 0.15,
                         child: Text(
                           "Options",
+                          textAlign: TextAlign.center,
                           style: AppTheme.of(context)
                           .bodyText1.override(
                             fontFamily:

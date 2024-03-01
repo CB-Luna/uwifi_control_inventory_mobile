@@ -1,6 +1,3 @@
-import 'package:clay_containers/constants.dart';
-import 'package:clay_containers/widgets/clay_container.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/screens/main/main_screen_selector.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +7,6 @@ import 'package:uwifi_control_inventory_mobile/screens/widgets/indicator_filter_
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/menu_form_button.dart';
-import 'package:uwifi_control_inventory_mobile/util/flutter_flow_util.dart';
 class ControlInventoryBundleScreen extends StatefulWidget {
 
   const ControlInventoryBundleScreen({
@@ -74,12 +70,26 @@ final animationsMap = {
       ],
     ),
   };
+  
 
 class _ControlInventoryBundleScreenState extends State<ControlInventoryBundleScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      BundleMenuProvider provider = Provider.of<BundleMenuProvider>(
+        context,
+        listen: false,
+      );
+      await provider.updateState();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final bundleMenuProvider = Provider.of<BundleMenuProvider>(context);
-    final userProvider = Provider.of<UsuarioController>(context);
     return Scaffold(
       backgroundColor: AppTheme.of(context).background,
       body: SafeArea(
@@ -209,58 +219,6 @@ class _ControlInventoryBundleScreenState extends State<ControlInventoryBundleScr
                   ],
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsetsDirectional.fromSTEB(24, 16, 24, 16),
-              //   child: Shimmer(
-              //     child: ClayContainer(
-              //       height: 60,
-              //       depth: 30,
-              //       spread: 2,
-              //       customBorderRadius: const BorderRadius.only(
-              //         topLeft: Radius.circular(30), 
-              //         bottomRight: Radius.circular(30),
-              //       ),
-              //       curveType: CurveType.concave,
-              //       color: AppTheme.of(context).secondaryColor,
-              //       child: Column(
-              //         mainAxisSize: MainAxisSize.max,
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: [
-              //           Row(
-              //             mainAxisSize: MainAxisSize.max,
-              //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //             children: [
-              //               Text(
-              //                 maybeHandleOverflow("${
-              //                   userProvider.usuarioCurrent?.firstName} ${
-              //                   userProvider.usuarioCurrent?.lastName}", 24, "..."),
-              //                 style: AppTheme.of(context).bodyText1.override(
-              //                   fontFamily:
-              //                       AppTheme.of(context).bodyText1Family,
-              //                   color: AppTheme.of(context).white,
-              //                   fontWeight: FontWeight.w500,
-              //                   fontSize: 15,
-              //                 ),
-              //               ),
-              //               Text(
-              //                 DateFormat(
-              //                  'MMM-dd-yyyy').
-              //                   format(DateTime.now()),
-              //                 style: AppTheme.of(context).bodyText1.override(
-              //                   fontFamily:
-              //                       AppTheme.of(context).bodyText1Family,
-              //                   color: AppTheme.of(context).white,
-              //                   fontWeight: FontWeight.w500,
-              //                   fontSize: 15,
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ).animateOnPageLoad(animationsMap['moveLoadAnimationLR']!),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(24, 16, 24, 24),
                 child: Row(
@@ -290,28 +248,35 @@ class _ControlInventoryBundleScreenState extends State<ControlInventoryBundleScr
                 endIndent: 20,
                 color: AppTheme.of(context).grayLighter,
               ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(24, 16, 24, 24),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IndicatorFilterButton(
-                      text: "AT&T", 
-                      onPressed: () {
-                        bundleMenuProvider.changeOptionSKUProvider(0);
-                      },
-                      isTaped: bundleMenuProvider.valueSKUProvider == 0,
-                    ),
-                    IndicatorFilterButton(
-                      text: "T-Mobile", 
-                      onPressed: () {
-                        bundleMenuProvider.changeOptionSKUProvider(1);
-                      },
-                      isTaped: bundleMenuProvider.valueSKUProvider == 1,
-                    ),
-                  ],
+              SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 100,
+                child: Builder(
+                  builder: (context) {
+                    return Center(
+                      child: ListView.builder(
+                      padding: const EdgeInsetsDirectional.fromSTEB(24, 16, 24, 24),
+                      shrinkWrap: true,
+                      controller: ScrollController(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: bundleMenuProvider.simCarriers.length,
+                      itemBuilder: (context, index) {
+                        final carrier = bundleMenuProvider.simCarriers[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: IndicatorFilterButton(
+                            text: carrier.name,
+                            onPressed: () {
+                              bundleMenuProvider.changeOptionSimCarrier(carrier.simCarrierId);
+                            },
+                            isTaped: bundleMenuProvider.valueSimCarrier == carrier.simCarrierId,
+                          ).animateOnPageLoad(animationsMap['moveLoadAnimationRL']!),
+                        );
+                      }),
+                    );
+                  },
                 ),
-              ).animateOnPageLoad(animationsMap['moveLoadAnimationRL']!),
+              ),
               Builder(
                 builder: (context) {
                   final section = bundleMenuProvider.menuTaped[

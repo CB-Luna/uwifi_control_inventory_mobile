@@ -2,7 +2,7 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
-import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
+import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/control_inventory_bundle_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/order/control_inventory_order_screen.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/control_inventory_sims_card_screen.dart';
@@ -21,10 +21,8 @@ class ControlDailyScreen extends StatefulWidget {
 class _ControlDailyScreenState extends State<ControlDailyScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  ControlForm? controlFormCheckOut;
-  ControlForm? controlFormCheckIn;
-  List<VehicleServices>? vehicleServicesList = [];
-  // List<String> vehicleServicesList = ["Hola", "Adios"];
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -258,21 +256,9 @@ class _ControlDailyScreenState extends State<ControlDailyScreen> {
                                         spread: 1,
                                         borderRadius: 25,
                                         curveType: CurveType.concave,
-                                        color: 
-                                        controlFormCheckOut != null ?
-                                        AppTheme.of(context).buenoColor
-                                        :
-                                        AppTheme.of(context).primaryColor,
-                                        surfaceColor: 
-                                        controlFormCheckOut != null ?
-                                        AppTheme.of(context).buenoColor
-                                        :
-                                        AppTheme.of(context).primaryColor,
-                                        parentColor: 
-                                        controlFormCheckOut != null ?
-                                        AppTheme.of(context).buenoColor
-                                        :
-                                        AppTheme.of(context).primaryColor,
+                                        color: AppTheme.of(context).primaryColor,
+                                        surfaceColor: AppTheme.of(context).primaryColor,
+                                        parentColor: AppTheme.of(context).primaryColor,
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(25),
@@ -395,21 +381,9 @@ class _ControlDailyScreenState extends State<ControlDailyScreen> {
                                         spread: 1,
                                         borderRadius: 25,
                                         curveType: CurveType.concave,
-                                        color: 
-                                        controlFormCheckIn != null ?
-                                        AppTheme.of(context).buenoColor
-                                        :
-                                        AppTheme.of(context).primaryColor,
-                                        surfaceColor: 
-                                        controlFormCheckIn != null ?
-                                        AppTheme.of(context).buenoColor
-                                        :
-                                        AppTheme.of(context).primaryColor,
-                                        parentColor: 
-                                        controlFormCheckIn != null ?
-                                        AppTheme.of(context).buenoColor
-                                        :
-                                        AppTheme.of(context).primaryColor,
+                                        color: AppTheme.of(context).primaryColor,
+                                        surfaceColor: AppTheme.of(context).primaryColor,
+                                        parentColor: AppTheme.of(context).primaryColor,
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(25),
@@ -431,7 +405,7 @@ class _ControlDailyScreenState extends State<ControlDailyScreen> {
                           GestureDetector(
                             onTap: () async {
                               await Navigator.push(
-                                context,
+                                context,    
                                 MaterialPageRoute(
                                   builder: (context) =>
                                       const ControlInventoryBundleScreen(),
@@ -532,21 +506,9 @@ class _ControlDailyScreenState extends State<ControlDailyScreen> {
                                         spread: 1,
                                         borderRadius: 25,
                                         curveType: CurveType.concave,
-                                        color: 
-                                        controlFormCheckIn != null ?
-                                        AppTheme.of(context).buenoColor
-                                        :
-                                        AppTheme.of(context).primaryColor,
-                                        surfaceColor: 
-                                        controlFormCheckIn != null ?
-                                        AppTheme.of(context).buenoColor
-                                        :
-                                        AppTheme.of(context).primaryColor,
-                                        parentColor: 
-                                        controlFormCheckIn != null ?
-                                        AppTheme.of(context).buenoColor
-                                        :
-                                        AppTheme.of(context).primaryColor,
+                                        color: AppTheme.of(context).primaryColor,
+                                        surfaceColor: AppTheme.of(context).primaryColor,
+                                        parentColor: AppTheme.of(context).primaryColor,
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(25),
@@ -669,21 +631,9 @@ class _ControlDailyScreenState extends State<ControlDailyScreen> {
                                         spread: 1,
                                         borderRadius: 25,
                                         curveType: CurveType.concave,
-                                        color: 
-                                        controlFormCheckIn != null ?
-                                        AppTheme.of(context).buenoColor
-                                        :
-                                        AppTheme.of(context).primaryColor,
-                                        surfaceColor: 
-                                        controlFormCheckIn != null ?
-                                        AppTheme.of(context).buenoColor
-                                        :
-                                        AppTheme.of(context).primaryColor,
-                                        parentColor: 
-                                        controlFormCheckIn != null ?
-                                        AppTheme.of(context).buenoColor
-                                        :
-                                        AppTheme.of(context).primaryColor,
+                                        color: AppTheme.of(context).primaryColor,
+                                        surfaceColor: AppTheme.of(context).primaryColor,
+                                        parentColor: AppTheme.of(context).primaryColor,
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(25),

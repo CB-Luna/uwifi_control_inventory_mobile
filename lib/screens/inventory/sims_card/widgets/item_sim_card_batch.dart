@@ -234,30 +234,32 @@ class _ItemSimCardBatchState extends State<ItemSimCardBatch> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.3,
-                child: Text(
-                  widget.simCardBatch.sapId,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTheme.of(context)
-                  .bodyText1.override(
-                    fontFamily:
-                          AppTheme.of(context).bodyText1Family,
-                    color: AppTheme.of(context).tertiaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.3,
+                width: MediaQuery.of(context).size.width * 0.4,
                 child: Text(
                   widget.simCardBatch.imei,
+                  textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: AppTheme.of(context)
                   .bodyText1.override(
                     fontFamily:
                           AppTheme.of(context).bodyText1Family,
                     color: AppTheme.of(context).secondaryText,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.2,
+                child: Text(
+                  widget.simCardBatch.sapId,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTheme.of(context)
+                  .bodyText1.override(
+                    fontFamily:
+                          AppTheme.of(context).bodyText1Family,
+                    color: AppTheme.of(context).tertiaryColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
                   ),

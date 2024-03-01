@@ -214,32 +214,53 @@ class BundleFormProvider extends ChangeNotifier {
   }
 
 
-  Future<String> addNewBundleBackend(Users currentUser) async {
+  Future<String> addNewBundleBackend(Users currentUser, int simCarrierId) async {
     try {
       if (await existsRegisterInBackend("router_sim_connection", "sim_detail_fk", simCard1!.simDetailId.toString()) 
       || await existsRegisterInBackend("router_sim_connection", "sim_detail_fk", simCard2!.simDetailId.toString()) ) {
         return "Duplicate";
       }
-      final recordSim1 = await supabase.from('router_sim_connection').insert(
-        {
-          'port': 1,
-          'router_detail_fk': gatewayCaptured!.routerDetailId,
-          'sim_detail_fk': simCard1!.simDetailId,
-          'created_by': currentUser.sequentialId
-        },
-      ).select<PostgrestList>('router_sim_connection_id');
-      
-      final recordSim2 = await supabase.from('router_sim_connection').insert(
-        {
-          'port': 2,
-          'router_detail_fk': gatewayCaptured!.routerDetailId,
-          'sim_detail_fk': simCard2!.simDetailId,
-          'created_by': currentUser.sequentialId
-        },
-      ).select<PostgrestList>('router_sim_connection_id');
 
-      if (recordSim1.isNotEmpty && recordSim2.isNotEmpty) {
-        return "True";
+      final updateSimCarrier1 = await supabase.from('sim_detail').update(
+        {
+          'sim_carrier_fk': simCarrierId,
+        },
+      ).eq(
+        'sim_detail_id', simCard1!.simDetailId
+      ).select<PostgrestList>('sim_detail_id');
+      
+      final updateSimCarrier2 = await supabase.from('sim_detail').update(
+        {
+          'sim_carrier_fk': simCarrierId,
+        },
+      ).eq(
+        'sim_detail_id', simCard2!.simDetailId
+      ).select<PostgrestList>('sim_detail_id');
+
+      if (updateSimCarrier1.isNotEmpty && updateSimCarrier2.isNotEmpty) {
+        final recordSim1 = await supabase.from('router_sim_connection').insert(
+          {
+            'port': 1,
+            'router_detail_fk': gatewayCaptured!.routerDetailId,
+            'sim_detail_fk': simCard1!.simDetailId,
+            'created_by': currentUser.sequentialId
+          },
+        ).select<PostgrestList>('router_sim_connection_id');
+        
+        final recordSim2 = await supabase.from('router_sim_connection').insert(
+          {
+            'port': 2,
+            'router_detail_fk': gatewayCaptured!.routerDetailId,
+            'sim_detail_fk': simCard2!.simDetailId,
+            'created_by': currentUser.sequentialId
+          },
+        ).select<PostgrestList>('router_sim_connection_id');
+
+        if (recordSim1.isNotEmpty && recordSim2.isNotEmpty) {
+          return "True";
+        } else {
+          return "False";
+        }
       } else {
         return "False";
       }

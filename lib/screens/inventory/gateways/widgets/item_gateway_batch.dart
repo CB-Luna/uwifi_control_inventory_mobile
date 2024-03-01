@@ -364,6 +364,7 @@ class _ItemGatewayBatchState extends State<ItemGatewayBatch> {
                 width: MediaQuery.of(context).size.width * 0.3,
                 child: Text(
                   widget.gatewayBatch.serialNo,
+                  textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: AppTheme.of(context)
                   .bodyText1.override(
@@ -379,6 +380,7 @@ class _ItemGatewayBatchState extends State<ItemGatewayBatch> {
                 width: MediaQuery.of(context).size.width * 0.3,
                 child: Text(
                   widget.gatewayBatch.mac,
+                  textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: AppTheme.of(context)
                   .bodyText1.override(

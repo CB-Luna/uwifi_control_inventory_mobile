@@ -28,7 +28,7 @@ class InventoryFormBatch extends StatelessWidget {
               padding: const EdgeInsetsDirectional.fromSTEB(
                   5, 5, 5, 5),
               child: Text(
-                "Please Upload a Valid CSV File",
+                "Please Upload a Valid XLSX File",
                 style: AppTheme.of(context).subtitle2,
               )
             ),

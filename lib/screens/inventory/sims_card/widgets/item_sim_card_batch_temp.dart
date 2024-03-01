@@ -51,12 +51,12 @@ class _ItemSimCardBatchTempState extends State<ItemSimCardBatchTemp> {
                   children: [
                     Icon(
                         widget.simCardBatchTemp.batchStatusFk == 1 ?
-                        Icons.error_outline_outlined
+                        Icons.error
                         :
                         widget.simCardBatchTemp.batchStatusFk == 2 ?
-                        Icons.close_outlined
+                        Icons.cancel
                         :
-                        Icons.check_outlined,
+                        Icons.check_circle,
                         size: 20,
                         color: 
                         widget.simCardBatchTemp.batchStatusFk == 1 ?
