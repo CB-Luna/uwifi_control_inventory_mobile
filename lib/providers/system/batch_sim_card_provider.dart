@@ -43,7 +43,6 @@ class BatchSimCardProvider extends ChangeNotifier {
 
     if (table != null) {
       // Eliminar la primera fila vacía
-      table.rows.removeAt(0);
       return table.rows;
     } else {
       return [];
