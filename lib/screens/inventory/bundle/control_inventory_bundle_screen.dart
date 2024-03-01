@@ -265,7 +265,7 @@ class _ControlInventoryBundleScreenState extends State<ControlInventoryBundleScr
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: IndicatorFilterButton(
-                            text: carrier.name,
+                            text: "${index + 1}. ${carrier.name}",
                             onPressed: () {
                               bundleMenuProvider.changeOptionSimCarrier(carrier.simCarrierId);
                             },
