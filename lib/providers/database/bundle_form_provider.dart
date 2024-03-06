@@ -139,10 +139,9 @@ class BundleFormProvider extends ChangeNotifier {
 
   //************************SIMS Cards Components *********/
   TextEditingController imeiTextController = TextEditingController();
-  String codeQRSC =  "";
+  String previous = "";
 
   Future<bool> autofillFieldsSIMCardQR(String value, int number) async {
-    codeQRSC = value;
     if (value.contains(imeiSCRegExp)) {
       // Intenta encontrar la primera coincidencia en el texto
       Match? matchImeiSC = imeiSCRegExp.firstMatch(value);
@@ -164,6 +163,7 @@ class BundleFormProvider extends ChangeNotifier {
   }
 
   Future<bool> autofillFieldsSIMCardOCR(String value, int number) async {
+    previous =  value;
     if (value.contains(imeiSCRegExp)) {
       // Intenta encontrar la primera coincidencia en el texto
       Match? matchImeiSC = imeiSCRegExp.firstMatch(value);
@@ -185,6 +185,7 @@ class BundleFormProvider extends ChangeNotifier {
       return false;
     }
   }
+
 
   Future<bool> validateSIMCardBackend(String imei, int number) async {
     try {
@@ -278,7 +279,7 @@ class BundleFormProvider extends ChangeNotifier {
     serialNumberTextController.clear();
     imeiTextController.clear();
     codeQRG =  "";
-    codeQRSC =  "";
+    previous =  "";
     gatewayCaptured = null;
     simCard1 = null;
     simCard2 = null;

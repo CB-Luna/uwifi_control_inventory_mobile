@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
@@ -113,8 +114,22 @@ class BatchSimCardProvider extends ChangeNotifier {
 
           if (idDocument != null) {
             //LLamado de API Batch
-            var urlAPI = Uri.parse('https://data-analitic.cbluna-dev.com/apigateway_ci/uwifi_ci/upload_batch_sims_card/$idDocument/${currentUser.sequentialId}');
-            var responseAPI = await get(urlAPI);
+            var urlAPI = Uri.parse('https://data-analitic.cbluna-dev.com/apigateway/spark/uwifi_ci_batch_sims_card');
+            final headers = ({
+              "Content-Type": "application/json",
+            });
+            var responseAPI = await post(
+              urlAPI,
+              headers: headers,
+              body: json.encode(
+                {
+                  "body": {
+                      "document_id": idDocument,
+                      "sequential_id": currentUser.sequentialId
+                  }
+                },
+              )
+            );
 
             if (!responseAPI.body.contains('Failed')) {
               final res = await supabase

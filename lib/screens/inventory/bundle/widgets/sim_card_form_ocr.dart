@@ -56,9 +56,11 @@ class SIMCardFormOCR extends StatelessWidget {
                             ..color = AppTheme.of(context).primaryColor,
                           boxHeight: MediaQuery.of(context).size.width * 0.7,
                           getScannedText: (value) async {
-                            if (await bundleFormProvider.autofillFieldsSIMCardOCR(value, bundleMenuProvider.simCardNumer)) {
-                              bundleMenuProvider.changeOptionInventorySection(4);
-                              bundleMenuProvider.changeOptionButtonsGC(0, null);
+                            if (bundleFormProvider.previous != value) {
+                              if (await bundleFormProvider.autofillFieldsSIMCardOCR(value, bundleMenuProvider.simCardNumer)) {
+                                bundleMenuProvider.changeOptionInventorySection(4);
+                                bundleMenuProvider.changeOptionButtonsGC(0, null);
+                              }
                             }
                           },),
                       FFButtonWidget(
