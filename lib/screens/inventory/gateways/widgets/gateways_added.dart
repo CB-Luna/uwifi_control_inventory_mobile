@@ -253,7 +253,8 @@ class GatewaysAdded extends StatelessWidget {
             children: [
               FFButtonWidget(
                 onPressed: () async {
-                  gatewayMenuProvider.changeOptionInventorySection(0);
+                  batchGatewayProvider.clearData();
+                  gatewayMenuProvider.changeOptionInventorySection(1);
                 },
                 text: 'Accept',
                 icon: const Icon(

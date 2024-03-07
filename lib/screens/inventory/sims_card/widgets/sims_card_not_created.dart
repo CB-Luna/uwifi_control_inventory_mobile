@@ -42,7 +42,7 @@ class SimsCardNotCreated extends StatelessWidget {
                 children: [
                   FFButtonWidget(
                     onPressed: () async {
-                      simsCardMenuProvider.changeOptionInventorySection(0);
+                      simsCardMenuProvider.changeOptionInventorySection(1);
                     },
                     text: 'Try again',
                     icon: const Icon(

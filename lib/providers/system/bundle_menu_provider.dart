@@ -124,6 +124,9 @@ class BundleMenuProvider extends ChangeNotifier {
   }
 
   void clean() {
+    valueOptionSection = 0;
+    valueOptionButtonsGC = 0;
+    valueSimCarrier = 1;
     buttonMenuTaped = 0;
     notifyListeners();
   }

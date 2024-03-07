@@ -67,6 +67,7 @@ class GatewayMenuProvider extends ChangeNotifier {
   }
 
   void clean() {
+    valueOptionSection = 1;
     buttonMenuTaped = 0;
     notifyListeners();
   }

@@ -42,7 +42,7 @@ class GatewaysNotCreated extends StatelessWidget {
                 children: [
                   FFButtonWidget(
                     onPressed: () async {
-                      gatewayMenuProvider.changeOptionInventorySection(0);
+                      gatewayMenuProvider.changeOptionInventorySection(1);
                     },
                     text: 'Try Again',
                     icon: const Icon(

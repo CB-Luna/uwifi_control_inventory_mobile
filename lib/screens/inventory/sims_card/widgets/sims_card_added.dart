@@ -256,7 +256,8 @@ class SimsCardAdded extends StatelessWidget {
                 children: [
                   FFButtonWidget(
                     onPressed: () async {
-                      simsCardMenuProvider.changeOptionInventorySection(0);
+                      batchSimCardProvider.clearData();
+                      simsCardMenuProvider.changeOptionInventorySection(1);
                     },
                     text: 'Accept',
                     icon: const Icon(
