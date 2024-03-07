@@ -311,16 +311,16 @@ class BatchSimCardProvider extends ChangeNotifier {
     searchController.clear();
   }
 
-  // bool removeSimCard(String imei) {
-  //   try {
-  //     simsCardBatch.removeWhere((element) => element.imei == imei);
-  //     notifyListeners();
-  //     return true;
-  //   } catch (e) {
-  //     print('Error en removeSimCard() - $e');
-  //     return false;
-  //   }
-  // }
+  bool removeSimCardBatch(String imei) {
+    try {
+      simsCardBatch.removeWhere((element) => element.imei == imei);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      print('Error en removeSimCard() - $e');
+      return false;
+    }
+  }
 
   @override
   void dispose() {

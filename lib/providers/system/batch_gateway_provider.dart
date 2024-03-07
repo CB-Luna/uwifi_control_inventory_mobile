@@ -322,16 +322,16 @@ class BatchGatewayProvider extends ChangeNotifier {
     searchController.clear();
   }
   
-  // bool removeGateway(String serialNumber) {
-  //   try {
-  //     gatewaysBatch.removeWhere((element) => element.serialNo == serialNumber);
-  //     notifyListeners();
-  //     return true;
-  //   } catch (e) {
-  //     print('Error en removeGateway() - $e');
-  //     return false;
-  //   }
-  // }
+  bool removeGatewayBatch(String serialNumber) {
+    try {
+      gatewaysBatch.removeWhere((element) => element.serialNo == serialNumber);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      print('Error en removeGateway() - $e');
+      return false;
+    }
+  }
 
   @override
   void dispose() {
