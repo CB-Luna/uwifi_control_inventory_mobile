@@ -4,6 +4,7 @@ import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/models/sims_card_batch.dart';
 
 class SIMSCardFormProvider extends ChangeNotifier {
   
@@ -99,6 +100,18 @@ class SIMSCardFormProvider extends ChangeNotifier {
       }
     } catch (e) {
       return "$e";
+    }
+  }
+
+  SimsCardBatch? createSimsCardBatch() {
+    try {
+      final simsCardBatch = SimsCardBatch(
+        sapId: sapIdTextController.text, 
+        imei: imeiSCTextController.text
+      );
+      return simsCardBatch;
+    } catch (e) {
+      return null;
     }
   }
 

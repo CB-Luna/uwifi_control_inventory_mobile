@@ -7,14 +7,14 @@ import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widget
 import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button_option.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 
-class PreviewGatewaysCSV extends StatefulWidget {
+class PreviewGatewaysUploaded extends StatefulWidget {
   
-  const PreviewGatewaysCSV({super.key});
+  const PreviewGatewaysUploaded({super.key});
 
   @override
-  State<PreviewGatewaysCSV> createState() => _PreviewGatewaysCSVState();
+  State<PreviewGatewaysUploaded> createState() => _PreviewGatewaysUploadedState();
 }
-class _PreviewGatewaysCSVState extends State<PreviewGatewaysCSV> {
+class _PreviewGatewaysUploadedState extends State<PreviewGatewaysUploaded> {
 
   @override
   void initState() {
@@ -25,6 +25,7 @@ class _PreviewGatewaysCSVState extends State<PreviewGatewaysCSV> {
   Widget build(BuildContext context) {
     final provider = Provider.of<BatchGatewayProvider>(context);
     final gatewayMenuProvider = Provider.of<GatewayMenuProvider>(context);
+    final batchGatewayProvider = Provider.of<BatchGatewayProvider>(context);
     final userProvider = Provider.of<UsuarioController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
@@ -40,6 +41,7 @@ class _PreviewGatewaysCSVState extends State<PreviewGatewaysCSV> {
                       5, 10, 5, 10),
                   child: FFButtonWidget(
                     onPressed: () async {
+                      batchGatewayProvider.clearData();
                       gatewayMenuProvider.changeOptionInventorySection(3);
                     },
                     text: 'Back',
@@ -79,15 +81,15 @@ class _PreviewGatewaysCSVState extends State<PreviewGatewaysCSV> {
                       5, 10, 5, 10),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      if (await provider.addGatewaysBatch(userProvider.usuarioCurrent)) {
+                      if (await provider.addGatewaysBatchUploaded(userProvider.usuarioCurrent)) {
                         gatewayMenuProvider.changeOptionInventorySection(6);
                       } else {
                         gatewayMenuProvider.changeOptionInventorySection(7);
                       }
                     },
-                    text: 'Add',
+                    text: 'Upload',
                     icon: const Icon(
-                      Icons.add_outlined,
+                      Icons.check_outlined,
                       size: 15,
                     ),
                     options: CustomButtonOption(

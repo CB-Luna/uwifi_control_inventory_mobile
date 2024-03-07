@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/components/preview_sims_card_csv.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/components/preview_sims_card_created.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widgets/inventory_form_ocr_batch.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widgets/result_section_batch.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/components/preview_sims_card_uploaded.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widgets/inventory_form_ocr.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widgets/inventory_form_batch.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widgets/options_add_products.dart';
@@ -39,11 +42,17 @@ class SIMSCardMenuProvider extends ChangeNotifier {
         case 4:
           return ResultSection();
           case 5:
-        return const PreviewSimsCardCSV();
+        return const PreviewSimsCardUploaded();
           case 6:
         return SimsCardAdded();
           case 7:
         return SimsCardNotCreated();
+        case 8:
+        return const PreviewSimsCardCreated();
+        case 9:
+          return const InventoryFormOCRBatch();
+        case 10:
+          return ResultSectionBatch();
         default:
           return OptionsAddProducts();
       }

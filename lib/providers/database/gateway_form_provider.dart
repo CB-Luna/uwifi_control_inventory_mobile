@@ -4,6 +4,7 @@ import 'package:uwifi_control_inventory_mobile/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:uwifi_control_inventory_mobile/database/entitys.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
+import 'package:uwifi_control_inventory_mobile/models/gateway_batch.dart';
 
 class GatewayFormProvider extends ChangeNotifier {
   
@@ -51,11 +52,6 @@ class GatewayFormProvider extends ChangeNotifier {
   }
 
   Future<bool> autofillFieldsOCR(String value) async {
-    print("*****<<<<<>>>>$value<<<<<>>>>>********");
-    print("Wi-Fi: KEY: ${value.contains(wifiKeyRegExp)}");
-    print("IMEI: ${value.contains(imeiGRegExp)}");
-    print("MAC: ${value.contains(macRegExp)}");
-    print("S/N: ${value.contains(serialNumberRegExp)}");
     if (value.contains(wifiKeyRegExp) 
     && value.contains(imeiGRegExp) 
     && value.contains(macRegExp)
@@ -133,6 +129,20 @@ class GatewayFormProvider extends ChangeNotifier {
       }
     } catch (e) {
       return "$e";
+    }
+  }
+
+  GatewayBatch? createGatewayBatch() {
+    try {
+      final gatewayBatch = GatewayBatch(
+        serialNo: serialNumberTextController.text, 
+        imei: imeiGTextController.text, 
+        mac: macTextController.text, 
+        wifiKey: wifiKeyTextController.text
+      );
+      return gatewayBatch;
+    } catch (e) {
+      return null;
     }
   }
 

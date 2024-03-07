@@ -7,14 +7,14 @@ import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widge
 import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button_option.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 
-class PreviewSimsCardCSV extends StatefulWidget {
+class PreviewSimsCardUploaded extends StatefulWidget {
   
-  const PreviewSimsCardCSV({super.key});
+  const PreviewSimsCardUploaded({super.key});
 
   @override
-  State<PreviewSimsCardCSV> createState() => _PreviewSimsCardCSVState();
+  State<PreviewSimsCardUploaded> createState() => _PreviewSimsCardUploadedState();
 }
-class _PreviewSimsCardCSVState extends State<PreviewSimsCardCSV> {
+class _PreviewSimsCardUploadedState extends State<PreviewSimsCardUploaded> {
 
   @override
   void initState() {
@@ -79,7 +79,7 @@ class _PreviewSimsCardCSVState extends State<PreviewSimsCardCSV> {
                       5, 10, 5, 10),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      if (await provider.addSimsCardBatch(userProvider.usuarioCurrent)) {
+                      if (await provider.addSimsCardBatchUploaded(userProvider.usuarioCurrent)) {
                         simsCardMenuProvider.changeOptionInventorySection(6);
                       } else {
                         simsCardMenuProvider.changeOptionInventorySection(7);

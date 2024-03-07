@@ -1,8 +1,9 @@
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
-import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/sims_card_form_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/batch_sim_card_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uwifi_control_inventory_mobile/providers/system/batch_sim_card_provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/system/sims_card_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button_option.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 
@@ -27,7 +28,16 @@ class InventoryFormBatch extends StatelessWidget {
               padding: const EdgeInsetsDirectional.fromSTEB(
                   5, 5, 5, 5),
               child: Text(
-                "Please Upload a Valid XLSX File",
+                "Please Select One Option",
+                style: AppTheme.of(context).subtitle1,
+              )
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(
+                  5, 5, 5, 5),
+              child: Text(
+                "*Note: If you want to upload a Batch, select a valid .xlsx File",
+                textAlign: TextAlign.center,
                 style: AppTheme.of(context).subtitle2,
               )
             ),
@@ -109,14 +119,48 @@ class InventoryFormBatch extends StatelessWidget {
                   5, 15, 5, 15),
               child: FFButtonWidget(
                 onPressed: () async {
+                  simsCardMenuProvider.changeOptionInventorySection(8);
+                },
+                text: 'Create Batch',
+                icon: const Icon(
+                  Icons.note_add_outlined,
+                  size: 15,
+                ),
+                options: CustomButtonOption(
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  height: 40,
+                  color: AppTheme.of(context)
+                      .white,
+                  textStyle: AppTheme.of(context)
+                      .subtitle2
+                      .override(
+                        fontFamily: AppTheme.of(context)
+                            .subtitle2Family,
+                        color: AppTheme.of(context).alternate,
+                        fontSize: 15,
+                      ),
+                  borderSide: BorderSide(
+                    color: AppTheme.of(context).alternate,
+                    width: 2,
+                  ),
+                  borderRadius:
+                      BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(
+                  5, 15, 5, 15),
+              child: FFButtonWidget(
+                onPressed: () async {
                   simsCardFormProvider.clearControllers();
                   simsCardMenuProvider.changeOptionInventorySection(1);
                 },
                 text: 'Back',
-                icon: const Icon(
-                  Icons.arrow_back_outlined,
-                  size: 15,
-                ),
+                  icon: const Icon(
+                    Icons.arrow_back_outlined,
+                    size: 15,
+                  ),
                 options: CustomButtonOption(
                   width: MediaQuery.of(context).size.width * 0.2,
                   height: 40,

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/preview_gateways_csv.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/preview_gateways_created.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/preview_gateways_uploaded.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/gateways_created_list.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/components/selector_inventory_form_gateway.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/gateways_added.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/gateways_not_created.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/inevntory_form_ocr_batch.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/inventory_form_ocr.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/inventory_form_batch.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/options_add_products.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/result_section.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/gateways/widgets/result_section_batch.dart';
 class GatewayMenuProvider extends ChangeNotifier {
 
 
@@ -42,11 +45,17 @@ class GatewayMenuProvider extends ChangeNotifier {
       case 4:
         return ResultSection();
       case 5:
-        return const PreviewGatewaysCSV();
+        return const PreviewGatewaysUploaded();
       case 6:
         return GatewaysAdded();
       case 7:
         return GatewaysNotCreated();
+      case 8:
+        return const PreviewGatewaysCreated();
+      case 9:
+        return const InventoryFormOCRBatch();
+      case 10:
+        return ResultSectionBatch();
       default:
         return OptionsAddProducts();
     }

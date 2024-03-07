@@ -28,7 +28,16 @@ class InventoryFormBatch extends StatelessWidget {
               padding: const EdgeInsetsDirectional.fromSTEB(
                   5, 5, 5, 5),
               child: Text(
-                "Please Upload a Valid XLSX File",
+                "Please Select One Option",
+                style: AppTheme.of(context).subtitle1,
+              )
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(
+                  5, 5, 5, 5),
+              child: Text(
+                "*Note: If you want to upload a Batch, select a valid .xlsx File",
+                textAlign: TextAlign.center,
                 style: AppTheme.of(context).subtitle2,
               )
             ),
@@ -81,6 +90,40 @@ class InventoryFormBatch extends StatelessWidget {
                 text: 'Upload Batch',
                 icon: const Icon(
                   Icons.upload_file_outlined,
+                  size: 15,
+                ),
+                options: CustomButtonOption(
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  height: 40,
+                  color: AppTheme.of(context)
+                      .white,
+                  textStyle: AppTheme.of(context)
+                      .subtitle2
+                      .override(
+                        fontFamily: AppTheme.of(context)
+                            .subtitle2Family,
+                        color: AppTheme.of(context).alternate,
+                        fontSize: 15,
+                      ),
+                  borderSide: BorderSide(
+                    color: AppTheme.of(context).alternate,
+                    width: 2,
+                  ),
+                  borderRadius:
+                      BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(
+                  5, 15, 5, 15),
+              child: FFButtonWidget(
+                onPressed: () async {
+                  gatewayMenuProvider.changeOptionInventorySection(8);
+                },
+                text: 'Create Batch',
+                icon: const Icon(
+                  Icons.note_add_outlined,
                   size: 15,
                 ),
                 options: CustomButtonOption(
