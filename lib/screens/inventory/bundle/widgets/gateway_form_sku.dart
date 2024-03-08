@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/bundle_menu_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/custom_button_option.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/indicator_filter_button.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 
 class GatewayFormSKU extends StatelessWidget {
@@ -26,11 +27,28 @@ class GatewayFormSKU extends StatelessWidget {
         key: keyForm,
         child: SizedBox( // Need to use container to add size constraint.
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.3,
+          height: MediaQuery.of(context).size.height * 0.4,
           child: SingleChildScrollView(
             controller: ScrollController(),
             child: Column(
               children: [
+                Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                child: Center(
+                  child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: 50,
+                  child: IndicatorFilterButton(
+                    text: "${bundleMenuProvider.valueSimCarrier}. ${
+                      bundleMenuProvider.simCarriers[
+                      bundleMenuProvider.valueSimCarrier -1
+                    ].name}",
+                    onPressed: () {},
+                    isTaped: true,
+                  ),
+                  ),
+                ),
+              ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 16),
                   child: GestureDetector(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/providers/providers.dart';
+import 'package:uwifi_control_inventory_mobile/screens/widgets/indicator_filter_button.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/screens/widgets/flutter_flow_widgets.dart';
 
@@ -16,6 +17,23 @@ class OptionsRecoverGateways extends StatelessWidget {
     final bundleMenuProvider = Provider.of<BundleMenuProvider>(context);
     return Column(
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+          child: Center(
+            child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.5,
+            height: 50,
+            child: IndicatorFilterButton(
+              text: "${bundleMenuProvider.valueSimCarrier}. ${
+                bundleMenuProvider.simCarriers[
+                bundleMenuProvider.valueSimCarrier -1
+              ].name}",
+              onPressed: () {},
+              isTaped: true,
+            ),
+            ),
+          ),
+        ),
         Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(
               5, 25, 5, 25),

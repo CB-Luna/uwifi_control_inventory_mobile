@@ -248,23 +248,6 @@ class _ControlInventoryBundleScreenState extends State<ControlInventoryBundleScr
                 endIndent: 20,
                 color: AppTheme.of(context).grayLighter,
               ),
-              Visibility(
-                visible: bundleMenuProvider.valueOptionSection != 0,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  child: Center(
-                    child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    height: 50,
-                    child: IndicatorFilterButton(
-                      text: "${bundleMenuProvider.valueSimCarrier}. SKU",
-                      onPressed: () {},
-                      isTaped: true,
-                    ).animateOnPageLoad(animationsMap['moveLoadAnimationRL']!),
-                    ),
-                  ),
-                ),
-              ),
               Builder(
                 builder: (context) {
                   final section = bundleMenuProvider.menuTaped[
@@ -277,7 +260,6 @@ class _ControlInventoryBundleScreenState extends State<ControlInventoryBundleScr
                   );
                 },
               ),
-
               const SizedBox(
                 height: 50,
               )
