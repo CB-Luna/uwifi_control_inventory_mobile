@@ -19,12 +19,17 @@ class BatchSimCardProvider extends ChangeNotifier {
   Uint8List? bytesExcel;
 
   final searchController = TextEditingController();
+  final noRecordsController = TextEditingController();
 
-  bool validateCsvFormat(List<List<dynamic>> csvData) {
+  bool validateKeyForm(GlobalKey<FormState> formKey) {
+    return formKey.currentState!.validate() ? true : false;
+  }
+
+  bool validateXLSXFormat(List<List<dynamic>> xlsxData) {
     // Aquí puedes realizar validaciones adicionales, como verificar
     // que el archivo tenga los encabezados esperados
     List<String> expectedHeaders = ['IMEI', 'SAP ID'];
-    List<dynamic> headers = csvData.first;
+    List<dynamic> headers = xlsxData.first;
 
     //En caso de que la posición del header fuera aleatoria, 
     //crearíamos una función para recuperar el índice de cada header
@@ -67,11 +72,14 @@ class BatchSimCardProvider extends ChangeNotifier {
         if (rows.first.isEmpty || rows.first.length == 1) {
           return 'Not Rows Data';
         } 
-        if (!validateCsvFormat(rows)) {
+        if (!validateXLSXFormat(rows)) {
           return 'Not Valid Format';
         } else {
           //Se quitan los headers
           rows.removeAt(0);
+          if (rows.length != int.parse(noRecordsController.text)) {
+            return 'Not Same No. Records';
+          } 
           for (var row in rows) {
             final SimsCardBatch simCardBatch = SimsCardBatch(
               imei: row[0].toString(), 
@@ -309,6 +317,10 @@ class BatchSimCardProvider extends ChangeNotifier {
     simsCardBatch.clear();
     simsCardBatchTemp.clear();
     searchController.clear();
+  }
+
+  void clearNoRecordController() {
+    noRecordsController.clear();
   }
 
   bool removeSimCardBatch(String imei) {

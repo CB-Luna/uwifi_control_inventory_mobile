@@ -18,12 +18,17 @@ class BatchGatewayProvider extends ChangeNotifier {
   List<GatewayBatchTemp> gatewaysBatchTemp = [];
   Uint8List? bytesExcel;
   final searchController = TextEditingController();
+  final noRecordsController = TextEditingController();
 
-  bool validateCsvFormat(List<List<dynamic>> csvData) {
+  bool validateKeyForm(GlobalKey<FormState> formKey) {
+    return formKey.currentState!.validate() ? true : false;
+  }
+
+  bool validateXLSXFormat(List<List<dynamic>> xlsxData) {
     // Aquí puedes realizar validaciones adicionales, como verificar
     // que el archivo tenga los encabezados esperados
     List<String> expectedHeaders = ['S/N', 'IMEI', 'MAC', 'Wi-Fi KEY'];
-    List<dynamic> headers = csvData.first;
+    List<dynamic> headers = xlsxData.first;
 
     //En caso de que la posición del header fuera aleatoria, 
     //crearíamos una función para recuperar el índice de cada header
@@ -63,14 +68,14 @@ class BatchGatewayProvider extends ChangeNotifier {
         final input = File(result.files.single.path!);
         final rows = await uploadFileXLSX(input);
 
-        if (rows.first.isEmpty || rows.first.length == 1) {
-          return 'Not Rows Data';
-        } 
-        if (!validateCsvFormat(rows)) {
+        if (!validateXLSXFormat(rows)) {
           return 'Not Valid Format';
         } else {
           //Se quitan los headers
           rows.removeAt(0);
+          if (rows.length != int.parse(noRecordsController.text)) {
+            return 'Not Same No. Records';
+          } 
           for (var row in rows) {
             final GatewayBatch gatewayBatch = GatewayBatch(
               serialNo: row[0].toString(),
@@ -320,6 +325,10 @@ class BatchGatewayProvider extends ChangeNotifier {
     gatewaysBatch.clear();
     gatewaysBatchTemp.clear();
     searchController.clear();
+  }
+
+  void clearNoRecordController() {
+    noRecordsController.clear();
   }
   
   bool removeGatewayBatch(String serialNumber) {
