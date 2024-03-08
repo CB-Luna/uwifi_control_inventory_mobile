@@ -145,7 +145,7 @@ class GatewayCaptured extends StatelessWidget {
                       FFButtonWidget(
                         onPressed: () async {
                           bundleFormProvider.clearGatewayControllers();
-                          bundleMenuProvider.changeOptionInventorySection(0);
+                          bundleMenuProvider.changeOptionInventorySection(1);
                           bundleMenuProvider.changeOptionButtonsGC(0 ,null);
                         },
                         text: 'Back',

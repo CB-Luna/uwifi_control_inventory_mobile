@@ -6,7 +6,8 @@ import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/componen
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/add_sims_card.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/gateway_captured.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/gateway_form_ocr.dart';
-import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/gateway_form_qr.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/gateway_form_sku.dart';
+import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/options_provider_bundle.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/options_recover_sims_card.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/bundle_created.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/bundle/widgets/sim_card_form_ocr.dart';
@@ -69,13 +70,13 @@ class BundleMenuProvider extends ChangeNotifier {
   Widget optionInventorySection() { 
   switch (valueOptionSection) {
       case 0:
-        return OptionsRecoverGateways();
+        return OptionsProviderBundle();
       case 1:
-        return const GatewayFormOCR();
+        return OptionsRecoverGateways();
       case 2:
-        return const GatewayFormQR();
+        return const GatewayFormOCR();
       case 3:
-        return Container();
+        return GatewayFormSKU();
       case 4:
         return const GatewayCaptured();
       case 5:
@@ -85,7 +86,7 @@ class BundleMenuProvider extends ChangeNotifier {
       case 7:
         return BundleCreated();
       default:
-        return OptionsRecoverGateways();
+        return OptionsProviderBundle();
     }
   }
 

@@ -137,6 +137,73 @@ class BundleFormProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> validateGatewayBackendSKU() async {
+    try {
+      final res = await supabase
+          .from('router_detail')
+          .select()
+          .eq('serie_no', serialNumberTextController.text);
+
+      if (res[0] != null) {
+        final gateway = res[0];
+        gatewayCaptured = Gateway.fromJson(jsonEncode(gateway));
+
+        final res1 = await supabase
+        .from('router_details_view')
+        .select()
+        .eq('router_detail_id', gatewayCaptured!.routerDetailId);
+
+        if (res1[0] != null) {
+          final bundle = res1[0];
+          final bundleCaptured = Bundle.fromJson(jsonEncode(bundle));
+          switch (bundleCaptured.sim.length) {
+            case 0:
+              break;
+            case 1:
+              simCard1 = SIMSCard(
+                simDetailId: bundleCaptured.sim[0]!.simDetailId, 
+                inventoryProductFk: bundleCaptured.sim[0]!.inventoryProductId, 
+                phoneAssociation: bundleCaptured.sim[0]!.phoneAssociation, 
+                pin: bundleCaptured.sim[0]!.pin, 
+                dataPlan: bundleCaptured.sim[0]!.dataPlan, 
+                createdAt: bundleCaptured.sim[0]!.connectedAt
+              );
+              break;
+            case 2:
+              simCard1 = SIMSCard(
+                simDetailId: bundleCaptured.sim[0]!.simDetailId, 
+                inventoryProductFk: bundleCaptured.sim[0]!.inventoryProductId, 
+                phoneAssociation: bundleCaptured.sim[0]!.phoneAssociation, 
+                pin: bundleCaptured.sim[0]!.pin, 
+                dataPlan: bundleCaptured.sim[0]!.dataPlan, 
+                imei: bundleCaptured.sim[0]?.imei,
+                createdAt: bundleCaptured.sim[0]!.connectedAt
+              );
+              simCard2 = SIMSCard(
+                simDetailId: bundleCaptured.sim[1]!.simDetailId, 
+                inventoryProductFk: bundleCaptured.sim[1]!.inventoryProductId, 
+                phoneAssociation: bundleCaptured.sim[1]!.phoneAssociation, 
+                pin: bundleCaptured.sim[1]!.pin, 
+                dataPlan: bundleCaptured.sim[1]!.dataPlan, 
+                imei: bundleCaptured.sim[1]?.imei,
+                createdAt: bundleCaptured.sim[1]!.connectedAt
+              );
+              break;
+            default:
+              break;
+          }
+        }
+        return true;
+      } else {
+        // Gateway doesn't exist
+        return false;
+      }
+    } catch (e) {
+      print("Error in 'validateGatewayBackend': $e");
+      return false;
+    }
+  }
+
   //************************SIMS Cards Components *********/
   TextEditingController imeiTextController = TextEditingController();
   String previous = "";

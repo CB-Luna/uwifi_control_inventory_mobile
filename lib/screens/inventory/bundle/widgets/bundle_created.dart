@@ -48,7 +48,7 @@ class BundleCreated extends StatelessWidget {
                   FFButtonWidget(
                     onPressed: () async {
                       bundleMenuProvider.changeOptionButtonsGC(0, null);
-                      bundleMenuProvider.changeOptionInventorySection(0);
+                      bundleMenuProvider.changeOptionInventorySection(1);
                     },
                     text: 'Create New One',
                     icon: const Icon(

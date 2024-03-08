@@ -248,33 +248,21 @@ class _ControlInventoryBundleScreenState extends State<ControlInventoryBundleScr
                 endIndent: 20,
                 color: AppTheme.of(context).grayLighter,
               ),
-              SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 100,
-                child: Builder(
-                  builder: (context) {
-                    return Center(
-                      child: ListView.builder(
-                      padding: const EdgeInsetsDirectional.fromSTEB(24, 16, 24, 24),
-                      shrinkWrap: true,
-                      controller: ScrollController(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: bundleMenuProvider.simCarriers.length,
-                      itemBuilder: (context, index) {
-                        final carrier = bundleMenuProvider.simCarriers[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: IndicatorFilterButton(
-                            text: "${index + 1}. ${carrier.name}",
-                            onPressed: () {
-                              bundleMenuProvider.changeOptionSimCarrier(carrier.simCarrierId);
-                            },
-                            isTaped: bundleMenuProvider.valueSimCarrier == carrier.simCarrierId,
-                          ).animateOnPageLoad(animationsMap['moveLoadAnimationRL']!),
-                        );
-                      }),
-                    );
-                  },
+              Visibility(
+                visible: bundleMenuProvider.valueOptionSection != 0,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                  child: Center(
+                    child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    height: 50,
+                    child: IndicatorFilterButton(
+                      text: "${bundleMenuProvider.valueSimCarrier}. SKU",
+                      onPressed: () {},
+                      isTaped: true,
+                    ).animateOnPageLoad(animationsMap['moveLoadAnimationRL']!),
+                    ),
+                  ),
                 ),
               ),
               Builder(

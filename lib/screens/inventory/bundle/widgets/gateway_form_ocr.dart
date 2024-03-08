@@ -63,7 +63,7 @@ class GatewayFormOCR extends StatelessWidget {
                       FFButtonWidget(
                         onPressed: () async {
                           bundleFormProvider.clearGatewayControllers();
-                          bundleMenuProvider.changeOptionInventorySection(0);
+                          bundleMenuProvider.changeOptionInventorySection(1);
                         },
                         text: 'Back',
                         icon: const Icon(
