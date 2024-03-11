@@ -308,7 +308,7 @@ class _ItemSimCardBatchState extends State<ItemSimCardBatch> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.2,
                 child: Text(
-                  widget.simCardBatch.sapId,
+                  "${widget.simCardBatch.sapId}",
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: AppTheme.of(context)

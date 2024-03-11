@@ -215,7 +215,7 @@ class BatchSimCardProvider extends ChangeNotifier {
 
         final List<CellValue> row = [
           TextCellValue(simCardBatch.imei),
-          TextCellValue(simCardBatch.sapId)
+          TextCellValue(simCardBatch.sapId ?? "")
         ];
         sheet.appendRow(row);
       }

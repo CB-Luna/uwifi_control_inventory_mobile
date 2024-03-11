@@ -32,7 +32,9 @@ const bearerAirflow = "Basic YWlyZmxvdzpjYiF1bmEyMDIz";
 //Sims Card
 final sapIdRegExp = RegExp(r'SAP ID: [0-9]{6}');
 const nameFieldSapId = "SAP ID: ";
-final imeiSCRegExp = RegExp(r' [0-9]{20}');
+final pukCodeRegExp = RegExp(r'PUK Code: [0-9]{8}');
+const nameFieldPukCode = "PUK Code: ";
+final imeiSCRegExp = RegExp(r' [0-9]{19}[0-9A-Z]{1}');
 const nameFieldImeiSC = " ";
 
 //Gateways

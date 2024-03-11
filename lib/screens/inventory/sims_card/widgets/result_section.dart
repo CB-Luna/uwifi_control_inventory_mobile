@@ -223,7 +223,7 @@ class ResultSection extends StatelessWidget {
                         Icons.pin_outlined,
                         color: AppTheme.of(context).alternate,
                       ),
-                      labelText: 'SAP Id*',
+                      labelText: 'SAP Id',
                       labelStyle: AppTheme.of(context)
                           .title3
                           .override(
@@ -273,6 +273,75 @@ class ResultSection extends StatelessWidget {
                     validator: (value) {
                       if (value == "" || value == null || value.isEmpty) {
                         return 'Please input a valid SAP Id.';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      5, 0, 5, 20),
+                  child: TextFormField(
+                    controller: simsCardFormProvider.pukCodeTextController,
+                    autovalidateMode:
+                        AutovalidateMode.onUserInteraction,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      errorMaxLines: 3,
+                      prefixIcon: Icon(
+                        Icons.numbers_outlined,
+                        color: AppTheme.of(context).alternate,
+                      ),
+                      labelText: 'PUK Code',
+                      labelStyle: AppTheme.of(context)
+                          .title3
+                          .override(
+                            fontFamily: 'Montserrat',
+                            color: AppTheme.of(context).grayDark,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                          ),
+                      hintText: 'Input the PUK Code...',
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                              AppTheme.of(context).alternate.withOpacity(0.5),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                              AppTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: AppTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: AppTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      contentPadding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                    ),
+                    style: AppTheme.of(context).bodyText1,
+                    textAlign: TextAlign.start,
+                    inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(6),],
+                    keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                    validator: (value) {
+                      if (value == "" || value == null || value.isEmpty) {
+                        return 'Please input a valid PUK Code.';
                       }
                       return null;
                     },

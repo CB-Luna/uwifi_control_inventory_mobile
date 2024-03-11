@@ -21,7 +21,7 @@ class _PasswordEmailSentScreenState extends State<PasswordEmailSentScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: const Color(0xFFDDEEF8),
+        backgroundColor: AppTheme.of(context).primaryBackground,
         body: SafeArea(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
@@ -37,7 +37,7 @@ class _PasswordEmailSentScreenState extends State<PasswordEmailSentScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        'Correo enviado!',
+                        'Email sent!',
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               color: Colors.black,
@@ -49,11 +49,10 @@ class _PasswordEmailSentScreenState extends State<PasswordEmailSentScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(
-                        'Un correo se ha enviado, revisa tu bandeja \nde entrada para reestablecer tu \ncontraseña.',
+                        'A email was sent tou your inbox \nto reset your password, please \ncheck it.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
-                              color: Colors.black,
                               fontSize: 15,
                             ),
                       ),
@@ -82,14 +81,15 @@ class _PasswordEmailSentScreenState extends State<PasswordEmailSentScreen> {
                           ),
                         );
                         },
-                        text: 'Listo',
+                        text: 'Okay',
                         options: ButtonOptions(
                           width: 200,
                           height: 45,
-                          color: const Color(0xFF28BFFA),
+                          color: AppTheme.of(context).primaryColor,
                           textStyle: AppTheme.of(context).subtitle2.override(
                                 fontFamily: 'Poppins',
-                                color: Colors.white,
+                                color: AppTheme.of(context).white,
+                                fontWeight: FontWeight.bold
                               ),
                           borderSide: const BorderSide(
                             color: Colors.transparent,
