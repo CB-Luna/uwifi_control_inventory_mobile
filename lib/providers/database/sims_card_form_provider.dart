@@ -65,7 +65,7 @@ class SIMSCardFormProvider extends ChangeNotifier {
           {
             'inventory_location_fk': 1,
             'provider_invoice_fk': 1,
-            'product_fk': 2,
+            'product_fk': 4,
             'barcode_type_fk': 1,
             'created_by': currentUser.sequentialId,
             'inventory_product_status_fk': 1
@@ -76,8 +76,8 @@ class SIMSCardFormProvider extends ChangeNotifier {
         recordInventoryProduct = await supabase.from('inventory_product').insert(
           {
             'inventory_location_fk': 1,
-            'provider_invoice_fk': 2,
-            'product_fk': 2,
+            'provider_invoice_fk': 1,
+            'product_fk': 3,
             'barcode_type_fk': 1,
             'created_by': currentUser.sequentialId,
             'inventory_product_status_fk': 1
@@ -88,8 +88,8 @@ class SIMSCardFormProvider extends ChangeNotifier {
       if (recordInventoryProduct.isNotEmpty) {
         final recordRouterSim = await supabase.from('sim_detail').insert(
           {
-            'sap_id': sapIdTextController.text,
-            'puk_code': pukCodeTextController.text,
+            'sap_id': sapIdTextController.text.isNotEmpty ? sapIdTextController.text : null,
+            'puk_code': pukCodeTextController.text.isNotEmpty ? pukCodeTextController.text : null,
             'imei': imeiSCTextController.text,
             'phone_association': '(524) 1234233',
             'data_plan': 'Unlimited',
@@ -107,6 +107,7 @@ class SIMSCardFormProvider extends ChangeNotifier {
         return "False";
       }
     } catch (e) {
+      print("Error at addNewSIMSCardBackend: $e");
       return "$e";
     }
   }

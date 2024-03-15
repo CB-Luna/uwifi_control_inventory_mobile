@@ -270,12 +270,12 @@ class ResultSection extends StatelessWidget {
                     textAlign: TextAlign.start,
                     inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(6),],
                     keyboardType: const TextInputType.numberWithOptions(decimal: false),
-                    validator: (value) {
-                      if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid SAP Id.';
-                      }
-                      return null;
-                    },
+                    // validator: (value) {
+                    //   if (value == "" || value == null || value.isEmpty) {
+                    //     return 'Please input a valid SAP Id.';
+                    //   }
+                    //   return null;
+                    // },
                   ),
                 ),
                 Padding(
@@ -339,12 +339,12 @@ class ResultSection extends StatelessWidget {
                     textAlign: TextAlign.start,
                     inputFormatters: [numbersFormat, LengthLimitingTextInputFormatter(6),],
                     keyboardType: const TextInputType.numberWithOptions(decimal: false),
-                    validator: (value) {
-                      if (value == "" || value == null || value.isEmpty) {
-                        return 'Please input a valid PUK Code.';
-                      }
-                      return null;
-                    },
+                    // validator: (value) {
+                    //   if (value == "" || value == null || value.isEmpty) {
+                    //     return 'Please input a valid PUK Code.';
+                    //   }
+                    //   return null;
+                    // },
                   ),
                 ),
                 Padding(
