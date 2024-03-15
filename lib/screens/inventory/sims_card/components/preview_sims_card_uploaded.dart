@@ -278,7 +278,7 @@ class _PreviewSimsCardUploadedState extends State<PreviewSimsCardUploaded> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.2,
                         child: Text(
-                          "SAP ID",
+                          "PROVIDER",
                           textAlign: TextAlign.center,
                           style: AppTheme.of(context)
                           .bodyText1.override(

@@ -28,7 +28,7 @@ class BatchSimCardProvider extends ChangeNotifier {
   bool validateXLSXFormat(List<List<dynamic>> xlsxData) {
     // Aquí puedes realizar validaciones adicionales, como verificar
     // que el archivo tenga los encabezados esperados
-    List<String> expectedHeaders = ['IMEI', 'SAP ID'];
+    List<String> expectedHeaders = ['IMEI', 'SAP ID', 'PUK CODE', 'PROVIDER'];
     List<dynamic> headers = xlsxData.first;
 
     //En caso de que la posición del header fuera aleatoria, 
@@ -83,7 +83,9 @@ class BatchSimCardProvider extends ChangeNotifier {
           for (var row in rows) {
             final SimsCardBatch simCardBatch = SimsCardBatch(
               imei: row[0].toString(), 
-              sapId: row[1].toString()
+              sapId: row[1].toString(),
+              pukCode: row[2].toString(),
+              provider: row[3].toString()
             );
             simsCardBatch.add(simCardBatch);
           }
@@ -204,6 +206,14 @@ class BatchSimCardProvider extends ChangeNotifier {
       cellT2.value = const TextCellValue("SAP ID");
       cellT2.cellStyle = titulo;
 
+      var cellT3 = sheet.cell(CellIndex.indexByString("C1"));
+      cellT3.value = const TextCellValue("PUK CODE");
+      cellT3.cellStyle = titulo;
+
+      var cellT4 = sheet.cell(CellIndex.indexByString("D1"));
+      cellT4.value = const TextCellValue("PROVIDER");
+      cellT4.cellStyle = titulo;
+
       //Agregar primera linea
       sheet.appendRow([]);
 
@@ -215,7 +225,9 @@ class BatchSimCardProvider extends ChangeNotifier {
 
         final List<CellValue> row = [
           TextCellValue(simCardBatch.imei),
-          TextCellValue(simCardBatch.sapId ?? "")
+          TextCellValue(simCardBatch.sapId ?? ""),
+          TextCellValue(simCardBatch.pukCode ?? ""),
+          TextCellValue(simCardBatch.provider)
         ];
         sheet.appendRow(row);
       }

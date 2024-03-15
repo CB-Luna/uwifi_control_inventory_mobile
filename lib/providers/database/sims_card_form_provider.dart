@@ -117,7 +117,8 @@ class SIMSCardFormProvider extends ChangeNotifier {
       final simsCardBatch = SimsCardBatch(
         sapId: sapIdTextController.text,
         pukCode: pukCodeTextController.text,
-        imei: imeiSCTextController.text
+        imei: imeiSCTextController.text,
+        provider: pukCodeTextController.text.isNotEmpty ? "T-Mobile" : "US Cellular"
       );
       return simsCardBatch;
     } catch (e) {

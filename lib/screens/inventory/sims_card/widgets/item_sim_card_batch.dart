@@ -101,7 +101,71 @@ class _ItemSimCardBatchState extends State<ItemSimCardBatch> {
                                 child: TextFormField(
                                   readOnly: true,
                                   enabled: false,
-                                  initialValue: widget.simCardBatch.sapId,
+                                  initialValue: widget.simCardBatch.imei,
+                                  textCapitalization: TextCapitalization.words,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    errorMaxLines: 3,
+                                    prefixIcon: Icon(
+                                      Icons.router,
+                                      color: AppTheme.of(context).alternate,
+                                    ),
+                                    labelText: 'IMEI',
+                                    labelStyle: AppTheme.of(context)
+                                        .title3
+                                        .override(
+                                          fontFamily: 'Montserrat',
+                                          color: AppTheme.of(context).grayDark,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    hintText: 'Input the IMEI...',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            AppTheme.of(context).alternate.withOpacity(0.5),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            AppTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    contentPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                                  ),
+                                  style: AppTheme.of(context).bodyText1,
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    5, 0, 5, 20),
+                                child: TextFormField(
+                                  readOnly: true,
+                                  enabled: false,
+                                  initialValue: widget.simCardBatch.sapId ?? "No Sap Id",
                                   textCapitalization: TextCapitalization.characters,
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
@@ -165,18 +229,18 @@ class _ItemSimCardBatchState extends State<ItemSimCardBatch> {
                                 child: TextFormField(
                                   readOnly: true,
                                   enabled: false,
-                                  initialValue: widget.simCardBatch.imei,
-                                  textCapitalization: TextCapitalization.words,
+                                  initialValue: widget.simCardBatch.pukCode ?? "No PUK Code",
+                                  textCapitalization: TextCapitalization.characters,
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     errorMaxLines: 3,
                                     prefixIcon: Icon(
-                                      Icons.router,
+                                      Icons.pin_outlined,
                                       color: AppTheme.of(context).alternate,
                                     ),
-                                    labelText: 'IMEI',
+                                    labelText: 'PUK Code',
                                     labelStyle: AppTheme.of(context)
                                         .title3
                                         .override(
@@ -185,7 +249,71 @@ class _ItemSimCardBatchState extends State<ItemSimCardBatch> {
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
-                                    hintText: 'Input the IMEI...',
+                                    hintText: 'Input the PUK Code...',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            AppTheme.of(context).alternate.withOpacity(0.5),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            AppTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    contentPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                                  ),
+                                  style: AppTheme.of(context).bodyText1,
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    5, 0, 5, 20),
+                                child: TextFormField(
+                                  readOnly: true,
+                                  enabled: false,
+                                  initialValue: widget.simCardBatch.provider,
+                                  textCapitalization: TextCapitalization.characters,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    errorMaxLines: 3,
+                                    prefixIcon: Icon(
+                                      Icons.label_outline,
+                                      color: AppTheme.of(context).alternate,
+                                    ),
+                                    labelText: 'Provider',
+                                    labelStyle: AppTheme.of(context)
+                                        .title3
+                                        .override(
+                                          fontFamily: 'Montserrat',
+                                          color: AppTheme.of(context).grayDark,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    hintText: 'Input the Provider...',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color:
@@ -308,7 +436,7 @@ class _ItemSimCardBatchState extends State<ItemSimCardBatch> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.2,
                 child: Text(
-                  "${widget.simCardBatch.sapId}",
+                  widget.simCardBatch.provider,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: AppTheme.of(context)
