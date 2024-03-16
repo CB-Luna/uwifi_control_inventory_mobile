@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/sims_card.dart';
+import 'package:uwifi_control_inventory_mobile/util/util.dart';
 
 class SIMSCardProvider extends ChangeNotifier {
 
@@ -65,6 +66,26 @@ class SIMSCardProvider extends ChangeNotifier {
     await getSIMSCard();
     notifyListeners();
     return true;
+  }
+
+  Future<void> searchSimCard() async {
+    if (searchController.text != '') {
+      simsCard.removeWhere((element) {
+        final imei =
+            removeDiacritics(element.imei ?? "")
+                .toLowerCase();
+        final tempBusqueda =
+            removeDiacritics(searchController.text)
+                .toLowerCase();
+        if (imei.contains(tempBusqueda)) {
+          return false;
+        }
+        return true;
+      });
+      notifyListeners();
+    } else {
+      await getSIMSCard();
+    }
   }
 
 

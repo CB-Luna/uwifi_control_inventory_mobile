@@ -131,8 +131,10 @@ class _GatewaysCreatedListState extends State<GatewaysCreatedList> {
                                   const EdgeInsetsDirectional
                                       .fromSTEB(4, 0, 4, 0),
                               child: TextFormField(
-                                onChanged: (value) =>
-                                    setState(() {}),
+                                controller: provider.searchController,
+                                onChanged: (value) async {
+                                  await provider.searchGateway();
+                                },
                                 decoration: InputDecoration(
                                   labelText: 'Search...',
                                   labelStyle: AppTheme.of(

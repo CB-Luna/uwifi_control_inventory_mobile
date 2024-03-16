@@ -131,8 +131,10 @@ class _SIMSCardCreatedListState extends State<SIMSCardCreatedList> {
                                   const EdgeInsetsDirectional
                                       .fromSTEB(4, 0, 4, 0),
                               child: TextFormField(
-                                onChanged: (value) =>
-                                    setState(() {}),
+                                controller: provider.searchController,
+                                onChanged: (value) async {
+                                  await provider.searchSimCard();
+                                },
                                 decoration: InputDecoration(
                                   labelText: 'Search...',
                                   labelStyle: AppTheme.of(

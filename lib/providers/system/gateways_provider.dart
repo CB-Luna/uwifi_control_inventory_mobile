@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/gateway.dart';
+import 'package:uwifi_control_inventory_mobile/util/util.dart';
 
 class GatewaysProvider extends ChangeNotifier {
 
@@ -65,6 +66,26 @@ class GatewaysProvider extends ChangeNotifier {
     await getGateways();
     notifyListeners();
     return true;
+  }
+
+  Future<void> searchGateway() async {
+    if (searchController.text != '') {
+      gateways.removeWhere((element) {
+        final serialNo =
+            removeDiacritics(element.serialNo)
+                .toLowerCase();
+        final tempBusqueda =
+            removeDiacritics(searchController.text)
+                .toLowerCase();
+        if (serialNo.contains(tempBusqueda)) {
+          return false;
+        }
+        return true;
+      });
+     notifyListeners();
+    } else {
+      await getGateways();
+    }
   }
 
 

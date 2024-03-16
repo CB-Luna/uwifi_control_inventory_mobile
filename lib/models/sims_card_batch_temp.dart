@@ -5,7 +5,8 @@ class SimCardBatchTemp {
     DateTime createdAt;
     int batchDocumentFk;
     int? batchStatusFk;
-    String sapId;
+    String? sapId;
+    String? pukCode;
     String imei;
 
     SimCardBatchTemp({
@@ -13,7 +14,8 @@ class SimCardBatchTemp {
         required this.createdAt,
         required this.batchDocumentFk,
         this.batchStatusFk,
-        required this.sapId,
+        this.sapId,
+        this.pukCode,
         required this.imei,
     });
 
@@ -26,6 +28,7 @@ class SimCardBatchTemp {
         batchDocumentFk: json["batch_document_fk"],
         batchStatusFk: json["batch_status_fk"],
         sapId: json["sap_id"],
+        pukCode: json["puk_code"],
         imei: json["imei"],
     );
     return simCardBatchTemp;
