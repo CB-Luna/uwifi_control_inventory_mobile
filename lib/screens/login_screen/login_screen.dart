@@ -61,10 +61,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            'assets/images/uwifi.png',
+                            'assets/images/U-Full.png',
                             width: 220,
                             height: 220,
-                            fit: BoxFit.fitWidth,
+                            fit: BoxFit.contain,
                           ),
                         ],
                       ),

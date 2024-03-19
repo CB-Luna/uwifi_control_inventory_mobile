@@ -74,7 +74,7 @@ class SideMenu extends StatelessWidget {
                               shape: BoxShape.rectangle,
                             ),
                             child: Image.asset(
-                              'assets/images/uwifi.png',
+                              'assets/images/U-Only.png',
                             ),
                           ),
                         ],
