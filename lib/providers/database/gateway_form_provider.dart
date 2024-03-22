@@ -116,6 +116,7 @@ class GatewayFormProvider extends ChangeNotifier {
             'serie_no': serialNumberTextController.text,
             'mac': macTextController.text,
             'imei': imeiGTextController.text,
+            'created_by': currentUser.sequentialId,
             'location': 'Store'
           },
         ).select<PostgrestList>('router_detail_id');

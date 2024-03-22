@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/sims_card_provider.dart';
 import 'package:uwifi_control_inventory_mobile/screens/inventory/sims_card/widgets/item_form_sims_card.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
@@ -77,17 +78,23 @@ class _SIMSCardCreatedListState extends State<SIMSCardCreatedList> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final userProvider = Provider.of<UsuarioController>(
+        context,
+        listen: false,
+      );
+      
       SIMSCardProvider provider = Provider.of<SIMSCardProvider>(
         context,
         listen: false,
       );
-      await provider.updateState();
+      await provider.updateState(userProvider.usuarioCurrent!.sequentialId);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SIMSCardProvider>(context);
+    final userProvider = Provider.of<UsuarioController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
@@ -132,8 +139,8 @@ class _SIMSCardCreatedListState extends State<SIMSCardCreatedList> {
                                       .fromSTEB(4, 0, 4, 0),
                               child: TextFormField(
                                 controller: provider.searchController,
-                                onChanged: (value) async {
-                                  await provider.searchSimCard();
+                                onChanged: (value) {
+                                  provider.getSIMSCard(userProvider.usuarioCurrent!.sequentialId);
                                 },
                                 decoration: InputDecoration(
                                   labelText: 'Search...',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/gateways_provider.dart';
 import 'package:uwifi_control_inventory_mobile/util/animations.dart';
@@ -77,17 +78,23 @@ class _GatewaysCreatedListState extends State<GatewaysCreatedList> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final userProvider = Provider.of<UsuarioController>(
+        context,
+        listen: false,
+      );
+      
       GatewaysProvider provider = Provider.of<GatewaysProvider>(
         context,
         listen: false,
       );
-      await provider.updateState();
+      await provider.updateState(userProvider.usuarioCurrent!.sequentialId);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<GatewaysProvider>(context);
+    final userProvider = Provider.of<UsuarioController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
@@ -132,8 +139,8 @@ class _GatewaysCreatedListState extends State<GatewaysCreatedList> {
                                       .fromSTEB(4, 0, 4, 0),
                               child: TextFormField(
                                 controller: provider.searchController,
-                                onChanged: (value) async {
-                                  await provider.searchGateway();
+                                onChanged: (value) {
+                                  provider.getGateways(userProvider.usuarioCurrent!.sequentialId);
                                 },
                                 decoration: InputDecoration(
                                   labelText: 'Search...',

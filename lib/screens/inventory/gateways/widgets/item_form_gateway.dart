@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/gateway.dart';
@@ -24,6 +25,7 @@ class _ItemFormGatewayState extends State<ItemFormGateway> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<GatewaysProvider>(context);
+    final usuarioProvider = Provider.of<UsuarioController>(context);
     return Column(
       children: [
         Padding(
@@ -52,7 +54,7 @@ class _ItemFormGatewayState extends State<ItemFormGateway> {
                             child: Row(
                               children: [
                                 const Text("Created at: "),
-                                Text(DateFormat("MMM-dd-yyyy").format(widget.gateway.createdAt)),
+                                Text(DateFormat("yyyy-MM-dd").format(widget.gateway.createdAt)),
                               ],
                             )
                           ),
@@ -567,7 +569,7 @@ class _ItemFormGatewayState extends State<ItemFormGateway> {
                       actions: [
                         TextButton(
                           onPressed: () async {        
-                            if (await provider.deleteGateway(widget.gateway.inventoryProductFk)) {
+                            if (await provider.deleteGateway(widget.gateway.inventoryProductFk, usuarioProvider.usuarioCurrent!.sequentialId)) {
                               if(!mounted) return;
                               Navigator.pop(alertDialogContext);
                               snackbarKey.currentState
@@ -619,7 +621,7 @@ class _ItemFormGatewayState extends State<ItemFormGateway> {
                 ),
               ),
               Text(
-                DateFormat("MMM-dd-yyyy").format(widget.gateway.createdAt),
+                DateFormat("yyyy-MM-dd").format(widget.gateway.createdAt),
                 style: AppTheme.of(context)
                 .bodyText1.override(
                   fontFamily:

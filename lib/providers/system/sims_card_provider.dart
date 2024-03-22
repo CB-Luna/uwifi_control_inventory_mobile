@@ -1,44 +1,30 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
 import 'package:uwifi_control_inventory_mobile/models/sims_card.dart';
-import 'package:uwifi_control_inventory_mobile/util/util.dart';
-
 class SIMSCardProvider extends ChangeNotifier {
 
   List<SIMSCard> simsCard = [];
 
   final searchController = TextEditingController();
 
-  Future<void> updateState() async {
+  Future<void> updateState(int userID) async {
     searchController.clear();
-    await getSIMSCard();
+    await getSIMSCard(userID);
   }
 
-  Future<void> getSIMSCard() async {
+  Future<void> getSIMSCard(int userID) async {
     try {
       simsCard.clear();
       // Se recuperan los simsCard creados el día anteror y hoy
-      // Obtener la fecha del día de hoy y la fecha de ayer
-      DateTime today = DateTime.now();
-      DateTime yesterday = today.subtract(const Duration(days: 1));
 
-      DateTime startOfYesterday = DateTime(yesterday.year, yesterday.month, yesterday.day);
-      DateTime endOfToday = DateTime(today.year, today.month, today.day, 23, 59, 59);
-
-      DateFormat format = DateFormat("yyyy-MM-dd HH:mm:ss");
-
-      String formattedStartOfYesteday = format.format(startOfYesterday);
-      String formattedEndOfToday = format.format(endOfToday);
-
-
-      final res = await supabase
-      .from('sim_detail')
-      .select()
-      .gt('created_at', formattedStartOfYesteday).lt('created_at', formattedEndOfToday);
-
-      // final res = await query.like('serial_no', '%${searchController.text}%').order(orden, ascending: true);
+      var res = await supabase.rpc(
+          'search_simcards_recently',
+          params: {
+            "busqueda": searchController.text,
+            "created_by_user_id": userID
+          },
+        ).select();
 
       if (res == null) {
         log('Error en getSIMSCard()');
@@ -47,15 +33,13 @@ class SIMSCardProvider extends ChangeNotifier {
 
       simsCard = (res as List<dynamic>).map((simCard) => SIMSCard.fromMap(simCard)).toList();
 
-      simsCard.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-
     } catch (e) {
       log('Error en getSIMSCard() - $e');
     }
     notifyListeners();
   }
 
-  Future<bool> deleteSIMSCard(int inventoryProductFk) async {
+  Future<bool> deleteSIMSCard(int inventoryProductFk, int userID) async {
     try {
       await supabase.from("sim_detail").delete().eq('inventory_product_fk', inventoryProductFk);
       await supabase.from("inventory_product").delete().eq('inventory_product_id', inventoryProductFk);
@@ -63,29 +47,9 @@ class SIMSCardProvider extends ChangeNotifier {
       log('Error en deleteOpportunity() - $e');
       return false;
     }
-    await getSIMSCard();
+    await getSIMSCard(userID);
     notifyListeners();
     return true;
-  }
-
-  Future<void> searchSimCard() async {
-    if (searchController.text != '') {
-      simsCard.removeWhere((element) {
-        final imei =
-            removeDiacritics(element.imei ?? "")
-                .toLowerCase();
-        final tempBusqueda =
-            removeDiacritics(searchController.text)
-                .toLowerCase();
-        if (imei.contains(tempBusqueda)) {
-          return false;
-        }
-        return true;
-      });
-      notifyListeners();
-    } else {
-      await getSIMSCard();
-    }
   }
 
 

@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:uwifi_control_inventory_mobile/models/sims_card.dart';
+import 'package:uwifi_control_inventory_mobile/providers/database/usuario_controller.dart';
 import 'package:uwifi_control_inventory_mobile/providers/system/sims_card_provider.dart';
 import 'package:uwifi_control_inventory_mobile/theme/theme.dart';
 import 'package:uwifi_control_inventory_mobile/helpers/globals.dart';
@@ -24,6 +25,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SIMSCardProvider>(context);
+    final usuarioProvider = Provider.of<UsuarioController>(context);
     return Column(
       children: [
         Padding(
@@ -52,7 +54,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                             child: Row(
                               children: [
                                 const Text("Created at: "),
-                                Text(DateFormat("MMM-dd-yyyy").format(widget.simsCard.createdAt)),
+                                Text(DateFormat("yyyy-MM-dd").format(widget.simsCard.createdAt)),
                               ],
                             )
                           ),
@@ -503,7 +505,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                       actions: [
                         TextButton(
                           onPressed: () async {        
-                            if (await provider.deleteSIMSCard(widget.simsCard.inventoryProductFk)) {
+                            if (await provider.deleteSIMSCard(widget.simsCard.inventoryProductFk, usuarioProvider.usuarioCurrent!.sequentialId)) {
                               if(!mounted) return;
                               Navigator.pop(alertDialogContext);
                               snackbarKey.currentState
@@ -559,7 +561,7 @@ class _ItemFormSIMSCardState extends State<ItemFormSIMSCard> {
                 ),
               ),
               Text(
-                DateFormat("MMM-dd-yyyy").format(widget.simsCard.createdAt),
+                DateFormat("yyyy-MM-dd").format(widget.simsCard.createdAt),
                 style: AppTheme.of(context)
                 .bodyText1.override(
                   fontFamily:

@@ -93,6 +93,7 @@ class _SearchBundlesCreatedState extends State<SearchBundlesCreated> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<BundlesProvider>(context);
+    final userProvider = Provider.of<UsuarioController>(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: SizedBox(
@@ -136,8 +137,10 @@ class _SearchBundlesCreatedState extends State<SearchBundlesCreated> {
                                   const EdgeInsetsDirectional
                                       .fromSTEB(4, 0, 4, 0),
                               child: TextFormField(
-                                onChanged: (value) =>
-                                    setState(() {}),
+                                controller: provider.searchController,
+                                onChanged: (value) {
+                                  provider.getBundles(userProvider.usuarioCurrent!.sequentialId);
+                                },
                                 decoration: InputDecoration(
                                   labelText: 'Search...',
                                   labelStyle: AppTheme.of(
