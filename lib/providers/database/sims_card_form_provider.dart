@@ -92,6 +92,7 @@ class SIMSCardFormProvider extends ChangeNotifier {
             'puk_code': pukCodeTextController.text.isNotEmpty ? pukCodeTextController.text : null,
             'imei': imeiSCTextController.text,
             'phone_association': '(524) 1234233',
+            'created_by': currentUser.sequentialId,
             'data_plan': 'Unlimited',
             'pin': "9999",
             'inventory_product_fk': recordInventoryProduct.first['inventory_product_id']
